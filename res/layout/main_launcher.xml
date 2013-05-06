@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containervermegame"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent" >
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:weightSum="3" >
+
+        <Button
+            android:id="@+id/ButtonScene"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/lamp"
+            android:drawingCacheQuality="high"
+            android:freezesText="false"
+            android:text="@string/scenes_title"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/Button06"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/remote"
+            android:drawingCacheQuality="high"
+            android:text="@string/programs_title"
+            android:textSize="@dimen/text_size" />
+
+        <Button
+            android:id="@+id/ButtonManual"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/hand"
+            android:text="@string/manual_title"
+            android:textSize="@dimen/text_size" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRowStat"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/CodeFontTitle"
+            android:layout_marginLeft="5dip"
+            android:text="@string/status_souliss" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textViewBasicInfo"
+            style="@style/CodeFontMain"
+            android:textIsSelectable="false"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/textViewBasicInfoLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@color/std_green" >
+        </View>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRowDBWarn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textViewDBWarn"
+            style="@style/CodeFontMain"
+            android:layout_marginLeft="5dip"
+            android:visibility="gone" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/textViewDBWarnLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@color/std_yellow"
+            android:visibility="gone" >
+        </View>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewCoords"
+            style="@style/CodeFontMain"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/TableRow01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewFromHome"
+            style="@style/CodeFontMain"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/PositionWarnLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@color/std_green" >
+        </View>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/TableRowServiceActions"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewServiceActions"
+            style="@style/CodeFontMain"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/TextViewServiceLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="2dip"
+            android:background="@color/std_green" >
+        </View>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/TableRowNodes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewNodes"
+            style="@style/CodeFontMain"
+            android:textIsSelectable="false"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
+
+</TableLayout>

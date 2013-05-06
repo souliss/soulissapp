@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerlistaScenes"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    android:weightSum="3" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <!-- <TextView -->
+        <!-- android:id="@+id/TextViewListaTitle" -->
+        <!-- style="@style/CodeFontTitle" -->
+        <!-- android:layout_width="fill_parent" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_marginTop="2dp" -->
+        <!-- android:gravity="center_vertical|center_horizontal" -->
+        <!-- android:text="@string/app_name" -->
+        <!-- android:textStyle="normal|bold" /> -->
+
+        <ImageView
+            android:id="@+id/scene_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dip"
+            android:alpha="0.5"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/lamp" />
+
+        <TextView
+            android:id="@+id/TextViewScenesDesc"
+            style="@style/CodeFontSmall"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/scenes_desc" />
+
+        <TextView
+            android:id="@+id/TextViewScenes"
+            style="@style/CodeFontTitle"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/TextViewScenesDesc"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:text="@string/scenes_title" >
+        </TextView>
+
+        <ListView
+            android:id="@+id/ListViewListaScenes"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextViewScenes"
+            android:cacheColorHint="@color/trans_black"
+            android:divider="@android:color/transparent"
+            android:fadingEdge="vertical"
+            android:requiresFadingEdge="vertical" >
+        </ListView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+    </RelativeLayout>
+
+</LinearLayout>

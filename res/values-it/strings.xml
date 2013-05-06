@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <!-- MANUAL_SECTION -->
+    <string name="app_name">SoulissApp</string>
+    <string name="app_opt">SoulissApp - Opzioni</string>
+    <string name="app_addprog">SoulissApp - Aggiungi Programma</string>
+    <string name="opt_network">Opzioni di rete</string>
+    <string name="last_update">Ultimo aggiornamento:</string>
+    <string name="last_exec">Ultima esecuzione:</string>
+    <string name="waiting">In attesa di aggiornamenti&#8230;</string>
+    <string name="historyof">Storico: </string>
+    <string name="daily">Media giornaliera</string>
+    <string name="monthly">Media mensile</string>
+
+    <!-- dialogs_SECTION -->
+    <string name="dialog_notinited_ip">Souliss non è configurato. Inserire l\'indirizzo locale di Souliss nelle impostazioni di rete</string>
+    <string name="dialog_disabled_db">DB vuoto</string>
+    <string name="dialog_notinited_db">Il DB di Souliss è vuoto. Richiedi la struttura dei nodi nella schermata opzioni DB</string>
+    <string name="dialog_disabled_service">Servizio in background disabilitato</string>
+    <string name="dialog_notinited_service">I Programmi non verranno eseguiti!\nAttiva il Servizio in background nelle opzioni</string>
+    <string name="dialog_dontshowagain">Non mostrare più</string>
+    <string name="dialog_warn_db">Attenzione!</string>
+    <string name="dialog_drop_db">Stai per cancellare la struttura dei nodi e la loro storia.\nSvuotare completamente il DB?</string>
+    <string name="dialog_create_db">Tutti i nodi verranno sovrascritti in seguito alla richiesta verso http://</string>
+    <string name="dialog_create_db2">. La struttura dei nodi già esistenti verrà sovrascritta. Procedere?</string>
+    <string name="dialog_title_edittext_IP_pubb">Indirizzo pubblico</string>
+    <string name="dialog_remove_cmd">Sicuro di eliminare questo comando?</string>
+    <string name="dialog_choose_icon">Scegli icona per </string>
+    <string name="dialog_warn_wifi">Test locale fallito. Il WIFI è abilitato?</string>
+    <string name="dialog_local_test">Test in esecuzione&#8230;</string>
+    <string name="dialog_local_ok">Test locale riuscito!</string>
+    <string name="dialog_net_test">Check di rete</string>
+    <string name="dialog_remote_test">Test remoto in esecuzione&#8230;</string>
+    <string name="dialog_remote_ok">Test remoto riuscito!</string>
+    <string name="dialog_remote_notok">Test remoto fallito</string>
+    <string name="dialog_notconf">Entrambi gli indirizzi sono vuoti/non validi</string>
+    <string name="allnodes">Tutti</string>
+
+    <!-- PROGRAMS_SECTION -->
+    <string name="programs_title">Programmi</string>
+    <string name="programs_no">Nessun programma attivo</string>
+    <string name="programs_add">Aggiungi Programma</string>
+    <string name="execute">Esegui</string>
+    <string name="programs_unexecuted">Programmi attivi</string>
+    <string name="programs_desc">SoulissApp supporta programmi temporali (viola), Geolocalizzati (blu) e basati su sensori (rosso) </string>
+    <string name="programs_target">Scegli il dispositivo da comandare</string>
+    <string name="programs_recursive">Il comando non verrà ripetuto.</string>
+    <string name="programs_leave">Il comando verrà ripetuto ogni volta che si esce di casa</string>
+    <string name="programs_come">Il comando verrà ripetuto ogni volta che si rientra a casa</string>
+    <string name="programs_notyet">Il comando non è ancora stato eseguito</string>
+    <string name="programs_when">Il comando verrà ripetuto ogni volta che lo slot</string>
+    <string name="programs_every">The command will be repeated every %1$d seconds</string>
+    <string name="command_sent">- comando inviato</string>
+    <string name="command_send">Invia comando</string>
+    <string name="compatible">i dispositivi compatibili</string>
+    <string name="to_all">a tutti</string>
+         <string name="to">a</string>
+     <string name="on_node">sul nodo</string>
+    <!-- SCENESS_SECTION -->
+    <string name="scenes_title">Scenari</string>
+    <string name="scenes_delete">Elimina Scenario</string>
+    <string name="scenes_rename">Rinomina Scenario</string>
+    <string name="scenes_changeicon">Cambia icona Scenario</string>
+    <string name="scenes_add">Aggiungi Scenario</string>
+    <string name="scenes_empty">Scenario vuoto!</string>
+    <string name="scenes_empty_desc">Usa il bottone in basso per aggiungere un comando a questo scenario</string>
+    <string name="scenes_desc">Uno scenario è un insieme di comandi. Long-tap su uno scenario per modificarlo o eseguirlo, tap per visualizzare il dettaglio. Usa il bottone in basso per creare un nuovo Scenario</string>
+    <string name="scene_turnoff_lights">Spegni luci</string>
+    <string name="scene_turnon_lights">Accendi luci</string>
+    <string name="scene_commands">Comandi dello Scenario</string>
+    <string name="scene_add_command">Aggiungi comando</string>
+    <string name="scene_add_command_to">Aggiungi comando a</string>
+    <string name="scene_del_command">Elimina comando</string>
+    <string name="scene_send_command">Invia Comando</string>
+    <string name="scene_cmd_order">Ordine esecuzione:</string>
+    <string name="scene_subtitle">Scenario formato da %1$d comandi</string>
+
+    <!-- ADD PROGRAMS_SECTION -->
+    <string name="addprogram_choosecommand">Scegli il comando del programma</string>
+    <string name="addprogram_timed">Attivazione temporale</string>
+    <string name="addprogram_scheduleevery">Ripeti ogni:</string>
+    <string name="addprogram_timed_desc">Il comando verrà attivato all\'orario specificato. Se ricorrente, il comando verrà ripetuto a intervalli regolari</string>
+    <string name="addprogram_positional">Attivazione geolocalizzata</string>
+    <string name="addprogram_positional_goout">Attiva quando esco di casa</string>
+    <string name="addprogram_positional_comeback">Attiva quando torno a casa</string>
+    <string name="addprogram_positional_desc">Il comando verrà attivato dallo spostamento dell\'utente</string>
+    <string name="addprogram_sensorial">Attivazione da Sensore</string>
+    <string name="addprogram_sensorial_desc">The command below will be activated upon specified slot\'s value. Choose operator and Threshold value</string>
+    <string name="addprogram_threshold">Valore di soglia</string>
+    <!-- MENU -->
+    <string name="menu_exit">Esci</string>
+    <string name="menu_options">Opzioni</string>
+    <string name="menu_test">Test Mode</string>
+    <string name="menu_test_udp">Test UDP</string>
+    <string name="menu_rename">Rinomina Nodo</string>
+    <string name="menu_changenodeicon">Cambia icona Nodo</string>
+    <string name="menu_changetypicon">Cambia icona Tipico</string>
+    <string name="rename_typical">Rinomina Tipico</string>
+    
+	<!-- TEST_UDP-->
+	<string name="test_health">Health request viene utilizzata per aggiornare lo stato di salute dei nodi</string>
+    <string name="test_typ_title">TypReq</string>
+    <string name="test_typ">Richiedi la definizione dei dispositivi, senza sottoscrizione</string>
+    <string name="test_poll">Richiedi lo stato dei nodi una volta, senza sottoscrizione</string>
+    <string name="test_ping">Testa la connettività con Souliss (ping)</string>
+    <string name="manual_title">Manuale</string>
+    <string name="manual_force">Esecuzione forzata comandi. Necessario indicare ID e SLOT del destinatario, oltre al comando</string>
+    <string name="manual_cmd_hint">cmd</string>
+    <string name="manual_slot">SLOT</string>
+    <string name="manual_typicals">Dispositivi</string>
+    <string name="inserire_almeno">Scegli un nodo, uno slot ed il comando da inviare</string>
+    <string name="manual_id_prompt">Scegli l\'ID del nodo</string>
+    <string name="manual_slot_prompt">Scegli uno SLOT</string>
+    <string name="icon_select">Scegli Icona</string>
+    <string name="manual_showing_typ">Showing Typical Detail: </string>
+    <string name="manual_desc">Invio manuale di comandi. Tap sulla lista per visualizzare il dettaglio, long-press per modificare</string>
+    <string name="node_empty">Nodo Vuoto!</string>
+    <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
+    
+    <!-- SERVICE -->
+    <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
+    <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
+    
+    <!-- STATUS -->
+    <string name="status_souliss">Souliss\' Status</string>
+    <string name="status_updating">Updating DB&#8230;Please wait</string>
+    <string name="status_souliss_notreachable">Souliss non raggiungibile, errore di rete</string>
+    <string name="status_geoprovider_enabled">Geo provider <b>abilitato</b>, acquisizione posizione in corso</string>
+    <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b></string>
+
+    <!-- OPZIONI -->
+    <string name="opt_credits">Credits</string>
+    <string name="opt_credits_desc">Souliss by Veseo - Client by shine@angelic.it</string>
+    <string name="opt_userindex">User Index</string>
+    <string name="opt_checkconnection">Check Connection</string>
+    <string name="opt_checkconnection_desc">Check connectivity to Souliss HTTP Server</string>
+    <string name="opt_networkdesc">Impostazioni rete locale e remota</string>
+    <string name="opt_dbexp">Esporta DB</string>
+    <string name="opt_dbexp_desc">Write a .csv file on sdcard containing current db</string>
+    <string name="opt_dbimp">Importa DB</string>
+    <string name="opt_dbimp_desc">Import a .csv file. Warning! Souliss Data will be ovewritten!</string>
+    <string name="opt_db">Souliss DB</string>
+    <string name="opt_db_desc">(Ri)crea database, importazione ed esportazione</string>
+    <string name="opt_dbdrop">Drop DB</string>
+    <string name="opt_dbdrop_desc">Elimina tutti i nodi, dispositivi e log dal DB</string>
+    <string name="opt_dbinfo">DB Status</string>
+    <string name="opt_dbinfo_desc">Nel DB sono presenti %1$d nodi e %2$d dispositivi</string>
+    <string name="opt_invalidAddress">Invalid address!!</string>
+    <string name="title_edittext_IP">Souliss local Address</string>
+    <string name="summary_edittext_IP">Inserire l\'indirizzo IP di Souliss sulla rete locale</string>
+    <string name="dialog_title_edittext_IP">Indirizzo IP</string>
+    <string name="summary_edittext_IP_VPN">Insert Souliss Node\'s IP Address when using Android VPN</string>
+    <string name="dialog_title_edittext_IP_VPN">VPN IP Address</string>
+    <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
+    <string name="title_edittext_IP_pubb">Indirizzo pubblico di Souliss</string>
+    <string name="opt_fontsizedesc">Personalizza le dimensioni del testo nei titoli</string>
+    <string name="opt_fonttitledesc">Personalizza l\'aspetto dei titoli</string>
+    <string name="opt_tetxfx">Effetti</string>
+    <string name="opt_tetxfx_desc">Animazioni del testo ed effetti</string>
+    <string name="opt_animfx">Animazioni</string>
+    <string name="opt_animfx_desc">Abilita sliding e fade delle schermate</string>
+    <string name="opt_lighttheme">Tema chiaro</string>
+    <string name="opt_lighttheme_desc">Usa colori chiari (richiede riavvio dell\'app)</string>
+    <string name="opt_restore">Ripristina Avvertimenti</string>
+    <string name="opt_restore_desc">Mostra di nuovo gli avvertimenti soppressi</string>
+    <string name="opt_visual">Opzioni di Visualizzazione</string>
+    <string name="opt_fontsize">Dimensioni del testo</string>
+    <string name="opt_fonttitle">Cambia il font dei titoli</string>
+    <string name="opt_visualdesc">Aspetto ed Effetti</string>
+    <string name="opt_servicedesc">Configurazione servizio e posizione casa</string>
+    <string name="opt_serviceEnable">Servizio abilitato</string>
+    <string name="opt_serviceEnable_desc">Il servizio mantiene souliss aggiornato anche se non è in esecuzione e provvede al logging dei sensori</string>
+    <string name="opt_serviceinterval">Intervallo esecuzione</string>
+    <string name="opt_serviceinterval_desc">Aggiornamenti frequenti richiedono più batteria e risorse</string>
+    <string name="opt_service">Servizio in background</string>
+    <string name="opt_timeout_pubb">Timeout della connessione</string>
+    <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
+    <string name="opt_dialog_restored">finestre di avviso ripristinate</string>
+
+    
+    <string name="unknown_typical">Dispositivo sconosciuto</string>
+
+    <!-- TYPICALS -->
+    <string name="Souliss_TurnOn_desc">Accendi</string>
+    <string name="Souliss_TurnOff_desc">Spegni</string>
+    <string name="Souliss_ResetCmd_desc">Reset</string>
+    <string name="Souliss_ToggleCmd_desc">Inverti</string>
+    <string name="Souliss_AutoCmd_desc">Auto</string>
+    <string name="music">Sync con la musica</string>
+    <string name="Souliss_Auto_mode">Modalità automatica</string>
+    <string name="Souliss_T_modes">Colori - Modalità</string>
+    <string name="Souliss_OpenCmd_desc">Open</string>
+    <string name="Souliss_CloseCmd_desc">Close</string>
+    <string name="Souliss_StopCmd_desc">Stop</string>
+    <string name="Souliss_T11_desc">ON/OFF Digitale con Timer</string>
+    <string name="Souliss_T12_desc">ON/OFF Digitale con AUTO mode</string>
+    <string name="Souliss_T13_desc">Input Digitale</string>
+    <string name="Souliss_T14_desc">Pulse Digital Output</string>
+    <string name="Souliss_T16_desc">RGB LED Strip</string>
+    <string name="Souliss_UndefinedCmd_desc">Non definito</string>
+    <string name="Souliss_T21_desc">Dispositivo motorizzato (w/ lim switch)</string>
+    <string name="Souliss_T22_desc">Dispositivo motorizzato</string>
+    <string name="Souliss_T31_desc">Termometro</string>
+    <string name="Souliss_T51_desc">Input Analogico</string>
+    <string name="Souliss_T52_desc">Input Analogico, root mean value</string>
+    <string name="Souliss_T53_desc">Input Analogico, max iterative</string>
+        <string name="Souliss_T54_desc">Sensore Luminosità</string>
+    <string name="Souliss_TCurrentSensor_desc">Sensore Corrente</string>
+    <string name="Souliss_TTemperature_desc">Sensore Temperatura</string>
+    <string name="Souliss_THumidity_desc">Sensore umidità</string>
+    <string name="Souliss_TAircon_desc">Condizionatore</string>
+    <string name="Souliss_TRGB_desc">Faretto IR RGB</string>
+    <string name="Souliss_TRGB_fade">Fade</string>
+    <string name="Souliss_TRGB_smooth">Sfuma</string>
+    <string name="Souliss_TRGB_strobe">Strobo</string>
+    <string name="Souliss_TRGB_sleep">Sleep</string>
+    <string name="Souliss_TRGB_flash">Flash</string>
+    <string name="Souliss_TRGB_white">Bianco</string>
+    <string name="Souliss_emptycmd_desc">Comando non selezionato</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Mode: Auto - 20°</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Mode: Auto - 24°</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Cool_18_desc">Mode: Cool - 18°</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Cool_22_desc">Mode: Cool - 22°</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Cool_26_desc">Mode: Cool - 26°</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Fan_desc">Mode: Fan Only</string>
+    <string name="Souliss_T_IrCom_AirCon_Pow_Dry_desc">Mode: Dry</string>
+    <!-- EULA -->
+    <string name="eula_title">Licenza d\'Uso</string>
+    <string name="eula_accept">Accetto</string>
+    <string name="eula_refuse">Rifiuto</string>
+
+</resources>
