@@ -14,7 +14,6 @@ import android.util.Log;
  * Receive per controllo esecuzione servizio.
  * Viene invocato dopo il boot, e all'USER_PRESENT
  * http://www.hascode.com/2011/11/managing-background-tasks-on-android-using-the-alarm-manager/
-
  */
 public class LifeCheckerEventReceiver extends BroadcastReceiver {
 
