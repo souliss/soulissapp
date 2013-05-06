@@ -32,6 +32,7 @@ public class LifeCheckerEventReceiver extends BroadcastReceiver {
 				Log.d("SoulissApp:LifeChecker", "Service already running");
 		}
 	}
+	
 	//FIXME or error checks
 	private boolean isMyServiceRunning(final Context ctx) {
 		ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
