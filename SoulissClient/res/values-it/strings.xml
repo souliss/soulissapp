@@ -127,6 +127,7 @@
     <string name="status_updating">Updating DB&#8230;Please wait</string>
     <string name="status_souliss_notreachable">Souliss non raggiungibile, errore di rete</string>
     <string name="status_geoprovider_enabled">Geo provider <b>abilitato</b>, acquisizione posizione in corso</string>
+    <string name="status_provider_selected"> selezionato</string>
     <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b></string>
 
     <!-- OPZIONI -->

@@ -150,7 +150,7 @@ public class LauncherActivity extends Activity implements LocationListener {
 		provider = locationManager.getBestProvider(criteria, true);
 		boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
 		if (enabled) {
-			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (from <b>" + provider
+			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
 					+ "</b>)"));
 			// ogni minuto, minimo 100 metri
 			locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
@@ -158,7 +158,7 @@ public class LauncherActivity extends Activity implements LocationListener {
 			Location location = locationManager.getLastKnownLocation(provider);
 			// Initialize the location fields
 			if (location != null) {
-				Log.i(TAG, "Geo-Provider " + provider + " has been selected.");
+				Log.i(TAG, "Geo-Provider " + provider + getString(R.string.status_provider_selected));
 				double lat = location.getLatitude();
 				double lng = location.getLongitude();
 				coordinfo.setText((Html.fromHtml("Position from <b>" + provider + "</b>: " + Constants.df.format(lat)
