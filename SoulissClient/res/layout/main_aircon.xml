@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Cont01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <View
+            android:id="@+id/strut"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@id/strut"
+            android:text="@string/mode" />
+
+        <TextView
+            android:id="@+id/textView1dx"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/strut"
+            android:layout_alignParentRight="true"
+            android:text="@string/fan"/>
+
+        <Spinner
+            android:id="@+id/spinnerFunction"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignRight="@id/strut"
+            android:layout_below="@id/textView1"
+            android:entries="@array/AirConFunction" />
+
+        <Spinner
+            android:id="@+id/spinnerFan"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/strut"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/textView1"
+            android:layout_toRightOf="@id/spinnerFunction"
+            android:entries="@array/AirConFan"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout3" >
+
+        <TextView
+            android:id="@+id/textviewTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:text="24"
+            android:textSize="140sp" />
+
+        <Button
+            android:id="@+id/buttonPlus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="25dip"
+            android:layout_toRightOf="@id/textviewTemp"
+            android:text="@string/plus" />
+
+        <Button
+            android:id="@+id/buttonMinus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/buttonPlus"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip"
+            android:layout_marginTop="10dip"
+            android:layout_toRightOf="@id/textviewTemp"
+            android:text="@string/minus" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout1" >
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#FFCCCCCC" />
+
+        <TextView
+            android:id="@+id/textviewOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/menu_options"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonEco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewOptions"
+            android:layout_centerHorizontal="true"
+            android:drawableTop="@drawable/plug"
+            android:textOff="Eco Mode"
+            android:textOn="Eco Mode" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonIon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewOptions"
+            android:layout_marginRight="15dip"
+            android:layout_toLeftOf="@id/toggleButtonEco"
+            android:drawableTop="@drawable/ionizer"
+            android:textOff="Air Clean"
+            android:textOn="Air Clean" />
+
+        <ToggleButton
+            android:id="@+id/toggleButtonSwing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewOptions"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@id/toggleButtonEco"
+            android:drawableTop="@drawable/fan"
+            android:textOff="Air Swing"
+            android:textOn="Air Swing" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/strut2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonTurnOn"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@id/strut2"
+        android:text="@string/ON"
+        android:width="0dip" />
+
+    <Button
+        android:id="@+id/buttonTurnOff"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/strut2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/OFF" />
+
+</RelativeLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LightThemeSelector" parent="android:Theme.Holo.Light">
+        <item name="android:windowBackground">@drawable/radialbacklight</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="MyActionBar.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
+
+    <style name="DarkThemeSelector" parent="android:Theme.Holo">
+        <item name="android:windowBackground">@drawable/radialback</item>
+        <item name="android:actionBarStyle">@style/MyActionBarDark</item>
+    </style>
+
+    <style name="MyActionBarDark" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/MyActionBarDark.TitleTextStyle</item>
+    </style>
+
+    <style name="MyActionBarDark.TitleTextStyle" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
+
+    <style name="CodeFontSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+    </style>
+
+    <style name="CodeFontMain" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+    </style>
+
+    <style name="CodeFontTitle" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">top</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:shadowColor">#aaaaff</item>
+        <item name="android:shadowRadius">1.5</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+    </style>
+
+</resources>

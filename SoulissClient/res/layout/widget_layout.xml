@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetcontainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dip"
+    android:padding="4dip"
+    android:orientation="vertical"
+    android:background="@drawable/widget_shape" >
+
+    <TextView 
+        android:text="@string/node"
+        style="@style/CodeFontSmall"
+        android:layout_width="match_parent"
+    	android:layout_height="@dimen/text_size"
+    	android:layout_alignParentTop="true"
+    	android:gravity="right"
+        android:id="@+id/wid_node"></TextView>
+     <TextView 
+        android:text="@string/slot"
+        style="@style/CodeFontSmall"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_below="@id/wid_node"
+    	android:gravity="right"
+        android:id="@+id/wid_typical"></TextView>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        style="@style/CodeFontTitle"
+        android:gravity="center"
+        android:background="@drawable/souliss_node"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+    
+    <TextView 
+        android:text="@string/node"
+        style="@style/CodeFontSmall"
+        android:layout_width="match_parent"
+    	android:layout_height="@dimen/text_size"
+    	android:layout_alignParentBottom="true"
+    	android:gravity="center|bottom"
+        android:id="@+id/wid_info"
+        android:layout_marginBottom="5dp"></TextView>
+
+</RelativeLayout> 
