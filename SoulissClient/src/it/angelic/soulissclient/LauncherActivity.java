@@ -47,7 +47,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * SoulissApp main screen
+ * @author Ale
+ *
+ */
 public class LauncherActivity extends Activity implements LocationListener {
 
 	private LocationManager locationManager;

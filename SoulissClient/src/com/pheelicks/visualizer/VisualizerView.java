@@ -289,7 +289,7 @@ public class VisualizerView extends View {
 
 		// mCanvas.drawRect(0, 0,mCanvasBitmap.getWidth(),
 		// mCanvasBitmap.getHeight(), transPainter);
-		canvas.drawBitmap(mCanvasBitmap, new Matrix(), null);
+		canvas.drawBitmap(mCanvasBitmap, neo, null);
 
 		// Fade out old contents
 		mCanvas.drawPaint(mFadePaint);

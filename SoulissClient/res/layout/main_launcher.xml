@@ -114,6 +114,7 @@
         <TextView
             android:id="@+id/TextViewCoords"
             style="@style/CodeFontMain"
+            android:textIsSelectable="false"
             android:layout_marginLeft="5dip" />
     </TableRow>
 
@@ -125,6 +126,7 @@
         <TextView
             android:id="@+id/TextViewFromHome"
             style="@style/CodeFontMain"
+            android:textIsSelectable="false"
             android:layout_marginLeft="5dip" />
     </TableRow>
 
@@ -150,6 +152,7 @@
         <TextView
             android:id="@+id/TextViewServiceActions"
             style="@style/CodeFontMain"
+            android:textIsSelectable="false"
             android:layout_marginLeft="5dip" />
     </TableRow>
 
