@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="110dp"
+    android:minHeight="110dp"
+    android:updatePeriodMillis="3600000"
+    android:previewImage="@drawable/soulisslogo"
+    android:initialLayout="@layout/widget_layout"
+    android:configure="it.angelic.soulissclient.SoulissWidgetConfig"
+    android:resizeMode="horizontal|vertical">
+</appwidget-provider>

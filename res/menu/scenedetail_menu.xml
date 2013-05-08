@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Opzioni"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="@string/menu_options"
+        android:showAsAction="always|withText"
+        android:orderInCategory="0"/>
+    <item
+        android:id="@+id/Esegui"
+        android:icon="@android:drawable/ic_media_play"
+        android:title="@string/execute"
+        android:showAsAction="always|withText"
+        android:orderInCategory="1"/>
+    <item
+        android:id="@+id/RinominaScena"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/scenes_rename"
+        android:showAsAction="ifRoom|collapseActionView|withText"
+        android:orderInCategory="2"/>
+    <item
+        android:id="@+id/CambiaIconaScena"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="@string/scenes_changeicon"
+        android:showAsAction="ifRoom|collapseActionView|withText"
+        android:orderInCategory="2"/>
+    <item
+        android:id="@+id/AddScene"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/scene_add_command"
+        android:showAsAction="ifRoom|collapseActionView|withText"
+        android:orderInCategory="2"/>
+
+</menu>

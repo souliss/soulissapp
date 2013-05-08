@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:robobunny="http://robobunny.com"
+    android:icon="@android:drawable/ic_menu_rotate"
+    android:key="service_setup"
+    android:summary="@string/opt_servicedesc"
+    android:title="@string/opt_service" >
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="checkboxService"
+        android:summary="@string/opt_serviceEnable_desc"
+        android:title="@string/opt_serviceEnable" />
+
+    <com.robobunny.SeekBarPreference
+        android:defaultValue="15"
+        android:key="updateRate"
+        android:max="200"
+        android:summary="@string/opt_serviceinterval_desc"
+        android:title="@string/opt_serviceinterval"
+        robobunny:min="1"
+        robobunny:unitsLeft=""
+        robobunny:unitsRight="minutes" />
+
+    <Preference
+        android:name="setHomeLocation"
+        android:key="setHomeLocation"
+        android:summary="set current position as reference for positional Programs"
+        android:title="Set Home Location" />
+
+</PreferenceScreen>

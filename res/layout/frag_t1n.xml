@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Cont01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textView1nInfo"
+            android:textIsSelectable="false"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/buttonPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="15dip"
+            android:layout_marginRight="15dip" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout1"
+        android:weightSum="4" >
+
+        <TextView
+            android:id="@+id/textviewTimerInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/timer"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TableLayout
+            android:id="@+id/containervermegame"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/textviewColours" >
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:weightSum="4" >
+
+                <SeekBar
+                    android:id="@+id/sleepBar"
+                    android:layout_weight="3"
+                    android:max="255" />
+
+                <Button
+                    android:id="@+id/sleep"
+                    style="@style/ButtonText"
+                    android:layout_width="0dip"
+                    android:layout_weight="1"
+                    android:text="@string/Souliss_TRGB_sleep" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:weightSum="4" >
+
+                <Button
+                    android:id="@+id/buttonAuto"
+                    style="@style/ButtonText"
+                    android:layout_width="0dip"
+                    android:layout_weight="1"
+                    android:text="@string/Souliss_AutoCmd_desc" />
+
+                <TextView
+                    android:id="@+id/textviewAutoInfo"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_weight="2"
+                    android:text="@string/Souliss_Auto_mode" />
+            </TableRow>
+            
+             <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:weightSum="4" >
+
+                <ToggleButton
+                    android:id="@+id/buttonMassive"
+                    style="@style/ButtonText"
+                    android:layout_weight="1"
+                    android:textOff="@string/multicast"
+                    android:layout_width="0dip"
+                    android:textOn="@string/multicast"  />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_weight="2"
+                    android:text="@string/multicast_desc" />
+            </TableRow>
+        </TableLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

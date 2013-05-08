@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string name="warn_wifi">Impossibile usare l\'indirizzo locale senza connessione WIFI!</string>
+    <string name="warn_connection">Connessione non disponibile</string>
+    <string name="contact_at">Connessione stabilita con</string>
+    <string name="contact_progress">Connessione al server Souliss in corso&#8230;</string>
+    <string name="homedist"><b>Distanza da casa:</b></string>
+    <string name="currentlyin">ora a</string>
+    <string name="positionfrom">Posizionamento tramite </string>
+    <string name="homewarn">Posizione di casa <b>sconosciuta</b>, usa le opzioni per impostarla</string>
+
+    
+</resources>
