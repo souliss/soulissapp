@@ -134,6 +134,10 @@
     <string name="opt_credits">Credits</string>
     <string name="opt_credits_desc">Souliss by Veseo - Client by shine@angelic.it</string>
     <string name="opt_userindex">User Index</string>
+    <string name="opt_userindex_desc">The User index identifies Android client to Souliss. Current value is %1$d. You shouldn\'t change it</string>
+    <string name="opt_nodeindex">Node Index</string>
+    <string name="opt_nodeindex_desc">The Node index identifies this device on Souliss boards. Current value is %1$d. Tap to change it</string>
+     
     <string name="opt_checkconnection">Check Connection</string>
     <string name="opt_checkconnection_desc">Check connectivity to Souliss HTTP Server</string>
     <string name="opt_networkdesc">Home and remote network settings</string>

@@ -44,9 +44,11 @@ public class UDPHelper {
 	 *            per ottenere l'indirizzo di souliss
 	 * @return
 	 */
-	public static ArrayList<Byte> buildVNetFrame(List<Byte> macaco, String ipd, int useridx) {
+	public static ArrayList<Byte> buildVNetFrame(List<Byte> macaco, String ipd, int useridx, int nodeidx) {
 
-		assertEquals(true, useridx < Byte.MAX_VALUE);
+		assertEquals(true, useridx < Byte.MAX_VALUE/2);
+		assertEquals(true, nodeidx < Byte.MAX_VALUE);
+		
 		ArrayList<Byte> frame = new ArrayList<Byte>();
 		InetAddress ip;
 		try {
@@ -63,8 +65,8 @@ public class UDPHelper {
 		frame.add((byte) dude[3]);// BOARD
 		frame.add((byte) 0);//
 
-		frame.add(Byte.valueOf("100"));// PHONE IP TODO
-		frame.add((byte) useridx); // USER INDEX
+		frame.add((byte) useridx);// USER
+		frame.add((byte) nodeidx); // NODE INDEX
 
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));// Check 2
@@ -178,7 +180,7 @@ public class UDPHelper {
 			sender = getSenderSocket(serverAddr);
 			ArrayList<Byte> buf;
 				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, typ, cmd),
-						prefs.getPrefIPAddress(), prefs.getUserIndex());
+						prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
@@ -225,10 +227,10 @@ public class UDPHelper {
 			ArrayList<Byte> buf;
 			if (type == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
 				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, slot, cmd),
-						prefs.getPrefIPAddress(), prefs.getUserIndex());
+						prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 			} else {
 				buf = buildVNetFrame(buildMaCaCoForce(Constants.Souliss_UDP_function_force, id, slot, cmd),
-						prefs.getPrefIPAddress(), prefs.getUserIndex());
+						prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 			}
 
 			byte[] merd = new byte[buf.size()];
@@ -263,7 +265,7 @@ public class UDPHelper {
 	 * @return
 	 * 
 	 */
-	public static InetAddress ping(String ip, String ipubbl, int userix) throws Exception {
+	public static InetAddress ping(String ip, String ipubbl, int userix, int nodeix) throws Exception {
 
 		InetAddress serverAddr;
 		DatagramSocket sender = null;
@@ -284,7 +286,7 @@ public class UDPHelper {
 			List<Byte> macaco = new ArrayList<Byte>();
 			macaco = Arrays.asList(Constants.PING_PAYLOAD);
 			macaco.set(1, (byte) (ip.compareTo(ipubbl) == 0 ? 0xF : 0xB));
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, ip, userix);
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, ip, userix, nodeix);
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
@@ -317,7 +319,7 @@ public class UDPHelper {
 
 			List<Byte> macaco = new ArrayList<Byte>();
 			macaco = Arrays.asList(Constants.DBSTRUCT_PAYLOAD);
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex());
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
@@ -376,7 +378,7 @@ public class UDPHelper {
 			macaco.add((byte) startOffset);// startnode
 			macaco.add((byte) numberOf);// numberof
 
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex());
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
@@ -423,7 +425,7 @@ public class UDPHelper {
 			macaco.add((byte) startOffset);// startnode
 			macaco.add((byte) numberOf);// numberof
 
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex());
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 
 			// pessimo
 			// http://stackoverflow.com/questions/6860055/convert-arraylistbyte-into-a-byte
@@ -482,7 +484,7 @@ public class UDPHelper {
 			macaco.add((byte) startOffset);// startnode
 			macaco.add((byte) numberOf);// numberof
 
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex());
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
@@ -524,7 +526,7 @@ public class UDPHelper {
 			macaco.add((byte) startOffset);// startnode
 			macaco.add((byte) numberOf);// numberof
 
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex());
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
 
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
@@ -564,7 +566,7 @@ public class UDPHelper {
 
 		// local address is alway necessary
 		try {
-			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex()).getHostAddress();
+			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex()).getHostAddress();
 		} catch (UnknownHostException ed) {
 			ed.printStackTrace();
 			return ed.getMessage();

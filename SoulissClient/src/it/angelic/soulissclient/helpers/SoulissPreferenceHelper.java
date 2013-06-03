@@ -50,6 +50,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private final String TAG = "SoulissApp:" + getClass().getSimpleName();
 	// private InetAddress cachedInet;
 	private int userIndex;
+	private int nodeIndex;
 	private int backoff = 1;
 	private boolean animations;
 
@@ -65,21 +66,28 @@ public class SoulissPreferenceHelper implements Serializable {
 		//SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(contx);
 		initializePrefs();
 		if (userIndex == -1) {//MAI inizializzato, lo calcolo
-			/* PHONE ID */
+			/* USER INDEX, statico */
+			Random r = new Random(Calendar.getInstance().getTimeInMillis());
+			int casual = r.nextInt(64);
+			setUserIndex(casual);
+			Log.i(Constants.TAG, "automated userIndex-index Using: "+casual);
+		}
+		if (nodeIndex == -1) {//MAI inizializzato, lo calcolo
+			/* PHONE ID diventa node index */
 			try {
 				final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
 				if (tm.getDeviceId() != null)
-					userIndex = (int) (Long.parseLong(tm.getDeviceId()) % 127);
+					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % 127);
 				else
-					userIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % 127);
-				userIndex = Math.abs(userIndex);
-				Log.w(TAG, "Pref init END. User index hash = " + userIndex);
-				setUserIndex(userIndex);
+					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % 127);
+				nodeIndex = Math.abs(nodeIndex);
+				Log.w(TAG, "Pref init END. Node index hash = " + userIndex);
+				setNodeIndex(nodeIndex);
 			} catch (Exception e) {//fallito il computo, uso random e lo salvo
 				Random r = new Random(Calendar.getInstance().getTimeInMillis());
 				int casual = r.nextInt(127);
-				setUserIndex(casual);
-				Log.e(Constants.TAG, "automated user-index fail " + e.getMessage()+". Using "+casual);
+				setNodeIndex(casual);
+				Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage()+". Using "+casual);
 			}
 		}
 		// reset cachedAddress to shared prefs one
@@ -104,6 +112,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
 		userIndex = prefs.getInt("userIndex", -1);
+		nodeIndex = prefs.getInt("nodeIndex", -1);
 		animations = prefs.getBoolean("checkboxAnimazione", true);
 		try {
 			ListDimensTesto = Float.valueOf(DimensTesto);
@@ -366,5 +375,16 @@ public class SoulissPreferenceHelper implements Serializable {
 		pesta.putInt("userIndex", userIndex);
 		pesta.commit();
 		
+	}
+
+	public int getNodeIndex() {
+		return nodeIndex;
+	}
+
+	public void setNodeIndex(int nodeIndex) {
+		this.nodeIndex = nodeIndex;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putInt("nodeIndex", nodeIndex);
+		pesta.commit();
 	}
 }
