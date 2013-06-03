@@ -1,7 +1,7 @@
 package it.angelic.soulissclient;
 
+import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
-import static it.angelic.soulissclient.Constants.*;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -10,7 +10,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.typicals.SoulissTypical;
 import it.angelic.soulissclient.typicals.SoulissTypical15;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
