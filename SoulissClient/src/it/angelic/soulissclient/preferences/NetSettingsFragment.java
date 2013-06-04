@@ -5,6 +5,8 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -15,6 +17,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.Toast;
 
 @TargetApi(11)
@@ -56,16 +60,17 @@ public class NetSettingsFragment extends PreferenceFragment {
 			Log.e(Constants.TAG, "Cannot load Version!", e);
 			strVersionName = "Cannot load Version!";
 		}
-		//GOOGLE PLUS link
+		// GOOGLE PLUS link
 		Preference creditsPref = (Preference) findPreference("credits");
 		creditsPref.setTitle(getResources().getString(R.string.app_name) + " Version " + strVersionName);
 		creditsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //open browser or intent here
-            	startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://plus.google.com/113934123042484468682/posts")));
-            	return true;
-            }
-        });
+			public boolean onPreferenceClick(Preference preference) {
+				// open browser or intent here
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri
+						.parse("https://plus.google.com/113934123042484468682/posts")));
+				return true;
+			}
+		});
 
 		/*
 		 * generale automaticamente l'ultimo byte (tra 0x01 e 0xFE) e
@@ -80,7 +85,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		 */
 		userIndex = (Preference) findPreference("userindexIC");
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
-		userIndex.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
+		userIndex.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
 		userIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			@Override
@@ -89,11 +94,11 @@ public class NetSettingsFragment extends PreferenceFragment {
 				try {
 					String ics = (String) newValue;
 					Integer rete = Integer.parseInt(ics);
-					if (rete > 63 || rete < 1 )//enforce 0 < x < 64
+					if (rete > 63 || rete < 1)// enforce 0 < x < 64
 						throw new IllegalArgumentException();
 					opzioni.setUserIndex(rete);
 					String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
-					userIndex.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
+					userIndex.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
 				} catch (Exception e) {
 					Toast.makeText(getActivity(), "Please insert a number in range 1-64", Toast.LENGTH_SHORT).show();
 				}
@@ -103,8 +108,8 @@ public class NetSettingsFragment extends PreferenceFragment {
 
 		nodeIndex = (Preference) findPreference("nodeindexIC");
 		String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
-		nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
-		
+		nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
+
 		nodeIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			@Override
@@ -112,11 +117,16 @@ public class NetSettingsFragment extends PreferenceFragment {
 				Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 				try {
 					String ics = (String) newValue;
-					if (Integer.parseInt(ics) > 127 || Integer.parseInt(ics) < 1 )//enforce 0 < x < 64
+					if (Integer.parseInt(ics) > 127 || Integer.parseInt(ics) < 1)// enforce
+																					// 0
+																					// <
+																					// x
+																					// <
+																					// 64
 						throw new IllegalArgumentException();
 					opzioni.setNodeIndex(Integer.parseInt(ics));
 					String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
-					nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
+					nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 				} catch (Exception e) {
 					Toast.makeText(getActivity(), "Please insert a number in range 1-127", Toast.LENGTH_SHORT).show();
 				}
@@ -124,12 +134,15 @@ public class NetSettingsFragment extends PreferenceFragment {
 			}
 		});
 	}
-@Override
-public void onStart() {
-	String nodeFormat = getActivity().getString(R.string.opt_nodeindex_desc);
-	String userFormat = getActivity().getString(R.string.opt_userindex_desc);
-	super.onStart();
-	userIndex.setSummary(String.format(userFormat,  opzioni.getUserIndex()));
-	nodeIndex.setSummary(String.format(nodeFormat,  opzioni.getNodeIndex()));
-}
+
+	@Override
+	public void onStart() {
+		String nodeFormat = getActivity().getString(R.string.opt_nodeindex_desc);
+		String userFormat = getActivity().getString(R.string.opt_userindex_desc);
+		super.onStart();
+		userIndex.setSummary(String.format(userFormat, opzioni.getUserIndex()));
+		nodeIndex.setSummary(String.format(nodeFormat, opzioni.getNodeIndex()));
+	}
+
+	
 }

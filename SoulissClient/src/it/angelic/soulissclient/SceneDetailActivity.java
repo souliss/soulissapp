@@ -55,9 +55,9 @@ public class SceneDetailActivity extends SherlockActivity {
 		collected = (SoulissScene) extras.get("SCENA");
 		assertTrue("SCENA NULLO", collected != null);
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		setTitle(getString(R.string.app_name) + " - " + getString(R.string.scene) + " "
 				+ Constants.int2roman(collected.getId()));

@@ -91,7 +91,7 @@
     <!-- MENU -->
     <string name="menu_exit">Esci</string>
     <string name="menu_options">Opzioni</string>
-    <string name="menu_test">Test Mode</string>
+    <string name="menu_test">Test della connettività a basso livello</string>
     <string name="menu_test_udp">Test UDP</string>
     <string name="menu_rename">Rinomina Nodo</string>
     <string name="menu_changenodeicon">Cambia icona Nodo</string>

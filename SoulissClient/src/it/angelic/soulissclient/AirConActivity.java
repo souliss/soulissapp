@@ -9,12 +9,10 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.typicals.SoulissTypical;
 import it.angelic.soulissclient.typicals.SoulissTypical32AirCon;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,8 +23,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -36,7 +32,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class AirConActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
+public class AirConActivity extends SherlockActivity {
 	private SoulissDBHelper datasource = new SoulissDBHelper(this);
 	private SoulissPreferenceHelper opzioni;
 
@@ -106,9 +106,9 @@ public class AirConActivity extends Activity {
 		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
 		// tema
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_aircon);
 
@@ -251,6 +251,7 @@ public class AirConActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
 		return true;
 	}
 
@@ -259,6 +260,8 @@ public class AirConActivity extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
+			if (opzioni.isAnimationsEnabled())
+				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

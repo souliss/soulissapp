@@ -124,6 +124,15 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		ImageView icon = (ImageView) findViewById(R.id.node_icon);
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+				// nothing to do here...
+			} else {
+				finish();
+				if (opzioni.isAnimationsEnabled())
+					overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+			}
+			return true;
 		case R.id.Opzioni:
 			Intent settingsActivity = new Intent(this, PreferencesActivity.class);
 			startActivity(settingsActivity);

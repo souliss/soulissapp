@@ -20,15 +20,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class RGBIrActivity extends FragmentActivity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
+public class RGBIrActivity extends SherlockFragmentActivity {
 	private SoulissDBHelper datasource = new SoulissDBHelper(this);
 	private SoulissPreferenceHelper opzioni;
 
@@ -66,9 +67,9 @@ public class RGBIrActivity extends FragmentActivity {
 		opzioni = SoulissClient.getOpzioni();
 		// tema
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_irrgb);
 
@@ -203,6 +204,7 @@ public class RGBIrActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
 		return true;
 	}
 
@@ -211,6 +213,9 @@ public class RGBIrActivity extends FragmentActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
+			if (opzioni.isAnimationsEnabled())
+				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
