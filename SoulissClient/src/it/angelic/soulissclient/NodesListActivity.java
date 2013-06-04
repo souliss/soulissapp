@@ -10,9 +10,10 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
-public class NodesListActivity extends FragmentActivity {
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+public class NodesListActivity extends SherlockFragmentActivity {
 	private SoulissDBHelper datasource;
 	List<SoulissNode> goer;
 	private SoulissPreferenceHelper opzioni;
@@ -24,9 +25,9 @@ public class NodesListActivity extends FragmentActivity {
 		opzioni = SoulissClient.getOpzioni();
 		opzioni.reload();
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		datasource = new SoulissDBHelper(getBaseContext());
 		// use fragmented panel/ separate /land

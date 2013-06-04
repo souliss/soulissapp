@@ -255,7 +255,6 @@ public class RGBIrActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//datasource.close();
 	}
 
 	// Aggiorna il feedback

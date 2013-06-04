@@ -1,5 +1,10 @@
 package it.angelic.soulissclient;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.fragments.NodeDetailFragment;
@@ -20,14 +25,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class NodeDetailActivity extends FragmentActivity {
-	private static final String TAG = "SOULISSCLIENT - Node detail";
+public class NodeDetailActivity extends SherlockFragmentActivity {
 	private SoulissPreferenceHelper opzioni;
 	private TypicalsListAdapter ta;
 	private SoulissDBHelper database;
@@ -55,8 +56,8 @@ public class NodeDetailActivity extends FragmentActivity {
 			// "Dataservice disconnected", Toast.LENGTH_SHORT).show();
 		}
 	};
-	private ImageView nodeic;
-	private Handler timeoutHandler;
+	//private ImageView nodeic;
+	//private Handler timeoutHandler;
 	private SoulissNode collected;
 
 	void doBindService() {
@@ -78,9 +79,9 @@ public class NodeDetailActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -114,7 +115,7 @@ public class NodeDetailActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.nodedetail_menu, menu);
 		return true;
 	}

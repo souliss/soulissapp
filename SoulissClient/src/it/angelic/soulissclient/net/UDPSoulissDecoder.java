@@ -69,7 +69,6 @@ public class UDPSoulissDecoder {
 		} else {
 			decodeMacaco(mac);
 		}
-		// database.close();
 
 		/* DEBUG PACCHETTO
 		 * StringBuilder dump = new StringBuilder(); for (int ig = 0; ig <

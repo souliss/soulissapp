@@ -10,6 +10,11 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -24,9 +29,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -46,7 +48,7 @@ import android.widget.Toast;
  * @author Ale
  * 
  */
-public class ProgramListActivity extends Activity {
+public class ProgramListActivity extends SherlockActivity {
 	private SoulissCommand[] programsArray;
 	SoulissPreferenceHelper opzioni;
 	private ListView listaProgrammiView;
@@ -58,9 +60,9 @@ public class ProgramListActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_programs);
 		setTitle(getString(R.string.app_name) + " - " + getString(R.string.programs_title));
@@ -158,14 +160,15 @@ public class ProgramListActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
+		android.view.MenuInflater inflater = getMenuInflater();
 		// Rinomina nodo e scelta icona
 		inflater.inflate(R.menu.programs_ctx_menu, menu);
 		Log.w(TAG, "inflate");
 	}
+	
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public boolean onContextItemSelected(android.view.MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		ProgramListAdapter ada = (ProgramListAdapter) listaProgrammiView.getAdapter();
 
@@ -205,11 +208,12 @@ public class ProgramListActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.programslist_menu, menu);
 		return true;
-
 	}
+	
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

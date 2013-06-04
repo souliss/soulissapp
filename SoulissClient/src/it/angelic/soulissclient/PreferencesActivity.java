@@ -144,24 +144,46 @@ public class PreferencesActivity extends PreferenceActivity {
 			privateIP.setOnPreferenceChangeListener(ipChanger);
 			publicIP.setOnPreferenceChangeListener(ipChanger);
 			final Preference userIdx = (Preference) findPreference("userindexIC");
-			userIdx.setSummary("The user index identify this device on Souliss boards. Current value is "
-					+ opzioni.getUserIndex() + ". Tap to change it");
+			final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
+			
+			String strMeatFormat = getString(R.string.opt_nodeindex_desc);
+			nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
+			
+			String stdrMeatFormat = getString(R.string.opt_userindex_desc);
+			userIdx.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
+			
 			userIdx.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				@Override
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
+					Log.w(Constants.TAG, "CHANGING USER INDEX:" + newValue);
 					try {
-						SharedPreferences prefs = PreferenceManager
-								.getDefaultSharedPreferences(PreferencesActivity.this);
-						Editor pesta = prefs.edit();
 						String ics = (String) newValue;
-						pesta.putInt("userindex", Integer.parseInt(ics));
-						pesta.commit();
-						opzioni.setUserIndex(Integer.parseInt(ics));
-						userIdx.setSummary("The user index identify this device on Souliss boards. Current value is "
-								+ opzioni.getUserIndex() + ". Tap to change it");
+						Integer rete = Integer.parseInt(ics);
+						if (rete > 63 || rete < 1 )//enforce 0 < x < 64
+							throw new IllegalArgumentException();
+						opzioni.setUserIndex(rete);
+						String stdrMeatFormat = getString(R.string.opt_userindex_desc);
+						userIdx.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
 					} catch (Exception e) {
-						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 0-127",
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 1-64", Toast.LENGTH_SHORT).show();
+					}
+					return true;
+				}
+			});
+			nodeIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+				@Override
+				public boolean onPreferenceChange(Preference preference, Object newValue) {
+					Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
+					try {
+						String ics = (String) newValue;
+						if (Integer.parseInt(ics) > 127 || Integer.parseInt(ics) < 1 )//enforce 0 < x < 64
+							throw new IllegalArgumentException();
+						opzioni.setNodeIndex(Integer.parseInt(ics));
+						String strMeatFormat = getString(R.string.opt_nodeindex_desc);
+						nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
+					} catch (Exception e) {
+						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 1-127", Toast.LENGTH_SHORT).show();
 					}
 					return true;
 				}

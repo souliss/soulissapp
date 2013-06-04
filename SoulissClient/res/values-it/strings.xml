@@ -133,7 +133,10 @@
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>
     <string name="opt_credits_desc">Souliss by Veseo - Client by shine@angelic.it</string>
-    <string name="opt_userindex">User Index</string>
+    <string name="opt_userindex">Tipo Utente</string>
+    <string name="opt_userindex_desc">Indica a Souliss il tipo di dispositivo. Ora vale %1$d. Non dovrebbe essere necessario cambiarlo</string>
+    <string name="opt_nodeindex">ID Utente</string>
+    <string name="opt_nodeindex_desc">L\'ID utente viene ricavato dal dispositivo, ora vale %1$d.</string>
     <string name="opt_checkconnection">Check Connessione</string>
     <string name="opt_checkconnection_desc">Check connectivity to Souliss HTTP Server</string>
     <string name="opt_networkdesc">Impostazioni rete locale e remota</string>

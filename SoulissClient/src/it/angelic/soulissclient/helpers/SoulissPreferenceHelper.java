@@ -81,11 +81,13 @@ public class SoulissPreferenceHelper implements Serializable {
 				else
 					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % 127);
 				nodeIndex = Math.abs(nodeIndex);
+				if (nodeIndex == 0)
+					nodeIndex++;
 				Log.w(TAG, "Pref init END. Node index hash = " + userIndex);
 				setNodeIndex(nodeIndex);
 			} catch (Exception e) {//fallito il computo, uso random e lo salvo
 				Random r = new Random(Calendar.getInstance().getTimeInMillis());
-				int casual = r.nextInt(127);
+				int casual = r.nextInt(126) + 1;
 				setNodeIndex(casual);
 				Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage()+". Using "+casual);
 			}

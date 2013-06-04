@@ -64,9 +64,9 @@ public class SceneListActivity extends SherlockActivity {
 		// Remove title bar
 		//this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		
 		

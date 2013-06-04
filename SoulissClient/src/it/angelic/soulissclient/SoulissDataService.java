@@ -306,9 +306,9 @@ public class SoulissDataService extends Service implements LocationListener {
 
 						} catch (Exception e) {
 							Log.e(TAG, "Service error, scheduling again ", e);
-						} finally {
+						} /*finally {
 							db.close();
-						}
+						}*/
 
 						// spostato per consentire comandi manuali
 						if (!opts.isDataServiceEnabled()) {
@@ -403,7 +403,7 @@ public class SoulissDataService extends Service implements LocationListener {
 							Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
 				}
 			}
-			db.close();
+			//db.close();
 		}
 	};
 

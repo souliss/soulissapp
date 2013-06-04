@@ -21,6 +21,8 @@ import android.widget.Toast;
 public class NetSettingsFragment extends PreferenceFragment {
 
 	private SoulissPreferenceHelper opzioni;
+	private Preference userIndex;
+	private Preference nodeIndex;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		 * vengano generati due "Node Index" uguali, a quel punto l'utente dovrà
 		 * intervenire manualmente per modificarli.
 		 */
-		final Preference userIndex = (Preference) findPreference("userindexIC");
+		userIndex = (Preference) findPreference("userindexIC");
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
 		userIndex.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
 		userIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -87,7 +89,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 				try {
 					String ics = (String) newValue;
 					Integer rete = Integer.parseInt(ics);
-					if (rete > 63)//enforce 0 < x < 64
+					if (rete > 63 || rete < 1 )//enforce 0 < x < 64
 						throw new IllegalArgumentException();
 					opzioni.setUserIndex(rete);
 					String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
@@ -99,11 +101,9 @@ public class NetSettingsFragment extends PreferenceFragment {
 			}
 		});
 
-		final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
-		
+		nodeIndex = (Preference) findPreference("nodeindexIC");
 		String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
 		nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
-		
 		
 		nodeIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
@@ -112,6 +112,8 @@ public class NetSettingsFragment extends PreferenceFragment {
 				Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 				try {
 					String ics = (String) newValue;
+					if (Integer.parseInt(ics) > 127 || Integer.parseInt(ics) < 1 )//enforce 0 < x < 64
+						throw new IllegalArgumentException();
 					opzioni.setNodeIndex(Integer.parseInt(ics));
 					String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
 					nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
@@ -122,5 +124,12 @@ public class NetSettingsFragment extends PreferenceFragment {
 			}
 		});
 	}
-
+@Override
+public void onStart() {
+	String nodeFormat = getActivity().getString(R.string.opt_nodeindex_desc);
+	String userFormat = getActivity().getString(R.string.opt_userindex_desc);
+	super.onStart();
+	userIndex.setSummary(String.format(userFormat,  opzioni.getUserIndex()));
+	nodeIndex.setSummary(String.format(nodeFormat,  opzioni.getNodeIndex()));
+}
 }

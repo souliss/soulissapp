@@ -241,8 +241,6 @@ public class SceneDetailActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//datasource.close();
-
 	}
 
 }
