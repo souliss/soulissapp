@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -22,23 +21,24 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SceneDetailActivity extends Activity {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+public class SceneDetailActivity extends SherlockActivity {
 	private SoulissScene collected;
 	private SoulissPreferenceHelper opzioni;
 	private ListView listaComandiView;
@@ -152,13 +152,13 @@ public class SceneDetailActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
+		android.view.MenuInflater inflater = getMenuInflater();
 		// Rinomina nodo e scelta icona
 		inflater.inflate(R.menu.scenes_commands_ctx_menu, menu);
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
+	public boolean onContextItemSelected(android.view.MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		SceneCommandListAdapter ada = (SceneCommandListAdapter) listaComandiView.getAdapter();
 
@@ -181,7 +181,7 @@ public class SceneDetailActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.scenedetail_menu, menu);
 		return true;
 	}
@@ -199,9 +199,9 @@ public class SceneDetailActivity extends Activity {
 			startActivity(preferencesActivity);
 			return true;
 		case R.id.AddScene:
-			FrameLayout f1 = (FrameLayout) findViewById(android.R.id.custom);
+			//FrameLayout f1 = (FrameLayout) findViewById(android.R.id.custom);
 			ScenesDialogHelper.addSceneCommandDialog(SceneDetailActivity.this, listaComandiView, datasource, collected,
-					opzioni, f1).show();
+					opzioni).show();
 			return true;
 		case R.id.CambiaIconaScena:
 			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, datasource, collected);

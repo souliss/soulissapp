@@ -28,9 +28,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -41,9 +38,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
-public class Typical1nFragment extends Fragment {
+public class Typical1nFragment extends SherlockFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -82,9 +83,9 @@ public class Typical1nFragment extends Fragment {
 		opzioni = SoulissClient.getOpzioni();
 		// tema
 		if (opzioni.isLightThemeSelected())
-			getActivity().setTheme(R.style.LightThemeSelector);
+			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			getActivity().setTheme(R.style.DarkThemeSelector);
+			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (!opzioni.isDbConfigured()) {
@@ -175,7 +176,8 @@ public class Typical1nFragment extends Fragment {
 
 		OnClickListener plusSlip = new OnClickListener() {
 			public void onClick(View v) {
-				turnOn(timer.getProgress());
+				//Il timer parte da 10...
+				turnOn(timer.getProgress()+10);
 				return;
 			}
 		};

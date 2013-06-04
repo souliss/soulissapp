@@ -29,7 +29,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -158,8 +157,8 @@ public class ScenesDialogHelper {
 	 * @return
 	 */
 	public static AlertDialog.Builder addSceneCommandDialog(final Context context, final ListView list,
-			final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni,
-			FrameLayout cust) {
+			final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni
+			) {
 		// prendo tipici dal DB
 		List<SoulissNode> goer = datasource.getAllNodes();
 		final SoulissNode[] nodiArray = new SoulissNode[goer.size() + 1];
@@ -296,7 +295,7 @@ public class ScenesDialogHelper {
 				strArray[0] = fake;
 			}
 
-			ArrayAdapter adapter = new ArrayAdapter<SoulissTypical>(ctx, android.R.layout.simple_spinner_item, strArray);
+			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(ctx, android.R.layout.simple_spinner_item, strArray);
 
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			tgt.setAdapter(adapter);

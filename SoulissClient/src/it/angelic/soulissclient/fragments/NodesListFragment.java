@@ -247,44 +247,7 @@ public class NodesListFragment extends ListFragment {
 		}
 	};
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.nodeslist_menu, menu);
-		return;
-
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-            // app icon in action bar clicked; go home
-            Intent intent = new Intent(getActivity(), LauncherActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return true;
-		case R.id.Opzioni:
-			Intent settingsActivity = new Intent(getActivity().getBaseContext(), PreferencesActivity.class);
-			startActivity(settingsActivity);
-			return true;
-			// TODO scelta tipo ordinamento
-		case R.id.Refresh:
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					UDPHelper.healthRequest(opzioni, nodiArray.length, 0);
-
-				}
-			}).start();
-
-			if (!opzioni.isSoulissReachable())
-				Toast.makeText(getActivity(), "Refresh failed: " + getString(R.string.status_souliss_notreachable),
-						Toast.LENGTH_SHORT).show();
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
+	
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {

@@ -1,28 +1,18 @@
 package it.angelic.soulissclient;
 
 import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
-import it.angelic.soulissclient.fragments.Typical1nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.typicals.SoulissTypical;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 
 public class RGBAdvancedActivity extends FragmentActivity {
 	private SoulissPreferenceHelper opzioni;
-	private TypicalsListAdapter ta;
 	private SoulissTypical collected;
-
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +31,6 @@ public class RGBAdvancedActivity extends FragmentActivity {
 		}
 		Bundle extras = getIntent().getExtras();
 
-		// collected.setCtx(getActivity());
-
 		if (extras != null && extras.get("TIPICO") != null)
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
@@ -57,7 +45,6 @@ public class RGBAdvancedActivity extends FragmentActivity {
 	@SuppressLint("NewApi")
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 		if (Constants.versionNumber >= 11) {
 			ActionBar actionBar = getActionBar();

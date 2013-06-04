@@ -160,9 +160,9 @@ public class NodeDetailFragment extends ListFragment {
 		opzioni = SoulissClient.getOpzioni();
 
 		if (opzioni.isLightThemeSelected())
-			getActivity().setTheme(R.style.LightThemeSelector);
+			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			getActivity().setTheme(R.style.DarkThemeSelector);
+			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onActivityCreated(savedInstanceState);
 		timeoutHandler = new Handler();
 		setHasOptionsMenu(true);

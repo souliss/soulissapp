@@ -9,9 +9,14 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class NodesListActivity extends SherlockFragmentActivity {
 	private SoulissDBHelper datasource;
@@ -63,7 +68,43 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		}).start();
 
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.nodeslist_menu, menu);
+		return true;
+	}
 	
-	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+            // app icon in action bar clicked; go home
+            Intent intent = new Intent(NodesListActivity.this, LauncherActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+		case R.id.Opzioni:
+			Intent settingsActivity = new Intent(NodesListActivity.this, PreferencesActivity.class);
+			startActivity(settingsActivity);
+			return true;
+			// TODO scelta tipo ordinamento
+		case R.id.Refresh:
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					UDPHelper.healthRequest(opzioni, goer.size(), 0);
+
+				}
+			}).start();
+
+			if (!opzioni.isSoulissReachable())
+				Toast.makeText(NodesListActivity.this, "Refresh failed: " + getString(R.string.status_souliss_notreachable),
+						Toast.LENGTH_SHORT).show();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
 	
 }
