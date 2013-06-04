@@ -1,7 +1,9 @@
 package it.angelic.soulissclient.fragments;
 
+import static it.angelic.soulissclient.typicals.Constants.Souliss_T11;
+import static it.angelic.soulissclient.typicals.Constants.Souliss_T12;
+import static it.angelic.soulissclient.typicals.Constants.Souliss_T16;
 import static junit.framework.Assert.assertTrue;
-import static it.angelic.soulissclient.typicals.Constants.*;
 import it.angelic.soulissclient.AirConActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -57,11 +59,15 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -71,6 +77,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NodeDetailFragment extends ListFragment {
 	private static final String TAG = "SOULISSCLIENT - Node detail";
@@ -133,6 +140,7 @@ public class NodeDetailFragment extends ListFragment {
 	private ImageView nodeic;
 	private Handler timeoutHandler;
 	private boolean mDualPane;
+	private SwipeGestureListener gestureListener;
 
 	void doBindService() {
 		if (!mIsBound) {
@@ -198,8 +206,8 @@ public class NodeDetailFragment extends ListFragment {
 		getActivity().setTitle(collected.getNiceName());
 
 		// SFONDO
-		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.containerlista),
-				getActivity().getWindowManager());
+		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.containerlista), getActivity()
+				.getWindowManager());
 		// listaTypicalsView = (ListView) getListView();
 		listaTypicalsView = getListView();
 		nodeic = (ImageView) getActivity().findViewById(R.id.node_icon);
@@ -250,7 +258,9 @@ public class NodeDetailFragment extends ListFragment {
 			List<SoulissTypical> goer = collected.getTypicals();
 			ArrayList<SoulissTypical> copy = new ArrayList<SoulissTypical>();
 			for (SoulissTypical soulissTypical : goer) {
-				if (!soulissTypical.isEmpty() && !soulissTypical.isRelated())// tolgo el. vuoti
+				if (!soulissTypical.isEmpty() && !soulissTypical.isRelated())// tolgo
+																				// el.
+																				// vuoti
 					copy.add(soulissTypical);
 			}
 			SoulissTypical[] typs = new SoulissTypical[copy.size()];
@@ -258,15 +268,18 @@ public class NodeDetailFragment extends ListFragment {
 
 			ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(), datasource,
 					opzioni);
+			listaTypicalsView = getListView();
 			// Adapter della lista
-			getListView().setAdapter(ta);
+			listaTypicalsView.setAdapter(ta);
 
-			getListView().setOnItemClickListener(new OnItemClickListener() {
+			listaTypicalsView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					TypicalViewHolder holder = (TypicalViewHolder) arg1.getTag();
 					showDetails(arg2, (SoulissTypical) holder.data);
 				}
 			});
+			gestureListener = new SwipeGestureListener(getActivity());
+			listaTypicalsView.setOnTouchListener(gestureListener);
 		}
 	}
 
@@ -342,12 +355,14 @@ public class NodeDetailFragment extends ListFragment {
 				NodeDetailFragment.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-			} else if (target.getTypicalDTO().getTypical() == Souliss_T11 ||target.getTypicalDTO().getTypical() == Souliss_T12) {
+			} else if (target.getTypicalDTO().getTypical() == Souliss_T11
+					|| target.getTypicalDTO().getTypical() == Souliss_T12) {
 				Intent nodeDatail = new Intent(getActivity(), Typical1nDetail.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 				NodeDetailFragment.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);}
+					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+			}
 
 		}
 	}
@@ -554,9 +569,86 @@ public class NodeDetailFragment extends ListFragment {
 		public void onReceive(Context context, Intent intent) {
 			Bundle extras = intent.getExtras();
 			int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-			Log.w(TAG, "Posting timeout, delay " +delay);
+			Log.w(TAG, "Posting timeout, delay " + delay);
 			timeoutHandler.postDelayed(timeExpired, delay);
 		}
 	};
 
+	class SwipeGestureListener extends SimpleOnGestureListener implements OnTouchListener {
+		Context context;
+		GestureDetector gDetector;
+		static final int SWIPE_MIN_DISTANCE = 120;
+		static final int SWIPE_MAX_OFF_PATH = 250;
+		static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+		public SwipeGestureListener() {
+			super();
+		}
+
+		public SwipeGestureListener(Context context) {
+			this(context, null);
+		}
+
+		public SwipeGestureListener(Context context, GestureDetector gDetector) {
+
+			if (gDetector == null)
+				gDetector = new GestureDetector(context, this);
+
+			this.context = context;
+			this.gDetector = gDetector;
+		}
+
+		@Override
+		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+			final int position = listaTypicalsView.pointToPosition(Math.round(e1.getX()), Math.round(e1.getY()));
+
+			SoulissTypical countryName = (SoulissTypical) listaTypicalsView.getItemAtPosition(position);
+
+			if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH) {
+				if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH
+						|| Math.abs(velocityY) < SWIPE_THRESHOLD_VELOCITY) {
+					return false;
+				}
+				/*if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
+					Toast.makeText(getActivity(), "bottomToTop" + countryName, Toast.LENGTH_SHORT).show();
+				} else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
+					Toast.makeText(getActivity(), "topToBottom  " + countryName, Toast.LENGTH_SHORT).show();
+				}*/
+			} else {
+				if (Math.abs(velocityX) < SWIPE_THRESHOLD_VELOCITY) {
+					return false;
+				}
+				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
+					// Toast.makeText(getActivity(),
+					// "swipe RightToLeft " + countryName, 5000).show();
+					showDetails(position, countryName);
+				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
+					Toast.makeText(getActivity(), "swipe LeftToright  " + countryName, 5000).show();
+					// TODO close current
+					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+						// nothing to do here...
+					} else {
+						getActivity().finish();
+						if (opzioni.isAnimationsEnabled())
+							getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+					}
+				}
+			}
+
+			return super.onFling(e1, e2, velocityX, velocityY);
+
+		}
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+
+			return gDetector.onTouchEvent(event);
+		}
+
+		public GestureDetector getDetector() {
+			return gDetector;
+		}
+
+	}
 }
