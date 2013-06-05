@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="LightThemeSelector" parent="@android:style/Theme.Light">
+        <item name="android:windowBackground">@drawable/radialbacklight</item>
+        <item name="android:listViewStyle">@style/lightListView</item>
+    </style>
+
+    <style name="AboutDialogLight" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">#ff000000</item>
+    </style>
+
+    <style name="AboutDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">#ffCCCCCC</item>
+    </style>
+
+    <style name="lightListView">
+        <item name="android:windowBackground">@drawable/radialbacklight</item>
+        <item name="android:background">#00ffffff</item>
+    </style>
+
+    <style name="DarkThemeSelector" parent="@android:style/Theme.Black">
+        <item name="android:windowBackground">@drawable/radialback</item>
+        <item name="android:listViewStyle">@style/darkListView</item>
+    </style>
+
+    <style name="darkListView">
+        <item name="android:windowBackground">@drawable/radialback</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
+    <style name="CodeFontSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+    </style>
+
+    <style name="CodeFontMain" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+    </style>
+
+    <style name="CodeFontTitle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">top</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:shadowColor">#aaaaff</item>
+        <item name="android:shadowRadius">1.5</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+
+    </style>
+
+    <style name="ButtonText">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>
