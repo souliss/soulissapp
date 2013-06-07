@@ -24,10 +24,10 @@
         <item>9</item>
     </string-array>
     <string-array name="textsiz_array">
-        <item>Piccolissimo</item>
-        <item>Piccolo</item>
-        <item>Medio</item>
-        <item>Grande</item>
+        <item>minúsculo</item>
+        <item>pequeño</item>
+        <item>promedio</item>
+        <item>gran</item>
     </string-array>
     <string-array name="textsiz_values">
         <item>-1</item>
@@ -46,9 +46,9 @@
         <item>Robotics.ttf</item>
     </string-array>
     <string-array name="updateInterval">
-        <item name="3000">3 seconds</item>
-        <item name="5000">5 seconds</item>
-        <item name="10000">10 seconds</item>
+        <item name="3000">3 segundos</item>
+        <item name="5000">5 segundos</item>
+        <item name="10000">10 segundos</item>
     </string-array>
     <string-array name="updateIntervalValues">
         <item name="3000">3000</item>
@@ -56,15 +56,13 @@
         <item name="10000">10000</item>
     </string-array>
     <string-array name="scheduleInterval">
-        <item name="60">minute</item>
-        <item name="1800">half hour</item>
-        <item name="3600">hour</item>
-        <item name="21600">6 hour</item>
-        <item name="86400">day</item>
+        <item name="1800">Media hora</item>
+        <item name="3600">Hora</item>
+        <item name="21600">6 hora</item>
+        <item name="86400">día</item>
     </string-array>
 
     <integer-array name="scheduleIntervalValues">
-        <item name="60">60</item>
         <item name="1800">1800</item>
         <item name="3600">3600</item>
         <item name="21600">21600</item>

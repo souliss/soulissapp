@@ -624,7 +624,7 @@ public class NodeDetailFragment extends ListFragment {
 					// "swipe RightToLeft " + countryName, 5000).show();
 					showDetails(position, countryName);
 				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
-					Toast.makeText(getActivity(), "swipe LeftToright  " + countryName, 5000).show();
+					Toast.makeText(getActivity(), "swipe LeftToright  " + countryName, Toast.LENGTH_SHORT).show();
 					// TODO close current
 					if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 						// nothing to do here...

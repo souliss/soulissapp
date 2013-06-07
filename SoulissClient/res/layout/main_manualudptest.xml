@@ -176,6 +176,7 @@
             <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:id="@+id/midDivider"
                 android:layout_width="0px"
                 android:layout_height="0px"

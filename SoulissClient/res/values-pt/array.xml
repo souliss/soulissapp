@@ -56,7 +56,6 @@
         <item name="10000">10000</item>
     </string-array>
     <string-array name="scheduleInterval">
-        <item name="60">minute</item>
         <item name="1800">half hour</item>
         <item name="3600">hour</item>
         <item name="21600">6 hour</item>
@@ -64,7 +63,6 @@
     </string-array>
 
     <integer-array name="scheduleIntervalValues">
-        <item name="60">60</item>
         <item name="1800">1800</item>
         <item name="3600">3600</item>
         <item name="21600">21600</item>

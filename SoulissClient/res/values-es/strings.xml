@@ -45,6 +45,7 @@
     <string name="programs_unexecuted">Programas activos</string>
     <string name="programs_desc">El cliente Souliss admite programas temporizados (morado), programas geolocalizados (azul) y comandos basados en sensores (rojo) </string>
     <string name="programs_target">Elige objetivo del programa. Sólo será ejecutado una vez</string>
+    <string name="programs_recursive">No se repetirá El comando. Se ejecuta una vez sólo</string>
     <string name="programs_leave">El cmando se repetirá cada vez que el usuario se vaya de casa</string>
     <string name="programs_come">El comando se repetirá cada vez que el usuario regrese a casa</string>
     <string name="programs_when">El comando será ejecutado junto al slot</string>

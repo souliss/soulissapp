@@ -14,6 +14,11 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -37,9 +42,6 @@ import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -52,7 +54,7 @@ import android.widget.Toast;
  * @author Ale
  *
  */
-public class LauncherActivity extends Activity implements LocationListener {
+public class LauncherActivity extends SherlockActivity implements LocationListener {
 
 	private LocationManager locationManager;
 	private String provider;
@@ -116,9 +118,9 @@ public class LauncherActivity extends Activity implements LocationListener {
 	public void onCreate(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
-			setTheme(R.style.DarkThemeSelector);
+			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
 		super.onCreate(savedInstanceState);
 		Eula.show(this);
 		opzioni.clearCachedAddress();
@@ -237,7 +239,7 @@ public class LauncherActivity extends Activity implements LocationListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 		return true;
 	}

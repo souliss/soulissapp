@@ -57,6 +57,7 @@
             android:textIsSelectable="false" />
 
         <LinearLayout
+            android:orientation="horizontal"
             android:id="@+id/linearLayoutButtons"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

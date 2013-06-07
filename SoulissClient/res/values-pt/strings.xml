@@ -99,7 +99,7 @@
     <string name="rename_typical">Renomeie módulo</string>
 
     <!-- TEST_UDP -->
-    <string name="test_health">Solicitação de Saúde é usada para solicitar boas condições de comunicação com a central.' health</string>
+    <string name="test_health">Solicitação de Saúde é usada para solicitar boas condições de comunicação com a central.</string>
     <string name="test_typ_title">ModReq</string>
     <string name="test_typ">Solicitar o módulo uma vez, sem sem registro</string>
     <string name="test_poll">Solicitar todos os dados da rede Souliss uma vez, sem registro</string>

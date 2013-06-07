@@ -29,6 +29,7 @@
     </TextView>
 
     <LinearLayout
+        android:orientation="horizontal"
         android:id="@+id/seekBarPrefBarContainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
