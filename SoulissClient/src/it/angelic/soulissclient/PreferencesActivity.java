@@ -177,13 +177,13 @@ public class PreferencesActivity extends PreferenceActivity {
 					Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 					try {
 						String ics = (String) newValue;
-						if (Integer.parseInt(ics) > 127 || Integer.parseInt(ics) < 1 )//enforce 0 < x < 64
+						if (Integer.parseInt(ics) > 100 || Integer.parseInt(ics) < 1 )//enforce 1 < x < 100
 							throw new IllegalArgumentException();
 						opzioni.setNodeIndex(Integer.parseInt(ics));
 						String strMeatFormat = getString(R.string.opt_nodeindex_desc);
 						nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
 					} catch (Exception e) {
-						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 1-127", Toast.LENGTH_SHORT).show();
+						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 1-100", Toast.LENGTH_SHORT).show();
 					}
 					return true;
 				}

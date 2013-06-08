@@ -7,6 +7,7 @@ import java.io.Serializable;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -45,8 +46,10 @@ public class SoulissClient extends Application implements Serializable{
     public static void setBackground(View target, WindowManager mgr){
     	try {
 			mgr.getDefaultDisplay().getMetrics(metrics);
+
+			StateListDrawable gras = (StateListDrawable) target.getRootView().getBackground();
 			GradientDrawable gra = (GradientDrawable) target.getRootView().getBackground();
-			gra.setGradientRadius(metrics.widthPixels < metrics.heightPixels ? metrics.widthPixels / 2f: metrics.heightPixels / 3f);
+			gra.setGradientRadius(metrics.widthPixels / 2f);
 			displayWidth = metrics.widthPixels;
 			displayHeight = metrics.heightPixels;
 			gra.setDither(true);

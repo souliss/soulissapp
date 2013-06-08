@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.angelic.soulissclient"
     android:installLocation="auto"
-    android:versionCode="98"
+    android:versionCode="99"
     android:versionName="1.2.2" >
 
     <uses-sdk

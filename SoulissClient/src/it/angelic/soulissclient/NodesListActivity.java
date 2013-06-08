@@ -30,9 +30,9 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		opzioni = SoulissClient.getOpzioni();
 		opzioni.reload();
 		if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		datasource = new SoulissDBHelper(getBaseContext());
 		// use fragmented panel/ separate /land

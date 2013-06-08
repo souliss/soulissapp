@@ -10,6 +10,9 @@ android.support.v4.content.ContextCompatHoneycomb:
 android.support.v4.content.ContextCompatJellybean:
     23:23:ContextCompatJellybean()
 android.support.v4.content.CursorLoader
+android.support.v4.content.FileProvider
+android.support.v4.content.FileProvider$PathStrategy
+android.support.v4.content.FileProvider$SimplePathStrategy
 android.support.v4.content.IntentCompat:
     public static final java.lang.String ACTION_EXTERNAL_APPLICATIONS_AVAILABLE
     public static final java.lang.String ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE
@@ -115,22 +118,53 @@ android.support.v4.view.GestureDetectorCompat
 android.support.v4.view.GestureDetectorCompat$GestureDetectorCompatImpl
 android.support.v4.view.GestureDetectorCompat$GestureDetectorCompatImplBase
 android.support.v4.view.GestureDetectorCompat$GestureDetectorCompatImplBase$GestureHandler
-android.support.v4.view.GestureDetectorCompat$GestureDetectorCompatImplJellybeanMr1
+android.support.v4.view.GestureDetectorCompat$GestureDetectorCompatImplJellybeanMr2
+android.support.v4.view.GravityCompat:
+    public static final int RELATIVE_LAYOUT_DIRECTION
+    public static final int START
+    public static final int END
+    public static final int RELATIVE_HORIZONTAL_GRAVITY_MASK
+    27:62:public GravityCompat()
+    132:133:public static void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    162:163:public static void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    186:187:public static void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+android.support.v4.view.GravityCompat$GravityCompatImpl:
+    public abstract void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    public abstract void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    public abstract void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+android.support.v4.view.GravityCompat$GravityCompatImplBase:
+    46:47:public void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    52:53:public void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    58:59:public void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+android.support.v4.view.GravityCompat$GravityCompatImplJellybeanMr1:
+    71:72:public void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    77:79:public void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    83:84:public void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+android.support.v4.view.GravityCompatJellybeanMr1:
+    23:23:GravityCompatJellybeanMr1()
+    31:32:public static void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    36:37:public static void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    40:41:public static void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
 android.support.v4.view.KeyEventCompat:
-    25:95:public KeyEventCompat()
-    127:127:public static int normalizeMetaState(int)
-    131:131:public static boolean metaStateHasModifiers(int,int)
-    135:135:public static boolean metaStateHasNoModifiers(int)
+    25:118:public KeyEventCompat()
+    150:150:public static int normalizeMetaState(int)
+    154:154:public static boolean metaStateHasModifiers(int,int)
+    158:158:public static boolean metaStateHasNoModifiers(int)
+    174:174:public static boolean isTracking(android.view.KeyEvent)
 android.support.v4.view.KeyEventCompat$BaseKeyEventVersionImpl:
     private static final int META_MODIFIER_MASK
     private static final int META_ALL_MASK
-android.support.v4.view.KeyEventCompat$HoneycombKeyEventVersionImpl:
-    98:98:public int normalizeMetaState(int)
+    99:99:public boolean isTracking(android.view.KeyEvent)
+android.support.v4.view.KeyEventCompat$EclairKeyEventVersionImpl:
+    111:111:public boolean isTracking(android.view.KeyEvent)
 android.support.v4.view.KeyEventCompat$KeyEventVersionImpl:
     public abstract int normalizeMetaState(int)
+    public abstract boolean isTracking(android.view.KeyEvent)
+android.support.v4.view.KeyEventCompatEclair:
+    22:22:KeyEventCompatEclair()
+    28:28:public static boolean isTracking(android.view.KeyEvent)
 android.support.v4.view.KeyEventCompatHoneycomb:
     24:24:KeyEventCompatHoneycomb()
-    26:26:public static int normalizeMetaState(int)
 android.support.v4.view.MenuCompat
 android.support.v4.view.MenuCompat$BaseMenuVersionImpl
 android.support.v4.view.MenuCompat$HoneycombMenuVersionImpl
@@ -151,17 +185,8 @@ android.support.v4.view.MotionEventCompat:
     public static final int ACTION_HOVER_ENTER
     public static final int ACTION_HOVER_EXIT
     25:80:public MotionEventCompat()
-    183:183:public static int getActionMasked(android.view.MotionEvent)
-    236:236:public static int getPointerCount(android.view.MotionEvent)
-android.support.v4.view.MotionEventCompat$BaseMotionEventVersionImpl:
-    73:73:public int getPointerCount(android.view.MotionEvent)
-android.support.v4.view.MotionEventCompat$EclairMotionEventVersionImpl:
-    99:99:public int getPointerCount(android.view.MotionEvent)
-android.support.v4.view.MotionEventCompat$MotionEventVersionImpl:
-    public abstract int getPointerCount(android.view.MotionEvent)
 android.support.v4.view.MotionEventCompatEclair:
     24:24:MotionEventCompatEclair()
-    38:38:public static int getPointerCount(android.view.MotionEvent)
 android.support.v4.view.PagerTabStrip
 android.support.v4.view.PagerTabStrip$1
 android.support.v4.view.PagerTabStrip$2
@@ -175,16 +200,8 @@ android.support.v4.view.PagerTitleStripIcs
 android.support.v4.view.PagerTitleStripIcs$SingleLineAllCapsTransform
 android.support.v4.view.VelocityTrackerCompat:
     25:51:public VelocityTrackerCompat()
-    91:91:public static float getYVelocity(android.view.VelocityTracker,int)
-android.support.v4.view.VelocityTrackerCompat$BaseVelocityTrackerVersionImpl:
-    44:44:public float getYVelocity(android.view.VelocityTracker,int)
-android.support.v4.view.VelocityTrackerCompat$HoneycombVelocityTrackerVersionImpl:
-    58:58:public float getYVelocity(android.view.VelocityTracker,int)
-android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl:
-    public abstract float getYVelocity(android.view.VelocityTracker,int)
 android.support.v4.view.VelocityTrackerCompatHoneycomb:
     24:24:VelocityTrackerCompatHoneycomb()
-    29:29:public static float getYVelocity(android.view.VelocityTracker,int)
 android.support.v4.view.ViewCompat:
     public static final int OVER_SCROLL_ALWAYS
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS
@@ -196,64 +213,67 @@ android.support.v4.view.ViewCompat:
     public static final int LAYER_TYPE_NONE
     public static final int LAYER_TYPE_SOFTWARE
     public static final int LAYER_TYPE_HARDWARE
-    31:308:public ViewCompat()
-    358:358:public static boolean canScrollVertically(android.view.View,int)
-    387:388:public static void setOverScrollMode(android.view.View,int)
-    424:425:public static void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-    457:458:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-    493:494:public static void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
-    508:509:public static void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
-    520:520:public static boolean hasTransientState(android.view.View)
-    531:532:public static void setHasTransientState(android.view.View,boolean)
-    562:563:public static void postInvalidateOnAnimation(android.view.View,int,int,int,int)
-    593:594:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-    609:609:public static int getImportantForAccessibility(android.view.View)
-    625:626:public static void setImportantForAccessibility(android.view.View,int)
-    643:643:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-    670:670:public static android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
-    733:733:public static int getLayerType(android.view.View)
-    744:744:public static int getLabelFor(android.view.View)
-    755:756:public static void setLabelFor(android.view.View,int)
+    public static final int LAYOUT_DIRECTION_LTR
+    public static final int LAYOUT_DIRECTION_RTL
+    public static final int LAYOUT_DIRECTION_INHERIT
+    public static final int LAYOUT_DIRECTION_LOCALE
+    32:367:public ViewCompat()
+    432:432:public static boolean canScrollVertically(android.view.View,int)
+    461:462:public static void setOverScrollMode(android.view.View,int)
+    498:499:public static void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    531:532:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    567:568:public static void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    582:583:public static void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
+    594:594:public static boolean hasTransientState(android.view.View)
+    605:606:public static void setHasTransientState(android.view.View,boolean)
+    667:668:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    683:683:public static int getImportantForAccessibility(android.view.View)
+    699:700:public static void setImportantForAccessibility(android.view.View,int)
+    717:717:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    744:744:public static android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    818:818:public static int getLabelFor(android.view.View)
+    829:830:public static void setLabelFor(android.view.View,int)
+    897:898:public static void setLayoutDirection(android.view.View,int)
+    909:909:public static android.view.ViewParent getParentForAccessibility(android.view.View)
 android.support.v4.view.ViewCompat$BaseViewCompatImpl:
-    144:144:public boolean canScrollVertically(android.view.View,int)
-    151:151:public void setOverScrollMode(android.view.View,int)
-    154:154:public void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
-    157:157:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-    160:160:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-    163:163:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
-    166:166:public boolean hasTransientState(android.view.View)
-    170:170:public void setHasTransientState(android.view.View,boolean)
-    175:176:public void postInvalidateOnAnimation(android.view.View,int,int,int,int)
-    181:182:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-    187:187:public int getImportantForAccessibility(android.view.View)
-    191:191:public void setImportantForAccessibility(android.view.View,int)
-    193:193:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-    196:196:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
-    201:201:public int getLayerType(android.view.View)
-    204:204:public int getLabelFor(android.view.View)
-    208:208:public void setLabelFor(android.view.View,int)
+    171:171:public boolean canScrollVertically(android.view.View,int)
+    178:178:public void setOverScrollMode(android.view.View,int)
+    181:181:public void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
+    184:184:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    187:187:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    190:190:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    193:193:public boolean hasTransientState(android.view.View)
+    197:197:public void setHasTransientState(android.view.View,boolean)
+    208:209:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    214:214:public int getImportantForAccessibility(android.view.View)
+    218:218:public void setImportantForAccessibility(android.view.View,int)
+    220:220:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    223:223:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    232:232:public int getLabelFor(android.view.View)
+    236:236:public void setLabelFor(android.view.View,int)
+    249:249:public void setLayoutDirection(android.view.View,int)
+    253:253:public android.view.ViewParent getParentForAccessibility(android.view.View)
 android.support.v4.view.ViewCompat$GBViewCompatImpl:
-    218:219:public void setOverScrollMode(android.view.View,int)
-android.support.v4.view.ViewCompat$HCViewCompatImpl:
-    230:230:public int getLayerType(android.view.View)
+    264:265:public void setOverScrollMode(android.view.View,int)
 android.support.v4.view.ViewCompat$ICSViewCompatImpl:
-    241:241:public boolean canScrollVertically(android.view.View,int)
-    245:246:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-    249:250:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-    253:254:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
-    257:258:public void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
+    295:295:public boolean canScrollVertically(android.view.View,int)
+    299:300:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    303:304:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    307:308:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    311:312:public void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
 android.support.v4.view.ViewCompat$JBViewCompatImpl:
-    264:264:public boolean hasTransientState(android.view.View)
-    268:269:public void setHasTransientState(android.view.View,boolean)
-    276:277:public void postInvalidateOnAnimation(android.view.View,int,int,int,int)
-    284:285:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-    288:288:public int getImportantForAccessibility(android.view.View)
-    292:293:public void setImportantForAccessibility(android.view.View,int)
-    296:296:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-    300:304:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    318:318:public boolean hasTransientState(android.view.View)
+    322:323:public void setHasTransientState(android.view.View,boolean)
+    338:339:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    342:342:public int getImportantForAccessibility(android.view.View)
+    346:347:public void setImportantForAccessibility(android.view.View,int)
+    350:350:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    354:358:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    363:363:public android.view.ViewParent getParentForAccessibility(android.view.View)
 android.support.v4.view.ViewCompat$JbMr1ViewCompatImpl:
-    312:312:public int getLabelFor(android.view.View)
-    317:318:public void setLabelFor(android.view.View,int)
+    371:371:public int getLabelFor(android.view.View)
+    376:377:public void setLabelFor(android.view.View,int)
+    391:392:public void setLayoutDirection(android.view.View,int)
 android.support.v4.view.ViewCompat$ViewCompatImpl:
     public abstract boolean canScrollVertically(android.view.View,int)
     public abstract void setOverScrollMode(android.view.View,int)
@@ -263,21 +283,20 @@ android.support.v4.view.ViewCompat$ViewCompatImpl:
     public abstract void setAccessibilityDelegate(android.view.View,android.support.v4.view.AccessibilityDelegateCompat)
     public abstract boolean hasTransientState(android.view.View)
     public abstract void setHasTransientState(android.view.View,boolean)
-    public abstract void postInvalidateOnAnimation(android.view.View,int,int,int,int)
     public abstract void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
     public abstract int getImportantForAccessibility(android.view.View)
     public abstract void setImportantForAccessibility(android.view.View,int)
     public abstract boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
     public abstract android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
-    public abstract int getLayerType(android.view.View)
     public abstract int getLabelFor(android.view.View)
     public abstract void setLabelFor(android.view.View,int)
+    public abstract void setLayoutDirection(android.view.View,int)
+    public abstract android.view.ViewParent getParentForAccessibility(android.view.View)
 android.support.v4.view.ViewCompatGingerbread:
     21:21:ViewCompatGingerbread()
     27:28:public static void setOverScrollMode(android.view.View,int)
 android.support.v4.view.ViewCompatHC:
     23:23:ViewCompatHC()
-    33:33:public static int getLayerType(android.view.View)
 android.support.v4.view.ViewCompatICS:
     27:27:ViewCompatICS()
     34:34:public static boolean canScrollVertically(android.view.View,int)
@@ -286,25 +305,31 @@ android.support.v4.view.ViewCompatICS:
     46:47:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
     50:51:public static void onInitializeAccessibilityNodeInfo(android.view.View,java.lang.Object)
 android.support.v4.view.ViewCompatJB:
-    25:25:public ViewCompatJB()
-    28:28:public static boolean hasTransientState(android.view.View)
-    32:33:public static void setHasTransientState(android.view.View,boolean)
-    41:42:public static void postInvalidateOnAnimation(android.view.View,int,int,int,int)
-    49:50:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-    53:53:public static int getImportantForAccessibility(android.view.View)
-    57:58:public static void setImportantForAccessibility(android.view.View,int)
-    61:61:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-    65:65:public static java.lang.Object getAccessibilityNodeProvider(android.view.View)
-android.support.v4.view.ViewCompatJellybeanMr1
+    26:26:public ViewCompatJB()
+    29:29:public static boolean hasTransientState(android.view.View)
+    33:34:public static void setHasTransientState(android.view.View,boolean)
+    50:51:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    54:54:public static int getImportantForAccessibility(android.view.View)
+    58:59:public static void setImportantForAccessibility(android.view.View,int)
+    62:62:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    66:66:public static java.lang.Object getAccessibilityNodeProvider(android.view.View)
+    70:70:public static android.view.ViewParent getParentForAccessibility(android.view.View)
+android.support.v4.view.ViewCompatJellybeanMr1:
+    25:25:ViewCompatJellybeanMr1()
+    28:28:public static int getLabelFor(android.view.View)
+    32:33:public static void setLabelFor(android.view.View,int)
+    44:45:public static void setLayoutDirection(android.view.View,int)
 android.support.v4.view.ViewConfigurationCompat
 android.support.v4.view.ViewConfigurationCompat$BaseViewConfigurationVersionImpl
 android.support.v4.view.ViewConfigurationCompat$FroyoViewConfigurationVersionImpl
 android.support.v4.view.ViewConfigurationCompat$ViewConfigurationVersionImpl
 android.support.v4.view.ViewConfigurationCompatFroyo
 android.support.v4.view.ViewGroupCompat
+android.support.v4.view.ViewGroupCompat$ViewGroupCompatHCImpl
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatIcsImpl
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatImpl
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatStubImpl
+android.support.v4.view.ViewGroupCompatHC
 android.support.v4.view.ViewGroupCompatIcs
 android.support.v4.view.ViewPager:
     private static final java.lang.String TAG
@@ -325,19 +350,19 @@ android.support.v4.view.ViewPager:
     public static final int SCROLL_STATE_IDLE
     public static final int SCROLL_STATE_DRAGGING
     public static final int SCROLL_STATE_SETTLING
-    338:340:public ViewPager(android.content.Context)
-    343:345:public ViewPager(android.content.Context,android.util.AttributeSet)
-    348:373:void initViewPager()
-    578:590:public void setPageTransformer(boolean,android.support.v4.view.ViewPager$PageTransformer)
-    622:624:android.support.v4.view.ViewPager$OnPageChangeListener setInternalPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
-    746:747:void smoothScrollTo(int,int)
-    2194:2210:public boolean beginFakeDrag()
-    2220:2241:public void endFakeDrag()
-    2251:2289:public void fakeDragBy(float)
-    2301:2301:public boolean isFakeDragging()
-    84:84:static synthetic void access$000(android.support.v4.view.ViewPager,int)
-    84:84:static synthetic android.support.v4.view.PagerAdapter access$200(android.support.v4.view.ViewPager)
-    84:84:static synthetic int access$300(android.support.v4.view.ViewPager)
+    342:344:public ViewPager(android.content.Context)
+    347:349:public ViewPager(android.content.Context,android.util.AttributeSet)
+    352:377:void initViewPager()
+    605:617:public void setPageTransformer(boolean,android.support.v4.view.ViewPager$PageTransformer)
+    651:653:android.support.v4.view.ViewPager$OnPageChangeListener setInternalPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
+    775:776:void smoothScrollTo(int,int)
+    2255:2271:public boolean beginFakeDrag()
+    2281:2302:public void endFakeDrag()
+    2312:2350:public void fakeDragBy(float)
+    2362:2362:public boolean isFakeDragging()
+    82:82:static synthetic void access$000(android.support.v4.view.ViewPager,int)
+    82:82:static synthetic android.support.v4.view.PagerAdapter access$200(android.support.v4.view.ViewPager)
+    82:82:static synthetic int access$300(android.support.v4.view.ViewPager)
 android.support.v4.view.ViewPager$3
 android.support.v4.view.ViewPager$MyAccessibilityDelegate
 android.support.v4.view.ViewPager$SimpleOnPageChangeListener
@@ -379,6 +404,38 @@ android.support.v4.view.accessibility.AccessibilityRecordCompat$AccessibilityRec
 android.support.v4.view.accessibility.AccessibilityRecordCompatIcs
 android.support.v4.view.accessibility.AccessibilityRecordCompatIcsMr1
 android.support.v4.view.accessibility.AccessibilityRecordCompatJellyBean
+android.support.v4.widget.DrawerLayout:
+    private static final java.lang.String TAG
+    public static final int STATE_IDLE
+    public static final int STATE_DRAGGING
+    public static final int STATE_SETTLING
+    public static final int LOCK_MODE_UNLOCKED
+    public static final int LOCK_MODE_LOCKED_CLOSED
+    public static final int LOCK_MODE_LOCKED_OPEN
+    private static final int MIN_DRAWER_MARGIN
+    private static final int DEFAULT_SCRIM_COLOR
+    private static final int PEEK_DELAY
+    private static final int MIN_FLING_VELOCITY
+    private static final boolean ALLOW_EDGE_LOCK
+    213:214:public DrawerLayout(android.content.Context)
+    217:218:public DrawerLayout(android.content.Context,android.util.AttributeSet)
+    221:245:public DrawerLayout(android.content.Context,android.util.AttributeSet,int)
+    261:271:public void setDrawerShadow(android.graphics.drawable.Drawable,int)
+    281:282:public void setDrawerShadow(int,int)
+    390:395:public void setDrawerLockMode(int,android.view.View)
+    405:412:public int getDrawerLockMode(int)
+    532:540:void moveDrawerToOffset(android.view.View,float)
+    1166:1177:void cancelChildViewTouch()
+android.support.v4.widget.DrawerLayout$AccessibilityDelegate
+android.support.v4.widget.DrawerLayout$LayoutParams:
+    1466:1468:public DrawerLayout$LayoutParams(int,int,int)
+android.support.v4.widget.DrawerLayout$SimpleDrawerListener
+android.support.v4.widget.DrawerLayout$ViewDragCallback:
+    1290:1292:public DrawerLayout$ViewDragCallback(android.support.v4.widget.DrawerLayout,int)
+    1295:1296:public void setDragger(android.support.v4.widget.ViewDragHelper)
+    1375:1397:private void peekDrawer()
+    1280:1280:static synthetic void access$000(android.support.v4.widget.DrawerLayout$ViewDragCallback)
+android.support.v4.widget.DrawerLayout$ViewDragCallback$1
 android.support.v4.widget.EdgeEffectCompat:
     132:134:public EdgeEffectCompat(android.content.Context)
     204:204:public boolean onAbsorb(int)
@@ -395,8 +452,55 @@ android.support.v4.widget.EdgeEffectCompatIcs:
     28:28:EdgeEffectCompatIcs()
     30:30:public static java.lang.Object newEdgeEffect(android.content.Context)
     57:58:public static boolean onAbsorb(java.lang.Object,int)
-android.support.v4.widget.ScrollerCompat
-android.support.v4.widget.ScrollerCompat$ScrollerCompatImplIcs
+android.support.v4.widget.ScrollerCompat:
+    251:251:public static android.support.v4.widget.ScrollerCompat create(android.content.Context)
+    255:255:public static android.support.v4.widget.ScrollerCompat create(android.content.Context,android.view.animation.Interpolator)
+    258:260:ScrollerCompat(android.content.Context,android.view.animation.Interpolator)
+    314:314:public float getCurrVelocity()
+    341:342:public void startScroll(int,int,int,int)
+    382:383:public void fling(int,int,int,int,int,int,int,int)
+    410:412:public void fling(int,int,int,int,int,int,int,int,int,int)
+    437:438:public void notifyHorizontalEdgeReached(int,int,int)
+    454:455:public void notifyVerticalEdgeReached(int,int,int)
+    471:471:public boolean isOverScrolled()
+android.support.v4.widget.ScrollerCompat$ScrollerCompatImpl:
+    public abstract java.lang.Object createScroller(android.content.Context,android.view.animation.Interpolator)
+    public abstract float getCurrVelocity(java.lang.Object)
+    public abstract void startScroll(java.lang.Object,int,int,int,int)
+    public abstract void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    public abstract void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    public abstract void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    public abstract void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    public abstract boolean isOverScrolled(java.lang.Object)
+android.support.v4.widget.ScrollerCompat$ScrollerCompatImplBase:
+    58:58:public java.lang.Object createScroller(android.content.Context,android.view.animation.Interpolator)
+    79:79:public float getCurrVelocity(java.lang.Object)
+    89:90:public void startScroll(java.lang.Object,int,int,int,int)
+    101:102:public void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    107:108:public void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    119:119:public void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    124:124:public void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    129:129:public boolean isOverScrolled(java.lang.Object)
+android.support.v4.widget.ScrollerCompat$ScrollerCompatImplGingerbread:
+    146:146:public java.lang.Object createScroller(android.content.Context,android.view.animation.Interpolator)
+    166:166:public float getCurrVelocity(java.lang.Object)
+    176:177:public void startScroll(java.lang.Object,int,int,int,int)
+    188:190:public void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    195:197:public void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    207:208:public void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    212:213:public void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    217:217:public boolean isOverScrolled(java.lang.Object)
+android.support.v4.widget.ScrollerCompat$ScrollerCompatImplIcs:
+    234:234:public float getCurrVelocity(java.lang.Object)
+android.support.v4.widget.ScrollerCompatGingerbread:
+    24:24:ScrollerCompatGingerbread()
+    26:26:public static java.lang.Object createScroller(android.content.Context,android.view.animation.Interpolator)
+    47:48:public static void startScroll(java.lang.Object,int,int,int,int)
+    57:58:public static void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    62:64:public static void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    72:73:public static void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    76:77:public static void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    80:80:public static boolean isOverScrolled(java.lang.Object)
 android.support.v4.widget.ScrollerCompatIcs
 android.support.v4.widget.SearchViewCompat
 android.support.v4.widget.SearchViewCompat$OnCloseListenerCompat
@@ -417,6 +521,68 @@ android.support.v4.widget.SearchViewCompatIcs$MySearchView
 android.support.v4.widget.SimpleCursorAdapter
 android.support.v4.widget.SimpleCursorAdapter$CursorToStringConverter
 android.support.v4.widget.SimpleCursorAdapter$ViewBinder
+android.support.v4.widget.SlidingPaneLayout:
+    private static final java.lang.String TAG
+    private static final int DEFAULT_OVERHANG_SIZE
+    private static final int DEFAULT_FADE_COLOR
+    private static final int MIN_FLING_VELOCITY
+    246:247:public SlidingPaneLayout(android.content.Context)
+    250:251:public SlidingPaneLayout(android.content.Context,android.util.AttributeSet)
+    254:269:public SlidingPaneLayout(android.content.Context,android.util.AttributeSet,int)
+    330:333:void dispatchOnPanelSlide(android.view.View)
+    336:340:void dispatchOnPanelOpened(android.view.View)
+    343:347:void dispatchOnPanelClosed(android.view.View)
+    815:816:public void smoothSlideOpen()
+    833:834:public void smoothSlideClosed()
+    862:862:public boolean canSlide()
+    876:889:private void onPanelDragged(int)
+    1070:1089:protected boolean canScroll(android.view.View,boolean,int,int,int)
+    90:90:static synthetic boolean access$100(android.support.v4.widget.SlidingPaneLayout)
+    90:90:static synthetic android.support.v4.widget.ViewDragHelper access$200(android.support.v4.widget.SlidingPaneLayout)
+    90:90:static synthetic float access$300(android.support.v4.widget.SlidingPaneLayout)
+    90:90:static synthetic android.view.View access$400(android.support.v4.widget.SlidingPaneLayout)
+    90:90:static synthetic boolean access$502(android.support.v4.widget.SlidingPaneLayout,boolean)
+    90:90:static synthetic void access$600(android.support.v4.widget.SlidingPaneLayout,int)
+    90:90:static synthetic int access$700(android.support.v4.widget.SlidingPaneLayout)
+android.support.v4.widget.SlidingPaneLayout$AccessibilityDelegate
+android.support.v4.widget.SlidingPaneLayout$DragHelperCallback
+android.support.v4.widget.SlidingPaneLayout$LayoutParams:
+    1244:1245:public SlidingPaneLayout$LayoutParams(int,int)
+    1256:1258:public SlidingPaneLayout$LayoutParams(android.support.v4.widget.SlidingPaneLayout$LayoutParams)
+android.support.v4.widget.SlidingPaneLayout$PanelSlideListener:
+    public abstract void onPanelSlide(android.view.View,float)
+    public abstract void onPanelOpened(android.view.View)
+    public abstract void onPanelClosed(android.view.View)
+android.support.v4.widget.SlidingPaneLayout$SimplePanelSlideListener
+android.support.v4.widget.ViewDragHelper:
+    private static final java.lang.String TAG
+    public static final int INVALID_POINTER
+    public static final int STATE_IDLE
+    public static final int STATE_DRAGGING
+    public static final int STATE_SETTLING
+    public static final int EDGE_LEFT
+    public static final int EDGE_RIGHT
+    public static final int EDGE_TOP
+    public static final int EDGE_BOTTOM
+    public static final int EDGE_ALL
+    public static final int DIRECTION_HORIZONTAL
+    public static final int DIRECTION_VERTICAL
+    public static final int DIRECTION_ALL
+    private static final int EDGE_SIZE
+    private static final int BASE_SETTLE_DURATION
+    private static final int MAX_SETTLE_DURATION
+    347:347:public static android.support.v4.widget.ViewDragHelper create(android.view.ViewGroup,android.support.v4.widget.ViewDragHelper$Callback)
+    360:362:public static android.support.v4.widget.ViewDragHelper create(android.view.ViewGroup,float,android.support.v4.widget.ViewDragHelper$Callback)
+    373:392:private ViewDragHelper(android.content.Context,android.view.ViewGroup,android.support.v4.widget.ViewDragHelper$Callback)
+    401:402:public void setMinVelocity(float)
+    412:412:public float getMinVelocity()
+    437:438:public void setEdgeTrackingEnabled(int)
+    483:483:public int getActivePointerId()
+    690:701:public void flingCapturedView(int,int,int,int)
+    908:927:protected boolean canScroll(android.view.View,boolean,int,int,int,int)
+android.support.v4.widget.ViewDragHelper$2
+android.support.v4.widget.ViewDragHelper$Callback:
+    148:148:public ViewDragHelper$Callback()
 com.pheelicks.visualizer.VisualizerView:
     218:219:public void clearRenderers()
     267:269:public void flash()
@@ -431,269 +597,6 @@ it.angelic.receivers.LifeCheckerSetupReceiver:
     private static final java.lang.String APP_TAG
 it.angelic.receivers.NetworkStateReceiver:
     private static final java.lang.String TAG
-it.angelic.soulissclient.AirConActivity:
-    android.widget.Spinner spinnerInterval
-it.angelic.soulissclient.BuildConfig
-it.angelic.soulissclient.Constants:
-    public static final java.lang.String TAG
-    public static final int MAX_HEALTH
-    public static final int ICON_REQUEST
-    public static final long POSITION_UPDATE_INTERVAL
-    public static final long POSITION_UPDATE_MIN_DIST
-    public static final int GUI_UPDATE_INTERVAL
-    public static final float POSITION_AWAY_THRESHOLD
-    public static final int COMMAND_TIMED
-    public static final int COMMAND_COMEBACK_CODE
-    public static final int COMMAND_GOAWAY_CODE
-    public static final int COMMAND_TRIGGERED
-    public static final int COMMAND_SINGLE
-    public static final int COMMAND_MASSIVE
-    public static final int MASSIVE_NODE_ID
-    public static final int CONNECTION_NONE
-    public static final java.lang.String CUSTOM_INTENT
-    private static final int MAX
-    7:7:public Constants()
-it.angelic.soulissclient.LauncherActivity:
-    android.net.ConnectivityManager mConnectivity
-    android.telephony.TelephonyManager mTelephony
-    protected android.app.PendingIntent netListenerPendingIntent
-it.angelic.soulissclient.NodeDetailActivity:
-    private boolean mIsBound
-    64:69:void doBindService()
-    72:76:void doUnbindService()
-it.angelic.soulissclient.PreferencesActivity:
-    378:398:private void hackBackGroundLights()
-it.angelic.soulissclient.PreferencesActivity$6
-it.angelic.soulissclient.R:
-    10:10:public R()
-it.angelic.soulissclient.R$anim
-it.angelic.soulissclient.R$array
-it.angelic.soulissclient.R$attr
-it.angelic.soulissclient.R$bool
-it.angelic.soulissclient.R$color
-it.angelic.soulissclient.R$dimen
-it.angelic.soulissclient.R$drawable
-it.angelic.soulissclient.R$id
-it.angelic.soulissclient.R$integer
-it.angelic.soulissclient.R$layout
-it.angelic.soulissclient.R$menu
-it.angelic.soulissclient.R$string
-it.angelic.soulissclient.R$style
-it.angelic.soulissclient.R$styleable:
-    1884:1884:public R$styleable()
-it.angelic.soulissclient.R$xml
-it.angelic.soulissclient.RGBAdvancedActivity:
-    private it.angelic.soulissclient.adapters.TypicalsListAdapter ta
-it.angelic.soulissclient.SensorDetailActivity:
-    private boolean mIsBound
-    51:56:void doBindService()
-    59:63:void doUnbindService()
-it.angelic.soulissclient.SoulissClient:
-    33:33:public static int getDisplayHeight()
-it.angelic.soulissclient.SoulissDataService:
-    private static final java.lang.String TAG
-it.angelic.soulissclient.SoulissWidget:
-    private static final java.lang.String TAG
-it.angelic.soulissclient.SoulissWidgetConfig:
-    private static final java.lang.String TAG
-it.angelic.soulissclient.SoulissWidgetConfig$2:
-    private android.content.SharedPreferences customSharedPreference
-it.angelic.soulissclient.adapters.NodesListAdapter:
-    50:50:public it.angelic.soulissclient.model.SoulissNode[] getNodes()
-it.angelic.soulissclient.adapters.ProgramListAdapter:
-    55:55:public it.angelic.soulissclient.model.SoulissCommand[] getNodes()
-it.angelic.soulissclient.adapters.SceneCommandListAdapter:
-    57:57:public it.angelic.soulissclient.model.SoulissCommand[] getNodes()
-it.angelic.soulissclient.adapters.SceneListAdapter:
-    47:47:public it.angelic.soulissclient.model.SoulissScene[] getScenes()
-it.angelic.soulissclient.adapters.TypicalsListAdapter:
-    56:56:public it.angelic.soulissclient.SoulissDataService getmBoundService()
-    75:75:public it.angelic.soulissclient.typicals.SoulissTypical[] getTypicals()
-it.angelic.soulissclient.db.SoulissDB:
-    public static final java.lang.String TABLE_TYPICALS
-    public static final java.lang.String TABLE_NODES
-    public static final java.lang.String TABLE_TRIGGERS
-    public static final java.lang.String TABLE_LOGS
-    public static final java.lang.String TABLE_COMMANDS
-    public static final java.lang.String TABLE_SCENES
-    public static final java.lang.String DATABASE_NAME
-    private static final int DATABASE_VERSION
-    public static final java.lang.String COLUMN_ID
-    public static final java.lang.String COLUMN_NODE_ID
-    public static final java.lang.String COLUMN_NODE_HEALTH
-    public static final java.lang.String COLUMN_NODE_ICON
-    public static final java.lang.String COLUMN_NODE_NAME
-    public static final java.lang.String COLUMN_NODE_LASTMOD
-    private static final java.lang.String DATABASE_CREATE_NODES
-    public static final java.lang.String COLUMN_TYPICAL_NODE_ID
-    public static final java.lang.String COLUMN_TYPICAL
-    public static final java.lang.String COLUMN_TYPICAL_SLOT
-    public static final java.lang.String COLUMN_TYPICAL_VALUE
-    public static final java.lang.String COLUMN_TYPICAL_INPUT
-    public static final java.lang.String COLUMN_TYPICAL_ICON
-    public static final java.lang.String COLUMN_TYPICAL_NAME
-    public static final java.lang.String COLUMN_TYPICAL_LASTMOD
-    private static final java.lang.String DATABASE_CREATE_TYPICALS
-    public static final java.lang.String COLUMN_COMMAND_ID
-    public static final java.lang.String COLUMN_COMMAND_NODE_ID
-    public static final java.lang.String COLUMN_COMMAND_SLOT
-    public static final java.lang.String COLUMN_COMMAND_INPUT
-    public static final java.lang.String COLUMN_COMMAND_SCHEDTIME
-    public static final java.lang.String COLUMN_COMMAND_TYPE
-    public static final java.lang.String COLUMN_COMMAND_EXECTIME
-    public static final java.lang.String COLUMN_COMMAND_SCHEDTIME_INTERVAL
-    public static final java.lang.String COLUMN_COMMAND_SCENEID
-    private static final java.lang.String DATABASE_CREATE_COMMANDS
-    public static final java.lang.String COLUMN_TRIGGER_ID
-    public static final java.lang.String COLUMN_TRIGGER_COMMAND_ID
-    public static final java.lang.String COLUMN_TRIGGER_SLOT
-    public static final java.lang.String COLUMN_TRIGGER_NODE_ID
-    public static final java.lang.String COLUMN_TRIGGER_OP
-    public static final java.lang.String COLUMN_TRIGGER_THRESHVAL
-    public static final java.lang.String COLUMN_TRIGGER_ACTIVE
-    private static final java.lang.String DATABASE_CREATE_TRIGGERS
-    public static final java.lang.String COLUMN_LOG_ID
-    public static final java.lang.String COLUMN_LOG_NODE_ID
-    public static final java.lang.String COLUMN_LOG_TYPICAL
-    public static final java.lang.String COLUMN_LOG_SLOT
-    public static final java.lang.String COLUMN_LOG_VAL
-    public static final java.lang.String COLUMN_LOG_DATE
-    private static final java.lang.String DATABASE_CREATE_LOGS
-    public static final java.lang.String COLUMN_SCENE_ID
-    public static final java.lang.String COLUMN_SCENE_NAME
-    public static final java.lang.String COLUMN_SCENE_ICON
-    private static final java.lang.String DATABASE_CREATE_SCENES
-it.angelic.soulissclient.db.SoulissDBHelper:
-    76:84:public int refreshNode(it.angelic.soulissclient.model.SoulissNode)
-    88:91:public int refreshAllTypicalsTime()
-    102:117:public int refreshNodeAndTypicals(it.angelic.soulissclient.model.SoulissNode)
-    253:265:public java.util.ArrayList getTypicalLogs(it.angelic.soulissclient.typicals.SoulissTypical)
-it.angelic.soulissclient.db.SoulissDBLowHelper:
-    28:28:public static synchronized android.database.sqlite.SQLiteDatabase getDatabase()
-it.angelic.soulissclient.db.SoulissHistoryGraphData:
-    37:39:public SoulissHistoryGraphData(java.util.Date,android.database.Cursor)
-it.angelic.soulissclient.db.SoulissLogDTO:
-    22:32:public SoulissLogDTO(android.database.Cursor)
-    66:66:public java.lang.Long getLogId()
-    74:74:public short getNodeId()
-    82:82:public short getSlot()
-    90:90:public short getTypical()
-    98:98:public float getLogValue()
-    106:106:public java.util.Calendar getLogTime()
-it.angelic.soulissclient.db.SoulissTriggerDTO:
-    106:106:public static long getSerialversionuid()
-it.angelic.soulissclient.db.SoulissTypicalDTO:
-    119:137:public it.angelic.soulissclient.typicals.SoulissTypical createOrReplaceTypical(it.angelic.soulissclient.db.SoulissDBHelper)
-    194:194:public short getInput()
-it.angelic.soulissclient.fragments.NodeDetailFragment:
-    private static final java.lang.String TAG
-it.angelic.soulissclient.fragments.RGBAdvancedFragment:
-    private static final int CENTER_X
-    private static final int CENTER_Y
-    private static final int CENTER_RADIUS
-it.angelic.soulissclient.fragments.RGBAdvancedFragment$ColorPickerView:
-    private static final float STROKE_WIDTH
-it.angelic.soulissclient.fragments.Typical1nFragment$OnColorChangedListener
-it.angelic.soulissclient.helpers.AlertDialogHelper:
-    57:57:public AlertDialogHelper()
-    496:583:public static android.app.ProgressDialog checkConnectionResultDialog(android.app.Activity,java.lang.String,java.lang.String,it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
-it.angelic.soulissclient.helpers.AlertDialogHelper$16
-it.angelic.soulissclient.helpers.AlertDialogHelper$16$1
-it.angelic.soulissclient.helpers.AlertDialogHelper$16$2
-it.angelic.soulissclient.helpers.AlertDialogHelper$16$3
-it.angelic.soulissclient.helpers.AlertDialogHelper$16$4
-it.angelic.soulissclient.helpers.AlertDialogHelper$16$5
-it.angelic.soulissclient.helpers.AlertDialogHelper$16$6
-it.angelic.soulissclient.helpers.AlertDialogHelper$17
-it.angelic.soulissclient.helpers.CSVReader:
-    public static final char DEFAULT_SEPARATOR
-    public static final char DEFAULT_QUOTE_CHARACTER
-    public static final int DEFAULT_SKIP_LINES
-it.angelic.soulissclient.helpers.CSVWriter:
-    public static final char DEFAULT_ESCAPE_CHARACTER
-    public static final char DEFAULT_SEPARATOR
-    public static final char DEFAULT_QUOTE_CHARACTER
-    public static final char NO_QUOTE_CHARACTER
-    public static final char NO_ESCAPE_CHARACTER
-    public static final java.lang.String DEFAULT_LINE_END
-    154:156:public void flush()
-it.angelic.soulissclient.helpers.Eula:
-    private static final java.lang.String ASSET_EULA
-    private static final java.lang.String PREFERENCE_EULA_ACCEPTED
-    private static final java.lang.String PREFERENCES_EULA
-    22:22:public Eula()
-it.angelic.soulissclient.helpers.GraphsHelper:
-    20:20:public GraphsHelper()
-    228:240:protected static org.achartengine.renderer.XYMultipleSeriesRenderer buildBarRenderer(int[])
-it.angelic.soulissclient.helpers.ImportDatabaseCSVTask:
-    45:45:public java.io.File getFile()
-it.angelic.soulissclient.helpers.ListButton:
-    19:22:public ListButton(android.content.Context,android.util.AttributeSet)
-it.angelic.soulissclient.helpers.ListSpinner
-it.angelic.soulissclient.helpers.ListToggleButton:
-    20:23:public ListToggleButton(android.content.Context,android.util.AttributeSet)
-it.angelic.soulissclient.helpers.SoulissPreferenceHelper:
-    279:281:public void setFont(android.widget.TextView)
-    288:289:public void setPrefFont(java.lang.String)
-    296:297:public void setTextFx(boolean)
-    304:305:public void setRemoteTimeoutPref(int)
-it.angelic.soulissclient.model.ISoulissTypical
-it.angelic.soulissclient.model.SoulissCommand:
-    43:47:public SoulissCommand(android.content.Context,it.angelic.soulissclient.db.SoulissCommandDTO)
-it.angelic.soulissclient.model.SoulissNode:
-    123:124:public void setId(short)
-it.angelic.soulissclient.model.SoulissScene:
-    31:31:public int getType()
-it.angelic.soulissclient.net.Constants:
-    public static final java.lang.String TAG
-    public static final java.lang.String CUSTOM_INTENT_SOULISS_RAWDATA
-    public static final java.lang.String CUSTOM_INTENT_SOULISS_TIMEOUT
-    public static final int SOULISSPORT
-    public static final int SERVERPORT
-    public static final byte Souliss_UDP_function_force
-    public static final byte Souliss_UDP_function_force_massive
-    public static final byte Souliss_UDP_function_subscribe
-    public static final byte Souliss_UDP_function_poll
-    public static final byte Souliss_UDP_function_poll_resp
-    public static final byte Souliss_UDP_function_subscribe_resp
-    public static final byte Souliss_UDP_function_subscribe_data
-    public static final byte Souliss_UDP_function_typreq
-    public static final byte Souliss_UDP_function_typreq_resp
-    public static final byte Souliss_UDP_function_healthReq
-    public static final byte Souliss_UDP_function_health_resp
-    public static final byte Souliss_UDP_function_ping
-    public static final byte Souliss_UDP_function_ping_resp
-    public static final int Souliss_UDP_function_db_struct
-    public static final int Souliss_UDP_function_db_struct_resp
-    4:4:public Constants()
-it.angelic.soulissclient.net.JSONHelper
-it.angelic.soulissclient.net.UDPHelper:
-    private static final java.lang.String TAG
-    24:24:public UDPHelper()
-it.angelic.soulissclient.net.UDPRunnable:
-    private static final java.lang.String TAG
-it.angelic.soulissclient.preferences.DbPreferenceListener:
-    private static final java.lang.String FTYPE
-    private static final int DIALOG_LOAD_FILE
-it.angelic.soulissclient.typicals.Constants
-it.angelic.soulissclient.typicals.SoulissTypical:
-    62:63:public void setRelated(it.angelic.soulissclient.typicals.SoulissTypical)
-    319:319:public it.angelic.soulissclient.helpers.SoulissPreferenceHelper getPrefs()
-it.angelic.soulissclient.typicals.SoulissTypical22:
-    android.content.Context ctx
-it.angelic.soulissclient.typicals.SoulissTypical32AirCon:
-    147:147:public it.angelic.soulissclient.typicals.SoulissTypical getRelated()
-    152:153:public void setRelated(it.angelic.soulissclient.typicals.SoulissTypical)
-it.angelic.soulissclient.typicals.SoulissTypical54LuxSensor:
-    int maxTemp
-    int minTemp
-it.angelic.soulissclient.typicals.SoulissTypical5n:
-    130:130:public int getTransientVal()
-it.angelic.soulissclient.typicals.SoulissTypicalCurrentSensor:
-    50:52:public java.lang.String getOutputAmperes()
-it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor:
-    int maxTemp
-    int minTemp
 org.achartengine.ChartFactory:
     public static final java.lang.String CHART
     public static final java.lang.String TITLE

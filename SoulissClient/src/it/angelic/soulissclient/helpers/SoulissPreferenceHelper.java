@@ -77,9 +77,9 @@ public class SoulissPreferenceHelper implements Serializable {
 			try {
 				final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
 				if (tm.getDeviceId() != null)
-					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % 127);
+					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % 100);
 				else
-					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % 127);
+					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % 100);
 				nodeIndex = Math.abs(nodeIndex);
 				if (nodeIndex == 0)
 					nodeIndex++;
@@ -87,7 +87,7 @@ public class SoulissPreferenceHelper implements Serializable {
 				setNodeIndex(nodeIndex);
 			} catch (Exception e) {//fallito il computo, uso random e lo salvo
 				Random r = new Random(Calendar.getInstance().getTimeInMillis());
-				int casual = r.nextInt(126) + 1;
+				int casual = r.nextInt(99) + 1;
 				setNodeIndex(casual);
 				Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage()+". Using "+casual);
 			}
