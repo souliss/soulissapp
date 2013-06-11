@@ -116,7 +116,7 @@ public class NodesListFragment extends ListFragment {
 			// titolo.setTypeface(font, Typeface.NORMAL);
 		}
 
-		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.containerlista),
+		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());
 
 		// check se IP non settato

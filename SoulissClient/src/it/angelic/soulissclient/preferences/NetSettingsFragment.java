@@ -117,7 +117,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 				Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 				try {
 					String ics = (String) newValue;
-					if (Integer.parseInt(ics) > 127 || Integer.parseInt(ics) < 1)// enforce
+					if (Integer.parseInt(ics) > 100 || Integer.parseInt(ics) < 1)// enforce
 																					// 0
 																					// <
 																					// x
@@ -128,7 +128,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 					String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
 					nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 				} catch (Exception e) {
-					Toast.makeText(getActivity(), "Please insert a number in range 1-127", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), "Please insert a number in range 1-100", Toast.LENGTH_SHORT).show();
 				}
 				return true;
 			}

@@ -106,9 +106,9 @@ public class AirConActivity extends SherlockActivity {
 		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
 		// tema
 		if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_aircon);
 
