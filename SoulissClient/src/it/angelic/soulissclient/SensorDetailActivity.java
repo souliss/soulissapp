@@ -3,6 +3,8 @@ package it.angelic.soulissclient;
 import static junit.framework.Assert.assertTrue;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.fragments.SensorDetailFragment;
@@ -49,6 +51,8 @@ public class SensorDetailActivity extends SherlockFragmentActivity {
 	//private ImageView nodeic;
 	//private Handler timeoutHandler;
 	private SoulissTypical collected;
+	
+	
 
 	void doBindService() {
 		if (!mIsBound) {
@@ -113,5 +117,25 @@ public class SensorDetailActivity extends SherlockFragmentActivity {
 	 * intent.getExtras(); int delay = extras.getInt("REQUEST_TIMEOUT_MSEC"); }
 	 * };
 	 */
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			if (opzioni.isAnimationsEnabled())
+				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+			
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 
 }

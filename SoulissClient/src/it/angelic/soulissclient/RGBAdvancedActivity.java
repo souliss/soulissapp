@@ -3,6 +3,8 @@ package it.angelic.soulissclient;
 import static junit.framework.Assert.assertTrue;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -54,5 +56,22 @@ public class RGBAdvancedActivity extends SherlockFragmentActivity {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		return true;
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			if (opzioni.isAnimationsEnabled())
+				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+			
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
