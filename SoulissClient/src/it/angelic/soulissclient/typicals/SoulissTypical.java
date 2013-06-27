@@ -109,6 +109,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypicalCurrentSensor(opts);
 			rest.setSensor(true);
 			break;
+		case Constants.Souliss_T51:
+			rest = new SoulissTypical51AnalogueSensor(opts);
+			rest.setSensor(true);
+			break;
 		case Constants.Souliss_T54_LuxSensor:
 			rest = new SoulissTypical54LuxSensor(opts);
 			rest.setSensor(true);
@@ -134,10 +138,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			// if (dto != null)
 			// rest.setRelated(parent.getTypical((short)(dto.getSlot()-1)));
 			break;
-		case Constants.Souliss_T51:
-			rest = new SoulissTypical5n(opts);
-			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());
-			break;
+
 		case Constants.Souliss_T52:
 			rest = new SoulissTypical5n(opts);
 			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());

@@ -525,6 +525,9 @@ public class NodeDetailFragment extends ListFragment {
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			try {
+				
+			
 			Log.d(TAG, "Detected data arrival, refresh from DB");
 			// cancel timeout
 			timeoutHandler.removeCallbacks(timeExpired);
@@ -551,7 +554,9 @@ public class NodeDetailFragment extends ListFragment {
 			// Adapter della lista
 			listaTypicalsView.setAdapter(ta);
 			listaTypicalsView.invalidateViews();
-			listaTypicalsView.setSelectionFromTop(index, top);
+			listaTypicalsView.setSelectionFromTop(index, top);} catch (Exception e) {
+				Log.e(Constants.TAG, "Error in data receival, connection closed?"+e.getMessage());
+			}
 		}
 	};
 
