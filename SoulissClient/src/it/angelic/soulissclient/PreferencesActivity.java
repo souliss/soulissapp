@@ -159,13 +159,13 @@ public class PreferencesActivity extends PreferenceActivity {
 					try {
 						String ics = (String) newValue;
 						Integer rete = Integer.parseInt(ics);
-						if (rete > 63 || rete < 1 )//enforce 0 < x < 64
+						if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1 )//enforce 0 < x < 0xfe
 							throw new IllegalArgumentException();
 						opzioni.setUserIndex(rete);
 						String stdrMeatFormat = getString(R.string.opt_userindex_desc);
 						userIdx.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
 					} catch (Exception e) {
-						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 1-64", Toast.LENGTH_SHORT).show();
+						Toast.makeText(PreferencesActivity.this,getString(R.string.useridxhint), Toast.LENGTH_SHORT).show();
 					}
 					return true;
 				}
@@ -177,13 +177,13 @@ public class PreferencesActivity extends PreferenceActivity {
 					Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 					try {
 						String ics = (String) newValue;
-						if (Integer.parseInt(ics) > 100 || Integer.parseInt(ics) < 1 )//enforce 1 < x < 100
+						if (Integer.parseInt(ics) >= it.angelic.soulissclient.Constants.MAX_NODE_IDX || Integer.parseInt(ics) < 1 )//enforce 1 < x < 100
 							throw new IllegalArgumentException();
 						opzioni.setNodeIndex(Integer.parseInt(ics));
 						String strMeatFormat = getString(R.string.opt_nodeindex_desc);
 						nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
 					} catch (Exception e) {
-						Toast.makeText(PreferencesActivity.this, "Please insert a number in range 1-100", Toast.LENGTH_SHORT).show();
+						Toast.makeText(PreferencesActivity.this, getString(R.string.nodeidxhint), Toast.LENGTH_SHORT).show();
 					}
 					return true;
 				}

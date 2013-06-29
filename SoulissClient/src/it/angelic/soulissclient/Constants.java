@@ -6,6 +6,8 @@ import java.util.Calendar;
 
 public class Constants {
 	public static final String TAG = "SoulissApp";
+	public static final int MAX_USER_IDX = 0x64;
+	public static final int MAX_NODE_IDX = 0xFE;
 	public static final int MAX_HEALTH = 255;
 	public static final int ICON_REQUEST = 1;
 	public static final float[] roundedCorners = new float[] { 5,5,5,5,5,5,5,5 };

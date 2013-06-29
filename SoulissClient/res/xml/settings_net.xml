@@ -34,20 +34,20 @@
             android:summary="@string/summary_edittext_IP_VPN"
             android:title="@string/dialog_title_edittext_IP_VPN" />
     </PreferenceCategory>
-    
-    <EditTextPreference
-        android:name="userindex"
-        android:dialogTitle="@string/opt_userindex"
-        android:inputType="number"
-        android:key="userindexIC"
-        android:title="@string/opt_userindex" />
-
-    <EditTextPreference
-        android:name="nodeindex"
-        android:dialogTitle="@string/opt_nodeindex"
-        android:inputType="number"
-        android:key="nodeindexIC"
-        android:title="@string/opt_nodeindex" />
+    <PreferenceCategory android:title="Device ID" >
+        <EditTextPreference
+            android:name="userindex"
+            android:dialogTitle="@string/opt_userindex"
+            android:inputType="number"
+            android:key="userindexIC"
+            android:title="@string/opt_userindex" />
+        <EditTextPreference
+            android:name="nodeindex"
+            android:dialogTitle="@string/opt_nodeindex"
+            android:inputType="number"
+            android:key="nodeindexIC"
+            android:title="@string/opt_nodeindex" />
+    </PreferenceCategory>
 
     <Preference
         android:name="credits"

@@ -82,6 +82,8 @@ public class NetSettingsFragment extends PreferenceFragment {
 		 * In questo modo, l'User Index non verrebbe mai toccato a meno che non
 		 * vengano generati due "Node Index" uguali, a quel punto l'utente dovrà
 		 * intervenire manualmente per modificarli.
+		 * 
+		 * ATTENZIONE CODICE DUPLICATO NELLA PREF ACTIVITY
 		 */
 		userIndex = (Preference) findPreference("userindexIC");
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
@@ -94,13 +96,13 @@ public class NetSettingsFragment extends PreferenceFragment {
 				try {
 					String ics = (String) newValue;
 					Integer rete = Integer.parseInt(ics);
-					if (rete > 63 || rete < 1)// enforce 0 < x < 64
+					if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1)// enforce 0 < x < 64
 						throw new IllegalArgumentException();
 					opzioni.setUserIndex(rete);
 					String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
 					userIndex.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
 				} catch (Exception e) {
-					Toast.makeText(getActivity(), "Please insert a number in range 1-64", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), getString(R.string.useridxhint), Toast.LENGTH_SHORT).show();
 				}
 				return true;
 			}
@@ -117,18 +119,13 @@ public class NetSettingsFragment extends PreferenceFragment {
 				Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 				try {
 					String ics = (String) newValue;
-					if (Integer.parseInt(ics) > 100 || Integer.parseInt(ics) < 1)// enforce
-																					// 0
-																					// <
-																					// x
-																					// <
-																					// 64
+					if (Integer.parseInt(ics) >= it.angelic.soulissclient.Constants.MAX_NODE_IDX || Integer.parseInt(ics) < 1)
 						throw new IllegalArgumentException();
 					opzioni.setNodeIndex(Integer.parseInt(ics));
 					String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
 					nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 				} catch (Exception e) {
-					Toast.makeText(getActivity(), "Please insert a number in range 1-100", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), getString(R.string.nodeidxhint), Toast.LENGTH_SHORT).show();
 				}
 				return true;
 			}

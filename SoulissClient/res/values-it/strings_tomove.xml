@@ -9,6 +9,7 @@
     <string name="currentlyin">ora a</string>
     <string name="positionfrom">Posizionamento tramite </string>
     <string name="homewarn">Posizione di casa <b>sconosciuta</b>, usa le opzioni per impostarla</string>
+    <string name="useridxhint">Inserisci un numero tra 1 e 100</string>
+    <string name="nodeidxhint">Inserisci un numero tra 1 e 254</string>
 
-    
 </resources>

@@ -1,6 +1,9 @@
 package it.angelic.soulissclient.typicals;
 
 import it.angelic.soulissclient.R;
+/**
+ * Not used anymore, showed an input slider to control analogue Input
+ */
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -17,7 +20,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-
+@Deprecated
 public class SoulissTypical5n extends SoulissTypical implements ISoulissTypical {
 
 	/**

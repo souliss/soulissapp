@@ -72,9 +72,13 @@ public class SoulissDataService extends Service implements LocationListener {
 		crit.setPowerRequirement(Criteria.POWER_LOW);
 		provider = locationManager.getBestProvider(crit, false);
 		db = new SoulissDBHelper(this);
-		// db.open();
-		locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-				Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
+		try {
+			locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+					Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
+		} catch (Exception e) {
+			Log.e(TAG, "location manager updates request FAIL",e);
+		}
+		
 
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 

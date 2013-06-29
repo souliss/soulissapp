@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.net;
 
 import static junit.framework.Assert.assertEquals;
+import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -23,8 +24,6 @@ import android.util.Log;
 
 public class UDPHelper {
 
-	private static final String TAG = "SoulissApp:UDPHelper";
-
 	// private String android_id =
 	// Secure.getString(getContext().getContentResolver(),
 	// Secure.ANDROID_ID);
@@ -46,15 +45,14 @@ public class UDPHelper {
 	 */
 	public static ArrayList<Byte> buildVNetFrame(List<Byte> macaco, String ipd, int useridx, int nodeidx) {
 
-		assertEquals(true, useridx < Byte.MAX_VALUE/2);
-		assertEquals(true, nodeidx < Byte.MAX_VALUE);
-		
+		assertEquals(true, useridx < it.angelic.soulissclient.Constants.MAX_USER_IDX);
+		assertEquals(true, nodeidx < it.angelic.soulissclient.Constants.MAX_NODE_IDX);
+
 		ArrayList<Byte> frame = new ArrayList<Byte>();
 		InetAddress ip;
 		try {
 			ip = InetAddress.getByName(ipd);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return frame;
 		}
@@ -65,7 +63,7 @@ public class UDPHelper {
 		frame.add((byte) dude[3]);// BOARD
 		frame.add((byte) 0);//
 
-		frame.add((byte) useridx);// USER
+		frame.add((byte) useridx);// USER IDX
 		frame.add((byte) nodeidx); // NODE INDEX
 
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));
@@ -91,7 +89,6 @@ public class UDPHelper {
 		SoulissClient.getOpzioni().getContx().sendBroadcast(i);
 
 		return frame;
-
 	}
 /**
  * Builds a Macaco frame to issue a command

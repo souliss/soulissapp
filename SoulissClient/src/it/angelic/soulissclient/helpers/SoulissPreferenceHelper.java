@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.helpers;
 
+import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.net.UDPHelper;
@@ -47,7 +48,6 @@ public class SoulissPreferenceHelper implements Serializable {
 	private int dataServiceInterval;
 	private boolean dataServiceEnabled;
 	private String DimensTesto;
-	private final String TAG = "SoulissApp:" + getClass().getSimpleName();
 	// private InetAddress cachedInet;
 	private int userIndex;
 	private int nodeIndex;
@@ -68,7 +68,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		if (userIndex == -1) {//MAI inizializzato, lo calcolo
 			/* USER INDEX, statico */
 			Random r = new Random(Calendar.getInstance().getTimeInMillis());
-			int casual = r.nextInt(64);
+			int casual = r.nextInt(Constants.MAX_USER_IDX);//100
 			setUserIndex(casual);
 			Log.i(Constants.TAG, "automated userIndex-index Using: "+casual);
 		}
@@ -77,9 +77,9 @@ public class SoulissPreferenceHelper implements Serializable {
 			try {
 				final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
 				if (tm.getDeviceId() != null)
-					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % 100);
+					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % Constants.MAX_NODE_IDX);
 				else
-					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % 100);
+					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % Constants.MAX_NODE_IDX);
 				nodeIndex = Math.abs(nodeIndex);
 				if (nodeIndex == 0)
 					nodeIndex++;

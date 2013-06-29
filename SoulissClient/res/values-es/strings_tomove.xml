@@ -9,6 +9,7 @@
     <string name="currentlyin">actualmente en</string>
     <string name="positionfrom"><b>Posición desde </b></string>
     <string name="homewarn"><b>No está fijada la posición de casa</b>, utilice la opción de fondo para establecer la posición de casa</string>
-
+    <string name="useridxhint">Please insert a number in range 1-100</string>
+    <string name="nodeidxhint">Please insert a number in range 1-254</string>
    
 </resources>
