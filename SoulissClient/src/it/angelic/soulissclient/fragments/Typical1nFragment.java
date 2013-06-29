@@ -188,7 +188,7 @@ public class Typical1nFragment extends SherlockFragment {
 			timer.setVisibility(View.GONE);
 			timerInfo.setVisibility(View.GONE);
 			// Check AUTO mode
-			if (collected.getOutputDesc().contains("auto"))
+			if (collected.getOutputDesc().contains("AUTO"))
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON");
 			else
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF");

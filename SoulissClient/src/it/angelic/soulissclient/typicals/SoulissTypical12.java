@@ -111,7 +111,8 @@ public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical 
 		turnOffButton.setText(ctx.getString(R.string.OFF));
 		cont.addView(turnOffButton);
 		// disabilitazioni interlock
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil) {
+		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || 
+				typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto) {
 			turnOnButton.setEnabled(false);
 		} else {
 			turnOffButton.setEnabled(false);
