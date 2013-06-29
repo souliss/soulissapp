@@ -2,6 +2,7 @@ package it.angelic.soulissclient.helpers;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -55,7 +56,7 @@ import android.widget.Toast;
  * 
  * */
 public class AlertDialogHelper {
-	//private static ProgressDialog progressDialog;
+	// private static ProgressDialog progressDialog;
 
 	/**
 	 * Mostra warning che il sistema non ha l'IP settato
@@ -358,13 +359,19 @@ public class AlertDialogHelper {
 								LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
 								SoulissScene[] scenesArray = new SoulissScene[goer.size()];
 								scenesArray = goer.toArray(scenesArray);
-								SceneListAdapter sa = (SceneListAdapter) listV.getAdapter();
-								//SceneListAdapter progsAdapter = new SceneListAdapter(cont, scenesArray, opzioni);
-								// Adapter della lista
-								sa.setScenes(scenesArray);
-								sa.notifyDataSetChanged();
-								//listV.setAdapter(sa);
-								listV.invalidateViews();
+								try {
+									SceneListAdapter sa = (SceneListAdapter) listV.getAdapter();
+									// SceneListAdapter progsAdapter = new
+									// SceneListAdapter(cont, scenesArray,
+									// opzioni);
+									// Adapter della lista
+									sa.setScenes(scenesArray);
+									sa.notifyDataSetChanged();
+									// listV.setAdapter(sa);
+									listV.invalidateViews();
+								} catch (Exception e) {
+									Log.w(Constants.TAG, "rename didn't find proper view to refresh");
+								}
 							}
 						} else {
 							if (listV != null) {
@@ -596,33 +603,33 @@ public class AlertDialogHelper {
 		// ProgressDialog.Builder alert = new
 		// ProgressDialog.Builder(preferencesActivity);
 		AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity);
-		//final SharedPreferences customSharedPreference = preferencesActivity.getSharedPreferences("SoulissPrefs",
-		//		Activity.MODE_PRIVATE);
+		// final SharedPreferences customSharedPreference =
+		// preferencesActivity.getSharedPreferences("SoulissPrefs",
+		// Activity.MODE_PRIVATE);
 		alert.setTitle(preferencesActivity.getResources().getString(R.string.dialog_warn_db));
 		alert.setIcon(android.R.drawable.ic_dialog_alert);
-		if (opts.isSoulissReachable()){
-		// alert.setIcon()
-		alert.setMessage(preferencesActivity.getResources().getString(R.string.dialog_create_db) + ip
-				+ preferencesActivity.getResources().getString(R.string.dialog_create_db2));
-		
+		if (opts.isSoulissReachable()) {
+			// alert.setIcon()
+			alert.setMessage(preferencesActivity.getResources().getString(R.string.dialog_create_db) + ip
+					+ preferencesActivity.getResources().getString(R.string.dialog_create_db2));
 
-		alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
-				new DialogInterface.OnClickListener() {
+			alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
+					new DialogInterface.OnClickListener() {
 
-					public void onClick(DialogInterface dialog, int whichButton) {
+						public void onClick(DialogInterface dialog, int whichButton) {
 
-						new Thread() {
-							public void run() {
-								Looper.prepare();
-								UDPHelper.requestDBStruct(opts);
-							}
-						}.start();
-						Toast.makeText(preferencesActivity, "DB Structure requested", Toast.LENGTH_SHORT).show();
-					}
-				});
-		}else{
-			alert.setMessage(preferencesActivity.getResources().getString(R.string.souliss_unavailable) );
-			
+							new Thread() {
+								public void run() {
+									Looper.prepare();
+									UDPHelper.requestDBStruct(opts);
+								}
+							}.start();
+							Toast.makeText(preferencesActivity, "DB Structure requested", Toast.LENGTH_SHORT).show();
+						}
+					});
+		} else {
+			alert.setMessage(preferencesActivity.getResources().getString(R.string.souliss_unavailable));
+
 		}
 		/*
 		 * else { JSON

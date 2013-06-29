@@ -59,15 +59,11 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -77,7 +73,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class NodeDetailFragment extends ListFragment {
 	private static final String TAG = "SOULISSCLIENT - Node detail";
@@ -140,7 +135,7 @@ public class NodeDetailFragment extends ListFragment {
 	private ImageView nodeic;
 	private Handler timeoutHandler;
 	private boolean mDualPane;
-	private SwipeGestureListener gestureListener;
+	//private SwipeGestureListener gestureListener;
 
 	void doBindService() {
 		if (!mIsBound) {
@@ -278,8 +273,8 @@ public class NodeDetailFragment extends ListFragment {
 					showDetails(arg2, (SoulissTypical) holder.data);
 				}
 			});
-			gestureListener = new SwipeGestureListener(getActivity());
-			listaTypicalsView.setOnTouchListener(gestureListener);
+			//gestureListener = new SwipeGestureListener(getActivity());
+			//listaTypicalsView.setOnTouchListener(gestureListener);
 		}
 	}
 
@@ -578,7 +573,7 @@ public class NodeDetailFragment extends ListFragment {
 			timeoutHandler.postDelayed(timeExpired, delay);
 		}
 	};
-
+/*
 	class SwipeGestureListener extends SimpleOnGestureListener implements OnTouchListener {
 		Context context;
 		GestureDetector gDetector;
@@ -615,11 +610,11 @@ public class NodeDetailFragment extends ListFragment {
 						|| Math.abs(velocityY) < SWIPE_THRESHOLD_VELOCITY) {
 					return false;
 				}
-				/*if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
+				if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
 					Toast.makeText(getActivity(), "bottomToTop" + countryName, Toast.LENGTH_SHORT).show();
 				} else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
 					Toast.makeText(getActivity(), "topToBottom  " + countryName, Toast.LENGTH_SHORT).show();
-				}*/
+				}
 			} else {
 				if (Math.abs(velocityX) < SWIPE_THRESHOLD_VELOCITY) {
 					return false;
@@ -655,5 +650,5 @@ public class NodeDetailFragment extends ListFragment {
 			return gDetector;
 		}
 
-	}
+	}*/
 }

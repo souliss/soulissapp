@@ -157,12 +157,13 @@ public class Typical1nFragment extends SherlockFragment {
 				Thread t = new Thread() {
 					public void run() {
 						if (togMassive.isChecked())
-							UDPHelper.issueMassiveCommand(""+collected.getTypicalDTO().getTypical(), opzioni,
+							UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni,
 									String.valueOf(Souliss_T1n_AutoCmd));
 						else
-						UDPHelper.issueSoulissCommand("" + collected.getTypicalDTO().getNodeId(), ""
-								+ collected.getTypicalDTO().getSlot(), opzioni,
-								it.angelic.soulissclient.Constants.COMMAND_SINGLE, String.valueOf(Souliss_T1n_AutoCmd));
+							UDPHelper.issueSoulissCommand("" + collected.getTypicalDTO().getNodeId(), ""
+									+ collected.getTypicalDTO().getSlot(), opzioni,
+									it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+									String.valueOf(Souliss_T1n_AutoCmd));
 					}
 				};
 
@@ -176,8 +177,8 @@ public class Typical1nFragment extends SherlockFragment {
 
 		OnClickListener plusSlip = new OnClickListener() {
 			public void onClick(View v) {
-				//Il timer parte da 10...
-				turnOn(timer.getProgress()+10);
+				// Il timer parte da 10...
+				turnOn(timer.getProgress() + 0x30);
 				return;
 			}
 		};
@@ -211,12 +212,12 @@ public class Typical1nFragment extends SherlockFragment {
 			public void run() {
 				Looper.prepare();
 				if (togMassive.isChecked())
-					UDPHelper.issueMassiveCommand(""+collected.getTypicalDTO().getTypical(), opzioni,
-							""+(Souliss_T1n_OffCmd));
+					UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni, ""
+							+ (Souliss_T1n_OffCmd));
 				else
-				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-						+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
-						+ (Souliss_T1n_OffCmd));
+					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
+							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
+							+ (Souliss_T1n_OffCmd));
 
 			}
 		};
@@ -234,8 +235,8 @@ public class Typical1nFragment extends SherlockFragment {
 				Looper.prepare();
 
 				if (togMassive.isChecked())
-					UDPHelper.issueMassiveCommand(""+collected.getTypicalDTO().getTypical(), opzioni,
-							""+(Souliss_T1n_OnCmd + i));
+					UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni, ""
+							+ (Souliss_T1n_OnCmd + i));
 				else
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
 							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
@@ -245,9 +246,15 @@ public class Typical1nFragment extends SherlockFragment {
 		};
 
 		t.start();
-		Toast.makeText(getActivity(),
-				getActivity().getString(R.string.TurnON) + " " + getActivity().getString(R.string.command_sent),
-				Toast.LENGTH_SHORT).show();
+		if (i > 0)
+			Toast.makeText(
+					getActivity(),
+					getActivity().getString(R.string.Souliss_TRGB_sleep) + " "
+							+ getActivity().getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
+		else
+			Toast.makeText(getActivity(),
+					getActivity().getString(R.string.TurnON) + " " + getActivity().getString(R.string.command_sent),
+					Toast.LENGTH_SHORT).show();
 		return;
 
 	}
