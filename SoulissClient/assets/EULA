@@ -6,6 +6,10 @@ Please refer to www.souliss.net for more information
 
 
 CHANGES:
+1.2.3
+portoguese and spanish translations
+Half precision floating pointsVarious bug issues, see support pages
+new analogue typicals w/  half precision fp
 
 1.2.2
 Sceneries fixes
@@ -28,6 +32,3 @@ triggered program fixes
 1.0.0
 Network layer rewritten for performance and reliability
 
-0.9.3
-optimizations
-new preference menus

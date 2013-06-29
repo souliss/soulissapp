@@ -6122,6 +6122,8 @@ it.angelic.soulissclient.BuildConfig: boolean DEBUG
 it.angelic.soulissclient.BuildConfig: BuildConfig()
 it.angelic.soulissclient.Constants
 it.angelic.soulissclient.Constants: java.lang.String TAG
+it.angelic.soulissclient.Constants: int MAX_USER_IDX
+it.angelic.soulissclient.Constants: int MAX_NODE_IDX
 it.angelic.soulissclient.Constants: int MAX_HEALTH
 it.angelic.soulissclient.Constants: int ICON_REQUEST
 it.angelic.soulissclient.Constants: float[] roundedCorners
@@ -7405,6 +7407,7 @@ it.angelic.soulissclient.R$string: int music
 it.angelic.soulissclient.R$string: int node
 it.angelic.soulissclient.R$string: int node_empty
 it.angelic.soulissclient.R$string: int node_empty_desc
+it.angelic.soulissclient.R$string: int nodeidxhint
 it.angelic.soulissclient.R$string: int nodes
 it.angelic.soulissclient.R$string: int notconfigured
 it.angelic.soulissclient.R$string: int on_node
@@ -7525,6 +7528,7 @@ it.angelic.soulissclient.R$string: int unavailable
 it.angelic.soulissclient.R$string: int unknown_typical
 it.angelic.soulissclient.R$string: int update
 it.angelic.soulissclient.R$string: int updated
+it.angelic.soulissclient.R$string: int useridxhint
 it.angelic.soulissclient.R$string: int waiting
 it.angelic.soulissclient.R$string: int warn_connection
 it.angelic.soulissclient.R$string: int warn_wifi
@@ -7805,6 +7809,8 @@ it.angelic.soulissclient.RGBAdvancedActivity: it.angelic.soulissclient.typicals.
 it.angelic.soulissclient.RGBAdvancedActivity: RGBAdvancedActivity()
 it.angelic.soulissclient.RGBAdvancedActivity: void onCreate(android.os.Bundle)
 it.angelic.soulissclient.RGBAdvancedActivity: void onStart()
+it.angelic.soulissclient.RGBAdvancedActivity: boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
+it.angelic.soulissclient.RGBAdvancedActivity: boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 it.angelic.soulissclient.RGBIrActivity
 it.angelic.soulissclient.RGBIrActivity: it.angelic.soulissclient.db.SoulissDBHelper datasource
 it.angelic.soulissclient.RGBIrActivity: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
@@ -7926,6 +7932,8 @@ it.angelic.soulissclient.SensorDetailActivity: void doBindService()
 it.angelic.soulissclient.SensorDetailActivity: void doUnbindService()
 it.angelic.soulissclient.SensorDetailActivity: void onCreate(android.os.Bundle)
 it.angelic.soulissclient.SensorDetailActivity: void onStart()
+it.angelic.soulissclient.SensorDetailActivity: boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
+it.angelic.soulissclient.SensorDetailActivity: boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 it.angelic.soulissclient.SensorDetailActivity: void access$0(it.angelic.soulissclient.SensorDetailActivity,it.angelic.soulissclient.SoulissDataService)
 it.angelic.soulissclient.SensorDetailActivity: it.angelic.soulissclient.adapters.TypicalsListAdapter access$1(it.angelic.soulissclient.SensorDetailActivity)
 it.angelic.soulissclient.SensorDetailActivity: it.angelic.soulissclient.SoulissDataService access$2(it.angelic.soulissclient.SensorDetailActivity)
@@ -8487,7 +8495,6 @@ it.angelic.soulissclient.fragments.NodeDetailFragment: android.content.ServiceCo
 it.angelic.soulissclient.fragments.NodeDetailFragment: android.widget.ImageView nodeic
 it.angelic.soulissclient.fragments.NodeDetailFragment: android.os.Handler timeoutHandler
 it.angelic.soulissclient.fragments.NodeDetailFragment: boolean mDualPane
-it.angelic.soulissclient.fragments.NodeDetailFragment: it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener gestureListener
 it.angelic.soulissclient.fragments.NodeDetailFragment: android.content.BroadcastReceiver datareceiver
 it.angelic.soulissclient.fragments.NodeDetailFragment: java.lang.Runnable timeExpired
 it.angelic.soulissclient.fragments.NodeDetailFragment: android.content.BroadcastReceiver timeoutReceiver
@@ -8553,19 +8560,6 @@ it.angelic.soulissclient.fragments.NodeDetailFragment$7$1
 it.angelic.soulissclient.fragments.NodeDetailFragment$7$1: it.angelic.soulissclient.fragments.NodeDetailFragment$7 this$1
 it.angelic.soulissclient.fragments.NodeDetailFragment$7$1: NodeDetailFragment$7$1(it.angelic.soulissclient.fragments.NodeDetailFragment$7)
 it.angelic.soulissclient.fragments.NodeDetailFragment$7$1: void run()
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: android.content.Context context
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: android.view.GestureDetector gDetector
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: int SWIPE_MIN_DISTANCE
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: int SWIPE_MAX_OFF_PATH
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: int SWIPE_THRESHOLD_VELOCITY
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: it.angelic.soulissclient.fragments.NodeDetailFragment this$0
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: NodeDetailFragment$SwipeGestureListener(it.angelic.soulissclient.fragments.NodeDetailFragment)
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: NodeDetailFragment$SwipeGestureListener(it.angelic.soulissclient.fragments.NodeDetailFragment,android.content.Context)
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: NodeDetailFragment$SwipeGestureListener(it.angelic.soulissclient.fragments.NodeDetailFragment,android.content.Context,android.view.GestureDetector)
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float)
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: boolean onTouch(android.view.View,android.view.MotionEvent)
-it.angelic.soulissclient.fragments.NodeDetailFragment$SwipeGestureListener: android.view.GestureDetector getDetector()
 it.angelic.soulissclient.fragments.NodesListFragment
 it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.model.SoulissNode[] nodiArray
 it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
@@ -9086,6 +9080,10 @@ it.angelic.soulissclient.helpers.GraphsHelper: org.achartengine.renderer.XYMulti
 it.angelic.soulissclient.helpers.GraphsHelper: org.achartengine.renderer.XYMultipleSeriesRenderer buildMonthRenderer(android.content.Context)
 it.angelic.soulissclient.helpers.GraphsHelper: org.achartengine.renderer.XYMultipleSeriesRenderer buildBarRenderer(int[])
 it.angelic.soulissclient.helpers.GraphsHelper: void setChartSettings(org.achartengine.renderer.XYMultipleSeriesRenderer,java.lang.String,java.lang.String,double,double,int,int)
+it.angelic.soulissclient.helpers.HalfFloatUtils
+it.angelic.soulissclient.helpers.HalfFloatUtils: HalfFloatUtils()
+it.angelic.soulissclient.helpers.HalfFloatUtils: float toFloat(int)
+it.angelic.soulissclient.helpers.HalfFloatUtils: int fromFloat(float)
 it.angelic.soulissclient.helpers.ImportDatabaseCSVTask
 it.angelic.soulissclient.helpers.ImportDatabaseCSVTask: java.lang.String TAG
 it.angelic.soulissclient.helpers.ImportDatabaseCSVTask: it.angelic.soulissclient.db.SoulissDBHelper DBob
@@ -9246,7 +9244,6 @@ it.angelic.soulissclient.helpers.SoulissPreferenceHelper: java.lang.String cache
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: int dataServiceInterval
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: boolean dataServiceEnabled
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: java.lang.String DimensTesto
-it.angelic.soulissclient.helpers.SoulissPreferenceHelper: java.lang.String TAG
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: int userIndex
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: int nodeIndex
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: int backoff
@@ -9425,7 +9422,6 @@ it.angelic.soulissclient.net.JSONHelper: java.lang.String getHttp(java.lang.Stri
 it.angelic.soulissclient.net.JSONHelper: java.lang.String convertStreamToString(java.io.InputStream)
 it.angelic.soulissclient.net.JSONHelper: boolean checkSoulissHttp(java.lang.String,int)
 it.angelic.soulissclient.net.UDPHelper
-it.angelic.soulissclient.net.UDPHelper: java.lang.String TAG
 it.angelic.soulissclient.net.UDPHelper: UDPHelper()
 it.angelic.soulissclient.net.UDPHelper: java.util.ArrayList buildVNetFrame(java.util.List,java.lang.String,int,int)
 it.angelic.soulissclient.net.UDPHelper: java.util.ArrayList buildMaCaCoForce(byte,java.lang.String,java.lang.String,java.lang.String[])
@@ -10000,6 +9996,14 @@ it.angelic.soulissclient.typicals.SoulissTypical32AirCon: void setOutputDescView
 it.angelic.soulissclient.typicals.SoulissTypical32AirCon: java.lang.String getOutputDesc()
 it.angelic.soulissclient.typicals.SoulissTypical32AirCon: it.angelic.soulissclient.typicals.SoulissTypical getRelated()
 it.angelic.soulissclient.typicals.SoulissTypical32AirCon: void setRelated(it.angelic.soulissclient.typicals.SoulissTypical)
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: int maxTemp
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: int minTemp
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: long serialVersionUID
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: SoulissTypical51AnalogueSensor(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: java.lang.String getOutputDesc()
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: float getOutputFloat()
+it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor: void getActionsLayout(it.angelic.soulissclient.adapters.TypicalsListAdapter,android.content.Context,android.content.Intent,android.view.View,android.view.ViewGroup)
 it.angelic.soulissclient.typicals.SoulissTypical54LuxSensor
 it.angelic.soulissclient.typicals.SoulissTypical54LuxSensor: int maxTemp
 it.angelic.soulissclient.typicals.SoulissTypical54LuxSensor: int minTemp
