@@ -56,6 +56,9 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		else
 			return "STALE";
 	}
+	/**
+	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
+	 */
 	public float getOutputFloat() {
 		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
 		//ora ho i due bytes, li converto
@@ -64,9 +67,10 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 
 		//return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 		//non voglio usare DecimalFormat
-	    float temp1 = (float) (HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput())*100.0);
-	    float temp2 = Math.round(temp1*100.0);//(round to nearest value)
-	    return (float) (Math.round(temp2*100.0)/100.0);
+	    //float temp1 = (float) (HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput())*100.0);
+	    //float temp2 = Math.round(temp1*100.0);//(round to nearest value)
+	    //return (float) (Math.round(temp2*100.0)/100.0);
+	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
 	}
 	@Override

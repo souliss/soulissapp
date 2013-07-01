@@ -89,7 +89,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
 			//Toast.makeText(LauncherActivity.this, "Dataservice connected, scheduling Souliss Update",
 			//		Toast.LENGTH_SHORT).show();
-			mBoundService.reschedule();
+			Log.i(TAG, "Dataservice connected, scheduling Souliss Update");
+			mBoundService.reschedule(true);
 			mIsBound = true;
 		}
 
@@ -108,7 +109,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 	void doUnbindService() {
 		if (mIsBound) {
-			// Detach our existing connection.
+			Log.i(TAG, "UNBIND, Detach our existing connection.");
 			unbindService(mConnection);
 		}
 	}
@@ -179,15 +180,15 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
 			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
 		}
-		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end");
-		// Log.i(TAG, "INFOTEST");
+		doBindService();
+		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
+		
 		// Log.w(TAG, "WARNTEST");
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		doBindService();
 		opzioni.reload();
 		ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

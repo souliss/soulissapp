@@ -39,7 +39,7 @@ import android.util.Log;
 public class SoulissDataService extends Service implements LocationListener {
 	// LOGGA a parte
 	private static final String TAG = "SoulissDataService";
-	
+
 	// This is the object that receives interactions from clients. See
 	// RemoteService for a more complete example.
 	private final IBinder mBinder = new LocalBinder();
@@ -76,9 +76,8 @@ public class SoulissDataService extends Service implements LocationListener {
 			locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
 					Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
 		} catch (Exception e) {
-			Log.e(TAG, "location manager updates request FAIL",e);
+			Log.e(TAG, "location manager updates request FAIL", e);
 		}
-		
 
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -96,7 +95,7 @@ public class SoulissDataService extends Service implements LocationListener {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		// timer.cancel();
+		Log.w(TAG, "Service Destroy!! " + opts.getBackedOffServiceInterval());
 		mHandler.removeCallbacks(mUpdateSoulissRunnable);
 		db.close();
 		locationManager.removeUpdates(SoulissDataService.this);
@@ -107,13 +106,12 @@ public class SoulissDataService extends Service implements LocationListener {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		opts = SoulissClient.getOpzioni();
-		// opts.getCachedAddress();
 
 		// uir = opts.getDataServiceInterval();
-		Log.i(TAG, "Service StartCommand, Scheduling every " + opts.getBackedOffServiceInterval());
+		Log.i(TAG, "Service StartCommand, Scheduling immediately and every " + opts.getBackedOffServiceInterval());
 		// delle opzioni
 
-		reschedule();
+		reschedule(true);
 
 		return START_STICKY;
 	}
@@ -121,14 +119,19 @@ public class SoulissDataService extends Service implements LocationListener {
 	/**
 	 * Schedule a new execution of the srvice via mHandler.postDelayed
 	 */
-	public void reschedule() {
+	public void reschedule(boolean immediate) {
 
-		opts.initializePrefs();//reload interval
+		opts.initializePrefs();// reload interval
 		mHandler.removeCallbacks(mUpdateSoulissRunnable);
 		// reschedule self
-		Log.i(TAG, "Regular mode, rescheduling self every " + opts.getBackedOffServiceInterval() / 1000 + " seconds");
-		mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec());
-
+		if (immediate) {
+			Log.i(TAG, "Reschedule immediate ");
+			mHandler.post(mUpdateSoulissRunnable);
+		} else {
+			Log.i(TAG, "Regular mode, rescheduling self every " + opts.getBackedOffServiceInterval() / 1000
+					+ " seconds");
+			mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec());
+		}
 		if (udpThread == null || !udpThread.isAlive()) {
 			// Create the object with the run() method
 			Runnable runnable = new UDPRunnable(opts, SoulissDataService.this);
@@ -159,13 +162,12 @@ public class SoulissDataService extends Service implements LocationListener {
 		}
 	}
 
-	/*
-	 * @Override public void onLowMemory() { // TODO Auto-generated method stub,
-	 * o quasi super.onLowMemory(); Log.w(TAG,
-	 * "Low memory, schedule a reserve task");
-	 * mHandler.postDelayed(mUpdateSoulissRunnable,
-	 * opts.getDataServiceInterval() * 10000); }
-	 */
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		Log.w(TAG, "Low memory, schedule a reserve task");
+		mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec() + 1000000);
+	}
 
 	private Runnable mUpdateSoulissRunnable = new Runnable() {
 
@@ -178,14 +180,14 @@ public class SoulissDataService extends Service implements LocationListener {
 			if (!opts.isDbConfigured()) {
 				Log.w(TAG, "Database empty, closing service");
 				// mHandler.removeCallbacks(mUpdateSoulissRunnable);
-				reschedule();
+				reschedule(false);
 				// SoulissDataService.this.stopSelf();
 				return;
 			}
 			if (!opts.getCustomPref().contains("numNodi")) {
 				Log.w(TAG, "Souliss didn't answer yet, rescheduling");
 				// mHandler.removeCallbacks(mUpdateSoulissRunnable);
-				reschedule();
+				reschedule(false);
 				return;
 			}
 
@@ -202,7 +204,7 @@ public class SoulissDataService extends Service implements LocationListener {
 				if (cached.compareTo("") == 0
 						|| cached.compareTo(SoulissDataService.this.getResources().getString(R.string.unavailable)) == 0) {
 					Log.e(TAG, "Souliss Unavailable, rescheduling");
-					reschedule();
+					reschedule(false);
 					// SoulissDataService.this.stopSelf();
 					return;
 				}
@@ -232,7 +234,7 @@ public class SoulissDataService extends Service implements LocationListener {
 								unexnex.getCommandDTO().persistCommand(db);
 								// Se ricorsivo, ricrea
 								if (unexnex.getCommandDTO().getInterval() > 0) {
-									
+
 									SoulissCommand nc = new SoulissCommand(SoulissDataService.this,
 											unexnex.getParentTypical());
 									nc.getCommandDTO().setNodeId(unexnex.getCommandDTO().getNodeId());
@@ -289,13 +291,14 @@ public class SoulissDataService extends Service implements LocationListener {
 													""
 															+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
 											break;// basta uno per nodo
-										}else if (tp instanceof SoulissTypical54LuxSensor) {
+										} else if (tp instanceof SoulissTypical54LuxSensor) {
 											UDPHelper.issueSoulissCommand(
 													"" + soulissNode.getId(),
 													"" + tp.getTypicalDTO().getSlot(),
 													opts,
 													Constants.COMMAND_SINGLE,
-													""+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
+													""
+															+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
 											break;// basta uno per nodo
 										} else {
 											Log.e(TAG, "Uninplemented..");
@@ -310,9 +313,9 @@ public class SoulissDataService extends Service implements LocationListener {
 
 						} catch (Exception e) {
 							Log.e(TAG, "Service error, scheduling again ", e);
-						} /*finally {
-							db.close();
-						}*/
+						} /*
+						 * finally { db.close(); }
+						 */
 
 						// spostato per consentire comandi manuali
 						if (!opts.isDataServiceEnabled()) {
@@ -331,7 +334,7 @@ public class SoulissDataService extends Service implements LocationListener {
 							}).start();
 							Log.v(TAG, "Service end run " + SoulissDataService.this.hashCode());
 							setLastupd(Calendar.getInstance());
-							reschedule();
+							reschedule(false);
 						}
 
 					}
@@ -343,7 +346,7 @@ public class SoulissDataService extends Service implements LocationListener {
 				i.setAction(Constants.CUSTOM_INTENT);
 				setLastupd(Calendar.getInstance());
 				getApplicationContext().sendBroadcast(i);
-				reschedule();
+				reschedule(false);
 			}
 		}
 
@@ -407,7 +410,7 @@ public class SoulissDataService extends Service implements LocationListener {
 							Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
 				}
 			}
-			//db.close();
+			// db.close();
 		}
 	};
 

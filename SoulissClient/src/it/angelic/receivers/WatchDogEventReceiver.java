@@ -1,5 +1,6 @@
 package it.angelic.receivers;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -16,21 +17,21 @@ import android.util.Log;
  * http://www.hascode.com/2011/11/managing-background-tasks-on-android-using-the-alarm-manager/
 
  */
-public class LifeCheckerEventReceiver extends BroadcastReceiver {
+public class WatchDogEventReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(final Context ctx, final Intent intent) {
-		Log.d("SoulissApp:LifeChecker", "ScheduledEventReceiver.onReceive() called");
+		Log.d(Constants.TAG+":WatchDog", "WatchDog.onReceive() called");
 		SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 
 		if (opzioni.isDataServiceEnabled()) {
 			Intent eventService = new Intent(ctx, SoulissDataService.class);
 			if (!isMyServiceRunning(ctx)){
 				ctx.startService(eventService);
-				Log.w("SoulissApp:LifeChecker", "Service restarted");
+				Log.w(Constants.TAG+":WatchDog", "Service restarted");
 			}
 			else
-				Log.d("SoulissApp:LifeChecker", "Service already running");
+				Log.d(Constants.TAG+":WatchDog", "Service already running");
 		}
 	}
 	//FIXME or error checks

@@ -63,7 +63,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="it.angelic.receivers.LifeCheckerSetupReceiver"
+            android:name="it.angelic.receivers.WatchDogSetupReceiver"
             android:process=":souliss_process" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -71,7 +71,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="it.angelic.receivers.LifeCheckerEventReceiver"
+            android:name="it.angelic.receivers.WatchDogEventReceiver"
             android:process=":souliss_process" />
 
         <activity
