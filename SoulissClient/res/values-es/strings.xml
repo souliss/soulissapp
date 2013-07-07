@@ -34,7 +34,7 @@
     <string name="dialog_remote_test">Ejcutando prueba remota&#8230;</string>
     <string name="dialog_remote_ok">!Conexion remota con éxito!</string>
     <string name="dialog_remote_notok">Prueba remota fallida</string>
-  <string name="dialog_notconf">Ambas direcciones están vacias o no son válidas</string>
+    <string name="dialog_notconf">Ambas direcciones están vacias o no son válidas</string>
     <string name="allnodes">Todos los Nodos</string>
 
     <!-- PROGRAMS_SECTION -->
@@ -52,10 +52,10 @@
     <string name="programs_notyet">EEl comando  no ha sido ejecutado aun</string>
     <string name="command_sent">comando enviado</string>
     <string name="command_send">Enviar comando</string>
-     <string name="compatible">compatible con dispositivos</string>
-     <string name="to_all">a todos</string>
-     <string name="to">a</string>
-     <string name="on_node">en el Nodo</string>
+    <string name="compatible">compatible con dispositivos</string>
+    <string name="to_all">a todos</string>
+    <string name="to">a</string>
+    <string name="on_node">en el Nodo</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Escenas</string>
     <string name="scenes_delete">Borrar escena</string>
@@ -64,7 +64,7 @@
     <string name="scenes_add">Añadir escena</string>
     <string name="scenes_empty">!!Escena vacia!</string>
     <string name="scenes_empty_desc">Utilice el siguiente boton para añadir un comando para esta escena</string>
-  <string name="scenes_desc">Las escenas se componen de varios comandos souliss. Realice una pulsación larga para editar o ejecutar una escena. Realice una pulsación corta para abrir detalles. Utilice el boton + para crear una nueva escena vacía</string>
+    <string name="scenes_desc">Las escenas se componen de varios comandos souliss. Realice una pulsación larga para editar o ejecutar una escena. Realice una pulsación corta para abrir detalles. Utilice el boton + para crear una nueva escena vacía</string>
     <string name="scene_turnoff_lights">Apagar luce</string>
     <string name="scene_turnon_lights">Encender luces</string>
     <string name="scene_commands">Comandos de escena</string>
@@ -119,7 +119,7 @@
 
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Servicio de Datos <b>desactivado</b></string>
-  <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
+    <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
 
     <!-- STATUS -->
     <string name="status_souliss">Estado Souliss</string>
@@ -136,7 +136,6 @@
     <string name="opt_userindex_desc">El indice de usuario identifica el cliente Android con Souliss. Valor actual es %1$d. No debe ser cambiado</string>
     <string name="opt_nodeindex">Indice de Nodo</string>
     <string name="opt_nodeindex_desc">El indice de Nodo identifica este dispositio en las placas Souliss. El valor actual es%1$d. Pulse para cambiarlo</string>
-     
     <string name="opt_checkconnection">Verifique conexión</string>
     <string name="opt_checkconnection_desc">Verifique conectificad en el servidor HTTP Souliss</string>
     <string name="opt_networkdesc">Ajuste de red local y remoto</string>
@@ -203,6 +202,8 @@
     <string name="Souliss_T21_desc">Dispositivo motorizado (con final de carrera)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizado</string>
     <string name="Souliss_T31_desc">Termómetro</string>
+    <string name="Souliss_T41_desc">AntiTheft System</string>
+    <string name="Souliss_T42_desc">AntiTheft Peer</string>
     <string name="Souliss_T51_desc">Entrada analógica</string>
     <string name="Souliss_T52_desc">Entrada analógica, valor medio</string>
     <string name="Souliss_T53_desc">Entrada analógica, interactividad máxima</string>

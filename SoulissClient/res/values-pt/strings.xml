@@ -53,10 +53,10 @@
     <string name="programs_notyet">O comando não foi executado ainda</string>
     <string name="command_sent">comando Enviado</string>
     <string name="command_send">Enviar comando</string>
-     <string name="compatible">módulos compatíveis</string>
-     <string name="to_all">a todos</string>
-     <string name="to">a</string>
-     <string name="on_node">na central</string>
+    <string name="compatible">módulos compatíveis</string>
+    <string name="to_all">a todos</string>
+    <string name="to">a</string>
+    <string name="on_node">na central</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Cenas</string>
     <string name="scenes_delete">Apagar Cenas</string>
@@ -137,7 +137,6 @@
     <string name="opt_userindex_desc">O índice de Usuário identifica o cliente Android para Souliss. O valor atual é %1$d. Você não deve alterá-lo</string>
     <string name="opt_nodeindex">Índice da Central</string>
     <string name="opt_nodeindex_desc">O índice da central identifica este dispositivo em placas Souliss. O valor atual é %1$d. Toque para mudar</string>
-     
     <string name="opt_checkconnection">Verificar Conexão</string>
     <string name="opt_checkconnection_desc">Verificar conectividade do servidor HTTP Souliss</string>
     <string name="opt_networkdesc">Configurações das redes interna e remota</string>
@@ -204,6 +203,8 @@
     <string name="Souliss_T21_desc">Dispositivo motorizado (w / lim switch)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizado</string>
     <string name="Souliss_T31_desc">Termômetro</string>
+    <string name="Souliss_T41_desc">AntiTheft System</string>
+    <string name="Souliss_T42_desc">AntiTheft Peer</string>
     <string name="Souliss_T51_desc">Entrada analógica</string>
     <string name="Souliss_T52_desc">Entrada analógica, raiz valor médio</string>
     <string name="Souliss_T53_desc">Entrada analógica, max iterativo</string>

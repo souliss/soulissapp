@@ -206,6 +206,8 @@
     <string name="Souliss_T21_desc">Dispositivo motorizzato (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizzato</string>
     <string name="Souliss_T31_desc">Termometro</string>
+         <string name="Souliss_T41_desc">Antifurto</string>
+     <string name="Souliss_T42_desc">Antifurto (sensore)</string>
     <string name="Souliss_T51_desc">Input Analogico</string>
     <string name="Souliss_T52_desc">Input Analogico, root mean value</string>
     <string name="Souliss_T53_desc">Input Analogico, max iterative</string>

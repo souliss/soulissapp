@@ -31,6 +31,9 @@ public class Constants {
 												// switches and middle position
 	public static final short Souliss_T31 = 0x31;
 	public static final short Souliss_T32_IrCom_AirCon = 0x32;
+	
+	public static final short  Souliss_T41_Antitheft_Main=						0x41		;	// Anti-theft integration (Main)
+	public static final short  Souliss_T42_Antitheft_Peer=						0x42		;	// Anti-theft integration (Peer)
 
 	public static final short Souliss_T51 = 0x51;
 	public static final short Souliss_T52 = 0x52;
@@ -178,6 +181,16 @@ public class Constants {
 	public static final short Souliss_T3n_ZeroSetPoint = 0x80;
 	public static final short Souliss_T3n_DeadBand = 0x05;
 	public static final short Souliss_T3n_RstCmd = 0x00;
+	
+	// General defines for T4n
+	public static final short Souliss_T4n_Alarm				=0x01;		// Alarm Condition Detected (Input)		
+	public static final short Souliss_T4n_RstCmd			=	0x00;		
+	public static final short Souliss_T4n_ReArm				=0x03	;	// Silence and Arm Command
+	public static final short Souliss_T4n_NotArmed			=0x04;		// Anti-theft not Armed Command
+	public static final short Souliss_T4n_Armed				=0x05	;	// Anti-theft Armed Command
+	public static final short Souliss_T4n_Antitheft			=0x01	;	// Anti-theft Armed Feedback
+	public static final short Souliss_T4n_NoAntitheft		=	0x00;		// Anti-theft not Armed Feedback
+	public static final short Souliss_T4n_InAlarm			=	0x03;		// Anti-theft in Alarm
 
 	public static final short Souliss_RstCmd = 0x00;
 	public static final short Souliss_NOTTRIGGED = 0x00;

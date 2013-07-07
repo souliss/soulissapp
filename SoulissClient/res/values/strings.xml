@@ -204,6 +204,8 @@
     <string name="Souliss_T21_desc">Motorized Device (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Motorized Device</string>
     <string name="Souliss_T31_desc">Thermomether</string>
+     <string name="Souliss_T41_desc">AntiTheft System</string>
+     <string name="Souliss_T42_desc">AntiTheft Peer</string>
     <string name="Souliss_T51_desc">Analog input</string>
     <string name="Souliss_T52_desc">Analog input, root mean value</string>
     <string name="Souliss_T53_desc">Analog input, max iterative</string>

@@ -109,10 +109,6 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypicalCurrentSensor(opts);
 			rest.setSensor(true);
 			break;
-		case 66:
-			rest = new SoulissTypical(opts);
-			rest.setRelated(true);
-			break;
 		case Constants.Souliss_T_TemperatureSensor:
 			rest = new SoulissTypicalTemperatureSensor(opts);
 			rest.setSensor(true);
@@ -123,6 +119,12 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			break;
 		case Constants.Souliss_T32_IrCom_AirCon:
 			rest = new SoulissTypical32AirCon(opts);
+			break;
+		case Constants.Souliss_T41_Antitheft_Main:
+			rest = new SoulissTypical41AntiTheft(opts);
+			break;
+		case Constants.Souliss_T42_Antitheft_Peer:
+			rest = new SoulissTypical42AntiTheftPeer(opts);
 			break;
 		case Constants.Souliss_T_related:
 			rest = new SoulissTypical(opts);
@@ -150,15 +152,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypical(opts);
 			break;
 		}
-		/*
-		 * if (dto == null) { rest.setTypicalDTO(new SoulissTypicalDTO()); }
-		 * else
-		 */
 		rest.setTypicalDTO(dto);
 		rest.setParentNode(parent);
 
 		rest.setPrefs(opts);
-		// rest.getTypicalDTO().setNodeId(parent.getId());
 		return rest;
 	}
 
@@ -193,6 +190,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_TAircon_desc;
 		else if (typical == Constants.Souliss_T1n_RGB)
 			id = R.string.Souliss_TRGB_desc;
+		else if (typical == Constants.Souliss_T41_Antitheft_Main)
+			id = R.string.Souliss_T41_desc;
+		else if (typical == Constants.Souliss_T42_Antitheft_Peer)
+			id = R.string.Souliss_T42_desc;
 		else if (typical == Constants.Souliss_T51)
 			id = R.string.Souliss_T51_desc;
 		else if (typical == Constants.Souliss_T52)
@@ -231,6 +232,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.limit;
 		else if (typical == Constants.Souliss_T31)
 			return R.drawable.thermometer;
+		else if (typical == Constants.Souliss_T41_Antitheft_Main)
+			return R.drawable.shield;
+		else if (typical == Constants.Souliss_T42_Antitheft_Peer)
+			return R.drawable.shield;
 		else if (typical == Constants.Souliss_T_CurrentSensor)
 			return R.drawable.lightning;
 		else if (typical == Constants.Souliss_T_TemperatureSensor)
