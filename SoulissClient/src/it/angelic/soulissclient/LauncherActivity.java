@@ -8,18 +8,13 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -49,10 +44,17 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
 /**
  * SoulissApp main screen
+ * 
  * @author Ale
- *
+ * 
  */
 public class LauncherActivity extends SherlockActivity implements LocationListener {
 
@@ -87,10 +89,18 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-			//Toast.makeText(LauncherActivity.this, "Dataservice connected, scheduling Souliss Update",
-			//		Toast.LENGTH_SHORT).show();
-			Log.i(TAG, "Dataservice connected, scheduling Souliss Update");
-			mBoundService.reschedule(true);
+			// Toast.makeText(LauncherActivity.this,
+			// "Dataservice connected, scheduling Souliss Update",
+			// Toast.LENGTH_SHORT).show();
+			Log.i(TAG, "Dataservice connected");
+			Calendar shouldHaveDoneAt = Calendar.getInstance();
+			shouldHaveDoneAt.add(Calendar.MILLISECOND,
+					(int) -(opzioni.getBackedOffServiceInterval()));
+			if (mBoundService.getLastupd().before(shouldHaveDoneAt)) {
+				mBoundService.reschedule(true);
+				Toast.makeText(LauncherActivity.this, "Dataservice restarted", Toast.LENGTH_SHORT).show();
+				Log.w(TAG, "Dataservice RETARDED, scheduling Souliss Update");
+			}
 			mIsBound = true;
 		}
 
@@ -182,7 +192,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		}
 		doBindService();
 		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
-		
+
 		// Log.w(TAG, "WARNTEST");
 	}
 
@@ -234,7 +244,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		setDbInfo();
 		setServiceInfo();
 		if (opzioni.isSoulissIpConfigured() && opzioni.isDataServiceEnabled())
-			serviceInfoFoot.setText(Html.fromHtml("<b>"+getString(R.string.waiting)+"</b> "));
+			serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.waiting) + "</b> "));
 
 	}
 
@@ -286,11 +296,10 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			return;
 		}
 		String base = opzioni.getAndSetCachedAddress();
-		Log.i(TAG, "cached Address: "+base);
+		Log.i(TAG, "cached Address: " + base);
 		if (base != null && "".compareTo(base) != 0) {
-			basinfo.setText(Html.fromHtml(getString(R.string.contact_at)+"<font color=\"#99CC00\"> " + base
-					+ "</font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR")
-					+ "</b>"));
+			basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"> " + base
+					+ "</font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
 		} else if (base != null && getString(R.string.unavailable).compareTo(base) != 0) {
 			basinfo.setText(getString(R.string.unavailable));
 		} else {
@@ -344,7 +353,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			if (mIsBound && mBoundService != null) {
 				sb.append("<b>" + getString(R.string.service_lastexec) + "</b> "
 						+ Constants.getTimeAgo(mBoundService.getLastupd()) + "<br/><b>");
-				sb.append(getString(R.string.opt_serviceinterval) + ":</b> " + Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
+				sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
+						+ Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
 			} else {
 				sb.append("Souliss Data service <b>enabled</b> but service <b>not bound</b>");
 				Intent serviceIntent = new Intent(this, SoulissDataService.class);
@@ -379,19 +389,19 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			opzioni.initializePrefs();
-			//rimuove timeout
+			// rimuove timeout
 			timeoutHandler.removeCallbacks(timeExpired);
 			Bundle extras = intent.getExtras();
 			if (extras != null) {
 				Log.i(TAG, "Broadcast receive, refresh from DB");
 				@SuppressWarnings("unchecked")
 				ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
-				//Log.d(TAG, "RAW DATA: " + vers);
+				// Log.d(TAG, "RAW DATA: " + vers);
 
-				StringBuilder tmp = new StringBuilder("<b>"+getString(R.string.last_update)+"</b> "
+				StringBuilder tmp = new StringBuilder("<b>" + getString(R.string.last_update) + "</b> "
 						+ Constants.hourFormat.format(new Date()));
 				tmp.append(" - " + vers);
-				
+
 				setHeadInfo();
 				setServiceInfo();
 				serviceInfoFoot.setText(Html.fromHtml(tmp.toString()));
@@ -400,8 +410,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			} else {
 				Log.e(TAG, "EMPTY response!!");
 			}
-			
-			
+
 		}
 	};
 
@@ -445,7 +454,11 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 					}
 				});
 			}
-		}, 100, Constants.GUI_UPDATE_INTERVAL*opzioni.getBackoff()); // updates UI each 5 secs
+		}, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff()); // updates
+																		// UI
+																		// each
+																		// 5
+																		// secs
 	}
 
 	/*
@@ -490,8 +503,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		final double lng = (location.getLongitude());
 		coordinfo.setVisibility(View.VISIBLE);
 		homedist.setVisibility(View.VISIBLE);
-		coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom)+" <b>" + provider + "</b>: " + Constants.df.format(lat) + " : "
-				+ Constants.df.format(lng)));
+		coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: "
+				+ Constants.df.format(lat) + " : " + Constants.df.format(lng)));
 
 		final float[] res = new float[3];
 		// Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
@@ -534,8 +547,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 								unit = "km";
 								res[0] = res[0] / 1000;
 							}
-							homedist.setText(Html.fromHtml(getString(R.string.homedist)+ (int) res[0] + unit
-									+ (ff == null ? "" : " ("+getString(R.string.currentlyin)+" " + ff + ")")));
+							homedist.setText(Html.fromHtml(getString(R.string.homedist) + (int) res[0] + unit
+									+ (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
 							posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_green));
 
 						}
@@ -545,8 +558,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			}).start();
 
 		} else {
-			homedist.setText(Html
-					.fromHtml(getString(R.string.homewarn)));
+			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
 			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
 		}
 

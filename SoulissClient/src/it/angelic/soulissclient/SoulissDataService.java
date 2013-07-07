@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -35,6 +36,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SoulissDataService extends Service implements LocationListener {
 	// LOGGA a parte
@@ -122,15 +124,24 @@ public class SoulissDataService extends Service implements LocationListener {
 	public void reschedule(boolean immediate) {
 
 		opts.initializePrefs();// reload interval
-		mHandler.removeCallbacks(mUpdateSoulissRunnable);
+		mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
+															// the others
 		// reschedule self
 		if (immediate) {
 			Log.i(TAG, "Reschedule immediate ");
 			mHandler.post(mUpdateSoulissRunnable);
 		} else {
-			Log.i(TAG, "Regular mode, rescheduling self every " + opts.getBackedOffServiceInterval() / 1000
-					+ " seconds");
+			Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
 			mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec());
+			/* One of the two should get it */
+			AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+			PendingIntent secureShot = PendingIntent.getService(this, 0, new Intent(this, SoulissDataService.class),
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			calendar.add(Calendar.MILLISECOND, opts.getDataServiceIntervalMsec());
+			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
+
 		}
 		if (udpThread == null || !udpThread.isAlive()) {
 			// Create the object with the run() method
@@ -267,45 +278,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
 							List<SoulissNode> ref = db.getAllNodes();
 
-							for (SoulissNode soulissNode : ref) {
-								refreshedNodes.put(soulissNode.getId(), soulissNode);
-								List<SoulissTypical> tips = soulissNode.getTypicals();
-								for (SoulissTypical tp : tips) {
-									if (tp.isSensor()) {
-										Log.i(TAG, "Issuing sensor refresh..");
-										if (tp instanceof SoulissTypicalTemperatureSensor) {
-											UDPHelper.issueSoulissCommand(
-													"" + soulissNode.getId(),
-													"" + tp.getTypicalDTO().getSlot(),
-													opts,
-													Constants.COMMAND_SINGLE,
-													""
-															+ it.angelic.soulissclient.typicals.Constants.Souliss_T_TemperatureSensor_refresh);
-											break;// basta uno per nodo
-										} else if (tp instanceof SoulissTypicalHumiditySensor) {
-											UDPHelper.issueSoulissCommand(
-													"" + soulissNode.getId(),
-													"" + tp.getTypicalDTO().getSlot(),
-													opts,
-													Constants.COMMAND_SINGLE,
-													""
-															+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
-											break;// basta uno per nodo
-										} else if (tp instanceof SoulissTypical54LuxSensor) {
-											UDPHelper.issueSoulissCommand(
-													"" + soulissNode.getId(),
-													"" + tp.getTypicalDTO().getSlot(),
-													opts,
-													Constants.COMMAND_SINGLE,
-													""
-															+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
-											break;// basta uno per nodo
-										} else {
-											Log.e(TAG, "Uninplemented..");
-										}
-									}
-								}
-							}
+							issueRefreshSensors(ref, refreshedNodes);
 							logThings(refreshedNodes);
 
 							// try a local reach, just in case ..
@@ -413,6 +386,37 @@ public class SoulissDataService extends Service implements LocationListener {
 			// db.close();
 		}
 	};
+
+	private void issueRefreshSensors(List<SoulissNode> ref, Map<Short, SoulissNode> refreshedNodes) {
+		for (SoulissNode soulissNode : ref) {
+			refreshedNodes.put(soulissNode.getId(), soulissNode);
+			List<SoulissTypical> tips = soulissNode.getTypicals();
+			for (SoulissTypical tp : tips) {
+				if (tp.isSensor()) {
+					Log.i(TAG, "Issuing sensor refresh..");
+					if (tp instanceof SoulissTypicalTemperatureSensor) {
+						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
+								opts, Constants.COMMAND_SINGLE,
+								"" + it.angelic.soulissclient.typicals.Constants.Souliss_T_TemperatureSensor_refresh);
+						break;// basta uno per nodo
+					} else if (tp instanceof SoulissTypicalHumiditySensor) {
+						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
+								opts, Constants.COMMAND_SINGLE, ""
+										+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
+						break;// basta uno per nodo
+					} else if (tp instanceof SoulissTypical54LuxSensor) {
+						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
+								opts, Constants.COMMAND_SINGLE, ""
+										+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
+						break;// basta uno per nodo
+					} else {
+						Log.e(TAG, "Uninplemented..");
+					}
+				}
+			}
+		}
+
+	}
 
 	private void logThings(Map<Short, SoulissNode> refreshedNodes) {
 		Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
