@@ -160,7 +160,6 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm ||
-				"UNKNOWN".compareTo(getOutputDesc()) == 0 ||
 				"NA".compareTo(getOutputDesc()) == 0) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));

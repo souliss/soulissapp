@@ -1,6 +1,8 @@
 package it.angelic.soulissclient.net;
 
+import static it.angelic.soulissclient.typicals.Constants.*;
 import static junit.framework.Assert.assertEquals;
+import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
@@ -12,6 +14,8 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
 
 import java.net.DatagramPacket;
 import java.util.ArrayList;
@@ -21,10 +25,19 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.BitmapFactory;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class UDPSoulissDecoder {
@@ -156,8 +169,17 @@ public class UDPSoulissDecoder {
 
 			Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
 
+			/* Check antifurto */
 			for (SoulissNode soulissNode : ref) {
 				refreshedNodes.put(soulissNode.getId(), soulissNode);
+				
+				for(SoulissTypical ty : soulissNode.getTypicals()){
+					//check Antitheft
+					if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
+							&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm){
+						sendNotification(context, "Souliss ALARM Activated", "Check for antitheft peers", R.drawable.shield);
+					}
+				}
 			}
 			for (SoulissTrigger soulissTrigger : triggers) {
 				SoulissCommandDTO command = soulissTrigger.getCommandDto();
@@ -391,6 +413,27 @@ public class UDPSoulissDecoder {
 			return;
 		}
 
+	}
+	public static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
+
+		Intent notificationIntent = new Intent(ctx, ProgramListActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
+		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+		Resources res = ctx.getResources();
+
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+
+		builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
+				.setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker(desc)
+				.setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
+		Notification n = builder.build();
+		nm.notify(665, n);
+		try {
+	        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+	        Ringtone r = RingtoneManager.getRingtone(ctx, notification);
+	        r.play();
+	    } catch (Exception e) {}
 	}
 
 }

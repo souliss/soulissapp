@@ -177,7 +177,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft ||
 				"UNKNOWN".compareTo(getOutputDesc()) == 0 ||
-				"NA".compareTo(getOutputDesc()) == 0) {
+						typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
 		} else {
