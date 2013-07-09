@@ -10,6 +10,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -160,7 +161,7 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm ||
-				"NA".compareTo(getOutputDesc()) == 0) {
+				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3))) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
 		} else {
@@ -170,12 +171,17 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	}
 	@Override
 	public String getOutputDesc() {
+		String ret;
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_RstCmd)
-			return "OK";
-		else if (typicalDTO.getOutput() >= Constants.Souliss_T4n_InAlarm)
-			return "ALARM";
+			ret = "OK";
+		else if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm)
+			ret = "ALARM";
 		else
-			return "UNKNOWN";
+			ret = "UNKNOWN";
+		
+		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3))
+			ret += "(STALE)";
+		return ret;
 	}
 
 }

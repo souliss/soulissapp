@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_AutoCmd;
+import static it.angelic.soulissclient.typicals.Constants.*;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCmd;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCoil;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCoil_Auto;
@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,28 +48,26 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
-public class Typical1nFragment extends SherlockFragment {
+public class Typical4nFragment extends SherlockFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
-	private Button buttPlus;
+	private ToggleButton buttPlus;
 
 	private SoulissTypical collected;
 	// private SoulissTypical related;
-	private SeekBar timer;
 	private Button btSleep;
 
 	// Color change listener.
 
 	private VisualizerView mVisualizerView;
-	private TextView timerInfo;
-	private Button buttAuto;
-	private TextView autoInfo;
-	private TextView infoTyp;
+	private TextView alarmInfoTextView;
 	private ToggleButton togMassive;
+	private CheckBox notifCheckbox;
+	private TextView infoTyp;
 	
-	public static Typical1nFragment newInstance(int index, SoulissTypical content) {
-		Typical1nFragment f = new Typical1nFragment();
+	public static Typical4nFragment newInstance(int index, SoulissTypical content) {
+		Typical4nFragment f = new Typical4nFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
@@ -119,7 +118,7 @@ public class Typical1nFragment extends SherlockFragment {
 		if (container == null)
 			return null;
 		opzioni = SoulissClient.getOpzioni();
-		View ret = inflater.inflate(R.layout.frag_t1n, container, false);
+		View ret = inflater.inflate(R.layout.frag_t4n, container, false);
 		datasource = new SoulissDBHelper(getActivity());
 		datasource.open();
 
@@ -141,25 +140,20 @@ public class Typical1nFragment extends SherlockFragment {
 			actionBar.setTitle(collected.getNiceName());
 		}
 
-		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-		buttAuto = (Button) ret.findViewById(R.id.buttonAuto);
-		timer = (SeekBar) ret.findViewById(R.id.sleepBar);
-		timerInfo = (TextView) ret.findViewById(R.id.textviewTimerInfo);
-		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
-		btSleep = (Button) ret.findViewById(R.id.sleep);
+		buttPlus = (ToggleButton) ret.findViewById(R.id.buttonPlus);
+		alarmInfoTextView = (TextView) ret.findViewById(R.id.textviewAlarmInfo);
+		notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
 		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
-		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 		buttPlus.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
-		btSleep.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T_related);
 		// Listener generico
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
 				Short cmd = (Short) v.getTag();
-				if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil) {
+				if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft) {
 					shutoff();
-				} else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil) {
+				} else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft) {
 					turnOn(0);
 				} else {
 					Log.e(Constants.TAG, "OUTPUT Error");
@@ -171,42 +165,12 @@ public class Typical1nFragment extends SherlockFragment {
 		};
 		buttPlus.setOnClickListener(plus);
 
-		buttAuto.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Thread t = new Thread() {
-					public void run() {
-						if (togMassive.isChecked())
-							UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni,
-									String.valueOf(Souliss_T1n_AutoCmd));
-						else
-							UDPHelper.issueSoulissCommand("" + collected.getTypicalDTO().getNodeId(), ""
-									+ collected.getTypicalDTO().getSlot(), opzioni,
-									it.angelic.soulissclient.Constants.COMMAND_SINGLE,
-									String.valueOf(Souliss_T1n_AutoCmd));
-					}
-				};
+		
 
-				t.start();
-				Toast.makeText(
-						getActivity(),
-						getActivity().getString(R.string.Souliss_AutoCmd_desc) + " "
-								+ getActivity().getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-			}
-		});
-
-		OnClickListener plusSlip = new OnClickListener() {
-			public void onClick(View v) {
-				// Il timer parte da 10...
-				turnOn(timer.getProgress() + 0x30);
-				return;
-			}
-		};
-		btSleep.setOnClickListener(plusSlip);
-
-		if (collected instanceof SoulissTypical12) {
+		
+	/*	if (collected instanceof SoulissTypical12) {
 			btSleep.setVisibility(View.GONE);
-			timer.setVisibility(View.GONE);
-			timerInfo.setVisibility(View.GONE);
+			alarmInfoTextView.setVisibility(View.GONE);
 			// Check AUTO mode
 			if (collected.getOutputDesc().contains("AUTO"))
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON");
@@ -215,14 +179,14 @@ public class Typical1nFragment extends SherlockFragment {
 		} else if (collected instanceof SoulissTypical11) {
 			buttAuto.setVisibility(View.GONE);
 			autoInfo.setVisibility(View.GONE);
-		}
+		}*/
 		// sfondo bottone
-		if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil
-				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil_Auto)
-			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_on));
-		else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil
-				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil_Auto)
-			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_off));
+		if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
+			buttPlus.setSelected(true);
+			//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+		else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
+			buttPlus.setSelected(false);
+			//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
 		return ret;
 	}
 
@@ -230,13 +194,10 @@ public class Typical1nFragment extends SherlockFragment {
 		Thread t = new Thread() {
 			public void run() {
 				Looper.prepare();
-				if (togMassive.isChecked())
-					UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni, ""
-							+ (Souliss_T1n_OffCmd));
-				else
+				
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
 							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
-							+ (Souliss_T1n_OffCmd));
+							+ (Souliss_T4n_NotArmed));
 
 			}
 		};
@@ -252,28 +213,15 @@ public class Typical1nFragment extends SherlockFragment {
 		Thread t = new Thread() {
 			public void run() {
 				Looper.prepare();
-
-				if (togMassive.isChecked())
-					UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni, ""
-							+ (Souliss_T1n_OnCmd + i));
-				else
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
 							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
-							+ (Souliss_T1n_OnCmd + i));
+							+Souliss_T4n_Armed);
 
 			}
 		};
 
 		t.start();
-		if (i > 0)
-			Toast.makeText(
-					getActivity(),
-					getActivity().getString(R.string.Souliss_TRGB_sleep) + " "
-							+ getActivity().getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-		else
-			Toast.makeText(getActivity(),
-					getActivity().getString(R.string.TurnON) + " " + getActivity().getString(R.string.command_sent),
-					Toast.LENGTH_SHORT).show();
+	
 		return;
 
 	}
@@ -344,14 +292,15 @@ public class Typical1nFragment extends SherlockFragment {
 				datasource.open();
 				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
 				collected = coll.getTypical(collected.getTypicalDTO().getSlot());
-				if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil)
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_on));
-				else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil)
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_off));
-				else if (collected.getTypicalDTO().getOutput() >= Souliss_T1n_Timed) {
-					timer.setProgress(collected.getTypicalDTO().getOutput());
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_on));
-					timerInfo.setText("Cycles to shutoff: " + collected.getTypicalDTO().getOutput());
+				if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
+					buttPlus.setSelected(true);
+					//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+				else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
+					buttPlus.setSelected(false);
+				else if (collected.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
+					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+					//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+					//alarmInfoTextView.setText("Cycles to shutoff: " + collected.getTypicalDTO().getOutput());
 				} else {
 					Log.w(Constants.TAG, "Unknown status");
 				}

@@ -10,6 +10,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -43,6 +44,8 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 
 	public SoulissTypical41AntiTheft(SoulissPreferenceHelper fg) {
 		super(fg);
+		//se lo istanzio, ce l'ho
+		fg.setAntitheftPresent(true);//
 	}
 
 	@Override
@@ -176,8 +179,8 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft ||
-				"UNKNOWN".compareTo(getOutputDesc()) == 0 ||
-						typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm) {
+				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3)) ||
+						typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
 		} else {
@@ -187,14 +190,20 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 	}
 	@Override
 	public String getOutputDesc() {
+		String ret;
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Antitheft)
-			return "ARMED";
+			ret = "ARMED";
 		else if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft)
-			return "NOT ARMED";
+			ret = "NOT ARMED";
 		else if (typicalDTO.getOutput() >= Constants.Souliss_T4n_InAlarm)
-			return "ALARM";
+			ret = "ALARM";
 		else
-			return "UNKNOWN";
+			ret= "UNKNOWN";
+		
+		if (Calendar.getInstance().getTime().getTime() - getTypicalDTO().getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3))
+			ret += "(STALE)";
+		
+		return ret;
 	}
 
 }

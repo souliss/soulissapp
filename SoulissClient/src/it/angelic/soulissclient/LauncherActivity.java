@@ -2,8 +2,10 @@ package it.angelic.soulissclient;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.receivers.NetworkStateReceiver;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,6 +77,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private Handler timeoutHandler;
 	private Button soulissSceneBtn;
 	private Button soulissManualBtn;
+	private TextView serviceInfoAntiTheft;
 	private Button programsActivity;
 
 	protected PendingIntent netListenerPendingIntent;
@@ -113,6 +116,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		}
 	};
 
+
 	void doBindService() {
 		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, Context.BIND_AUTO_CREATE);
 	}
@@ -150,6 +154,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		coordinfo = (TextView) findViewById(R.id.TextViewCoords);
 		homedist = (TextView) findViewById(R.id.TextViewFromHome);
 		serviceInfoFoot = (TextView) findViewById(R.id.TextViewNodes);
+		serviceInfoAntiTheft = (TextView) findViewById(R.id.TextViewAntiTheft);
 		// gestore timeout dei comandi
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		timeoutHandler = new Handler();
@@ -243,6 +248,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		setHeadInfo();
 		setDbInfo();
 		setServiceInfo();
+		setAntiTheftInfo();
 		if (opzioni.isSoulissIpConfigured() && opzioni.isDataServiceEnabled())
 			serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.waiting) + "</b> "));
 
@@ -329,6 +335,15 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			dbwarnline.setVisibility(View.GONE);
 		}
 	}
+	private void setAntiTheftInfo(){
+		if (opzioni.isAntitheftPresent()){
+			serviceInfoAntiTheft.setVisibility(View.VISIBLE);
+			SoulissDBHelper db = new SoulissDBHelper(this);
+			db.open();
+			SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();
+			serviceInfoAntiTheft.setText(Html.fromHtml("<b>"+getString(R.string.antitheft_status)+"</b> "+at.getOutputDesc()));
+		}
+	}
 
 	private void setServiceInfo() {
 		StringBuilder sb = new StringBuilder();
@@ -388,7 +403,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			opzioni.initializePrefs();
+			//opzioni.initializePrefs();
 			// rimuove timeout
 			timeoutHandler.removeCallbacks(timeExpired);
 			Bundle extras = intent.getExtras();
@@ -400,7 +415,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 				StringBuilder tmp = new StringBuilder("<b>" + getString(R.string.last_update) + "</b> "
 						+ Constants.hourFormat.format(new Date()));
-				tmp.append(" - " + vers);
+				tmp.append(" - " + vers.size()+" " +context.getString(R.string.bytes_received));
+				
 
 				setHeadInfo();
 				setServiceInfo();
@@ -451,14 +467,12 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 						setHeadInfo();
 						setDbInfo();
 						setServiceInfo();
+						setAntiTheftInfo();
 					}
 				});
 			}
-		}, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff()); // updates
-																		// UI
-																		// each
-																		// 5
-																		// secs
+			//UI updates every 5 secs.
+		}, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());
 	}
 
 	/*
@@ -547,7 +561,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 								unit = "km";
 								res[0] = res[0] / 1000;
 							}
-							homedist.setText(Html.fromHtml(getString(R.string.homedist) + (int) res[0] + unit
+							homedist.setText(Html.fromHtml("<b>"+getString(R.string.homedist) + "</b> "+(int) res[0] + unit
 									+ (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
 							posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_green));
 

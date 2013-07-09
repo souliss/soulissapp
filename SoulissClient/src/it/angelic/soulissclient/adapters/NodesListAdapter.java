@@ -57,13 +57,13 @@ public class NodesListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		NodeViewHolder holder;
 
-		// ProgressBar sfumata
-		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0,250, 0, context.getResources()
-				.getColor(color.aa_red), context.getResources().getColor(color.aa_green),
-				android.graphics.Shader.TileMode.CLAMP);
-
 		if (convertView == null) {
+			// ProgressBar sfumata
+			final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
+			final LinearGradient gradient = new LinearGradient(0, 0,250, 0, context.getResources()
+					.getColor(color.aa_red), context.getResources().getColor(color.aa_green),
+					android.graphics.Shader.TileMode.CLAMP);
+			
 			convertView = mInflater.inflate(R.layout.listview, null);
 			holder = new NodeViewHolder();
 			holder.text = (TextView) convertView.findViewById(R.id.TextView01);

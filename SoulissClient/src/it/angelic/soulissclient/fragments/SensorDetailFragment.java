@@ -159,7 +159,7 @@ public class SensorDetailFragment extends Fragment {
 
 		// ProgressBar sfumata
 		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, SoulissClient.getDisplayWidth() / 2, 0, getResources()
+		final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, getResources()
 				.getColor(color.aa_red), getResources().getColor(color.aa_green),
 				android.graphics.Shader.TileMode.CLAMP);
 		pgDrawable.getPaint().setStrokeWidth(3);
@@ -274,7 +274,7 @@ public class SensorDetailFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		datasource.close();
+		//datasource.close();
 	}
 
 	/**

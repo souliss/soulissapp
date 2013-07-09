@@ -10,6 +10,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
 import java.text.ParseException;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -377,6 +379,28 @@ public class SoulissDBHelper {
 		// Make sure to close the cursor
 		cursor.close();
 		return comments;
+	}
+
+	/**
+	 * DB typical factory
+	 * 
+	 * @param node
+	 * @param slot
+	 * @return produced Typical
+	 */
+	public SoulissTypical41AntiTheft getAntiTheftMasterTypical() {
+		// query with primary key
+		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+				SoulissDB.COLUMN_TYPICAL + " = "
+						+ it.angelic.soulissclient.typicals.Constants.Souliss_T41_Antitheft_Main, null, null, null,
+				null);
+		if (cursor.moveToFirst()) {
+			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+			SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypical.typicalFactory(dto.getTypical(), getSoulissNode(dto.getNodeId()), dto, opts);
+			cursor.close();
+			return ret;
+		} else
+			throw new NoSuchElementException();
 	}
 
 	/**

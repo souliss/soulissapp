@@ -180,5 +180,18 @@
             android:textIsSelectable="false"
             android:layout_marginLeft="5dip" />
     </TableRow>
+    
+    <TableRow
+        android:id="@+id/TableRowAntiTheft"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewAntiTheft"
+            style="@style/CodeFontMain"
+            android:visibility="gone"
+            android:textIsSelectable="false"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
 
 </TableLayout>

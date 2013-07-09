@@ -53,6 +53,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private int nodeIndex;
 	private int backoff = 1;
 	private boolean animations;
+	private boolean antitheftPresent;
 
 	public SoulissPreferenceHelper(Context contx) {
 		super();
@@ -116,6 +117,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		userIndex = prefs.getInt("userIndex", -1);
 		nodeIndex = prefs.getInt("nodeIndex", -1);
 		animations = prefs.getBoolean("checkboxAnimazione", true);
+		antitheftPresent = prefs.getBoolean("antitheft", false);
 		try {
 			ListDimensTesto = Float.valueOf(DimensTesto);
 		} catch (Exception e) {
@@ -387,6 +389,18 @@ public class SoulissPreferenceHelper implements Serializable {
 		this.nodeIndex = nodeIndex;
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putInt("nodeIndex", nodeIndex);
+		pesta.commit();
+	}
+
+	public boolean isAntitheftPresent() {
+		// TODO Auto-generated method stub
+		return antitheftPresent;
+	}
+
+	public void setAntitheftPresent(boolean antitheftPresent) {
+		this.antitheftPresent = antitheftPresent;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putBoolean("antitheft", antitheftPresent);
 		pesta.commit();
 	}
 }

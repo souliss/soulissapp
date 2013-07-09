@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.angelic.soulissclient"
     android:installLocation="auto"
-    android:versionCode="102"
-    android:versionName="1.2.32" >
+    android:versionCode="103"
+    android:versionName="1.2.4" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -165,16 +165,15 @@
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
         </activity>
-        <!--
         <activity
-            android:name="PreferencesActivity"
+            android:name="Typical4nDetail"
             android:exported="false"
-            android:label="@string/app_opt" >
+            android:icon="@drawable/light_off"
+            android:label="@string/typical" >
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
-        </activity>
-        -->
+        </activity>
         <activity
             android:name="it.angelic.soulissclient.PreferencesActivity"
             android:exported="false"

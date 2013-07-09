@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Cont01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textView1nInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <ToggleButton
+            android:id="@+id/buttonPlus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_centerHorizontal="true"
+             android:layout_below="@id/textView1nInfo"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="25dip"
+            android:layout_marginRight="25dip"
+            android:textSize="26sp"
+            android:text="BLERG"
+            android:gravity="center_vertical|center_horizontal" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout1"
+        android:weightSum="4" >
+
+        <TextView
+            android:id="@+id/textviewAlarmInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:gravity="center"
+            android:text="@string/timer"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <CheckBox
+            android:id="@+id/checkBoxnotifAndroid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewAlarmInfo"
+            android:text="Send Android Notifications" />
+
+        <CheckBox
+            android:id="@+id/checkBoxnotifMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkBoxnotifAndroid"
+            android:text="Send Email" />
+    </RelativeLayout>
+
+</RelativeLayout>

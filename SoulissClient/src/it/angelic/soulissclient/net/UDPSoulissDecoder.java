@@ -62,7 +62,7 @@ public class UDPSoulissDecoder {
 	 */
 	public void decodevNet(DatagramPacket packet) {
 		int checklen = packet.getLength();
-		//Log.d("UDPDecoder", "** Packet received");
+		// Log.d("UDPDecoder", "** Packet received");
 		ArrayList<Short> mac = new ArrayList<Short>();
 		for (int ig = 7; ig < checklen; ig++) {
 			mac.add((short) (packet.getData()[ig] & 0xFF));
@@ -83,9 +83,9 @@ public class UDPSoulissDecoder {
 			decodeMacaco(mac);
 		}
 
-		/* DEBUG PACCHETTO
-		 * StringBuilder dump = new StringBuilder(); for (int ig = 0; ig <
-		 * checklen; ig++) { // 0xFF & buf[index] dump.append("0x" +
+		/*
+		 * DEBUG PACCHETTO StringBuilder dump = new StringBuilder(); for (int ig
+		 * = 0; ig < checklen; ig++) { // 0xFF & buf[index] dump.append("0x" +
 		 * Long.toHexString(0xFF & packet.getData()[ig]) + " "); //
 		 * dump.append(":"+packet.getData()[ig]); } Log.d("UDPDecoder", "***" +
 		 * dump.toString());
@@ -108,7 +108,7 @@ public class UDPSoulissDecoder {
 		// NUMBEROF 1 byte
 		int startOffset = mac.get(3);
 		int numberOf = mac.get(4);
-		Log.d("UDPDecoder", "** Macaco IN: Start Offset:" + startOffset+", Number of " + numberOf);
+		Log.d("UDPDecoder", "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
 		switch (functionalCode) {
 		case Constants.Souliss_UDP_function_subscribe_data:
 			Log.d("UDPDecoder", "** Subscription answer");
@@ -170,14 +170,16 @@ public class UDPSoulissDecoder {
 			Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
 
 			/* Check antifurto */
-			for (SoulissNode soulissNode : ref) {
-				refreshedNodes.put(soulissNode.getId(), soulissNode);
-				
-				for(SoulissTypical ty : soulissNode.getTypicals()){
-					//check Antitheft
-					if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
-							&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm){
-						sendNotification(context, "Souliss ALARM Activated", "Check for antitheft peers", R.drawable.shield);
+			if (opzioni.isAntitheftPresent()) {
+				for (SoulissNode soulissNode : ref) {
+					refreshedNodes.put(soulissNode.getId(), soulissNode);
+					for (SoulissTypical ty : soulissNode.getTypicals()) {
+						// check Antitheft
+						if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
+								&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
+							sendNotification(context, "Souliss ALARM Activated", "Check for antitheft peers",
+									R.drawable.shield);
+						}
 					}
 				}
 			}
@@ -336,7 +338,7 @@ public class UDPSoulissDecoder {
 			if (mac.get(5 + j) != 0) {// create only not-empty typicals
 				SoulissTypicalDTO dto = new SoulissTypicalDTO();
 				dto.setTypical(mac.get(5 + j));
-				dto.setSlot(((short) (j % typXnodo)));
+				dto.setSlot(((short) (j % typXnodo)));// magia
 				dto.setNodeId((short) (j / typXnodo));
 				// conta solo i master
 				if (mac.get(5 + j) != it.angelic.soulissclient.typicals.Constants.Souliss_T_related)
@@ -378,7 +380,8 @@ public class UDPSoulissDecoder {
 					continue;
 				}
 			}
-			//Log.d(Constants.TAG, "Refreshed " + refreshed + " typicals STATUS for node " + tgtnode);
+			// Log.d(Constants.TAG, "Refreshed " + refreshed +
+			// " typicals STATUS for node " + tgtnode);
 		} catch (IllegalStateException e) {
 			Log.e(Constants.TAG, "DB connection was closed, impossible to finish");
 			return;
@@ -414,6 +417,7 @@ public class UDPSoulissDecoder {
 		}
 
 	}
+
 	public static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
 
 		Intent notificationIntent = new Intent(ctx, ProgramListActivity.class);
@@ -430,10 +434,11 @@ public class UDPSoulissDecoder {
 		Notification n = builder.build();
 		nm.notify(665, n);
 		try {
-	        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-	        Ringtone r = RingtoneManager.getRingtone(ctx, notification);
-	        r.play();
-	    } catch (Exception e) {}
+			Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+			Ringtone r = RingtoneManager.getRingtone(ctx, notification);
+			r.play();
+		} catch (Exception e) {
+		}
 	}
 
 }

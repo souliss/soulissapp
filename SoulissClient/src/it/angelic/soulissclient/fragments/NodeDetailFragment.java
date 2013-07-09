@@ -1,8 +1,6 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T11;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T12;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T16;
+import static it.angelic.soulissclient.typicals.Constants.*;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.AirConActivity;
 import it.angelic.soulissclient.Constants;
@@ -14,6 +12,7 @@ import it.angelic.soulissclient.SensorDetailActivity;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.Typical1nDetail;
+import it.angelic.soulissclient.Typical4nDetail;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -27,6 +26,8 @@ import it.angelic.soulissclient.typicals.SoulissTypical12;
 import it.angelic.soulissclient.typicals.SoulissTypical15;
 import it.angelic.soulissclient.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.typicals.SoulissTypical32AirCon;
+import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.typicals.SoulissTypicalHumiditySensor;
 import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
@@ -309,6 +310,8 @@ public class NodeDetailFragment extends ListFragment {
 				details = RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)
 				details = Typical1nFragment.newInstance(index, target);
+			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer)
+				details = Typical4nFragment.newInstance(index, target);
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -329,7 +332,7 @@ public class NodeDetailFragment extends ListFragment {
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.typicals.Constants.Souliss_T32_IrCom_AirCon) {
+			}else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.typicals.Constants.Souliss_T32_IrCom_AirCon) {
 				Intent nodeDatail = new Intent(getActivity(), AirConActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical32AirCon) target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getTypicalDTO().getSlot() + 1)));
@@ -353,6 +356,13 @@ public class NodeDetailFragment extends ListFragment {
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T11
 					|| target.getTypicalDTO().getTypical() == Souliss_T12) {
 				Intent nodeDatail = new Intent(getActivity(), Typical1nDetail.class);
+				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
+				NodeDetailFragment.this.startActivity(nodeDatail);
+				if (opzioni.isAnimationsEnabled())
+					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+			} else if (target.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
+					|| target.getTypicalDTO().getTypical() == Souliss_T42_Antitheft_Peer) {
+				Intent nodeDatail = new Intent(getActivity(), Typical4nDetail.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 				NodeDetailFragment.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
@@ -391,10 +401,10 @@ public class NodeDetailFragment extends ListFragment {
 
 		// ProgressBar sfumata
 		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, SoulissClient.getDisplayWidth() / 2, 0, getResources()
+		final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, getResources()
 				.getColor(color.aa_red), getResources().getColor(color.aa_green),
 				android.graphics.Shader.TileMode.CLAMP);
-		pgDrawable.getPaint().setStrokeWidth(3);
+		//pgDrawable.getPaint().setStrokeWidth(3);
 		pgDrawable.getPaint().setDither(true);
 		pgDrawable.getPaint().setShader(gradient);
 

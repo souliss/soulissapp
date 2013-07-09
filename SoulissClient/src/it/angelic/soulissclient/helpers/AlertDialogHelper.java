@@ -624,78 +624,14 @@ public class AlertDialogHelper {
 									UDPHelper.requestDBStruct(opts);
 								}
 							}.start();
-							Toast.makeText(preferencesActivity, "DB Structure requested", Toast.LENGTH_SHORT).show();
+							Toast.makeText(preferencesActivity, preferencesActivity.getResources().getString(R.string.dbstruct_req), Toast.LENGTH_SHORT).show();
 						}
 					});
 		} else {
 			alert.setMessage(preferencesActivity.getResources().getString(R.string.souliss_unavailable));
 
 		}
-		/*
-		 * else { JSON
-		 * alert.setPositiveButton(preferencesActivity.getResources()
-		 * .getString(android.R.string.ok), new
-		 * DialogInterface.OnClickListener() {
-		 * 
-		 * public void onClick(DialogInterface dialog, int whichButton) {
-		 * progressDialog = ProgressDialog.show(preferencesActivity, "",
-		 * SoulissClient.getAppContext()
-		 * .getResources().getString(R.string.status_updating));
-		 * 
-		 * new Thread() {
-		 * 
-		 * public void run() { Looper.prepare(); SoulissDBHelper datasource =
-		 * new SoulissDBHelper(preferencesActivity);
-		 * 
-		 * JSONHelper.setServer(ip); datasource.open(); final HashMap<Short,
-		 * SoulissNode> names = JSONHelper.getAllNodes(); if (names == null ||
-		 * names.size() == 0) { progressDialog.dismiss();
-		 * preferencesActivity.runOnUiThread(new Runnable() { public void run()
-		 * { Toast.makeText( preferencesActivity,
-		 * SoulissClient.getAppContext().getResources()
-		 * .getString(R.string.status_souliss_notreachable),
-		 * Toast.LENGTH_SHORT).show(); } }); return; }
-		 * 
-		 * final int totNodes = names.size(); int tottyp = 0; try { for (final
-		 * SoulissNode soulissNode : names.values()) { datasource.open(); //
-		 * crea ex novo, o aggiorna datasource.createOrUpdateNode(soulissNode);
-		 * for (SoulissTypical soulissT : soulissNode.getTypicals()) { // viene
-		 * perso il nome e gli // altri // settaggi // utente
-		 * soulissT.getTypicalDTO().createOrReplaceTypical(datasource); // lo
-		 * conto se non e vuoto if (!soulissT.isEmpty() &&
-		 * !soulissT.isRelated()) tottyp++; } } SharedPreferences.Editor editor
-		 * = customSharedPreference.edit(); // sistema configurato if
-		 * (customSharedPreference.contains("numNodi"))
-		 * editor.remove("numNodi"); if
-		 * (customSharedPreference.contains("numTipici"))
-		 * editor.remove("numTipici");
-		 * 
-		 * editor.putInt("numNodi", totNodes); editor.putInt("numTipici",
-		 * tottyp);
-		 * 
-		 * Log.i(TAG, "Refreshed " + totNodes + " Nodes and " + tottyp +
-		 * " typicals"); editor.commit(); preferencesActivity.runOnUiThread(new
-		 * Runnable() { public void run() { Toast.makeText( preferencesActivity,
-		 * "Souliss configuration complete: " + totNodes + " nodes detected",
-		 * Toast.LENGTH_SHORT).show(); Intent intent =
-		 * preferencesActivity.getIntent();
-		 * preferencesActivity.overridePendingTransition(0, 0);
-		 * intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-		 * preferencesActivity.finish(); intent.putExtra("opt_screen",
-		 * "db_setup"); intent.setAction("db_setup");
-		 * preferencesActivity.overridePendingTransition(0, 0);
-		 * preferencesActivity.startActivity(intent);
-		 * 
-		 * } }); } catch (Exception e) { Log.e(TAG, e.getMessage(), e); }
-		 * 
-		 * // dismiss the progress dialog datasource.close();
-		 * progressDialog.dismiss(); }
-		 * 
-		 * }.start();
-		 * 
-		 * } }); }
-		 */
-
+		
 		alert.setNegativeButton(SoulissClient.getAppContext().getResources().getString(android.R.string.cancel),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {

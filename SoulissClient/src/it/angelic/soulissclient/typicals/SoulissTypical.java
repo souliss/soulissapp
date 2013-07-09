@@ -69,7 +69,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 	}
 
 	/**
-	 * get the concrete typical
+	 * get the concrete typical and instantiate it
 	 * 
 	 * @param typ
 	 * @param parent
@@ -121,6 +121,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypical32AirCon(opts);
 			break;
 		case Constants.Souliss_T41_Antitheft_Main:
+			//set the isAntitheftConfigure option TRUE
 			rest = new SoulissTypical41AntiTheft(opts);
 			break;
 		case Constants.Souliss_T42_Antitheft_Peer:
