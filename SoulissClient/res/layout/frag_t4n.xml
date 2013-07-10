@@ -11,7 +11,7 @@
         android:gravity="center" >
 
         <TextView
-            android:id="@+id/textView1nInfo"
+            android:id="@+id/textView4nInfo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -23,18 +23,20 @@
             android:id="@+id/buttonPlus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:layout_below="@id/textView4nInfo"
             android:layout_centerHorizontal="true"
-             android:layout_below="@id/textView1nInfo"
             android:layout_margin="10dp"
             android:layout_marginLeft="25dip"
             android:layout_marginRight="25dip"
-            android:textSize="26sp"
-            android:text="BLERG"
-            android:gravity="center_vertical|center_horizontal" />
+            android:gravity="center_vertical|center_horizontal"
+            android:minHeight="164dip"
+            android:padding="20dp"
+            android:textSize="26sp" />
+
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayoutAlarmInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout1"
@@ -54,14 +56,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textviewAlarmInfo"
-            android:text="Send Android Notifications" />
+            android:text="@string/antitheftNotify" />
 
-        <CheckBox
-            android:id="@+id/checkBoxnotifMail"
-            android:layout_width="wrap_content"
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutAlarmInfo"
+        android:weightSum="4" >
+        
+        <TextView
+            android:id="@+id/textViewSensorInfo"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/checkBoxnotifAndroid"
-            android:text="Send Email" />
+            android:layout_marginTop="2dp"
+            android:text="@string/sensors"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/textviewSensors"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_below="@id/textViewSensorInfo"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        
     </RelativeLayout>
 
 </RelativeLayout>

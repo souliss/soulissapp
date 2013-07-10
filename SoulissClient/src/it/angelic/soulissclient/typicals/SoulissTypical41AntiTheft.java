@@ -115,8 +115,11 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		// disabilitazioni interlock
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Antitheft) {
 			turnOnButton.setEnabled(false);
-		} else {
+		}else if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft){
 			turnOffButton.setEnabled(false);
+		}
+		else  if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm){
+			
 		}
 
 		turnOnButton.setOnClickListener(new OnClickListener() {

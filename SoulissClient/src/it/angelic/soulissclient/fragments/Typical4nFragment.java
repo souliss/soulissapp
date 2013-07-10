@@ -1,5 +1,8 @@
 package it.angelic.soulissclient.fragments;
 
+/**
+ * Antifurto, deve poter leggere lo stato di tutti i sensori. Il pannello e` unico
+ */
 import static it.angelic.soulissclient.typicals.Constants.*;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCmd;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCoil;
@@ -9,6 +12,9 @@ import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCoil;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCoil_Auto;
 import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Timed;
 import static junit.framework.Assert.assertTrue;
+
+import java.util.List;
+
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -20,6 +26,8 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.typicals.SoulissTypical;
 import it.angelic.soulissclient.typicals.SoulissTypical11;
 import it.angelic.soulissclient.typicals.SoulissTypical12;
+import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
@@ -30,6 +38,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +46,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +75,10 @@ public class Typical4nFragment extends SherlockFragment {
 	private ToggleButton togMassive;
 	private CheckBox notifCheckbox;
 	private TextView infoTyp;
-	
+	private TextView textviewSensors;
+	private SoulissTypical41AntiTheft senseiMaster;
+	private List<SoulissTypical42AntiTheftPeer> sensei;
+
 	public static Typical4nFragment newInstance(int index, SoulissTypical content) {
 		Typical4nFragment f = new Typical4nFragment();
 
@@ -80,7 +93,6 @@ public class Typical4nFragment extends SherlockFragment {
 
 		return f;
 	}
-
 
 	/**
 	 * Interface describing a color change listener.
@@ -109,7 +121,18 @@ public class Typical4nFragment extends SherlockFragment {
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());
 		}
+	}
 
+	private void setSensorsView() {
+		StringBuilder tmp = new StringBuilder();
+
+		sensei = datasource.getAntiTheftSensors();
+		for (SoulissTypical42AntiTheftPeer soulissTypical42AntiTheftPeer : sensei) {
+			tmp.append(soulissTypical42AntiTheftPeer.getParentNode().getNiceName() + " - "
+					+ soulissTypical42AntiTheftPeer.getNiceName() + " - "
+					+ soulissTypical42AntiTheftPeer.getOutputDesc() + "\n");
+		}
+		textviewSensors.setText(Html.fromHtml(tmp.toString()));
 	}
 
 	@SuppressLint("NewApi")
@@ -121,6 +144,10 @@ public class Typical4nFragment extends SherlockFragment {
 		View ret = inflater.inflate(R.layout.frag_t4n, container, false);
 		datasource = new SoulissDBHelper(getActivity());
 		datasource.open();
+		//Il master sara` sempre lo stesso, anche se collected e` un peer
+		if (opzioni.isAntitheftPresent()){
+			senseiMaster = datasource.getAntiTheftMasterTypical();
+		}
 
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null && extras.get("TIPICO") != null) {
@@ -143,62 +170,74 @@ public class Typical4nFragment extends SherlockFragment {
 		buttPlus = (ToggleButton) ret.findViewById(R.id.buttonPlus);
 		alarmInfoTextView = (TextView) ret.findViewById(R.id.textviewAlarmInfo);
 		notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
-		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
+		infoTyp = (TextView) ret.findViewById(R.id.textView4nInfo);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-		buttPlus.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_BrightUp);
+		textviewSensors = (TextView) ret.findViewById(R.id.textviewSensors);
+
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
+		alarmInfoTextView.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
+				+ senseiMaster.getOutputDesc()));
+		setSensorsView();
 		// Listener generico
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
-				Short cmd = (Short) v.getTag();
-				if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft) {
+				if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft) {
 					shutoff();
-				} else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft) {
-					turnOn(0);
 				} else {
-					Log.e(Constants.TAG, "OUTPUT Error");
+					turnOn(0);
 				}
-				assertTrue(cmd != null);
 				return;
 			}
 
 		};
 		buttPlus.setOnClickListener(plus);
-
 		
 
-		
-	/*	if (collected instanceof SoulissTypical12) {
-			btSleep.setVisibility(View.GONE);
-			alarmInfoTextView.setVisibility(View.GONE);
-			// Check AUTO mode
-			if (collected.getOutputDesc().contains("AUTO"))
-				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON");
-			else
-				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF");
-		} else if (collected instanceof SoulissTypical11) {
-			buttAuto.setVisibility(View.GONE);
-			autoInfo.setVisibility(View.GONE);
-		}*/
+		notifCheckbox.setChecked(opzioni.isAntitheftNotify());
+		notifCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+			   @Override
+			   public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+				   	opzioni.setAntitheftNotify(isChecked);
+			   }
+			});
+		/*
+		 * if (collected instanceof SoulissTypical12) {
+		 * btSleep.setVisibility(View.GONE);
+		 * alarmInfoTextView.setVisibility(View.GONE); // Check AUTO mode if
+		 * (collected.getOutputDesc().contains("AUTO"))
+		 * autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON"); else
+		 * autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF"); }
+		 * else if (collected instanceof SoulissTypical11) {
+		 * buttAuto.setVisibility(View.GONE); autoInfo.setVisibility(View.GONE);
+		 * }
+		 */
 		// sfondo bottone
 		if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
-			buttPlus.setSelected(true);
-			//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+			buttPlus.setChecked(true);
+		// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
 		else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
-			buttPlus.setSelected(false);
-			//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+			buttPlus.setChecked(false);
+		else if (senseiMaster.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
+			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.alert_theft));
+			buttPlus.setTextOn("ALARM");
+			buttPlus.setTextOff("ALARM");
+			// alarmInfoTextView.setText("Cycles to shutoff: " +
+			// collected.getTypicalDTO().getOutput());
+		}
+		// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
 		return ret;
 	}
-
+	/**
+	 * comandi sempre inviati al master
+	 */
 	private void shutoff() {
 		Thread t = new Thread() {
 			public void run() {
 				Looper.prepare();
-				
-					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
-							+ (Souliss_T4n_NotArmed));
-
+				UDPHelper.issueSoulissCommand("" + senseiMaster.getParentNode().getId(), ""
+						+ senseiMaster.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
+						+ (Souliss_T4n_NotArmed));
 			}
 		};
 		t.start();
@@ -213,20 +252,20 @@ public class Typical4nFragment extends SherlockFragment {
 		Thread t = new Thread() {
 			public void run() {
 				Looper.prepare();
-					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
-							+Souliss_T4n_Armed);
-
+				UDPHelper.issueSoulissCommand("" + senseiMaster.getParentNode().getId(), ""
+						+ senseiMaster.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
+						+ Souliss_T4n_Armed);
 			}
 		};
 
 		t.start();
-	
+		Toast.makeText(getActivity(),
+				getActivity().getString(R.string.TurnON) + " " + getActivity().getString(R.string.command_sent),
+				Toast.LENGTH_SHORT).show();
 		return;
 
 	}
 
-	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// inflater.inflate(R.menu.queue_options, menu);
@@ -290,21 +329,24 @@ public class Typical4nFragment extends SherlockFragment {
 			try {
 				Log.i(Constants.TAG, "Broadcast received, intent" + intent.toString());
 				datasource.open();
-				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
-				collected = coll.getTypical(collected.getTypicalDTO().getSlot());
-				if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
-					buttPlus.setSelected(true);
-					//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
-				else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
-					buttPlus.setSelected(false);
-				else if (collected.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
-					//buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
-					//alarmInfoTextView.setText("Cycles to shutoff: " + collected.getTypicalDTO().getOutput());
+				senseiMaster = datasource.getAntiTheftMasterTypical();
+				alarmInfoTextView.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
+						+ senseiMaster.getOutputDesc()));
+				if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft) {
+					buttPlus.setChecked(true);
+					// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+				} else if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft) {
+					buttPlus.setChecked(false);
+				} else if (senseiMaster.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
+					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.alert_theft));
+					buttPlus.setTextOn("ALARM");
+					buttPlus.setTextOff("ALARM");
+					// alarmInfoTextView.setText("Cycles to shutoff: " +
+					// collected.getTypicalDTO().getOutput());
 				} else {
 					Log.w(Constants.TAG, "Unknown status");
 				}
-				// datasource.close();
+				setSensorsView();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
 			}

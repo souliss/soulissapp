@@ -14,6 +14,7 @@
     <string name="slot">Slot</string>
     <string name="ping">Ping</string>
     <string name="poll">Poll</string>
+     <string name="sensors">Sensori</string>
     <string name="ago">fa</string>
     <string name="days">giorni</string>
     <string name="multicast">Invia a tutti</string>

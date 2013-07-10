@@ -6,6 +6,7 @@ import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
+import it.angelic.soulissclient.Typical4nDetail;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
@@ -170,15 +171,17 @@ public class UDPSoulissDecoder {
 			Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
 
 			/* Check antifurto */
-			if (opzioni.isAntitheftPresent()) {
-				for (SoulissNode soulissNode : ref) {
-					refreshedNodes.put(soulissNode.getId(), soulissNode);
+
+			for (SoulissNode soulissNode : ref) {
+				refreshedNodes.put(soulissNode.getId(), soulissNode);
+				if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {//giro i tipici solo se seve
 					for (SoulissTypical ty : soulissNode.getTypicals()) {
 						// check Antitheft
 						if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 								&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-							sendNotification(context, "Souliss ALARM Activated", "Check for antitheft peers",
+							sendNotification(context, context.getString(R.string.antitheft_notify), context.getString(R.string.antitheft_notify_desc),
 									R.drawable.shield);
+							break;
 						}
 					}
 				}
@@ -418,9 +421,9 @@ public class UDPSoulissDecoder {
 
 	}
 
-	public static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
+	private static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
 
-		Intent notificationIntent = new Intent(ctx, ProgramListActivity.class);
+		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -432,12 +435,13 @@ public class UDPSoulissDecoder {
 				.setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker(desc)
 				.setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
 		Notification n = builder.build();
-		nm.notify(665, n);
+		nm.notify(664, n);
 		try {
-			Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+			Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 			Ringtone r = RingtoneManager.getRingtone(ctx, notification);
 			r.play();
 		} catch (Exception e) {
+			Log.e(Constants.TAG, "Unable toplaysounds:"+e.getMessage());
 		}
 	}
 

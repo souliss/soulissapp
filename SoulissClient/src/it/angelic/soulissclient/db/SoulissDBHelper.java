@@ -11,6 +11,7 @@ import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.typicals.SoulissTypical;
 import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
 import java.text.ParseException;
@@ -382,7 +383,7 @@ public class SoulissDBHelper {
 	}
 
 	/**
-	 * DB typical factory
+	 * Return antitheft master typical
 	 * 
 	 * @param node
 	 * @param slot
@@ -401,6 +402,26 @@ public class SoulissDBHelper {
 			return ret;
 		} else
 			throw new NoSuchElementException();
+	}
+	
+	public List<SoulissTypical42AntiTheftPeer> getAntiTheftSensors() {
+		List<SoulissTypical42AntiTheftPeer> comments = new ArrayList<SoulissTypical42AntiTheftPeer>();
+		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null, null, null);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+			SoulissNode parent = getSoulissNode(dto.getNodeId());
+			SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypical.typicalFactory(dto.getTypical(), parent, dto, opts);
+			newTyp.setParentNode(parent);
+			// if (newTyp.getTypical() !=
+			// Constants.Souliss_T_CurrentSensor_slave)
+			comments.add(newTyp);
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		return comments;
 	}
 
 	/**
@@ -421,6 +442,8 @@ public class SoulissDBHelper {
 		cursor.close();
 		return ret;
 	}
+	
+
 
 	public SoulissTriggerDTO getSoulissTrigger(long insertId) {
 		Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS,
@@ -641,5 +664,7 @@ public class SoulissDBHelper {
 		cursor.close();
 		return ret;
 	}
+
+	
 
 }

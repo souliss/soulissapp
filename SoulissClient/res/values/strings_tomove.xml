@@ -11,10 +11,11 @@
     <string name="homewarn"><b>Home position not set</b>, use background option to set your home location</string>
     <string name="useridxhint">Please insert a number in range 1-100</string>
     <string name="nodeidxhint">Please insert a number in range 1-254</string>
-    
-    
     <string name="dbstruct_req">DB Structure requested</string>
-     <string name="antitheft_status">Antitheft Status:</string>
-     <string name="bytes_received">Bytes received</string>
+    <string name="antitheft_status">Antitheft Status:</string>
+    <string name="antitheft_notify_desc">Check for antitheft peers tapping on this notification</string>
+    <string name="antitheft_notify">Souliss ALARM Activated!</string>
+    <string name="bytes_received">Bytes received</string>
+    <string name="antitheftNotify">Notify Alarm Condition</string>
 
 </resources>
