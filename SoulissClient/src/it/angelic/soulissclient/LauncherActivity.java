@@ -373,6 +373,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			} else {
 				sb.append("Souliss Data service <b>enabled</b> but service <b>not bound</b>");
 				Intent serviceIntent = new Intent(this, SoulissDataService.class);
+				//FIXME first schedule always: is this the cause?
 				startService(serviceIntent);
 				serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
 			}

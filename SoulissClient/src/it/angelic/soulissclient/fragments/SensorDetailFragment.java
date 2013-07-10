@@ -301,6 +301,10 @@ public class SensorDetailFragment extends Fragment {
 			renderer.setYAxisMax(100);
 			renderer.setYTitle("Celsius degrees");
 			break;
+		case it.angelic.soulissclient.typicals.Constants.Souliss_T51://generic analog
+			renderer.setYAxisMin(0);
+			renderer.setYAxisMax(100);
+			break;
 		case it.angelic.soulissclient.typicals.Constants.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(255);

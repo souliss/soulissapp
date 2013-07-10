@@ -12,6 +12,7 @@ import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.typicals.SoulissTypical;
 import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor;
 import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
 import java.text.ParseException;
@@ -180,6 +181,8 @@ public class SoulissDBHelper {
 		values.put(SoulissDB.COLUMN_LOG_TYPICAL, soulissTypical.getTypicalDTO().getTypical());
 		if (soulissTypical instanceof SoulissTypicalTemperatureSensor) {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypicalTemperatureSensor) soulissTypical).getOutputCelsius());
+		} else if (soulissTypical instanceof SoulissTypical51AnalogueSensor) {
+			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
 		} else {
 			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
 		}

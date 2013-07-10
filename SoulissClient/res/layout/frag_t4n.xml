@@ -29,7 +29,7 @@
             android:layout_marginLeft="25dip"
             android:layout_marginRight="25dip"
             android:gravity="center_vertical|center_horizontal"
-            android:minHeight="164dip"
+            android:minHeight="200dip"
             android:padding="20dp"
             android:textSize="26sp" />
 

@@ -7,9 +7,9 @@ import android.util.Log;
 
 public class SoulissGraphData {
 	
-	public double average;
-	public double max;
-	public double min;
+	public float average;
+	public float max;
+	public float min;
 	
 	int key;
 	
@@ -28,13 +28,13 @@ public class SoulissGraphData {
 
 		// setScale is immutable
 		bd = bd.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-		min = bd.doubleValue();
+		min = bd.floatValue();
 		bd = new BigDecimal(cursor.getFloat(3));
 		bd = bd.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-		max = bd.doubleValue();
+		max = bd.floatValue();
 		bd = new BigDecimal(cursor.getFloat(1));
 		bd = bd.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
-		average = bd.doubleValue();
+		average = bd.floatValue();
 		Log.d("GRAPH", "key="+key+" AVG="+average);
 	}
 
