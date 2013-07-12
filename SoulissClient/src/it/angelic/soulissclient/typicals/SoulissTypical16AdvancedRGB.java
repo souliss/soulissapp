@@ -197,5 +197,18 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 		t.start();
 		return;
 	}
+	public void issuerefresh() {
+
+		Thread t = new Thread() {
+			public void run() {
+				Looper.prepare();
+					//refresh data for typical's node
+					UDPHelper.pollRequest(prefs, 1, getParentNode().getId());
+			}
+		};
+
+		t.start();
+		return;
+	}
 
 }

@@ -97,13 +97,15 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			// Toast.LENGTH_SHORT).show();
 			Log.i(TAG, "Dataservice connected");
 			Calendar shouldHaveDoneAt = Calendar.getInstance();
-			shouldHaveDoneAt.add(Calendar.MILLISECOND,
-					(int) -(opzioni.getBackedOffServiceInterval()));
+			shouldHaveDoneAt.add(Calendar.MILLISECOND, (int) -(opzioni.getBackedOffServiceInterval()));
 			if (mBoundService.getLastupd().before(shouldHaveDoneAt)) {
 				mBoundService.reschedule(true);
 				Toast.makeText(LauncherActivity.this, "Dataservice restarted", Toast.LENGTH_SHORT).show();
 				Log.w(TAG, "Dataservice RETARDED, scheduling Souliss Update");
+			}else{
+				Log.i(TAG, "Dataservice ON TIME");
 			}
+			setServiceInfo();
 			mIsBound = true;
 		}
 
@@ -116,14 +118,14 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		}
 	};
 
-
 	void doBindService() {
-		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, Context.BIND_AUTO_CREATE);
+		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
+		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, Context.BIND_NOT_FOREGROUND);
 	}
 
 	void doUnbindService() {
 		if (mIsBound) {
-			Log.i(TAG, "UNBIND, Detach our existing connection.");
+			Log.d(TAG, "UNBIND, Detach our existing connection.");
 			unbindService(mConnection);
 		}
 	}
@@ -335,13 +337,15 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			dbwarnline.setVisibility(View.GONE);
 		}
 	}
-	private void setAntiTheftInfo(){
-		if (opzioni.isAntitheftPresent()){
+
+	private void setAntiTheftInfo() {
+		if (opzioni.isAntitheftPresent()) {
 			serviceInfoAntiTheft.setVisibility(View.VISIBLE);
 			SoulissDBHelper db = new SoulissDBHelper(this);
 			db.open();
 			SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();
-			serviceInfoAntiTheft.setText(Html.fromHtml("<b>"+getString(R.string.antitheft_status)+"</b> "+at.getOutputDesc()));
+			serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
+					+ at.getOutputDesc()));
 		}
 	}
 
@@ -373,7 +377,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			} else {
 				sb.append("Souliss Data service <b>enabled</b> but service <b>not bound</b>");
 				Intent serviceIntent = new Intent(this, SoulissDataService.class);
-				//FIXME first schedule always: is this the cause?
+				Log.w(TAG, "Service not bound yet, restarting");
 				startService(serviceIntent);
 				serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
 			}
@@ -404,7 +408,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			//opzioni.initializePrefs();
+			// opzioni.initializePrefs();
 			// rimuove timeout
 			timeoutHandler.removeCallbacks(timeExpired);
 			Bundle extras = intent.getExtras();
@@ -416,11 +420,11 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 				StringBuilder tmp = new StringBuilder("<b>" + getString(R.string.last_update) + "</b> "
 						+ Constants.hourFormat.format(new Date()));
-				tmp.append(" - " + vers.size()+" " +context.getString(R.string.bytes_received));
-				
+				tmp.append(" - " + vers.size() + " " + context.getString(R.string.bytes_received));
 
 				setHeadInfo();
 				setServiceInfo();
+				setAntiTheftInfo();
 				serviceInfoFoot.setText(Html.fromHtml(tmp.toString()));
 				// questo sovrascrive nodesinf
 
@@ -472,7 +476,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 					}
 				});
 			}
-			//UI updates every 5 secs.
+			// UI updates every 5 secs.
 		}, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());
 	}
 
@@ -562,7 +566,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 								unit = "km";
 								res[0] = res[0] / 1000;
 							}
-							homedist.setText(Html.fromHtml("<b>"+getString(R.string.homedist) + "</b> "+(int) res[0] + unit
+							homedist.setText(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
+									+ (int) res[0] + unit
 									+ (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
 							posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_green));
 

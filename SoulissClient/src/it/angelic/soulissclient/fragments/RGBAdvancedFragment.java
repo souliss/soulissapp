@@ -136,6 +136,11 @@ public class RGBAdvancedFragment extends Fragment {
 		setIsDecrementing(false);
 	}
 
+	/**
+	 * Per gestire tasto premuto
+	 * 
+	 * @param newSetting
+	 */
 	synchronized void setIsIncrementing(boolean newSetting) {
 		continueIncrementing = newSetting;
 	}
@@ -226,10 +231,10 @@ public class RGBAdvancedFragment extends Fragment {
 		seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
 		seekChannelGreen = (SeekBar) ret.findViewById(R.id.channelGreen);
 		seekChannelBlue = (SeekBar) ret.findViewById(R.id.channelBlue);
-		
-		redChanabel = (TextView)ret.findViewById(R.id.channelRedLabel);
-		blueChanabel = (TextView)ret.findViewById(R.id.channelBlueLabel);
-		greenChanabel = (TextView)ret.findViewById(R.id.channelGreenLabel);
+
+		redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
+		blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
+		greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
 
 		btOff.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCmd);
 		btOn.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCmd);
@@ -257,7 +262,7 @@ public class RGBAdvancedFragment extends Fragment {
 					tableRowChannel.setVisibility(View.VISIBLE);
 					mVisualizerView.setEnabled(false);
 					colorSwitchRelativeLayout.setVisibility(View.GONE);
-					//TODO questi non vanno
+					// TODO questi non vanno
 					seekChannelRed.setProgress(Color.red(color));
 					seekChannelGreen.setProgress(Color.green(color));
 					seekChannelBlue.setProgress(Color.blue(color));
@@ -385,7 +390,7 @@ public class RGBAdvancedFragment extends Fragment {
 			}
 		};
 		cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color);
-		cpv.setCenterColor(collected.getColor());
+		// cpv.setCenterColor(collected.getColor());
 		colorSwitchRelativeLayout.addView(cpv);
 
 		return ret;
@@ -461,7 +466,7 @@ public class RGBAdvancedFragment extends Fragment {
 		super.onResume();
 		datasource.open();
 		IntentFilter filtere = new IntentFilter();
-		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
+		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 	}
 
@@ -483,12 +488,15 @@ public class RGBAdvancedFragment extends Fragment {
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
-			collected = (SoulissTypical16AdvancedRGB) coll.getTypical(collected.getTypicalDTO().getSlot());
+			// SoulissNode coll = datasource.getSoulissNode();
+			collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected.getTypicalDTO()
+					.getNodeId(), collected.getTypicalDTO().getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");
-			// Log.d(TAG, "Detected data arrival: " + vers.size() + " nodes");
-			cpv.setCenterColor(collected.getColor());
+			Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor()) + " G"
+					+ Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
+			cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
+					Color.blue(collected.getColor())));
 
 		}
 	};
@@ -504,15 +512,16 @@ public class RGBAdvancedFragment extends Fragment {
 					seekChannelBlue.getProgress());
 			issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, Color.red(color),
 					Color.green(color), Color.blue(color), togMulticast.isChecked());
-			redChanabel.setText(getString(R.string.red)+" - "+Color.red(color));
-			greenChanabel.setText(getString(R.string.green)+" - "+Color.green(color));
-			blueChanabel.setText(getString(R.string.blue)+" - "+Color.blue(color));
+			redChanabel.setText(getString(R.string.red) + " - " + Color.red(color));
+			greenChanabel.setText(getString(R.string.green) + " - " + Color.green(color));
+			blueChanabel.setText(getString(R.string.blue) + " - " + Color.blue(color));
 		}
 
 		public void onStartTrackingTouch(SeekBar seekBar) {
 
 		}
-		//solo per sicurezza
+
+		// solo per sicurezza
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, Color.red(color),
 					Color.green(color), Color.blue(color), togMulticast.isChecked());
@@ -619,7 +628,7 @@ public class RGBAdvancedFragment extends Fragment {
 				invalidate();
 				break;
 			case MotionEvent.ACTION_UP:
-				// FIXME
+				collected.issuerefresh();// change center color
 				// ColorDialogPreference.this.color = centerPaint.getColor();
 				break;
 			}
@@ -676,4 +685,5 @@ public class RGBAdvancedFragment extends Fragment {
 	public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
 		collected.issueIrCommand(val, r, g, b, multicast);
 	}
+
 }

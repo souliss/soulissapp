@@ -55,7 +55,10 @@ public class SoulissPreferenceHelper implements Serializable {
 	private boolean animations;
 	private boolean antitheftPresent;
 	private boolean antitheftNotify;
+	private long serviceLastrun;
+	private long nextServiceRun;
 
+	
 	public SoulissPreferenceHelper(Context contx) {
 		super();
 		this.contx = contx;
@@ -120,6 +123,8 @@ public class SoulissPreferenceHelper implements Serializable {
 		animations = prefs.getBoolean("checkboxAnimazione", true);
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
+		serviceLastrun= prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
+		nextServiceRun= prefs.getLong("nextServiceRun", Calendar.getInstance().getTimeInMillis());
 		try {
 			ListDimensTesto = Float.valueOf(DimensTesto);
 		} catch (Exception e) {
@@ -417,5 +422,28 @@ public class SoulissPreferenceHelper implements Serializable {
 		pesta.putBoolean("antitheftNotify", antitheftNotify);
 		pesta.commit();
 		
+	}
+	
+
+	public void setLastServiceRun(Calendar lastupd) {
+		serviceLastrun = lastupd.getTimeInMillis();
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putLong("serviceLastrun", serviceLastrun);
+		pesta.commit();
+	}
+
+	public long getServiceLastrun() {
+		return serviceLastrun;
+	}
+
+	public void setNextServiceRun(long schedTime) {
+		nextServiceRun = schedTime;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putLong("nextServiceRun", nextServiceRun);
+		pesta.commit();
+		
+	}
+	public long getNextServiceRun() {
+		return nextServiceRun;
 	}
 }

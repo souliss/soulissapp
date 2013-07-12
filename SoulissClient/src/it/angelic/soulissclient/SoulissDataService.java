@@ -36,7 +36,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 public class SoulissDataService extends Service implements LocationListener {
 	// LOGGA a parte
@@ -59,6 +58,7 @@ public class SoulissDataService extends Service implements LocationListener {
 	private String cached;
 	private Thread udpThread;
 
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		return mBinder;
@@ -67,11 +67,14 @@ public class SoulissDataService extends Service implements LocationListener {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		Log.w(TAG, "service onCreate()");
 		opts = SoulissClient.getOpzioni();
 		// toDoDBAdapter = new ToDoDBAdapter(getApplicationContext());
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Criteria crit = new Criteria();
 		crit.setPowerRequirement(Criteria.POWER_LOW);
+		// riporta exec precedenti, non usare ora attuale
+		lastupd.setTimeInMillis(opts.getServiceLastrun());
 		provider = locationManager.getBestProvider(crit, false);
 		db = new SoulissDBHelper(this);
 		try {
@@ -83,13 +86,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-		// Create the object with the run() method
-		Runnable runnable = new UDPRunnable(opts, SoulissDataService.this);
-		// Create the udpThread supplying it with the runnable
-		// object
-		udpThread = new Thread(runnable);
-		// Start the udpThread
-		udpThread.start();
+		startUDPListener();
 		Log.i(TAG, "UDP thread started" + opts.getBackedOffServiceInterval());
 
 	}
@@ -108,41 +105,21 @@ public class SoulissDataService extends Service implements LocationListener {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		opts = SoulissClient.getOpzioni();
-
+		Calendar now = Calendar.getInstance();
+		Calendar next = Calendar.getInstance();
+		next.setTimeInMillis(opts.getNextServiceRun());
 		// uir = opts.getDataServiceInterval();
-		Log.i(TAG, "Service StartCommand, Scheduling immediately and every " + opts.getBackedOffServiceInterval());
+		Log.i(TAG, "Service StartCommand()");
 		// delle opzioni
-
-		reschedule(true);
-
+		if (!next.after(now)) {
+			Log.w(TAG, "Service next sched outdated, sched NOW");
+			reschedule(true);
+		}
+		startUDPListener();
 		return START_STICKY;
 	}
 
-	/**
-	 * Schedule a new execution of the srvice via mHandler.postDelayed
-	 */
-	public void reschedule(boolean immediate) {
-
-		opts.initializePrefs();// reload interval
-		mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
-															// the others
-		// reschedule self
-		if (immediate) {
-			Log.i(TAG, "Reschedule immediate ");
-			mHandler.post(mUpdateSoulissRunnable);
-		} else {
-			Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
-			mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec());
-			/* One of the two should get it */
-			AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-			PendingIntent secureShot = PendingIntent.getService(this, 0, new Intent(this, SoulissDataService.class),
-					PendingIntent.FLAG_UPDATE_CURRENT);
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(System.currentTimeMillis());
-			calendar.add(Calendar.MILLISECOND, opts.getDataServiceIntervalMsec());
-			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
-
-		}
+	private void startUDPListener() {
 		if (udpThread == null || !udpThread.isAlive()) {
 			// Create the object with the run() method
 			Runnable runnable = new UDPRunnable(opts, SoulissDataService.this);
@@ -155,12 +132,43 @@ public class SoulissDataService extends Service implements LocationListener {
 		}
 	}
 
+	/**
+	 * Schedule a new execution of the srvice via mHandler.postDelayed
+	 */
+	public void reschedule(boolean immediate) {
+
+		opts.initializePrefs();// reload interval
+		mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
+															// the others
+		// reschedule self
+		if (immediate) {
+			Log.i(TAG, "Reschedule immediate");
+			mHandler.post(mUpdateSoulissRunnable);
+		} else {
+			Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
+			// mHandler.postDelayed(mUpdateSoulissRunnable,
+			// opts.getDataServiceIntervalMsec());
+			/* One of the two should get it */
+			AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+			PendingIntent secureShot = PendingIntent.getService(this, 0, new Intent(this, SoulissDataService.class),
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(System.currentTimeMillis());
+			calendar.add(Calendar.MILLISECOND, opts.getDataServiceIntervalMsec());
+			opts.setNextServiceRun(calendar.getTimeInMillis());
+			alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
+
+		}
+		startUDPListener();
+	}
+
 	public Calendar getLastupd() {
 		return lastupd;
 	}
 
 	public void setLastupd(Calendar lastupd) {
 		this.lastupd = lastupd;
+		opts.setLastServiceRun(lastupd);
 	}
 
 	/**
