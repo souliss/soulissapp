@@ -17,5 +17,6 @@
     <string name="antitheft_notify">Antifurto Souliss in Allarme!</string>
     <string name="bytes_received">Bytes ricevuti</string>
     <string name="antitheftNotify">Abilita Notifiche Allarme</string>
+    <string name="antitheftReset">Ri-abilita allarme</string>
 
 </resources>

@@ -14,7 +14,7 @@
     <string name="slot">Slot</string>
     <string name="ping">Ping</string>
     <string name="poll">Poll</string>
-     <string name="sensors">Sensori</string>
+    <string name="sensors">Sensori</string>
     <string name="ago">fa</string>
     <string name="days">giorni</string>
     <string name="multicast">Invia a tutti</string>
@@ -26,6 +26,7 @@
     <string name="proceed">Procedi</string>
     <string name="scene">Scena</string>
     <string name="rename">Rinomina</string>
+    <string name="reset">Ripristina</string>
     <string name="typical">Typical</string>
     <string name="ON">ON</string>
     <string name="power">Power</string>

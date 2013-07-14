@@ -32,6 +32,7 @@ public class Constants {
 	public static final short Souliss_T31 = 0x31;
 	public static final short Souliss_T32_IrCom_AirCon = 0x32;
 	
+	public static final short  Souliss_T42_Antitheft_Group=						0x40		;	// Anti-theft group (used w/ massive commands)
 	public static final short  Souliss_T41_Antitheft_Main=						0x41		;	// Anti-theft integration (Main)
 	public static final short  Souliss_T42_Antitheft_Peer=						0x42		;	// Anti-theft integration (Peer)
 

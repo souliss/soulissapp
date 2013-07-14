@@ -160,7 +160,7 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
-		if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm ||
+		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm ||
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3))) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
@@ -174,7 +174,7 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 		String ret;
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_RstCmd)
 			ret = "OK";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm)
+		else if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm || typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm)
 			ret = "ALARM";
 		else
 			ret = "UNKNOWN";

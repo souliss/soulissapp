@@ -17,5 +17,6 @@
     <string name="antitheft_notify">Souliss ALARM Activated!</string>
     <string name="bytes_received">Bytes received</string>
     <string name="antitheftNotify">Notify Alarm Condition</string>
+    <string name="antitheftReset">Re-Arm Anti theft</string>
 
 </resources>

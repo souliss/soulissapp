@@ -32,7 +32,6 @@
             android:minHeight="200dip"
             android:padding="20dp"
             android:textSize="26sp" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -58,20 +57,39 @@
             android:layout_below="@id/textviewAlarmInfo"
             android:text="@string/antitheftNotify" />
 
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkBoxnotifAndroid"
+            android:text="@string/reset" >
+        </Button>
+
+        <TextView
+            android:id="@+id/textviewResetInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkBoxnotifAndroid"
+            android:layout_margin="5dip"
+            android:layout_toRightOf="@id/resetButton"
+            android:gravity="center_vertical"
+            android:text="@string/antitheftReset"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayoutAlarmInfo"
         android:weightSum="4" >
-        
+
         <TextView
             android:id="@+id/textViewSensorInfo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="@string/sensors"
             android:gravity="center_horizontal"
+            android:text="@string/sensors"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
 
@@ -79,11 +97,9 @@
             android:id="@+id/textviewSensors"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
             android:layout_below="@id/textViewSensorInfo"
+            android:layout_marginLeft="5dip"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        
     </RelativeLayout>
 
 </RelativeLayout>

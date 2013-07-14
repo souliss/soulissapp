@@ -76,6 +76,7 @@ public class Typical4nFragment extends SherlockFragment {
 	private CheckBox notifCheckbox;
 	private TextView infoTyp;
 	private TextView textviewSensors;
+	private Button resetButton;
 	private SoulissTypical41AntiTheft senseiMaster;
 	private List<SoulissTypical42AntiTheftPeer> sensei;
 
@@ -123,17 +124,7 @@ public class Typical4nFragment extends SherlockFragment {
 		}
 	}
 
-	private void setSensorsView() {
-		StringBuilder tmp = new StringBuilder();
-
-		sensei = datasource.getAntiTheftSensors();
-		for (SoulissTypical42AntiTheftPeer soulissTypical42AntiTheftPeer : sensei) {
-			tmp.append(soulissTypical42AntiTheftPeer.getParentNode().getNiceName() + " - "
-					+ soulissTypical42AntiTheftPeer.getNiceName() + " - "
-					+ soulissTypical42AntiTheftPeer.getOutputDesc() + "\n");
-		}
-		textviewSensors.setText(Html.fromHtml(tmp.toString()));
-	}
+	
 
 	@SuppressLint("NewApi")
 	@Override
@@ -144,8 +135,8 @@ public class Typical4nFragment extends SherlockFragment {
 		View ret = inflater.inflate(R.layout.frag_t4n, container, false);
 		datasource = new SoulissDBHelper(getActivity());
 		datasource.open();
-		//Il master sara` sempre lo stesso, anche se collected e` un peer
-		if (opzioni.isAntitheftPresent()){
+		// Il master sara` sempre lo stesso, anche se collected e` un peer
+		if (opzioni.isAntitheftPresent()) {
 			senseiMaster = datasource.getAntiTheftMasterTypical();
 		}
 
@@ -172,6 +163,7 @@ public class Typical4nFragment extends SherlockFragment {
 		notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
 		infoTyp = (TextView) ret.findViewById(R.id.textView4nInfo);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+		resetButton = (Button) ret.findViewById(R.id.resetButton);
 		textviewSensors = (TextView) ret.findViewById(R.id.textviewSensors);
 
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
@@ -191,16 +183,27 @@ public class Typical4nFragment extends SherlockFragment {
 
 		};
 		buttPlus.setOnClickListener(plus);
-		
+
+		// Listener generico
+		OnClickListener resett = new OnClickListener() {
+			public void onClick(View v) {
+				//if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
+					reset();
+				//}
+				return;
+			}
+
+		};
+		resetButton.setOnClickListener(resett);
 
 		notifCheckbox.setChecked(opzioni.isAntitheftNotify());
 		notifCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-			   @Override
-			   public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-				   	opzioni.setAntitheftNotify(isChecked);
-			   }
-			});
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				opzioni.setAntitheftNotify(isChecked);
+			}
+		});
 		/*
 		 * if (collected instanceof SoulissTypical12) {
 		 * btSleep.setVisibility(View.GONE);
@@ -213,10 +216,10 @@ public class Typical4nFragment extends SherlockFragment {
 		 * }
 		 */
 		// sfondo bottone
-		if (collected.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
+		if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
 			buttPlus.setChecked(true);
 		// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
-		else if (collected.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
+		else if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
 			buttPlus.setChecked(false);
 		else if (senseiMaster.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
 			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.alert_theft));
@@ -228,6 +231,7 @@ public class Typical4nFragment extends SherlockFragment {
 		// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
 		return ret;
 	}
+
 	/**
 	 * comandi sempre inviati al master
 	 */
@@ -243,6 +247,24 @@ public class Typical4nFragment extends SherlockFragment {
 		t.start();
 		Toast.makeText(getActivity(),
 				getActivity().getString(R.string.TurnOFF) + " " + getActivity().getString(R.string.command_sent),
+				Toast.LENGTH_SHORT).show();
+		return;
+
+	}
+
+	/**
+	 * comandi massivi ai peers
+	 */
+	private void reset() {
+		Thread t = new Thread() {
+			public void run() {
+				Looper.prepare();
+				UDPHelper.issueMassiveCommand("" + Souliss_T42_Antitheft_Group, opzioni, "" + Souliss_T4n_ReArm);
+			}
+		};
+		t.start();
+		Toast.makeText(getActivity(),
+				getActivity().getString(R.string.reset) + " " + getActivity().getString(R.string.command_sent),
 				Toast.LENGTH_SHORT).show();
 		return;
 
@@ -352,5 +374,15 @@ public class Typical4nFragment extends SherlockFragment {
 			}
 		}
 	};
+	private void setSensorsView() {
+		StringBuilder tmp = new StringBuilder();
 
+		sensei = datasource.getAntiTheftSensors();
+		for (SoulissTypical42AntiTheftPeer soulissTypical42AntiTheftPeer : sensei) {
+			tmp.append(soulissTypical42AntiTheftPeer.getParentNode().getNiceName() + " - "
+					+ soulissTypical42AntiTheftPeer.getNiceName() + " - "
+					+ soulissTypical42AntiTheftPeer.getOutputDesc() + "\n");
+		}
+		textviewSensors.setText(Html.fromHtml(tmp.toString()));
+	}
 }
