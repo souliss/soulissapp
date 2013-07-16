@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.helpers;
 
 import it.angelic.soulissclient.PreferencesActivity;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -80,21 +81,21 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 	protected Boolean doInBackground(final String... args)
 
 	{
-		Looper.prepare();
-
 		int lin = 0;
 		int loopMode = 0;
 		// File dbFile = null;// getDatabasePath("excerDB.db");
 		DBob = new SoulissDBHelper(SoulissClient.getAppContext());
 
 		try {
+			Looper.prepare();
+			
 			File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
 
 			if (!importDir.exists())
-				Toast.makeText(SoulissClient.getAppContext(), "Import folder doesn't exist", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SoulissClient.getAppContext(), SoulissClient.getAppContext().getString(R.string.dialog_import_nofolder), Toast.LENGTH_SHORT).show();
 
 			if (!file.exists()) {
-				Toast.makeText(SoulissClient.getAppContext(), "Import file doesn't exist", Toast.LENGTH_SHORT).show();
+				Toast.makeText(SoulissClient.getAppContext(),SoulissClient.getAppContext().getString(R.string.dialog_import_nofile) , Toast.LENGTH_SHORT).show();
 				Log.e(TAG, "Import file doesn't exist!" + file.getAbsolutePath());
 				return false;
 			}
@@ -132,7 +133,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 				lin++;
 			}
 			final int lines = lin;
-			Log.e(TAG, "Importing" + lin + "lines");
+			Log.e(TAG, "Importing " + lin + " lines");
 			csvReader.close();
 			csvReader = new CSVReader(new FileReader(file));
 

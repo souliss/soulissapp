@@ -35,7 +35,7 @@ public class ServicePreferenceListener implements OnPreferenceChangeListener {
 				Log.w(Constants.TAG, "Startin Souliss Service");
 			} else {
 				parent.stopService(serviceIntent);
-				Log.w(Constants.TAG, "Stopping Souliss Service TODO");
+				Log.w(Constants.TAG, "Stopping Souliss Service");
 			}
 			return true;
 		}  else {

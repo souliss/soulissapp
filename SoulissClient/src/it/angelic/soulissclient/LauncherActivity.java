@@ -343,9 +343,14 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			serviceInfoAntiTheft.setVisibility(View.VISIBLE);
 			SoulissDBHelper db = new SoulissDBHelper(this);
 			db.open();
-			SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();
-			serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
-					+ at.getOutputDesc()));
+			try {
+				SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();
+				serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
+						+ at.getOutputDesc()));
+			} catch (Exception e) {
+				Log.e(TAG, "cant set ANTITHEFT info: "+e.getMessage());
+			}
+			
 		}
 	}
 

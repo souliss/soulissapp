@@ -37,8 +37,8 @@ public class Constants {
 	public static final short  Souliss_T42_Antitheft_Peer=						0x42		;	// Anti-theft integration (Peer)
 
 	public static final short Souliss_T51 = 0x51;
-	public static final short Souliss_T52 = 0x52;
-	public static final short Souliss_T53 = 0x53;
+	public static final short Souliss_T52_TemperatureSensor = 0x52;
+	public static final short Souliss_T53_HumiditySensor = 0x53;
 	public static final short Souliss_T54_LuxSensor = 0x54;
 
 	// #define Souliss_T3n_AirCon_OnCmd 0xF0

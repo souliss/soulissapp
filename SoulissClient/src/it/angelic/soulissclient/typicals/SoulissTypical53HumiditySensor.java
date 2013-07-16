@@ -4,8 +4,10 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
+import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -15,6 +17,7 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +33,9 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-@Deprecated
-public class SoulissTypicalHumiditySensor extends SoulissTypical {
+public class SoulissTypical53HumiditySensor extends SoulissTypical {
 
-	public SoulissTypicalHumiditySensor(SoulissPreferenceHelper pre) {
+	public SoulissTypical53HumiditySensor(SoulissPreferenceHelper pre) {
 		super(pre);
 		// TODO Auto-generated constructor stub
 	}
@@ -44,17 +46,19 @@ public class SoulissTypicalHumiditySensor extends SoulissTypical {
 	private static final long serialVersionUID = 3784476625375333669L;
 
 	public float getOutputFloat() {
-		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
-				.getTypicalDTO().getOutput();
+		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
+		//ora ho i due bytes, li converto
+		int shifted = miofratello << 8;
+		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
 
-		return (float) typicalDTO.getOutput() + (float) miofratello / 100;
+	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
+
 	}
 
 	public String getOutputPercent() {
-		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
-				.getTypicalDTO().getOutput();
+		DecimalFormat df = new DecimalFormat("###.##");
 
-		return "" + typicalDTO.getOutput() + "." + miofratello;
+		return df.format(getOutputFloat() );
 	}
 
 	@Override

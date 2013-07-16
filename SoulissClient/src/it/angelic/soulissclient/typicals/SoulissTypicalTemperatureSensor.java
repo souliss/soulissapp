@@ -31,6 +31,7 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
+@Deprecated
 public class SoulissTypicalTemperatureSensor extends SoulissTypical implements ISoulissTypical {
 
 	public SoulissTypicalTemperatureSensor(SoulissPreferenceHelper pre) {

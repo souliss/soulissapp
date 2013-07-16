@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LightThemeSelector" parent="android:Theme.Holo.Light">
+    <style name="LightThemeSelector" parent="Theme.Sherlock.Light">
         <item name="android:windowBackground">@drawable/radialbacklight</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
+   
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">
         <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
@@ -14,7 +15,7 @@
         <item name="android:textSize">@dimen/text_size_big</item>
     </style>
 
-    <style name="DarkThemeSelector" parent="android:Theme.Holo">
+    <style name="DarkThemeSelector" parent="Theme.Sherlock">
         <item name="android:windowBackground">@drawable/radialback</item>
         <item name="android:actionBarStyle">@style/MyActionBarDark</item>
     </style>

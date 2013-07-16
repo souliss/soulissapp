@@ -13,6 +13,8 @@ import it.angelic.soulissclient.typicals.SoulissTypical;
 import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor;
+import it.angelic.soulissclient.typicals.SoulissTypical52TemperatureSensor;
+import it.angelic.soulissclient.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
 import java.text.ParseException;
@@ -172,6 +174,10 @@ public class SoulissDBHelper {
 
 	}
 
+	/**
+	 * Decide come interpretare gli out e logga
+	 * @param soulissTypical
+	 */
 	public void logTypical(SoulissTypical soulissTypical) {
 		ContentValues values = new ContentValues();
 		// wrap values from object
@@ -183,6 +189,10 @@ public class SoulissDBHelper {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypicalTemperatureSensor) soulissTypical).getOutputCelsius());
 		} else if (soulissTypical instanceof SoulissTypical51AnalogueSensor) {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
+		} else if (soulissTypical instanceof SoulissTypical52TemperatureSensor) {
+			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical52TemperatureSensor) soulissTypical).getOutputFloat());
+		} else if (soulissTypical instanceof SoulissTypical53HumiditySensor) {
+			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical53HumiditySensor) soulissTypical).getOutputFloat());
 		} else {
 			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
 		}

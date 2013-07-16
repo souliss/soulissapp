@@ -123,8 +123,10 @@ public class SoulissPreferenceHelper implements Serializable {
 		animations = prefs.getBoolean("checkboxAnimazione", true);
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
+		Calendar fake = Calendar.getInstance();
+		fake.add(Calendar.MONTH, -2);//Default value in the past
 		serviceLastrun= prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
-		nextServiceRun= prefs.getLong("nextServiceRun", Calendar.getInstance().getTimeInMillis());
+		nextServiceRun= prefs.getLong("nextServiceRun", fake.getTimeInMillis());
 		try {
 			ListDimensTesto = Float.valueOf(DimensTesto);
 		} catch (Exception e) {

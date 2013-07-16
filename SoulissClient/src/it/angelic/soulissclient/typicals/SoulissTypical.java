@@ -46,6 +46,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		return getDefaultName();
 
 	}
+	
+	public short getOutput() {
+		return typicalDTO.getOutput();
+	}
 
 	@Override
 	public void setIconResourceId(int resId) {
@@ -137,18 +141,26 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypical51AnalogueSensor(opts);
 			rest.setSensor(true);
 			break;
+		case Constants.Souliss_T52_TemperatureSensor:
+			rest = new SoulissTypical52TemperatureSensor(opts);
+			rest.setSensor(true);
+			break;
+		case Constants.Souliss_T53_HumiditySensor:
+			rest = new SoulissTypical53HumiditySensor(opts);
+			rest.setSensor(true);
+			break;
 		case Constants.Souliss_T54_LuxSensor:
 			rest = new SoulissTypical54LuxSensor(opts);
 			rest.setSensor(true);
 			break;
-		case Constants.Souliss_T52:
+		/*case Constants.Souliss_T52:
 			rest = new SoulissTypical5n(opts);
 			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());
 			break;
 		case Constants.Souliss_T53:
 			rest = new SoulissTypical5n(opts);
 			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());
-			break;
+			break;*/
 		default:
 			rest = new SoulissTypical(opts);
 			break;
@@ -197,10 +209,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_T42_desc;
 		else if (typical == Constants.Souliss_T51)
 			id = R.string.Souliss_T51_desc;
-		else if (typical == Constants.Souliss_T52)
-			id = R.string.Souliss_T52_desc;
-		else if (typical == Constants.Souliss_T53)
-			id = R.string.Souliss_T53_desc;
+		else if (typical == Constants.Souliss_T52_TemperatureSensor)
+			id = R.string.Souliss_TTemperature_desc;
+		else if (typical == Constants.Souliss_T53_HumiditySensor)
+			id = R.string.Souliss_THumidity_desc;
 		else if (typical == Constants.Souliss_T54_LuxSensor)
 			id = R.string.Souliss_T54_desc;
 		else
@@ -251,10 +263,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.remote;
 		else if (typical == Constants.Souliss_T51)
 			return R.drawable.analog;
-		else if (typical == Constants.Souliss_T52)
-			return R.drawable.analog;
-		else if (typical == Constants.Souliss_T53)
-			return R.drawable.analog;
+		else if (typical == Constants.Souliss_T52_TemperatureSensor)
+			return R.drawable.thermometer;
+		else if (typical == Constants.Souliss_T53_HumiditySensor)
+			return R.drawable.thermometer;
 		else if (typical == Constants.Souliss_T54_LuxSensor)
 			return R.drawable.home;
 		else
