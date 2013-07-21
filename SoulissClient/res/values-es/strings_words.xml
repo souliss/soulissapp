@@ -5,7 +5,7 @@
 
     <string name="unavailable">No disponible</string>
     <string name="souliss_unavailable">!Souliss no disponible!</string>
-    <string name="notconfigured">Souliss <b>no estÃ¡ configurado</b> aun, la direcciÃ³n IP local es obligatoria</string>
+    <string name="notconfigured">Souliss <b>no está configurado</b> aun, la dirección IP local es obligatoria</string>
     <string name="health">SALUD:</string>
     <string name="status">ESTADO:</string>
     <string name="update">ACTUALIZADO:</string>
@@ -17,7 +17,7 @@
     <string name="ago">atrás</string>
     <string name="multicast">Multicast</string>
     <string name="multicast_desc">Enviar a todos los dispositivos de este tipo</string>
-    <string name="music">Sincronizar mÃºsica</string>
+    <string name="music">Sincronizar música</string>
     <string name="days">días</string>
     <string name="poll">Obtener</string>
     <string name="refresh">Actualizar</string>
@@ -29,7 +29,7 @@
     <string name="rename">Renombrar</string>
     <string name="typical">Dispositivo</string>
     <string name="ON">ON</string>
-    <string name="power">AlimentaciÃ³n</string>
+    <string name="power">Alimentación</string>
     <string name="OFF">OFF</string>
     <string name="open">Abrir</string>
     <string name="close">Cerrar</string>

@@ -27,7 +27,7 @@
         <item>minúsculo</item>
         <item>pequeño</item>
         <item>promedio</item>
-        <item>gran</item>
+        <item>grande</item>
     </string-array>
     <string-array name="textsiz_values">
         <item>-1</item>
@@ -58,7 +58,7 @@
     <string-array name="scheduleInterval">
         <item name="1800">Media hora</item>
         <item name="3600">Hora</item>
-        <item name="21600">6 hora</item>
+        <item name="21600">6 horas</item>
         <item name="86400">día</item>
     </string-array>
 
@@ -70,9 +70,9 @@
     </integer-array>
 
     <string-array name="graphType">
-        <item>History</item>
-        <item>Grouped by Month</item>
-        <item>Grouped by Hour</item>
+        <item>Historial</item>
+        <item>Agrupado por mes</item>
+        <item>Agrupado por hora</item>
     </string-array>
     <string-array name="graphTypeValues">
         <item>0</item>
@@ -80,9 +80,9 @@
         <item>2</item>
     </string-array>
     <string-array name="graphRange">
-        <item>All Data</item>
-        <item>Last Month</item>
-        <item>Last week</item>
+        <item>Todo</item>
+        <item>Último mes</item>
+        <item>Última semana</item>
     </string-array>
     <string-array name="graphRangeValues">
         <item>0</item>
@@ -91,10 +91,10 @@
     </string-array>
     <string-array name="AirConFunction">
         <item>Auto</item>
-        <item>Cool</item>
-        <item>Dry</item>
-        <item>Fan</item>
-        <item>Heat</item>
+        <item>Frío</item>
+        <item>Deshumidificación</item>
+        <item>Ventilación</item>
+        <item>Calor</item>
     </string-array>
 
     <integer-array name="AirConFunctionValues">
@@ -107,9 +107,9 @@
 
     <string-array name="AirConFan">
         <item>Auto</item>
-        <item>High</item>
-        <item>Medium</item>
-        <item>Low</item>
+        <item>Alta</item>
+        <item>Media</item>
+        <item>Baja</item>
     </string-array>
 
     <integer-array name="AirConFanValues">
@@ -120,9 +120,9 @@
     </integer-array>
     
     <string-array name="rgbModes">
-        <item>RGB circle</item>
-        <item>RGB channels</item>
-        <item>Music sync</item>
+        <item>Círculo RGB</item>
+        <item>Canales RGB</item>
+        <item>Sincronizar música</item>
     </string-array>
 
 </resources>
