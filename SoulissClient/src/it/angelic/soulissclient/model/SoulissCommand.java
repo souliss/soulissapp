@@ -4,10 +4,10 @@ import static junit.framework.Assert.assertEquals;
 
 import java.io.Serializable;
 
-import it.angelic.soulissclient.typicals.Constants;
+import it.angelic.soulissclient.model.typicals.Constants;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.typicals.SoulissTypical;
 import android.content.Context;
 
 public class SoulissCommand implements Serializable {
@@ -193,29 +193,29 @@ public class SoulissCommand implements Serializable {
 			resId = R.string.Souliss_TTemperature_desc;
 		else if (typical == Constants.Souliss_T_HumiditySensor)
 			resId = R.string.Souliss_THumidity_desc;
-		else if (typical == it.angelic.soulissclient.typicals.Constants.Souliss_T32_IrCom_AirCon) {
-			if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Auto_20)
+		else if (typical == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
+			if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Auto_20)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Auto_20_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Auto_24)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Auto_24)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Auto_24_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Cool_18)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Cool_18)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Cool_18_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Cool_22)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Cool_22)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Cool_22_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Cool_26)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Cool_26)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Cool_26_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Dry)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Dry)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Dry_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Fan)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Fan)
 				resId = R.string.Souliss_T_IrCom_AirCon_Pow_Fan_desc;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Off)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_Pow_Off)
 				resId = R.string.TurnOFF;
 			else
 				resId = R.string.Souliss_emptycmd_desc;
-		} else if (typical == it.angelic.soulissclient.typicals.Constants.Souliss_T1n_RGB) {
-			if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T1n_RGB_OnCmd)
+		} else if (typical == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB) {
+			if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_OnCmd)
 				resId = R.string.TurnON;
-			else if (command == it.angelic.soulissclient.typicals.Constants.Souliss_T1n_RGB_OffCmd)
+			else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_OffCmd)
 				resId = R.string.TurnOFF;
 			else
 				resId = R.string.Souliss_emptycmd_desc;

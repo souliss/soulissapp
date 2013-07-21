@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.typicals;
+package it.angelic.soulissclient.model.typicals;
 
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.R;

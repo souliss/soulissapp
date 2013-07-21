@@ -26,7 +26,7 @@
     <Preference
         android:name="setHomeLocation"
         android:key="setHomeLocation"
-        android:summary="set current position as reference for positional Programs"
-        android:title="Set Home Location" />
+        android:summary="@string/opt_servicehomepos_desc"
+        android:title="@string/opt_servicehomepos" />
 
 </PreferenceScreen>

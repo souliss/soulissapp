@@ -8,7 +8,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.res.Configuration;

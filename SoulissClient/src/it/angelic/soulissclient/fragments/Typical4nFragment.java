@@ -3,14 +3,7 @@ package it.angelic.soulissclient.fragments;
 /**
  * Antifurto, deve poter leggere lo stato di tutti i sensori. Il pannello e` unico
  */
-import static it.angelic.soulissclient.typicals.Constants.*;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCmd;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCoil;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCoil_Auto;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCmd;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCoil;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCoil_Auto;
-import static it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Timed;
+import static it.angelic.soulissclient.model.typicals.Constants.*;
 import static junit.framework.Assert.assertTrue;
 
 import java.util.List;
@@ -22,12 +15,12 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.net.UDPHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical11;
-import it.angelic.soulissclient.typicals.SoulissTypical12;
-import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;

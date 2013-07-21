@@ -9,13 +9,13 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
-import it.angelic.soulissclient.typicals.SoulissTypical51AnalogueSensor;
-import it.angelic.soulissclient.typicals.SoulissTypical52TemperatureSensor;
-import it.angelic.soulissclient.typicals.SoulissTypical53HumiditySensor;
-import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -406,7 +406,7 @@ public class SoulissDBHelper {
 		// query with primary key
 		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
 				SoulissDB.COLUMN_TYPICAL + " = "
-						+ it.angelic.soulissclient.typicals.Constants.Souliss_T41_Antitheft_Main, null, null, null,
+						+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main, null, null, null,
 				null);
 		if (cursor.moveToFirst()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
@@ -420,7 +420,7 @@ public class SoulissDBHelper {
 	public List<SoulissTypical42AntiTheftPeer> getAntiTheftSensors() {
 		List<SoulissTypical42AntiTheftPeer> comments = new ArrayList<SoulissTypical42AntiTheftPeer>();
 		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null, null, null);
+				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);

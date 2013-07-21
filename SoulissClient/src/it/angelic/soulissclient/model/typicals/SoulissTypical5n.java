@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.typicals;
+package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
 /**

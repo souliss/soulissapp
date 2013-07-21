@@ -17,12 +17,12 @@ import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 import it.angelic.soulissclient.net.JSONHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
-import it.angelic.soulissclient.typicals.SoulissTypical;
 
 import java.util.LinkedList;
 import java.util.List;

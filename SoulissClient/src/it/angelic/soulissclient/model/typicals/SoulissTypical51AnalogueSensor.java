@@ -1,12 +1,14 @@
-package it.angelic.soulissclient.typicals;
+package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
+import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -16,6 +18,7 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +34,9 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical51AnalogueSensor extends SoulissTypical implements ISoulissTypical {
 
-	public SoulissTypical54LuxSensor(SoulissPreferenceHelper pre) {
+	public SoulissTypical51AnalogueSensor(SoulissPreferenceHelper pre) {
 		super(pre);
 	}
 
@@ -53,7 +56,23 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		else
 			return "STALE";
 	}
+	/**
+	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
+	 */
+	public float getOutputFloat() {
+		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
+		//ora ho i due bytes, li converto
+		int shifted = miofratello << 8;
+		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
 
+		//return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
+		//non voglio usare DecimalFormat
+	    //float temp1 = (float) (HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput())*100.0);
+	    //float temp2 = Math.round(temp1*100.0);//(round to nearest value)
+	    //return (float) (Math.round(temp2*100.0)/100.0);
+	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
+
+	}
 	@Override
 	public void getActionsLayout(TypicalsListAdapter ble, Context ctx, Intent parentIntent, View convertView,
 			ViewGroup parent) {
@@ -62,8 +81,8 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
-
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + (getTypicalDTO().getOutput()*3) + " Lux"));
+		DecimalFormat df = new DecimalFormat("###.##");
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + df.format(getOutputFloat() )));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

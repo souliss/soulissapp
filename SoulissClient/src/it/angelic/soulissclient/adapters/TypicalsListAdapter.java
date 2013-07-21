@@ -5,7 +5,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 import java.util.Locale;
 

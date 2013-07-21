@@ -9,7 +9,7 @@ import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 import java.net.BindException;
 import java.net.DatagramPacket;

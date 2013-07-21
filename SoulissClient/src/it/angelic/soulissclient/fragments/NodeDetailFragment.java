@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.typicals.Constants.*;
+import static it.angelic.soulissclient.model.typicals.Constants.*;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.AirConActivity;
 import it.angelic.soulissclient.Constants;
@@ -19,17 +19,17 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12;
+import it.angelic.soulissclient.model.typicals.SoulissTypical15;
+import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 import it.angelic.soulissclient.net.UDPHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical11;
-import it.angelic.soulissclient.typicals.SoulissTypical12;
-import it.angelic.soulissclient.typicals.SoulissTypical15;
-import it.angelic.soulissclient.typicals.SoulissTypical16AdvancedRGB;
-import it.angelic.soulissclient.typicals.SoulissTypical32AirCon;
-import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
-import it.angelic.soulissclient.typicals.SoulissTypicalHumiditySensor;
-import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -332,7 +332,7 @@ public class NodeDetailFragment extends ListFragment {
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-			}else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.typicals.Constants.Souliss_T32_IrCom_AirCon) {
+			}else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
 				Intent nodeDatail = new Intent(getActivity(), AirConActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical32AirCon) target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getTypicalDTO().getSlot() + 1)));
@@ -340,7 +340,7 @@ public class NodeDetailFragment extends ListFragment {
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.typicals.Constants.Souliss_T1n_RGB) {
+			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB) {
 				Intent nodeDatail = new Intent(getActivity(), RGBIrActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical15) target);
 				NodeDetailFragment.this.startActivity(nodeDatail);

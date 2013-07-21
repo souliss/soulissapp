@@ -7,7 +7,7 @@ import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.util.SparseArray;

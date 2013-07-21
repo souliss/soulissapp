@@ -5,9 +5,9 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.net.UDPHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical32AirCon;
 
 import java.util.List;
 
@@ -415,39 +415,39 @@ public class AirConActivity extends SherlockActivity {
 
 		switch (CelsiusIn) {
 		case 16:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_16C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_16C;
 		case 17:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_17C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_17C;
 		case 18:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_18C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_18C;
 		case 19:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_19C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_19C;
 		case 20:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_20C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_20C;
 		case 21:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_21C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_21C;
 		case 22:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_22C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_22C;
 		case 23:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_23C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_23C;
 		case 24:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_24C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_24C;
 		case 25:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_25C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_25C;
 		case 26:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_26C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_26C;
 		case 27:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_27C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_27C;
 		case 28:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_28C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_28C;
 		case 29:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_29C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_29C;
 		case 30:
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_30C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_30C;
 
 		default:
 			Log.e(Constants.TAG, "error in temp ecode");
-			return it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_24C;
+			return it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_24C;
 		}
 
 	}
@@ -463,35 +463,35 @@ public class AirConActivity extends SherlockActivity {
 	static short demapTemperature(int CelsiusIn) {
 
 		switch (CelsiusIn) {
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_16C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_16C:
 			return 16;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_17C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_17C:
 			return 17;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_18C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_18C:
 			return 18;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_19C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_19C:
 			return 19;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_20C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_20C:
 			return 020;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_21C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_21C:
 			return 21;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_22C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_22C:
 			return 22;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_23C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_23C:
 			return 23;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_24C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_24C:
 			return 24;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_25C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_25C:
 			return 25;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_26C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_26C:
 			return 26;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_27C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_27C:
 			return 27;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_28C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_28C:
 			return 28;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_29C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_29C:
 			return 29;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_IrCom_AirCon_temp_30C:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_AirCon_temp_30C:
 			return 30;
 
 		default:

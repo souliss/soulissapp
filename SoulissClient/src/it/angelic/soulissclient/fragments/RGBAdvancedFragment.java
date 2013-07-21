@@ -8,8 +8,8 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
@@ -236,12 +236,12 @@ public class RGBAdvancedFragment extends Fragment {
 		blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
 		greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
 
-		btOff.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OffCmd);
-		btOn.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_OnCmd);
-		buttPlus.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_BrightUp);
-		buttMinus.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_BrightDown);
-		btFlash.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Flash);
-		btSleep.setTag(it.angelic.soulissclient.typicals.Constants.Souliss_T_related);
+		btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
+		btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
+		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
+		buttMinus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown);
+		btFlash.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Flash);
+		btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
 
 		// CHANNEL Listeners
 		seekChannelRed.setOnSeekBarChangeListener(new channelInputListener());
@@ -350,7 +350,7 @@ public class RGBAdvancedFragment extends Fragment {
 		// bianco manuale
 		btWhite.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, 254, 254, 254,
+				issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, 254, 254, 254,
 						togMulticast.isChecked());
 				return;
 			}
@@ -385,7 +385,7 @@ public class RGBAdvancedFragment extends Fragment {
 				color = c;
 
 				// e
-				collected.issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, Color.red(color),
+				collected.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
 						Color.green(color), Color.blue(color), togMulticast.isChecked());
 			}
 		};
@@ -510,7 +510,7 @@ public class RGBAdvancedFragment extends Fragment {
 
 			color = Color.argb(255, seekChannelRed.getProgress(), seekChannelGreen.getProgress(),
 					seekChannelBlue.getProgress());
-			issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, Color.red(color),
+			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
 					Color.green(color), Color.blue(color), togMulticast.isChecked());
 			redChanabel.setText(getString(R.string.red) + " - " + Color.red(color));
 			greenChanabel.setText(getString(R.string.green) + " - " + Color.green(color));
@@ -523,7 +523,7 @@ public class RGBAdvancedFragment extends Fragment {
 
 		// solo per sicurezza
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, Color.red(color),
+			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
 					Color.green(color), Color.blue(color), togMulticast.isChecked());
 		}
 

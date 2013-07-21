@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.typicals;
+package it.angelic.soulissclient.model.typicals;
 
 public class Constants {
 	public static final String TAG = "SoulissApp:Typicals";

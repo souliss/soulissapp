@@ -5,7 +5,7 @@ import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 
 import java.io.File;
 import java.io.IOException;

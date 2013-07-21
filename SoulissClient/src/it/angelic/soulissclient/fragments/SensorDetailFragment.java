@@ -11,7 +11,7 @@ import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
 import it.angelic.soulissclient.helpers.GraphsHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -291,21 +291,21 @@ public class SensorDetailFragment extends Fragment {
 		renderer = GraphsHelper.buildHistoryRenderer(getActivity(), opzioni);
 
 		switch (type) {
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_TemperatureSensor:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_TemperatureSensor:
 			renderer.setYAxisMin(-15);
 			renderer.setYAxisMax(50);
 			renderer.setYTitle("Celsius degrees");
 			break;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			renderer.setYTitle("Celsius degrees");
 			break;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T51://generic analog
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T51://generic analog
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T54_LuxSensor:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(255);
 			break;
@@ -357,15 +357,15 @@ public class SensorDetailFragment extends Fragment {
 			renderer = GraphsHelper.buildMonthRenderer(getActivity());
 
 		switch (type) {
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_TemperatureSensor:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_TemperatureSensor:
 			renderer.setYAxisMin(-15);
 			renderer.setYAxisMax(50);
 			break;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;
-		case it.angelic.soulissclient.typicals.Constants.Souliss_T54_LuxSensor:
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(255);
 			break;

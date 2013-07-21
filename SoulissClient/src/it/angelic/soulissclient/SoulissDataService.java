@@ -4,12 +4,12 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical54LuxSensor;
-import it.angelic.soulissclient.typicals.SoulissTypicalHumiditySensor;
-import it.angelic.soulissclient.typicals.SoulissTypicalTemperatureSensor;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -279,22 +279,7 @@ public class SoulissDataService extends Service implements LocationListener {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						try {
-							db.open();
-
-							Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
-
-							List<SoulissNode> ref = db.getAllNodes();
-
-							issueRefreshSensors(ref, refreshedNodes);
-							logThings(refreshedNodes);
-
-							// try a local reach, just in case ..
-							UDPHelper.checkSoulissUdp(2000, opts, opts.getPrefIPAddress());
-
-						} catch (Exception e) {
-							Log.e(TAG, "Service error, scheduling again ", e);
-						} /*
+						 /*
 						 * finally { db.close(); }
 						 */
 
@@ -309,11 +294,36 @@ public class SoulissDataService extends Service implements LocationListener {
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
-									Log.v(TAG, "issuing subscribe, numnodes=" + nodesNum);
+									Log.i(TAG, "issuing subscribe, numnodes=" + nodesNum);
 									UDPHelper.stateRequest(opts, nodesNum, 0);
 								}
 							}).start();
-							Log.v(TAG, "Service end run " + SoulissDataService.this.hashCode());
+							
+							
+							try {
+								//ritarda il logging
+								Thread.sleep(3000);
+								db.open();
+
+								Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
+
+								List<SoulissNode> ref = db.getAllNodes();
+								for (SoulissNode soulissNode : ref) {
+									refreshedNodes.put(soulissNode.getId(), soulissNode);
+								}
+								Log.v(TAG, "logging nodes:" + nodesNum);
+								//issueRefreshSensors(ref, refreshedNodes);
+								logThings(refreshedNodes);
+
+								// try a local reach, just in case ..
+								UDPHelper.checkSoulissUdp(2000, opts, opts.getPrefIPAddress());
+
+							} catch (Exception e) {
+								Log.e(TAG, "Service error, scheduling again ", e);
+							}
+							
+							
+							Log.i(TAG, "Service end run" + SoulissDataService.this.hashCode());
 							setLastupd(Calendar.getInstance());
 							reschedule(false);
 						}
@@ -395,7 +405,7 @@ public class SoulissDataService extends Service implements LocationListener {
 		}
 	};
 
-	private void issueRefreshSensors(List<SoulissNode> ref, Map<Short, SoulissNode> refreshedNodes) {
+	/*private void issueRefreshSensors(List<SoulissNode> ref, Map<Short, SoulissNode> refreshedNodes) {
 		for (SoulissNode soulissNode : ref) {
 			refreshedNodes.put(soulissNode.getId(), soulissNode);
 			List<SoulissTypical> tips = soulissNode.getTypicals();
@@ -405,17 +415,17 @@ public class SoulissDataService extends Service implements LocationListener {
 					if (tp instanceof SoulissTypicalTemperatureSensor) {
 						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
 								opts, Constants.COMMAND_SINGLE,
-								"" + it.angelic.soulissclient.typicals.Constants.Souliss_T_TemperatureSensor_refresh);
+								"" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_TemperatureSensor_refresh);
 						break;// basta uno per nodo
 					} else if (tp instanceof SoulissTypicalHumiditySensor) {
 						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
 								opts, Constants.COMMAND_SINGLE, ""
-										+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
+										+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor_refresh);
 						break;// basta uno per nodo
 					} else if (tp instanceof SoulissTypical54LuxSensor) {
 						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
 								opts, Constants.COMMAND_SINGLE, ""
-										+ it.angelic.soulissclient.typicals.Constants.Souliss_T_HumiditySensor_refresh);
+										+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor_refresh);
 						break;// basta uno per nodo
 					} else {
 						Log.e(TAG, "Uninplemented..");
@@ -424,7 +434,7 @@ public class SoulissDataService extends Service implements LocationListener {
 			}
 		}
 
-	}
+	}*/
 
 	private void logThings(Map<Short, SoulissNode> refreshedNodes) {
 		Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");

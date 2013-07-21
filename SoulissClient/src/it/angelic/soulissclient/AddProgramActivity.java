@@ -6,7 +6,7 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 import java.util.ArrayList;
 import java.util.Calendar;

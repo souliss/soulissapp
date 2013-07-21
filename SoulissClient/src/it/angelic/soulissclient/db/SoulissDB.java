@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.db;
 
-import it.angelic.soulissclient.typicals.Constants;
+import it.angelic.soulissclient.model.typicals.Constants;
 import it.angelic.soulissclient.R;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

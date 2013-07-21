@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.net;
 
-import static it.angelic.soulissclient.typicals.Constants.*;
+import static it.angelic.soulissclient.model.typicals.Constants.*;
 import static junit.framework.Assert.assertEquals;
 import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.R;
@@ -14,9 +14,9 @@ import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.typicals.SoulissTypical;
-import it.angelic.soulissclient.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 
 import java.net.DatagramPacket;
 import java.util.ArrayList;
@@ -344,7 +344,7 @@ public class UDPSoulissDecoder {
 				dto.setSlot(((short) (j % typXnodo)));// magia
 				dto.setNodeId((short) (j / typXnodo));
 				// conta solo i master
-				if (mac.get(5 + j) != it.angelic.soulissclient.typicals.Constants.Souliss_T_related)
+				if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
 					done++;
 				dto.persist();
 			}

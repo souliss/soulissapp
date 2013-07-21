@@ -201,7 +201,7 @@ public class VisualizerView extends View {
 
 		+ absMax_med);
 
-		parent.issueIrCommand(it.angelic.soulissclient.typicals.Constants.Souliss_T1n_Set, (int) dbValue_low,
+		parent.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, (int) dbValue_low,
 
 		(int) dbValue_medium, (int) dbValue_high, multicast);
 

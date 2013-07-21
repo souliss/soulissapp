@@ -176,6 +176,8 @@
     <string name="opt_serviceEnable_desc">Servicio en segundo plano deja Souliss sincronizado</string>
     <string name="opt_serviceinterval">Intervalo del Servicio</string>
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
+    <string name="opt_servicehomepos">Set Home Location</string>
+    <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_service">Servicio en segundo plan</string>
     <string name="opt_timeout_pubb">Tiempo límite de conexión</string>
     <string name="opt_timeout_pubb_desc">Elija límite de tiempo de conexión cuando esté usando internet</string>

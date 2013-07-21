@@ -177,6 +177,8 @@
     <string name="opt_serviceEnable_desc">Il servizio mantiene souliss aggiornato anche se non è in esecuzione e provvede al logging dei sensori</string>
     <string name="opt_serviceinterval">Intervallo esecuzione</string>
     <string name="opt_serviceinterval_desc">Aggiornamenti frequenti richiedono più batteria e risorse</string>
+    <string name="opt_servicehomepos">Sono a casa</string>
+    <string name="opt_servicehomepos_desc">usa la posizione corrente come riferimento per i programmi posizionali</string>
     <string name="opt_service">Servizio in background</string>
     <string name="opt_timeout_pubb">Timeout della connessione</string>
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>

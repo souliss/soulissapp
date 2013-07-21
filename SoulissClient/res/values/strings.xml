@@ -178,6 +178,8 @@
     <string name="opt_serviceEnable_desc">Background service keeps Souliss synchronized</string>
     <string name="opt_serviceinterval">Service Interval</string>
     <string name="opt_serviceinterval_desc">Higher speeds require more battery and resources</string>
+    <string name="opt_servicehomepos">Set Home Location</string>
+    <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_service">Background Service</string>
     <string name="opt_timeout_pubb">Connection Timeout</string>
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
