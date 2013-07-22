@@ -7,7 +7,6 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.typicals.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import android.annotation.SuppressLint;
@@ -497,6 +496,7 @@ public class RGBAdvancedFragment extends Fragment {
 					+ Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
 			cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
 					Color.blue(collected.getColor())));
+			cpv.invalidate();
 
 		}
 	};
@@ -537,7 +537,7 @@ public class RGBAdvancedFragment extends Fragment {
 		private static final float STROKE_WIDTH = 48;
 		private Paint paint = null;
 		private Paint centerPaint = null;
-		private boolean trackingCenter = false;
+		//private boolean trackingCenter = false;
 		private RectF swapRect = new RectF();
 		private final int[] colors = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00,
 				0xFFFFFF00, 0xFFFF0000 };
@@ -575,7 +575,7 @@ public class RGBAdvancedFragment extends Fragment {
 			canvas.drawOval(swapRect, paint);
 			canvas.drawCircle(0, 0, CENTER_RADIUS, centerPaint);
 
-			if (trackingCenter) {
+		/*	if (trackingCenter) {
 				int c = centerPaint.getColor();
 				centerPaint.setStyle(Paint.Style.STROKE);
 				centerPaint.setAlpha(0x80);
@@ -584,7 +584,7 @@ public class RGBAdvancedFragment extends Fragment {
 
 				centerPaint.setStyle(Paint.Style.FILL);
 				centerPaint.setColor(c);
-			}
+			}*/
 		}
 
 		/**

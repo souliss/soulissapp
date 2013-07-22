@@ -9,6 +9,8 @@ package it.angelic.soulissclient.helpers;
  */
 public class HalfFloatUtils {
 	
+	public static boolean isNaN(float x){return x != x;}
+	
 	// ignores the higher 16 bits
 	public static float toFloat( int hbits )
 	{

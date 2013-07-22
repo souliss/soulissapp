@@ -29,13 +29,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
- * Occupa DUE slot, quindi l'output viene dal suo e dal suo fratello destro (66)
+ * Occupa DUE slot, quindi l'output viene dal suo e dal suo fratello destro (related)
  * 
  * @author Ale
  * 
  */
 public class SoulissTypical52TemperatureSensor extends SoulissTypical implements ISoulissTypical {
-
+	private final DecimalFormat df = new DecimalFormat("###.##");
 	public SoulissTypical52TemperatureSensor(SoulissPreferenceHelper pre) {
 		super(pre);
 	}
@@ -56,12 +56,14 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		int shifted = miofratello << 8;
 		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
 
-	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
+		float ret = HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
+
+	    return ret;
 
 	}
 
 	public String getOutputCelsius() {
-		DecimalFormat df = new DecimalFormat("###.##");
+		
 
 		return df.format(getOutputFloat() );
 	}

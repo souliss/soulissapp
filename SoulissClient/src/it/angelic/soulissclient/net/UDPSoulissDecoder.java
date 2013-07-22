@@ -1,8 +1,8 @@
 package it.angelic.soulissclient.net;
 
-import static it.angelic.soulissclient.model.typicals.Constants.*;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_InAlarm;
 import static junit.framework.Assert.assertEquals;
-import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
@@ -15,8 +15,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.typicals.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 
 import java.net.DatagramPacket;
 import java.util.ArrayList;
@@ -174,13 +172,18 @@ public class UDPSoulissDecoder {
 
 			for (SoulissNode soulissNode : ref) {
 				refreshedNodes.put(soulissNode.getId(), soulissNode);
-				if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {//giro i tipici solo se seve
+				if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {// giro
+																					// i
+																					// tipici
+																					// solo
+																					// se
+																					// seve
 					for (SoulissTypical ty : soulissNode.getTypicals()) {
 						// check Antitheft
 						if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 								&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-							sendNotification(context, context.getString(R.string.antitheft_notify), context.getString(R.string.antitheft_notify_desc),
-									R.drawable.shield);
+							sendNotification(context, context.getString(R.string.antitheft_notify),
+									context.getString(R.string.antitheft_notify_desc), R.drawable.shield);
 							break;
 						}
 					}
@@ -287,6 +290,7 @@ public class UDPSoulissDecoder {
 
 	/**
 	 * Sovrascrive la struttura I nodi e la struttura dei tipici
+	 * e richiama UDPHelper.typicalRequest(opzioni, nodes, 0);
 	 * 
 	 * @param mac
 	 */
@@ -330,29 +334,33 @@ public class UDPSoulissDecoder {
 	 * @param mac
 	 */
 	private void decodeTypRequest(ArrayList<Short> mac) {
-		assertEquals(Constants.Souliss_UDP_function_typreq_resp, (short) mac.get(0));
-		SharedPreferences.Editor editor = customSharedPreference.edit();
-		short tgtnode = mac.get(3);
-		int numberOf = mac.get(4);
-		int done = 0;
-		// SoulissNode node = database.getSoulissNode(tgtnode);
-		int typXnodo = customSharedPreference.getInt("TipiciXNodo", 1);
-		for (int j = 0; j < numberOf; j++) {
-			if (mac.get(5 + j) != 0) {// create only not-empty typicals
-				SoulissTypicalDTO dto = new SoulissTypicalDTO();
-				dto.setTypical(mac.get(5 + j));
-				dto.setSlot(((short) (j % typXnodo)));// magia
-				dto.setNodeId((short) (j / typXnodo));
-				// conta solo i master
-				if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
-					done++;
-				dto.persist();
+		try {
+			assertEquals(Constants.Souliss_UDP_function_typreq_resp, (short) mac.get(0));
+			SharedPreferences.Editor editor = customSharedPreference.edit();
+			short tgtnode = mac.get(3);
+			int numberOf = mac.get(4);
+			int done = 0;
+			// SoulissNode node = database.getSoulissNode(tgtnode);
+			int typXnodo = customSharedPreference.getInt("TipiciXNodo", 1);
+			for (int j = 0; j < numberOf; j++) {
+				if (mac.get(5 + j) != 0) {// create only not-empty typicals
+					SoulissTypicalDTO dto = new SoulissTypicalDTO();
+					dto.setTypical(mac.get(5 + j));
+					dto.setSlot(((short) (j % typXnodo)));// magia
+					dto.setNodeId((short) (j / typXnodo));
+					// conta solo i master
+					if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
+						done++;
+					dto.persist();
+				}
 			}
+			editor.putInt("numTipici", done);// farloccata,
+			// togliere
+			editor.commit();
+			Log.d(Constants.TAG, "Refreshed typicals for node " + tgtnode);
+		} catch (Exception uy) {
+			Log.e(Constants.TAG, "decodeTypRequest ERROR", uy);
 		}
-		editor.putInt("numTipici", done);// farloccata,
-		// togliere
-		editor.commit();
-		Log.d(Constants.TAG, "Refreshed typicals for node " + tgtnode);
 	}
 
 	/**
@@ -441,7 +449,7 @@ public class UDPSoulissDecoder {
 			Ringtone r = RingtoneManager.getRingtone(ctx, notification);
 			r.play();
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "Unable toplaysounds:"+e.getMessage());
+			Log.e(Constants.TAG, "Unable toplaysounds:" + e.getMessage());
 		}
 	}
 

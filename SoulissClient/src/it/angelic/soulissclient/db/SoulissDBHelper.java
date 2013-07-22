@@ -31,6 +31,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
@@ -196,7 +197,13 @@ public class SoulissDBHelper {
 		} else {
 			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
 		}
-		database.insert(SoulissDB.TABLE_LOGS, null, values);
+		try {
+			database.insert(SoulissDB.TABLE_LOGS, null, values);
+		} catch (SQLiteConstraintException e) {
+			// sensori NaN violano il constraint
+			Log.e(Constants.TAG, "error saving log:"+e);
+		}
+		
 	}
 
 	public SoulissNode getSoulissNode(int nodeIN) {
