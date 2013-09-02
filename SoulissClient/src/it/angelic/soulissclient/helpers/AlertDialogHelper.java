@@ -621,7 +621,7 @@ public class AlertDialogHelper {
 							new Thread() {
 								public void run() {
 									Looper.prepare();
-									UDPHelper.requestDBStruct(opts);
+									UDPHelper.dbStructRequest(opts);
 								}
 							}.start();
 							Toast.makeText(preferencesActivity, preferencesActivity.getResources().getString(R.string.dbstruct_req), Toast.LENGTH_SHORT).show();

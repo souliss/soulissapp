@@ -1,15 +1,7 @@
 package it.angelic.soulissclient.net;
 
-import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 import java.net.BindException;
 import java.net.DatagramPacket;
@@ -17,12 +9,7 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
 import java.nio.channels.DatagramChannel;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import android.content.Context;
 import android.os.Looper;
 import android.util.Log;
 
@@ -40,12 +27,12 @@ public class UDPRunnable implements Runnable {
 	private static final String TAG = "Souliss:UDP";
 	private DatagramSocket socket;
 	private SoulissPreferenceHelper opzioni;
-	private Context context;
+	//private Context context;
 
-	public UDPRunnable(SoulissPreferenceHelper opzioni, Context ctx) {
+	public UDPRunnable(SoulissPreferenceHelper opzioni) {
 		super();
 		this.opzioni = opzioni;
-		this.context = ctx;
+		//this.context = ctx;
 	}
 
 	public void run() {
@@ -80,7 +67,7 @@ public class UDPRunnable implements Runnable {
 					@Override
 					public void run() {
 						UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
-						decoder.decodevNet(packet);
+						decoder.decodeVNetDatagram(packet);
 					}
 				}).start();
 				
@@ -100,13 +87,8 @@ public class UDPRunnable implements Runnable {
 				Log.w(TAG, "***UDP SocketTimeoutException close!" + e2);
 				socket.close();
 			} catch (Exception ee) {
-				Log.w(TAG, "***UDP unhandled!" + ee.getMessage());
-				ee.printStackTrace();
+				Log.e(TAG, "***UDP unhandled!" + ee.getMessage());
 			}
 		}
 	}
-
-
-	
-
 }

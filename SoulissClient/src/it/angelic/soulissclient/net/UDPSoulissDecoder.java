@@ -39,6 +39,14 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+/**
+ * Classe per il decode dei pacchetti nativi souliss 
+ * 
+ * This class decodes incoming Souliss packets, starting from decodevNet
+ * 
+ * @author Ale
+ * 
+ */
 public class UDPSoulissDecoder {
 
 	SoulissPreferenceHelper opzioni;
@@ -55,11 +63,12 @@ public class UDPSoulissDecoder {
 	}
 
 	/**
-	 * processa il pacchetto UDP ricevuto
+	 * processa il pacchetto UDP ricevuto e agisce di condeguenza
 	 * 
 	 * @param packet
+	 *            incoming datagram
 	 */
-	public void decodevNet(DatagramPacket packet) {
+	public void decodeVNetDatagram(DatagramPacket packet) {
 		int checklen = packet.getLength();
 		// Log.d("UDPDecoder", "** Packet received");
 		ArrayList<Short> mac = new ArrayList<Short>();
@@ -99,48 +108,53 @@ public class UDPSoulissDecoder {
 
 	}
 
-	private void decodeMacaco(ArrayList<Short> mac) {
-		int functionalCode = mac.get(0);
+	/**
+	 * Decodes lower level MaCaCo packet
+	 * 
+	 * @param macacoPck
+	 */
+	private void decodeMacaco(ArrayList<Short> macacoPck) {
+		int functionalCode = macacoPck.get(0);
 		// int putIn = mac.get(1);
 		// PUTIN :) 2 byte
 		// STARTOFFSET 1 byte
 		// NUMBEROF 1 byte
-		int startOffset = mac.get(3);
-		int numberOf = mac.get(4);
+		int startOffset = macacoPck.get(3);
+		int numberOf = macacoPck.get(4);
 		Log.d("UDPDecoder", "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
 		switch (functionalCode) {
 		case Constants.Souliss_UDP_function_subscribe_data:
 			Log.d("UDPDecoder", "** Subscription answer");
-			decodeStateRequest(mac);
+			decodeStateRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_poll_resp:
 			Log.d("UDPDecoder", "** Poll answer");
-			decodeStateRequest(mac);
+			decodeStateRequest(macacoPck);
 			processTriggers();
 			break;
 		case Constants.Souliss_UDP_function_ping_resp:
 			// assertEquals(mac.size(), 8);
-			Log.d("UDPDecoder", "** Ping response bytes " + mac.size());
-			decodePing(mac);
+			Log.d("UDPDecoder", "** Ping response bytes " + macacoPck.size());
+			decodePing(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_subscribe_resp:
 			Log.d("UDPDecoder", "** State request answer");
-			decodeStateRequest(mac);
+			decodeStateRequest(macacoPck);
 			processTriggers();
 			break;
 		case Constants.Souliss_UDP_function_typreq_resp:// Answer for assigned
 														// typical logic
 			Log.d("UDPDecoder", "** TypReq answer");
-			decodeTypRequest(mac);
+			decodeTypRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_health_resp:// Answer nodes healty
 			Log.d("UDPDecoder", "** Health answer");
-			decodeHealthRequest(mac);
+			decodeHealthRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_db_struct_resp:// Answer nodes
-			assertEquals(mac.size(), 9); // healty
+			assertEquals(macacoPck.size(), 9); // healty
 			Log.w("UDPDecoder", "** DB Structure answer");
-			decodeDBStructRequest(mac);
+			decodeDBStructRequest(macacoPck);
 			break;
 		case 0x83:
 			Log.e("UDPDecoder", "** (Functional code not supported)");
@@ -289,8 +303,8 @@ public class UDPSoulissDecoder {
 	}
 
 	/**
-	 * Sovrascrive la struttura I nodi e la struttura dei tipici
-	 * e richiama UDPHelper.typicalRequest(opzioni, nodes, 0);
+	 * Sovrascrive la struttura I nodi e la struttura dei tipici e richiama
+	 * UDPHelper.typicalRequest(opzioni, nodes, 0);
 	 * 
 	 * @param mac
 	 */
@@ -302,15 +316,15 @@ public class UDPSoulissDecoder {
 		int maxTypicalXnode = mac.get(7);
 		int maxrequests = mac.get(8);
 
+		Log.i(Constants.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
+				+ maxrequests);
 		database.createOrUpdateStructure(nodes, maxTypicalXnode);
-		Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
+		// Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
 
 		SharedPreferences.Editor editor = customSharedPreference.edit();
 		// sistema configurato
 		if (customSharedPreference.contains("numNodi"))
 			editor.remove("numNodi");
-		if (customSharedPreference.contains("numTipici"))
-			editor.remove("numTipici");
 		if (customSharedPreference.contains("TipiciXNodo"))
 			editor.remove("TipiciXNodo");
 
@@ -342,6 +356,7 @@ public class UDPSoulissDecoder {
 			int done = 0;
 			// SoulissNode node = database.getSoulissNode(tgtnode);
 			int typXnodo = customSharedPreference.getInt("TipiciXNodo", 1);
+			// creates Souliss nodes
 			for (int j = 0; j < numberOf; j++) {
 				if (mac.get(5 + j) != 0) {// create only not-empty typicals
 					SoulissTypicalDTO dto = new SoulissTypicalDTO();
@@ -354,8 +369,9 @@ public class UDPSoulissDecoder {
 					dto.persist();
 				}
 			}
-			editor.putInt("numTipici", done);// farloccata,
-			// togliere
+			if (customSharedPreference.contains("numTipici"))
+				editor.remove("numTipici");//unused
+			editor.putInt("numTipici", done);
 			editor.commit();
 			Log.d(Constants.TAG, "Refreshed typicals for node " + tgtnode);
 		} catch (Exception uy) {
@@ -377,6 +393,7 @@ public class UDPSoulissDecoder {
 			int numberOf = mac.get(4);
 			int typXnodo = customSharedPreference.getInt("TipiciXNodo", 1);
 			SoulissTypicalDTO dto = new SoulissTypicalDTO();
+			//refresh typicals
 			for (short j = 0; j < numberOf; j++) {
 				try {
 					SoulissNode it = nodes.get(j / typXnodo + tgtnode);
@@ -403,18 +420,18 @@ public class UDPSoulissDecoder {
 	}
 
 	/**
-	 * Make a souliss nodes health request
+	 * Decodes a souliss nodes health request
 	 * 
 	 * @param macaco
 	 *            packet
 	 */
 	private void decodeHealthRequest(ArrayList<Short> mac) {
 		// Threee static bytes
-
 		int tgtnode = mac.get(3);
 		int numberOf = mac.get(4);
 
 		ArrayList<Short> healths = new ArrayList<Short>();
+		//build an array containing healths
 		for (int i = 5; i < 5 + numberOf; i++) {
 			healths.add(Short.valueOf(mac.get(i)));
 		}
@@ -423,12 +440,20 @@ public class UDPSoulissDecoder {
 			numberOf = database.refreshNodeHealths(healths, tgtnode);
 			Log.d(Constants.TAG, "Refreshed " + numberOf + " nodes' health");
 		} catch (IllegalStateException e) {
-			Log.e(Constants.TAG, "DB connection was closed, impossible to finish");
+			Log.e(Constants.TAG, "DB connection closed! Can't update healths");
 			return;
 		}
 
 	}
 
+	/**
+	 * Should be moved. Produces Android notification
+	 * 
+	 * @param ctx
+	 * @param desc
+	 * @param longdesc
+	 * @param icon
+	 */
 	private static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
 
 		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);

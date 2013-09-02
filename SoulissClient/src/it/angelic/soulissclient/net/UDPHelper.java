@@ -22,11 +22,424 @@ import java.util.List;
 import android.content.Intent;
 import android.util.Log;
 
+/**
+ * Static methods to build requests' frames
+ * 
+ * 
+ * @author shine@angelic.it
+ * 
+ */
 public class UDPHelper {
 
-	// private String android_id =
-	// Secure.getString(getContext().getContentResolver(),
-	// Secure.ANDROID_ID);
+	
+	
+	/**
+	 * Issue a command to Souliss, at specified coordinates
+	 * 
+	 * @param id
+	 * @param slot
+	 * @param cmd
+	 * @return TODO output string
+	 */
+	public static String issueSoulissCommand(String id, String slot, SoulissPreferenceHelper prefs, int type,
+			String... cmd) {
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+		try {
+			// Log.d(TAG, "Issuing command " + cmd[0]);
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+
+			sender = getSenderSocket(serverAddr);
+			ArrayList<Byte> buf;
+			if (type == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
+				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, slot, cmd),
+						prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
+			} else {
+				buf = buildVNetFrame(buildMaCaCoForce(Constants.Souliss_UDP_function_force, id, slot, cmd),
+						prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
+			}
+
+			byte[] merd = new byte[buf.size()];
+			for (int i = 0; i < buf.size(); i++) {
+				merd[i] = (byte) buf.get(i);
+			}
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+
+			sender.send(packet);
+			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
+
+			return "UDP command OK";
+		} catch (UnknownHostException ed) {
+			ed.printStackTrace();
+			return ed.getLocalizedMessage();
+		} catch (SocketException et) {
+			et.printStackTrace();
+			return et.getLocalizedMessage();
+		} catch (Exception e) {
+			Log.d(Constants.TAG, "***Fail", e);
+			return e.getLocalizedMessage();
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+	}
+
+	public static String issueSoulissCommand(SoulissCommand in, SoulissPreferenceHelper prefs) {
+		SoulissCommandDTO dto = in.getCommandDTO();
+
+		String ret = issueSoulissCommand(String.valueOf(dto.getNodeId()), String.valueOf(dto.getSlot()), prefs,
+				dto.getType(), String.valueOf(dto.getCommand()));
+		return ret;
+
+	}
+
+	public static String issueMassiveCommand(String typ, SoulissPreferenceHelper prefs, String... cmd) {
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+		try {
+			// Log.d(TAG, "Issuing command " + cmd[0]);
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+
+			sender = getSenderSocket(serverAddr);
+			ArrayList<Byte> buf;
+			buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, typ, cmd),
+					prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
+
+			byte[] merd = new byte[buf.size()];
+			for (int i = 0; i < buf.size(); i++) {
+				merd[i] = (byte) buf.get(i);
+			}
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+
+			sender.send(packet);
+			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
+
+			return "UDP massive command OK";
+		} catch (UnknownHostException ed) {
+			ed.printStackTrace();
+			return ed.getLocalizedMessage();
+		} catch (SocketException et) {
+			et.printStackTrace();
+			return et.getLocalizedMessage();
+		} catch (Exception e) {
+			Log.d(Constants.TAG, "***Fail", e);
+			return e.getLocalizedMessage();
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+	}
+
+	/**
+	 * 	 * N+1 N 17 B1 00 64 01 08 00 00 00 00 ipubbl can be = to ip, if local area
+	 * LAN is used
+	 * 
+	 * @return contacted address
+	 * 
+	 * @param ip private LAN IP address, mandatory
+	 * @param ipubbl public IP, if any
+	 * @param userix Souliss User index
+	 * @param nodeix Souliss Node index
+
+	 * @throws Exception catch not implemented by design
+	 */
+	public static InetAddress ping(String ip, String ipubbl, int userix, int nodeix) throws Exception {
+
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+
+		try {
+
+			serverAddr = InetAddress.getByName(ipubbl);
+
+			DatagramChannel channel = DatagramChannel.open();
+			sender = channel.socket();
+			sender.setReuseAddress(true);
+
+			// hole punch
+			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
+			sender.bind(sa);
+
+			List<Byte> macaco = new ArrayList<Byte>();
+			macaco = Arrays.asList(Constants.PING_PAYLOAD);
+			macaco.set(1, (byte) (ip.compareTo(ipubbl) == 0 ? 0xF : 0xB));
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, ip, userix, nodeix);
+
+			byte[] merd = new byte[buf.size()];
+			for (int i = 0; i < buf.size(); i++) {
+				merd[i] = (byte) buf.get(i);
+			}
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			sender.send(packet);
+			Log.d(Constants.TAG, "Ping sent to: " + serverAddr);
+			return serverAddr;
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+
+	}
+
+	/**
+	 * N+1 N 17 B1 00 64 01 08 00 00 00 00 used to recreate DB
+	 * 
+	 */
+	public static void dbStructRequest(SoulissPreferenceHelper prefs) {
+
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+
+		try {
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			sender = getSenderSocket(serverAddr);
+
+			List<Byte> macaco = new ArrayList<Byte>();
+			macaco = Arrays.asList(Constants.DBSTRUCT_PAYLOAD);
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
+					prefs.getNodeIndex());
+
+			byte[] merd = new byte[buf.size()];
+			for (int i = 0; i < buf.size(); i++) {
+				merd[i] = (byte) buf.get(i);
+			}
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			sender.send(packet);
+			Log.w(Constants.TAG, "DB struct sent. bytes:" + packet.getLength());
+			return;
+		} catch (UnknownHostException ed) {
+			Log.d(Constants.TAG, "***requestDBStruct Fail", ed);
+			return;
+		} catch (SocketException et) {
+			Log.d(Constants.TAG, "***requestDBStruct Fail", et);
+			return;
+		} catch (Exception e) {
+			Log.d(Constants.TAG, "***requestDBStruct Fail", e);
+			return;
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+
+	}
+
+	/**
+	 * Subscribe request.
+	 * 
+	 * @param prefs App preferences
+	 * @param numberOf number of nodes to request
+	 * @param startOffset
+	 */
+	public static void stateRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
+
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+
+		try {
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			Log.w(Constants.TAG, "Staterequest, numberof=" + numberOf);
+			sender = getSenderSocket(serverAddr);
+
+			List<Byte> macaco = new ArrayList<Byte>();
+			macaco.add(Constants.Souliss_UDP_function_subscribe);
+			// PUTIN, STARTOFFEST, NUMBEROF
+			macaco.add((byte) 0x0);// PUTIN
+			macaco.add((byte) 0x0);// PUTIN
+
+			macaco.add((byte) startOffset);// startnode
+			macaco.add((byte) numberOf);// numberof
+
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
+					prefs.getNodeIndex());
+
+			byte[] merd = toByteArray(buf);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			sender.send(packet);
+			Log.w(Constants.TAG, "Subscribe sent. bytes:" + packet.getLength());
+		} catch (UnknownHostException ed) {
+			Log.e(Constants.TAG, "***stateRequest Fail", ed);
+			return;
+		} catch (SocketException et) {
+			Log.e(Constants.TAG, "***stateRequest Fail", et);
+			return;
+		} catch (Exception e) {
+			Log.e(Constants.TAG, "***stateRequest Fail", e);
+			return;
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+
+	}
+
+	/**
+	 * Poll data request, without data subscription (one-shot)
+	 * 
+	 * @param prefs
+	 */
+	public static void pollRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
+
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+
+		try {
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			Log.w(TAG, "Poll request, numberof=" + numberOf);
+			sender = getSenderSocket(serverAddr);
+
+			List<Byte> macaco = new ArrayList<Byte>();
+			macaco.add(Constants.Souliss_UDP_function_poll);
+			// PUTIN, STARTOFFEST, NUMBEROF
+			macaco.add((byte) 0x0);// PUTIN
+			macaco.add((byte) 0x0);// PUTIN
+
+			macaco.add((byte) startOffset);// startnode
+			macaco.add((byte) numberOf);// numberof
+
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
+					prefs.getNodeIndex());
+
+			// pessimo
+			// http://stackoverflow.com/questions/6860055/convert-arraylistbyte-into-a-byte
+			byte[] merd = toByteArray(buf);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			sender.send(packet);
+		} catch (UnknownHostException ed) {
+			Log.e(Constants.TAG, "***stateRequest Fail", ed);
+			return;
+		} catch (SocketException et) {
+			Log.e(Constants.TAG, "***stateRequest Fail", et);
+			return;
+		} catch (Exception e) {
+			Log.e(Constants.TAG, "***stateRequest Fail", e);
+			return;
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+
+	}
+
+	public static void typicalRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
+
+		assertEquals(true, numberOf < 128);
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+
+		try {
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			sender = getSenderSocket(serverAddr);
+
+			List<Byte> macaco = new ArrayList<Byte>();
+			// PUTIN, STARTOFFEST, NUMBEROF
+			macaco.add(Constants.Souliss_UDP_function_typreq);
+			macaco.add((byte) 0x0);// PUTIN
+			macaco.add((byte) 0x0);// PUTIN
+			macaco.add((byte) startOffset);// startnode
+			macaco.add((byte) numberOf);// numberof
+
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
+					prefs.getNodeIndex());
+
+			byte[] merd = toByteArray(buf);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			sender.send(packet);
+			Log.w(Constants.TAG, "typRequest sent to " + serverAddr.getHostAddress());
+		} catch (UnknownHostException ed) {
+			ed.printStackTrace();
+			return;
+		} catch (SocketException et) {
+			et.printStackTrace();
+			return;
+		} catch (Exception e) {
+			Log.e(Constants.TAG, "typRequest Fail", e);
+			return;
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+	}
+
+	public static void healthRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
+
+		assertEquals(true, numberOf < 128);
+		assertEquals(true, prefs.getPrefIPAddress() != null);
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+
+		try {
+			Log.d(TAG, "Staterequest, numberof=" + numberOf);
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			sender = getSenderSocket(serverAddr);
+
+			List<Byte> macaco = new ArrayList<Byte>();
+			// PUTIN, STARTOFFEST, NUMBEROF
+			macaco.add(Constants.Souliss_UDP_function_healthReq);
+			macaco.add((byte) 0x0);// PUTIN
+			macaco.add((byte) 0x0);// PUTIN
+			macaco.add((byte) startOffset);// startnode
+			macaco.add((byte) numberOf);// numberof
+
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
+					prefs.getNodeIndex());
+
+			byte[] merd = toByteArray(buf);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			sender.send(packet);
+			Log.w(Constants.TAG, "healthRequest sent to " + serverAddr.getHostAddress());
+		} catch (UnknownHostException ed) {
+			Log.e(Constants.TAG, "Souliss unavailable " + ed.getMessage());
+			return;
+		} catch (SocketException et) {
+			Log.e(Constants.TAG, "typRequest Fail", et);
+			return;
+		} catch (Exception e) {
+			Log.e(Constants.TAG, "typRequest Fail", e);
+			return;
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+
+	}
+
+	/**
+	 * Wrappa una ping, per causare una risposta da soluiss
+	 * 
+	 * local address is always necessary
+	 * 
+	 * @param timeoutMsec
+	 * @param prefs Souliss preferences
+	 * @param ip
+	 */
+	public static String checkSoulissUdp(int timeoutMsec, SoulissPreferenceHelper prefs, String ip) {
+
+		// TODO timer che stacca la connessione in mancata risposta
+		// assertEquals(true, ip.equals(prefs.getIPPreferencePublic()) ||
+		// ip.equals(prefs.getPrefIPAddress()));
+
+		try {
+			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex()).getHostAddress();
+		} catch (UnknownHostException ed) {
+			Log.e(Constants.TAG, "***Fail", ed);
+			return ed.getMessage();
+		} catch (SocketException et) {
+			Log.e(Constants.TAG, "***Fail", et);
+			return et.getMessage();
+		} catch (Exception e) {
+			Log.e(Constants.TAG, "***Fail", e);
+			return e.getMessage();
+		}
+
+	}
+	
 	/**
 	 * Costruzione frame vNet: 0D 0C 17 11 00 64 01 XX 00 00 00 01 01 0D è la
 	 * lunghezza complessiva del driver vNet 0C è la lunghezza complessiva vNet
@@ -43,7 +456,7 @@ public class UDPHelper {
 	 *            per ottenere l'indirizzo di souliss
 	 * @return
 	 */
-	public static ArrayList<Byte> buildVNetFrame(List<Byte> macaco, String ipd, int useridx, int nodeidx) {
+	private static ArrayList<Byte> buildVNetFrame(List<Byte> macaco, String ipd, int useridx, int nodeidx) {
 
 		assertEquals(true, useridx < it.angelic.soulissclient.Constants.MAX_USER_IDX);
 		assertEquals(true, nodeidx < it.angelic.soulissclient.Constants.MAX_NODE_IDX);
@@ -90,15 +503,17 @@ public class UDPHelper {
 
 		return frame;
 	}
-/**
- * Builds a Macaco frame to issue a command
- * @param functional
- * @param id NodeId
- * @param slot
- * @param cmd
- * @return
- */
-	private static ArrayList<Byte> buildMaCaCoForce(byte functional, String id, String slot, String... cmd) {
+
+	/**
+	 * Builds a Macaco frame to issue a standard command
+	 * 
+	 * @param functional
+	 * @param nodeId Node's id
+	 * @param slot
+	 * @param cmd
+	 * @return
+	 */
+	private static ArrayList<Byte> buildMaCaCoForce(byte functional, String nodeId, String slot, String... cmd) {
 		assertEquals(true, functional < Byte.MAX_VALUE);
 		ArrayList<Byte> frame = new ArrayList<Byte>();
 
@@ -107,7 +522,7 @@ public class UDPHelper {
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
 
-		frame.add(Byte.valueOf(id)); // STARTOFFSET
+		frame.add(Byte.valueOf(nodeId)); // STARTOFFSET
 		frame.add(((byte) (Byte.valueOf(slot) + cmd.length))); // NUMBEROF
 
 		for (int i = 0; i <= Byte.valueOf(slot); i++) {
@@ -117,7 +532,7 @@ public class UDPHelper {
 					// che schifo
 					int merdata = Integer.decode(number);
 					if (merdata > Byte.MAX_VALUE)
-						Log.w(Constants.TAG, "Overflow with command "+number);
+						Log.w(Constants.TAG, "Overflow with command " + number);
 					frame.add((byte) merdata);
 				}
 
@@ -147,7 +562,7 @@ public class UDPHelper {
 			// che schifo
 			int merdata = Integer.parseInt(number);
 			if (merdata > Byte.MAX_VALUE)
-				Log.w(Constants.TAG, "Overflow with command "+cmd);
+				Log.w(Constants.TAG, "Overflow with command " + cmd);
 			frame.add((byte) merdata);
 		}
 
@@ -155,193 +570,12 @@ public class UDPHelper {
 		return frame;
 
 	}
-
-	public static String issueSoulissCommand(SoulissCommand in, SoulissPreferenceHelper prefs) {
-		SoulissCommandDTO dto = in.getCommandDTO();
-
-		String ret = issueSoulissCommand(String.valueOf(dto.getNodeId()), String.valueOf(dto.getSlot()), prefs,
-				dto.getType(), String.valueOf(dto.getCommand()));
-		return ret;
-
-	}
-
-	public static String issueMassiveCommand(String typ, SoulissPreferenceHelper prefs,
-			String... cmd){
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-		try {
-			// Log.d(TAG, "Issuing command " + cmd[0]);
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-
-			sender = getSenderSocket(serverAddr);
-			ArrayList<Byte> buf;
-				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, typ, cmd),
-						prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-
-			byte[] merd = new byte[buf.size()];
-			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
-			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-
-			sender.send(packet);
-			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
-
-			return "UDP massive command OK";
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return ed.getLocalizedMessage();
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return et.getLocalizedMessage();
-		} catch (Exception e) {
-			Log.d(Constants.TAG, "***Fail", e);
-			return e.getLocalizedMessage();
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-	}
+	
 	/**
-	 * Issue a command to Souliss, at specified coordinates
-	 * 
-	 * @param id
-	 * @param slot
-	 * @param cmd
-	 * @return TODO output string
-	 */
-	public static String issueSoulissCommand(String id, String slot, SoulissPreferenceHelper prefs, int type,
-			String... cmd) {
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-		try {
-			// Log.d(TAG, "Issuing command " + cmd[0]);
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-
-			sender = getSenderSocket(serverAddr);
-			ArrayList<Byte> buf;
-			if (type == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
-				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, slot, cmd),
-						prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-			} else {
-				buf = buildVNetFrame(buildMaCaCoForce(Constants.Souliss_UDP_function_force, id, slot, cmd),
-						prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-			}
-
-			byte[] merd = new byte[buf.size()];
-			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
-			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-
-			sender.send(packet);
-			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
-
-			return "UDP command OK";
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return ed.getLocalizedMessage();
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return et.getLocalizedMessage();
-		} catch (Exception e) {
-			Log.d(Constants.TAG, "***Fail", e);
-			return e.getLocalizedMessage();
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-	}
-
-	/**
-	 * N+1 N 17 B1 00 64 01 08 00 00 00 00 ipubbl can be = to ip, if local area
-	 * LAN is used
-	 * 
+	 * Builds old-school byte array
+	 * @param buf
 	 * @return
-	 * 
 	 */
-	public static InetAddress ping(String ip, String ipubbl, int userix, int nodeix) throws Exception {
-
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-
-		try {
-
-			serverAddr = InetAddress.getByName(ipubbl);
-
-			DatagramChannel channel = DatagramChannel.open();
-			sender = channel.socket();
-			sender.setReuseAddress(true);
-
-			// hole punch
-			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
-			sender.bind(sa);
-
-			List<Byte> macaco = new ArrayList<Byte>();
-			macaco = Arrays.asList(Constants.PING_PAYLOAD);
-			macaco.set(1, (byte) (ip.compareTo(ipubbl) == 0 ? 0xF : 0xB));
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, ip, userix, nodeix);
-
-			byte[] merd = new byte[buf.size()];
-			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
-			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-			sender.send(packet);
-			Log.w(Constants.TAG, "Ping sent to: " + serverAddr);
-			return serverAddr;
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-
-	}
-
-	/**
-	 * N+1 N 17 B1 00 64 01 08 00 00 00 00 used to recreate DB
-	 * 
-	 */
-	public static void requestDBStruct(SoulissPreferenceHelper prefs) {
-
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-
-		try {
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			sender = getSenderSocket(serverAddr);
-
-			List<Byte> macaco = new ArrayList<Byte>();
-			macaco = Arrays.asList(Constants.DBSTRUCT_PAYLOAD);
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-
-			byte[] merd = new byte[buf.size()];
-			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
-			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-			sender.send(packet);
-			Log.w(Constants.TAG, "DB struct sent. bytes:" + packet.getLength());
-			return;
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return;
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return;
-		} catch (Exception e) {
-			Log.d(Constants.TAG, "***requestDBStruct Fail", e);
-			return;
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-
-	}
-
 	private static byte[] toByteArray(ArrayList<Byte> buf) {
 		byte[] merd = new byte[buf.size()];
 		for (int i = 0; i < buf.size(); i++) {
@@ -349,102 +583,6 @@ public class UDPHelper {
 		}
 		return merd;
 	}
-
-	/**
-	 * Subscribe request.
-	 * 
-	 * @param prefs
-	 */
-	public static void stateRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
-
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-
-		try {
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			Log.w(Constants.TAG, "Staterequest, numberof=" + numberOf);
-			sender = getSenderSocket(serverAddr);
-
-			List<Byte> macaco = new ArrayList<Byte>();
-			macaco.add(Constants.Souliss_UDP_function_subscribe);
-			// PUTIN, STARTOFFEST, NUMBEROF
-			macaco.add((byte) 0x0);// PUTIN
-			macaco.add((byte) 0x0);// PUTIN
-
-			macaco.add((byte) startOffset);// startnode
-			macaco.add((byte) numberOf);// numberof
-
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-
-			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-			sender.send(packet);
-			Log.w(Constants.TAG, "Subscribe sent. bytes:" + packet.getLength());
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return;
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return;
-		} catch (Exception e) {
-			Log.e(Constants.TAG, "***stateRequest Fail", e);
-			return;
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-
-	}
-
-	/**
-	 * Subscribe request.
-	 * 
-	 * @param prefs
-	 */
-	public static void pollRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
-
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-
-		try {
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			Log.w(TAG, "Poll request, numberof=" + numberOf);
-			sender = getSenderSocket(serverAddr);
-
-			List<Byte> macaco = new ArrayList<Byte>();
-			macaco.add(Constants.Souliss_UDP_function_poll);
-			// PUTIN, STARTOFFEST, NUMBEROF
-			macaco.add((byte) 0x0);// PUTIN
-			macaco.add((byte) 0x0);// PUTIN
-
-			macaco.add((byte) startOffset);// startnode
-			macaco.add((byte) numberOf);// numberof
-
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-
-			// pessimo
-			// http://stackoverflow.com/questions/6860055/convert-arraylistbyte-into-a-byte
-			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-			sender.send(packet);
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return;
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return;
-		} catch (Exception e) {
-			Log.e(Constants.TAG, "***stateRequest Fail", e);
-			return;
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-
-	}
-
 	private static DatagramSocket getSenderSocket(InetAddress serverAddr) {
 		DatagramSocket sender = null;
 		try {
@@ -455,126 +593,12 @@ public class UDPHelper {
 			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
 			sender.bind(sa);
 		} catch (SocketException e) {
-			Log.e(Constants.TAG, "SOCKETERR: "+e.getMessage());
+			Log.e(Constants.TAG, "SOCKETERR: " + e.getMessage());
 		} catch (IOException e) {
-			Log.e(Constants.TAG, "IOERR: "+e.getMessage());
+			Log.e(Constants.TAG, "IOERR: " + e.getMessage());
 		}
 		return sender;
 	}
 
-	public static void typicalRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
-
-		assertEquals(true, numberOf < 128);
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-
-		try {
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			sender = getSenderSocket(serverAddr);
-
-			List<Byte> macaco = new ArrayList<Byte>();
-			// PUTIN, STARTOFFEST, NUMBEROF
-			macaco.add(Constants.Souliss_UDP_function_typreq);
-			macaco.add((byte) 0x0);// PUTIN
-			macaco.add((byte) 0x0);// PUTIN
-			macaco.add((byte) startOffset);// startnode
-			macaco.add((byte) numberOf);// numberof
-
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-
-			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-			sender.send(packet);
-			Log.w(Constants.TAG, "typRequest sent to " + serverAddr.getHostAddress());
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return;
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return;
-		} catch (Exception e) {
-			Log.e(Constants.TAG, "typRequest Fail", e);
-			return;
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-	}
-
-	public static void healthRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
-
-		assertEquals(true, numberOf < 128);
-		assertEquals(true, prefs.getPrefIPAddress() != null);
-		InetAddress serverAddr;
-		DatagramSocket sender = null;
-		DatagramPacket packet;
-
-		try {
-			Log.d(TAG, "Staterequest, numberof=" + numberOf);
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			sender = getSenderSocket(serverAddr);
-
-			List<Byte> macaco = new ArrayList<Byte>();
-			// PUTIN, STARTOFFEST, NUMBEROF
-			macaco.add(Constants.Souliss_UDP_function_healthReq);
-			macaco.add((byte) 0x0);// PUTIN
-			macaco.add((byte) 0x0);// PUTIN
-			macaco.add((byte) startOffset);// startnode
-			macaco.add((byte) numberOf);// numberof
-
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),prefs.getNodeIndex());
-
-			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
-			sender.send(packet);
-			Log.w(Constants.TAG, "healthRequest sent to " + serverAddr.getHostAddress());
-		} catch (UnknownHostException ed) {
-			Log.e(Constants.TAG, "Souliss unavailable " + ed.getMessage());
-			return;
-		} catch (SocketException et) {
-			// TODO Auto-generated catch block
-			et.printStackTrace();
-			return;
-		} catch (Exception e) {
-			Log.e(Constants.TAG, "typRequest Fail", e);
-			return;
-		} finally {
-			if (sender != null && !sender.isClosed())
-				sender.close();
-		}
-
-	}
-
-	/**
-	 * Wrappa una ping, per causare una risposta da soluiss
-	 * 
-	 * 
-	 * 
-	 * @param timeoutMsec
-	 * @param prefs
-	 * @param ip
-	 */
-	public static String checkSoulissUdp(int timeoutMsec, SoulissPreferenceHelper prefs, String ip) {
-
-		// TODO timer che stacca la connessione in mancata risposta
-		// assertEquals(true, ip.equals(prefs.getIPPreferencePublic()) ||
-		// ip.equals(prefs.getPrefIPAddress()));
-
-		// local address is alway necessary
-		try {
-			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex()).getHostAddress();
-		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return ed.getMessage();
-		} catch (SocketException et) {
-			et.printStackTrace();
-			return et.getMessage();
-		} catch (Exception e) {
-			Log.e(Constants.TAG, "***Fail", e);
-			return e.getMessage();
-		}
-
-	}
 
 }

@@ -29,7 +29,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-
+/**
+ * This class shouldn't be used anymore.
+ * 
+ * @author Ale
+ *
+ */
+@Deprecated
 public class JSONHelper {
 	private static final String LOG_TAG = "Souliss:JSONHelper";
 
@@ -299,7 +305,7 @@ public class JSONHelper {
 		}
 		return json;
 	}
-
+	@Deprecated
 	public static JSONArray getHttpJsonArray(String url) {
 		JSONArray json = null;
 		String result = getHttp(url);

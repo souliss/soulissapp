@@ -122,7 +122,7 @@ public class SoulissDataService extends Service implements LocationListener {
 	private void startUDPListener() {
 		if (udpThread == null || !udpThread.isAlive()) {
 			// Create the object with the run() method
-			Runnable runnable = new UDPRunnable(opts, SoulissDataService.this);
+			Runnable runnable = new UDPRunnable(opts);
 			// Create the udpThread supplying it with the runnable
 			// object
 			udpThread = new Thread(runnable);
