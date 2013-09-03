@@ -3,7 +3,7 @@
     package="it.angelic.soulissclient"
     android:installLocation="auto"
     android:versionCode="105"
-    android:versionName="1.2.4" >
+    android:versionName="1.2.5" >
 
     <uses-sdk
         android:minSdkVersion="7"

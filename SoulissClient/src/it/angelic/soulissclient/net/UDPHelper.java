@@ -475,10 +475,10 @@ public class UDPHelper {
 
 		frame.add((byte) dude[3]);// BOARD
 		frame.add((byte) 0);//
-
-		frame.add((byte) useridx);// USER IDX
 		frame.add((byte) nodeidx); // NODE INDEX
-
+		frame.add((byte) useridx);// USER IDX
+		
+		//aggiunge in testa il calcolo
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));// Check 2
 

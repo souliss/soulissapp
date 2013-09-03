@@ -69,6 +69,9 @@ public class SoulissDataService extends Service implements LocationListener {
 		super.onCreate();
 		Log.w(TAG, "service onCreate()");
 		opts = SoulissClient.getOpzioni();
+		//subito
+		startUDPListener();
+		
 		// toDoDBAdapter = new ToDoDBAdapter(getApplicationContext());
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Criteria crit = new Criteria();
@@ -86,8 +89,8 @@ public class SoulissDataService extends Service implements LocationListener {
 
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-		startUDPListener();
-		Log.i(TAG, "UDP thread started" + opts.getBackedOffServiceInterval());
+		
+		
 
 	}
 
@@ -109,7 +112,7 @@ public class SoulissDataService extends Service implements LocationListener {
 		Calendar next = Calendar.getInstance();
 		next.setTimeInMillis(opts.getNextServiceRun());
 		// uir = opts.getDataServiceInterval();
-		Log.i(TAG, "Service StartCommand()");
+		Log.i(TAG, "Service onStartCommand()");
 		// delle opzioni
 		if (!next.after(now)) {
 			Log.w(TAG, "Service next sched outdated, sched NOW");

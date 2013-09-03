@@ -119,8 +119,13 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	};
 
 	void doBindService() {
+		
+		//ComponentName myService = startService(new Intent(this,SoulissDataService.class));
+		//bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, Context.BIND_NOT_FOREGROUND );
+		
+		
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
-		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, Context.BIND_NOT_FOREGROUND);
+		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
 	}
 
 	void doUnbindService() {
