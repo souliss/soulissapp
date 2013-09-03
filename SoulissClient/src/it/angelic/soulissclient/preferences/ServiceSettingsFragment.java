@@ -40,6 +40,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		// criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		criteria.setPowerRequirement(Criteria.POWER_LOW);
 		provider = locationManager.getBestProvider(criteria, true);
 		// datasource = new SoulissDBHelper(getActivity());
 
@@ -61,9 +62,10 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 					opzioni.setHomeLongitude(luogo.getLongitude());
 					opzioni.reload();
 					resetMesg(setHomeLocation);
-					Toast.makeText(getActivity(), "Home position set", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(),getString(R.string.opt_homepos_set) , Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {
-					Toast.makeText(getActivity(), "Error getting current position", Toast.LENGTH_SHORT).show();
+					Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
+					Toast.makeText(getActivity(), getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();
 				}
 				return true;
 			}

@@ -179,6 +179,8 @@
     <string name="opt_serviceinterval_desc">Altas velocidades requerem mais batteria e recursos</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
+    <string name="opt_homepos_err">Error getting current position</string>
+    <string name="opt_homepos_set">Home position set</string>
     <string name="opt_service">Serviço de Suporte</string>
     <string name="opt_timeout_pubb">Tempo limite de conexão</string>
     <string name="opt_timeout_pubb_desc">Escolha de tempo limite de conexão ao usar a Internet</string>

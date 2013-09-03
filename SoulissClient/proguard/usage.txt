@@ -593,8 +593,6 @@ com.robobunny.SeekBarPreference:
     private static final java.lang.String ANDROIDNS
     private static final java.lang.String ROBOBUNNYNS
     private static final int DEFAULT_VALUE
-it.angelic.receivers.LifeCheckerSetupReceiver:
-    private static final java.lang.String APP_TAG
 it.angelic.receivers.NetworkStateReceiver:
     private static final java.lang.String TAG
 org.achartengine.ChartFactory:

@@ -178,6 +178,8 @@
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
+    <string name="opt_homepos_err">Error getting current position</string>
+    <string name="opt_homepos_set">Home position set</string>
     <string name="opt_service">Servicio en segundo plan</string>
     <string name="opt_timeout_pubb">Tiempo límite de conexión</string>
     <string name="opt_timeout_pubb_desc">Elija límite de tiempo de conexión cuando esté usando internet</string>
