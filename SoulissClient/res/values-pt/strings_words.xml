@@ -13,6 +13,7 @@
     <string name="node">Central</string>
     <string name="nodes">Centrais</string>
     <string name="slot">Slot</string>
+     <string name="sensors">Sensors</string>
     <string name="ping">Ping</string>
     <string name="ago">atrás</string>
     <string name="multicast">multidifusão</string>

@@ -5,7 +5,7 @@
     android:summary="@string/opt_networkdesc"
     android:title="@string/opt_network" >
 
-    <PreferenceCategory android:title="Home Network (mandatory)" >
+    <PreferenceCategory android:title="@string/opt_net_home" >
         <EditTextPreference
             android:dialogTitle="@string/dialog_title_edittext_IP"
             android:key="edittext_IP"
@@ -20,20 +20,13 @@
             android:summary="@string/opt_timeout_pubb_desc"
             android:title="@string/opt_timeout_pubb" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Remote Network (optional)" >
+    <PreferenceCategory android:title="" >
         <EditTextPreference
             android:dialogTitle="@string/dialog_title_edittext_IP_pubb"
             android:key="edittext_IP_pubb"
             android:summary="@string/summary_edittext_IP_pubb"
             android:title="@string/title_edittext_IP_pubb" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="VPN Network (optional)" >
-        <EditTextPreference
-            android:dialogTitle="@string/dialog_title_edittext_IP_VPN"
-            android:key="edittext_IP_VPN"
-            android:summary="@string/summary_edittext_IP_VPN"
-            android:title="@string/dialog_title_edittext_IP_VPN" />
-    </PreferenceCategory>
+    </PreferenceCategory>  
     <PreferenceCategory android:title="Device ID" >
         <EditTextPreference
             android:name="userindex"

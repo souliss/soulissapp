@@ -53,10 +53,10 @@
     <string name="programs_notyet">The command hasn\'t been executed yet</string>
     <string name="command_sent">command Sent</string>
     <string name="command_send">Send command</string>
-     <string name="compatible">compatible typicals</string>
-     <string name="to_all">to all</string>
-     <string name="to">to</string>
-     <string name="on_node">on node</string>
+    <string name="compatible">compatible typicals</string>
+    <string name="to_all">to all</string>
+    <string name="to">to</string>
+    <string name="on_node">on node</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Scenes</string>
     <string name="scenes_delete">Delete Scene</string>
@@ -137,7 +137,6 @@
     <string name="opt_userindex_desc">The User index identifies Android client to Souliss. Current value is %1$d. Tap to change it, in range 1-100</string>
     <string name="opt_nodeindex">Node Index</string>
     <string name="opt_nodeindex_desc">The Node index identifies this device on Souliss boards. Current value is %1$d. Tap to change it, in range 1-254</string>
-     
     <string name="opt_checkconnection">Check Connection</string>
     <string name="opt_checkconnection_desc">Check connectivity to Souliss HTTP Server</string>
     <string name="opt_networkdesc">Home and remote network settings</string>
@@ -187,6 +186,9 @@
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>
     <string name="unknown_typical">Unknown typical</string>
+    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_remote">Remote Network (optional)</string>
+    <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Turn ON</string>
@@ -208,8 +210,8 @@
     <string name="Souliss_T21_desc">Motorized Device (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Motorized Device</string>
     <string name="Souliss_T31_desc">Thermomether</string>
-     <string name="Souliss_T41_desc">AntiTheft System</string>
-     <string name="Souliss_T42_desc">AntiTheft Peer</string>
+    <string name="Souliss_T41_desc">AntiTheft System</string>
+    <string name="Souliss_T42_desc">AntiTheft Peer</string>
     <string name="Souliss_T51_desc">Analog input</string>
     <string name="Souliss_T52_desc">Analog input, root mean value</string>
     <string name="Souliss_T53_desc">Analog input, max iterative</string>

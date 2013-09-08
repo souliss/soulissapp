@@ -13,12 +13,11 @@
     <string name="node">Node</string>
     <string name="nodes">Nodes</string>
     <string name="slot">Slot</string>
-        <string name="sensors">Sensors</string>
+    <string name="sensors">Sensors</string>
     <string name="ping">Ping</string>
     <string name="ago">ago</string>
     <string name="multicast">Multicast</string>
     <string name="multicast_desc">Send to all devices of this type</string>
-    <string name="music">Music Sync</string>
     <string name="days">days</string>
     <string name="poll">Poll</string>
     <string name="refresh">Refresh</string>

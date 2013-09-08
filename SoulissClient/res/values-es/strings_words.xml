@@ -13,6 +13,7 @@
     <string name="node">Nodo</string>
     <string name="nodes">Nodos</string>
     <string name="slot">Slot</string>
+    <string name="sensors">Sensors</string>
     <string name="ping">Ping</string>
     <string name="ago">atrás</string>
     <string name="multicast">Multicast</string>
@@ -45,7 +46,6 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="timer">Temporizador</string>
-     <string name="is">es</string>
-    
+    <string name="is">es</string>
 
 </resources>

@@ -186,7 +186,10 @@
     <string name="opt_timeout_pubb_desc">Escolha de tempo limite de conexão ao usar a Internet</string>
     <string name="opt_dialog_restored">Todos os diálogos foram restaurados</string>
     <string name="unknown_typical">Unknown typical</string>
-
+    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_remote">Remote Network (optional)</string>
+    <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
+    
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Ligar</string>
     <string name="Souliss_TurnOff_desc">Desligar</string>

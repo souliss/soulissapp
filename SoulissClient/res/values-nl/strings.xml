@@ -186,6 +186,9 @@
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>
     <string name="unknown_typical">Unknown typical</string>
+    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_remote">Remote Network (optional)</string>
+    <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Turn ON</string>

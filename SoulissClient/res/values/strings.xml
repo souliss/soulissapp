@@ -154,8 +154,6 @@
     <string name="title_edittext_IP">Souliss local Address</string>
     <string name="summary_edittext_IP">Insert Souliss Bridge Node\'s IP Address when using home network</string>
     <string name="dialog_title_edittext_IP">IP Address</string>
-    <string name="summary_edittext_IP_VPN">Insert Souliss Node\'s IP Address when using Android VPN</string>
-    <string name="dialog_title_edittext_IP_VPN">VPN IP Address</string>
     <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
     <string name="title_edittext_IP_pubb">Souliss public Address</string>
     <string name="opt_fontsizedesc">Choose text size</string>
@@ -186,6 +184,9 @@
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>
     <string name="unknown_typical">Unknown typical</string>
+    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_remote">Remote Network (optional)</string>
+    <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Turn ON</string>

@@ -10,7 +10,7 @@
         <Preference
             android:name="createdb"
             android:key="createdb"
-            android:summary="updates Souliss hardware nodes configuration. Be sure to configure network first"
+            android:summary=""
             android:title="Get Souliss Nodes" />
         <Preference
             android:name="dropdb"

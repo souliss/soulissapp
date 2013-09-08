@@ -131,7 +131,7 @@
 
     <!-- OPZIONI -->
     <string name="opt_credits">Créditos</string>
-    <string name="opt_credits_desc">Souliss by Veseo - Client by sh...@angelic.it</string>
+    <string name="opt_credits_desc">Souliss by Veseo - Client by Shine - Visit www.souliss.net</string>
     <string name="opt_userindex">Índice de usuario</string>
     <string name="opt_userindex_desc">El índice de usuario identifica el cliente Android con Souliss. Valor actual es %1$d. No debe ser cambiado</string>
     <string name="opt_nodeindex">Índice de Nodo</string>
@@ -185,6 +185,9 @@
     <string name="opt_timeout_pubb_desc">Elija límite de tiempo de conexión cuando esté usando internet</string>
     <string name="opt_dialog_restored">Restaurados todos los diálogos</string>
     <string name="unknown_typical">Dispositivo desconocido</string>
+    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_remote">Remote Network (optional)</string>
+    <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Encender</string>
