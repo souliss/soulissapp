@@ -24,6 +24,7 @@ public class Constants {
 	public static final short Souliss_T14 = 0x14;
 	public static final short Souliss_T1n_RGB = 0x15;// RGB Light
 	public static final short Souliss_T16 = 0x16;
+	public static final short Souliss_T18 = 0x18;
 	
 	public static final short Souliss_T21 = 0x21;// Motorized devices with limit
 												// switches
@@ -120,6 +121,7 @@ public class Constants {
 	public static final long Souliss_T16_Red = 0x22FF; // Set a state
 	public static final long Souliss_T16_Green = 0x2201FF;
 	public static final long Souliss_T16_Blue = 0x220101FF;
+	public static final long Souliss_T18_Pulse = 0xA1;
 	/*
 	 * IR RGB Typical
 	 */

@@ -199,11 +199,12 @@
     <string name="Souliss_OpenCmd_desc">Open</string>
     <string name="Souliss_CloseCmd_desc">Close</string>
     <string name="Souliss_StopCmd_desc">Stop</string>
-    <string name="Souliss_T11_desc">ON/OFF Digital Output with Timer</string>
+    <string name="Souliss_T11_desc">ON/OFF Output with Timer</string>
     <string name="Souliss_T12_desc">ON/OFF Output with AUTO mode</string>
     <string name="Souliss_T13_desc">Digital Input Value</string>
     <string name="Souliss_T14_desc">Pulse Digital Output</string>
     <string name="Souliss_T16_desc">RGB LED Strip</string>
+    <string name="Souliss_T18_desc">ON/OFF Digital Output</string>
     <string name="Souliss_UndefinedCmd_desc">Undefined</string>
     <string name="Souliss_T21_desc">Motorized Device (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Motorized Device</string>

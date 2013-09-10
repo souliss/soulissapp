@@ -209,6 +209,7 @@
     <string name="Souliss_T13_desc">Input Digitale</string>
     <string name="Souliss_T14_desc">Pulse Digital Output</string>
     <string name="Souliss_T16_desc">RGB LED Strip</string>
+    <string name="Souliss_T18_desc">ON/OFF Digitale</string>
     <string name="Souliss_UndefinedCmd_desc">Non definito</string>
     <string name="Souliss_T21_desc">Dispositivo motorizzato (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizzato</string>

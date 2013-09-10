@@ -191,14 +191,17 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackon));
 		}
 	}
-	@Override
+	@Override 
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
 			return "ON";
 		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
 			return "OFF";
+		else if (typicalDTO.getOutput() == Constants.Souliss_T18_Pulse)
+			return "...";//pulse
 		else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
-			return ctx.getString(R.string.Souliss_TRGB_sleep);
+			return ""+typicalDTO.getOutput();
+			//return ctx.getString(R.string.Souliss_TRGB_sleep);
 		else
 			return "UNKNOWN";
 	}

@@ -103,6 +103,9 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		case Constants.Souliss_T16:
 			rest = new SoulissTypical16AdvancedRGB(opts);
 			break;
+		case Constants.Souliss_T18:
+			rest = new SoulissTypical11(opts);
+			break;
 		case Constants.Souliss_T21:
 			rest = new SoulissTypical21(opts);
 			break;
@@ -187,6 +190,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_T14_desc;
 		else if (typical == Constants.Souliss_T16)
 			id = R.string.Souliss_T16_desc;
+		else if (typical == Constants.Souliss_T18)
+			id = R.string.Souliss_T18_desc;
 		else if (typical == Constants.Souliss_T21)
 			id = R.string.Souliss_T21_desc;
 		else if (typical == Constants.Souliss_T22)
@@ -239,6 +244,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.locked;
 		else if (typical == Constants.Souliss_T16)
 			return R.drawable.rgb;
+		else if (typical == Constants.Souliss_T18)
+			return R.drawable.power;
 		else if (typical == Constants.Souliss_T21)
 			return R.drawable.limit;
 		else if (typical == Constants.Souliss_T22)
