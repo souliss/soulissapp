@@ -24,10 +24,10 @@
         <item>9</item>
     </string-array>
     <string-array name="textsiz_array">
-        <item>Piccolissimo</item>
-        <item>Piccolo</item>
-        <item>Medio</item>
-        <item>Grande</item>
+        <item>Very Small</item>
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
     </string-array>
     <string-array name="textsiz_values">
         <item>-1</item>

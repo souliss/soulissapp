@@ -24,10 +24,10 @@
         <item>9</item>
     </string-array>
     <string-array name="textsiz_array">
-        <item>Piccolissimo</item>
-        <item>Piccolo</item>
-        <item>Medio</item>
-        <item>Grande</item>
+        <item>Kleinst</item>
+        <item>Klein</item>
+        <item>Middel</item>
+        <item>Groot</item>
     </string-array>
     <string-array name="textsiz_values">
         <item>-1</item>
@@ -46,9 +46,9 @@
         <item>Robotics.ttf</item>
     </string-array>
     <string-array name="updateInterval">
-        <item name="3000">3 seconds</item>
-        <item name="5000">5 seconds</item>
-        <item name="10000">10 seconds</item>
+        <item name="3000">3 seconden</item>
+        <item name="5000">5 seconden</item>
+        <item name="10000">10 seconden</item>
     </string-array>
     <string-array name="updateIntervalValues">
         <item name="3000">3000</item>
@@ -56,10 +56,10 @@
         <item name="10000">10000</item>
     </string-array>
     <string-array name="scheduleInterval">
-        <item name="1800">half hour</item>
-        <item name="3600">hour</item>
-        <item name="21600">6 hour</item>
-        <item name="86400">day</item>
+        <item name="1800">half uur</item>
+        <item name="3600">uur</item>
+        <item name="21600">6 uur</item>
+        <item name="86400">dag</item>
     </string-array>
 
     <integer-array name="scheduleIntervalValues">
@@ -70,9 +70,9 @@
     </integer-array>
 
     <string-array name="graphType">
-        <item>History</item>
-        <item>Grouped by Month</item>
-        <item>Grouped by Hour</item>
+        <item>Geschiedenis</item>
+        <item>Gesorteerd op maand</item>
+        <item>Gesorteerd op uur</item>
     </string-array>
     <string-array name="graphTypeValues">
         <item>0</item>
@@ -80,9 +80,9 @@
         <item>2</item>
     </string-array>
     <string-array name="graphRange">
-        <item>All Data</item>
-        <item>Last Month</item>
-        <item>Last week</item>
+        <item>Alle gegevens</item>
+        <item>Afgelopen maand</item>
+        <item>Afgelopen week</item>
     </string-array>
     <string-array name="graphRangeValues">
         <item>0</item>
@@ -91,10 +91,10 @@
     </string-array>
     <string-array name="AirConFunction">
         <item>Auto</item>
-        <item>Cool</item>
-        <item>Dry</item>
-        <item>Fan</item>
-        <item>Heat</item>
+        <item>Koelen</item>
+        <item>Drogen</item>
+        <item>Ventilator</item>
+        <item>Verwarmen</item>
     </string-array>
 
     <integer-array name="AirConFunctionValues">
@@ -107,9 +107,9 @@
 
     <string-array name="AirConFan">
         <item>Auto</item>
-        <item>High</item>
-        <item>Medium</item>
-        <item>Low</item>
+        <item>Hoog</item>
+        <item>Normaal</item>
+        <item>Laag</item>
     </string-array>
 
     <integer-array name="AirConFanValues">
@@ -120,9 +120,9 @@
     </integer-array>
     
     <string-array name="rgbModes">
-        <item>RGB circle</item>
-        <item>RGB channels</item>
-        <item>Music sync</item>
+        <item>RGB cirkel</item>
+        <item>RGB kanalen</item>
+        <item>Muziek gestuurd</item>
     </string-array>
 
 </resources>
