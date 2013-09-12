@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="33dp"
         android:text="high"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

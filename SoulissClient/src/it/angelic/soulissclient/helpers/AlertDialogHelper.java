@@ -50,6 +50,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -402,18 +403,35 @@ public class AlertDialogHelper {
 		return alert;
 	}
 
-	public static AlertDialog equalizerDialog(final Context context) {
-		final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
+	public static AlertDialog equalizerDialog(final Context context, final TextView toUpdate) {
+		final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 		// alert2.setTitle("Choose " + toRename.toString() + " icon");
 		final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
 
 		LayoutInflater factory = LayoutInflater.from(context);
 		final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null);
 
+		final SeekBar low = (SeekBar) deleteDialogView.findViewById(R.id.seekBarLow);
+		final SeekBar med = (SeekBar) deleteDialogView.findViewById(R.id.seekBarMed);
+		final SeekBar hi = (SeekBar) deleteDialogView.findViewById(R.id.seekBarHigh);
+		low.setProgress(Float.valueOf(opzioni.getEqLow() * 100f).intValue());
+		med.setProgress(Float.valueOf(opzioni.getEqMed() * 100f).intValue());
+		hi.setProgress(Float.valueOf(opzioni.getEqHigh() * 100f).intValue());
+		Log.i("SoulissEqualizer", "Setting new eq low:" + opzioni.getEqLow() + " med: " + opzioni.getEqMed()
+				+ " high: " + opzioni.getEqHigh());
+
 		deleteBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-
+						opzioni.setEqLow(low.getProgress() / 100f);
+						opzioni.setEqMed((float) med.getProgress() / 100f);
+						opzioni.setEqHigh(hi.getProgress() / 100f);
+						String strDisease2Format = context.getString(R.string.Souliss_TRGB_eq);
+						String strDisease2Msg = String.format(strDisease2Format,
+								Constants.twoDecimalFormat.format(opzioni.getEqLow()),
+								Constants.twoDecimalFormat.format(opzioni.getEqMed()),
+								Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
+						toUpdate.setText(strDisease2Msg);
 					}
 				});
 
@@ -426,7 +444,7 @@ public class AlertDialogHelper {
 		final AlertDialog deleteDialog = deleteBuilder.create();
 		deleteDialog.setView(deleteDialogView);
 
-		deleteDialog.setTitle("Global equalizer normalization");
+		deleteDialog.setTitle("Global equalizer");
 		return deleteDialog;
 	}
 

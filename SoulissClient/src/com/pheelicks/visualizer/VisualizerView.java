@@ -46,7 +46,7 @@ public class VisualizerView extends View {
 
 	private Set<Renderer> mRenderers;
 
-	private Paint mFlashPaint = new Paint();
+	//private Paint mFlashPaint = new Paint();
 	private Paint mFadePaint = new Paint();
 
 	private RGBAdvancedFragment parent;
@@ -75,7 +75,7 @@ public class VisualizerView extends View {
 		mBytes = null;
 		mFFTBytes = null;
 
-		mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
+		//mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
 		mFadePaint.setColor(Color.argb(100, 255, 255, 255)); // Adjust alpha to
 																// change how
 																// quickly the
@@ -109,6 +109,7 @@ public class VisualizerView extends View {
 			@Override
 			public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
 				updateVisualizer(bytes);
+				Log.w(Constants.TAG, "should not run this");
 			}
 
 			@Override
@@ -142,8 +143,14 @@ public class VisualizerView extends View {
 	int k_low = 30;
 	int k_med = 1;
 	int k_high = 1;
-
-	public void sendSoulissDario(byte[] data, boolean multicast) {
+	/**
+	 * Magie di Dario.
+	 * Dalla trasformata di fourier a tre colori
+	 * 
+	 * @param data FFT
+	 * @param multicast se inviare a tutti
+	 */
+	private void sendSoulissDario(byte[] data, boolean multicast) {
 
 		int mDivisions = 3;
 		float dbValue_low = 1;
@@ -200,10 +207,8 @@ public class VisualizerView extends View {
 		}
 		dbValue_low *= opz.getEqLow();
 		dbValue_medium*= opz.getEqMed();
-		dbValue_high*= opz.getEqMed();
-		Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high + " cycleMAX_med:"
-
-		+ absMax_med);
+		dbValue_high*= opz.getEqHigh();
+		Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
 
 		parent.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, (int) dbValue_low,
 
@@ -261,16 +266,16 @@ public class VisualizerView extends View {
 		invalidate();
 	}
 
-	boolean mFlash = false;
+	//boolean mFlash = false;
 
 	/**
 	 * Call this to make the visualizer flash. Useful for flashing at the start
 	 * of a song/loop etc...
 	 */
-	public void flash() {
+	/*public void flash() {
 		mFlash = true;
 		invalidate();
-	}
+	}*/
 
 	Bitmap mCanvasBitmap;
 	Canvas mCanvas;
@@ -316,10 +321,10 @@ public class VisualizerView extends View {
 			}
 		}
 
-		if (mFlash) {
+		/*if (mFlash) {
 			mFlash = false;
 			mCanvas.drawPaint(mFlashPaint);
-		}
+		}*/
 
 	}
 

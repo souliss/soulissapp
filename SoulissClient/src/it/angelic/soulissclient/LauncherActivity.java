@@ -186,8 +186,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				Log.i(TAG, "Geo-Provider " + provider + getString(R.string.status_provider_selected));
 				double lat = location.getLatitude();
 				double lng = location.getLongitude();
-				coordinfo.setText((Html.fromHtml("Position from <b>" + provider + "</b>: " + Constants.df.format(lat)
-						+ " : " + Constants.df.format(lng))));
+				coordinfo.setText((Html.fromHtml(getString(R.string.positionfrom)+" <b>" + provider + "</b>: " + Constants.gpsDecimalFormat.format(lat)
+						+ " : " + Constants.gpsDecimalFormat.format(lng))));
 				float[] res = new float[3];
 				Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
 				homedist.setText(Html.fromHtml(getString(R.string.homedist) + res[0]));
@@ -533,7 +533,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		coordinfo.setVisibility(View.VISIBLE);
 		homedist.setVisibility(View.VISIBLE);
 		coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: "
-				+ Constants.df.format(lat) + " : " + Constants.df.format(lng)));
+				+ Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng)));
 
 		final float[] res = new float[3];
 		// Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);

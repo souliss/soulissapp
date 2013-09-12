@@ -490,13 +490,12 @@ public class UDPHelper {
 		for (int i = 0; i < ret.length; i++) {
 			deb.append("0x" + Long.toHexString((long) frame.get(i) & 0xff) + " ");
 		}
-		Log.d(Constants.TAG, "vNet Frame built: " + deb.toString());
+		Log.v(Constants.TAG, "vNet   frame built: " + deb.toString());
 
 		// Send broadcast timeout
 		Intent i = new Intent();
-		Log.d(TAG, "Posting timeout msec. " + SoulissClient.getOpzioni().getRemoteTimeoutPref()
-				* SoulissClient.getOpzioni().getBackoff());
 		int it = (int) (SoulissClient.getOpzioni().getRemoteTimeoutPref() * SoulissClient.getOpzioni().getBackoff());
+		Log.d(TAG, "Posting timeout msec. " +it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		SoulissClient.getOpzioni().getContx().sendBroadcast(i);
@@ -531,8 +530,10 @@ public class UDPHelper {
 				for (String number : cmd) {
 					// che schifo
 					int merdata = Integer.decode(number);
-					if (merdata > Byte.MAX_VALUE)
+					if (merdata > Byte.MAX_VALUE){
+						//TODO chiedere a Dario
 						Log.w(Constants.TAG, "Overflow with command " + number);
+					}
 					frame.add((byte) merdata);
 				}
 
@@ -541,7 +542,7 @@ public class UDPHelper {
 				frame.add(Byte.valueOf("0"));
 		}
 
-		Log.d(Constants.TAG, "MaCaCo frame built size:" + frame.size());
+		Log.v(Constants.TAG, "MaCaCo frame built size:" + frame.size());
 		return frame;
 
 	}

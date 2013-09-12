@@ -156,8 +156,8 @@
                     <SeekBar
                         android:id="@+id/channelRed"
                         android:layout_width="match_parent"
-                        android:background="@color/aa_red"
                         android:layout_height="wrap_content"
+                        android:background="@color/aa_red"
                         android:max="255" />
 
                     <TextView
@@ -172,8 +172,8 @@
                         android:id="@+id/channelGreen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/aa_green"
                         android:layout_below="@id/channelRedLabel"
+                        android:background="@color/aa_green"
                         android:max="255" />
 
                     <TextView
@@ -188,12 +188,12 @@
                         android:id="@+id/channelBlue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/aa_blue"
                         android:layout_below="@id/channelGreenLabel"
+                        android:background="@color/aa_blue"
                         android:max="255" />
 
                     <TextView
-                         android:id="@+id/channelBlueLabel"
+                        android:id="@+id/channelBlueLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/channelBlue"
@@ -224,6 +224,7 @@
                     </com.pheelicks.visualizer.VisualizerView>
                 </FrameLayout>
             </TableRow>
+
             <TableRow
                 android:id="@+id/tableRowEqualizer"
                 android:layout_width="wrap_content"
@@ -238,9 +239,13 @@
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Equalizer" />
+                    android:text="@string/equalizer" />
 
-              </TableRow>   
+                <TextView
+                    android:id="@+id/textEqualizer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </TableRow>
         </TableLayout>
     </RelativeLayout>
 

@@ -46,7 +46,7 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="timer">Timer</string>
-     <string name="is">is</string>
-    
+    <string name="is">is</string>
+    <string name="equalizer">Equalizer</string>
 
 </resources>

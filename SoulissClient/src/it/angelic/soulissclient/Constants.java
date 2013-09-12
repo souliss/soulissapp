@@ -15,7 +15,8 @@ public class Constants {
 	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
 	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	public static DecimalFormat df = new DecimalFormat("#.######");
+	public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
+	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
 	//public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
 	public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;
 	public static final long POSITION_UPDATE_MIN_DIST = 25;

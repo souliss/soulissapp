@@ -50,10 +50,6 @@ import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 public class RGBAdvancedFragment extends Fragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
-	// dimensioni pannello colore
-	private static final int CENTER_X = 150;
-	private static final int CENTER_Y = 150;
-	private static final int CENTER_RADIUS = 50;
 
 	private Button buttPlus;
 	private Button buttMinus;
@@ -86,9 +82,11 @@ public class RGBAdvancedFragment extends Fragment {
 	private SeekBar seekChannelGreen;
 	private SeekBar seekChannelBlue;
 	private TextView redChanabel;
+	private TextView eqText;
 	private TextView blueChanabel;
 	private TextView greenChanabel;
 	private Button btEqualizer;
+	private TableRow tableRowEq;
 
 	/**
 	 * Serve per poter tenuto il bottone brightness
@@ -219,6 +217,7 @@ public class RGBAdvancedFragment extends Fragment {
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
 		// checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
 		tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
+		tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
 
 		btWhite = (Button) ret.findViewById(R.id.white);
 		btFlash = (Button) ret.findViewById(R.id.flash);
@@ -237,6 +236,7 @@ public class RGBAdvancedFragment extends Fragment {
 		redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
 		blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
 		greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
+		eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
 		btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
 		btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
@@ -252,10 +252,11 @@ public class RGBAdvancedFragment extends Fragment {
 
 		final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				if (pos == 0) {
+				if (pos == 0) {//cerchio RGB
 					tableRowVis.setVisibility(View.GONE);
 					mVisualizerView.setVisibility(View.GONE);
 					tableRowChannel.setVisibility(View.GONE);
+					tableRowEq.setVisibility(View.GONE);
 					mVisualizerView.setEnabled(false);
 					colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
 				} else if (pos == 1) {// channels
@@ -264,6 +265,7 @@ public class RGBAdvancedFragment extends Fragment {
 					tableRowChannel.setVisibility(View.VISIBLE);
 					mVisualizerView.setEnabled(false);
 					colorSwitchRelativeLayout.setVisibility(View.GONE);
+					tableRowEq.setVisibility(View.GONE);
 					// TODO questi non vanno
 					seekChannelRed.setProgress(Color.red(color));
 					seekChannelGreen.setProgress(Color.green(color));
@@ -282,6 +284,7 @@ public class RGBAdvancedFragment extends Fragment {
 					mVisualizerView.setEnabled(true);
 					mVisualizerView.link(togMulticast.isChecked());
 
+					tableRowEq.setVisibility(View.VISIBLE);
 					tableRowChannel.setVisibility(View.GONE);
 				}
 			}
@@ -311,7 +314,7 @@ public class RGBAdvancedFragment extends Fragment {
 		// Listener generico
 		OnClickListener plusEq = new OnClickListener() {
 			public void onClick(View v) {
-				AlertDialogHelper.equalizerDialog(getActivity()).show();
+				AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
 
 				return;
 			}
@@ -360,6 +363,14 @@ public class RGBAdvancedFragment extends Fragment {
 		btEqualizer.setOnClickListener(plusEq);
 		btFlash.setOnClickListener(plus);
 		btSleep.setOnClickListener(plus);
+		
+		String strDisease2Format = getResources().getString(R.string.Souliss_TRGB_eq);
+		String strDisease2Msg = String.format(strDisease2Format,
+				Constants.twoDecimalFormat.format(opzioni.getEqLow()),
+				Constants.twoDecimalFormat.format(opzioni.getEqMed()),
+				Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
+		eqText.setText(strDisease2Msg);
+		
 		// bianco manuale
 		btWhite.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -369,26 +380,6 @@ public class RGBAdvancedFragment extends Fragment {
 			}
 		});
 
-		// MODALITA DETTAGLIO
-		/*
-		 * checkMusic.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-		 * 
-		 * 
-		 * @Override public void onCheckedChanged(CompoundButton buttonView,
-		 * boolean isChecked) { if (isChecked) { if (Constants.versionNumber >=
-		 * 9) { mVisualizerView.setFrag(RGBAdvancedFragment.this);
-		 * mVisualizerView.link(togMulticast.isChecked());
-		 * addBarGraphRenderers(); } else { // TODO scrivere che non esiste }
-		 * mVisualizerView.setVisibility(View.VISIBLE);
-		 * tableRowVis.setVisibility(View.VISIBLE);
-		 * colorSwitchRelativeLayout.setVisibility(View.GONE);
-		 * mVisualizerView.setEnabled(true);
-		 * mVisualizerView.link(togMulticast.isChecked()); } else {
-		 * tableRowVis.setVisibility(View.GONE);
-		 * mVisualizerView.setVisibility(View.GONE);
-		 * mVisualizerView.setEnabled(false);
-		 * colorSwitchRelativeLayout.setVisibility(View.VISIBLE); } } });
-		 */
 		dialogColorChangedListener = new OnColorChangedListener() {
 			/**
 			 * {@inheritDoc}
@@ -456,7 +447,6 @@ public class RGBAdvancedFragment extends Fragment {
 				NodeDetailFragment details = NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
 						collected.getParentNode());
 				// Execute a transaction, replacing any existing fragment
-				// with this one inside the frame.
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				if (opzioni.isAnimationsEnabled())
 					ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
@@ -506,6 +496,7 @@ public class RGBAdvancedFragment extends Fragment {
 					.getNodeId(), collected.getTypicalDTO().getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");
+			//color = collected.getColor();
 			Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor()) + " G"
 					+ Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
 			cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
@@ -547,7 +538,8 @@ public class RGBAdvancedFragment extends Fragment {
 	 * Inner class representing the color chooser.
 	 */
 	private class ColorPickerView extends View {
-
+		// dimensioni pannello colore
+		private static final int CENTER_RADIUS = 50;
 		private static final float STROKE_WIDTH = 48;
 		private Paint paint = null;
 		private Paint centerPaint = null;
@@ -584,22 +576,11 @@ public class RGBAdvancedFragment extends Fragment {
 			int centerX = colorSwitchRelativeLayout.getWidth() / 2;
 			float r = (centerX - paint.getStrokeWidth()) / 2;
 
-			canvas.translate(centerX, CENTER_Y);
+			canvas.translate(centerX, r + STROKE_WIDTH);
 			swapRect.set(-r, -r, r, r);
 			canvas.drawOval(swapRect, paint);
 			canvas.drawCircle(0, 0, CENTER_RADIUS, centerPaint);
 
-			/*
-			 * if (trackingCenter) { int c = centerPaint.getColor();
-			 * centerPaint.setStyle(Paint.Style.STROKE);
-			 * centerPaint.setAlpha(0x80);
-			 * 
-			 * canvas.drawCircle(0, 0, CENTER_RADIUS +
-			 * centerPaint.getStrokeWidth(), centerPaint);
-			 * 
-			 * centerPaint.setStyle(Paint.Style.FILL); centerPaint.setColor(c);
-			 * }
-			 */
 		}
 
 		/**
@@ -608,13 +589,13 @@ public class RGBAdvancedFragment extends Fragment {
 		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 			int width = getRootView().getWidth();
 			int h = getRootView().getHeight();
+			
 			if (width == 0) {
 				width = colorSwitchRelativeLayout.getWidth();
 				h = colorSwitchRelativeLayout.getHeight();
 			}
 			if (width == 0) {
-				width = CENTER_X * 2 + 50;
-				h = (int) (CENTER_Y * 2 + STROKE_WIDTH * 2);
+				Log.e(Constants.TAG, "Couldn't measure View");
 			}
 
 			setMeasuredDimension(width, h);
@@ -624,8 +605,11 @@ public class RGBAdvancedFragment extends Fragment {
 		 * {@inheritDoc}
 		 */
 		public boolean onTouchEvent(MotionEvent event) {
-			float x = event.getX() - getRootView().getWidth() / 2;
-			float y = event.getY() - CENTER_Y;
+			//remove offset
+			int centerX = colorSwitchRelativeLayout.getWidth() / 2;
+			float r = (centerX - paint.getStrokeWidth()) / 2;
+			float x = event.getX() - centerX;
+			float y = event.getY() - (r + STROKE_WIDTH);
 
 			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:

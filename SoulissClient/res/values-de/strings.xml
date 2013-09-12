@@ -228,6 +228,7 @@
     <string name="Souliss_TRGB_sleep">Sleep</string>
     <string name="Souliss_TRGB_flash">Flash</string>
     <string name="Souliss_TRGB_white">White</string>
+    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string> 
     <string name="Souliss_emptycmd_desc">Command not Selected</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Mode: Auto - 20°</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Mode: Auto - 24°</string>
