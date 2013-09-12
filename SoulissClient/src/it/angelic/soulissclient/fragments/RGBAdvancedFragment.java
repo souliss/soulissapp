@@ -88,6 +88,7 @@ public class RGBAdvancedFragment extends Fragment {
 	private TextView redChanabel;
 	private TextView blueChanabel;
 	private TextView greenChanabel;
+	private Button btEqualizer;
 
 	/**
 	 * Serve per poter tenuto il bottone brightness
@@ -225,6 +226,8 @@ public class RGBAdvancedFragment extends Fragment {
 		modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
 		tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+		mVisualizerView.setOpz(opzioni);
+		btEqualizer = (Button) ret.findViewById(R.id.buttonEqualizer);
 		colorSwitchRelativeLayout = (RelativeLayout) ret.findViewById(R.id.colorSwitch);
 
 		seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
@@ -305,6 +308,16 @@ public class RGBAdvancedFragment extends Fragment {
 
 		};
 
+		// Listener generico
+		OnClickListener plusEq = new OnClickListener() {
+			public void onClick(View v) {
+				AlertDialogHelper.equalizerDialog(getActivity()).show();
+
+				return;
+			}
+
+		};
+
 		// start thread x decremento
 		OnTouchListener incListener = new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
@@ -344,6 +357,7 @@ public class RGBAdvancedFragment extends Fragment {
 		buttMinus.setOnTouchListener(decListener);
 		btOff.setOnClickListener(plus);
 		btOn.setOnClickListener(plus);
+		btEqualizer.setOnClickListener(plusEq);
 		btFlash.setOnClickListener(plus);
 		btSleep.setOnClickListener(plus);
 		// bianco manuale
@@ -384,8 +398,8 @@ public class RGBAdvancedFragment extends Fragment {
 				color = c;
 
 				// e
-				collected.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
-						Color.green(color), Color.blue(color), togMulticast.isChecked());
+				collected.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
+						Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
 			}
 		};
 		cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color);
@@ -537,7 +551,7 @@ public class RGBAdvancedFragment extends Fragment {
 		private static final float STROKE_WIDTH = 48;
 		private Paint paint = null;
 		private Paint centerPaint = null;
-		//private boolean trackingCenter = false;
+		// private boolean trackingCenter = false;
 		private RectF swapRect = new RectF();
 		private final int[] colors = new int[] { 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00,
 				0xFFFFFF00, 0xFFFF0000 };
@@ -575,16 +589,17 @@ public class RGBAdvancedFragment extends Fragment {
 			canvas.drawOval(swapRect, paint);
 			canvas.drawCircle(0, 0, CENTER_RADIUS, centerPaint);
 
-		/*	if (trackingCenter) {
-				int c = centerPaint.getColor();
-				centerPaint.setStyle(Paint.Style.STROKE);
-				centerPaint.setAlpha(0x80);
-
-				canvas.drawCircle(0, 0, CENTER_RADIUS + centerPaint.getStrokeWidth(), centerPaint);
-
-				centerPaint.setStyle(Paint.Style.FILL);
-				centerPaint.setColor(c);
-			}*/
+			/*
+			 * if (trackingCenter) { int c = centerPaint.getColor();
+			 * centerPaint.setStyle(Paint.Style.STROKE);
+			 * centerPaint.setAlpha(0x80);
+			 * 
+			 * canvas.drawCircle(0, 0, CENTER_RADIUS +
+			 * centerPaint.getStrokeWidth(), centerPaint);
+			 * 
+			 * centerPaint.setStyle(Paint.Style.FILL); centerPaint.setColor(c);
+			 * }
+			 */
 		}
 
 		/**

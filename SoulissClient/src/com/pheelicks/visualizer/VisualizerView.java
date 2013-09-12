@@ -8,6 +8,7 @@ package com.pheelicks.visualizer;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -41,6 +42,7 @@ public class VisualizerView extends View {
 	private byte[] mFFTBytes;
 	private Rect mRect = new Rect();
 	private Visualizer mVisualizer;
+	private SoulissPreferenceHelper opz;
 
 	private Set<Renderer> mRenderers;
 
@@ -196,7 +198,9 @@ public class VisualizerView extends View {
 			dbValue_high = 0;
 
 		}
-
+		dbValue_low *= opz.getEqLow();
+		dbValue_medium*= opz.getEqMed();
+		dbValue_high*= opz.getEqMed();
 		Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high + " cycleMAX_med:"
 
 		+ absMax_med);
@@ -317,5 +321,13 @@ public class VisualizerView extends View {
 			mCanvas.drawPaint(mFlashPaint);
 		}
 
+	}
+
+	public SoulissPreferenceHelper getOpz() {
+		return opz;
+	}
+
+	public void setOpz(SoulissPreferenceHelper opz) {
+		this.opz = opz;
 	}
 }

@@ -224,6 +224,23 @@
                     </com.pheelicks.visualizer.VisualizerView>
                 </FrameLayout>
             </TableRow>
+            <TableRow
+                android:id="@+id/tableRowEqualizer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@color/black"
+                android:weightSum="1" >
+
+                <Button
+                    android:id="@+id/buttonEqualizer"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Equalizer" />
+
+              </TableRow>   
         </TableLayout>
     </RelativeLayout>
 

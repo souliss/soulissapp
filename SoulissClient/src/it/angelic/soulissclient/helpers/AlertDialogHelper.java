@@ -39,11 +39,13 @@ import android.os.Build;
 import android.os.Looper;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -400,6 +402,34 @@ public class AlertDialogHelper {
 		return alert;
 	}
 
+	public static AlertDialog equalizerDialog(final Context context) {
+		final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
+		// alert2.setTitle("Choose " + toRename.toString() + " icon");
+		final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
+
+		LayoutInflater factory = LayoutInflater.from(context);
+		final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null);
+
+		deleteBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+					}
+				});
+
+		deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+
+					}
+				});
+		final AlertDialog deleteDialog = deleteBuilder.create();
+		deleteDialog.setView(deleteDialogView);
+
+		deleteDialog.setTitle("Global equalizer normalization");
+		return deleteDialog;
+	}
+
 	/**
 	 * Sceglie nuova icona
 	 * 
@@ -624,14 +654,16 @@ public class AlertDialogHelper {
 									UDPHelper.dbStructRequest(opts);
 								}
 							}.start();
-							Toast.makeText(preferencesActivity, preferencesActivity.getResources().getString(R.string.dbstruct_req), Toast.LENGTH_SHORT).show();
+							Toast.makeText(preferencesActivity,
+									preferencesActivity.getResources().getString(R.string.dbstruct_req),
+									Toast.LENGTH_SHORT).show();
 						}
 					});
 		} else {
 			alert.setMessage(preferencesActivity.getResources().getString(R.string.souliss_unavailable));
 
 		}
-		
+
 		alert.setNegativeButton(SoulissClient.getAppContext().getResources().getString(android.R.string.cancel),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {

@@ -57,6 +57,9 @@ public class SoulissPreferenceHelper implements Serializable {
 	private boolean antitheftNotify;
 	private long serviceLastrun;
 	private long nextServiceRun;
+	private float eqLow;
+	private float eqMed;
+	private float eqHigh;
 
 	
 	public SoulissPreferenceHelper(Context contx) {
@@ -123,6 +126,9 @@ public class SoulissPreferenceHelper implements Serializable {
 		animations = prefs.getBoolean("checkboxAnimazione", true);
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
+		eqLow= prefs.getFloat("eqLow", 1f);
+		eqMed= prefs.getFloat("eqMed", 1f);
+		eqHigh= prefs.getFloat("eqHigh", 1f);
 		Calendar fake = Calendar.getInstance();
 		fake.add(Calendar.MONTH, -2);//Default value in the past
 		serviceLastrun= prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
@@ -447,5 +453,38 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 	public long getNextServiceRun() {
 		return nextServiceRun;
+	}
+
+	public float getEqLow() {
+		return eqLow;
+	}
+
+	public void setEqLow(float eqLow) {
+		this.eqLow = eqLow;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putFloat("eqLow", eqLow);
+		pesta.commit();
+	}
+
+	public float getEqMed() {
+		return eqMed;
+	}
+
+	public void setEqMed(float eqMed) {
+		this.eqMed = eqMed;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putFloat("eqMed", eqMed);
+		pesta.commit();
+	}
+
+	public float getEqHigh() {
+		return eqHigh;
+	}
+
+	public void setEqHigh(float eqHigh) {
+		this.eqHigh = eqHigh;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putFloat("eqHigh", eqHigh);
+		pesta.commit();
 	}
 }
