@@ -178,7 +178,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	 * 
 	 * INPUT data 'read' from GUI
 	 **************************************************************************/
-	public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean togMulticast) {
+	public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean togMulticast) {
 
 		Thread t = new Thread() {
 			public void run() {
@@ -197,7 +197,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 		t.start();
 		return;
 	}
-	public void issuerefresh() {
+	public void issueRefresh() {
 
 		Thread t = new Thread() {
 			public void run() {

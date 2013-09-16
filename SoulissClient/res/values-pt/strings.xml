@@ -189,7 +189,7 @@
     <string name="opt_net_home">Home Network (mandatory)</string>
     <string name="opt_net_remote">Remote Network (optional)</string>
     <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
-    
+
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Ligar</string>
     <string name="Souliss_TurnOff_desc">Desligar</string>
@@ -206,6 +206,8 @@
     <string name="Souliss_T13_desc">Valor de Entrada Digital</string>
     <string name="Souliss_T14_desc">Saída de Pulso Digital</string>
     <string name="Souliss_T16_desc">Faixa de LED RGB</string>
+    <string name="Souliss_T18_desc">ON/OFF Digital Output</string>
+    <string name="Souliss_T19_desc">Dimmable Light</string>
     <string name="Souliss_UndefinedCmd_desc">Indefinido</string>
     <string name="Souliss_T21_desc">Dispositivo motorizado (w / lim switch)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizado</string>
@@ -227,7 +229,7 @@
     <string name="Souliss_TRGB_sleep">Dormir</string>
     <string name="Souliss_TRGB_flash">Flash</string>
     <string name="Souliss_TRGB_white">Branco</string>
-    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string> 
+    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string>
     <string name="Souliss_emptycmd_desc">Comando não Selecionado</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Modo: Frio - 20°</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Modo: Frio - 24°</string>

@@ -22,7 +22,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,7 +46,7 @@ import android.widget.ToggleButton;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-public class RGBAdvancedFragment extends Fragment {
+public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -389,7 +388,7 @@ public class RGBAdvancedFragment extends Fragment {
 				color = c;
 
 				// e
-				collected.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
+				collected.issueRGBCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
 						Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
 			}
 		};
@@ -627,7 +626,7 @@ public class RGBAdvancedFragment extends Fragment {
 				invalidate();
 				break;
 			case MotionEvent.ACTION_UP:
-				collected.issuerefresh();// change center color
+				collected.issueRefresh();// change center color
 				// ColorDialogPreference.this.color = centerPaint.getColor();
 				break;
 			}
@@ -682,7 +681,7 @@ public class RGBAdvancedFragment extends Fragment {
 	 * INPUT data 'read' from GUI
 	 **************************************************************************/
 	public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-		collected.issueIrCommand(val, r, g, b, multicast);
+		collected.issueRGBCommand(val, r, g, b, multicast);
 	}
 
 }

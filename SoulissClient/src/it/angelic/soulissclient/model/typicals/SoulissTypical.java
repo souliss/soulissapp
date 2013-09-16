@@ -106,6 +106,9 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		case Constants.Souliss_T18:
 			rest = new SoulissTypical11(opts);
 			break;
+		case Constants.Souliss_T19:
+			rest = new SoulissTypical19AnalogChannel(opts);
+			break;
 		case Constants.Souliss_T21:
 			rest = new SoulissTypical21(opts);
 			break;
@@ -137,8 +140,6 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		case Constants.Souliss_T_related:
 			rest = new SoulissTypical(opts);
 			rest.setRelated(true);
-			// if (dto != null)
-			// rest.setRelated(parent.getTypical((short)(dto.getSlot()-1)));
 			break;
 		case Constants.Souliss_T51:
 			rest = new SoulissTypical51AnalogueSensor(opts);
@@ -192,6 +193,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_T16_desc;
 		else if (typical == Constants.Souliss_T18)
 			id = R.string.Souliss_T18_desc;
+		else if (typical == Constants.Souliss_T19)
+			id = R.string.Souliss_T19_desc;
 		else if (typical == Constants.Souliss_T21)
 			id = R.string.Souliss_T21_desc;
 		else if (typical == Constants.Souliss_T22)
@@ -246,6 +249,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.rgb;
 		else if (typical == Constants.Souliss_T18)
 			return R.drawable.power;
+		else if (typical == Constants.Souliss_T18)
+			return R.drawable.candle;
 		else if (typical == Constants.Souliss_T21)
 			return R.drawable.limit;
 		else if (typical == Constants.Souliss_T22)
@@ -370,6 +375,9 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		return cmd;
 	}
 
+	/**
+	 * Should be sub-implemented
+	 */
 	public String getOutputDesc() {
 		return "TOIMPLEMENT";
 	}

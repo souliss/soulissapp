@@ -125,4 +125,9 @@
         <item>Music sync</item>
     </string-array>
 
+    <string-array name="singleChannelModes">
+        <item>Manual</item>
+        <item>Music sync</item>
+    </string-array>
+    
 </resources>

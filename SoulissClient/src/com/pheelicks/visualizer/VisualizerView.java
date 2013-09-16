@@ -7,7 +7,7 @@
 package com.pheelicks.visualizer;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
+import it.angelic.soulissclient.fragments.AbstractMusicVisualizerFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.util.HashSet;
@@ -49,7 +49,7 @@ public class VisualizerView extends View {
 	//private Paint mFlashPaint = new Paint();
 	private Paint mFadePaint = new Paint();
 
-	private RGBAdvancedFragment parent;
+	private AbstractMusicVisualizerFragment parent;
 
 	// private Paint transPainter;
 
@@ -66,7 +66,7 @@ public class VisualizerView extends View {
 		this(context, null, 0);
 	}
 
-	public void setFrag(RGBAdvancedFragment par) {
+	public void setFrag(AbstractMusicVisualizerFragment par) {
 		parent = par;
 	}
 
