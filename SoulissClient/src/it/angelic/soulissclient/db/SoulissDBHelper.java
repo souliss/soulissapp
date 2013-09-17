@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.db;
 
+import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertEquals;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -35,7 +36,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
-import static it.angelic.soulissclient.Constants.TAG;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -647,7 +647,7 @@ public class SoulissDBHelper {
 		cursor.moveToFirst();
 
 		while (!cursor.isAfterLast()) {
-			SoulissScene comment = new SoulissScene(context, cursor.getInt(cursor
+			SoulissScene comment = new SoulissScene(cursor.getInt(cursor
 					.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
 			comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
 			comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));

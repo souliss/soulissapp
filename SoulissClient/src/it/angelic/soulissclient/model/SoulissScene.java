@@ -5,22 +5,20 @@ import it.angelic.soulissclient.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import android.content.Context;
-
 public class SoulissScene implements Serializable, ISoulissObject {
 
 
 	private static final long serialVersionUID = 375896210748961219L;
 	private ArrayList<SoulissCommand> commandArray;
-	private transient Context ctx;
+	//private transient Context ctx;
 	private String name = "Name not Set";
 	private int iconId = R.drawable.soulisslogo;
 	private int Id;
 
 
-	public SoulissScene(Context ct,int id) {
+	public SoulissScene(int id) {
 		super();
-		ctx = ct;
+		//ctx = ct;
 		Id = id;
 		//this.commandDTO = new ArrayList<SoulissCommandDTO>();
 		//this.parentTypical = parentTypical;

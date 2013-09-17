@@ -239,39 +239,38 @@ public class AddProgramActivity extends SherlockActivity {
 		OnClickListener saveProgramButtonListener = new OnClickListener() {
 			public void onClick(View v) {
 
-				SoulissCommand tull = (SoulissCommand) outputCommandSpinner.getSelectedItem();
+				SoulissCommand programToSave = (SoulissCommand) outputCommandSpinner.getSelectedItem();
 
-				if (tull == null) {
+				if (programToSave == null) {
 					Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
 					return;
 				}
-				tull.getCommandDTO().setSceneId(null);
+				programToSave.getCommandDTO().setSceneId(null);
 				Intent intent = AddProgramActivity.this.getIntent();
 				datasource.open();
 				if (radioTimed.isChecked()) {// temporal schedule
 					Calendar base = Calendar.getInstance();
 					base.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
 					base.set(Calendar.MINUTE, tp.getCurrentMinute());
-					tull.getCommandDTO().setType(Constants.COMMAND_TIMED);
-					tull.getCommandDTO().setScheduledTime(base);
+					programToSave.getCommandDTO().setType(Constants.COMMAND_TIMED);
+					programToSave.getCommandDTO().setScheduledTime(base);
 					if (checkboxRecursive.isChecked()) {
 						final int[] spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
-						tull.getCommandDTO().setInterval(spinnerArrVal[spinnerInterval.getSelectedItemPosition()]);
+						programToSave.getCommandDTO().setInterval(spinnerArrVal[spinnerInterval.getSelectedItemPosition()]);
 					}
 					// inserimento nuovo
-					tull.getCommandDTO().persistCommand(datasource);
+					programToSave.getCommandDTO().persistCommand(datasource);
 					intent.putExtra("returnedData", Constants.COMMAND_TIMED);
-					/* crea comando posizionale */
-				} else if (radioPositional.isChecked()) {
+				} else if (radioPositional.isChecked()) {//POSIZIONALE
 					if (togglehomeaway.isChecked()) {
-						tull.getCommandDTO().setType(Constants.COMMAND_COMEBACK_CODE);
+						programToSave.getCommandDTO().setType(Constants.COMMAND_COMEBACK_CODE);
 					} else {
-						tull.getCommandDTO().setType(Constants.COMMAND_GOAWAY_CODE);
+						programToSave.getCommandDTO().setType(Constants.COMMAND_GOAWAY_CODE);
 					}
 					// inserimento nuovo
-					tull.getCommandDTO().persistCommand(datasource);
+					programToSave.getCommandDTO().persistCommand(datasource);
 					intent.putExtra("returnedData", Constants.COMMAND_COMEBACK_CODE);
-				} else if (radioSensorial.isChecked()) {// crea trigger
+				} else if (radioSensorial.isChecked()) {// TRIGGER
 					SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
 					if (trig == null || trig.getTypicalDTO() == null || et.getText() == null
 							|| "".compareTo(et.getText().toString()) == 0) {
@@ -279,16 +278,16 @@ public class AddProgramActivity extends SherlockActivity {
 								Toast.LENGTH_SHORT).show();
 						return;
 					}
-					tull.getCommandDTO().setType(Constants.COMMAND_TRIGGERED);
+					programToSave.getCommandDTO().setType(Constants.COMMAND_TRIGGERED);
 					// inserimento nuovo
-					tull.getCommandDTO().persistCommand(datasource);
+					programToSave.getCommandDTO().persistCommand(datasource);
 					// campi trigger
 					SoulissTriggerDTO trigger = new SoulissTriggerDTO();
-					trigger.setInputNodeId(tull.getCommandDTO().getNodeId());
+					trigger.setInputNodeId(trig.getTypicalDTO().getNodeId());
 
 					trigger.setInputSlot(trig.getTypicalDTO().getSlot());
 					trigger.setOp(buttComparator.getText().toString());
-					trigger.setCommandId(tull.getCommandDTO().getProgramId());
+					trigger.setCommandId(programToSave.getCommandDTO().getProgramId());
 					trigger.setThreshVal(Integer.parseInt(et.getText().toString()));
 
 					trigger.persist(datasource);

@@ -279,9 +279,9 @@ public class AlertDialogHelper {
 	public static AlertDialog.Builder removeCommandDialog(final Context cont, final ListView ctx,
 			final SoulissDBHelper datasource, final SoulissCommand toRename) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(cont);
-		alert.setTitle("Remove Program");
+		alert.setTitle(cont.getString(R.string.dialog_remove_title));
 		alert.setIcon(android.R.drawable.ic_dialog_alert);
-		alert.setMessage(cont.getResources().getString(R.string.dialog_remove_cmd));
+		alert.setMessage(cont.getString(R.string.dialog_remove_cmd));
 		alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
 
