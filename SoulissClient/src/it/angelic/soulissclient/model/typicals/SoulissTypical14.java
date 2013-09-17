@@ -16,8 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class SoulissTypical14 extends SoulissTypical implements ISoulissTypical {
 
@@ -61,8 +59,8 @@ public class SoulissTypical14 extends SoulissTypical implements ISoulissTypical 
 		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
 		
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.MATCH_PARENT);
+		//RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+			//	RelativeLayout.LayoutParams.MATCH_PARENT);
 		// cmd.setGravity(Gravity.TOP);
 		cont.addView(getQuickActionTitle());
 

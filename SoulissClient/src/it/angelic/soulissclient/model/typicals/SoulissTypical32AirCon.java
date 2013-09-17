@@ -111,11 +111,11 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 			textStatusVal.setText(getOutputDesc());
 			if ((typicalDTO.getOutput() ==0 || typicalDTO.getOutput() >> 6 == 1)|| "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
 				textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-				textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
+				textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 			} else {
 
 				textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
-				textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackon));
+				textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 			}
 		}
 	@Override

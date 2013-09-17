@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Looper;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -147,7 +146,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 			textStatusVal.setTextColor(getColor());
 			textStatusVal.setBackgroundColor(getColor());

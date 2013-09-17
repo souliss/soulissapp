@@ -106,7 +106,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 
 		ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
 		par.setProgressDrawable(progress);
-		par.setBackgroundDrawable(ctx.getResources().getDrawable(android.R.drawable.progress_horizontal));
+		par.setBackgroundResource(android.R.drawable.progress_horizontal);
 		
 		RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);

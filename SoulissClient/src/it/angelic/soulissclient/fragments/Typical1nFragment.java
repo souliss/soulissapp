@@ -219,10 +219,10 @@ public class Typical1nFragment extends SherlockFragment {
 		// sfondo bottone
 		if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil
 				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil_Auto)
-			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_on));
+			buttPlus.setBackgroundResource(R.drawable.bulb_on);
 		else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil
 				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil_Auto)
-			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_off));
+			buttPlus.setBackgroundResource(R.drawable.bulb_off);
 		return ret;
 	}
 

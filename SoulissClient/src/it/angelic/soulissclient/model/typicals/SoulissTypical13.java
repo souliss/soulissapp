@@ -10,11 +10,9 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -62,8 +60,8 @@ public class SoulissTypical13 extends SoulissTypical implements ISoulissTypical 
 			View convertView, final ViewGroup parent) {
 		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		//RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+			//	RelativeLayout.LayoutParams.WRAP_CONTENT);
 
 		// Infotext nascosto all'inizio
 		final TextView cmd = getQuickActionTitle();

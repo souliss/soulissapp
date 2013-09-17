@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 /**
  * Handle one digital output based on hardware and software commands, output can
@@ -87,8 +86,8 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 		cont.removeAllViews();
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
+		//LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+			//	LinearLayout.LayoutParams.WRAP_CONTENT);
 		cont.setGravity(Gravity.CENTER);
 
 		cont.addView(getQuickActionTitle());
@@ -185,18 +184,20 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 				"UNKNOWN".compareTo(getOutputDesc()) == 0 ||
 				"NA".compareTo(getOutputDesc()) == 0) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
+			//textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
 		} else {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackon));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
+			//textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackon));
 		}
 	}
 	@Override 
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
-			return "ON";
+			return ctx.getString(R.string.ON);
 		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
-			return "OFF";
+			return ctx.getString(R.string.OFF);
 		else if (typicalDTO.getOutput() == Constants.Souliss_T18_Pulse)
 			return "...";//pulse
 		else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)

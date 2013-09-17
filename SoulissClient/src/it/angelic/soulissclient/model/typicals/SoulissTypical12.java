@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -61,11 +60,11 @@ public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical 
 	@Override
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
-			return "ON";
+			return ctx.getString(R.string.ON);
 		else if	(typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto)
-			return "ON (AUTO)";
+			return ctx.getString(R.string.ON)+" (AUTO)";
 		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
-			return "OFF";
+			return ctx.getString(R.string.OFF);
 		else if( typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto)
 			return "OFF (AUTO)";
 		else
@@ -76,10 +75,10 @@ public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical 
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackon));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 		}
 	}
 

@@ -47,7 +47,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -167,7 +166,7 @@ public class SensorDetailFragment extends Fragment {
 		pgDrawable.getPaint().setShader(gradient);
 
 		ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-		par.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.progress_horizontal));
+		par.setBackgroundResource(android.R.drawable.progress_horizontal);
 		par.setProgressDrawable(progress);
 		par.setMax(50);
 		par.setProgress(20);

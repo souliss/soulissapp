@@ -9,8 +9,8 @@
     <string name="currentlyin">actualmente en</string>
     <string name="positionfrom"><b>Posición desde </b></string>
     <string name="homewarn"><b>No está fijada la posición de casa</b>, utilice la opción de fondo para establecer la posición de casa</string>
-    <string name="useridxhint">Por favor ingrese un número en rango 1-100</string>
-    <string name="nodeidxhint">Por favor ingrese un número en rango 1-254</string>
+    <string name="useridxhint">Por favor ingrese un número en rango 1&#8211;100</string>
+    <string name="nodeidxhint">Por favor ingrese un número en rango 1&#8211;254</string>
     <string name="dbstruct_req">Estructura de base de datos requerida</string>
     <string name="antitheft_status">Estado de sistema antirobo:</string>
     <string name="antitheft_notify_desc">Revisar peers tapping del sistema antirobo en esta notificación</string>

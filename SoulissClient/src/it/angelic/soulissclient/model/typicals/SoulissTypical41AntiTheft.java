@@ -3,7 +3,6 @@ package it.angelic.soulissclient.model.typicals;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
-import it.angelic.soulissclient.helpers.ListToggleButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -21,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 /**
  * Handle one digital output based on hardware and software commands, output can
@@ -90,8 +88,8 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		cont.removeAllViews();
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-				LinearLayout.LayoutParams.WRAP_CONTENT);
+		//LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+			//	LinearLayout.LayoutParams.WRAP_CONTENT);
 		cont.setGravity(Gravity.CENTER);
 
 		cont.addView(getQuickActionTitle());
@@ -185,10 +183,10 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3)) ||
 						typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackon));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 		}
 	}
 	@Override

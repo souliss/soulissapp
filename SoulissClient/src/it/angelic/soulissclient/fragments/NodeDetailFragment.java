@@ -1,6 +1,10 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.model.typicals.Constants.*;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T11;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T12;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T16;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.AirConActivity;
 import it.angelic.soulissclient.Constants;
@@ -411,7 +415,7 @@ public class NodeDetailFragment extends ListFragment {
 		pgDrawable.getPaint().setShader(gradient);
 
 		ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-		par.setBackgroundDrawable(getResources().getDrawable(android.R.drawable.progress_horizontal));
+		par.setBackgroundResource(android.R.drawable.progress_horizontal);
 		par.setProgressDrawable(progress);
 		par.setMax(50);
 		par.setProgress(20);

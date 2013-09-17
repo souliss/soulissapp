@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.RGBAdvancedActivity;
 import it.angelic.soulissclient.RGBIrActivity;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
@@ -14,12 +13,10 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical {
 
