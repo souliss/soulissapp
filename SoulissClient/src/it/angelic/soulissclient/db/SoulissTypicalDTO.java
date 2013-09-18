@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.db;
 
 import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.io.Serializable;
 import java.util.Calendar;

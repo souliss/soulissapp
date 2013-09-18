@@ -148,7 +148,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="RGBAdvancedActivity"
+            android:name="T16RGBAdvancedActivity"
             android:exported="false"
             android:icon="@drawable/remote"
             android:label="@string/Souliss_TRGB_desc" >

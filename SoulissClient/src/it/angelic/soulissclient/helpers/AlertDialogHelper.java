@@ -17,7 +17,7 @@ import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.JSONHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;

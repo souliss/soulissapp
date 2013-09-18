@@ -11,7 +11,7 @@ import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
 import it.angelic.soulissclient.helpers.GraphsHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.util.Date;
 import java.util.HashMap;

@@ -25,6 +25,7 @@
     <string name="dialog_create_db">Tutti i nodi verranno sovrascritti in seguito alla richiesta verso http://</string>
     <string name="dialog_create_db2">. La struttura dei nodi già esistenti verrà sovrascritta. Procedere?</string>
     <string name="dialog_title_edittext_IP_pubb">Indirizzo pubblico</string>
+    <string name="dialog_remove_title">Elimina Programma</string>
     <string name="dialog_remove_cmd">Sicuro di eliminare questo comando?</string>
     <string name="dialog_choose_icon">Scegli icona per </string>
     <string name="dialog_warn_wifi">Test locale fallito. Il WIFI è abilitato?</string>

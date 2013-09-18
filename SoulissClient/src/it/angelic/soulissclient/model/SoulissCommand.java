@@ -5,7 +5,6 @@ import static junit.framework.Assert.assertEquals;
 import java.io.Serializable;
 
 import it.angelic.soulissclient.model.typicals.Constants;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import android.content.Context;

@@ -4,7 +4,6 @@ import android.content.Context;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 public class SoulissTrigger extends SoulissCommand {
 

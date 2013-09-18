@@ -3,6 +3,7 @@ package it.angelic.soulissclient.fragments;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T11;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T12;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T16;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T19;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
 import static junit.framework.Assert.assertTrue;
@@ -10,11 +11,12 @@ import it.angelic.soulissclient.AirConActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.RGBAdvancedActivity;
 import it.angelic.soulissclient.RGBIrActivity;
 import it.angelic.soulissclient.SensorDetailActivity;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
+import it.angelic.soulissclient.T16RGBAdvancedActivity;
+import it.angelic.soulissclient.T19SingleChannelActivity;
 import it.angelic.soulissclient.Typical1nDetail;
 import it.angelic.soulissclient.Typical4nDetail;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
@@ -23,11 +25,12 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
@@ -313,6 +316,8 @@ public class NodeDetailFragment extends ListFragment {
 				details = SensorDetailFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical16AdvancedRGB)
 				details = RGBAdvancedFragment.newInstance(index, target);
+			else if (target instanceof SoulissTypical19AnalogChannel)
+				details = SingleChannelLedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)
 				details = Typical1nFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer)
@@ -327,53 +332,41 @@ public class NodeDetailFragment extends ListFragment {
 			ft.commit();
 
 		} else {
-
+			Intent nodeDatail = null;
 			if (target.isSensor()) {
 				Log.d(TAG, getResources().getString(R.string.manual_showing_typ) + index);
 				// Activity Dettaglio nodo
-				Intent nodeDatail = new Intent(getActivity(), SensorDetailActivity.class);
+				nodeDatail = new Intent(getActivity(), SensorDetailActivity.class);
 				nodeDatail.putExtra("TIPICO", target);
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
 			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
-				Intent nodeDatail = new Intent(getActivity(), AirConActivity.class);
+				nodeDatail = new Intent(getActivity(), AirConActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical32AirCon) target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getTypicalDTO().getSlot() + 1)));
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
 			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB) {
-				Intent nodeDatail = new Intent(getActivity(), RGBIrActivity.class);
+				nodeDatail = new Intent(getActivity(), RGBIrActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical15) target);
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T16) {
-				Intent nodeDatail = new Intent(getActivity(), RGBAdvancedActivity.class);
+				nodeDatail = new Intent(getActivity(), T16RGBAdvancedActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical16AdvancedRGB) target);
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+			} else if (target.getTypicalDTO().getTypical() == Souliss_T19) {
+				nodeDatail = new Intent(getActivity(), T19SingleChannelActivity.class);
+				nodeDatail.putExtra("TIPICO", (SoulissTypical19AnalogChannel) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T11
 					|| target.getTypicalDTO().getTypical() == Souliss_T12) {
-				Intent nodeDatail = new Intent(getActivity(), Typical1nDetail.class);
+				nodeDatail = new Intent(getActivity(), Typical1nDetail.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 					|| target.getTypicalDTO().getTypical() == Souliss_T42_Antitheft_Peer) {
-				Intent nodeDatail = new Intent(getActivity(), Typical4nDetail.class);
+				nodeDatail = new Intent(getActivity(), Typical4nDetail.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
+
+			}
+
+			if (nodeDatail != null) {//se ho fatto uno degli if precedente
 				NodeDetailFragment.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
-
 		}
 	}
 
@@ -383,7 +376,7 @@ public class NodeDetailFragment extends ListFragment {
 		par.setProgress(0); // <-- BUG Android
 		par.setProgress(collected.getHealth());
 		upda.setText(getResources().getString(R.string.update) + " " + Constants.getTimeAgo(collected.getRefreshedAt()));
-		
+
 	}
 
 	/**

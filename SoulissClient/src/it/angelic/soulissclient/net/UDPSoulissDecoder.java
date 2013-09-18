@@ -14,7 +14,7 @@ import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.net.DatagramPacket;
 import java.util.ArrayList;

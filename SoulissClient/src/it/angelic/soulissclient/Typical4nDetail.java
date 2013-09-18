@@ -7,7 +7,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import it.angelic.soulissclient.fragments.Typical1nFragment;
 import it.angelic.soulissclient.fragments.Typical4nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.res.Configuration;

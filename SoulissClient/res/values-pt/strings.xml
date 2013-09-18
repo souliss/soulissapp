@@ -26,6 +26,7 @@
     <string name="dialog_create_db2">. Você irá perder qualquer configuração e histórico prévio. Continuar?</string>
     <string name="dialog_title_edittext_IP_pubb">Endereço Público</string>
     <string name="dialog_remove_cmd">Você tem certeza que deseja excluir este comando?</string>
+    <string name="dialog_remove_title">Delete Program</string>
     <string name="dialog_choose_icon">Selecione ícone para </string>
     <string name="dialog_warn_wifi">O teste local falhou. Você habilitou a rede sem fio?</string>
     <string name="dialog_local_test">Executando teste local&#8230;</string>

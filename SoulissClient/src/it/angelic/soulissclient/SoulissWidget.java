@@ -3,7 +3,7 @@ package it.angelic.soulissclient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import android.app.Activity;
 import android.app.PendingIntent;

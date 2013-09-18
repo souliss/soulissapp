@@ -5,6 +5,7 @@ import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.util.ArrayList;
 

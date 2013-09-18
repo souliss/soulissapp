@@ -25,7 +25,8 @@
     <string name="dialog_create_db">Todos los Nodos Souliss van a ser borrados y creados de nuevo desde http://</string>
     <string name="dialog_create_db2">. Va a perder cualquier configuración previa y el historial. ¿Seguir?</string>
     <string name="dialog_title_edittext_IP_pubb">Dirección pública</string>
-    <string name="dialog_remove_cmd">Está seguro que quiere borrar este comando ?</string>
+    <string name="dialog_remove_title">Delete Program</string>
+    <string name="dialog_remove_cmd">Está seguro que quiere borrar este program ?</string>
     <string name="dialog_choose_icon">Seleccione ícono para </string>
     <string name="dialog_warn_wifi">Prueba local fallida. ¿Ha activado la red inalámbrica?</string>
     <string name="dialog_local_test">Ejecutando prueba local&#8230;</string>

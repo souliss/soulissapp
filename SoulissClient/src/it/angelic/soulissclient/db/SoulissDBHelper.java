@@ -10,7 +10,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;

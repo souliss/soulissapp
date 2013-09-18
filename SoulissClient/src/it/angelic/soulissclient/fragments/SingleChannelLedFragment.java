@@ -7,8 +7,8 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
@@ -51,7 +51,7 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 
 	private Button btOff;
 	private Button btOn;
-	private SoulissTypical16AdvancedRGB collected;
+	private SoulissTypical19AnalogChannel collected;
 	// private SoulissTypical related;
 
 	private Button btWhite;
@@ -60,7 +60,6 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 
 	private int color = 0;
 	// Color change listener.
-	private OnColorChangedListener dialogColorChangedListener = null;
 	private VisualizerView mVisualizerView;
 	// private CheckBox checkMusic;
 
@@ -72,12 +71,8 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 	private TableRow tableRowChannel;
 	private Spinner modeSpinner;
 	private SeekBar seekChannelRed;
-	private SeekBar seekChannelGreen;
-	private SeekBar seekChannelBlue;
 	private TextView redChanabel;
 	private TextView eqText;
-	private TextView blueChanabel;
-	private TextView greenChanabel;
 	private Button btEqualizer;
 	private TableRow tableRowEq;
 
@@ -180,20 +175,20 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		if (container == null)
 			return null;
 		opzioni = SoulissClient.getOpzioni();
-		View ret = inflater.inflate(R.layout.frag_rgb_advanced, container, false);
+		View ret = inflater.inflate(R.layout.frag_t19_singlechannel, container, false);
 		datasource = new SoulissDBHelper(getActivity());
 		datasource.open();
 
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null && extras.get("TIPICO") != null) {
-			collected = (SoulissTypical16AdvancedRGB) extras.get("TIPICO");
+			collected = (SoulissTypical19AnalogChannel) extras.get("TIPICO");
 		} else if (getArguments() != null) {
-			collected = (SoulissTypical16AdvancedRGB) getArguments().get("TIPICO");
+			collected = (SoulissTypical19AnalogChannel) getArguments().get("TIPICO");
 		} else {
 			Log.e(Constants.TAG, "Error retriving node:");
 			return ret;
 		}
-		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical16AdvancedRGB);
+		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical19AnalogChannel);
 		collected.setPrefs(opzioni);
 		collected.setCtx(getActivity());
 		if (Constants.versionNumber >= 11) {
@@ -222,12 +217,8 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		btEqualizer = (Button) ret.findViewById(R.id.buttonEqualizer);
 
 		seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
-		seekChannelGreen = (SeekBar) ret.findViewById(R.id.channelGreen);
-		seekChannelBlue = (SeekBar) ret.findViewById(R.id.channelBlue);
 
 		redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
-		blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
-		greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
 		eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
 		btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
@@ -239,8 +230,6 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 
 		// CHANNEL Listeners
 		seekChannelRed.setOnSeekBarChangeListener(new channelInputListener());
-		seekChannelGreen.setOnSeekBarChangeListener(new channelInputListener());
-		seekChannelBlue.setOnSeekBarChangeListener(new channelInputListener());
 
 		final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -252,8 +241,6 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 					tableRowEq.setVisibility(View.GONE);
 					// TODO questi non vanno
 					seekChannelRed.setProgress(Color.red(color));
-					seekChannelGreen.setProgress(Color.green(color));
-					seekChannelBlue.setProgress(Color.blue(color));
 				} else {// music
 					if (Constants.versionNumber >= 9) {
 						mVisualizerView.setFrag(SingleChannelLedFragment.this);
@@ -363,20 +350,6 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 			}
 		});
 
-		dialogColorChangedListener = new OnColorChangedListener() {
-			/**
-			 * {@inheritDoc}
-			 */
-			public void colorChanged(int c) {
-				// Log.i(Constants.TAG, "color changed:" + c);
-				color = c;
-
-				// e
-				collected.issueRGBCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
-						Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
-			}
-		};
-
 		return ret;
 	}
 
@@ -406,7 +379,7 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		args.putInt("index", index);
 		// Ci metto il nodo dentro
 		if (content != null) {
-			args.putSerializable("TIPICO", (SoulissTypical16AdvancedRGB) content);
+			args.putSerializable("TIPICO", (SoulissTypical19AnalogChannel) content);
 		}
 		f.setArguments(args);
 
@@ -472,7 +445,7 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// SoulissNode coll = datasource.getSoulissNode();
-			collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected.getTypicalDTO()
+			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
 					.getNodeId(), collected.getTypicalDTO().getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");
@@ -490,13 +463,10 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-			color = Color.argb(255, seekChannelRed.getProgress(), seekChannelGreen.getProgress(),
-					seekChannelBlue.getProgress());
+			color = Color.argb(255, seekChannelRed.getProgress(), 0,0);
 			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
 					Color.green(color), Color.blue(color), togMulticast.isChecked());
 			redChanabel.setText(getString(R.string.red) + " - " + Color.red(color));
-			greenChanabel.setText(getString(R.string.green) + " - " + Color.green(color));
-			blueChanabel.setText(getString(R.string.blue) + " - " + Color.blue(color));
 		}
 
 		public void onStartTrackingTouch(SeekBar seekBar) {

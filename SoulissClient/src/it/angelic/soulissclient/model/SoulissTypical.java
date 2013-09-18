@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.model.typicals;
+package it.angelic.soulissclient.model;
 
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.R;
@@ -6,10 +6,26 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissObject;
-import it.angelic.soulissclient.model.ISoulissTypical;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.typicals.Constants;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12;
+import it.angelic.soulissclient.model.typicals.SoulissTypical13;
+import it.angelic.soulissclient.model.typicals.SoulissTypical14;
+import it.angelic.soulissclient.model.typicals.SoulissTypical15;
+import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.soulissclient.model.typicals.SoulissTypical21;
+import it.angelic.soulissclient.model.typicals.SoulissTypical22;
+import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,15 +44,15 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 	 */
 	private static final long serialVersionUID = -7375342157142543740L;
 	// nodo di appartenenza
-	private SoulissNode parentNode;
+	protected SoulissNode parentNode;
 	// contenitore dati specchio del DB
-	SoulissTypicalDTO typicalDTO;
+	protected SoulissTypicalDTO typicalDTO;
 
 	private boolean isSlave = false;// indica se includerlo nelle liste
 	private boolean isSensor = false;// indica se va loggato
 
-	transient Context ctx;
-	transient SoulissPreferenceHelper prefs;
+	protected transient Context ctx;
+	protected transient SoulissPreferenceHelper prefs;
 
 	@Override
 	public String getNiceName() {
@@ -249,7 +265,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.rgb;
 		else if (typical == Constants.Souliss_T18)
 			return R.drawable.power;
-		else if (typical == Constants.Souliss_T18)
+		else if (typical == Constants.Souliss_T19)
 			return R.drawable.candle;
 		else if (typical == Constants.Souliss_T21)
 			return R.drawable.limit;

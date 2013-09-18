@@ -7,7 +7,7 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;

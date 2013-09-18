@@ -9,6 +9,7 @@ import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;

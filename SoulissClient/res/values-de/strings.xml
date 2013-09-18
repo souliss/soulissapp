@@ -25,6 +25,7 @@
     <string name="dialog_create_db">All Souliss nodes will be deleted and created again from http://</string>
     <string name="dialog_create_db2">. You\'ll lose any previous configuration and history. Proceed?</string>
     <string name="dialog_title_edittext_IP_pubb">Public Address</string>
+    <string name="dialog_remove_title">Delete Program</string>
     <string name="dialog_remove_cmd">Are you sure you want to delete this command ?</string>
     <string name="dialog_choose_icon">Select icon for </string>
     <string name="dialog_warn_wifi">Local test Failed. Have you enabled Wireless network?</string>

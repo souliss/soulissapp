@@ -10,7 +10,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;

@@ -3,7 +3,6 @@ package it.angelic.soulissclient.model;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.model.typicals.SoulissTypical;
 
 import java.io.Serializable;
 import java.util.ArrayList;
