@@ -47,7 +47,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
-public class Typical1nFragment extends SherlockFragment {
+public class T1nGenericLightFragment extends SherlockFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -67,8 +67,8 @@ public class Typical1nFragment extends SherlockFragment {
 	private TextView infoTyp;
 	private ToggleButton togMassive;
 	
-	public static Typical1nFragment newInstance(int index, SoulissTypical content) {
-		Typical1nFragment f = new Typical1nFragment();
+	public static T1nGenericLightFragment newInstance(int index, SoulissTypical content) {
+		T1nGenericLightFragment f = new T1nGenericLightFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();

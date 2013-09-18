@@ -317,9 +317,9 @@ public class NodeDetailFragment extends ListFragment {
 			else if (target instanceof SoulissTypical16AdvancedRGB)
 				details = RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
-				details = SingleChannelLedFragment.newInstance(index, target);
+				details = T19SingleChannelLedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)
-				details = Typical1nFragment.newInstance(index, target);
+				details = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer)
 				details = Typical4nFragment.newInstance(index, target);
 			FragmentTransaction ft = getFragmentManager().beginTransaction();

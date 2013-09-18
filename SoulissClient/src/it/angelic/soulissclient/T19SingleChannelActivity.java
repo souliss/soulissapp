@@ -7,7 +7,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
-import it.angelic.soulissclient.fragments.SingleChannelLedFragment;
+import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import android.annotation.SuppressLint;
@@ -41,7 +41,7 @@ public class T19SingleChannelActivity extends SherlockFragmentActivity {
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
 		if (savedInstanceState == null) {
-			SingleChannelLedFragment details = SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(),
+			T19SingleChannelLedFragment details = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();

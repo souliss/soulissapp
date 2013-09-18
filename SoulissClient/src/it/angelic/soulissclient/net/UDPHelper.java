@@ -530,7 +530,7 @@ public class UDPHelper {
 				for (String number : cmd) {
 					// che schifo
 					int merdata = Integer.decode(number);
-					if (merdata > Byte.MAX_VALUE){
+					if (merdata > 255){
 						//TODO chiedere a Dario
 						Log.w(Constants.TAG, "Overflow with command " + number);
 					}
@@ -562,7 +562,7 @@ public class UDPHelper {
 		for (String number : cmd) {
 			// che schifo
 			int merdata = Integer.parseInt(number);
-			if (merdata > Byte.MAX_VALUE)
+			if (merdata > 255)
 				Log.w(Constants.TAG, "Overflow with command " + cmd);
 			frame.add((byte) merdata);
 		}

@@ -53,23 +53,12 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
-		/*
-		SoulissCommand fRed = new SoulissCommand(ctx, this);
-		fRed.getCommandDTO().setCommand(Constants.Souliss_T16_Red);
-		fRed.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		fRed.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
-		ret.add(fRed);
-		*/
 		return ret;
 	}
 
-	public int getColor(){
+	public int getIntensity(){
 		int r = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
 				.getTypicalDTO().getOutput();
-		/*int g = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 2)))
-				.getTypicalDTO().getOutput();
-		int b = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 3)))
-				.getTypicalDTO().getOutput();*/
 		return r;
 	}
 	/**
@@ -133,9 +122,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 									prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE, String.valueOf(Constants.Souliss_T1n_OffCmd));
 					}
 				};
-
 				t.start();
-
 			}
 
 		});
@@ -149,8 +136,8 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
-			textStatusVal.setTextColor(getColor());
-			textStatusVal.setBackgroundColor(getColor());
+			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
+			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 		}
 	}
 	@Override
@@ -166,7 +153,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 	 * 
 	 * INPUT data 'read' from GUI
 	 **************************************************************************/
-	public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean togMulticast) {
+	public void issueAnalogCommand(final short val, final int r, final boolean togMulticast) {
 
 		Thread t = new Thread() {
 			public void run() {

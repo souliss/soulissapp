@@ -42,7 +42,7 @@ import android.widget.ToggleButton;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
+public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -54,11 +54,10 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 	private SoulissTypical19AnalogChannel collected;
 	// private SoulissTypical related;
 
-	private Button btWhite;
 	private Button btFlash;
 	private Button btSleep;
 
-	private int color = 0;
+	private int intensity = 0;
 	// Color change listener.
 	private VisualizerView mVisualizerView;
 	// private CheckBox checkMusic;
@@ -72,9 +71,6 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 	private Spinner modeSpinner;
 	private SeekBar seekChannelRed;
 	private TextView redChanabel;
-	private TextView eqText;
-	private Button btEqualizer;
-	private TableRow tableRowEq;
 
 	/**
 	 * Serve per poter tenuto il bottone brightness
@@ -86,7 +82,7 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		new Thread(new Runnable() {
 			public void run() {
 				while (isIncrementing()) {
-					issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+					issueIrCommand(cmd, intensity,0, 0,
 							togMulticast.isChecked());
 				}
 			}
@@ -111,7 +107,7 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		new Thread(new Runnable() {
 			public void run() {
 				while (isDecrementing()) {
-					issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+					issueIrCommand(cmd,intensity, 0,0,
 							togMulticast.isChecked());
 				}
 			}
@@ -140,14 +136,14 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 	}
 
 	/**
-	 * Interface describing a color change listener.
+	 * Interface describing a intensity change listener.
 	 */
 	public interface OnColorChangedListener {
 		/**
-		 * Method colorChanged is called when a new color is selected.
+		 * Method colorChanged is called when a new intensity is selected.
 		 * 
-		 * @param color
-		 *            new color.
+		 * @param intensity
+		 *            new intensity.
 		 */
 		void colorChanged(int color);
 	}
@@ -205,21 +201,17 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
 		// checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
 		tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
-		tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
 
-		btWhite = (Button) ret.findViewById(R.id.white);
 		btFlash = (Button) ret.findViewById(R.id.flash);
 		btSleep = (Button) ret.findViewById(R.id.sleep);
 		modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
 		tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 		mVisualizerView.setOpz(opzioni);
-		btEqualizer = (Button) ret.findViewById(R.id.buttonEqualizer);
 
 		seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
 
 		redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
-		eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
 		btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
 		btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
@@ -233,17 +225,16 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 
 		final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				 if (pos == 0) {// channels
+				if (pos == 0) {// channels
 					tableRowVis.setVisibility(View.GONE);
 					mVisualizerView.setVisibility(View.GONE);
 					tableRowChannel.setVisibility(View.VISIBLE);
 					mVisualizerView.setEnabled(false);
-					tableRowEq.setVisibility(View.GONE);
 					// TODO questi non vanno
-					seekChannelRed.setProgress(Color.red(color));
+					seekChannelRed.setProgress(intensity);
 				} else {// music
 					if (Constants.versionNumber >= 9) {
-						mVisualizerView.setFrag(SingleChannelLedFragment.this);
+						mVisualizerView.setFrag(T19SingleChannelLedFragment.this);
 						mVisualizerView.link(togMulticast.isChecked());
 						addBarGraphRenderers();
 					} else {
@@ -254,7 +245,6 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 					mVisualizerView.setEnabled(true);
 					mVisualizerView.link(togMulticast.isChecked());
 
-					tableRowEq.setVisibility(View.VISIBLE);
 					tableRowChannel.setVisibility(View.GONE);
 				}
 			}
@@ -263,11 +253,11 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 			}
 		};
 		// avoid auto call upon Creation with runnable
-		modeSpinner.post(new Runnable() {
-			public void run() {
-				modeSpinner.setOnItemSelectedListener(lib);
-			}
-		});
+		// modeSpinner.post(new Runnable() {
+		// public void run() {
+		modeSpinner.setOnItemSelectedListener(lib);
+		// }
+		// });
 
 		// Listener generico
 		OnClickListener plus = new OnClickListener() {
@@ -275,21 +265,12 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 				Short cmd = (Short) v.getTag();
 				assertTrue(cmd != null);
 
-				issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+				issueIrCommand(cmd,  intensity, 0,0, togMulticast.isChecked());
 				return;
 			}
 
 		};
 
-		// Listener generico
-		OnClickListener plusEq = new OnClickListener() {
-			public void onClick(View v) {
-				AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
-
-				return;
-			}
-
-		};
 
 		// start thread x decremento
 		OnTouchListener incListener = new OnTouchListener() {
@@ -330,25 +311,8 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		buttMinus.setOnTouchListener(decListener);
 		btOff.setOnClickListener(plus);
 		btOn.setOnClickListener(plus);
-		btEqualizer.setOnClickListener(plusEq);
 		btFlash.setOnClickListener(plus);
 		btSleep.setOnClickListener(plus);
-		
-		String strDisease2Format = getResources().getString(R.string.Souliss_TRGB_eq);
-		String strDisease2Msg = String.format(strDisease2Format,
-				Constants.twoDecimalFormat.format(opzioni.getEqLow()),
-				Constants.twoDecimalFormat.format(opzioni.getEqMed()),
-				Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
-		eqText.setText(strDisease2Msg);
-		
-		// bianco manuale
-		btWhite.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, 254, 254, 254,
-						togMulticast.isChecked());
-				return;
-			}
-		});
 
 		return ret;
 	}
@@ -371,8 +335,8 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 		mVisualizerView.addRenderer(barGraphRendererTop);
 	}
 
-	public static SingleChannelLedFragment newInstance(int index, SoulissTypical content) {
-		SingleChannelLedFragment f = new SingleChannelLedFragment();
+	public static T19SingleChannelLedFragment newInstance(int index, SoulissTypical content) {
+		T19SingleChannelLedFragment f = new T19SingleChannelLedFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
@@ -449,47 +413,49 @@ public class SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 					.getNodeId(), collected.getTypicalDTO().getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");
-			//color = collected.getColor();
-			Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor()) + " G"
-					+ Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
+			// intensity = collected.getColor();
+			Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + collected.getIntensity() );
+			redChanabel.setText( "Received:"+collected.getIntensity());
 
 		}
 	};
 
 	/**
-	 * Inner class representing the color Channels.
+	 * Inner class representing the intensity Channels.
 	 */
 	private class channelInputListener implements SeekBar.OnSeekBarChangeListener {
 
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-			color = Color.argb(255, seekChannelRed.getProgress(), 0,0);
-			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
-					Color.green(color), Color.blue(color), togMulticast.isChecked());
-			redChanabel.setText(getString(R.string.red) + " - " + Color.red(color));
+			//curva quadratica
+			float val = seekChannelRed.getProgress();
+			int out = (int) (val*val*255/100/100);
+			if (out > 255)
+				out = 255;
+			intensity =  out;
+			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity,
+					0, 0, togMulticast.isChecked());
+			redChanabel.setText( ""+out);
+			
 		}
 
 		public void onStartTrackingTouch(SeekBar seekBar) {
-
 		}
 
 		// solo per sicurezza
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
-					Color.green(color), Color.blue(color), togMulticast.isChecked());
+			collected.issueRefresh();//
 		}
 
 	}
 
-	
-	/**************************************************************************
+	/**
 	 * Souliss RGB light command Souliss OUTPUT Data is:
 	 * 
 	 * 
 	 * INPUT data 'read' from GUI
-	 **************************************************************************/
+	 */
 	public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-		collected.issueRGBCommand(val, r, g, b, multicast);
+		collected.issueAnalogCommand(val, r, multicast);
 	}
 
 }

@@ -4,7 +4,7 @@ import static junit.framework.Assert.assertTrue;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-import it.angelic.soulissclient.fragments.Typical1nFragment;
+import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
 import it.angelic.soulissclient.fragments.Typical4nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
