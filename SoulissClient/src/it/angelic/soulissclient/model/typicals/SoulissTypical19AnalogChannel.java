@@ -160,7 +160,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 				Looper.prepare();
 
 				if (togMulticast)//a tutti i nodi
-					UDPHelper.issueMassiveCommand(""+Constants.Souliss_T16, prefs,""+val, "" + r);
+					UDPHelper.issueMassiveCommand(""+Constants.Souliss_T19, prefs,""+val, "" + r);
 				else
 				UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
 						+ getTypicalDTO().getSlot(), prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE, "" + val, "" + r);
