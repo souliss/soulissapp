@@ -10,6 +10,7 @@ import it.angelic.soulissclient.preferences.IpChangerListener;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServicePreferenceListener;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.preferences.WebServerPreferenceListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.Address;
@@ -37,7 +36,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.ListView;
@@ -215,6 +213,7 @@ public class PreferencesActivity extends PreferenceActivity {
 			dbinfopref.setSummary(strMeatMsg);
 		} else if (action != null && action.equals("service_setup")) {
 			final Preference serviceActive = (Preference) findPreference("checkboxService");
+			final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
 			final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
 			final LocationManager locationManager;
 			// EXPORT
@@ -228,6 +227,9 @@ public class PreferencesActivity extends PreferenceActivity {
 
 			/* START STOP SoulissDataService */
 			serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(this));
+			
+			/* START STOP SoulissDataService */
+			webserviceActive.setOnPreferenceChangeListener(new WebServerPreferenceListener(this));
 
 			// Setta home location
 			setHomeLocation.setOnPreferenceClickListener(new OnPreferenceClickListener() {

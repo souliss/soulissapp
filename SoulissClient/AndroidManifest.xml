@@ -201,6 +201,11 @@
             android:name="it.angelic.soulissclient.SoulissDataService"
             android:enabled="true"
             android:process=":souliss_process" />
+        
+        <service
+            android:name="it.angelic.soulissclient.net.webserver.HTTPService"
+            android:enabled="true"
+            android:process=":souliss_process" />
 
         <receiver android:name="it.angelic.soulissclient.SoulissWidget" >
             <intent-filter>

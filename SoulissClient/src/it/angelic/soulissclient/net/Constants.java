@@ -13,6 +13,8 @@ public class Constants {
 	
 	public static final int SOULISSPORT = 230;
 	public static final int SERVERPORT = 23000;
+
+    public static final int WEB_SERVER_PORT = 8080;
 	
 
 	public static final byte Souliss_UDP_function_force = 51;
@@ -35,5 +37,17 @@ public class Constants {
 	
 	public static final Byte[] PING_PAYLOAD = { Souliss_UDP_function_ping, 0, 0, 0, 0 };
 	public static final Byte[] DBSTRUCT_PAYLOAD = { Souliss_UDP_function_db_struct, 0, 0, 0, 0 };
+	
+	//WEBSERVER
+	public static final String AWS_MESSAGE = "awsmessage";
+    
+    public static final String PREF_DIRECTORY_LISTING = "prefDirectotyListing";
+    public static final String PREF_DIRECTORY = "prefDirectory";
+    public static final String PREF_VIBRATE = "prefVibrate";
+    public static final String PREF_PLAYSOUND = "prefPlaysound";
+    public static final String PREF_RINGTONE = "prefMessageringtone";
+    public static final String PREF_SERVER_PORT = "prefServerPort";
+
+
 
 }

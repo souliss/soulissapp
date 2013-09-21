@@ -4,10 +4,8 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.model.SoulissCommand;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.SocketException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,11 +27,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+
 /**
  * This class shouldn't be used anymore.
  * 
  * @author Ale
- *
+ * 
  */
 @Deprecated
 public class JSONHelper {
@@ -63,115 +62,95 @@ public class JSONHelper {
 	 * 
 	 * @return
 	 */
-	/*public static HashMap<Short, SoulissNode> getAllNodes() {
+	/*
+	 * public static HashMap<Short, SoulissNode> getAllNodes() {
+	 * 
+	 * // String tmpInt; SoulissPreferenceHelper op = new
+	 * SoulissPreferenceHelper(SoulissClient.getAppContext()); HashMap<Short,
+	 * SoulissNode> aryActuator = new HashMap<Short, SoulissNode>();
+	 * 
+	 * try { String url_login = "http://" + server + "/status?all"; JSONArray
+	 * nodesArray = getHttpJsonArray(url_login);
+	 * 
+	 * // ip = jsonObject.optString("id"); // JSONArray nodesArray =
+	 * jsonObject.getJSONArray("id"); // go through all the nodes for (short i =
+	 * 0; i < nodesArray.length(); i++) {
+	 * 
+	 * SoulissNode newSoulNode = populateNodeFromJSONArray(nodesArray, i, op);
+	 * // aryActuator.add(newSoulNode); aryActuator.put(newSoulNode.getId(),
+	 * newSoulNode);
+	 * 
+	 * }
+	 * 
+	 * } catch (JSONException e) { Log.e(LOG_TAG, e.toString()); } catch
+	 * (Exception e) { Log.e(LOG_TAG, " CAN'T DOWNLOAD NODES!! ", e); }
+	 * Log.i(LOG_TAG, " getAllNodes size " + aryActuator.size()); return
+	 * aryActuator;
+	 * 
+	 * }
+	 */
 
-		// String tmpInt;
-		SoulissPreferenceHelper op = new SoulissPreferenceHelper(SoulissClient.getAppContext());
-		HashMap<Short, SoulissNode> aryActuator = new HashMap<Short, SoulissNode>();
-
-		try {
-			String url_login = "http://" + server + "/status?all";
-			JSONArray nodesArray = getHttpJsonArray(url_login);
-
-			// ip = jsonObject.optString("id");
-			// JSONArray nodesArray = jsonObject.getJSONArray("id");
-			// go through all the nodes
-			for (short i = 0; i < nodesArray.length(); i++) {
-
-				SoulissNode newSoulNode = populateNodeFromJSONArray(nodesArray, i, op);
-				// aryActuator.add(newSoulNode);
-				aryActuator.put(newSoulNode.getId(), newSoulNode);
-
-			}
-
-		} catch (JSONException e) {
-			Log.e(LOG_TAG, e.toString());
-		} catch (Exception e) {
-			Log.e(LOG_TAG, " CAN'T DOWNLOAD NODES!! ", e);
-		}
-		Log.i(LOG_TAG, " getAllNodes size " + aryActuator.size());
-		return aryActuator;
-
-	}*/
-
-	/*private static SoulissNode populateNodeFromJSONArray(JSONArray retrieved, short tgtIndex, SoulissPreferenceHelper op)
-			throws Exception {
-		JSONObject actuator;
-		// SoulissPreferenceHelper op = new
-		// SoulissPreferenceHelper(SoulissClient.getAppContext());
-		try {
-			actuator = retrieved.getJSONObject(tgtIndex);
-
-			String tmpInt;
-			SoulissNode newSoulNode = new SoulissNode((short) 0);
-
-			tmpInt = actuator.optString("hlt");
-			newSoulNode.setHealth(Short.parseShort(tmpInt));
-			newSoulNode.setRefreshedAt(Calendar.getInstance());
-			tmpInt = actuator.optString("id");
-
-			newSoulNode.setId((short) Integer.parseInt(tmpInt));
-			// prende lo slot del nodo
-			JSONArray aryies = actuator.getJSONArray("slot");
-
-			for (int j = 0; j < aryies.length(); j++) {
-				SoulissTypical rest;
-				JSONObject actualTyp = aryies.getJSONObject(j);
-				tmpInt = actualTyp.optString("typ");
-				SoulissTypicalDTO dto = new SoulissTypicalDTO();
-				dto.setTypical(Short.parseShort(tmpInt));
-				dto.setSlot((short) j);
-				dto.setNodeId(tgtIndex);
-				dto.setRefreshedAt(Calendar.getInstance());
-
-				rest = SoulissTypical.typicalFactory(Short.parseShort(tmpInt), newSoulNode, dto, op);
-
-				// rest.getTypicalDTO().setTypical(Byte.parseByte(tmpInt));
-				// rest.getTypicalDTO().setNodeId(tgtIndex);
-				// rest.getTypicalDTO().setSlot((short) j);
-
-				// rest.getTypicalDTO().setRefreshedAt(Calendar.getInstance());
-				tmpInt = actualTyp.optString("val");
-				rest.getTypicalDTO().setOutput(Short.parseShort(tmpInt));
-
-				// if (rest.getTypical() !=
-				// Constants.Souliss_T_CurrentSensor_slave)
-				newSoulNode.add(rest);
-			}
-			return newSoulNode;
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}*/
+	/*
+	 * private static SoulissNode populateNodeFromJSONArray(JSONArray retrieved,
+	 * short tgtIndex, SoulissPreferenceHelper op) throws Exception { JSONObject
+	 * actuator; // SoulissPreferenceHelper op = new //
+	 * SoulissPreferenceHelper(SoulissClient.getAppContext()); try { actuator =
+	 * retrieved.getJSONObject(tgtIndex);
+	 * 
+	 * String tmpInt; SoulissNode newSoulNode = new SoulissNode((short) 0);
+	 * 
+	 * tmpInt = actuator.optString("hlt");
+	 * newSoulNode.setHealth(Short.parseShort(tmpInt));
+	 * newSoulNode.setRefreshedAt(Calendar.getInstance()); tmpInt =
+	 * actuator.optString("id");
+	 * 
+	 * newSoulNode.setId((short) Integer.parseInt(tmpInt)); // prende lo slot
+	 * del nodo JSONArray aryies = actuator.getJSONArray("slot");
+	 * 
+	 * for (int j = 0; j < aryies.length(); j++) { SoulissTypical rest;
+	 * JSONObject actualTyp = aryies.getJSONObject(j); tmpInt =
+	 * actualTyp.optString("typ"); SoulissTypicalDTO dto = new
+	 * SoulissTypicalDTO(); dto.setTypical(Short.parseShort(tmpInt));
+	 * dto.setSlot((short) j); dto.setNodeId(tgtIndex);
+	 * dto.setRefreshedAt(Calendar.getInstance());
+	 * 
+	 * rest = SoulissTypical.typicalFactory(Short.parseShort(tmpInt),
+	 * newSoulNode, dto, op);
+	 * 
+	 * // rest.getTypicalDTO().setTypical(Byte.parseByte(tmpInt)); //
+	 * rest.getTypicalDTO().setNodeId(tgtIndex); //
+	 * rest.getTypicalDTO().setSlot((short) j);
+	 * 
+	 * // rest.getTypicalDTO().setRefreshedAt(Calendar.getInstance()); tmpInt =
+	 * actualTyp.optString("val");
+	 * rest.getTypicalDTO().setOutput(Short.parseShort(tmpInt));
+	 * 
+	 * // if (rest.getTypical() != // Constants.Souliss_T_CurrentSensor_slave)
+	 * newSoulNode.add(rest); } return newSoulNode; } catch (JSONException e) {
+	 * // TODO Auto-generated catch block e.printStackTrace(); return null; } }
+	 */
 
 	/**
 	 * Issue a /status?id= command and retrieves specified node
 	 * 
 	 * @return null se non trovato
 	 */
-	/*public static SoulissNode getNode(int nodeid, SoulissPreferenceHelper op) {
-
-		try {
-			String url_login = "http://" + server + "/status?id=" + nodeid;
-			// l'array contiene un solo nodo
-			JSONArray nodesArray = getHttpJsonArray(url_login);
-			// JSONArray nodesArray = jsonObject.getJSONArray("id");
-			// go through all the nodes
-
-			SoulissNode got = populateNodeFromJSONArray(nodesArray, (short) 0, op);
-			if (nodeid != got.getId())
-				throw new Exception("manage me");
-			return got;
-		} catch (JSONException e) {
-			Log.e(LOG_TAG, e.toString());
-		} catch (Exception e) {
-			Log.e(LOG_TAG, " NULL " + e.getMessage(), e);
-		}
-		// Log.i(LOG_TAG, " getAllActuator size " + aryActuator.size());
-		return null;
-	}*/
+	/*
+	 * public static SoulissNode getNode(int nodeid, SoulissPreferenceHelper op)
+	 * {
+	 * 
+	 * try { String url_login = "http://" + server + "/status?id=" + nodeid; //
+	 * l'array contiene un solo nodo JSONArray nodesArray =
+	 * getHttpJsonArray(url_login); // JSONArray nodesArray =
+	 * jsonObject.getJSONArray("id"); // go through all the nodes
+	 * 
+	 * SoulissNode got = populateNodeFromJSONArray(nodesArray, (short) 0, op);
+	 * if (nodeid != got.getId()) throw new Exception("manage me"); return got;
+	 * } catch (JSONException e) { Log.e(LOG_TAG, e.toString()); } catch
+	 * (Exception e) { Log.e(LOG_TAG, " NULL " + e.getMessage(), e); } //
+	 * Log.i(LOG_TAG, " getAllActuator size " + aryActuator.size()); return
+	 * null; }
+	 */
 
 	/**
 	 * Issue a reset command to Souliss, to reinitialize Souliss internal
@@ -305,6 +284,7 @@ public class JSONHelper {
 		}
 		return json;
 	}
+
 	@Deprecated
 	public static JSONArray getHttpJsonArray(String url) {
 		JSONArray json = null;
@@ -344,7 +324,6 @@ public class JSONHelper {
 		HttpClient httpclient = new DefaultHttpClient();
 		URI u;
 
-
 		try {
 			u = new URI(url);
 			HttpGet httpget = new HttpGet(u);
@@ -360,7 +339,7 @@ public class JSONHelper {
 				HttpEntity entity = response.getEntity();
 				if (entity != null) {
 					InputStream instream = entity.getContent();
-					result = convertStreamToString(instream);
+					result = StaticUtils.convertStreamToString(instream);
 					// Log.i(LOG_TAG, result);
 					instream.close();
 				}
@@ -379,25 +358,7 @@ public class JSONHelper {
 		return result;
 	}
 
-	private static String convertStreamToString(InputStream is) {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		StringBuilder sb = new StringBuilder();
-		String line = null;
-		try {
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-		} catch (IOException e) {
-			Log.e(LOG_TAG, "There was an IO error", e);
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return sb.toString();
-	}
+	
 
 	public static boolean checkSoulissHttp(String ip, int timeoutMsec) {
 		try {
@@ -405,7 +366,7 @@ public class JSONHelper {
 			HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutMsec);
 			HttpClient httpClient = new DefaultHttpClient(httpParameters);
 			HttpGet request;
-			Log.d(LOG_TAG, "checkSoulissHttp " + ip+" timeout: "+timeoutMsec);
+			Log.d(LOG_TAG, "checkSoulissHttp " + ip + " timeout: " + timeoutMsec);
 			request = new HttpGet(new URI("http://" + ip));
 			HttpResponse response = httpClient.execute(request);
 			int status = response.getStatusLine().getStatusCode();
@@ -427,5 +388,6 @@ public class JSONHelper {
 			return false;
 		}
 	}
+
 
 }

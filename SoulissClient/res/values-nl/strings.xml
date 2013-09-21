@@ -178,6 +178,8 @@
     <string name="opt_serviceEnable_desc">Background service keeps Souliss synchronized</string>
     <string name="opt_serviceinterval">Service Interval</string>
     <string name="opt_serviceinterval_desc">Higher speeds require more battery and resources</string>
+    <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
+    <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_homepos_err">Error getting current position</string>

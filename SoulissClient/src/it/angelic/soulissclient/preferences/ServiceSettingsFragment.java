@@ -46,10 +46,13 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 
 		addPreferencesFromResource(R.xml.settings_dataservice);
 		final Preference serviceActive = (Preference) findPreference("checkboxService");
+		final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
 		final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
 
 		/* START STOP SoulissDataService */
 		serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(getActivity()));
+		
+		webserviceActive.setOnPreferenceChangeListener(new WebServerPreferenceListener(getActivity()));
 
 		// Setta home location
 		setHomeLocation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -70,7 +73,10 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
-
+		
+		
+		
+		// Setta home location
 		resetMesg(setHomeLocation);
 
 	}

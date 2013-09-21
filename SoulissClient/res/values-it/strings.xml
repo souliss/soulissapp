@@ -56,8 +56,8 @@
     <string name="command_send">Invia comando</string>
     <string name="compatible">i dispositivi compatibili</string>
     <string name="to_all">a tutti</string>
-         <string name="to">a</string>
-     <string name="on_node">sul nodo</string>
+    <string name="to">a</string>
+    <string name="on_node">sul nodo</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Scenari</string>
     <string name="scenes_delete">Elimina Scenario</string>
@@ -98,9 +98,9 @@
     <string name="menu_changenodeicon">Cambia icona Nodo</string>
     <string name="menu_changetypicon">Cambia icona Tipico</string>
     <string name="rename_typical">Rinomina Tipico</string>
-    
-	<!-- TEST_UDP-->
-	<string name="test_health">Health request viene utilizzata per aggiornare lo stato di salute dei nodi</string>
+
+    <!-- TEST_UDP -->
+    <string name="test_health">Health request viene utilizzata per aggiornare lo stato di salute dei nodi</string>
     <string name="test_typ_title">TypReq</string>
     <string name="test_typ">Richiedi la definizione dei dispositivi, senza sottoscrizione</string>
     <string name="test_poll">Richiedi lo stato dei nodi una volta, senza sottoscrizione</string>
@@ -118,11 +118,11 @@
     <string name="manual_desc">Invio manuale di comandi. Tap sulla lista per visualizzare il dettaglio, long-press per modificare</string>
     <string name="node_empty">Nodo Vuoto!</string>
     <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
-    
+
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
-    
+
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
     <string name="status_updating">Updating DB&#8230;Please wait</string>
@@ -178,6 +178,8 @@
     <string name="opt_serviceEnable_desc">Il servizio mantiene souliss aggiornato anche se non è in esecuzione e provvede al logging dei sensori</string>
     <string name="opt_serviceinterval">Intervallo esecuzione</string>
     <string name="opt_serviceinterval_desc">Aggiornamenti frequenti richiedono più batteria e risorse</string>
+    <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
+    <string name="opt_WebServerEnable_desc">Con il webserver Souliss puoi esporre i dispositivi sul web. Apre la porta 8080</string>
     <string name="opt_servicehomepos">Sono a casa</string>
     <string name="opt_servicehomepos_desc">usa la posizione corrente come riferimento per i programmi posizionali</string>
     <string name="opt_homepos_err">Errore nella richiesta di posizione</string>
@@ -189,8 +191,6 @@
     <string name="opt_net_home">Home Network (obbligatorio)</string>
     <string name="opt_net_remote">Remote Network (opzionale)</string>
     <string name="opt_db_upd_desc">Aggiorna la configurazione dei nodi. Assicurati che Souliss sia connesso</string>
-
-    
     <string name="unknown_typical">Dispositivo sconosciuto</string>
 
     <!-- TYPICALS -->
@@ -215,12 +215,12 @@
     <string name="Souliss_T21_desc">Dispositivo motorizzato (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizzato</string>
     <string name="Souliss_T31_desc">Termometro</string>
-         <string name="Souliss_T41_desc">Antifurto</string>
-     <string name="Souliss_T42_desc">Antifurto (sensore)</string>
+    <string name="Souliss_T41_desc">Antifurto</string>
+    <string name="Souliss_T42_desc">Antifurto (sensore)</string>
     <string name="Souliss_T51_desc">Input Analogico</string>
     <string name="Souliss_T52_desc">Input Analogico, root mean value</string>
     <string name="Souliss_T53_desc">Input Analogico, max iterative</string>
-        <string name="Souliss_T54_desc">Sensore Luminosità</string>
+    <string name="Souliss_T54_desc">Sensore Luminosità</string>
     <string name="Souliss_TCurrentSensor_desc">Sensore Corrente</string>
     <string name="Souliss_TTemperature_desc">Sensore Temperatura</string>
     <string name="Souliss_THumidity_desc">Sensore umidità</string>
@@ -232,7 +232,7 @@
     <string name="Souliss_TRGB_sleep">Sleep</string>
     <string name="Souliss_TRGB_flash">Flash</string>
     <string name="Souliss_TRGB_white">Bianco</string>
-    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string> 
+    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string>
     <string name="Souliss_emptycmd_desc">Comando non selezionato</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Mode: Auto - 20°</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Mode: Auto - 24°</string>

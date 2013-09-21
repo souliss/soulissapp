@@ -60,6 +60,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private float eqLow;
 	private float eqMed;
 	private float eqHigh;
+	private boolean webserverEnabled;
 
 	
 	public SoulissPreferenceHelper(Context contx) {
@@ -121,6 +122,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "10000"));
 		dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
+		webserverEnabled = prefs.getBoolean("webserverEnabled", false);
 		userIndex = prefs.getInt("userIndex", -1);
 		nodeIndex = prefs.getInt("nodeIndex", -1);
 		animations = prefs.getBoolean("checkboxAnimazione", true);
@@ -486,5 +488,14 @@ public class SoulissPreferenceHelper implements Serializable {
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putFloat("eqHigh", eqHigh);
 		pesta.commit();
+	}
+
+
+	public boolean isWebserverEnabled() {
+		return webserverEnabled;
+	}
+
+	public void setWebserverEnabled(boolean webserverEnabled) {
+		this.webserverEnabled = webserverEnabled;
 	}
 }
