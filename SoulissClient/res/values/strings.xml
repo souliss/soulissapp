@@ -122,6 +122,8 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
+    <string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
+    <string name="webservice_enabled">Zozzariello <b>enabled</b> listening on port </string>
 
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
@@ -158,7 +160,7 @@
     <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
     <string name="title_edittext_IP_pubb">Souliss public Address</string>
     <string name="opt_fontsizedesc">Choose text size</string>
-    <string name="opt_fonttitledesc">Personalizza l\'aspetto dei titoli</string>
+    <string name="opt_fonttitledesc">Texts font used for titles</string>
     <string name="opt_tetxfx">Text Effects</string>
     <string name="opt_tetxfx_desc">Animate icons and text</string>
     <string name="opt_animfx">Animations</string>
@@ -171,7 +173,7 @@
     <string name="opt_fontsize">Text Size</string>
     <string name="opt_fonttitle">Change Title font</string>
     <string name="opt_visualdesc">Text size and effects</string>
-    <string name="opt_servicedesc">Configure Souliss client background data retrieval</string>
+    <string name="opt_servicedesc">Configure Souliss background services and home position</string>
     <string name="opt_serviceEnable">Data Service Enabled</string>
     <string name="opt_serviceEnable_desc">Background service keeps Souliss synchronized</string>
     <string name="opt_serviceinterval">Service Interval</string>
@@ -182,7 +184,7 @@
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_homepos_err">Error getting current position</string>
     <string name="opt_homepos_set">Home position set</string>
-    <string name="opt_service">Background Service</string>
+    <string name="opt_service">Background Services</string>
     <string name="opt_timeout_pubb">Connection Timeout</string>
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>

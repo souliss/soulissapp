@@ -26,7 +26,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class WebServer extends Thread {
-	private static final String SERVER_NAME = "AndWebServer";
+	private static final String SERVER_NAME = "Zozzariello";
 	private static final String ALL_PATTERN = "*";
 	private static final String MESSAGE_PATTERN = "/message*";
 
@@ -124,5 +124,9 @@ public class WebServer extends Thread {
 
 	public Context getContext() {
 		return context;
+	}
+
+	public int getServerPort() {
+		return serverPort;
 	}
 }

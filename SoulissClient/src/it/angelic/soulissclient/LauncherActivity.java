@@ -6,6 +6,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.net.webserver.HTTPService;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,25 +85,27 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private SoulissPreferenceHelper opzioni;
 
 	private SoulissDataService mBoundService;
+	private HTTPService mBoundWebService;
+	private TextView webserviceInfo;
+
 	private boolean mIsBound;
+	private boolean mIsWebBound;
 	private Timer autoUpdate;
 	private Geocoder geocoder;
 
-	/* SOULISS DATA SERVICE BINDING */
+	/* SOULISS DATA SERVICE BINDINGS */
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-			// Toast.makeText(LauncherActivity.this,
-			// "Dataservice connected, scheduling Souliss Update",
-			// Toast.LENGTH_SHORT).show();
 			Log.i(TAG, "Dataservice connected");
+
 			Calendar shouldHaveDoneAt = Calendar.getInstance();
 			shouldHaveDoneAt.add(Calendar.MILLISECOND, (int) -(opzioni.getBackedOffServiceInterval()));
 			if (mBoundService.getLastupd().before(shouldHaveDoneAt)) {
 				mBoundService.reschedule(true);
 				Toast.makeText(LauncherActivity.this, "Dataservice restarted", Toast.LENGTH_SHORT).show();
 				Log.w(TAG, "Dataservice RETARDED, scheduling Souliss Update");
-			}else{
+			} else {
 				Log.i(TAG, "Dataservice ON TIME");
 			}
 			setServiceInfo();
@@ -118,20 +121,45 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		}
 	};
 
+	private ServiceConnection mWebConnection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			mBoundWebService = ((HTTPService.LocalBinder) service).getService();
+			Log.i(TAG, "WEBSERVER connected");
+
+			setWebServiceInfo();
+			mIsWebBound = true;
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			// Because it is running in our same process, we should never
+			// see this happen.
+			mBoundWebService = null;
+			Toast.makeText(LauncherActivity.this, "WEBSERVER disconnected", Toast.LENGTH_SHORT).show();
+			mIsWebBound = false;
+		}
+	};
+
 	void doBindService() {
-		
-		//ComponentName myService = startService(new Intent(this,SoulissDataService.class));
-		//bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, Context.BIND_NOT_FOREGROUND );
-		
-		
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
 		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
+	}
+
+	void doBindWebService() {
+		Log.d(TAG, "doBindWebService(), BIND_NOT_FOREGROUND.");
+		bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_NOT_FOREGROUND);
 	}
 
 	void doUnbindService() {
 		if (mIsBound) {
 			Log.d(TAG, "UNBIND, Detach our existing connection.");
 			unbindService(mConnection);
+		}
+	}
+
+	void doUnbindWebService() {
+		if (mIsWebBound) {
+			Log.d(TAG, "UNBIND WEB, Detach our existing connection.");
+			unbindService(mWebConnection);
 		}
 	}
 
@@ -158,6 +186,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		dbwarnline = (View) findViewById(R.id.textViewDBWarnLine);
 		posInfoLine = (View) findViewById(R.id.PositionWarnLine);
 		serviceInfo = (TextView) findViewById(R.id.TextViewServiceActions);
+		webserviceInfo = (TextView) findViewById(R.id.TextViewWebService);
 		coordinfo = (TextView) findViewById(R.id.TextViewCoords);
 		homedist = (TextView) findViewById(R.id.TextViewFromHome);
 		serviceInfoFoot = (TextView) findViewById(R.id.TextViewNodes);
@@ -186,8 +215,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				Log.i(TAG, "Geo-Provider " + provider + getString(R.string.status_provider_selected));
 				double lat = location.getLatitude();
 				double lng = location.getLongitude();
-				coordinfo.setText((Html.fromHtml(getString(R.string.positionfrom)+" <b>" + provider + "</b>: " + Constants.gpsDecimalFormat.format(lat)
-						+ " : " + Constants.gpsDecimalFormat.format(lng))));
+				coordinfo.setText((Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: "
+						+ Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng))));
 				float[] res = new float[3];
 				Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
 				homedist.setText(Html.fromHtml(getString(R.string.homedist) + res[0]));
@@ -203,6 +232,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
 		}
 		doBindService();
+		doBindWebService();
 		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 
 		// Log.w(TAG, "WARNTEST");
@@ -255,6 +285,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		setHeadInfo();
 		setDbInfo();
 		setServiceInfo();
+		setWebServiceInfo();
 		setAntiTheftInfo();
 		if (opzioni.isSoulissIpConfigured() && opzioni.isDataServiceEnabled())
 			serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.waiting) + "</b> "));
@@ -353,9 +384,9 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
 						+ at.getOutputDesc()));
 			} catch (Exception e) {
-				Log.e(TAG, "cant set ANTITHEFT info: "+e.getMessage());
+				Log.e(TAG, "cant set ANTITHEFT info: " + e.getMessage());
 			}
-			
+
 		}
 	}
 
@@ -385,7 +416,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
 						+ Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
 			} else {
-				sb.append("Souliss Data service <b>enabled</b> but service <b>not bound</b>");
+				sb.append(getString(R.string.service_warnbound));
 				Intent serviceIntent = new Intent(this, SoulissDataService.class);
 				Log.w(TAG, "Service not bound yet, restarting");
 				startService(serviceIntent);
@@ -393,6 +424,35 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			}
 		}
 		serviceInfo.setText(Html.fromHtml(sb.toString()));
+	}
+
+	private void setWebServiceInfo() {
+		StringBuilder sb = new StringBuilder();
+		webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+		/* SERVICE MANAGEMENT */
+		if (!opzioni.isWebserverEnabled()) {
+			if (mIsWebBound && mBoundWebService != null)
+				// in esecuzione? strano
+				mBoundWebService.stopSelf();
+			webserviceInfo.setVisibility(View.GONE);
+		} else {
+			webserviceInfo.setVisibility(View.VISIBLE);
+			if (mIsWebBound && mBoundWebService != null) {
+				sb.append( getString(R.string.webservice_enabled) + mBoundWebService.getPort());
+				// PORT 8080 TODO
+				// sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
+				// +
+				// Constants.getScaledTime(opzioni.getDataServiceIntervalMsec()
+				// / 1000));
+			} else {
+				sb.append(getString(R.string.service_warnbound));
+				Intent serviceIntent = new Intent(this, HTTPService.class);
+				Log.w(TAG, "WEB Service not bound yet, restarting");
+				startService(serviceIntent);
+				webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+			}
+		}
+		webserviceInfo.setText(Html.fromHtml(sb.toString()));
 	}
 
 	Runnable timeExpired = new Runnable() {
@@ -434,6 +494,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 				setHeadInfo();
 				setServiceInfo();
+				setWebServiceInfo();
 				setAntiTheftInfo();
 				serviceInfoFoot.setText(Html.fromHtml(tmp.toString()));
 				// questo sovrascrive nodesinf
@@ -482,6 +543,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 						setHeadInfo();
 						setDbInfo();
 						setServiceInfo();
+						setWebServiceInfo();
 						setAntiTheftInfo();
 					}
 				});
@@ -522,6 +584,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		doUnbindService();
+		doUnbindWebService();
 
 		super.onDestroy();
 	}

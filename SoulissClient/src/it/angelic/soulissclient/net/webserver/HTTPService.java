@@ -28,14 +28,14 @@ public class HTTPService extends Service {
 	}
 
 	private void startWebServer() {
-    		if (server == null || !server.isAlive()) {
-    			
-    			server.setPriority(Thread.MIN_PRIORITY+1);
-    			
-    			server.startThread();
-    			Log.i(Constants.TAG, "webserver started");
-    		}
-    	}
+		if (server == null || !server.isAlive()) {
+
+			server.setPriority(Thread.MIN_PRIORITY + 1);
+
+			server.startThread();
+			Log.i(Constants.TAG, "webserver started");
+		}
+	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -82,6 +82,7 @@ public class HTTPService extends Service {
 		 * notifyManager.notify(NOTIFICATION_STARTED_ID, notification);
 		 */
 	}
+
 	/**
 	 * Class for clients to access. Because we know this service always runs in
 	 * the same process as its clients, we don't need to deal with IPC.
@@ -90,5 +91,12 @@ public class HTTPService extends Service {
 		public HTTPService getService() {
 			return HTTPService.this;
 		}
+	}
+
+	public String getPort() {
+		if (server != null)
+			return "" + server.getServerPort();
+		else
+			return "init..";
 	}
 }
