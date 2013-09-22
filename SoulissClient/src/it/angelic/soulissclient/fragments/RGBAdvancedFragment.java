@@ -491,6 +491,7 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// SoulissNode coll = datasource.getSoulissNode();
+			try {
 			collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected.getTypicalDTO()
 					.getNodeId(), collected.getTypicalDTO().getSlot());
 			// Bundle extras = intent.getExtras();
@@ -501,6 +502,9 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
 					Color.blue(collected.getColor())));
 			cpv.invalidate();
+			} catch (Exception e) {
+				Log.e(Constants.TAG, "Errore broadcast Receive!",e);
+			}
 
 		}
 	};
