@@ -1,4 +1,5 @@
 /gen
 /bin
 /project.properties
-/.gitignore
+.project
+.classpath
