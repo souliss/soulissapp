@@ -19,8 +19,7 @@
             android:key="remoteTimeout"
             android:summary="@string/opt_timeout_pubb_desc"
             android:title="@string/opt_timeout_pubb" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="" >
+
         <EditTextPreference
             android:dialogTitle="@string/dialog_title_edittext_IP_pubb"
             android:key="edittext_IP_pubb"

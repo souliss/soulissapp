@@ -20,14 +20,14 @@ import android.content.Context;
 
 public class HomePageHandler implements HttpRequestHandler {
 	private Context context = null;
-
+	final String contentType = "text/html; charset=UTF-8";
 	public HomePageHandler(Context context) {
 		this.context = context;
 	}
 
 	@Override
         public void handle(HttpRequest request, HttpResponse response, HttpContext httpContext) throws HttpException, IOException {
-                String contentType = "text/html";
+                
                 HttpEntity entity = new EntityTemplate(new ContentProducer() {
                 public void writeTo(final OutputStream outstream) throws IOException {
                         OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
@@ -42,4 +42,6 @@ public class HomePageHandler implements HttpRequestHandler {
                
                 response.setEntity(entity);
         }
+	
+	
 }

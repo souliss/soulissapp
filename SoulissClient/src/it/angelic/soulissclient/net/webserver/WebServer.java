@@ -28,7 +28,8 @@ import android.preference.PreferenceManager;
 public class WebServer extends Thread {
 	private static final String SERVER_NAME = "Zozzariello";
 	private static final String ALL_PATTERN = "*";
-	private static final String MESSAGE_PATTERN = "/message*";
+	private static final String PATTERN_MESSAGE = "/message*";
+	private static final String  PATTERN_STRUCTURE  = "/structure*";
 
 	private boolean isRunning = false;
 	private Context context = null;
@@ -62,7 +63,8 @@ public class WebServer extends Thread {
 		registry = new HttpRequestHandlerRegistry();
 
 		registry.register(ALL_PATTERN, new HomePageHandler(context));
-		registry.register(MESSAGE_PATTERN, new MessageCommandHandler(context));
+		registry.register(PATTERN_STRUCTURE, new JSONStatusHandler(context));
+		registry.register(PATTERN_MESSAGE, new MessageCommandHandler(context));
 
 		httpService.setHandlerResolver(registry);
 	}

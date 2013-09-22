@@ -46,6 +46,10 @@ public class SoulissTypical53HumiditySensor extends SoulissTypical {
 	 */
 	private static final long serialVersionUID = 3784476625375333669L;
 
+	@Override
+	public Float getOutput() {
+		return getOutputFloat();
+	}
 	public float getOutputFloat() {
 		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
 		//ora ho i due bytes, li converto

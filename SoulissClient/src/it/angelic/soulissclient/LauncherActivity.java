@@ -571,6 +571,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	@Override
 	protected void onDestroy() {
 		doUnbindService();
+		doUnbindWebService();
 		// Muovo i log su file
 		Log.w(TAG, "Closing app, moving logs");
 		try {
@@ -584,9 +585,6 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		doUnbindService();
-		doUnbindWebService();
-
 		super.onDestroy();
 	}
 

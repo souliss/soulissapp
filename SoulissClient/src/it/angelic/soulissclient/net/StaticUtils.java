@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.net;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +11,9 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
@@ -72,4 +76,20 @@ public class StaticUtils {
 
 		return StaticUtils.convertStreamToString(is);
 	}
+	
+	public static JSONObject getJSONSoulissDevice(SoulissTypical soulissTypical){
+		JSONObject objecttyp = new JSONObject();
+		try {
+			objecttyp.put("typ", Integer.toHexString(soulissTypical.getTypicalDTO().getTypical()));
+			objecttyp.put("slo", soulissTypical.getTypicalDTO().getSlot());
+			objecttyp.put("val", soulissTypical.getOutput());
+			objecttyp.put("ddesc", soulissTypical.getNiceName());
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return objecttyp;
+	}
+	
 }

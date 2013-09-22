@@ -203,6 +203,7 @@ public class Constants {
 	// Defines for current sensor
 	public static final short Souliss_T_CurrentSensor = 0x65;
 
+	//REMOVE THESE
 	public static final short Souliss_T_TemperatureSensor = 0x67;
 	public static final byte Souliss_T_TemperatureSensor_refresh = 0x02;
 
