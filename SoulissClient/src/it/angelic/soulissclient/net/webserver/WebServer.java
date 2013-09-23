@@ -3,6 +3,7 @@ package it.angelic.soulissclient.net.webserver;
 import it.angelic.soulissclient.net.Constants;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -34,13 +35,36 @@ public class WebServer extends Thread {
 	private boolean isRunning = false;
 	private Context context = null;
 	private int serverPort = 0;
+	private InetAddress serverAddress;
 
 	private BasicHttpProcessor httpproc = null;
 	private BasicHttpContext httpContext = null;
 	private HttpService httpService = null;
 	private HttpRequestHandlerRegistry registry = null;
 	private NotificationManager notifyManager = null;
-
+	
+	/*
+	HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
+	    public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
+	        AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
+	        CredentialsProvider credsProvider = (CredentialsProvider) context.getAttribute(
+	                ClientContext.CREDS_PROVIDER);
+	        HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+	       request.getHeaders("WWW-Authenticate");
+	       
+	       
+	       
+	        if (authState.getAuthScheme() == null) {
+	            AuthScope authScope = new AuthScope(targetHost.getHostName(), targetHost.getPort());
+	            Credentials creds = credsProvider.getCredentials(authScope);
+	            if (creds != null) {
+	                authState.setAuthScheme(new BasicScheme());
+	                authState.setCredentials(creds);
+	            }
+	        }
+	    }    
+	};
+*/
 	public WebServer(Context context) {
 		super(SERVER_NAME);
 
@@ -57,9 +81,10 @@ public class WebServer extends Thread {
 		httpproc.addInterceptor(new ResponseServer());
 		httpproc.addInterceptor(new ResponseContent());
 		httpproc.addInterceptor(new ResponseConnControl());
+	//	httpproc.addInterceptor(preemptiveAuth);
 
 		httpService = new HttpService(httpproc, new DefaultConnectionReuseStrategy(), new DefaultHttpResponseFactory());
-
+		
 		registry = new HttpRequestHandlerRegistry();
 
 		registry.register(ALL_PATTERN, new HomePageHandler(context));
@@ -68,14 +93,14 @@ public class WebServer extends Thread {
 
 		httpService.setHandlerResolver(registry);
 	}
-
+	
 	@Override
 	public void run() {
 		super.run();
 
 		try {
 			ServerSocket serverSocket = new ServerSocket(serverPort);
-
+			serverAddress = serverSocket.getInetAddress();
 			serverSocket.setReuseAddress(true);
 
 			while (isRunning) {
@@ -131,4 +156,5 @@ public class WebServer extends Thread {
 	public int getServerPort() {
 		return serverPort;
 	}
+
 }

@@ -6,6 +6,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.net.StaticUtils;
 import it.angelic.soulissclient.net.webserver.HTTPService;
 
 import java.io.File;
@@ -438,7 +439,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		} else {
 			webserviceInfo.setVisibility(View.VISIBLE);
 			if (mIsWebBound && mBoundWebService != null) {
-				sb.append( getString(R.string.webservice_enabled) + mBoundWebService.getPort());
+				sb.append( getString(R.string.webservice_enabled) +StaticUtils.getLocalIpAddress()+":"+ mBoundWebService.getPort());
 				// PORT 8080 TODO
 				// sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
 				// +
