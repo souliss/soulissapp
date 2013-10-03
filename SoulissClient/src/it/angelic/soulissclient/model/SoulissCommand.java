@@ -58,7 +58,7 @@ public class SoulissCommand implements Serializable {
 		short typical = parentTypical.getTypicalDTO().getTypical();
 		long command = commandDTO.getCommand();
 		int resId;
-		if (typical == Constants.Souliss_T11) {
+		 if (typical == Constants.Souliss_T11 || typical == Constants.Souliss_T18) {
 			if (command == Constants.Souliss_T1n_OnCmd)
 				resId = R.drawable.light_on;
 			else if (command == Constants.Souliss_T1n_OffCmd)
