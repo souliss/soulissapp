@@ -109,7 +109,7 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 		turnOffButton.setText(ctx.getString(R.string.OFF));
 		cont.addView(turnOffButton);
 		// disabilitazioni interlock
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil) {
+		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback) {
 			turnOnButton.setEnabled(false);
 			tog.setChecked(true);
 		} else {
@@ -181,7 +181,7 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil ||
+		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback ||
 				"UNKNOWN".compareTo(getOutputDesc()) == 0 ||
 				"NA".compareTo(getOutputDesc()) == 0) {
 			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
@@ -195,13 +195,11 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 	}
 	@Override 
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
+		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback)
 			return ctx.getString(R.string.ON);
-		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
+		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback)
 			return ctx.getString(R.string.OFF);
-		else if (typicalDTO.getOutput() == Constants.Souliss_T18_Pulse)
-			return "...";//pulse
-		else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
+				else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
 			return ""+typicalDTO.getOutput();
 			//return ctx.getString(R.string.Souliss_TRGB_sleep);
 		else

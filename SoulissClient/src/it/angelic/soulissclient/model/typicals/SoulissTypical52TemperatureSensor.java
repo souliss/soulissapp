@@ -86,7 +86,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius() + "Â°"));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius() + "°C"));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
