@@ -152,7 +152,7 @@
     <string name="opt_dbinfo">Banco de Dados Status</string>
     <string name="opt_dbinfo_desc">%1$d Centrais Souliss estão armazenadas no Banco de Dados, totalizando %2$d módulos presentes.</string>
     <string name="opt_invalidAddress">Endereço inválido!!</string>
-    <string name="title_edittext_IP">Souliss Endereço local</string>
+    <string name="title_edittext_IP">Souliss Endereço local (mandatory)</string>
     <string name="summary_edittext_IP">Insira o endereço IP da central Souliss quando estiver usando a rede local</string>
     <string name="dialog_title_edittext_IP">IP Address</string>
     <string name="summary_edittext_IP_VPN">Insira o endereço IP da central Souliss quando estiver usando VPN Android</string>
@@ -187,7 +187,7 @@
     <string name="opt_timeout_pubb_desc">Escolha de tempo limite de conexão ao usar a Internet</string>
     <string name="opt_dialog_restored">Todos os diálogos foram restaurados</string>
     <string name="unknown_typical">Unknown typical</string>
-    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_home">Network</string>
     <string name="opt_net_remote">Remote Network (optional)</string>
     <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 

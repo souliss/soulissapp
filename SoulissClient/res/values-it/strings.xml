@@ -152,7 +152,7 @@
     <string name="opt_dbinfo">DB Status</string>
     <string name="opt_dbinfo_desc">Nel DB sono presenti %1$d nodi e %2$d dispositivi</string>
     <string name="opt_invalidAddress">Invalid address!!</string>
-    <string name="title_edittext_IP">Souliss local Address</string>
+    <string name="title_edittext_IP">Indirizzo Souliss locale (obbligatorio)</string>
     <string name="summary_edittext_IP">Inserire l\'indirizzo IP di Souliss sulla rete locale (obbligatorio)</string>
     <string name="dialog_title_edittext_IP">Indirizzo IP</string>
     <string name="summary_edittext_IP_VPN">Insert Souliss Node\'s IP Address when using Android VPN</string>
@@ -186,7 +186,7 @@
     <string name="opt_timeout_pubb">Timeout della connessione</string>
     <string name="opt_timeout_pubb_desc">Tempo di timeout attraverso internet</string>
     <string name="opt_dialog_restored">Finestre di avviso ripristinate</string>
-    <string name="opt_net_home">Home Network (obbligatorio)</string>
+    <string name="opt_net_home">Network</string>
     <string name="opt_net_remote">Remote Network (opzionale)</string>
     <string name="opt_db_upd_desc">Aggiorna la configurazione dei nodi. Assicurati che Souliss sia connesso</string>
 

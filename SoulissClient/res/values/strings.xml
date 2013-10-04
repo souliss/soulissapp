@@ -152,7 +152,7 @@
     <string name="opt_dbinfo">DB Status</string>
     <string name="opt_dbinfo_desc">%1$d Souliss nodes are stored in DB, totally %2$d typicals are present.</string>
     <string name="opt_invalidAddress">Invalid address!!</string>
-    <string name="title_edittext_IP">Souliss local Address</string>
+    <string name="title_edittext_IP">Souliss local Address (mandatory)</string>
     <string name="summary_edittext_IP">Insert Souliss Bridge Node\'s IP Address when using home network</string>
     <string name="dialog_title_edittext_IP">IP Address</string>
     <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
@@ -185,7 +185,7 @@
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>
     <string name="unknown_typical">Unknown typical</string>
-    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_home">Network</string>
     <string name="opt_net_remote">Remote Network (optional)</string>
     <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 
