@@ -18,11 +18,10 @@ public class Constants {
 	public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
 	//public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
-	public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;
-	public static final long POSITION_UPDATE_MIN_DIST = 25;
+	public static final long POSITION_UPDATE_INTERVAL = 5 * 1000;//5 seconds
+	public static final long POSITION_UPDATE_MIN_DIST = 15;
 	public static final int GUI_UPDATE_INTERVAL = 5000;
 
-	public static final float POSITION_AWAY_THRESHOLD = 150;
 	//public static final int   CHECK_STATUS_PAUSE_MSEC = 250;
 	
 	//public static final long TEXT_SIZE_TITLE_OFFSET = 10;
@@ -74,6 +73,7 @@ public class Constants {
 	private static final int[][] DIGITS = {
 	    {},{0},{0,0},{0,0,0},{0,1},{1},
 	    {1,0},{1,0,0},{1,0,0,0},{0,2}};
+	public static final int POSITION_DEADZONE_METERS = 27;
 
 
 	/**

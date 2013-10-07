@@ -178,6 +178,8 @@
     <string name="opt_serviceinterval_desc">Higher speeds require more battery and resources</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
+    <string name="opt_Thold_desc">Range at which you\'ll be considered out of home when you leave</string>
+    <string name="opt_Thold">Distance Threshold</string>
     <string name="opt_homepos_err">Error getting current position</string>
     <string name="opt_homepos_set">Home position set</string>
     <string name="opt_service">Background Service</string>

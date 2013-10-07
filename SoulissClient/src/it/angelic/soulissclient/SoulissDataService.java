@@ -5,9 +5,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
 
@@ -53,11 +50,10 @@ public class SoulissDataService extends Service implements LocationListener {
 	// private long uir;
 	private SoulissDBHelper db;
 	private String provider;
-	private float homeDist;
+	private float homeDist = 0;
 	NotificationManager nm;
 	private String cached;
 	private Thread udpThread;
-
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -69,9 +65,9 @@ public class SoulissDataService extends Service implements LocationListener {
 		super.onCreate();
 		Log.w(TAG, "service onCreate()");
 		opts = SoulissClient.getOpzioni();
-		//subito
+		// subito
 		startUDPListener();
-		
+
 		// toDoDBAdapter = new ToDoDBAdapter(getApplicationContext());
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Criteria crit = new Criteria();
@@ -80,17 +76,9 @@ public class SoulissDataService extends Service implements LocationListener {
 		lastupd.setTimeInMillis(opts.getServiceLastrun());
 		provider = locationManager.getBestProvider(crit, false);
 		db = new SoulissDBHelper(this);
-		try {
-			locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-					Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
-		} catch (Exception e) {
-			Log.e(TAG, "location manager updates request FAIL", e);
-		}
+		requestBackedOffLocationUpdates();
 
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-		
-		
 
 	}
 
@@ -232,7 +220,7 @@ public class SoulissDataService extends Service implements LocationListener {
 				}
 				// db.open();
 				float homeDistPrev = opts.getPrevDistance();
-				Log.i(TAG, "Previous distance " + homeDistPrev + " current " + homeDist);
+				Log.i(TAG, "Previous distance " + homeDistPrev + " current: " + homeDist);
 				// PROGRAMMI POSIZIONALI /
 				if (homeDist != homeDistPrev) {
 					processPositionalPrograms(homeDistPrev);
@@ -282,7 +270,7 @@ public class SoulissDataService extends Service implements LocationListener {
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						 /*
+						/*
 						 * finally { db.close(); }
 						 */
 
@@ -301,10 +289,9 @@ public class SoulissDataService extends Service implements LocationListener {
 									UDPHelper.stateRequest(opts, nodesNum, 0);
 								}
 							}).start();
-							
-							
+
 							try {
-								//ritarda il logging
+								// ritarda il logging
 								Thread.sleep(3000);
 								db.open();
 
@@ -315,7 +302,7 @@ public class SoulissDataService extends Service implements LocationListener {
 									refreshedNodes.put(soulissNode.getId(), soulissNode);
 								}
 								Log.v(TAG, "logging nodes:" + nodesNum);
-								//issueRefreshSensors(ref, refreshedNodes);
+								// issueRefreshSensors(ref, refreshedNodes);
 								logThings(refreshedNodes);
 
 								// try a local reach, just in case ..
@@ -324,8 +311,7 @@ public class SoulissDataService extends Service implements LocationListener {
 							} catch (Exception e) {
 								Log.e(TAG, "Service error, scheduling again ", e);
 							}
-							
-							
+
 							Log.i(TAG, "Service end run" + SoulissDataService.this.hashCode());
 							setLastupd(Calendar.getInstance());
 							reschedule(false);
@@ -344,100 +330,35 @@ public class SoulissDataService extends Service implements LocationListener {
 			}
 		}
 
-		private void processPositionalPrograms(float homeDistPrev) {
-			db.open();
-			LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
-			Log.i(TAG, "active positional programs: " + unexecuted.size());
-			if (homeDistPrev > Constants.POSITION_AWAY_THRESHOLD && homeDist < Constants.POSITION_AWAY_THRESHOLD) {
-				// tornato a casa
-				for (SoulissCommand soulissCommand : unexecuted) {
-					final SoulissCommand cmd = soulissCommand;
-					if (soulissCommand.getType() == Constants.COMMAND_COMEBACK_CODE) {
-						Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								UDPHelper.issueSoulissCommand(cmd, opts);
-								Calendar cop = Calendar.getInstance();
-								cmd.getCommandDTO().setExecutedTime(cop);
-								cmd.getCommandDTO().setSceneId(null);
-								cmd.getCommandDTO().persistCommand(db);
-								sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
-										cmd.toString() + " " + cmd.getParentTypical().toString(), R.drawable.exit);
-							}
-						}).start();
-					}
-				}
-				opts.setPrevDistance(homeDist);
-			} else if (homeDistPrev < Constants.POSITION_AWAY_THRESHOLD && homeDist > Constants.POSITION_AWAY_THRESHOLD) {
-				// uscito di casa
-				for (SoulissCommand soulissCommand : unexecuted) {
-					final SoulissCommand cmd = soulissCommand;
-					if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
-						Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString());
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								UDPHelper.issueSoulissCommand(cmd, opts);
-								Calendar cop = Calendar.getInstance();
-								cmd.getCommandDTO().setExecutedTime(cop);
-								cmd.getCommandDTO().setSceneId(null);
-								cmd.getCommandDTO().persistCommand(db);
-								sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
-										cmd.toString() + " " + cmd.getParentTypical().toString(), R.drawable.exit);
-							}
-						}).start();
-					}
-				}
-				opts.setPrevDistance(homeDist);
-			} else {// gestione BACKOFF
-				Log.w(TAG, "resetting backoff at meters " + homeDist);
-				locationManager.removeUpdates(SoulissDataService.this);
-				if (homeDist > 25000) {
-					locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL * 100,
-							Constants.POSITION_UPDATE_MIN_DIST * 100, SoulissDataService.this);
-				} else if (homeDist > 5000) {
-					locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL * 10,
-							Constants.POSITION_UPDATE_MIN_DIST * 10, SoulissDataService.this);
-				} else {
-					locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-							Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
-				}
-			}
-			// db.close();
-		}
 	};
 
-	/*private void issueRefreshSensors(List<SoulissNode> ref, Map<Short, SoulissNode> refreshedNodes) {
-		for (SoulissNode soulissNode : ref) {
-			refreshedNodes.put(soulissNode.getId(), soulissNode);
-			List<SoulissTypical> tips = soulissNode.getTypicals();
-			for (SoulissTypical tp : tips) {
-				if (tp.isSensor()) {
-					Log.i(TAG, "Issuing sensor refresh..");
-					if (tp instanceof SoulissTypicalTemperatureSensor) {
-						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
-								opts, Constants.COMMAND_SINGLE,
-								"" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_TemperatureSensor_refresh);
-						break;// basta uno per nodo
-					} else if (tp instanceof SoulissTypicalHumiditySensor) {
-						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
-								opts, Constants.COMMAND_SINGLE, ""
-										+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor_refresh);
-						break;// basta uno per nodo
-					} else if (tp instanceof SoulissTypical54LuxSensor) {
-						UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(),
-								opts, Constants.COMMAND_SINGLE, ""
-										+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor_refresh);
-						break;// basta uno per nodo
-					} else {
-						Log.e(TAG, "Uninplemented..");
-					}
-				}
-			}
-		}
-
-	}*/
+	/*
+	 * private void issueRefreshSensors(List<SoulissNode> ref, Map<Short,
+	 * SoulissNode> refreshedNodes) { for (SoulissNode soulissNode : ref) {
+	 * refreshedNodes.put(soulissNode.getId(), soulissNode);
+	 * List<SoulissTypical> tips = soulissNode.getTypicals(); for
+	 * (SoulissTypical tp : tips) { if (tp.isSensor()) { Log.i(TAG,
+	 * "Issuing sensor refresh.."); if (tp instanceof
+	 * SoulissTypicalTemperatureSensor) { UDPHelper.issueSoulissCommand("" +
+	 * soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(), opts,
+	 * Constants.COMMAND_SINGLE, "" +
+	 * it.angelic.soulissclient.model.typicals.Constants
+	 * .Souliss_T_TemperatureSensor_refresh); break;// basta uno per nodo } else
+	 * if (tp instanceof SoulissTypicalHumiditySensor) {
+	 * UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" +
+	 * tp.getTypicalDTO().getSlot(), opts, Constants.COMMAND_SINGLE, "" +
+	 * it.angelic
+	 * .soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor_refresh
+	 * ); break;// basta uno per nodo } else if (tp instanceof
+	 * SoulissTypical54LuxSensor) { UDPHelper.issueSoulissCommand("" +
+	 * soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(), opts,
+	 * Constants.COMMAND_SINGLE, "" +
+	 * it.angelic.soulissclient.model.typicals.Constants
+	 * .Souliss_T_HumiditySensor_refresh); break;// basta uno per nodo } else {
+	 * Log.e(TAG, "Uninplemented.."); } } } }
+	 * 
+	 * }
+	 */
 
 	private void logThings(Map<Short, SoulissNode> refreshedNodes) {
 		Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
@@ -493,16 +414,122 @@ public class SoulissDataService extends Service implements LocationListener {
 		float[] res = new float[3];
 		try {
 			Location.distanceBetween(lat, lng, opts.getHomeLatitude(), opts.getHomeLongitude(), res);
-			Log.i(TAG, "Service received new Position. Home Distance:" + (int) res[0]);
+			Log.d(TAG, "Service received new Position. Home Distance:" + (int) res[0]);
 			homeDist = res[0];
 			if (opts.getPrevDistance() == 0) {
 				Log.w(TAG, "Resetting prevdistance =>" + homeDist);
 				opts.setPrevDistance(homeDist);
+			} else {
+				// float homeDistPrev = opts.getPrevDistance();
+				// processPositionalPrograms(homeDistPrev);
 			}
+
 		} catch (Exception e) {// home note set
 			homeDist = 0;
 			Log.w(TAG, "can't compute home distance, home position not set");
 		}
 
+	}
+
+	/**
+	 * Se la distanza attuale rispetto alla precedente supera la soglia,
+	 * scattano i programmi posizionali
+	 * 
+	 * @param homeDistPrev
+	 */
+	private void processPositionalPrograms(float homeDistPrev) {
+		float distPrevCache = opts.getPrevDistance();
+		if (homeDistPrev > (opts.getHomeThresholdDistance() - Constants.POSITION_DEADZONE_METERS)
+				&& homeDist < (opts.getHomeThresholdDistance() - Constants.POSITION_DEADZONE_METERS)) {
+			db.open();
+			LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
+			Log.i(TAG, "activating positional programs: " + unexecuted.size());
+			// tornato a casa
+			for (SoulissCommand soulissCommand : unexecuted) {
+				final SoulissCommand cmd = soulissCommand;
+				if (soulissCommand.getType() == Constants.COMMAND_COMEBACK_CODE) {
+					Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							UDPHelper.issueSoulissCommand(cmd, opts);
+							Calendar cop = Calendar.getInstance();
+							cmd.getCommandDTO().setExecutedTime(cop);
+							cmd.getCommandDTO().setSceneId(null);
+							cmd.getCommandDTO().persistCommand(db);
+							sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
+									cmd.toString() + " " + cmd.getParentTypical().toString(), R.drawable.exit);
+						}
+					}).start();
+				}
+			}
+			opts.setPrevDistance(homeDist);
+		} else if (homeDistPrev < (opts.getHomeThresholdDistance() + Constants.POSITION_DEADZONE_METERS)
+				&& homeDist > (opts.getHomeThresholdDistance() + Constants.POSITION_DEADZONE_METERS)) {
+			db.open();
+			LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
+			Log.i(TAG, "activating positional programs: " + unexecuted.size());
+			// uscito di casa
+			for (SoulissCommand soulissCommand : unexecuted) {
+				final SoulissCommand cmd = soulissCommand;
+				if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
+					Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString());
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							UDPHelper.issueSoulissCommand(cmd, opts);
+							Calendar cop = Calendar.getInstance();
+							cmd.getCommandDTO().setExecutedTime(cop);
+							cmd.getCommandDTO().setSceneId(null);
+							cmd.getCommandDTO().persistCommand(db);
+							sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
+									cmd.toString() + " " + cmd.getParentTypical().toString(), R.drawable.exit);
+						}
+					}).start();
+				}
+			}
+			opts.setPrevDistance(homeDist);
+		} else {// gestione BACKOFF sse e` cambiata la fascia
+			if ((homeDist > 25000 && distPrevCache <= 25000) || (homeDist < 25000 && distPrevCache >= 25000)) {
+				Log.w(TAG, "FASCIA 25" + homeDist);
+				requestBackedOffLocationUpdates();
+			} else if ((homeDist > 5000 && distPrevCache <= 5000)||(homeDist < 5000 && distPrevCache >= 5000)) {
+				Log.w(TAG, "FASCIA 5" + homeDist);
+				requestBackedOffLocationUpdates();
+			} else if ((homeDist > 2000 && distPrevCache <= 2000)||(homeDist < 2000 && distPrevCache >= 2000)) {
+				Log.w(TAG, "FASCIA 2" + homeDist);
+				requestBackedOffLocationUpdates();
+			} 
+		}
+		// db.close();
+	}
+	/**
+	 * Rischedula le richieste posizionali a intervali basati su fascie distanza
+	 * 
+	 */
+	private void requestBackedOffLocationUpdates() {
+		try {
+			// locationManager.requestLocationUpdates(provider,
+			// Constants.POSITION_UPDATE_INTERVAL,
+			// Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
+
+			Log.w(TAG, "requesting updates at meters " + homeDist);
+			locationManager.removeUpdates(SoulissDataService.this);
+			if (homeDist > 25000) {
+				locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL * 100,
+						Constants.POSITION_UPDATE_MIN_DIST * 10, SoulissDataService.this);
+			} else if (homeDist > 5000) {
+				locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL * 10,
+						Constants.POSITION_UPDATE_MIN_DIST * 4, SoulissDataService.this);
+			} else if (homeDist > 2000) {
+				locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL * 2,
+						Constants.POSITION_UPDATE_MIN_DIST * 2, SoulissDataService.this);
+			} else {
+				locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+						Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
+			}
+		} catch (Exception e) {
+			Log.e(TAG, "location manager updates request FAIL", e);
+		}
 	}
 }
