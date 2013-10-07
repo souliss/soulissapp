@@ -433,7 +433,10 @@ public class SoulissDataService extends Service implements LocationListener {
 
 	/**
 	 * Se la distanza attuale rispetto alla precedente supera la soglia,
-	 * scattano i programmi posizionali
+	 * scattano i programmi posizionali.
+	 * 
+	 * Se viene rilevato un cambio fascia tra prev e attuale viene anche rischedulato
+	 * il locationManager
 	 * 
 	 * @param homeDistPrev
 	 */

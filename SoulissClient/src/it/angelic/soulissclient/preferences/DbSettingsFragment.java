@@ -36,7 +36,7 @@ public class DbSettingsFragment extends PreferenceFragment {
 		dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 
 		String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
-		String nonode = "Souliss not configured yet, DB is empty";
+		String nonode = getString(R.string.dialog_disabled_db);
 		final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(
 				strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
 				opzioni.getCustomPref().getInt("numTipici", 0));

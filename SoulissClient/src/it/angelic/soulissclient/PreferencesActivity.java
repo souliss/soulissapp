@@ -22,8 +22,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.Address;
@@ -37,7 +35,6 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 import android.widget.ListView;
@@ -189,7 +186,7 @@ public class PreferencesActivity extends PreferenceActivity {
 				}
 			});
 
-		} else if (action != null && action.equals("db_setup")) {
+		} else if (action != null && action.equals("db_setup")) {//SCHERMATA DBINFO
 			Preference createDbPref = (Preference) findPreference("createdb");
 			Preference dropDbPref = (Preference) findPreference("dropdb");
 			Preference exportDBPref = (Preference) findPreference("dbexp");
@@ -204,11 +201,8 @@ public class PreferencesActivity extends PreferenceActivity {
 			// dialogo drop DB
 			dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(this));
 
-			/*
-			 * SCHERMATA DBINFO
-			 */
-			String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
-			String nonode = "Souliss not configured yet, DB is empty";
+			String strMeatFormat = getString(R.string.opt_dbinfo_desc);
+			String nonode = getString(R.string.opt_dbinfo_desc); 
 			final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(
 					strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
 					opzioni.getCustomPref().getInt("numTipici", 0));
@@ -329,7 +323,9 @@ public class PreferencesActivity extends PreferenceActivity {
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 						inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
 					inten.setAction("db_setup");
-
+					Toast.makeText(PreferencesActivity.this,
+							PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
+							Toast.LENGTH_SHORT).show();
 					PreferencesActivity.this.startActivity(inten);
 					break;
 				case Constants.Souliss_UDP_function_ping_resp:

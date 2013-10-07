@@ -151,7 +151,7 @@
     <string name="opt_dbdrop_desc">Elimina tutti i nodi, dispositivi e log dal DB</string>
     <string name="opt_dbinfo">DB Status</string>
     <string name="opt_dbinfo_desc">Nel DB sono presenti %1$d nodi e %2$d dispositivi</string>
-    <string name="opt_invalidAddress">Invalid address!!</string>
+    <string name="opt_invalidAddress">Indirizzo non valido!!</string>
     <string name="title_edittext_IP">Indirizzo Souliss locale (obbligatorio)</string>
     <string name="summary_edittext_IP">Inserire l\'indirizzo IP di Souliss sulla rete locale (obbligatorio)</string>
     <string name="dialog_title_edittext_IP">Indirizzo IP</string>

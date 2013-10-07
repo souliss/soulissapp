@@ -221,7 +221,7 @@ public class AlertDialogHelper {
 								editor.remove("numNodi");
 							if (soulissCust.contains("numTipici"))
 								editor.remove("numTipici");
-							Toast.makeText(source, "Souliss DB Deleted", Toast.LENGTH_SHORT).show();
+							//Toast.makeText(source, "Souliss DB Deleted", Toast.LENGTH_SHORT).show();
 							editor.commit();
 							Log.w(TAG, "Souliss DB dropped");
 							// source.finish();
@@ -682,9 +682,7 @@ public class AlertDialogHelper {
 									UDPHelper.dbStructRequest(opts);
 								}
 							}.start();
-							Toast.makeText(preferencesActivity,
-									preferencesActivity.getResources().getString(R.string.dbstruct_req),
-									Toast.LENGTH_SHORT).show();
+							
 						}
 					});
 		} else {
