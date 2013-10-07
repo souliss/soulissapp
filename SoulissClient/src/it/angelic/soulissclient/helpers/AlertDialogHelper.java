@@ -27,6 +27,7 @@ import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import java.util.LinkedList;
 import java.util.List;
 
+import us.feras.ecogallery.EcoGallery;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,12 +42,8 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -471,23 +468,36 @@ public class AlertDialogHelper {
 
 		alert2.setIcon(android.R.drawable.ic_dialog_dialer);
 		// loads gallery and requires icon selection*/
-		final Gallery gallery = new Gallery(context);
+		final EcoGallery gallery = new EcoGallery(context);
+		//final Gallery gallery = new Gallery(context);
 		// Gallery gallery = (Gallery) findViewById(R.id.gallery);
-		gallery.setMinimumHeight(120);
+		//gallery.setMinimumHeight(300);
+		//gallery.setLayoutParams(new Layo);
 		gallery.setAdapter(new SoulissIconAdapter(context));
 		alert2.setView(gallery);
 
-		gallery.setOnItemClickListener(new OnItemClickListener() {
+		/*gallery.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(EcoGalleryAdapterView<?> parent, View view, int position, long id) {
+				SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
+				toRename.setIconResourceId(ad.getItemResId(position));
+			}
+		});
+		/*gallery.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
 				toRename.setIconResourceId(ad.getItemResId(position));
 			}
-		});
+		});*/
 
 		alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
+						int pos = gallery.getSelectedItemPosition();
+						SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
+						toRename.setIconResourceId(ad.getItemResId(pos));
 						if (toRename instanceof SoulissNode) {
 							datasource.createOrUpdateNode((SoulissNode) toRename);
 							if (list != null) {
