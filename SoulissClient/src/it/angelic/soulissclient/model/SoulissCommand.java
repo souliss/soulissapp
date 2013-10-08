@@ -151,7 +151,7 @@ public class SoulissCommand implements Serializable {
 				resId = R.string.Souliss_OpenCmd_desc;
 			else
 				resId = R.string.Souliss_UndefinedCmd_desc;
-		} else if (typical == Constants.Souliss_T16) {
+		} else if (typical == Constants.Souliss_T16) {//RGB
 			if (command == Constants.Souliss_T1n_OnCmd)
 				resId = R.string.TurnON;
 			else if (command == Constants.Souliss_T1n_OffCmd)

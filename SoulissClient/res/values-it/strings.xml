@@ -75,6 +75,7 @@
     <string name="scene_del_command">Elimina comando</string>
     <string name="scene_send_command">Invia Comando</string>
     <string name="scene_cmd_order">Ordine esecuzione:</string>
+    <string name="scene_cmd_massive">Comando Massivo</string>
     <string name="scene_subtitle">Scenario formato da %1$d comandi</string>
 
     <!-- ADD PROGRAMS_SECTION -->

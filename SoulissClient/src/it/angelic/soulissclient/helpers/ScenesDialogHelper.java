@@ -157,8 +157,7 @@ public class ScenesDialogHelper {
 	 * @return
 	 */
 	public static AlertDialog.Builder addSceneCommandDialog(final Context context, final ListView list,
-			final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni
-			) {
+			final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni) {
 		// prendo tipici dal DB
 		List<SoulissNode> goer = datasource.getAllNodes();
 		final SoulissNode[] nodiArray = new SoulissNode[goer.size() + 1];
@@ -166,7 +165,7 @@ public class ScenesDialogHelper {
 		for (SoulissNode object : goer) {
 			nodiArray[q++] = object;
 		}
-		SoulissNode fake = new SoulissNode((short) -1);//MASSIVO
+		SoulissNode fake = new SoulissNode((short) -1);// MASSIVO
 		fake.setName(context.getString(R.string.allnodes));
 		fake.setTypicals(datasource.getUniqueTypicals(fake));
 		nodiArray[q] = fake;
@@ -203,10 +202,9 @@ public class ScenesDialogHelper {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 				ArrayList<SoulissTypical> re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()]
 						.getActiveTypicals();
-				if (re.size() > 0){ // node could be empty
+				if (re.size() > 0) { // node could be empty
 					fillCommandSpinner(outputCommandSpinner, re.get(pos), context);
-				}
-				else{
+				} else {
 					SoulissCommand[] strArray = new SoulissCommand[0];
 					ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<SoulissCommand>(context,
 							android.R.layout.simple_spinner_item, strArray);
@@ -230,7 +228,7 @@ public class ScenesDialogHelper {
 						}
 						// collega il comando alla scena
 						tull.getCommandDTO().setSceneId(targetScene.getId());
-						
+
 						if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getId() == -1) {// MASSIVE
 							SoulissTypical model = (SoulissTypical) outputTypicalSpinner.getSelectedItem();
 							if (model == null) {
@@ -288,14 +286,15 @@ public class ScenesDialogHelper {
 			for (SoulissTypical soulissTypical : strArray) {
 				soulissTypical.setCtx(ctx);
 			}
-			if (strArray.length == 0){//nodo vuoto
+			if (strArray.length == 0) {// nodo vuoto
 				SoulissTypical fake = new SoulissTypical(SoulissClient.getOpzioni());
 				fake.setName(ctx.getString(R.string.node_empty));
 				strArray = new SoulissTypical[1];
 				strArray[0] = fake;
 			}
 
-			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(ctx, android.R.layout.simple_spinner_item, strArray);
+			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(ctx,
+					android.R.layout.simple_spinner_item, strArray);
 
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			tgt.setAdapter(adapter);
@@ -351,27 +350,38 @@ public class ScenesDialogHelper {
 					for (final SoulissCommand soulissCommand : gino) {
 						SoulissCommandDTO dto = soulissCommand.getCommandDTO();
 						if (soulissCommand.getCommandDTO().getType() == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
-							UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), opt,
-									String.valueOf(dto.getCommand()));
-						} else{
-							String start = Long.toHexString(dto.getCommand());
-							String[] laCosa = splitStringEvery(start,2);
-							//String[] laCosa = start.split("(?<=\\G..)");
-							
+							String intero = Long.toHexString(dto.getCommand());
+							String[] laCosa =  splitStringEvery(intero, 2);
 							for (int i = 0; i < laCosa.length; i++) {
-								laCosa[i] = "0x"+laCosa[i];
+								laCosa[i] = "0x" + laCosa[i];
 							}
-									
+							//split the command if longer
+							UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), opt, laCosa);
+							
+							//UDPHelper.issueMassiveCommand(""+Constants.Souliss_T16, prefs,""+val, "" + r, ""+ g, "" + b);
+						} else {// COMANDO SINGOLO
+							String start = Long.toHexString(dto.getCommand());
+							String[] laCosa = splitStringEvery(start, 2);
+							// String[] laCosa = start.split("(?<=\\G..)");
+
+							for (int i = 0; i < laCosa.length; i++) {
+								laCosa[i] = "0x" + laCosa[i];
+							}
+
 							UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
 									String.valueOf(dto.getSlot()), opt, soulissCommand.getCommandDTO().getType(),
-									//pura magia
+									// pura magia della decode
 									laCosa);
 						}
 						preferencesActivity.runOnUiThread(new Runnable() {
 							public void run() {
 								if (soulissCommand.getCommandDTO().getType() != Constants.COMMAND_MASSIVE)
-									progressDialog.setMessage(preferencesActivity.getResources().getString(R.string.command_sent)+": " + soulissCommand.getCommandDTO().getInterval()
-											+ " Issued to " + soulissCommand.getParentTypical().getNiceName());
+									progressDialog.setMessage(preferencesActivity.getResources().getString(
+											R.string.command_sent)
+											+ ": "
+											+ soulissCommand.getCommandDTO().getInterval()
+											+ " Issued to "
+											+ soulissCommand.getParentTypical().getNiceName());
 								else
 									progressDialog.setMessage("Massive command Issued to typicals "
 											+ soulissCommand.getCommandDTO().getSlot());
@@ -409,18 +419,29 @@ public class ScenesDialogHelper {
 		}.start();
 
 	}
+
+	private static List<String> getParts(String string, int partitionSize) {
+        List<String> parts = new ArrayList<String>();
+        int len = string.length();
+        for (int i=0; i<len; i+=partitionSize)
+        {
+            parts.add(string.substring(i, Math.min(len, i + partitionSize)));
+        }
+        return parts;
+    }
+	
 	public static String[] splitStringEvery(String s, int interval) {
-	    int arrayLength = (int) Math.ceil(((s.length() / (double)interval)));
-	    String[] result = new String[arrayLength];
+		int arrayLength = (int) Math.ceil(((s.length() / (double) interval)));
+		String[] result = new String[arrayLength];
 
-	    int j = 0;
-	    int lastIndex = result.length - 1;
-	    for (int i = 0; i < lastIndex; i++) {
-	        result[i] = s.substring(j, j + interval);
-	        j += interval;
-	    } //Add the last bit
-	    result[lastIndex] = s.substring(j);
+		int j = 0;
+		int lastIndex = result.length - 1;
+		for (int i = 0; i < lastIndex; i++) {
+			result[i] = s.substring(j, j + interval);
+			j += interval;
+		} // Add the last bit
+		result[lastIndex] = s.substring(j);
 
-	    return result;
+		return result;
 	}
 }
