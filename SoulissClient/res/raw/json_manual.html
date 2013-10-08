@@ -98,10 +98,11 @@ body {
 		<a name="State_HTTP_Request"></a>State HTTP Request<a
 			href="#State_HTTP_Request" class="section_anchor"></a>
 	</h2>
+	
 	<p>
 		After the startup, the user interface or an external application shall
 		periodically request fresh data in order to show the proper state of
-		devices. Using an <strong>HTTP GET /status?all</strong> request only
+		devices. Using an <a href="/status?all"><strong>HTTP GET /status?all</strong></a> request only
 		the live data are passed to the user interface.
 	</p>
 
@@ -139,51 +140,7 @@ body {
 		A request for specific devices can be achieved using instead of <strong>?all</strong>
 		parameter the coordinates (id and slot) of the device as <strong>?id=n_id&amp;slot=n_slot</strong>.
 	</p>
-	<h2>
-		<a name="Graph_Data_HTTP_Request"></a>Graph Data HTTP Request<a
-			href="#Graph_Data_HTTP_Request" class="section_anchor"></a>
-	</h2>
-	<p>
-		An user interface can request a single shot stream of data to be
-		displayed on a graph chart using an <strong>HTTP GET
-			/graph?id=n_id&amp;slot=n_slot&amp;sdate=yyyymmdd&amp;edate=yyyymmdd</strong>,
-		the JSON server will return
-	</p>
-	<pre class="prettyprint">
-		<span class="pun">({”</span><span class="pln">stream</span><span
-			class="str">" : [{"</span><span class="pln">sdate</span><span
-			class="str">" : "</span><span class="pln">yyyymmdd</span><span
-			class="str">", "</span><span class="pln">engunit</span><span
-			class="str">" : "</span><span class="pun">°</span><span class="pln">C</span><span
-			class="str">", "</span><span class="pln">vals</span><span class="str">" : [{ "</span><span
-			class="pln">time</span><span class="str">" : "</span><span
-			class="pln">hh</span><span class="pun">:</span><span class="pln">mm</span><span
-			class="str">", "</span><span class="pln">val</span><span class="str">" : "</span><span
-			class="lit">16.3</span><span class="str">"},{ "</span><span
-			class="pln">time</span><span class="str">" : "</span><span
-			class="pln">hh</span><span class="pun">:</span><span class="pln">mm</span><span
-			class="str">", "</span><span class="pln">val</span><span class="str">" : "</span><span
-			class="lit">18</span><span class="pun">,</span><span class="lit">3</span><span
-			class="str">"},{ "</span><span class="pln">time</span><span
-			class="str">" : "</span><span class="pln">hh</span><span class="pun">:</span><span
-			class="pln">mm</span><span class="str">", "</span><span class="pln">val</span><span
-			class="str">" : "</span><span class="lit">21.8</span><span
-			class="str">"},{ "</span><span class="pln">time</span><span
-			class="str">" : "</span><span class="pln">hh</span><span class="pun">:</span><span
-			class="pln">mm</span><span class="str">", "</span><span class="pln">val</span><span
-			class="str">" : "</span><span class="lit">20.1</span><span
-			class="str">"},{ "</span><span class="pln">time</span><span
-			class="str">" : "</span><span class="pln">hh</span><span class="pun">:</span><span
-			class="pln">mm</span><span class="str">", "</span><span class="pln">val</span><span
-			class="str">" : "</span><span class="lit">20.1</span><span
-			class="str">"}]}]}) </span>
-	</pre>
-	<p>
-		If the Starting Date (sdate) and End Date (edate) hasn't the day
-		parameter <strong>sdate=yyyymm&amp;edate=yyyymm</strong> the data will
-		be the average over the months as per following JSON reply.
-	</p>
-
+	
 	<h2>
 		<a name="Send_Command"></a>Send Command<a href="#Send_Command"
 			class="section_anchor"></a>

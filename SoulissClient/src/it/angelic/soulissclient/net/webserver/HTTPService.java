@@ -9,14 +9,14 @@ import android.util.Log;
 
 public class HTTPService extends Service {
 
-	private WebServer server = null;
+	private Zozzariello server = null;
 	private final IBinder mBinder = new LocalBinder();
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
-		server = new WebServer(this);
+		server = new Zozzariello(this);
 		startWebServer();
 	}
 

@@ -29,12 +29,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-public class JSONStatusHandler implements HttpRequestHandler {
+public class JSONStructureHandler implements HttpRequestHandler {
 
 	private Context context = null;
 	private SoulissDBHelper db;
 
-	public JSONStatusHandler(Context context) {
+	public JSONStructureHandler(Context context) {
 		this.context = context;
 		db = new SoulissDBHelper(context);
 	}
@@ -70,7 +70,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 		response.setEntity(entity);
 	}
 	/**
-	 * Write the entire live data if target < 0
+	 * Write the entire network structure if target < 0
 	 * 
 	 * @param target
 	 * @return
@@ -92,12 +92,13 @@ public class JSONStatusHandler implements HttpRequestHandler {
 
 			ArrayList<SoulissTypical> tipici = soulissNode.getActiveTypicals();
 			for (SoulissTypical soulissTypical : tipici) {
-				typArr.put(StaticUtils.getJSONSoulissLiveData(soulissTypical));
+				typArr.put(StaticUtils.getJSONSoulissDevice(soulissTypical));
 			}
 
 			try {
 				object.put("slot", typArr);
 				object.put("hlt", soulissNode.getHealth());
+				object.put("ndesc", soulissNode.getNiceName());
 			} catch (JSONException e) {
 				Log.e(Constants.TAG, "Zozzariello ERROR:",e);
 			}
@@ -107,8 +108,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 			try {
 				glob.put("id", object);
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(Constants.TAG, "Zozzariello ERROR:",e);
 			}
 			nodesArr.put(glob);
 		}

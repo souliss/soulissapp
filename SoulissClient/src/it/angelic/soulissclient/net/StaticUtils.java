@@ -111,5 +111,17 @@ public class StaticUtils {
 		}
 		return objecttyp;
 	}
+	public static JSONObject getJSONSoulissLiveData(SoulissTypical soulissTypical) {
+		JSONObject objecttyp = new JSONObject();
+		try {
+			objecttyp.put("typ", Integer.toHexString(soulissTypical.getTypicalDTO().getTypical()));
+			objecttyp.put("val", soulissTypical.getOutput());
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return objecttyp;
+	}
 
 }

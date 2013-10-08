@@ -1,19 +1,25 @@
 package it.angelic.soulissclient.net.webserver;
 
+import it.angelic.soulissclient.helpers.Base64;
 import it.angelic.soulissclient.net.Constants;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.apache.http.HttpException;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthenticationException;
 import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.impl.DefaultHttpServerConnection;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.BasicHttpProcessor;
+import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpRequestHandlerRegistry;
 import org.apache.http.protocol.HttpService;
 import org.apache.http.protocol.ResponseConnControl;
@@ -26,11 +32,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class WebServer extends Thread {
+public class Zozzariello extends Thread {
 	private static final String SERVER_NAME = "Zozzariello";
 	private static final String ALL_PATTERN = "*";
 	private static final String PATTERN_MESSAGE = "/message*";
 	private static final String  PATTERN_STRUCTURE  = "/structure*";
+	private static final String  PATTERN_STATUS  = "/status*";
+	private static final String  PATTERN_FORCE  = "/force*";
 
 	private boolean isRunning = false;
 	private Context context = null;
@@ -65,7 +73,7 @@ public class WebServer extends Thread {
 	    }    
 	};
 */
-	public WebServer(Context context) {
+	public Zozzariello(Context context) {
 		super(SERVER_NAME);
 
 		this.setContext(context);
@@ -88,7 +96,8 @@ public class WebServer extends Thread {
 		registry = new HttpRequestHandlerRegistry();
 
 		registry.register(ALL_PATTERN, new HomePageHandler(context));
-		registry.register(PATTERN_STRUCTURE, new JSONStatusHandler(context));
+		registry.register(PATTERN_STRUCTURE, new JSONStructureHandler(context));
+		registry.register(PATTERN_STATUS, new JSONStatusHandler(context));
 		registry.register(PATTERN_MESSAGE, new MessageCommandHandler(context));
 
 		httpService.setHandlerResolver(registry);
@@ -155,6 +164,30 @@ public class WebServer extends Thread {
 
 	public int getServerPort() {
 		return serverPort;
+	}
+	protected static void doLogin(HttpRequest request, HttpResponse response, HttpContext httpContext, SharedPreferences pref)
+			throws AuthenticationException {
+		if (request.getHeaders("Authorization").length == 0) {
+
+			throw new AuthenticationException();
+		} else {
+			String auth = request.getHeaders("Authorization")[0].getValue();
+			if (!auth.startsWith("Basic "))
+				throw new AuthenticationException();
+			auth = auth.substring(6);
+			byte[] in = Base64.decode(auth, Base64.DEFAULT);
+			try {
+				String o = new String(in, "UTF-8");
+				if (o.compareTo(pref.getString("webUser", "") + ":" + pref.getString("webPass", "")) != 0)
+					throw new AuthenticationException();
+				// Login Success!!
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+				throw new AuthenticationException();
+			}
+			// byte[] in = {'u','s','e','r',':'};
+			byte[] out = Base64.encode(in, Base64.DEFAULT);
+		}
 	}
 
 }
