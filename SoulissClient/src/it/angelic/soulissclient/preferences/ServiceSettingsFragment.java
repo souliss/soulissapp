@@ -99,7 +99,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 			}
 
 		}
-		setHomeLocation.setSummary("Home location set to: " + (loc == null ? "" : loc) + " ("
+		setHomeLocation.setSummary(getString(R.string.opt_homepos_set)+": " + (loc == null ? "" : loc) + " ("
 				+ opzioni.getHomeLatitude() + " : " + opzioni.getHomeLongitude() + ")");
 	}
 }

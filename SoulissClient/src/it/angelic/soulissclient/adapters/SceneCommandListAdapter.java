@@ -96,13 +96,13 @@ public class SceneCommandListAdapter extends BaseAdapter {
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
 			SoulissTypical appoggio = holder.data.getParentTypical();
 			SoulissCommandDTO dto = holder.data.getCommandDTO();
-			StringBuilder info = new StringBuilder(context.getString(R.string.scene_send_command) + " "
+			StringBuilder info = new StringBuilder(context.getString(R.string.scene_send_command) + "\""
 					+ holder.data.toString());
-			info.append(context.getString(R.string.to));
+			info.append("\" "+context.getString(R.string.to));
 			// if (appoggio.getNiceName() != null &&
 			// "".compareTo(appoggio.getNiceName())!= 0)
-			info.append(" (" + context.getResources().getString(R.string.slot) + " " + dto.getSlot());
-			info.append(context.getString(R.string.on_node));
+			info.append(" " + appoggio.getNiceName() +" (" + context.getResources().getString(R.string.slot) + " " + dto.getSlot());
+			info.append(" - ");
 			if (appoggio.getParentNode().getNiceName() != null
 					&& "".compareTo(appoggio.getParentNode().getNiceName()) != 0)
 				info.append(appoggio.getParentNode().getNiceName());

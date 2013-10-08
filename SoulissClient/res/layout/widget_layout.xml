@@ -37,7 +37,8 @@
     
     <TextView 
         android:text="@string/node"
-        style="@style/CodeFontSmall"
+        style="@style/CodeFontMain"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
     	android:layout_height="@dimen/text_size"
     	android:layout_alignParentBottom="true"

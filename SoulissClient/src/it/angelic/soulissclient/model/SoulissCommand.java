@@ -1,12 +1,12 @@
 package it.angelic.soulissclient.model;
 
 import static junit.framework.Assert.assertEquals;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.db.SoulissCommandDTO;
+import it.angelic.soulissclient.model.typicals.Constants;
 
 import java.io.Serializable;
 
-import it.angelic.soulissclient.model.typicals.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
 import android.content.Context;
 
 public class SoulissCommand implements Serializable {
@@ -58,7 +58,7 @@ public class SoulissCommand implements Serializable {
 		short typical = parentTypical.getTypicalDTO().getTypical();
 		long command = commandDTO.getCommand();
 		int resId;
-		if (typical == Constants.Souliss_T11) {
+		 if (typical == Constants.Souliss_T11 || typical == Constants.Souliss_T18) {
 			if (command == Constants.Souliss_T1n_OnCmd)
 				resId = R.drawable.light_on;
 			else if (command == Constants.Souliss_T1n_OffCmd)
@@ -164,7 +164,14 @@ public class SoulissCommand implements Serializable {
 				resId = R.string.blue;
 			else
 				resId = R.string.Souliss_UndefinedCmd_desc;
-		} else if (typical == Constants.Souliss_T21)
+		}else if (typical == Constants.Souliss_T19) {
+			if (command == Constants.Souliss_T1n_OnCmd)
+				resId = R.string.TurnON;
+			else if (command == Constants.Souliss_T1n_OffCmd)
+				resId = R.string.TurnOFF;
+			else
+				resId = R.string.Souliss_UndefinedCmd_desc;
+		}  else if (typical == Constants.Souliss_T21)
 			if (command == Constants.Souliss_T2n_CloseCmd)
 				resId = R.string.Souliss_CloseCmd_desc;
 			else if (command == Constants.Souliss_T2n_OpenCmd)

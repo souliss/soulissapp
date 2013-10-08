@@ -48,5 +48,8 @@
     <string name="timer">Timer</string>
     <string name="is">is</string>
     <string name="equalizer">Equalizer</string>
+    <string name="meters">Meters</string>
+    <string name="service">Service</string>
+    <string name="position">Position</string>
 
 </resources>

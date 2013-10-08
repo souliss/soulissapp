@@ -151,7 +151,7 @@
     <string name="opt_dbinfo">Estado de la Base de Datos</string>
     <string name="opt_dbinfo_desc">%1$d Nodos Souliss están guardados en la Base de Datos, total %2$d dispositivos presentes.</string>
     <string name="opt_invalidAddress">¡¡Dirección no válida!!</string>
-    <string name="title_edittext_IP">Dirección local de Souliss</string>
+    <string name="title_edittext_IP">Dirección local de Souliss (mandatory)</string>
     <string name="summary_edittext_IP">Inserte la dirección IP del Nodo puente Souliss cuando use la red local</string>
     <string name="dialog_title_edittext_IP">Dirección IP</string>
     <string name="summary_edittext_IP_VPN">Inserte la dirección IP del Nodo puente Souliss cuando use VPN Android</string>
@@ -181,6 +181,8 @@
     <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
+    <string name="opt_Thold_desc">Distanza entro cui si viene considerati "in casa"</string>
+    <string name="opt_Thold">Soglia Posizione</string>
     <string name="opt_homepos_err">Error getting current position</string>
     <string name="opt_homepos_set">Home position set</string>
     <string name="opt_service">Servicio en segundo plan</string>
@@ -188,7 +190,7 @@
     <string name="opt_timeout_pubb_desc">Elija límite de tiempo de conexión cuando esté usando internet</string>
     <string name="opt_dialog_restored">Restaurados todos los diálogos</string>
     <string name="unknown_typical">Dispositivo desconocido</string>
-    <string name="opt_net_home">Home Network (mandatory)</string>
+    <string name="opt_net_home">Network</string>
     <string name="opt_net_remote">Remote Network (optional)</string>
     <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
 

@@ -41,6 +41,7 @@ public class SoulissWidget extends AppWidgetProvider {
 		SoulissDBHelper db = new SoulissDBHelper(context);
 		db.open();
 		final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
+		tgt.setCtx(context);
 		RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 		if (!name.equals(""))
 			updateViews.setTextViewText(R.id.button1, name);
@@ -63,14 +64,17 @@ public class SoulissWidget extends AppWidgetProvider {
 
 		appWidgetManager.updateAppWidget(appWidgetId, updateViews);
 
-		Toast.makeText(context, "forcedUpdate(), node " + String.valueOf(node), Toast.LENGTH_LONG).show();
+		// Toast.makeText(context, "forcedUpdate(), node " +
+		// String.valueOf(node), Toast.LENGTH_LONG).show();
 	}
 
 	private SharedPreferences customSharedPreference;
+	private SoulissPreferenceHelper opzioni;
 
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
 		customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
+		opzioni = new SoulissPreferenceHelper(context);
 		handler = new Handler();
 		super.onReceive(context, intent);
 		final AppWidgetManager awm = AppWidgetManager.getInstance(context);
@@ -109,24 +113,26 @@ public class SoulissWidget extends AppWidgetProvider {
 					db = new SoulissDBHelper(context);
 					db.open();
 					final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
+					tgt.setCtx(context);
 					final SoulissCommand cmdd = new SoulissCommand(context, tgt);
 					cmdd.getCommandDTO().setCommand(cmd);
-					UDPHelper.issueSoulissCommand(cmdd, prefs);
+					// UDPHelper.issueSoulissCommand(cmdd, prefs);
+					final String res = UDPHelper.issueSoulissCommand(cmdd, prefs);
 					handler.post(new Runnable() {
 						@Override
 						public void run() {
 							updateViews.setTextViewText(R.id.button1, cmdd.toString());
-							updateViews.setTextViewText(R.id.wid_info, (!name.equals("") ? name : tgt.getNiceName() )+" - "+tgt.getOutputDesc());
+							updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
 							// TODO edittext name
 							updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-
-							Toast.makeText(context,
-									"Command sent to node " + customSharedPreference.getInt(got + "_NODE", -1),
-									Toast.LENGTH_LONG).show();
+							UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
+							//Toast.makeText(context,
+								//	"Command sent to node " + customSharedPreference.getInt(got + "_NODE", -1),
+								//	Toast.LENGTH_LONG).show();
 
 						}
 					});
-					final String res = UDPHelper.issueSoulissCommand(cmdd, prefs);
+
 					handler.postDelayed(new Runnable() {
 
 						@Override
@@ -134,7 +140,7 @@ public class SoulissWidget extends AppWidgetProvider {
 							// TODO carica stato dal DB
 
 							updateViews.setTextViewText(R.id.button1, cmdd.toString());
-							updateViews.setTextViewText(R.id.wid_info, (!name.equals("") ? name : tgt.getNiceName() )+" - "+tgt.getOutputDesc());
+							updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
 							// edittext name
 							updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
 
@@ -142,7 +148,7 @@ public class SoulissWidget extends AppWidgetProvider {
 							// refresh asincrono x ripristino widget
 							awm.updateAppWidget(got, updateViews);
 						}
-					}, 5000);
+					}, 2000);
 
 				}
 

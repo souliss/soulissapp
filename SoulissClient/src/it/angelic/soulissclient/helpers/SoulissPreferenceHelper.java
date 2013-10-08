@@ -61,6 +61,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private float eqMed;
 	private float eqHigh;
 	private boolean webserverEnabled;
+	private int homeThold;
 
 	
 	public SoulissPreferenceHelper(Context contx) {
@@ -121,6 +122,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		PrefFont = prefs.getString("fontPref", "Futura.ttf");
 		remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "10000"));
 		dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
+		homeThold = prefs.getInt("distanceThold", 150);
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
 		webserverEnabled = prefs.getBoolean("webserverEnabled", false);
 		userIndex = prefs.getInt("userIndex", -1);
@@ -325,6 +327,9 @@ public class SoulissPreferenceHelper implements Serializable {
 
 	public int getDataServiceIntervalMsec() {
 		return dataServiceInterval * 60;
+	}
+	public int getHomeThresholdDistance(){
+		return homeThold;
 	}
 
 	public boolean isDataServiceEnabled() {

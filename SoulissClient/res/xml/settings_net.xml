@@ -25,7 +25,7 @@
             android:key="edittext_IP_pubb"
             android:summary="@string/summary_edittext_IP_pubb"
             android:title="@string/title_edittext_IP_pubb" />
-    </PreferenceCategory>  
+    </PreferenceCategory>
     <PreferenceCategory android:title="Device ID" >
         <EditTextPreference
             android:name="userindex"
@@ -40,11 +40,12 @@
             android:key="nodeindexIC"
             android:title="@string/opt_nodeindex" />
     </PreferenceCategory>
-
-    <Preference
-        android:name="credits"
-        android:key="credits"
-        android:summary="@string/opt_credits_desc"
-        android:title="@string/opt_credits" />
+    <PreferenceCategory android:title="@string/opt_credits" >
+        <Preference
+            android:name="credits"
+            android:key="credits"
+            android:summary="@string/opt_credits_desc"
+            android:title="@string/opt_credits" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

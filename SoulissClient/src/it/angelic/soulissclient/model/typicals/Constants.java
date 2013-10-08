@@ -118,10 +118,13 @@ public class Constants {
 	public static final short Souliss_T1n_BrightUp = 0x10; // Increase Light
 	public static final short Souliss_T1n_BrightDown = 0x20; // Decrease Light
 	public static final short Souliss_T1n_Flash = 0x21; // Flash Light
+
+	public static final short  Souliss_T1n_OnFeedback	=	0x23;		
+	public static final short Souliss_T1n_OffFeedback	=		0x24	;
 	
-	public static final long Souliss_T16_Red = 0x22FF; // Set a state
-	public static final long Souliss_T16_Green = 0x2201FF;
-	public static final long Souliss_T16_Blue = 0x220101FF;
+	public static final long Souliss_T16_Red = 0x22FF0000; // Set a state
+	public static final long Souliss_T16_Green = 0x2200FF00;
+	public static final long Souliss_T16_Blue = 0x220000FF;
 	public static final long Souliss_T18_Pulse = 0xA1;
 	/*
 	 * IR RGB Typical

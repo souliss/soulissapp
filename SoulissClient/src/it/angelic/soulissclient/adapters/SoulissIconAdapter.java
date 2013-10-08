@@ -1,12 +1,12 @@
 package it.angelic.soulissclient.adapters;
 
 import it.angelic.soulissclient.R;
+import us.feras.ecogallery.EcoGallery;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
 
 public class SoulissIconAdapter extends BaseAdapter {
@@ -96,9 +96,8 @@ public class SoulissIconAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
-
         imageView.setImageResource(mImageIds[position]);
-        imageView.setLayoutParams(new Gallery.LayoutParams(150, 100));
+        imageView.setLayoutParams(new EcoGallery.LayoutParams(250,250));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setBackgroundResource(mGalleryItemBackground);
 
