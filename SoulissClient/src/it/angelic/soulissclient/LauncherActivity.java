@@ -429,7 +429,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 	private void setWebServiceInfo() {
 		StringBuilder sb = new StringBuilder();
-		webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+		//webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 		/* SERVICE MANAGEMENT */
 		if (!opzioni.isWebserverEnabled()) {
 			if (mIsWebBound && mBoundWebService != null)
@@ -439,7 +439,9 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		} else {
 			webserviceInfo.setVisibility(View.VISIBLE);
 			if (mIsWebBound && mBoundWebService != null) {
-				sb.append( getString(R.string.webservice_enabled) +StaticUtils.getLocalIpAddress()+":"+ mBoundWebService.getPort());
+				sb.append(getString(R.string.webservice_enabled));
+				sb.append(StaticUtils.getLocalIpAddress()+":");
+				sb.append(mBoundWebService.getPort());
 				// PORT 8080 TODO
 				// sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
 				// +

@@ -99,6 +99,7 @@ public class Zozzariello extends Thread {
 		registry.register(PATTERN_STRUCTURE, new JSONStructureHandler(context));
 		registry.register(PATTERN_STATUS, new JSONStatusHandler(context));
 		registry.register(PATTERN_MESSAGE, new MessageCommandHandler(context));
+		registry.register(PATTERN_FORCE, new JSONForceHandler(context));
 
 		httpService.setHandlerResolver(registry);
 	}

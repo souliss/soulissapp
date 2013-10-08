@@ -122,6 +122,7 @@
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
+    <string name="webservice_enabled">Zozzariello <b>abilitato</b>, in ascolto su </string>
 
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>

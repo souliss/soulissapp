@@ -123,7 +123,7 @@
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
     <string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
-    <string name="webservice_enabled">Zozzariello <b>enabled</b> listening on port </string>
+    <string name="webservice_enabled">Zozzariello <b>enabled</b> listening on </string>
 
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
