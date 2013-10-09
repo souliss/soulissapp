@@ -321,7 +321,7 @@ public class NodeDetailFragment extends ListFragment {
 			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)
 				details = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer)
-				details = Typical4nFragment.newInstance(index, target);
+				details = T4nFragment.newInstance(index, target);
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);

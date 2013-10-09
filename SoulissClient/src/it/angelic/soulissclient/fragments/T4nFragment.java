@@ -51,7 +51,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
-public class Typical4nFragment extends SherlockFragment {
+public class T4nFragment extends SherlockFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -73,8 +73,8 @@ public class Typical4nFragment extends SherlockFragment {
 	private SoulissTypical41AntiTheft senseiMaster;
 	private List<SoulissTypical42AntiTheftPeer> sensei;
 
-	public static Typical4nFragment newInstance(int index, SoulissTypical content) {
-		Typical4nFragment f = new Typical4nFragment();
+	public static T4nFragment newInstance(int index, SoulissTypical content) {
+		T4nFragment f = new T4nFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
