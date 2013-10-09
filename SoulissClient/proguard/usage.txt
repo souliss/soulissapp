@@ -940,3 +940,41 @@ org.achartengine.util.MathHelper:
     35:37:private MathHelper()
     46:57:public static double[] minmax(java.util.List)
 org.achartengine.util.XYEntry
+us.feras.ecogallery.EcoGallery:
+    private static final java.lang.String TAG
+    private static final boolean localLOGV
+    private static final int SCROLL_TO_FLING_UNCERTAINTY_TIMEOUT
+    216:216:public boolean isBroken()
+us.feras.ecogallery.EcoGalleryAbsSpinner:
+    android.graphics.Interpolator mInterpolator
+    41:43:public EcoGalleryAbsSpinner(android.content.Context)
+    46:47:public EcoGalleryAbsSpinner(android.content.Context,android.util.AttributeSet)
+    266:269:public void setSelection(int,boolean)
+    288:295:void setSelectionInt(int,boolean)
+    abstract void layout(int,boolean)
+    1:1:static synthetic void access$2(us.feras.ecogallery.EcoGalleryAbsSpinner,android.view.View,boolean)
+us.feras.ecogallery.EcoGalleryAbsSpinner$RecycleBin:
+    461:468:android.view.View get(int)
+    473:473:android.view.View peek(int)
+    477:488:void clear()
+us.feras.ecogallery.EcoGalleryAdapterView:
+    public static final int ITEM_VIEW_TYPE_IGNORE
+    public static final int ITEM_VIEW_TYPE_HEADER_OR_FOOTER
+    static final int SYNC_SELECTED_POSITION
+    static final int SYNC_FIRST_POSITION
+    static final int SYNC_MAX_DURATION_MILLIS
+    public static final int INVALID_POSITION
+    public static final long INVALID_ROW_ID
+    195:196:public EcoGalleryAdapterView(android.content.Context)
+    199:200:public EcoGalleryAdapterView(android.content.Context,android.util.AttributeSet)
+    763:764:public java.lang.Object getItemAtPosition(int)
+us.feras.ecogallery.EcoGalleryAdapterView$AdapterDataSetObserver:
+    843:844:public void clearSavedState()
+us.feras.ecogallery.R:
+    9:9:public R()
+us.feras.ecogallery.R$attr:
+    10:10:public R$attr()
+us.feras.ecogallery.R$string
+us.feras.ecogallery.R$style
+us.feras.ecogallery.R$styleable:
+    28:28:public R$styleable()

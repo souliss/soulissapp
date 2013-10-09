@@ -50,7 +50,7 @@ public class SoulissTypical53HumiditySensor extends SoulissTypical {
 		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
 		//ora ho i due bytes, li converto
 		int shifted = miofratello << 8;
-		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
+		Log.d(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
 
 	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
