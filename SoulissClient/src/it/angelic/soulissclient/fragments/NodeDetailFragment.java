@@ -63,7 +63,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -82,7 +81,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class NodeDetailFragment extends ListFragment {
+public class NodeDetailFragment extends AbstractTypicalFragment {
 	private static final String TAG = "SOULISSCLIENT - Node detail";
 	private SoulissNode collected;
 	private SoulissPreferenceHelper opzioni;
@@ -97,13 +96,7 @@ public class NodeDetailFragment extends ListFragment {
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
 
-	public int getShownIndex() {
-		if (getArguments() != null)
-			return getArguments().getInt("index", 0);
-		else
-			return 0;
-	}
-
+	
 	public static NodeDetailFragment newInstance(int index, SoulissNode content) {
 		NodeDetailFragment f = new NodeDetailFragment();
 

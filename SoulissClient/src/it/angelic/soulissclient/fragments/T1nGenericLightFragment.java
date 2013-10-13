@@ -345,12 +345,12 @@ public class T1nGenericLightFragment extends SherlockFragment {
 				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
 				collected = coll.getTypical(collected.getTypicalDTO().getSlot());
 				if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil)
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_on));
+					buttPlus.setBackgroundResource(R.drawable.bulb_on);
 				else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil)
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_off));
+					buttPlus.setBackgroundResource(R.drawable.bulb_off);
 				else if (collected.getTypicalDTO().getOutput() >= Souliss_T1n_Timed) {
 					timer.setProgress(collected.getTypicalDTO().getOutput());
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.bulb_on));
+					buttPlus.setBackgroundResource(R.drawable.bulb_on);
 					timerInfo.setText("Cycles to shutoff: " + collected.getTypicalDTO().getOutput());
 				} else {
 					Log.w(Constants.TAG, "Unknown status");
