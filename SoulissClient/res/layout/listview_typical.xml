@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
 
     <RelativeLayout
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-                android:layout_marginLeft="6dip"
+        android:layout_marginLeft="6dip"
         android:layout_marginRight="6dip"
         android:layout_marginTop="4dip"
         android:background="@drawable/list_rect_green"
         android:focusable="false" >
+
+        <ImageView
+            android:id="@+id/imageButtonExpand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/abs__ic_menu_moreoverflow_normal_holo_dark" />
 
         <ImageView
             android:id="@+id/node_icon"
@@ -30,6 +37,7 @@
             android:layout_toRightOf="@id/node_icon"
             android:ellipsize="end"
             android:lines="1"
+            android:layout_marginRight="16dip"
             android:textIsSelectable="false" >
         </TextView>
 
@@ -59,19 +67,21 @@
             android:textIsSelectable="false" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:id="@+id/linearLayoutButtons"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewStatus"
-            android:layout_toRightOf="@id/node_icon" >
+            android:layout_toRightOf="@id/node_icon"
+            android:orientation="horizontal" >
         </LinearLayout>
     </RelativeLayout>
-<View
+
+    <View
         android:layout_width="fill_parent"
         android:layout_height="4dp"
         android:layout_below="@id/LinearLayout01"
         android:layout_marginLeft="9dip"
         android:layout_marginRight="9dip"
         android:background="@drawable/shadow_left" />
+
 </RelativeLayout>

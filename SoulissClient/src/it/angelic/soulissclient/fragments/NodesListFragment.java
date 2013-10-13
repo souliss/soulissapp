@@ -130,6 +130,8 @@ public class NodesListFragment extends ListFragment {
 			final List<SoulissNode> goer = datasource.getAllNodes();
 			nodiArray = new SoulissNode[goer.size()];
 			nodiArray = goer.toArray(nodiArray);
+			
+			
 
 			getListView().setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
