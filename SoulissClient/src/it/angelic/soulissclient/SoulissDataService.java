@@ -76,7 +76,7 @@ public class SoulissDataService extends Service implements LocationListener {
 		lastupd.setTimeInMillis(opts.getServiceLastrun());
 		provider = locationManager.getBestProvider(crit, false);
 		db = new SoulissDBHelper(this);
-		requestBackedOffLocationUpdates();
+		
 
 		nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -99,6 +99,7 @@ public class SoulissDataService extends Service implements LocationListener {
 		Calendar now = Calendar.getInstance();
 		Calendar next = Calendar.getInstance();
 		next.setTimeInMillis(opts.getNextServiceRun());
+		requestBackedOffLocationUpdates();
 		// uir = opts.getDataServiceInterval();
 		Log.i(TAG, "Service onStartCommand()");
 		// delle opzioni
@@ -380,7 +381,6 @@ public class SoulissDataService extends Service implements LocationListener {
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		Resources res = ctx.getResources();
-
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
 		builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
@@ -420,8 +420,8 @@ public class SoulissDataService extends Service implements LocationListener {
 				Log.w(TAG, "Resetting prevdistance =>" + homeDist);
 				opts.setPrevDistance(homeDist);
 			} else {
-				// float homeDistPrev = opts.getPrevDistance();
-				// processPositionalPrograms(homeDistPrev);
+				float homeDistPrev = opts.getPrevDistance();
+				processPositionalPrograms(homeDistPrev);
 			}
 
 		} catch (Exception e) {// home note set
@@ -442,8 +442,9 @@ public class SoulissDataService extends Service implements LocationListener {
 	 */
 	private void processPositionalPrograms(float homeDistPrev) {
 		float distPrevCache = opts.getPrevDistance();
-		if (homeDistPrev > (opts.getHomeThresholdDistance() - Constants.POSITION_DEADZONE_METERS)
-				&& homeDist < (opts.getHomeThresholdDistance() - Constants.POSITION_DEADZONE_METERS)) {
+		Log.d(TAG, "process positional programs, homedistanceprev=" + homeDistPrev+" homedist now is="+homeDist);
+		if (homeDistPrev > (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance()/10)
+				&& homeDist < (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance()/10)) {
 			db.open();
 			LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
 			Log.i(TAG, "activating positional programs: " + unexecuted.size());
@@ -467,8 +468,8 @@ public class SoulissDataService extends Service implements LocationListener {
 				}
 			}
 			opts.setPrevDistance(homeDist);
-		} else if (homeDistPrev < (opts.getHomeThresholdDistance() + Constants.POSITION_DEADZONE_METERS)
-				&& homeDist > (opts.getHomeThresholdDistance() + Constants.POSITION_DEADZONE_METERS)) {
+		} else if (homeDistPrev < (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance()/10)
+				&& homeDist > (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance()/10)) {
 			db.open();
 			LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
 			Log.i(TAG, "activating positional programs: " + unexecuted.size());
@@ -491,20 +492,20 @@ public class SoulissDataService extends Service implements LocationListener {
 					}).start();
 				}
 			}
-			opts.setPrevDistance(homeDist);
 		} else {// gestione BACKOFF sse e` cambiata la fascia
-			if ((homeDist > 25000 && distPrevCache <= 25000) || (homeDist < 25000 && distPrevCache >= 25000)) {
-				Log.w(TAG, "FASCIA 25" + homeDist);
+			if ((homeDist > 25000 && distPrevCache <= 25000) || (homeDist < 25000 && homeDist > 5000 && distPrevCache >= 25000)) {
+				Log.w(TAG, "FASCIA 25 " + homeDist);
 				requestBackedOffLocationUpdates();
-			} else if ((homeDist > 5000 && distPrevCache <= 5000)||(homeDist < 5000 && distPrevCache >= 5000)) {
-				Log.w(TAG, "FASCIA 5" + homeDist);
+			} else if ((homeDist > 5000 && distPrevCache <= 5000)||(homeDist < 5000 && homeDist > 2000 && distPrevCache >= 5000)) {
+				Log.w(TAG, "FASCIA 5 " + homeDist);
 				requestBackedOffLocationUpdates();
 			} else if ((homeDist > 2000 && distPrevCache <= 2000)||(homeDist < 2000 && distPrevCache >= 2000)) {
-				Log.w(TAG, "FASCIA 2" + homeDist);
+				Log.w(TAG, "FASCIA 2 " + homeDist);
 				requestBackedOffLocationUpdates();
 			} 
 		}
-		// db.close();
+		//abbiamo processato, e` ora di resettare il prev
+		opts.setPrevDistance(homeDist);
 	}
 	/**
 	 * Rischedula le richieste posizionali a intervali basati su fascie distanza
@@ -512,10 +513,6 @@ public class SoulissDataService extends Service implements LocationListener {
 	 */
 	private void requestBackedOffLocationUpdates() {
 		try {
-			// locationManager.requestLocationUpdates(provider,
-			// Constants.POSITION_UPDATE_INTERVAL,
-			// Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
-
 			Log.w(TAG, "requesting updates at meters " + homeDist);
 			locationManager.removeUpdates(SoulissDataService.this);
 			if (homeDist > 25000) {
