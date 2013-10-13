@@ -28,7 +28,7 @@ public class NodesListActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
-		opzioni.reload();
+		opzioni.initializePrefs();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else
