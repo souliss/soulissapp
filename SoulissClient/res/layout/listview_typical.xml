@@ -7,7 +7,9 @@
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="6dip"
+                android:layout_marginLeft="6dip"
+        android:layout_marginRight="6dip"
+        android:layout_marginTop="4dip"
         android:background="@drawable/list_rect_green"
         android:focusable="false" >
 
@@ -65,5 +67,11 @@
             android:layout_toRightOf="@id/node_icon" >
         </LinearLayout>
     </RelativeLayout>
-
+<View
+        android:layout_width="fill_parent"
+        android:layout_height="4dp"
+        android:layout_below="@id/LinearLayout01"
+        android:layout_marginLeft="9dip"
+        android:layout_marginRight="9dip"
+        android:background="@drawable/shadow_left" />
 </RelativeLayout>
