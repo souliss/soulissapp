@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.net;
 
-import static junit.framework.Assert.assertEquals;
 import static it.angelic.soulissclient.Constants.TAG;
+import static junit.framework.Assert.assertEquals;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -561,7 +561,7 @@ public class UDPHelper {
 
 		for (String number : cmd) {
 			// che schifo
-			int merdata = Integer.parseInt(number);
+			int merdata = Integer.decode(number);
 			if (merdata > 255)
 				Log.w(Constants.TAG, "Overflow with command " + cmd);
 			frame.add((byte) merdata);

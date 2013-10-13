@@ -20,6 +20,7 @@ import android.util.Log;
  */
 public class WatchDogEventReceiver extends BroadcastReceiver {
 
+
 	@Override
 	public void onReceive(final Context ctx, final Intent intent) {
 		Log.d(Constants.TAG + ":WatchDog", "WatchDog.onReceive() called, looking for Souliss Dataservice");

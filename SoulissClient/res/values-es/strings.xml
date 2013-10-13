@@ -154,8 +154,6 @@
     <string name="title_edittext_IP">Dirección local de Souliss (mandatory)</string>
     <string name="summary_edittext_IP">Inserte la dirección IP del Nodo puente Souliss cuando use la red local</string>
     <string name="dialog_title_edittext_IP">Dirección IP</string>
-    <string name="summary_edittext_IP_VPN">Inserte la dirección IP del Nodo puente Souliss cuando use VPN Android</string>
-    <string name="dialog_title_edittext_IP_VPN">Dirección IP VPN</string>
     <string name="summary_edittext_IP_pubb">Insertar dirección pública Souliss, para acceder desde fuera de casa. Puede usar DNS dinámica (DDNS) y redireccionamiento de puerto para acceder a casa fácilmente</string>
     <string name="title_edittext_IP_pubb">Dirección pública de Souliss</string>
     <string name="opt_fontsizedesc">Elija el tamaño de letra</string>

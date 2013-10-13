@@ -75,6 +75,7 @@
     <string name="scene_del_command">Elimina comando</string>
     <string name="scene_send_command">Invia Comando</string>
     <string name="scene_cmd_order">Ordine esecuzione:</string>
+    <string name="scene_cmd_massive">Comando Massivo</string>
     <string name="scene_subtitle">Scenario formato da %1$d comandi</string>
 
     <!-- ADD PROGRAMS_SECTION -->
@@ -214,6 +215,9 @@
     <string name="Souliss_T14_desc">Pulse Digital Output</string>
     <string name="Souliss_T16_desc">RGB LED Strip</string>
     <string name="Souliss_T18_desc">ON/OFF Digitale</string>
+    <string name="Souliss_T19_desc">Luce analogica</string>
+    <string name="Souliss_T19_received">Intensità attuale:</string>
+    <string name="Souliss_T19_set">Intensità impostata:</string>
     <string name="Souliss_UndefinedCmd_desc">Non definito</string>
     <string name="Souliss_T21_desc">Dispositivo motorizzato (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizzato</string>

@@ -59,7 +59,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
 		//ora ho i due bytes, li converto
 		int shifted = miofratello << 8;
-		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
+		Log.d(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
 
 		float ret = HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
@@ -90,7 +90,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius() + "°"));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius() + "°C"));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

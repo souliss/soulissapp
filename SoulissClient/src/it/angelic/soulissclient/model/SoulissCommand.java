@@ -115,7 +115,8 @@ public class SoulissCommand implements Serializable {
 			typical = parentTypical.getTypicalDTO().getTypical();
 		long command = commandDTO.getCommand();
 		int resId;
-		if (typical == Constants.Souliss_T11) {
+		if (typical == Constants.Souliss_T11 || typical == Constants.Souliss_T12 || typical == Constants.Souliss_T13 ||
+		typical == Constants.Souliss_T18|| typical == Constants.Souliss_T19) {
 			if (command == Constants.Souliss_T1n_OnCmd)
 				resId = R.string.TurnON;
 			else if (command == Constants.Souliss_T1n_OffCmd)
@@ -124,26 +125,8 @@ public class SoulissCommand implements Serializable {
 				resId = R.string.Souliss_ResetCmd_desc;
 			else if (command == Constants.Souliss_T1n_ToogleCmd)
 				resId = R.string.Souliss_ToggleCmd_desc;
-			else
-				resId = R.string.Souliss_UndefinedCmd_desc;
-		} else if (typical == Constants.Souliss_T12) {
-			if (command == Constants.Souliss_T1n_OnCmd)
-				resId = R.string.TurnON;
-			else if (command == Constants.Souliss_T1n_OffCmd)
-				resId = R.string.TurnOFF;
-			else if (command == Constants.Souliss_T1n_RstCmd)
-				resId = R.string.Souliss_ResetCmd_desc;
 			else if (command == Constants.Souliss_T1n_AutoCmd)
 				resId = R.string.Souliss_AutoCmd_desc;
-			else if (command == Constants.Souliss_T1n_ToogleCmd)
-				resId = R.string.Souliss_ToggleCmd_desc;
-			else
-				resId = R.string.Souliss_UndefinedCmd_desc;
-		} else if (typical == Constants.Souliss_T13) {
-			if (command == Constants.Souliss_T1n_OnCmd)
-				resId = R.string.TurnON;
-			else if (command == Constants.Souliss_T1n_OffCmd)
-				resId = R.string.TurnOFF;
 			else
 				resId = R.string.Souliss_UndefinedCmd_desc;
 		} else if (typical == Constants.Souliss_T14) {
@@ -151,11 +134,13 @@ public class SoulissCommand implements Serializable {
 				resId = R.string.Souliss_OpenCmd_desc;
 			else
 				resId = R.string.Souliss_UndefinedCmd_desc;
-		} else if (typical == Constants.Souliss_T16) {
+		} else if (typical == Constants.Souliss_T16) {//RGB
 			if (command == Constants.Souliss_T1n_OnCmd)
 				resId = R.string.TurnON;
 			else if (command == Constants.Souliss_T1n_OffCmd)
 				resId = R.string.TurnOFF;
+			else if (command == Constants.Souliss_T1n_ToogleCmd)
+				resId = R.string.toggle;
 			else if (command == Constants.Souliss_T16_Red)
 				resId = R.string.red;
 			else if (command == Constants.Souliss_T16_Green)
@@ -164,14 +149,7 @@ public class SoulissCommand implements Serializable {
 				resId = R.string.blue;
 			else
 				resId = R.string.Souliss_UndefinedCmd_desc;
-		}else if (typical == Constants.Souliss_T19) {
-			if (command == Constants.Souliss_T1n_OnCmd)
-				resId = R.string.TurnON;
-			else if (command == Constants.Souliss_T1n_OffCmd)
-				resId = R.string.TurnOFF;
-			else
-				resId = R.string.Souliss_UndefinedCmd_desc;
-		}  else if (typical == Constants.Souliss_T21)
+		} else if (typical == Constants.Souliss_T21)
 			if (command == Constants.Souliss_T2n_CloseCmd)
 				resId = R.string.Souliss_CloseCmd_desc;
 			else if (command == Constants.Souliss_T2n_OpenCmd)

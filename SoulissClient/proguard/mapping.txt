@@ -6565,7 +6565,6 @@ it.angelic.soulissclient.Constants -> it.angelic.soulissclient.Constants:
     long POSITION_UPDATE_INTERVAL -> POSITION_UPDATE_INTERVAL
     long POSITION_UPDATE_MIN_DIST -> POSITION_UPDATE_MIN_DIST
     int GUI_UPDATE_INTERVAL -> GUI_UPDATE_INTERVAL
-    float POSITION_AWAY_THRESHOLD -> POSITION_AWAY_THRESHOLD
     int COMMAND_TIMED -> COMMAND_TIMED
     int COMMAND_COMEBACK_CODE -> COMMAND_COMEBACK_CODE
     int COMMAND_GOAWAY_CODE -> COMMAND_GOAWAY_CODE
@@ -6578,6 +6577,7 @@ it.angelic.soulissclient.Constants -> it.angelic.soulissclient.Constants:
     java.lang.String[] ROM -> ROM
     int MAX -> MAX
     int[][] DIGITS -> DIGITS
+    int POSITION_DEADZONE_METERS -> POSITION_DEADZONE_METERS
     java.lang.String getTimeAgo(java.util.Calendar) -> getTimeAgo
     java.lang.String getScaledTime(long) -> getScaledTime
     java.lang.String int2roman(int) -> int2roman
@@ -6953,10 +6953,12 @@ it.angelic.soulissclient.R$attr -> it.angelic.soulissclient.R$attr:
     int actionSpinnerItemStyle -> actionSpinnerItemStyle
     int activatedBackgroundIndicator -> activatedBackgroundIndicator
     int activityChooserViewStyle -> activityChooserViewStyle
+    int animationDuration -> animationDuration
     int background -> background
     int backgroundSplit -> backgroundSplit
     int backgroundStacked -> backgroundStacked
     int buttonStyleSmall -> buttonStyleSmall
+    int customAbsSpinnerStyle -> customAbsSpinnerStyle
     int customNavigationLayout -> customNavigationLayout
     int displayOptions -> displayOptions
     int divider -> divider
@@ -6964,7 +6966,10 @@ it.angelic.soulissclient.R$attr -> it.angelic.soulissclient.R$attr:
     int dropDownHintAppearance -> dropDownHintAppearance
     int dropDownListViewStyle -> dropDownListViewStyle
     int dropdownListPreferredItemHeight -> dropdownListPreferredItemHeight
+    int ecoGalleryStyle -> ecoGalleryStyle
+    int entries -> entries
     int expandActivityOverflowButtonDrawable -> expandActivityOverflowButtonDrawable
+    int gravity -> gravity
     int headerBackground -> headerBackground
     int height -> height
     int homeAsUpIndicator -> homeAsUpIndicator
@@ -7001,6 +7006,7 @@ it.angelic.soulissclient.R$attr -> it.angelic.soulissclient.R$attr:
     int searchViewTextFieldRight -> searchViewTextFieldRight
     int searchViewVoiceIcon -> searchViewVoiceIcon
     int selectableItemBackground -> selectableItemBackground
+    int spacing -> spacing
     int spinnerDropDownItemStyle -> spinnerDropDownItemStyle
     int spinnerItemStyle -> spinnerItemStyle
     int subtitle -> subtitle
@@ -7017,6 +7023,7 @@ it.angelic.soulissclient.R$attr -> it.angelic.soulissclient.R$attr:
     int textColorSearchUrl -> textColorSearchUrl
     int title -> title
     int titleTextStyle -> titleTextStyle
+    int unselectedAlpha -> unselectedAlpha
     int verticalDivider -> verticalDivider
     int windowActionBar -> windowActionBar
     int windowActionBarOverlay -> windowActionBarOverlay
@@ -7784,6 +7791,7 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int fan -> fan
     int green -> green
     int health -> health
+    int hello_world -> hello_world
     int historyof -> historyof
     int homedist -> homedist
     int homewarn -> homewarn
@@ -7806,8 +7814,10 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int menu_exit -> menu_exit
     int menu_options -> menu_options
     int menu_rename -> menu_rename
+    int menu_settings -> menu_settings
     int menu_test -> menu_test
     int menu_test_udp -> menu_test_udp
+    int meters -> meters
     int minus -> minus
     int mode -> mode
     int monthly -> monthly
@@ -7822,6 +7832,8 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int notconfigured -> notconfigured
     int on_node -> on_node
     int open -> open
+    int opt_Thold -> opt_Thold
+    int opt_Thold_desc -> opt_Thold_desc
     int opt_animfx -> opt_animfx
     int opt_animfx_desc -> opt_animfx_desc
     int opt_checkconnection -> opt_checkconnection
@@ -7876,6 +7888,7 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int ping -> ping
     int plus -> plus
     int poll -> poll
+    int position -> position
     int positionfrom -> positionfrom
     int power -> power
     int proceed -> proceed
@@ -7900,6 +7913,7 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int scene -> scene
     int scene_add_command -> scene_add_command
     int scene_add_command_to -> scene_add_command_to
+    int scene_cmd_massive -> scene_cmd_massive
     int scene_cmd_order -> scene_cmd_order
     int scene_commands -> scene_commands
     int scene_del_command -> scene_del_command
@@ -7916,6 +7930,7 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int scenes_rename -> scenes_rename
     int scenes_title -> scenes_title
     int sensors -> sensors
+    int service -> service
     int service_disabled -> service_disabled
     int service_lastexec -> service_lastexec
     int slot -> slot
@@ -7937,6 +7952,7 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
     int test_typ -> test_typ
     int test_typ_title -> test_typ_title
     int timer -> timer
+    int title_activity_main -> title_activity_main
     int title_edittext_IP -> title_edittext_IP
     int title_edittext_IP_pubb -> title_edittext_IP_pubb
     int to -> to
@@ -7954,6 +7970,7 @@ it.angelic.soulissclient.R$string -> it.angelic.soulissclient.R$string:
 it.angelic.soulissclient.R$style -> it.angelic.soulissclient.R$style:
     int AboutDialog -> AboutDialog
     int AboutDialogLight -> AboutDialogLight
+    int AppTheme -> AppTheme
     int ButtonText -> ButtonText
     int CodeFontMain -> CodeFontMain
     int CodeFontSmall -> CodeFontSmall
@@ -8056,6 +8073,13 @@ it.angelic.soulissclient.R$style -> it.angelic.soulissclient.R$style:
     int darkListView -> darkListView
     int lightListView -> lightListView
 it.angelic.soulissclient.R$styleable -> it.angelic.soulissclient.R$styleable:
+    int[] CustomAbsSpinner -> CustomAbsSpinner
+    int CustomAbsSpinner_entries -> CustomAbsSpinner_entries
+    int[] EcoGallery -> EcoGallery
+    int EcoGallery_animationDuration -> EcoGallery_animationDuration
+    int EcoGallery_gravity -> EcoGallery_gravity
+    int EcoGallery_spacing -> EcoGallery_spacing
+    int EcoGallery_unselectedAlpha -> EcoGallery_unselectedAlpha
     int[] IconGallery -> IconGallery
     int IconGallery_android_galleryItemBackground -> IconGallery_android_galleryItemBackground
     int[] SherlockActionBar -> SherlockActionBar
@@ -8380,21 +8404,21 @@ it.angelic.soulissclient.SoulissDataService -> it.angelic.soulissclient.SoulissD
     void onProviderEnabled(java.lang.String) -> onProviderEnabled
     void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
     void onLocationChanged(android.location.Location) -> onLocationChanged
+    void processPositionalPrograms(float) -> processPositionalPrograms
+    void requestBackedOffLocationUpdates() -> requestBackedOffLocationUpdates
     it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$0(it.angelic.soulissclient.SoulissDataService) -> access$0
     void access$1(it.angelic.soulissclient.SoulissDataService,it.angelic.soulissclient.helpers.SoulissPreferenceHelper) -> access$1
     void access$2(it.angelic.soulissclient.SoulissDataService,java.lang.String) -> access$2
     java.lang.String access$3(it.angelic.soulissclient.SoulissDataService) -> access$3
     float access$4(it.angelic.soulissclient.SoulissDataService) -> access$4
-    it.angelic.soulissclient.db.SoulissDBHelper access$5(it.angelic.soulissclient.SoulissDataService) -> access$5
-    android.os.Handler access$6(it.angelic.soulissclient.SoulissDataService) -> access$6
-    java.lang.Runnable access$7(it.angelic.soulissclient.SoulissDataService) -> access$7
-    void access$8(it.angelic.soulissclient.SoulissDataService,java.util.Map) -> access$8
-    android.location.LocationManager access$9(it.angelic.soulissclient.SoulissDataService) -> access$9
-    java.lang.String access$10(it.angelic.soulissclient.SoulissDataService) -> access$10
+    void access$5(it.angelic.soulissclient.SoulissDataService,float) -> access$5
+    it.angelic.soulissclient.db.SoulissDBHelper access$6(it.angelic.soulissclient.SoulissDataService) -> access$6
+    android.os.Handler access$7(it.angelic.soulissclient.SoulissDataService) -> access$7
+    java.lang.Runnable access$8(it.angelic.soulissclient.SoulissDataService) -> access$8
+    void access$9(it.angelic.soulissclient.SoulissDataService,java.util.Map) -> access$9
 it.angelic.soulissclient.SoulissDataService$1 -> it.angelic.soulissclient.SoulissDataService$1:
     it.angelic.soulissclient.SoulissDataService this$0 -> this$0
     void run() -> run
-    void processPositionalPrograms(float) -> processPositionalPrograms
     it.angelic.soulissclient.SoulissDataService access$0(it.angelic.soulissclient.SoulissDataService$1) -> access$0
 it.angelic.soulissclient.SoulissDataService$1$1 -> it.angelic.soulissclient.SoulissDataService$1$1:
     it.angelic.soulissclient.SoulissDataService$1 this$1 -> this$1
@@ -8408,12 +8432,12 @@ it.angelic.soulissclient.SoulissDataService$1$2$1 -> it.angelic.soulissclient.So
     it.angelic.soulissclient.SoulissDataService$1$2 this$2 -> this$2
     byte val$nodesNum -> val$nodesNum
     void run() -> run
-it.angelic.soulissclient.SoulissDataService$1$3 -> it.angelic.soulissclient.SoulissDataService$1$3:
-    it.angelic.soulissclient.SoulissDataService$1 this$1 -> this$1
+it.angelic.soulissclient.SoulissDataService$2 -> it.angelic.soulissclient.SoulissDataService$2:
+    it.angelic.soulissclient.SoulissDataService this$0 -> this$0
     it.angelic.soulissclient.model.SoulissCommand val$cmd -> val$cmd
     void run() -> run
-it.angelic.soulissclient.SoulissDataService$1$4 -> it.angelic.soulissclient.SoulissDataService$1$4:
-    it.angelic.soulissclient.SoulissDataService$1 this$1 -> this$1
+it.angelic.soulissclient.SoulissDataService$3 -> it.angelic.soulissclient.SoulissDataService$3:
+    it.angelic.soulissclient.SoulissDataService this$0 -> this$0
     it.angelic.soulissclient.model.SoulissCommand val$cmd -> val$cmd
     void run() -> run
 it.angelic.soulissclient.SoulissDataService$LocalBinder -> it.angelic.soulissclient.SoulissDataService$LocalBinder:
@@ -8423,11 +8447,12 @@ it.angelic.soulissclient.SoulissWidget -> it.angelic.soulissclient.SoulissWidget
     java.lang.String TAG -> TAG
     android.os.Handler handler -> handler
     android.content.SharedPreferences customSharedPreference -> customSharedPreference
+    it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni -> opzioni
     void forcedUpdate(android.content.Context,android.appwidget.AppWidgetManager,int) -> forcedUpdate
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
     void onUpdate(android.content.Context,android.appwidget.AppWidgetManager,int[]) -> onUpdate
     android.os.Handler access$0(it.angelic.soulissclient.SoulissWidget) -> access$0
-    android.content.SharedPreferences access$1(it.angelic.soulissclient.SoulissWidget) -> access$1
+    it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$1(it.angelic.soulissclient.SoulissWidget) -> access$1
 it.angelic.soulissclient.SoulissWidget$1 -> it.angelic.soulissclient.SoulissWidget$1:
     it.angelic.soulissclient.db.SoulissDBHelper db -> db
     it.angelic.soulissclient.SoulissWidget this$0 -> this$0
@@ -8436,25 +8461,20 @@ it.angelic.soulissclient.SoulissWidget$1 -> it.angelic.soulissclient.SoulissWidg
     int val$slot -> val$slot
     long val$cmd -> val$cmd
     android.widget.RemoteViews val$updateViews -> val$updateViews
-    java.lang.String val$name -> val$name
-    int val$got -> val$got
     android.appwidget.AppWidgetManager val$awm -> val$awm
+    int val$got -> val$got
     void run() -> run
     it.angelic.soulissclient.SoulissWidget access$0(it.angelic.soulissclient.SoulissWidget$1) -> access$0
 it.angelic.soulissclient.SoulissWidget$1$1 -> it.angelic.soulissclient.SoulissWidget$1$1:
     it.angelic.soulissclient.SoulissWidget$1 this$1 -> this$1
     android.widget.RemoteViews val$updateViews -> val$updateViews
     it.angelic.soulissclient.model.SoulissCommand val$cmdd -> val$cmdd
-    java.lang.String val$name -> val$name
     it.angelic.soulissclient.model.SoulissTypical val$tgt -> val$tgt
-    android.content.Context val$context -> val$context
-    int val$got -> val$got
     void run() -> run
 it.angelic.soulissclient.SoulissWidget$1$2 -> it.angelic.soulissclient.SoulissWidget$1$2:
     it.angelic.soulissclient.SoulissWidget$1 this$1 -> this$1
     android.widget.RemoteViews val$updateViews -> val$updateViews
     it.angelic.soulissclient.model.SoulissCommand val$cmdd -> val$cmdd
-    java.lang.String val$name -> val$name
     it.angelic.soulissclient.model.SoulissTypical val$tgt -> val$tgt
     android.content.Context val$context -> val$context
     java.lang.String val$res -> val$res
@@ -9273,7 +9293,7 @@ it.angelic.soulissclient.fragments.T1nGenericLightFragment$6 -> it.angelic.souli
     void run() -> run
 it.angelic.soulissclient.fragments.T1nGenericLightFragment$OnColorChangedListener -> it.angelic.soulissclient.fragments.T1nGenericLightFragment$OnColorChangedListener:
     void colorChanged(int) -> colorChanged
-it.angelic.soulissclient.fragments.Typical4nFragment -> it.angelic.soulissclient.fragments.Typical4nFragment:
+it.angelic.soulissclient.fragments.T4nFragment -> it.angelic.soulissclient.fragments.T4nFragment:
     it.angelic.soulissclient.db.SoulissDBHelper datasource -> datasource
     it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni -> opzioni
     android.widget.ToggleButton buttPlus -> buttPlus
@@ -9289,7 +9309,7 @@ it.angelic.soulissclient.fragments.Typical4nFragment -> it.angelic.soulissclient
     it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft senseiMaster -> senseiMaster
     java.util.List sensei -> sensei
     android.content.BroadcastReceiver datareceiver -> datareceiver
-    it.angelic.soulissclient.fragments.Typical4nFragment newInstance(int,it.angelic.soulissclient.model.SoulissTypical) -> newInstance
+    it.angelic.soulissclient.fragments.T4nFragment newInstance(int,it.angelic.soulissclient.model.SoulissTypical) -> newInstance
     void onActivityCreated(android.os.Bundle) -> onActivityCreated
     android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     void shutoff() -> shutoff
@@ -9301,38 +9321,38 @@ it.angelic.soulissclient.fragments.Typical4nFragment -> it.angelic.soulissclient
     void onPause() -> onPause
     void onDestroy() -> onDestroy
     void setSensorsView() -> setSensorsView
-    it.angelic.soulissclient.db.SoulissDBHelper access$0(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$0
-    void access$1(it.angelic.soulissclient.fragments.Typical4nFragment,it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft) -> access$1
-    android.widget.TextView access$2(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$2
-    it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft access$3(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$3
-    android.widget.ToggleButton access$4(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$4
-    void access$5(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$5
-    void access$6(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$6
-    void access$7(it.angelic.soulissclient.fragments.Typical4nFragment,int) -> access$7
-    void access$8(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$8
-    it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$9(it.angelic.soulissclient.fragments.Typical4nFragment) -> access$9
-it.angelic.soulissclient.fragments.Typical4nFragment$1 -> it.angelic.soulissclient.fragments.Typical4nFragment$1:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+    it.angelic.soulissclient.db.SoulissDBHelper access$0(it.angelic.soulissclient.fragments.T4nFragment) -> access$0
+    void access$1(it.angelic.soulissclient.fragments.T4nFragment,it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft) -> access$1
+    android.widget.TextView access$2(it.angelic.soulissclient.fragments.T4nFragment) -> access$2
+    it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft access$3(it.angelic.soulissclient.fragments.T4nFragment) -> access$3
+    android.widget.ToggleButton access$4(it.angelic.soulissclient.fragments.T4nFragment) -> access$4
+    void access$5(it.angelic.soulissclient.fragments.T4nFragment) -> access$5
+    void access$6(it.angelic.soulissclient.fragments.T4nFragment) -> access$6
+    void access$7(it.angelic.soulissclient.fragments.T4nFragment,int) -> access$7
+    void access$8(it.angelic.soulissclient.fragments.T4nFragment) -> access$8
+    it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$9(it.angelic.soulissclient.fragments.T4nFragment) -> access$9
+it.angelic.soulissclient.fragments.T4nFragment$1 -> it.angelic.soulissclient.fragments.T4nFragment$1:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-it.angelic.soulissclient.fragments.Typical4nFragment$2 -> it.angelic.soulissclient.fragments.Typical4nFragment$2:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+it.angelic.soulissclient.fragments.T4nFragment$2 -> it.angelic.soulissclient.fragments.T4nFragment$2:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void onClick(android.view.View) -> onClick
-it.angelic.soulissclient.fragments.Typical4nFragment$3 -> it.angelic.soulissclient.fragments.Typical4nFragment$3:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+it.angelic.soulissclient.fragments.T4nFragment$3 -> it.angelic.soulissclient.fragments.T4nFragment$3:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void onClick(android.view.View) -> onClick
-it.angelic.soulissclient.fragments.Typical4nFragment$4 -> it.angelic.soulissclient.fragments.Typical4nFragment$4:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+it.angelic.soulissclient.fragments.T4nFragment$4 -> it.angelic.soulissclient.fragments.T4nFragment$4:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
-it.angelic.soulissclient.fragments.Typical4nFragment$5 -> it.angelic.soulissclient.fragments.Typical4nFragment$5:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+it.angelic.soulissclient.fragments.T4nFragment$5 -> it.angelic.soulissclient.fragments.T4nFragment$5:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void run() -> run
-it.angelic.soulissclient.fragments.Typical4nFragment$6 -> it.angelic.soulissclient.fragments.Typical4nFragment$6:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+it.angelic.soulissclient.fragments.T4nFragment$6 -> it.angelic.soulissclient.fragments.T4nFragment$6:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void run() -> run
-it.angelic.soulissclient.fragments.Typical4nFragment$7 -> it.angelic.soulissclient.fragments.Typical4nFragment$7:
-    it.angelic.soulissclient.fragments.Typical4nFragment this$0 -> this$0
+it.angelic.soulissclient.fragments.T4nFragment$7 -> it.angelic.soulissclient.fragments.T4nFragment$7:
+    it.angelic.soulissclient.fragments.T4nFragment this$0 -> this$0
     void run() -> run
-it.angelic.soulissclient.fragments.Typical4nFragment$OnColorChangedListener -> it.angelic.soulissclient.fragments.Typical4nFragment$OnColorChangedListener:
+it.angelic.soulissclient.fragments.T4nFragment$OnColorChangedListener -> it.angelic.soulissclient.fragments.T4nFragment$OnColorChangedListener:
     void colorChanged(int) -> colorChanged
 it.angelic.soulissclient.helpers.AlertDialogHelper -> it.angelic.soulissclient.helpers.AlertDialogHelper:
     android.app.AlertDialog$Builder sysNotInitedDialog(android.app.Activity) -> sysNotInitedDialog
@@ -9373,10 +9393,7 @@ it.angelic.soulissclient.helpers.AlertDialogHelper$13 -> it.angelic.soulissclien
 it.angelic.soulissclient.helpers.AlertDialogHelper$14 -> it.angelic.soulissclient.helpers.AlertDialogHelper$14:
     void onClick(android.content.DialogInterface,int) -> onClick
 it.angelic.soulissclient.helpers.AlertDialogHelper$15 -> it.angelic.soulissclient.helpers.AlertDialogHelper$15:
-    android.widget.Gallery val$gallery -> val$gallery
-    it.angelic.soulissclient.model.ISoulissObject val$toRename -> val$toRename
-    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-it.angelic.soulissclient.helpers.AlertDialogHelper$16 -> it.angelic.soulissclient.helpers.AlertDialogHelper$16:
+    us.feras.ecogallery.EcoGallery val$gallery -> val$gallery
     it.angelic.soulissclient.model.ISoulissObject val$toRename -> val$toRename
     it.angelic.soulissclient.db.SoulissDBHelper val$datasource -> val$datasource
     android.widget.ListView val$list -> val$list
@@ -9384,60 +9401,59 @@ it.angelic.soulissclient.helpers.AlertDialogHelper$16 -> it.angelic.soulissclien
     it.angelic.soulissclient.helpers.SoulissPreferenceHelper val$opzioni -> val$opzioni
     android.widget.ImageView val$ctx -> val$ctx
     void onClick(android.content.DialogInterface,int) -> onClick
-it.angelic.soulissclient.helpers.AlertDialogHelper$17 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17:
+it.angelic.soulissclient.helpers.AlertDialogHelper$16 -> it.angelic.soulissclient.helpers.AlertDialogHelper$16:
     it.angelic.soulissclient.model.ISoulissObject val$toRename -> val$toRename
     int val$savepoint -> val$savepoint
     void onClick(android.content.DialogInterface,int) -> onClick
-it.angelic.soulissclient.helpers.AlertDialogHelper$18 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18:
+it.angelic.soulissclient.helpers.AlertDialogHelper$17 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17:
     android.app.Activity val$preferencesActivity -> val$preferencesActivity
     java.lang.String val$local_ip -> val$local_ip
     it.angelic.soulissclient.helpers.SoulissPreferenceHelper val$opzioni -> val$opzioni
     java.lang.String val$public_ip -> val$public_ip
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$18$1 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18$1:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$18 this$1 -> this$1
+it.angelic.soulissclient.helpers.AlertDialogHelper$17$1 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17$1:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$17 this$1 -> this$1
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$18$2 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18$2:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$18 this$1 -> this$1
-    android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
-    java.lang.StringBuilder val$memo -> val$memo
-    void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$18$3 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18$3:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$18 this$1 -> this$1
+it.angelic.soulissclient.helpers.AlertDialogHelper$17$2 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17$2:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$17 this$1 -> this$1
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     java.lang.StringBuilder val$memo -> val$memo
     void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$18$4 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18$4:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$18 this$1 -> this$1
+it.angelic.soulissclient.helpers.AlertDialogHelper$17$3 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17$3:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$17 this$1 -> this$1
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     java.lang.StringBuilder val$memo -> val$memo
     void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$18$5 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18$5:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$18 this$1 -> this$1
+it.angelic.soulissclient.helpers.AlertDialogHelper$17$4 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17$4:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$17 this$1 -> this$1
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     java.lang.StringBuilder val$memo -> val$memo
     void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$18$6 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18$6:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$18 this$1 -> this$1
+it.angelic.soulissclient.helpers.AlertDialogHelper$17$5 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17$5:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$17 this$1 -> this$1
+    android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
+    java.lang.StringBuilder val$memo -> val$memo
+    void run() -> run
+it.angelic.soulissclient.helpers.AlertDialogHelper$17$6 -> it.angelic.soulissclient.helpers.AlertDialogHelper$17$6:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$17 this$1 -> this$1
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     java.lang.Exception val$e -> val$e
     void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$19 -> it.angelic.soulissclient.helpers.AlertDialogHelper$19:
+it.angelic.soulissclient.helpers.AlertDialogHelper$18 -> it.angelic.soulissclient.helpers.AlertDialogHelper$18:
     android.app.ProgressDialog val$mProgressDialog -> val$mProgressDialog
     void onClick(android.content.DialogInterface,int) -> onClick
+it.angelic.soulissclient.helpers.AlertDialogHelper$19 -> it.angelic.soulissclient.helpers.AlertDialogHelper$19:
+    it.angelic.soulissclient.helpers.SoulissPreferenceHelper val$opts -> val$opts
+    void onClick(android.content.DialogInterface,int) -> onClick
+it.angelic.soulissclient.helpers.AlertDialogHelper$19$1 -> it.angelic.soulissclient.helpers.AlertDialogHelper$19$1:
+    it.angelic.soulissclient.helpers.AlertDialogHelper$19 this$1 -> this$1
+    it.angelic.soulissclient.helpers.SoulissPreferenceHelper val$opts -> val$opts
+    void run() -> run
 it.angelic.soulissclient.helpers.AlertDialogHelper$2 -> it.angelic.soulissclient.helpers.AlertDialogHelper$2:
     void onClick(android.content.DialogInterface,int) -> onClick
 it.angelic.soulissclient.helpers.AlertDialogHelper$20 -> it.angelic.soulissclient.helpers.AlertDialogHelper$20:
-    android.app.Activity val$preferencesActivity -> val$preferencesActivity
-    it.angelic.soulissclient.helpers.SoulissPreferenceHelper val$opts -> val$opts
-    void onClick(android.content.DialogInterface,int) -> onClick
-it.angelic.soulissclient.helpers.AlertDialogHelper$20$1 -> it.angelic.soulissclient.helpers.AlertDialogHelper$20$1:
-    it.angelic.soulissclient.helpers.AlertDialogHelper$20 this$1 -> this$1
-    it.angelic.soulissclient.helpers.SoulissPreferenceHelper val$opts -> val$opts
-    void run() -> run
-it.angelic.soulissclient.helpers.AlertDialogHelper$21 -> it.angelic.soulissclient.helpers.AlertDialogHelper$21:
     void onClick(android.content.DialogInterface,int) -> onClick
 it.angelic.soulissclient.helpers.AlertDialogHelper$3 -> it.angelic.soulissclient.helpers.AlertDialogHelper$3:
     android.widget.CheckBox val$checkBox -> val$checkBox
@@ -9601,6 +9617,7 @@ it.angelic.soulissclient.helpers.ScenesDialogHelper -> it.angelic.soulissclient.
     void setTypicalSpinner(android.widget.Spinner,it.angelic.soulissclient.model.SoulissNode,android.content.Context) -> setTypicalSpinner
     void fillCommandSpinner(android.widget.Spinner,it.angelic.soulissclient.model.SoulissTypical,android.content.Context) -> fillCommandSpinner
     void executeSceneDialog(android.app.Activity,it.angelic.soulissclient.model.SoulissScene,it.angelic.soulissclient.helpers.SoulissPreferenceHelper) -> executeSceneDialog
+    java.util.List getParts(java.lang.String,int) -> getParts
     java.lang.String[] splitStringEvery(java.lang.String,int) -> splitStringEvery
     void access$0(android.widget.Spinner,it.angelic.soulissclient.model.SoulissNode,android.content.Context) -> access$0
     void access$1(android.widget.Spinner,it.angelic.soulissclient.model.SoulissTypical,android.content.Context) -> access$1
@@ -9690,6 +9707,7 @@ it.angelic.soulissclient.helpers.SoulissPreferenceHelper -> it.angelic.soulisscl
     float eqLow -> eqLow
     float eqMed -> eqMed
     float eqHigh -> eqHigh
+    int homeThold -> homeThold
     void reload() -> reload
     void initializePrefs() -> initializePrefs
     void clearCachedAddress() -> clearCachedAddress
@@ -9718,6 +9736,7 @@ it.angelic.soulissclient.helpers.SoulissPreferenceHelper -> it.angelic.soulisscl
     int getRemoteTimeoutPref() -> getRemoteTimeoutPref
     void setRemoteTimeoutPref(int) -> setRemoteTimeoutPref
     int getDataServiceIntervalMsec() -> getDataServiceIntervalMsec
+    int getHomeThresholdDistance() -> getHomeThresholdDistance
     boolean isDataServiceEnabled() -> isDataServiceEnabled
     void setDontShowAgain(java.lang.String,boolean) -> setDontShowAgain
     boolean getDontShowAgain(java.lang.String) -> getDontShowAgain
@@ -9931,6 +9950,8 @@ it.angelic.soulissclient.model.typicals.Constants -> it.angelic.soulissclient.mo
     short Souliss_T1n_BrightUp -> Souliss_T1n_BrightUp
     short Souliss_T1n_BrightDown -> Souliss_T1n_BrightDown
     short Souliss_T1n_Flash -> Souliss_T1n_Flash
+    short Souliss_T1n_OnFeedback -> Souliss_T1n_OnFeedback
+    short Souliss_T1n_OffFeedback -> Souliss_T1n_OffFeedback
     long Souliss_T16_Red -> Souliss_T16_Red
     long Souliss_T16_Green -> Souliss_T16_Green
     long Souliss_T16_Blue -> Souliss_T16_Blue
@@ -11195,3 +11216,273 @@ org.achartengine.util.MathHelper -> a.a.e.b:
     java.util.List getLabels(double,double,int) -> a
     double[] computeLabels(double,double,int) -> b
     double roundUp(double) -> a
+us.feras.ecogallery.EcoGallery -> us.feras.ecogallery.a:
+    java.lang.String LOG_TAG -> G
+    int mSpacing -> H
+    int mAnimationDuration -> I
+    float mUnselectedAlpha -> J
+    int mGravity -> K
+    android.view.GestureDetector mGestureDetector -> L
+    int mDownTouchPosition -> M
+    android.view.View mDownTouchView -> N
+    us.feras.ecogallery.EcoGallery$FlingRunnable mFlingRunnable -> O
+    java.lang.Runnable mDisableSuppressSelectionChangedRunnable -> P
+    boolean mShouldStopFling -> Q
+    android.view.View mSelectedChild -> R
+    boolean mShouldCallbackDuringFling -> S
+    boolean mShouldCallbackOnUnselectedItemClick -> T
+    boolean mSuppressSelectionChanged -> U
+    boolean mReceivedInvokeKeyDown -> V
+    us.feras.ecogallery.EcoGalleryAdapterView$AdapterContextMenuInfo mContextMenuInfo -> W
+    boolean mIsFirstScroll -> Z
+    boolean mBroken -> aa
+    void setCallbackDuringFling(boolean) -> setCallbackDuringFling
+    void setCallbackOnUnselectedItemClick(boolean) -> setCallbackOnUnselectedItemClick
+    void setAnimationDuration(int) -> setAnimationDuration
+    void setSpacing(int) -> setSpacing
+    void setUnselectedAlpha(float) -> setUnselectedAlpha
+    boolean getChildStaticTransformation(android.view.View,android.view.animation.Transformation) -> getChildStaticTransformation
+    int computeHorizontalScrollExtent() -> computeHorizontalScrollExtent
+    int computeHorizontalScrollOffset() -> computeHorizontalScrollOffset
+    int computeHorizontalScrollRange() -> computeHorizontalScrollRange
+    boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
+    android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
+    android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
+    android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    int getChildHeight(android.view.View) -> a
+    void trackMotionScroll(int) -> a
+    int getLimitedMotionScrollAmount(boolean,int) -> a
+    void offsetChildrenLeftAndRight(int) -> c
+    int getCenterOfGallery() -> getCenterOfGallery
+    int getCenterOfView(android.view.View) -> d
+    void detachOffScreenChildren(boolean) -> a
+    void scrollIntoSlots() -> n
+    void onFinishedMovement() -> o
+    void selectionChanged() -> a
+    void setSelectionToCenterChild() -> p
+    void layout(int,boolean) -> a
+    void fillToGalleryLeft() -> q
+    void fillToGalleryRight() -> r
+    android.view.View makeAndAddView(int,int,int,boolean) -> a
+    void setUpChild(android.view.View,int,int,boolean) -> a
+    int calculateTop(android.view.View,boolean) -> a
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
+    boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
+    boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
+    boolean onDown(android.view.MotionEvent) -> onDown
+    void onUp() -> b
+    void onCancel() -> c
+    void onLongPress(android.view.MotionEvent) -> onLongPress
+    void onShowPress(android.view.MotionEvent) -> onShowPress
+    void dispatchPress(android.view.View) -> e
+    void dispatchUnpress() -> s
+    void dispatchSetSelected(boolean) -> dispatchSetSelected
+    void dispatchSetPressed(boolean) -> dispatchSetPressed
+    android.view.ContextMenu$ContextMenuInfo getContextMenuInfo() -> getContextMenuInfo
+    boolean showContextMenuForChild(android.view.View) -> showContextMenuForChild
+    boolean showContextMenu() -> showContextMenu
+    boolean dispatchLongPress(android.view.View,int,long) -> b
+    boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
+    boolean movePrevious() -> d
+    boolean moveNext() -> e
+    boolean scrollToChild(int) -> d
+    void setSelectedPositionInt(int) -> setSelectedPositionInt
+    void updateSelectedItemMetadata() -> t
+    void setGravity(int) -> setGravity
+    int getChildDrawingOrder(int,int) -> getChildDrawingOrder
+    void onFocusChanged(boolean,int,android.graphics.Rect) -> onFocusChanged
+    void access$0(us.feras.ecogallery.EcoGallery,boolean) -> a
+    int access$1(us.feras.ecogallery.EcoGallery) -> a
+    void access$2(us.feras.ecogallery.EcoGallery) -> b
+    void access$3(us.feras.ecogallery.EcoGallery,boolean) -> b
+    void access$4(us.feras.ecogallery.EcoGallery,int) -> a
+    boolean access$5(us.feras.ecogallery.EcoGallery) -> c
+    void access$6(us.feras.ecogallery.EcoGallery) -> d
+us.feras.ecogallery.EcoGallery$1 -> us.feras.ecogallery.b:
+    us.feras.ecogallery.EcoGallery this$0 -> a
+    void run() -> run
+us.feras.ecogallery.EcoGallery$2 -> us.feras.ecogallery.c:
+    us.feras.ecogallery.EcoGallery this$0 -> a
+    void run() -> run
+us.feras.ecogallery.EcoGallery$FlingRunnable -> us.feras.ecogallery.d:
+    android.widget.Scroller mScroller -> b
+    int mLastFlingX -> c
+    us.feras.ecogallery.EcoGallery this$0 -> a
+    void startCommon() -> a
+    void startUsingVelocity(int) -> a
+    void startUsingDistance(int) -> b
+    void stop(boolean) -> a
+    void endFling(boolean) -> b
+    void run() -> run
+    void access$0(us.feras.ecogallery.EcoGallery$FlingRunnable,boolean) -> a
+    android.widget.Scroller access$1(us.feras.ecogallery.EcoGallery$FlingRunnable) -> a
+us.feras.ecogallery.EcoGallery$LayoutParams -> us.feras.ecogallery.e:
+us.feras.ecogallery.EcoGalleryAbsSpinner -> us.feras.ecogallery.EcoGalleryAbsSpinner:
+    android.widget.SpinnerAdapter mAdapter -> a
+    int mHeightMeasureSpec -> b
+    int mWidthMeasureSpec -> c
+    boolean mBlockLayoutRequests -> d
+    int mSelectionLeftPadding -> e
+    int mSelectionTopPadding -> f
+    int mSelectionRightPadding -> g
+    int mSelectionBottomPadding -> h
+    android.graphics.Rect mSpinnerPadding -> i
+    android.view.View mSelectedView -> j
+    us.feras.ecogallery.EcoGalleryAbsSpinner$RecycleBin mRecycler -> k
+    android.database.DataSetObserver mDataSetObserver -> G
+    android.graphics.Rect mTouchFrame -> H
+    void initAbsSpinner() -> b
+    void setAdapter(android.widget.SpinnerAdapter) -> setAdapter
+    void resetList() -> f
+    void onMeasure(int,int) -> onMeasure
+    int getChildHeight(android.view.View) -> a
+    int getChildWidth(android.view.View) -> b
+    android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    void recycleAllViews() -> g
+    void handleDataChanged() -> h
+    void setSelection(int) -> setSelection
+    android.view.View getSelectedView() -> getSelectedView
+    void requestLayout() -> requestLayout
+    android.widget.SpinnerAdapter getAdapter() -> getAdapter
+    int getCount() -> getCount
+    int pointToPosition(int,int) -> a
+    android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
+    void setAdapter(android.widget.Adapter) -> setAdapter
+    android.widget.Adapter getAdapter() -> getAdapter
+us.feras.ecogallery.EcoGalleryAbsSpinner$RecycleBin -> us.feras.ecogallery.f:
+    android.util.SparseArray mScrapHeap -> b
+    us.feras.ecogallery.EcoGalleryAbsSpinner this$0 -> a
+    void put(int,android.view.View) -> a
+    void add(int,android.view.View) -> b
+    android.view.View get() -> a
+us.feras.ecogallery.EcoGalleryAbsSpinner$SavedState -> us.feras.ecogallery.EcoGalleryAbsSpinner$SavedState:
+    long selectedId -> a
+    int position -> b
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    java.lang.String toString() -> toString
+us.feras.ecogallery.EcoGalleryAbsSpinner$SavedState$1 -> us.feras.ecogallery.g:
+    us.feras.ecogallery.EcoGalleryAbsSpinner$SavedState createFromParcel(android.os.Parcel) -> a
+    us.feras.ecogallery.EcoGalleryAbsSpinner$SavedState[] newArray(int) -> a
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    java.lang.Object[] newArray(int) -> newArray
+us.feras.ecogallery.EcoGalleryAdapterView -> us.feras.ecogallery.h:
+    int mFirstPosition -> l
+    int mSpecificTop -> m
+    int mSyncPosition -> n
+    long mSyncRowId -> o
+    long mSyncHeight -> p
+    boolean mNeedSync -> q
+    int mSyncMode -> r
+    int mLayoutHeight -> a
+    boolean mInLayout -> s
+    us.feras.ecogallery.EcoGalleryAdapterView$OnItemSelectedListener mOnItemSelectedListener -> t
+    us.feras.ecogallery.EcoGalleryAdapterView$OnItemClickListener mOnItemClickListener -> u
+    us.feras.ecogallery.EcoGalleryAdapterView$OnItemLongClickListener mOnItemLongClickListener -> v
+    boolean mDataChanged -> w
+    int mNextSelectedPosition -> x
+    long mNextSelectedRowId -> y
+    int mSelectedPosition -> z
+    long mSelectedRowId -> A
+    android.view.View mEmptyView -> b
+    int mItemCount -> B
+    int mOldItemCount -> C
+    int mOldSelectedPosition -> D
+    long mOldSelectedRowId -> E
+    boolean mDesiredFocusableState -> c
+    boolean mDesiredFocusableInTouchModeState -> d
+    us.feras.ecogallery.EcoGalleryAdapterView$SelectionNotifier mSelectionNotifier -> e
+    boolean mBlockLayoutRequests -> F
+    void setOnItemClickListener(us.feras.ecogallery.EcoGalleryAdapterView$OnItemClickListener) -> setOnItemClickListener
+    us.feras.ecogallery.EcoGalleryAdapterView$OnItemClickListener getOnItemClickListener() -> getOnItemClickListener
+    boolean performItemClick(android.view.View,int,long) -> a
+    void setOnItemLongClickListener(us.feras.ecogallery.EcoGalleryAdapterView$OnItemLongClickListener) -> setOnItemLongClickListener
+    us.feras.ecogallery.EcoGalleryAdapterView$OnItemLongClickListener getOnItemLongClickListener() -> getOnItemLongClickListener
+    void setOnItemSelectedListener(us.feras.ecogallery.EcoGalleryAdapterView$OnItemSelectedListener) -> setOnItemSelectedListener
+    us.feras.ecogallery.EcoGalleryAdapterView$OnItemSelectedListener getOnItemSelectedListener() -> getOnItemSelectedListener
+    android.widget.Adapter getAdapter() -> getAdapter
+    void setAdapter(android.widget.Adapter) -> setAdapter
+    void addView(android.view.View) -> addView
+    void addView(android.view.View,int) -> addView
+    void addView(android.view.View,android.view.ViewGroup$LayoutParams) -> addView
+    void addView(android.view.View,int,android.view.ViewGroup$LayoutParams) -> addView
+    void removeView(android.view.View) -> removeView
+    void removeViewAt(int) -> removeViewAt
+    void removeAllViews() -> removeAllViews
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    int getSelectedItemPosition() -> getSelectedItemPosition
+    long getSelectedItemId() -> getSelectedItemId
+    android.view.View getSelectedView() -> getSelectedView
+    java.lang.Object getSelectedItem() -> getSelectedItem
+    int getCount() -> getCount
+    int getPositionForView(android.view.View) -> c
+    int getFirstVisiblePosition() -> getFirstVisiblePosition
+    int getLastVisiblePosition() -> getLastVisiblePosition
+    void setSelection(int) -> setSelection
+    void setEmptyView(android.view.View) -> setEmptyView
+    android.view.View getEmptyView() -> getEmptyView
+    boolean isInFilterMode() -> i
+    void setFocusable(boolean) -> setFocusable
+    void setFocusableInTouchMode(boolean) -> setFocusableInTouchMode
+    void checkFocus() -> j
+    void updateEmptyStatus(boolean) -> a
+    long getItemIdAtPosition(int) -> b
+    void setOnClickListener(android.view.View$OnClickListener) -> setOnClickListener
+    void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
+    void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    void selectionChanged() -> a
+    void fireOnSelected() -> b
+    boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent) -> dispatchPopulateAccessibilityEvent
+    boolean canAnimate() -> canAnimate
+    void handleDataChanged() -> h
+    void checkSelectionChanged() -> k
+    int findSyncPosition() -> l
+    int lookForSelectablePosition(int,boolean) -> b
+    void setSelectedPositionInt(int) -> setSelectedPositionInt
+    void setNextSelectedPositionInt(int) -> setNextSelectedPositionInt
+    void rememberSyncState() -> m
+    void access$0(us.feras.ecogallery.EcoGalleryAdapterView,android.os.Parcelable) -> a
+    android.os.Parcelable access$1(us.feras.ecogallery.EcoGalleryAdapterView) -> a
+    void access$2(us.feras.ecogallery.EcoGalleryAdapterView) -> b
+us.feras.ecogallery.EcoGalleryAdapterView$AdapterContextMenuInfo -> us.feras.ecogallery.i:
+    android.view.View targetView -> a
+    int position -> b
+    long id -> c
+us.feras.ecogallery.EcoGalleryAdapterView$AdapterDataSetObserver -> us.feras.ecogallery.j:
+    android.os.Parcelable mInstanceState -> b
+    us.feras.ecogallery.EcoGalleryAdapterView this$0 -> a
+    void onChanged() -> onChanged
+    void onInvalidated() -> onInvalidated
+us.feras.ecogallery.EcoGalleryAdapterView$OnItemClickListener -> us.feras.ecogallery.k:
+    void onItemClick(us.feras.ecogallery.EcoGalleryAdapterView,android.view.View,int,long) -> a
+us.feras.ecogallery.EcoGalleryAdapterView$OnItemLongClickListener -> us.feras.ecogallery.l:
+    boolean onItemLongClick(us.feras.ecogallery.EcoGalleryAdapterView,android.view.View,int,long) -> a
+us.feras.ecogallery.EcoGalleryAdapterView$OnItemSelectedListener -> us.feras.ecogallery.m:
+    void onItemSelected(us.feras.ecogallery.EcoGalleryAdapterView,android.view.View,int,long) -> a
+    void onNothingSelected(us.feras.ecogallery.EcoGalleryAdapterView) -> a
+us.feras.ecogallery.EcoGalleryAdapterView$SelectionNotifier -> us.feras.ecogallery.n:
+    us.feras.ecogallery.EcoGalleryAdapterView this$0 -> a
+    void run() -> run
+us.feras.ecogallery.R -> us.feras.ecogallery.o:
+us.feras.ecogallery.R$attr -> us.feras.ecogallery.p:
+    int animationDuration -> animationDuration
+    int customAbsSpinnerStyle -> customAbsSpinnerStyle
+    int ecoGalleryStyle -> ecoGalleryStyle
+    int entries -> entries
+    int gravity -> gravity
+    int spacing -> spacing
+    int unselectedAlpha -> unselectedAlpha
+us.feras.ecogallery.R$styleable -> us.feras.ecogallery.q:
+    int[] CustomAbsSpinner -> CustomAbsSpinner
+    int CustomAbsSpinner_entries -> CustomAbsSpinner_entries
+    int[] EcoGallery -> EcoGallery
+    int EcoGallery_animationDuration -> EcoGallery_animationDuration
+    int EcoGallery_gravity -> EcoGallery_gravity
+    int EcoGallery_spacing -> EcoGallery_spacing
+    int EcoGallery_unselectedAlpha -> EcoGallery_unselectedAlpha

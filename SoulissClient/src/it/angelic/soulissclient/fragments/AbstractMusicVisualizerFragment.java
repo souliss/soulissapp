@@ -16,4 +16,11 @@ public abstract class AbstractMusicVisualizerFragment  extends Fragment  {
 	 * @param multicast
 	 */
 	public abstract void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) ;
+	protected int getShownIndex() {
+		if (getArguments() != null)
+			return getArguments().getInt("index", 0);
+		else
+			return 0;
+	}
+
 }

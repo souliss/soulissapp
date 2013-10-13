@@ -84,7 +84,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
 
 	public String getNiceName() {
 		if (Name != null && "".compareToIgnoreCase(Name) != 0)
-			return Name + " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
+			return Name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
 		else
 			return SoulissClient.getAppContext().getString(R.string.node)+" "+ Constants.int2roman(getId());
 

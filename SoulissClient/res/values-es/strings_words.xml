@@ -18,7 +18,6 @@
     <string name="ago">atrás</string>
     <string name="multicast">Multicast</string>
     <string name="multicast_desc">Enviar a todos los dispositivos de este tipo</string>
-    <string name="music">Sincronizar música</string>
     <string name="days">días</string>
     <string name="poll">Obtener</string>
     <string name="refresh">Actualizar</string>

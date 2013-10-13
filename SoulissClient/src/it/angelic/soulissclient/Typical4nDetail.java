@@ -5,7 +5,7 @@ import static junit.framework.Assert.assertTrue;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
-import it.angelic.soulissclient.fragments.Typical4nFragment;
+import it.angelic.soulissclient.fragments.T4nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import android.annotation.SuppressLint;
@@ -43,7 +43,7 @@ public class Typical4nDetail extends SherlockFragmentActivity {
 		assertTrue("TIPICO NULLO", collected != null);
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
-			Typical4nFragment details = Typical4nFragment.newInstance(collected.getTypicalDTO().getSlot(),
+			T4nFragment details = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
