@@ -39,6 +39,7 @@ public class Zozzariello extends Thread {
 	private static final String  PATTERN_STRUCTURE  = "/structure*";
 	private static final String  PATTERN_STATUS  = "/status*";
 	private static final String  PATTERN_FORCE  = "/force*";
+	private static final String  PATTERN_GETMAPPINGS = "/mappings";
 
 	private boolean isRunning = false;
 	private Context context = null;
@@ -100,6 +101,7 @@ public class Zozzariello extends Thread {
 		registry.register(PATTERN_STATUS, new JSONStatusHandler(context));
 		registry.register(PATTERN_MESSAGE, new MessageCommandHandler(context));
 		registry.register(PATTERN_FORCE, new JSONForceHandler(context));
+		registry.register(PATTERN_GETMAPPINGS, new GetConstantsHandler(context));
 
 		httpService.setHandlerResolver(registry);
 	}

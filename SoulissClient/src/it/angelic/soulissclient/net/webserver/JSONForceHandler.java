@@ -1,10 +1,12 @@
 package it.angelic.soulissclient.net.webserver;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.StaticUtils;
+import it.angelic.soulissclient.net.UDPHelper;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -44,30 +46,35 @@ public class JSONForceHandler implements HttpRequestHandler {
 			IOException {
 		int mellow = -1;// nodesid sempe positivi
 		try {
-
+			//HTTP GET /force?id=0&slot=1&val=22+01+05+01
 			String uriString = request.getRequestLine().getUri();
 			Uri uri = Uri.parse(uriString);
-			String message = URLDecoder.decode(uri.getQueryParameter("id"), "UTF-8");
+			final String message = URLDecoder.decode(uri.getQueryParameter("id"), "UTF-8");
+			final String slot = URLDecoder.decode(uri.getQueryParameter("slot"), "UTF-8");
+			final String val = URLDecoder.decode(uri.getQueryParameter("val"), "UTF-8");
+			final String[] parsed = val.split("\\+");
 			mellow = Integer.parseInt(message);
 			Log.i(it.angelic.soulissclient.Constants.TAG, "URI: " + uriString);
 			Log.i(it.angelic.soulissclient.Constants.TAG, "Decoded ID: " + message);
+			
+			HttpEntity entity = new EntityTemplate(new ContentProducer() {
+				public void writeTo(final OutputStream outstream) throws IOException {
+					OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
+					//Log.v(it.angelic.soulissclient.Constants.TAG,writeJSON(target));
+					writer.write(UDPHelper.issueSoulissCommand(message, slot, SoulissClient.getOpzioni(), it.angelic.soulissclient.Constants.COMMAND_SINGLE, parsed));
+					writer.flush();
+				}
+			});
+			//Log.d(it.angelic.soulissclient.Constants.TAG, "Encoding:"+entity.getContentEncoding());
+			response.setHeader("Content-Type", "text/html; charset=UTF-8");
+			response.setEntity(entity);
 		} catch (Exception e) {
 			Log.e(it.angelic.soulissclient.Constants.TAG, e.getMessage(),e);
 		}
 		final int target = mellow;
 		// HTTP GET /force?id=0&slot=1&val=22
 
-		HttpEntity entity = new EntityTemplate(new ContentProducer() {
-			public void writeTo(final OutputStream outstream) throws IOException {
-				OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
-				//Log.v(it.angelic.soulissclient.Constants.TAG,writeJSON(target));
-				writer.write(writeJSON(target));
-				writer.flush();
-			}
-		});
-		//Log.d(it.angelic.soulissclient.Constants.TAG, "Encoding:"+entity.getContentEncoding());
-		response.setHeader("Content-Type", "text/html; charset=UTF-8");
-		response.setEntity(entity);
+		
 	}
 	/**
 	 * Write the entire live data if target < 0

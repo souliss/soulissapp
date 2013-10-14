@@ -1,13 +1,36 @@
 package it.angelic.soulissclient.model.typicals;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 public class Constants {
 	public static final String TAG = "SoulissApp:Typicals";
+
 	/**
 	 * 
 	 * @author Ale
 	 * 
 	 */
-	
+	@Override
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		Field[] consts = getClass().getDeclaredFields();
+		for (int i = 0; i < consts.length; i++) {
+			if ((consts[i].getModifiers() & (Modifier.FINAL | Modifier.STATIC)) != 0) {
+				try {
+					ret.append(consts[i].getName() + " = " + consts[i].get(null) + "<br/>");
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return ret.toString();
+	}
+
 	/**
 	 * /** // Defines for Typicals C LIBRARY
 	 * 
@@ -26,17 +49,26 @@ public class Constants {
 	public static final short Souliss_T16 = 0x16;
 	public static final short Souliss_T18 = 0x18;
 	public static final short Souliss_T19 = 0x19;
-	
+
 	public static final short Souliss_T21 = 0x21;// Motorized devices with limit
-												// switches
+													// switches
 	public static final short Souliss_T22 = 0x22;// Motorized devices with limit
-												// switches and middle position
+													// switches and middle
+													// position
 	public static final short Souliss_T31 = 0x31;
 	public static final short Souliss_T32_IrCom_AirCon = 0x32;
-	
-	public static final short  Souliss_T42_Antitheft_Group=						0x40		;	// Anti-theft group (used w/ massive commands)
-	public static final short  Souliss_T41_Antitheft_Main=						0x41		;	// Anti-theft integration (Main)
-	public static final short  Souliss_T42_Antitheft_Peer=						0x42		;	// Anti-theft integration (Peer)
+
+	public static final short Souliss_T42_Antitheft_Group = 0x40; // Anti-theft
+																	// group
+																	// (used w/
+																	// massive
+																	// commands)
+	public static final short Souliss_T41_Antitheft_Main = 0x41; // Anti-theft
+																	// integration
+																	// (Main)
+	public static final short Souliss_T42_Antitheft_Peer = 0x42; // Anti-theft
+																	// integration
+																	// (Peer)
 
 	public static final short Souliss_T51 = 0x51;
 	public static final short Souliss_T52_TemperatureSensor = 0x52;
@@ -119,9 +151,9 @@ public class Constants {
 	public static final short Souliss_T1n_BrightDown = 0x20; // Decrease Light
 	public static final short Souliss_T1n_Flash = 0x21; // Flash Light
 
-	public static final short  Souliss_T1n_OnFeedback	=	0x23;		
-	public static final short Souliss_T1n_OffFeedback	=		0x24	;
-	
+	public static final short Souliss_T1n_OnFeedback = 0x23;
+	public static final short Souliss_T1n_OffFeedback = 0x24;
+
 	public static final long Souliss_T16_Red = 0x22FF0000; // Set a state
 	public static final long Souliss_T16_Green = 0x2200FF00;
 	public static final long Souliss_T16_Blue = 0x220000FF;
@@ -188,16 +220,23 @@ public class Constants {
 	public static final short Souliss_T3n_ZeroSetPoint = 0x80;
 	public static final short Souliss_T3n_DeadBand = 0x05;
 	public static final short Souliss_T3n_RstCmd = 0x00;
-	
+
 	// General defines for T4n
-	public static final short Souliss_T4n_Alarm				=0x01;		// Alarm Condition Detected (Input)		
-	public static final short Souliss_T4n_RstCmd			=	0x00;		
-	public static final short Souliss_T4n_ReArm				=0x03	;	// Silence and Arm Command
-	public static final short Souliss_T4n_NotArmed			=0x04;		// Anti-theft not Armed Command
-	public static final short Souliss_T4n_Armed				=0x05	;	// Anti-theft Armed Command
-	public static final short Souliss_T4n_Antitheft			=0x01	;	// Anti-theft Armed Feedback
-	public static final short Souliss_T4n_NoAntitheft		=	0x00;		// Anti-theft not Armed Feedback
-	public static final short Souliss_T4n_InAlarm			=	0x03;		// Anti-theft in Alarm
+	public static final short Souliss_T4n_Alarm = 0x01; // Alarm Condition
+														// Detected (Input)
+	public static final short Souliss_T4n_RstCmd = 0x00;
+	public static final short Souliss_T4n_ReArm = 0x03; // Silence and Arm
+														// Command
+	public static final short Souliss_T4n_NotArmed = 0x04; // Anti-theft not
+															// Armed Command
+	public static final short Souliss_T4n_Armed = 0x05; // Anti-theft Armed
+														// Command
+	public static final short Souliss_T4n_Antitheft = 0x01; // Anti-theft Armed
+															// Feedback
+	public static final short Souliss_T4n_NoAntitheft = 0x00; // Anti-theft not
+																// Armed
+																// Feedback
+	public static final short Souliss_T4n_InAlarm = 0x03; // Anti-theft in Alarm
 
 	public static final short Souliss_RstCmd = 0x00;
 	public static final short Souliss_NOTTRIGGED = 0x00;
@@ -206,7 +245,7 @@ public class Constants {
 	// Defines for current sensor
 	public static final short Souliss_T_CurrentSensor = 0x65;
 
-	//REMOVE THESE
+	// REMOVE THESE
 	public static final short Souliss_T_TemperatureSensor = 0x67;
 	public static final byte Souliss_T_TemperatureSensor_refresh = 0x02;
 

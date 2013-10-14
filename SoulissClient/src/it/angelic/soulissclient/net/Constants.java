@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.net;
 
+
 /**
  * Network constants
  * 
@@ -7,6 +8,7 @@ package it.angelic.soulissclient.net;
  *
  */
 public class Constants {
+	
 	public static final String TAG = "SoulissApp";
 	public static final String CUSTOM_INTENT_SOULISS_RAWDATA = "it.angelic.soulissclient.RAW_MACACO_DATA";
 	public static final String CUSTOM_INTENT_SOULISS_TIMEOUT = "it.angelic.soulissclient.RAW_TIMEOUT";
