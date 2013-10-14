@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -45,9 +46,10 @@ public class TypicalsListAdapter extends BaseAdapter {
 		mBoundService = serv;
 	}
 
-	public void setTypicals(SoulissTypical[] in){
+	public void setTypicals(SoulissTypical[] in) {
 		tipici = in;
 	}
+
 	public void setmBoundService(SoulissDataService mBoundService2) {
 		mBoundService = mBoundService2;
 	}
@@ -77,27 +79,39 @@ public class TypicalsListAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		TypicalViewHolder holder;
-
+		
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.listview_typical, null);
+			final View ccopy = convertView;
 			holder = new TypicalViewHolder();
+			holder.expand = (ImageView) convertView.findViewById(R.id.imageButtonExpand);
 			holder.textslot = (TextView) convertView.findViewById(R.id.TextViewSlot);
 			holder.textUpdated = (TextView) convertView.findViewById(R.id.TextViewUpdated);
 			holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
 			holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
 			holder.image = (ImageView) convertView.findViewById(R.id.node_icon);
-			if (tipici.length > 0) //magari e` vuoto
+			if (tipici.length > 0) // magari e` vuoto
 				holder.data = tipici[position];
 			holder.linearActionsLayout = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
-			//linButton.removeAllViews();
+			// linButton.removeAllViews();
 			convertView.setTag(holder);
+			holder.expand.setOnClickListener(new OnClickListener() {
 
+				@Override
+				public void onClick(View v) {
+					ccopy.performLongClick();
+
+				}
+			});
 		} else {
 			holder = (TypicalViewHolder) convertView.getTag();
 		}
+
 		/* Dimensioni del testo settate dalle opzioni */
-		//holder.textUpdated.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
-		//holder.textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
+		// holder.textUpdated.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+		// opzioni.getListDimensTesto());
+		// holder.textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+		// opzioni.getListDimensTesto());
 		// holder.textslot.setTextSize(TypedValue.COMPLEX_UNIT_SP,
 		// opzioni.getListDimensTesto());
 
@@ -105,6 +119,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textslot.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textUpdated.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textStatus.setTextColor(context.getResources().getColor(R.color.black));
+			holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abs__ic_menu_moreoverflow_normal_holo_light));
 		}
 		/* Nodo vuota */
 		if (tipici.length == 0) {
@@ -119,21 +134,20 @@ public class TypicalsListAdapter extends BaseAdapter {
 		/* INFO slot e Alias Name */
 		holder.textslot.setText(tipici[position].getNiceName());
 		holder.textUpdated.setText(context.getString(R.string.update) + " "
-				+ Constants.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt())
-				+ " - "+context.getString(R.string.manual_slot) + ": "
-				+ tipici[position].getTypicalDTO().getSlot() );
-		holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())+": "+
-				tipici[position].getTypicalDTO().getTypicalDec()+" - "+
-				context.getResources().getString(R.string.status));
+				+ Constants.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
+				+ context.getString(R.string.manual_slot) + ": " + tipici[position].getTypicalDTO().getSlot());
+		holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
+				+ ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
+				+ context.getResources().getString(R.string.status));
 		/* Icona del nodo */
 		if (tipici[position].getDefaultIconResourceId() != 0)
 			holder.image.setImageResource(tipici[position].getDefaultIconResourceId());
 		// nascondi gli slot slave
 		if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
-			//holder.textStatusVal.setText(tipici[position].getOutputDesc());
-			//TODO remove following
+			// holder.textStatusVal.setText(tipici[position].getOutputDesc());
+			// TODO remove following
 			holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
-			
+
 			tipici[position].setOutputDescView(holder.textStatusVal);
 			convertView.setVisibility(View.VISIBLE);
 			holder.image.setVisibility(View.VISIBLE);
@@ -141,6 +155,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textUpdated.setVisibility(View.VISIBLE);
 			holder.textStatus.setVisibility(View.VISIBLE);
 			holder.textStatusVal.setVisibility(View.VISIBLE);
+			holder.expand.setVisibility(View.VISIBLE);
 		} else if (tipici[position].isRelated()) {
 			convertView.setVisibility(View.GONE);
 			holder.image.setVisibility(View.GONE);
@@ -148,14 +163,15 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textUpdated.setVisibility(View.GONE);
 			holder.textStatus.setVisibility(View.GONE);
 			holder.textStatusVal.setVisibility(View.GONE);
+			holder.expand.setVisibility(View.GONE);
 		} else {
 			// lascia slot vuoti
 			return convertView;
-			
-		}
 
+		}
 		/* Aggiunta dei comandi */
-		//LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+		// LinearLayout cont = (LinearLayout)
+		// convertView.findViewById(R.id.linearLayoutButtons);
 		holder.linearActionsLayout.removeAllViews();
 		if (opzioni.isSoulissReachable()) {
 			// richiama l'overloaded del tipico relativo
@@ -168,9 +184,9 @@ public class TypicalsListAdapter extends BaseAdapter {
 			}
 			holder.linearActionsLayout.addView(na);
 		}
-		//linearActionsLayout.setVisibility(View.VISIBLE);
+		// linearActionsLayout.setVisibility(View.VISIBLE);
 		if (tipici[position].isEmpty() || tipici[position].isRelated()) {
-			//linButton.setVisibility(View.GONE);
+			// linButton.setVisibility(View.GONE);
 		}
 
 		if (opzioni.getTextFx()) {
@@ -184,6 +200,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 	}
 
 	public static class TypicalViewHolder {
+		public ImageView expand;
 		TextView textStatus;
 		TextView textStatusVal;
 		TextView textslot;

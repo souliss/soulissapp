@@ -7,7 +7,7 @@
     <string name="notconfigured">Souliss <b>non configurato</b>, l\'indirizzo IP locale è indispensabile</string>
     <string name="health">SALUTE:</string>
     <string name="status">STATO:</string>
-    <string name="update">AGGIORN:</string>
+    <string name="update">Aggiornato</string>
     <string name="actions">AZIONI:</string>
     <string name="node">Nodo</string>
     <string name="nodes">Nodi</string>

@@ -5,7 +5,6 @@
     android:versionCode="110"
     android:versionName="1.2.6_zozzariello" >
 
-
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="18" />

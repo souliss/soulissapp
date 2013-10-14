@@ -51,14 +51,14 @@ public class UDPSoulissDecoder {
 
 	SoulissPreferenceHelper opzioni;
 	private SoulissDBLowHelper database;
-	private SharedPreferences customSharedPreference;
+	private SharedPreferences soulissSharedPreference;
 	private Context context;
 
 	public UDPSoulissDecoder(SoulissPreferenceHelper opts, Context ctx) {
 		this.opzioni = opts;
 		this.context = ctx;
 		database = new SoulissDBLowHelper(ctx);
-		customSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+		soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		database.open();
 	}
 
@@ -279,10 +279,10 @@ public class UDPSoulissDecoder {
 
 		// se trovo F e` locale, se trovo B e` Remoto
 
-		SharedPreferences.Editor editor = customSharedPreference.edit();
-		// if (customSharedPreference.contains("cachedAddress"))
+		SharedPreferences.Editor editor = soulissSharedPreference.edit();
+		// if (soulissSharedPreference.contains("cachedAddress"))
 		// editor.remove("cachedAddress");
-		boolean alreadyPrivate = customSharedPreference.getString("cachedAddress", "").compareTo(
+		boolean alreadyPrivate = soulissSharedPreference.getString("cachedAddress", "").compareTo(
 				opzioni.getPrefIPAddress()) == 0;
 
 		if (putIn == 0xB && !alreadyPrivate) {
@@ -296,7 +296,7 @@ public class UDPSoulissDecoder {
 		} else if (alreadyPrivate) {
 			Log.w(Constants.TAG,
 					"Local address already set. I'll NOT overwrite it: "
-							+ customSharedPreference.getString("cachedAddress", ""));
+							+ soulissSharedPreference.getString("cachedAddress", ""));
 		} else
 			Log.e(Constants.TAG, "Unknown putIn code: " + putIn);
 		editor.commit();
@@ -321,11 +321,11 @@ public class UDPSoulissDecoder {
 		database.createOrUpdateStructure(nodes, maxTypicalXnode);
 		// Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
 
-		SharedPreferences.Editor editor = customSharedPreference.edit();
+		SharedPreferences.Editor editor = soulissSharedPreference.edit();
 		// sistema configurato
-		if (customSharedPreference.contains("numNodi"))
+		if (soulissSharedPreference.contains("numNodi"))
 			editor.remove("numNodi");
-		if (customSharedPreference.contains("TipiciXNodo"))
+		if (soulissSharedPreference.contains("TipiciXNodo"))
 			editor.remove("TipiciXNodo");
 
 		editor.putInt("numNodi", nodes);
@@ -350,12 +350,12 @@ public class UDPSoulissDecoder {
 	private void decodeTypRequest(ArrayList<Short> mac) {
 		try {
 			assertEquals(Constants.Souliss_UDP_function_typreq_resp, (short) mac.get(0));
-			SharedPreferences.Editor editor = customSharedPreference.edit();
+			SharedPreferences.Editor editor = soulissSharedPreference.edit();
 			short tgtnode = mac.get(3);
 			int numberOf = mac.get(4);
 			int done = 0;
 			// SoulissNode node = database.getSoulissNode(tgtnode);
-			int typXnodo = customSharedPreference.getInt("TipiciXNodo", 1);
+			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
 			// creates Souliss nodes
 			for (int j = 0; j < numberOf; j++) {
 				if (mac.get(5 + j) != 0) {// create only not-empty typicals
@@ -369,7 +369,7 @@ public class UDPSoulissDecoder {
 					dto.persist();
 				}
 			}
-			if (customSharedPreference.contains("numTipici"))
+			if (soulissSharedPreference.contains("numTipici"))
 				editor.remove("numTipici");//unused
 			editor.putInt("numTipici", done);
 			editor.commit();
@@ -391,7 +391,7 @@ public class UDPSoulissDecoder {
 			List<SoulissNode> nodes = database.getAllNodes();
 			short tgtnode = mac.get(3);
 			int numberOf = mac.get(4);
-			int typXnodo = customSharedPreference.getInt("TipiciXNodo", 1);
+			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
 			SoulissTypicalDTO dto = new SoulissTypicalDTO();
 			//refresh typicals
 			for (short j = 0; j < numberOf; j++) {
