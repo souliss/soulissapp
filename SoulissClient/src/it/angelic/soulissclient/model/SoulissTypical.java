@@ -23,6 +23,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
@@ -131,10 +132,6 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		case Constants.Souliss_T22:
 			rest = new SoulissTypical22(opts);
 			break;
-		case Constants.Souliss_T_CurrentSensor:
-			rest = new SoulissTypicalCurrentSensor(opts);
-			rest.setSensor(true);
-			break;
 		case Constants.Souliss_T_TemperatureSensor:
 			rest = new SoulissTypicalTemperatureSensor(opts);
 			rest.setSensor(true);
@@ -173,6 +170,20 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypical54LuxSensor(opts);
 			rest.setSensor(true);
 			break;
+		case Constants.Souliss_T55_VoltageSensor:
+			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
+			rest.setSensor(true);
+			break;
+		case Constants.Souliss_T56_CurrentSensor:
+			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
+			rest.setSensor(true);
+			break;
+			
+		case Constants.Souliss_T57_PowerSensor:
+			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
+			rest.setSensor(true);
+			break;
+			
 		/*case Constants.Souliss_T52:
 			rest = new SoulissTypical5n(opts);
 			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());
@@ -239,6 +250,12 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_THumidity_desc;
 		else if (typical == Constants.Souliss_T54_LuxSensor)
 			id = R.string.Souliss_T54_desc;
+		else if (typical == Constants.Souliss_T55_VoltageSensor)
+			id = R.string.Souliss_T55_desc;
+		else if (typical == Constants.Souliss_T56_CurrentSensor)
+			id = R.string.Souliss_T56_desc;
+		else if (typical == Constants.Souliss_T57_PowerSensor)
+			id = R.string.Souliss_T57_desc;
 		else
 			id = R.string.unknown_typical;
 
@@ -276,9 +293,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		else if (typical == Constants.Souliss_T41_Antitheft_Main)
 			return R.drawable.shield;
 		else if (typical == Constants.Souliss_T42_Antitheft_Peer)
-			return R.drawable.shield;
-		else if (typical == Constants.Souliss_T_CurrentSensor)
-			return R.drawable.lightning;
+			return R.drawable.shield;		
 		else if (typical == Constants.Souliss_T_TemperatureSensor)
 			return R.drawable.thermometer;
 		else if (typical == Constants.Souliss_T_related)
@@ -297,6 +312,13 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.thermometer;
 		else if (typical == Constants.Souliss_T54_LuxSensor)
 			return R.drawable.home;
+		else if (typical == Constants.Souliss_T55_VoltageSensor)
+			return R.drawable.lightning;
+		else if (typical == Constants.Souliss_T56_CurrentSensor)
+			return R.drawable.lightning;
+		else if (typical == Constants.Souliss_T57_PowerSensor)
+			return R.drawable.lightning;
+		
 		else
 			return R.drawable.empty_narrow;
 	}

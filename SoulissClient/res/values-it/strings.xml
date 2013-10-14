@@ -224,7 +224,7 @@
     <string name="Souliss_T51_desc">Input Analogico</string>
     <string name="Souliss_T52_desc">Input Analogico, root mean value</string>
     <string name="Souliss_T53_desc">Input Analogico, max iterative</string>
-    <string name="Souliss_T54_desc">Sensore Luminosità</string>
+    <string name="Souliss_T54_desc">Sensore Luminosità</string><string name="Souliss_T55_desc">Sensore Tensione</string><string name="Souliss_T56_desc">Sensore Corrente</string><string name="Souliss_T57_desc">Sensore Potenza</string>
     <string name="Souliss_TCurrentSensor_desc">Sensore Corrente</string>
     <string name="Souliss_TTemperature_desc">Sensore Temperatura</string>
     <string name="Souliss_THumidity_desc">Sensore umidità</string>
