@@ -92,7 +92,7 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical im
 		final TextView cmd = new TextView(ctx);
 //************************************************************
 		String sUnit="";
-		int iMax;
+		int iMax = 0;
 		switch (typ) {
 		case Constants.Souliss_T55_VoltageSensor:
 			sUnit="V";
@@ -139,9 +139,8 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical im
 		//par.setMax(50);
 		//par.setProgress(20);
 		//par.setProgress(0);
-		par.setMax(40);
+		par.setMax(iMax);
 		par.setProgress((int) getOutputFloat());
-
 		cont.addView(par);
 
 	}
