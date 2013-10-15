@@ -1,4 +1,5 @@
-/gen
-/bin
-.classpath
-.project
+SoulissClient/gen
+SoulissClient/bin
+SoulissClient/.classpath
+SoulissClient/.project
+SoulissClient/project.properties
