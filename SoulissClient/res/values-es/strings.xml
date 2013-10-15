@@ -216,6 +216,9 @@
     <string name="Souliss_T52_desc">Entrada analógica, valor medio</string>
     <string name="Souliss_T53_desc">Entrada analógica, interactividad máxima</string>
     <string name="Souliss_T54_desc">Sensor de luz</string>
+	<string name="Souliss_T55_desc">Voltage Sensor</string>
+	<string name="Souliss_T56_desc">Current Sensor</string>
+	<string name="Souliss_T57_desc">Power Sensor</string>
     <string name="Souliss_TCurrentSensor_desc">Sensor de corriente</string>
     <string name="Souliss_TTemperature_desc">Sendor de temperatura</string>
     <string name="Souliss_THumidity_desc">Sensor de humedad</string>
