@@ -392,6 +392,7 @@ public class UDPSoulissDecoder {
 			short tgtnode = mac.get(3);
 			int numberOf = mac.get(4);
 			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
+			Log.d(Constants.TAG, "---DECODE MACACO OFFSET:"+tgtnode+" NUMOF:"+numberOf);
 			SoulissTypicalDTO dto = new SoulissTypicalDTO();
 			//refresh typicals
 			for (short j = 0; j < numberOf; j++) {
@@ -402,6 +403,7 @@ public class UDPSoulissDecoder {
 					dto.setSlot(((short) (j % typXnodo)));
 					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// sufficiente una refresh
+					Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
 					dto.refresh();
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");
