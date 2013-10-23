@@ -70,7 +70,7 @@ public class UDPSoulissDecoder {
 	 */
 	public void decodeVNetDatagram(DatagramPacket packet) {
 		int checklen = packet.getLength();
-		// Log.d("UDPDecoder", "** Packet received");
+		// Log.d(Constants.TAG, "** Packet received");
 		ArrayList<Short> mac = new ArrayList<Short>();
 		for (int ig = 7; ig < checklen; ig++) {
 			mac.add((short) (packet.getData()[ig] & 0xFF));
@@ -85,7 +85,7 @@ public class UDPSoulissDecoder {
 				dump.append("0x" + Long.toHexString(0xFF & packet.getData()[ig]) + " ");
 				// dump.append(":"+packet.getData()[ig]);
 			}
-			Log.e("UDPDecoder", "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
+			Log.e(Constants.TAG, "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
 					+ "\n" + dump.toString());
 		} else {
 			decodeMacaco(mac);
@@ -95,7 +95,7 @@ public class UDPSoulissDecoder {
 		 * DEBUG PACCHETTO StringBuilder dump = new StringBuilder(); for (int ig
 		 * = 0; ig < checklen; ig++) { // 0xFF & buf[index] dump.append("0x" +
 		 * Long.toHexString(0xFF & packet.getData()[ig]) + " "); //
-		 * dump.append(":"+packet.getData()[ig]); } Log.d("UDPDecoder", "***" +
+		 * dump.append(":"+packet.getData()[ig]); } Log.d(Constants.TAG, "***" +
 		 * dump.toString());
 		 */
 		// Qualcosa ho ricevuto, invia broadcast
@@ -124,49 +124,49 @@ public class UDPSoulissDecoder {
 		Log.d(Constants.TAG, "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
 		switch (functionalCode) {
 		case Constants.Souliss_UDP_function_subscribe_data:
-			Log.d("UDPDecoder", "** Subscription answer");
+			Log.d(Constants.TAG, "** Subscription answer");
 			decodeStateRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_poll_resp:
-			Log.d("UDPDecoder", "** Poll answer");
+			Log.d(Constants.TAG, "** Poll answer");
 			decodeStateRequest(macacoPck);
 			processTriggers();
 			break;
 		case Constants.Souliss_UDP_function_ping_resp:
 			// assertEquals(mac.size(), 8);
-			Log.d("UDPDecoder", "** Ping response bytes " + macacoPck.size());
+			Log.d(Constants.TAG, "** Ping response bytes " + macacoPck.size());
 			decodePing(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_subscribe_resp:
-			Log.d("UDPDecoder", "** State request answer");
+			Log.d(Constants.TAG, "** State request answer");
 			decodeStateRequest(macacoPck);
 			processTriggers();
 			break;
 		case Constants.Souliss_UDP_function_typreq_resp:// Answer for assigned
 														// typical logic
-			Log.d("UDPDecoder", "** TypReq answer");
+			Log.d(Constants.TAG, "** TypReq answer");
 			decodeTypRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_health_resp:// Answer nodes healty
-			Log.d("UDPDecoder", "** Health answer");
+			Log.d(Constants.TAG, "** Health answer");
 			decodeHealthRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_db_struct_resp:// Answer nodes
 			assertEquals(macacoPck.size(), 9); // healty
-			Log.w("UDPDecoder", "** DB Structure answer");
+			Log.w(Constants.TAG, "** DB Structure answer");
 			decodeDBStructRequest(macacoPck);
 			break;
 		case 0x83:
-			Log.e("UDPDecoder", "** (Functional code not supported)");
+			Log.e(Constants.TAG, "** (Functional code not supported)");
 			break;
 		case 0x84:
-			Log.e("UDPDecoder", "** (Data out of range)");
+			Log.e(Constants.TAG, "** (Data out of range)");
 			break;
 		case 0x85:
-			Log.e("UDPDecoder", "** (Subscription refused)");
+			Log.e(Constants.TAG, "** (Subscription refused)");
 			break;
 		default:
-			Log.e("UDPDecoder", "** Unknown functional code: " + functionalCode);
+			Log.e(Constants.TAG, "** Unknown functional code: " + functionalCode);
 			break;
 		}
 

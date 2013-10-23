@@ -483,8 +483,8 @@ public class UDPHelper {
 
 		frame.add((byte) 23);// PUTIN
 
-		frame.add((byte) dude[3]);// BOARD
-		frame.add((byte) dude[2]);//
+		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD
+		frame.add((byte) dude[2]);// es 192.168.XX.0
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX
 		
