@@ -285,14 +285,19 @@ public class UDPSoulissDecoder {
 		boolean alreadyPrivate = soulissSharedPreference.getString("cachedAddress", "").compareTo(
 				opzioni.getPrefIPAddress()) == 0;
 
-		if (putIn == 0xB && !alreadyPrivate) {
+		if (putIn == 0xB && !alreadyPrivate) {//PUBBLICO
 			opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
 			editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getIPPreferencePublic());
-		} else if (putIn == 0xF) {
+		} else if (putIn == 0xF) {//PRIVATO
 			opzioni.setCachedAddr(opzioni.getPrefIPAddress());
 			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getPrefIPAddress());
+		} else if (putIn == 0x5) {//BROADCAST VA, USO QUELLA
+			opzioni.setCachedAddr(Constants.BROADCASTADDR);
+			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
+			//FIXME qui estrarre l'indirizzo
+			Log.w(Constants.TAG, "Refreshing BROADCAST address FIXME: " + Constants.BROADCASTADDR);
 		} else if (alreadyPrivate) {
 			Log.w(Constants.TAG,
 					"Local address already set. I'll NOT overwrite it: "

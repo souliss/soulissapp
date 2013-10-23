@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.helpers;
 
 import static it.angelic.soulissclient.Constants.TAG;
+import static it.angelic.soulissclient.net.Constants.BROADCASTADDR;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.net.UDPHelper;
@@ -216,6 +217,12 @@ public class SoulissPreferenceHelper implements Serializable {
 						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI)
 					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
 							getPrefIPAddress());
+				else if (customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI){
+					//Broadcast
+					Log.w(Constants.TAG, "if everything bad, try BROADCAST address");
+					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
+							BROADCASTADDR);
+				}
 			}
 		}.start();
 		return;

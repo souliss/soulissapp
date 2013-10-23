@@ -165,7 +165,16 @@ public class UDPHelper {
 
 			List<Byte> macaco = new ArrayList<Byte>();
 			macaco = Arrays.asList(Constants.PING_PAYLOAD);
-			macaco.set(1, (byte) (ip.compareTo(ipubbl) == 0 ? 0xF : 0xB));
+			//qui inserisco broadcast
+			byte whoami = 0xB;//PRIVATE by default
+			if (ipubbl.compareTo(ip) == 0)
+				whoami = 0xF;
+			else if (ipubbl.compareTo(Constants.BROADCASTADDR)==0){
+				whoami = 0x5;
+				macaco = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
+				ip = Constants.BROADCASTADDR;
+			}
+			macaco.set(1, whoami);
 			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, ip, userix, nodeix);
 
 			byte[] merd = new byte[buf.size()];
@@ -411,7 +420,8 @@ public class UDPHelper {
 	}
 
 	/**
-	 * Wrappa una ping, per causare una risposta da soluiss
+	 * Wrappa una ping, per causare una risposta da souliss
+	 * ip puo essere quello pubblico, privato o broadcast
 	 * 
 	 * local address is always necessary
 	 * 
@@ -428,10 +438,10 @@ public class UDPHelper {
 		try {
 			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex()).getHostAddress();
 		} catch (UnknownHostException ed) {
-			Log.e(Constants.TAG, "***Fail", ed);
+			Log.e(Constants.TAG, "***UnknownHostFail", ed);
 			return ed.getMessage();
 		} catch (SocketException et) {
-			Log.e(Constants.TAG, "***Fail", et);
+			Log.e(Constants.TAG, "***SocketFail", et);
 			return et.getMessage();
 		} catch (Exception e) {
 			Log.e(Constants.TAG, "***Fail", e);
@@ -474,7 +484,7 @@ public class UDPHelper {
 		frame.add((byte) 23);// PUTIN
 
 		frame.add((byte) dude[3]);// BOARD
-		frame.add((byte) 0);//
+		frame.add((byte) dude[2]);//
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX
 		
