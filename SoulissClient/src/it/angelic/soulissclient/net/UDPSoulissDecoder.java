@@ -121,7 +121,7 @@ public class UDPSoulissDecoder {
 		// NUMBEROF 1 byte
 		int startOffset = macacoPck.get(3);
 		int numberOf = macacoPck.get(4);
-		Log.d("UDPDecoder", "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
+		Log.d(Constants.TAG, "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
 		switch (functionalCode) {
 		case Constants.Souliss_UDP_function_subscribe_data:
 			Log.d("UDPDecoder", "** Subscription answer");
@@ -356,16 +356,18 @@ public class UDPSoulissDecoder {
 			int done = 0;
 			// SoulissNode node = database.getSoulissNode(tgtnode);
 			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
+			Log.i(Constants.TAG, "--DECODE MACACO OFFSET:"+tgtnode+" NUMOF:"+numberOf+" TYPICALSXNODE: "+typXnodo);
 			// creates Souliss nodes
 			for (int j = 0; j < numberOf; j++) {
 				if (mac.get(5 + j) != 0) {// create only not-empty typicals
 					SoulissTypicalDTO dto = new SoulissTypicalDTO();
 					dto.setTypical(mac.get(5 + j));
 					dto.setSlot(((short) (j % typXnodo)));// magia
-					dto.setNodeId((short) (j / typXnodo));
+					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// conta solo i master
 					if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
 						done++;
+					Log.d(Constants.TAG, "---PERSISTING TYPICAL ON NODE:"+((short) (j / typXnodo + tgtnode))+" SLOT:"+((short) (j % typXnodo))+" TYP:"+(mac.get(5 + j)));
 					dto.persist();
 				}
 			}
@@ -373,7 +375,7 @@ public class UDPSoulissDecoder {
 				editor.remove("numTipici");//unused
 			editor.putInt("numTipici", done);
 			editor.commit();
-			Log.d(Constants.TAG, "Refreshed typicals for node " + tgtnode);
+			Log.i(Constants.TAG, "Refreshed "+numberOf+" typicals for node " + tgtnode);
 		} catch (Exception uy) {
 			Log.e(Constants.TAG, "decodeTypRequest ERROR", uy);
 		}
@@ -389,24 +391,32 @@ public class UDPSoulissDecoder {
 	private void decodeStateRequest(ArrayList<Short> mac) {
 		try {
 			List<SoulissNode> nodes = database.getAllNodes();
-			short tgtnode = mac.get(3);
+			Log.d(Constants.TAG, "---Nodes on DB: "+nodes.size());
+			int tgtnode = mac.get(3);
 			int numberOf = mac.get(4);
-			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
+			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 8);
 			Log.d(Constants.TAG, "---DECODE MACACO OFFSET:"+tgtnode+" NUMOF:"+numberOf);
 			SoulissTypicalDTO dto = new SoulissTypicalDTO();
 			//refresh typicals
 			for (short j = 0; j < numberOf; j++) {
+				//Log.d(Constants.TAG, "---REFRESHING NODE:"+(((int)j / typXnodo) + tgtnode)+" SLOT:"+(j % typXnodo));
 				try {
-					SoulissNode it = nodes.get(j / typXnodo + tgtnode);
+					SoulissNode it = nodes.get(((int)j / typXnodo) + tgtnode);
 					it.getTypical((short) (j % typXnodo));
 					dto.setOutput(mac.get(5 + j));
 					dto.setSlot(((short) (j % typXnodo)));
 					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// sufficiente una refresh
-					Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
+					
 					dto.refresh();
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");
+					//Log.d(Constants.TAG, "---REFRESHING NODE ERROR:"+(((int)j / typXnodo) + tgtnode)+" SLOT/TYP:"+(j % typXnodo)+e.getMessage());
+					
+					continue;
+				} catch (Exception e) {
+					// unknown error
+					Log.e(Constants.TAG, e.getMessage(),e);
 					continue;
 				}
 			}
