@@ -17,6 +17,7 @@ import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.net.DatagramPacket;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 /**
- * Classe per il decode dei pacchetti nativi souliss 
+ * Classe per il decode dei pacchetti nativi souliss
  * 
  * This class decodes incoming Souliss packets, starting from decodevNet
  * 
@@ -135,6 +136,11 @@ public class UDPSoulissDecoder {
 		case Constants.Souliss_UDP_function_ping_resp:
 			// assertEquals(mac.size(), 8);
 			Log.d(Constants.TAG, "** Ping response bytes " + macacoPck.size());
+			decodePing(macacoPck);
+			break;
+		case Constants.Souliss_UDP_function_ping_bcast_resp:
+			// assertEquals(mac.size(), 8);
+			Log.d(Constants.TAG, "** Ping BROADCAST response bytes " + macacoPck.size());
 			decodePing(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_subscribe_resp:
@@ -285,18 +291,40 @@ public class UDPSoulissDecoder {
 		boolean alreadyPrivate = soulissSharedPreference.getString("cachedAddress", "").compareTo(
 				opzioni.getPrefIPAddress()) == 0;
 
-		if (putIn == 0xB && !alreadyPrivate) {//PUBBLICO
+		if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
 			opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
 			editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getIPPreferencePublic());
-		} else if (putIn == 0xF) {//PRIVATO
+		} else if (putIn == 0xF) {// PRIVATO
 			opzioni.setCachedAddr(opzioni.getPrefIPAddress());
 			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getPrefIPAddress());
-		} else if (putIn == 0x5) {//BROADCAST VA, USO QUELLA
-			opzioni.setCachedAddr(Constants.BROADCASTADDR);
-			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
-			//FIXME qui estrarre l'indirizzo
+		} else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
+			
+			try {// sanity check
+				Short[] parsed = mac.subList(5, 9).toArray(new Short[4]);
+				byte[] good = new byte[4];
+				//[56, 5, 0, 0, 4, 192, 168, 0, 17]
+				for (int i = 0; i < good.length; i++) {
+					good[i] = parsed[i].byteValue();
+				}
+				final InetAddress checkIPt = InetAddress.getByAddress(good);
+				final String pars = " (" + checkIPt.getHostName() + ")";
+				Log.i(Constants.TAG, "Parsed private IP: " + checkIPt.getHostAddress());
+				opzioni.setCachedAddr(checkIPt.getHostAddress());
+				editor.putString("cachedAddress", checkIPt.getHostAddress());
+			} catch (final Exception e) {
+				Log.e(Constants.TAG, "Error in address parsing: " + e.getMessage(), e);
+				opzioni.setCachedAddr(Constants.BROADCASTADDR);
+				editor.putString("cachedAddress", Constants.BROADCASTADDR);
+			}
+			
+			if (!opzioni.isSoulissIpConfigured() || !Constants.BROADCASTADDR.equals(opzioni.getCachedAddress()) ) {
+				//sovrascrivo se non settato o settato ma ricevo IP valido
+				Log.w(Constants.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
+				opzioni.setIPPreference(opzioni.getCachedAddress());
+			}
+			
 			Log.w(Constants.TAG, "Refreshing BROADCAST address FIXME: " + Constants.BROADCASTADDR);
 		} else if (alreadyPrivate) {
 			Log.w(Constants.TAG,
@@ -361,7 +389,8 @@ public class UDPSoulissDecoder {
 			int done = 0;
 			// SoulissNode node = database.getSoulissNode(tgtnode);
 			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
-			Log.i(Constants.TAG, "--DECODE MACACO OFFSET:"+tgtnode+" NUMOF:"+numberOf+" TYPICALSXNODE: "+typXnodo);
+			Log.i(Constants.TAG, "--DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
+					+ typXnodo);
 			// creates Souliss nodes
 			for (int j = 0; j < numberOf; j++) {
 				if (mac.get(5 + j) != 0) {// create only not-empty typicals
@@ -372,15 +401,16 @@ public class UDPSoulissDecoder {
 					// conta solo i master
 					if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
 						done++;
-					Log.d(Constants.TAG, "---PERSISTING TYPICAL ON NODE:"+((short) (j / typXnodo + tgtnode))+" SLOT:"+((short) (j % typXnodo))+" TYP:"+(mac.get(5 + j)));
+					Log.d(Constants.TAG, "---PERSISTING TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
+							+ " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
 					dto.persist();
 				}
 			}
 			if (soulissSharedPreference.contains("numTipici"))
-				editor.remove("numTipici");//unused
+				editor.remove("numTipici");// unused
 			editor.putInt("numTipici", done);
 			editor.commit();
-			Log.i(Constants.TAG, "Refreshed "+numberOf+" typicals for node " + tgtnode);
+			Log.i(Constants.TAG, "Refreshed " + numberOf + " typicals for node " + tgtnode);
 		} catch (Exception uy) {
 			Log.e(Constants.TAG, "decodeTypRequest ERROR", uy);
 		}
@@ -396,32 +426,35 @@ public class UDPSoulissDecoder {
 	private void decodeStateRequest(ArrayList<Short> mac) {
 		try {
 			List<SoulissNode> nodes = database.getAllNodes();
-			Log.d(Constants.TAG, "---Nodes on DB: "+nodes.size());
+			Log.d(Constants.TAG, "---Nodes on DB: " + nodes.size());
 			int tgtnode = mac.get(3);
 			int numberOf = mac.get(4);
 			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 8);
-			Log.d(Constants.TAG, "---DECODE MACACO OFFSET:"+tgtnode+" NUMOF:"+numberOf);
+			Log.d(Constants.TAG, "---DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
 			SoulissTypicalDTO dto = new SoulissTypicalDTO();
-			//refresh typicals
+			// refresh typicals
 			for (short j = 0; j < numberOf; j++) {
-				//Log.d(Constants.TAG, "---REFRESHING NODE:"+(((int)j / typXnodo) + tgtnode)+" SLOT:"+(j % typXnodo));
+				// Log.d(Constants.TAG, "---REFRESHING NODE:"+(((int)j /
+				// typXnodo) + tgtnode)+" SLOT:"+(j % typXnodo));
 				try {
-					SoulissNode it = nodes.get(((int)j / typXnodo) + tgtnode);
+					SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
 					it.getTypical((short) (j % typXnodo));
 					dto.setOutput(mac.get(5 + j));
 					dto.setSlot(((short) (j % typXnodo)));
 					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// sufficiente una refresh
-					
+
 					dto.refresh();
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");
-					//Log.d(Constants.TAG, "---REFRESHING NODE ERROR:"+(((int)j / typXnodo) + tgtnode)+" SLOT/TYP:"+(j % typXnodo)+e.getMessage());
-					
+					// Log.d(Constants.TAG, "---REFRESHING NODE ERROR:"+(((int)j
+					// / typXnodo) + tgtnode)+" SLOT/TYP:"+(j %
+					// typXnodo)+e.getMessage());
+
 					continue;
 				} catch (Exception e) {
 					// unknown error
-					Log.e(Constants.TAG, e.getMessage(),e);
+					Log.e(Constants.TAG, e.getMessage(), e);
 					continue;
 				}
 			}
@@ -448,7 +481,7 @@ public class UDPSoulissDecoder {
 		int numberOf = mac.get(4);
 
 		ArrayList<Short> healths = new ArrayList<Short>();
-		//build an array containing healths
+		// build an array containing healths
 		for (int i = 5; i < 5 + numberOf; i++) {
 			healths.add(Short.valueOf(mac.get(i)));
 		}

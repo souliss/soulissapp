@@ -42,21 +42,22 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 				}
 				final String newval = newValue.toString();
 
-				if (newval != null && newval.compareTo("") == 0) {
+				if (newval != null && newval.compareTo("") == 0) {// SET vuoto
 					parent.runOnUiThread(new Runnable() {
 						public void run() {
-							if ("edittext_IP_pubb".compareTo(preference.getKey()) == 0)
+							if ("edittext_IP_pubb".compareTo(preference.getKey()) == 0) {
 								preference.setSummary(parent.getString(R.string.summary_edittext_IP_pubb));
-							else if ("edittext_IP".compareTo(preference.getKey()) == 0)
+								opzioni.setIPPreferencePublic("");
+							} else if ("edittext_IP".compareTo(preference.getKey()) == 0) {
 								preference.setSummary(parent.getString(R.string.summary_edittext_IP));
+								opzioni.setIPPreference("");
+							}
 						}
 					});
 
-					opzioni.setIPPreferencePublic("");
 					return;
 				}
-				// sanity check
-				try {
+				try {// sanity check
 					final InetAddress checkIPt = InetAddress.getByName(newValue.toString());
 					final String pars = " (" + checkIPt.getHostName() + ")";
 					parent.runOnUiThread(new Runnable() {
@@ -77,8 +78,7 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 					return;
 				}
 				// trigger connection test se il valore pubblico e`
-				// ok e
-				// diverso dal vecchio
+				// ok e diverso dal vecchio
 				if (old.compareTo(newval) != 0) {
 
 					opzioni.clearCachedAddress();

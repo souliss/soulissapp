@@ -314,8 +314,11 @@ public class SoulissPreferenceHelper implements Serializable {
 		PrefFont = iPPreference;
 	}
 
-	public void setIPPreference(String fontPreference) {
-		this.IPPreference = fontPreference;
+	public void setIPPreference(String newIP) {//serve anche commit perche` chiamata fuori da prefs
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putString("edittext_IP", newIP);
+		pesta.commit();
+		this.IPPreference = newIP;
 	}
 
 	public void setTextFx(boolean nfx) {
