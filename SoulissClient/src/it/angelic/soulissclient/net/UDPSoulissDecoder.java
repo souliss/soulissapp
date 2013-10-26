@@ -309,7 +309,7 @@ public class UDPSoulissDecoder {
 					good[i] = parsed[i].byteValue();
 				}
 				final InetAddress checkIPt = InetAddress.getByAddress(good);
-				final String pars = " (" + checkIPt.getHostName() + ")";
+				//final String pars = " (" + checkIPt.getHostName() + ")";
 				Log.i(Constants.TAG, "Parsed private IP: " + checkIPt.getHostAddress());
 				opzioni.setCachedAddr(checkIPt.getHostAddress());
 				editor.putString("cachedAddress", checkIPt.getHostAddress());
@@ -325,7 +325,6 @@ public class UDPSoulissDecoder {
 				opzioni.setIPPreference(opzioni.getCachedAddress());
 			}
 			
-			Log.w(Constants.TAG, "Refreshing BROADCAST address FIXME: " + Constants.BROADCASTADDR);
 		} else if (alreadyPrivate) {
 			Log.w(Constants.TAG,
 					"Local address already set. I'll NOT overwrite it: "

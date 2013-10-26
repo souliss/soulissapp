@@ -18,7 +18,6 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.JSONHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
@@ -31,7 +30,6 @@ import us.feras.ecogallery.EcoGallery;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -556,7 +554,7 @@ public class AlertDialogHelper {
 	 * @param opzioni
 	 * @return il dialogo da mostrare
 	 */
-	public static ProgressDialog checkConnectionResultDialog(final Activity preferencesActivity, final String local_ip,
+	/*public static ProgressDialog checkConnectionResultDialog(final Activity preferencesActivity, final String local_ip,
 			final String public_ip, final SoulissPreferenceHelper opzioni) {
 		final ProgressDialog mProgressDialog = new ProgressDialog(preferencesActivity);
 		mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
@@ -647,7 +645,7 @@ public class AlertDialogHelper {
 
 		return mProgressDialog;
 
-	}
+	}*/
 
 	/**
 	 * Dialogo creazione DB
