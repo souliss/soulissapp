@@ -480,7 +480,6 @@ public class UDPHelper {
 			return frame;
 		}
 		byte[] dude = ip.getAddress();
-
 		frame.add((byte) 23);// PUTIN
 
 		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD

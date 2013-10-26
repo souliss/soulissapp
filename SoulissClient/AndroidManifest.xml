@@ -11,6 +11,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -156,7 +157,7 @@
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:name="T19SingleChannelActivity"
             android:exported="false"
             android:icon="@drawable/candle"
@@ -165,7 +166,7 @@
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
         </activity>
-         <activity
+        <activity
             android:name="Typical1nDetail"
             android:exported="false"
             android:icon="@drawable/light_off"

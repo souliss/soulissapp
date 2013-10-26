@@ -18,6 +18,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -322,7 +323,16 @@ public class UDPSoulissDecoder {
 			if (!opzioni.isSoulissIpConfigured() || !Constants.BROADCASTADDR.equals(opzioni.getCachedAddress()) ) {
 				//sovrascrivo se non settato o settato ma ricevo IP valido
 				Log.w(Constants.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
-				opzioni.setIPPreference(opzioni.getCachedAddress());
+				//potrebbe non essere valido secondo subnet mask. provo
+				try {
+					if (!isMaskedEqualZero(InetAddress.getByName(opzioni.getCachedAddress()))){
+						opzioni.setIPPreference(opzioni.getCachedAddress());
+					}
+				} catch (UnknownHostException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			
 		} else if (alreadyPrivate) {
@@ -333,6 +343,36 @@ public class UDPSoulissDecoder {
 			Log.e(Constants.TAG, "Unknown putIn code: " + putIn);
 		editor.commit();
 	}
+
+	private boolean isMaskedEqualZero(InetAddress byName) throws UnknownHostException {
+		int sub = Constants.getSubnet(context);
+		//byte[] bytes = BigInteger.valueOf(sub).toByteArray();
+		InetAddress subnet = intToInet(sub);
+		
+		byte[] subnetAddr = subnet.getAddress();
+		byte[] actual = byName.getAddress();
+		for (int i = 0; i < subnetAddr.length; i++) {
+			if ((subnetAddr[i] & actual[i]) != 0 )
+				return false;
+		}
+		return true;
+	}
+	public static byte byteOfInt(int value, int which) {
+	    int shift = which * 8;
+	    return (byte)(value >> shift); 
+	  }
+	  public static InetAddress intToInet(int value) {
+	    byte[] bytes = new byte[4];
+	    for(int i = 0; i<4; i++) {
+	      bytes[i] = byteOfInt(value, i);
+	    }
+	    try {
+	      return InetAddress.getByAddress(bytes);
+	    } catch (UnknownHostException e) {
+	      // This only happens if the byte array has a bad length
+	      return null;
+	    }
+	  }
 
 	/**
 	 * Sovrascrive la struttura I nodi e la struttura dei tipici e richiama
