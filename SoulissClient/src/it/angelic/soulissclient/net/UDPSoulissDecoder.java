@@ -18,6 +18,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,11 +65,10 @@ public class UDPSoulissDecoder {
 		soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		database.open();
 		try {
-			localHost = InetAddress.getLocalHost();
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			localHost = NetUtils.getLocalIpAddress();
+		} catch (SocketException e) {
+			Log.e(Constants.TAG, "CANT GET LOCALADDR");
+		} 
 	}
 
 	/**
@@ -308,27 +308,34 @@ public class UDPSoulissDecoder {
 			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getPrefIPAddress());
 		} else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
-			
+
 			try {// sanity check
 				final InetAddress toverify = NetUtils.extractTargetAddress(mac);
 				Log.w(Constants.TAG, "BROADCAST detected, IP to verify: " + toverify);
-				Log.w(Constants.TAG, "BROADCAST, subnet: " +NetUtils.intToInet(NetUtils.getSubnet(context)));
+				Log.w(Constants.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getSubnet(context)));
 				Log.w(Constants.TAG, "BROADCAST, me: " + localHost);
-				
-				Log.w(Constants.TAG, "BROADCAST, belongsToNode: " + NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))) );
-				Log.w(Constants.TAG, "BROADCAST, belongsToSameSubnet: " + NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),localHost));
+
+				Log.w(Constants.TAG,
+						"BROADCAST, belongsToNode: "
+								+ NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))));
+				Log.w(Constants.TAG,
+						"BROADCAST, belongsToSameSubnet: "
+								+ NetUtils.belongsToSameSubnet(toverify,
+										NetUtils.intToInet(NetUtils.getSubnet(context)), localHost));
 				/**
 				 * deve essere determinato se l'indirizzo appartiene ad un nodo
 				 * e se è all'interno della propria subnet. Se entrambe le
 				 * verifiche hanno esito positivo, si può utilizzare tale
 				 * indirizzo, altrimenti si continua ad usare broadcast.
 				 */
-				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))) && 
-						NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),localHost)) {
+				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)))
+						&& NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),
+								localHost)) {
 					Log.i(Constants.TAG, "Parsed private IP: " + toverify.getHostAddress());
 					opzioni.setCachedAddr(toverify.getHostAddress());
 					editor.putString("cachedAddress", toverify.getHostAddress());
-					if (!opzioni.isSoulissIpConfigured()) {//forse e` da togliere
+					if (!opzioni.isSoulissIpConfigured()) {// forse e` da
+															// togliere
 						Log.w(Constants.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
 						opzioni.setIPPreference(opzioni.getCachedAddress());
 					}
@@ -350,7 +357,6 @@ public class UDPSoulissDecoder {
 		editor.commit();
 	}
 
-	
 	/**
 	 * Sovrascrive la struttura I nodi e la struttura dei tipici e richiama
 	 * UDPHelper.typicalRequest(opzioni, nodes, 0);

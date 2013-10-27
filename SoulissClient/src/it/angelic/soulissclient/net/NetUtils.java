@@ -1,14 +1,39 @@
 package it.angelic.soulissclient.net;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+
+import org.apache.http.conn.util.InetAddressUtils;
 
 import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 
 public class NetUtils {
+	
+	public static InetAddress getLocalIpAddress() throws SocketException {
+			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					System.out.println("ip1--:" + inetAddress);
+					System.out.println("ip2--:" + inetAddress.getHostAddress());
+
+					// for getting IPV4 format
+					if (!inetAddress.isLoopbackAddress()
+							&& InetAddressUtils.isIPv4Address(inetAddress.getHostAddress())) {
+						// return inetAddress.getHostAddress().toString();
+						return inetAddress;
+					}
+				}
+			}
+		return null;
+	}
+	
 	public static int getSubnet(Context ctx){
 		WifiManager wifii= (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
         DhcpInfo d = wifii.getDhcpInfo();
