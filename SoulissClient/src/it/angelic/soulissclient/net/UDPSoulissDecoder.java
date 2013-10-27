@@ -312,17 +312,7 @@ public class UDPSoulissDecoder {
 
 			try {// sanity check
 				final InetAddress toverify = NetUtils.extractTargetAddress(mac);
-				Log.w(Constants.TAG, "BROADCAST detected, IP to verify: " + toverify);
-				Log.w(Constants.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getSubnet(context)));
-				Log.w(Constants.TAG, "BROADCAST, me: " + localHost);
-
-				Log.w(Constants.TAG,
-						"BROADCAST, belongsToNode: "
-								+ NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))));
-				Log.w(Constants.TAG,
-						"BROADCAST, belongsToSameSubnet: "
-								+ NetUtils.belongsToSameSubnet(toverify,
-										NetUtils.intToInet(NetUtils.getSubnet(context)), localHost));
+				Log.i(Constants.TAG, "Parsed private IP: " + toverify.getHostAddress());
 				/**
 				 * deve essere determinato se l'indirizzo appartiene ad un nodo
 				 * e se è all'interno della propria subnet. Se entrambe le
@@ -332,7 +322,18 @@ public class UDPSoulissDecoder {
 				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)))
 						&& NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),
 								localHost)) {
-					Log.i(Constants.TAG, "Parsed private IP: " + toverify.getHostAddress());
+					Log.d(Constants.TAG, "BROADCAST detected, IP to verify: " + toverify);
+					Log.d(Constants.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getSubnet(context)));
+					Log.d(Constants.TAG, "BROADCAST, me: " + localHost);
+
+					Log.d(Constants.TAG,
+							"BROADCAST, belongsToNode: "
+									+ NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))));
+					Log.d(Constants.TAG,
+							"BROADCAST, belongsToSameSubnet: "
+									+ NetUtils.belongsToSameSubnet(toverify,
+											NetUtils.intToInet(NetUtils.getSubnet(context)), localHost));
+					
 					opzioni.setCachedAddr(toverify.getHostAddress());
 					editor.putString("cachedAddress", toverify.getHostAddress());
 					if (!opzioni.isSoulissIpConfigured()) {// forse e` da

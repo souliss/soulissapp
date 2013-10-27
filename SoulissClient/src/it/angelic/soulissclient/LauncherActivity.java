@@ -309,7 +309,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			return;
 		}
 		String base = opzioni.getAndSetCachedAddress();
-		Log.i(TAG, "cached Address: " + base);
+		Log.d(TAG, "cached Address: " + base);
 		if (base != null && "".compareTo(base) != 0) {
 			basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"> " + base
 					+ "</font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
