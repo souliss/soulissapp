@@ -60,7 +60,7 @@ public class UDPRunnable implements Runnable {
 
 				// socket = new DatagramSocket();
 				socket.setReuseAddress(true);
-
+				socket.setBroadcast(true);
 				// port to receive souliss board data
 				InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
 				socket.bind(sa);

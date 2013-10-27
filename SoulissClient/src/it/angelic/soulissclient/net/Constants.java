@@ -14,7 +14,7 @@ public class Constants {
 	
 	public static final int SOULISSPORT = 230;
 	public static final int SERVERPORT = 23000;
-	public static final String BROADCASTADDR = "255.255.255.255";
+	//public static final String BROADCASTADDR = "255.255.255.255";
 
 	public static final byte Souliss_UDP_function_force = 51;
 	public static final byte Souliss_UDP_function_force_massive = 52;

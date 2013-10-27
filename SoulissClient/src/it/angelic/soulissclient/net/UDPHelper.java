@@ -164,7 +164,7 @@ public class UDPHelper {
 
 			// hole punch
 			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
-			sender.bind(sa);
+			
 
 			List<Byte> macaco = new ArrayList<Byte>();
 			macaco = Arrays.asList(Constants.PING_PAYLOAD);
@@ -172,10 +172,11 @@ public class UDPHelper {
 			byte whoami = 0xB;// PRIVATE by default
 			if (ipubbl.compareTo(ip) == 0)
 				whoami = 0xF;
-			else if (ipubbl.compareTo(Constants.BROADCASTADDR) == 0) {
+			else if (ipubbl.compareTo(SoulissClient.getBroadcastAddress().getHostAddress()) == 0) {
 				whoami = 0x5;
 				macaco = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
-				ip = Constants.BROADCASTADDR;
+				ip = SoulissClient.getBroadcastAddress().getHostAddress();
+				sender.setBroadcast(true);
 			}
 			macaco.set(1, whoami);
 			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, ip, userix, nodeix);
@@ -184,6 +185,7 @@ public class UDPHelper {
 			for (int i = 0; i < buf.size(); i++) {
 				merd[i] = (byte) buf.get(i);
 			}
+			sender.bind(sa);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
 			sender.send(packet);
 			Log.d(Constants.TAG, "Ping sent to: " + serverAddr);
@@ -491,7 +493,12 @@ public class UDPHelper {
 		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD
 		// n broadcast : La comunicazione avviene utilizzando l'indirizzo IP
 		// 255.255.255.255 a cui associare l'indirizzo vNet 0xFFFF.
-		frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);// es
+		try {
+			frame.add((byte) ipd.compareTo(SoulissClient.getBroadcastAddress().getHostAddress()) == 0 ? dude[2] : 0);
+		} catch (UnknownHostException e) {
+			frame.add((byte) 0);// es 192.168.1.XX BOARD
+			e.printStackTrace();
+		}// es
 																					// 192.168.XX.0
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX

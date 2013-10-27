@@ -37,6 +37,8 @@ public class NetUtils {
 		return null;
 	}
 	
+	
+	
 	public static int getSubnet(Context ctx){
 		WifiManager wifii= (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
         DhcpInfo d = wifii.getDhcpInfo();

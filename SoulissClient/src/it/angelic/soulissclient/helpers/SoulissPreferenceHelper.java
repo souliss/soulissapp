@@ -1,12 +1,13 @@
 package it.angelic.soulissclient.helpers;
 
 import static it.angelic.soulissclient.Constants.TAG;
-import static it.angelic.soulissclient.net.Constants.BROADCASTADDR;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.io.Serializable;
+import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -64,7 +65,6 @@ public class SoulissPreferenceHelper implements Serializable {
 	private int homeThold;
 	private boolean broadCastEnabled;
 
-	
 	public SoulissPreferenceHelper(Context contx) {
 		super();
 		this.contx = contx;
@@ -74,16 +74,17 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	public void reload() {
-		//SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(contx);
+		// SharedPreferences prefs =
+		// PreferenceManager.getDefaultSharedPreferences(contx);
 		initializePrefs();
-		if (userIndex == -1) {//MAI inizializzato, lo calcolo
+		if (userIndex == -1) {// MAI inizializzato, lo calcolo
 			/* USER INDEX, statico */
 			Random r = new Random(Calendar.getInstance().getTimeInMillis());
-			int casual = r.nextInt(Constants.MAX_USER_IDX);//100
+			int casual = r.nextInt(Constants.MAX_USER_IDX);// 100
 			setUserIndex(casual);
-			Log.i(Constants.TAG, "automated userIndex-index Using: "+casual);
+			Log.i(Constants.TAG, "automated userIndex-index Using: " + casual);
 		}
-		if (nodeIndex == -1) {//MAI inizializzato, lo calcolo
+		if (nodeIndex == -1) {// MAI inizializzato, lo calcolo
 			/* PHONE ID diventa node index */
 			try {
 				final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
@@ -96,11 +97,11 @@ public class SoulissPreferenceHelper implements Serializable {
 					nodeIndex++;
 				Log.w(TAG, "Pref init END. Node index hash = " + userIndex);
 				setNodeIndex(nodeIndex);
-			} catch (Exception e) {//fallito il computo, uso random e lo salvo
+			} catch (Exception e) {// fallito il computo, uso random e lo salvo
 				Random r = new Random(Calendar.getInstance().getTimeInMillis());
 				int casual = r.nextInt(99) + 1;
 				setNodeIndex(casual);
-				Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage()+". Using "+casual);
+				Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage() + ". Using " + casual);
 			}
 		}
 		// reset cachedAddress to shared prefs one
@@ -131,13 +132,13 @@ public class SoulissPreferenceHelper implements Serializable {
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
 		broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
-		eqLow= prefs.getFloat("eqLow", 1f);
-		eqMed= prefs.getFloat("eqMed", 1f);
-		eqHigh= prefs.getFloat("eqHigh", 1f);
+		eqLow = prefs.getFloat("eqLow", 1f);
+		eqMed = prefs.getFloat("eqMed", 1f);
+		eqHigh = prefs.getFloat("eqHigh", 1f);
 		Calendar fake = Calendar.getInstance();
-		fake.add(Calendar.MONTH, -2);//Default value in the past
-		serviceLastrun= prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
-		nextServiceRun= prefs.getLong("nextServiceRun", fake.getTimeInMillis());
+		fake.add(Calendar.MONTH, -2);// Default value in the past
+		serviceLastrun = prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
+		nextServiceRun = prefs.getLong("nextServiceRun", fake.getTimeInMillis());
 		try {
 			ListDimensTesto = Float.valueOf(DimensTesto);
 		} catch (Exception e) {
@@ -178,8 +179,8 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	/*
-	 * return currently used Souliss address may return null
-	 * and then re-initialize it
+	 * return currently used Souliss address may return null and then
+	 * re-initialize it
 	 */
 	public String getAndSetCachedAddress() {
 		if (cachedAddr == null) {
@@ -219,11 +220,16 @@ public class SoulissPreferenceHelper implements Serializable {
 						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI)
 					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
 							getPrefIPAddress());
-				else if (broadCastEnabled && customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI){
-					//Broadcast
+				else if (broadCastEnabled
+						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI) {
+					// Broadcast
 					Log.w(Constants.TAG, "if everything bad, try BROADCAST address");
-					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
-							BROADCASTADDR);
+					try {
+						UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this, SoulissClient.getBroadcastAddress().getHostAddress());
+					} catch (UnknownHostException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}.start();
@@ -258,7 +264,8 @@ public class SoulissPreferenceHelper implements Serializable {
 	public boolean isLightThemeSelected() {
 		return lightTheme;
 	}
-	public boolean isAnimationsEnabled(){
+
+	public boolean isAnimationsEnabled() {
 		return animations;
 	}
 
@@ -316,7 +323,8 @@ public class SoulissPreferenceHelper implements Serializable {
 		PrefFont = iPPreference;
 	}
 
-	public void setIPPreference(String newIP) {//serve anche commit perche` chiamata fuori da prefs
+	public void setIPPreference(String newIP) {// serve anche commit perche`
+												// chiamata fuori da prefs
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putString("edittext_IP", newIP);
 		pesta.commit();
@@ -338,7 +346,8 @@ public class SoulissPreferenceHelper implements Serializable {
 	public int getDataServiceIntervalMsec() {
 		return dataServiceInterval * 60;
 	}
-	public int getHomeThresholdDistance(){
+
+	public int getHomeThresholdDistance() {
 		return homeThold;
 	}
 
@@ -410,7 +419,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putInt("userIndex", userIndex);
 		pesta.commit();
-		
+
 	}
 
 	public int getNodeIndex() {
@@ -428,7 +437,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		// TODO Auto-generated method stub
 		return antitheftPresent;
 	}
-	
+
 	public boolean isAntitheftNotify() {
 		// TODO Auto-generated method stub
 		return antitheftNotify;
@@ -446,9 +455,8 @@ public class SoulissPreferenceHelper implements Serializable {
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putBoolean("antitheftNotify", antitheftNotify);
 		pesta.commit();
-		
+
 	}
-	
 
 	public void setLastServiceRun(Calendar lastupd) {
 		serviceLastrun = lastupd.getTimeInMillis();
@@ -466,8 +474,9 @@ public class SoulissPreferenceHelper implements Serializable {
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putLong("nextServiceRun", nextServiceRun);
 		pesta.commit();
-		
+
 	}
+
 	public long getNextServiceRun() {
 		return nextServiceRun;
 	}
