@@ -172,10 +172,10 @@ public class UDPHelper {
 			byte whoami = 0xB;// PRIVATE by default
 			if (ipubbl.compareTo(ip) == 0)
 				whoami = 0xF;
-			else if (ipubbl.compareTo(SoulissClient.getBroadcastAddress().getHostAddress()) == 0) {
+			else if (ipubbl.compareTo(Constants.BROADCASTADDR) == 0) {
 				whoami = 0x5;
 				macaco = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
-				ip = SoulissClient.getBroadcastAddress().getHostAddress();
+				ip = Constants.BROADCASTADDR;
 				sender.setBroadcast(true);
 			}
 			macaco.set(1, whoami);
@@ -493,12 +493,7 @@ public class UDPHelper {
 		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD
 		// n broadcast : La comunicazione avviene utilizzando l'indirizzo IP
 		// 255.255.255.255 a cui associare l'indirizzo vNet 0xFFFF.
-		try {
-			frame.add((byte) ipd.compareTo(SoulissClient.getBroadcastAddress().getHostAddress()) == 0 ? dude[2] : 0);
-		} catch (UnknownHostException e) {
-			frame.add((byte) 0);// es 192.168.1.XX BOARD
-			e.printStackTrace();
-		}// es
+			frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);
 																					// 192.168.XX.0
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX

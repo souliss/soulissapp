@@ -346,13 +346,8 @@ public class UDPSoulissDecoder {
 				}
 			} catch (final Exception e) {
 				Log.e(Constants.TAG, "Error in address parsing, using BCAST address: " + e.getMessage(), e);
-				try {
-					opzioni.setCachedAddr(SoulissClient.getBroadcastAddress().getHostAddress());
-					editor.putString("cachedAddress", SoulissClient.getBroadcastAddress().getHostAddress());
-				} catch (UnknownHostException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					opzioni.setCachedAddr(Constants.BROADCASTADDR);
+					editor.putString("cachedAddress", Constants.BROADCASTADDR);
 				
 			}
 
@@ -484,7 +479,7 @@ public class UDPSoulissDecoder {
 					continue;
 				} catch (Exception e) {
 					// unknown error
-					Log.e(Constants.TAG, e.getMessage(), e);
+					Log.e(Constants.TAG, e.getMessage());
 					continue;
 				}
 			}

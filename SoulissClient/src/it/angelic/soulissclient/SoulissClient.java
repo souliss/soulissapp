@@ -3,15 +3,11 @@ package it.angelic.soulissclient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.io.Serializable;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
-import android.net.DhcpInfo;
-import android.net.wifi.WifiManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -71,7 +67,7 @@ public class SoulissClient extends Application implements Serializable{
 	public static SoulissPreferenceHelper getOpzioni() {
 		return opzioni;
 	}
-	public static InetAddress getBroadcastAddress() throws UnknownHostException {
+	/*public static InetAddress getBroadcastAddress() throws UnknownHostException {
 	    WifiManager wifi = (WifiManager) SoulissClient.context.getSystemService(Context.WIFI_SERVICE);
 	    DhcpInfo dhcp = wifi.getDhcpInfo();
 	    // handle null somehow
@@ -80,8 +76,8 @@ public class SoulissClient extends Application implements Serializable{
 	    byte[] quads = new byte[4];
 	    for (int k = 0; k < 4; k++)
 	      quads[k] = (byte) ((broadcast >> k * 8) & 0xFF);
-	    return InetAddress.getByAddress(quads);
-	}
+	    return InetAddress.getByAddress("255.255.255.255");
+	}*/
 	private static void setOpzioni(SoulissPreferenceHelper opzioni) {
 		SoulissClient.opzioni = opzioni;
 	}

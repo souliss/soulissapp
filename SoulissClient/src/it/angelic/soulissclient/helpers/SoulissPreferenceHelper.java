@@ -3,11 +3,9 @@ package it.angelic.soulissclient.helpers;
 import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.io.Serializable;
-import java.net.UnknownHostException;
 import java.util.Calendar;
 import java.util.Random;
 
@@ -224,12 +222,7 @@ public class SoulissPreferenceHelper implements Serializable {
 						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI) {
 					// Broadcast
 					Log.w(Constants.TAG, "if everything bad, try BROADCAST address");
-					try {
-						UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this, SoulissClient.getBroadcastAddress().getHostAddress());
-					} catch (UnknownHostException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this, it.angelic.soulissclient.net.Constants.BROADCASTADDR);
 				}
 			}
 		}.start();

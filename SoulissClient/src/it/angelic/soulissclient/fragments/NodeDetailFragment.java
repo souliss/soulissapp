@@ -43,8 +43,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -75,11 +73,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class NodeDetailFragment extends AbstractTypicalFragment {
 	private static final String TAG = "SOULISSCLIENT - Node detail";
@@ -159,7 +161,32 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		View ret = inflater.inflate(R.layout.frag_nodedetail, container, false);
 		return ret;
 	}
-
+	private void refreshStatusIcon() {
+		try {
+			ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+			actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setTitle(getString(R.string.manual_title));
+			View ds = actionBar.getCustomView();
+			ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+			
+			if (!opzioni.isSoulissReachable()) {
+				online.setBackgroundResource(R.drawable.red);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+				statusOnline.setText(R.string.offline);
+			} else {
+				online.setBackgroundResource(R.drawable.green);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+				statusOnline.setText(R.string.Online);
+				
+			}
+			statusOnline.invalidate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
@@ -218,18 +245,13 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public void onStart() {
 		super.onStart();
 		if (collected == null || upda == null) {
 			return;// no detail selected
 		}
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(collected.getNiceName());
-		}
+		refreshStatusIcon();
 
 		if (opzioni.isDbConfigured()) {
 			datasource.open();
@@ -487,7 +509,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		}, 100, Constants.GUI_UPDATE_INTERVAL); // updates GUI each 40 secs
 	}
 
-	@Override
+	/*@Override FIXME
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -501,7 +523,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}*/
 
 	@Override
 	public void onPause() {
@@ -556,7 +578,9 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		public void run() {
 			Log.e(TAG, "TIMEOUT detected!!!");
 			// Reset cachedaddress
-			opzioni.reload();
+			//opzioni.reload();
+			opzioni.getAndSetCachedAddress();
+			refreshStatusIcon();
 		}
 	};
 	// meccanismo per timeout detection
