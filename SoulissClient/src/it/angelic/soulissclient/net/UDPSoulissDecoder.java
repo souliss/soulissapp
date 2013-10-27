@@ -55,6 +55,7 @@ public class UDPSoulissDecoder {
 	private SoulissDBLowHelper database;
 	private SharedPreferences soulissSharedPreference;
 	private Context context;
+	private InetAddress localHost;
 
 	public UDPSoulissDecoder(SoulissPreferenceHelper opts, Context ctx) {
 		this.opzioni = opts;
@@ -62,6 +63,12 @@ public class UDPSoulissDecoder {
 		database = new SoulissDBLowHelper(ctx);
 		soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		database.open();
+		try {
+			localHost = InetAddress.getLocalHost();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -203,7 +210,7 @@ public class UDPSoulissDecoder {
 						// check Antitheft
 						if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 								&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-							sendNotification(context, context.getString(R.string.antitheft_notify),
+							sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
 									context.getString(R.string.antitheft_notify_desc), R.drawable.shield);
 							break;
 						}
@@ -301,40 +308,33 @@ public class UDPSoulissDecoder {
 			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getPrefIPAddress());
 		} else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
-			
+
 			try {// sanity check
-				Short[] parsed = mac.subList(5, 9).toArray(new Short[4]);
-				byte[] good = new byte[4];
-				//[56, 5, 0, 0, 4, 192, 168, 0, 17]
-				for (int i = 0; i < good.length; i++) {
-					good[i] = parsed[i].byteValue();
+				final InetAddress toverify = NetUtils.extractTargetAddress(mac);
+				/**
+				 * deve essere determinato se l'indirizzo appartiene ad un nodo
+				 * e se è all'interno della propria subnet. Se entrambe le
+				 * verifiche hanno esito positivo, si può utilizzare tale
+				 * indirizzo, altrimenti si continua ad usare broadcast.
+				 */
+				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))) && 
+						NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),localHost)) {
+					Log.i(Constants.TAG, "Parsed private IP: " + toverify.getHostAddress());
+					opzioni.setCachedAddr(toverify.getHostAddress());
+					editor.putString("cachedAddress", toverify.getHostAddress());
+					if (!opzioni.isSoulissIpConfigured()) {//forse e` da togliere
+						Log.w(Constants.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
+						opzioni.setIPPreference(opzioni.getCachedAddress());
+					}
+				} else {
+					throw new UnknownHostException("belongsToNode or belongsToSameSubnet = FALSE");
 				}
-				final InetAddress checkIPt = InetAddress.getByAddress(good);
-				//final String pars = " (" + checkIPt.getHostName() + ")";
-				Log.i(Constants.TAG, "Parsed private IP: " + checkIPt.getHostAddress());
-				opzioni.setCachedAddr(checkIPt.getHostAddress());
-				editor.putString("cachedAddress", checkIPt.getHostAddress());
 			} catch (final Exception e) {
-				Log.e(Constants.TAG, "Error in address parsing: " + e.getMessage(), e);
+				Log.e(Constants.TAG, "Error in address parsing, using BCAST address: " + e.getMessage(), e);
 				opzioni.setCachedAddr(Constants.BROADCASTADDR);
 				editor.putString("cachedAddress", Constants.BROADCASTADDR);
 			}
-			
-			if (!opzioni.isSoulissIpConfigured() || !Constants.BROADCASTADDR.equals(opzioni.getCachedAddress()) ) {
-				//sovrascrivo se non settato o settato ma ricevo IP valido
-				Log.w(Constants.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
-				//potrebbe non essere valido secondo subnet mask. provo
-				try {
-					if (!isMaskedEqualZero(InetAddress.getByName(opzioni.getCachedAddress()))){
-						opzioni.setIPPreference(opzioni.getCachedAddress());
-					}
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
+
 		} else if (alreadyPrivate) {
 			Log.w(Constants.TAG,
 					"Local address already set. I'll NOT overwrite it: "
@@ -344,36 +344,7 @@ public class UDPSoulissDecoder {
 		editor.commit();
 	}
 
-	private boolean isMaskedEqualZero(InetAddress byName) throws UnknownHostException {
-		int sub = Constants.getSubnet(context);
-		//byte[] bytes = BigInteger.valueOf(sub).toByteArray();
-		InetAddress subnet = intToInet(sub);
-		
-		byte[] subnetAddr = subnet.getAddress();
-		byte[] actual = byName.getAddress();
-		for (int i = 0; i < subnetAddr.length; i++) {
-			if ((subnetAddr[i] & actual[i]) != 0 )
-				return false;
-		}
-		return true;
-	}
-	public static byte byteOfInt(int value, int which) {
-	    int shift = which * 8;
-	    return (byte)(value >> shift); 
-	  }
-	  public static InetAddress intToInet(int value) {
-	    byte[] bytes = new byte[4];
-	    for(int i = 0; i<4; i++) {
-	      bytes[i] = byteOfInt(value, i);
-	    }
-	    try {
-	      return InetAddress.getByAddress(bytes);
-	    } catch (UnknownHostException e) {
-	      // This only happens if the byte array has a bad length
-	      return null;
-	    }
-	  }
-
+	
 	/**
 	 * Sovrascrive la struttura I nodi e la struttura dei tipici e richiama
 	 * UDPHelper.typicalRequest(opzioni, nodes, 0);
@@ -543,14 +514,13 @@ public class UDPSoulissDecoder {
 	 * @param longdesc
 	 * @param icon
 	 */
-	private static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
+	private static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon) {
 
 		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		Resources res = ctx.getResources();
-
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
 		builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
@@ -563,7 +533,7 @@ public class UDPSoulissDecoder {
 			Ringtone r = RingtoneManager.getRingtone(ctx, notification);
 			r.play();
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "Unable toplaysounds:" + e.getMessage());
+			Log.e(Constants.TAG, "Unable to play sounds:" + e.getMessage());
 		}
 	}
 

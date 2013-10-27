@@ -31,8 +31,6 @@ import android.util.Log;
  */
 public class UDPHelper {
 
-	
-	
 	/**
 	 * Issue a command to Souliss, at specified coordinates
 	 * 
@@ -133,17 +131,22 @@ public class UDPHelper {
 	}
 
 	/**
-	 * 	 * N+1 N 17 B1 00 64 01 08 00 00 00 00 ipubbl can be = to ip, if local area
-	 * LAN is used
+	 * * N+1 N 17 B1 00 64 01 08 00 00 00 00 ipubbl can be = to ip, if local
+	 * area LAN is used
 	 * 
 	 * @return contacted address
 	 * 
-	 * @param ip private LAN IP address, mandatory
-	 * @param ipubbl public IP, if any
-	 * @param userix Souliss User index
-	 * @param nodeix Souliss Node index
-
-	 * @throws Exception catch not implemented by design
+	 * @param ip
+	 *            private LAN IP address, mandatory
+	 * @param ipubbl
+	 *            public IP, if any
+	 * @param userix
+	 *            Souliss User index
+	 * @param nodeix
+	 *            Souliss Node index
+	 * 
+	 * @throws Exception
+	 *             catch not implemented by design
 	 */
 	public static InetAddress ping(String ip, String ipubbl, int userix, int nodeix) throws Exception {
 
@@ -165,11 +168,11 @@ public class UDPHelper {
 
 			List<Byte> macaco = new ArrayList<Byte>();
 			macaco = Arrays.asList(Constants.PING_PAYLOAD);
-			//qui inserisco broadcast
-			byte whoami = 0xB;//PRIVATE by default
+			// qui inserisco broadcast
+			byte whoami = 0xB;// PRIVATE by default
 			if (ipubbl.compareTo(ip) == 0)
 				whoami = 0xF;
-			else if (ipubbl.compareTo(Constants.BROADCASTADDR)==0){
+			else if (ipubbl.compareTo(Constants.BROADCASTADDR) == 0) {
 				whoami = 0x5;
 				macaco = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
 				ip = Constants.BROADCASTADDR;
@@ -238,8 +241,10 @@ public class UDPHelper {
 	/**
 	 * Subscribe request.
 	 * 
-	 * @param prefs App preferences
-	 * @param numberOf number of nodes to request
+	 * @param prefs
+	 *            App preferences
+	 * @param numberOf
+	 *            number of nodes to request
 	 * @param startOffset
 	 */
 	public static void stateRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
@@ -420,13 +425,14 @@ public class UDPHelper {
 	}
 
 	/**
-	 * Wrappa una ping, per causare una risposta da souliss
-	 * ip puo essere quello pubblico, privato o broadcast
+	 * Wrappa una ping, per causare una risposta da souliss ip puo essere quello
+	 * pubblico, privato o broadcast
 	 * 
 	 * local address is always necessary
 	 * 
 	 * @param timeoutMsec
-	 * @param prefs Souliss preferences
+	 * @param prefs
+	 *            Souliss preferences
 	 * @param ip
 	 */
 	public static String checkSoulissUdp(int timeoutMsec, SoulissPreferenceHelper prefs, String ip) {
@@ -449,7 +455,7 @@ public class UDPHelper {
 		}
 
 	}
-	
+
 	/**
 	 * Costruzione frame vNet: 0D 0C 17 11 00 64 01 XX 00 00 00 01 01 0D è la
 	 * lunghezza complessiva del driver vNet 0C è la lunghezza complessiva vNet
@@ -483,11 +489,14 @@ public class UDPHelper {
 		frame.add((byte) 23);// PUTIN
 
 		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD
-		frame.add((byte) dude[2]);// es 192.168.XX.0
+		// n broadcast : La comunicazione avviene utilizzando l'indirizzo IP
+		// 255.255.255.255 a cui associare l'indirizzo vNet 0xFFFF.
+		frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);// es
+																					// 192.168.XX.0
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX
-		
-		//aggiunge in testa il calcolo
+
+		// aggiunge in testa il calcolo
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));
 		frame.add(0, (byte) (frame.size() + macaco.size() + 1));// Check 2
 
@@ -504,7 +513,7 @@ public class UDPHelper {
 		// Send broadcast timeout
 		Intent i = new Intent();
 		int it = (int) (SoulissClient.getOpzioni().getRemoteTimeoutPref() * SoulissClient.getOpzioni().getBackoff());
-		Log.d(TAG, "Posting timeout msec. " +it);
+		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		SoulissClient.getOpzioni().getContx().sendBroadcast(i);
@@ -516,7 +525,8 @@ public class UDPHelper {
 	 * Builds a Macaco frame to issue a standard command
 	 * 
 	 * @param functional
-	 * @param nodeId Node's id
+	 * @param nodeId
+	 *            Node's id
 	 * @param slot
 	 * @param cmd
 	 * @return
@@ -539,8 +549,8 @@ public class UDPHelper {
 				for (String number : cmd) {
 					// che schifo
 					int merdata = Integer.decode(number);
-					if (merdata > 255){
-						//TODO chiedere a Dario
+					if (merdata > 255) {
+						// TODO chiedere a Dario
 						Log.w(Constants.TAG, "Overflow with command " + number);
 					}
 					frame.add((byte) merdata);
@@ -580,9 +590,10 @@ public class UDPHelper {
 		return frame;
 
 	}
-	
+
 	/**
 	 * Builds old-school byte array
+	 * 
 	 * @param buf
 	 * @return
 	 */
@@ -593,6 +604,7 @@ public class UDPHelper {
 		}
 		return merd;
 	}
+
 	private static DatagramSocket getSenderSocket(InetAddress serverAddr) {
 		DatagramSocket sender = null;
 		try {
@@ -609,6 +621,5 @@ public class UDPHelper {
 		}
 		return sender;
 	}
-
 
 }
