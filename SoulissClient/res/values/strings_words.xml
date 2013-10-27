@@ -51,5 +51,8 @@
     <string name="meters">Meters</string>
     <string name="service">Service</string>
     <string name="position">Position</string>
+    <string name="Online">Online</string>
+    <string name="offline">Offline</string>
+    
 
 </resources>

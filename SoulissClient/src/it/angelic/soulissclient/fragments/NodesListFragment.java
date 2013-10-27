@@ -23,8 +23,8 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -36,9 +36,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockListFragment;
 
 /**
  * Activity per mostrare una lista di risultati (Nodi Souliss) questa modalita`
@@ -51,18 +56,20 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-public class NodesListFragment extends ListFragment {
+public class NodesListFragment extends SherlockListFragment {
 	private SoulissNode[] nodiArray;
 	SoulissPreferenceHelper opzioni;
 	private SoulissDBHelper datasource;
 	private NodesListAdapter nodesAdapter;
 	int mCurCheckPosition = 0;
-
+	private Handler timeoutHandler;
 	private Timer autoUpdate;
 
 	private TextView tt;
 	private boolean mDualPane;
 	private TextView textHeadListInfo;
+	private ImageButton online;
+	private TextView statusOnline;
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -81,7 +88,7 @@ public class NodesListFragment extends ListFragment {
 		Log.d(TAG, "onActivityCreated");
 		opzioni = SoulissClient.getOpzioni();
 		setHasOptionsMenu(true);
-		opzioni.reload();
+		//opzioni.reload();
 		// Remove title bar
 		// tema
 		if (opzioni.isLightThemeSelected())
@@ -100,6 +107,7 @@ public class NodesListFragment extends ListFragment {
 		// fragment directly in the containing UI.
 		View detailsFrame = getActivity().findViewById(R.id.details);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+		
 
 		ImageView nodeic = (ImageView) getActivity().findViewById(R.id.scene_icon);
 		tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
@@ -157,8 +165,10 @@ public class NodesListFragment extends ListFragment {
 	 */
 	private void showDetails(int index) {
 		mCurCheckPosition = index;
+		
 
 		if (mDualPane) {
+			refreshStatusIcon();
 			//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			// We can display everything in-place with fragments, so update
 			// the list to highlight the selected item and show the data.
@@ -192,6 +202,33 @@ public class NodesListFragment extends ListFragment {
 		}
 	}
 
+	private void refreshStatusIcon() {
+		try {
+			ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+			actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setTitle(getString(R.string.manual_title));
+			View ds = actionBar.getCustomView();
+			online = (ImageButton) ds.findViewById(R.id.action_starred);
+			statusOnline = (TextView) ds.findViewById(R.id.online_status);
+			
+			if (!opzioni.isSoulissReachable()) {
+				online.setBackgroundResource(R.drawable.red);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+				statusOnline.setText(R.string.offline);
+			} else {
+				online.setBackgroundResource(R.drawable.green);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+				statusOnline.setText(R.string.Online);
+				
+			}
+			statusOnline.invalidate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -208,7 +245,7 @@ public class NodesListFragment extends ListFragment {
 		final List<SoulissNode> goer = datasource.getAllNodes();
 		nodiArray = new SoulissNode[goer.size()];
 		nodiArray = goer.toArray(nodiArray);
-
+		timeoutHandler = new Handler();
 		Log.i(TAG, "mostro numnodi:" + goer.size());
 		// final TextView shootTextView = (TextView)
 		// findViewById(R.id.TextViewListaTitle);
@@ -224,10 +261,13 @@ public class NodesListFragment extends ListFragment {
 
 	// Aggiorna il feedback
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+		
+
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Log.i(TAG, "Broadcast received, refresh from DB");
 			datasource.open();
+			timeoutHandler.removeCallbacks(timeExpired);
 			// i nuovi programmi sono gia sul DB
 			// prendo tipici dal DB
 			try {
@@ -291,7 +331,26 @@ public class NodesListFragment extends ListFragment {
 
 		getActivity().unregisterReceiver(datareceiver);
 	}
+	
+	Runnable timeExpired = new Runnable() {
+		@Override
+		public void run() {
+			Log.e(TAG, "TIMEOUT!!!");
+			refreshStatusIcon();
+			opzioni.getAndSetCachedAddress();
+		}
+	};
+	
+	// meccanismo per network detection
+		private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
 
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Bundle extras = intent.getExtras();
+				int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
+				timeoutHandler.postDelayed(timeExpired, delay);
+			}
+		};
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -306,6 +365,7 @@ public class NodesListFragment extends ListFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
 						try {
+							refreshStatusIcon();
 							getListView().invalidateViews();
 						} catch (Exception e) {
 							Log.e(Constants.TAG, "InvalidateViews fallita");
