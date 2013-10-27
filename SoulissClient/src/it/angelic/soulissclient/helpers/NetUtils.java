@@ -1,4 +1,6 @@
-package it.angelic.soulissclient.net;
+package it.angelic.soulissclient.helpers;
+
+import it.angelic.soulissclient.net.Constants;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -12,6 +14,7 @@ import org.apache.http.conn.util.InetAddressUtils;
 import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 public class NetUtils {
 	
@@ -20,7 +23,7 @@ public class NetUtils {
 				NetworkInterface intf = en.nextElement();
 				for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 					InetAddress inetAddress = enumIpAddr.nextElement();
-					System.out.println("ip1--:" + inetAddress);
+					Log.d(Constants.TAG,"ip1--:" + inetAddress);
 					System.out.println("ip2--:" + inetAddress.getHostAddress());
 
 					// for getting IPV4 format

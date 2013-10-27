@@ -154,6 +154,8 @@
     <string name="opt_invalidAddress">Invalid address!!</string>
     <string name="title_edittext_IP">Souliss local Address</string>
     <string name="summary_edittext_IP">Insert Souliss Bridge Node\'s IP Address when using home network</string>
+    <string name="opt_title_broadcast">Broadcast Discovery</string>
+    <string name="opt_summary_broadcast">On local LANs Souliss can discover bridge node automatically</string>
     <string name="dialog_title_edittext_IP">IP Address</string>
     <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
     <string name="title_edittext_IP_pubb">Souliss public Address</string>

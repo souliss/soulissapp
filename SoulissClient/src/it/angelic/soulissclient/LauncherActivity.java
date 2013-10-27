@@ -145,7 +145,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		Eula.show(this);
-		opzioni.clearCachedAddress();
+		
 		setContentView(R.layout.main_launcher);
 		geocoder = new Geocoder(this, Locale.getDefault());
 		soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
@@ -399,8 +399,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		@Override
 		public void run() {
 			Log.e(TAG, "TIMEOUT!!!");
-			serviceInfoFoot.setText(Html.fromHtml("Command timeout <b><font color=\"#FF4444\">expired</font></b>."
-					+ " Be sure to set correct Souliss address "));
+			serviceInfoFoot.setText(Html.fromHtml(getString(R.string.timeout_expired)));
 			opzioni.getAndSetCachedAddress();
 		}
 	};

@@ -62,6 +62,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private float eqMed;
 	private float eqHigh;
 	private int homeThold;
+	private boolean broadCastEnabled;
 
 	
 	public SoulissPreferenceHelper(Context contx) {
@@ -103,7 +104,7 @@ public class SoulissPreferenceHelper implements Serializable {
 			}
 		}
 		// reset cachedAddress to shared prefs one
-		cachedAddr = null;
+		clearCachedAddress();
 		resetBackOff();
 		getAndSetCachedAddress();
 	}
@@ -129,6 +130,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		animations = prefs.getBoolean("checkboxAnimazione", true);
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
+		broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
 		eqLow= prefs.getFloat("eqLow", 1f);
 		eqMed= prefs.getFloat("eqMed", 1f);
 		eqHigh= prefs.getFloat("eqHigh", 1f);
@@ -217,7 +219,7 @@ public class SoulissPreferenceHelper implements Serializable {
 						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI)
 					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
 							getPrefIPAddress());
-				else if (customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI){
+				else if (broadCastEnabled && customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI){
 					//Broadcast
 					Log.w(Constants.TAG, "if everything bad, try BROADCAST address");
 					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
@@ -501,5 +503,9 @@ public class SoulissPreferenceHelper implements Serializable {
 		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
 		pesta.putFloat("eqHigh", eqHigh);
 		pesta.commit();
+	}
+
+	public boolean isBroadCastEnabled() {
+		return broadCastEnabled;
 	}
 }

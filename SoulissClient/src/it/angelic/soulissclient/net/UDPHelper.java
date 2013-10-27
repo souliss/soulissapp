@@ -512,7 +512,7 @@ public class UDPHelper {
 
 		// Send broadcast timeout
 		Intent i = new Intent();
-		int it = (int) (SoulissClient.getOpzioni().getRemoteTimeoutPref() * SoulissClient.getOpzioni().getBackoff());
+		int it = (int) (SoulissClient.getOpzioni().getRemoteTimeoutPref());
 		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);

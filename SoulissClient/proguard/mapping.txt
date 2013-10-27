@@ -10421,6 +10421,14 @@ it.angelic.soulissclient.net.Constants -> it.angelic.soulissclient.net.Constants
     java.lang.Byte[] PING_PAYLOAD -> PING_PAYLOAD
     java.lang.Byte[] PING_BCAST_PAYLOAD -> PING_BCAST_PAYLOAD
     java.lang.Byte[] DBSTRUCT_PAYLOAD -> DBSTRUCT_PAYLOAD
+it.angelic.soulissclient.helpers.NetUtils -> it.angelic.soulissclient.helpers.NetUtils:
+    java.net.InetAddress getLocalIpAddress() -> getLocalIpAddress
+    int getSubnet(android.content.Context) -> getSubnet
+    boolean belongsToNode(java.net.InetAddress,java.net.InetAddress) -> belongsToNode
+    boolean belongsToSameSubnet(java.net.InetAddress,java.net.InetAddress,java.net.InetAddress) -> belongsToSameSubnet
+    java.net.InetAddress extractTargetAddress(java.util.ArrayList) -> extractTargetAddress
+    byte byteOfInt(int,int) -> byteOfInt
+    java.net.InetAddress intToInet(int) -> intToInet
 it.angelic.soulissclient.net.UDPHelper -> it.angelic.soulissclient.net.UDPHelper:
     java.lang.String issueSoulissCommand(java.lang.String,java.lang.String,it.angelic.soulissclient.helpers.SoulissPreferenceHelper,int,java.lang.String[]) -> issueSoulissCommand
     java.lang.String issueSoulissCommand(it.angelic.soulissclient.model.SoulissCommand,it.angelic.soulissclient.helpers.SoulissPreferenceHelper) -> issueSoulissCommand
@@ -10454,6 +10462,7 @@ it.angelic.soulissclient.net.UDPSoulissDecoder -> it.angelic.soulissclient.net.U
     it.angelic.soulissclient.db.SoulissDBLowHelper database -> database
     android.content.SharedPreferences soulissSharedPreference -> soulissSharedPreference
     android.content.Context context -> context
+    java.net.InetAddress localHost -> localHost
     void decodeVNetDatagram(java.net.DatagramPacket) -> decodeVNetDatagram
     void decodeMacaco(java.util.ArrayList) -> decodeMacaco
     void processTriggers() -> processTriggers
@@ -10462,7 +10471,7 @@ it.angelic.soulissclient.net.UDPSoulissDecoder -> it.angelic.soulissclient.net.U
     void decodeTypRequest(java.util.ArrayList) -> decodeTypRequest
     void decodeStateRequest(java.util.ArrayList) -> decodeStateRequest
     void decodeHealthRequest(java.util.ArrayList) -> decodeHealthRequest
-    void sendNotification(android.content.Context,java.lang.String,java.lang.String,int) -> sendNotification
+    void sendAntiTheftNotification(android.content.Context,java.lang.String,java.lang.String,int) -> sendAntiTheftNotification
 it.angelic.soulissclient.net.UDPSoulissDecoder$1 -> it.angelic.soulissclient.net.UDPSoulissDecoder$1:
     it.angelic.soulissclient.net.UDPSoulissDecoder this$0 -> this$0
     int val$nodes -> val$nodes

@@ -4,7 +4,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.UDPHelper;
 
 import java.net.InetAddress;
 
@@ -82,7 +81,8 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 				if (old.compareTo(newval) != 0) {
 
 					opzioni.clearCachedAddress();
-					UDPHelper.checkSoulissUdp(opzioni.getRemoteTimeoutPref(), opzioni, newval);
+					opzioni.setBestAddress();
+					//UDPHelper.checkSoulissUdp(opzioni.getRemoteTimeoutPref(), opzioni, newval);
 					// TODO error after timeout
 					if (preference.getKey() != null && preference.getKey().compareTo("edittext_IP_pubb") == 0) {
 						opzioni.setIPPreferencePublic(newval);

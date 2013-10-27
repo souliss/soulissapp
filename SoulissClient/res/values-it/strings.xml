@@ -123,7 +123,7 @@
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
-
+<string name="timeout_expired">Timeout <![CDATA[<b><font color=\"#FF4444\">scaduto</font></b>]]>. Souliss potrebbe non essere raggiungibile</string>
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
     <string name="status_updating">Updating DB&#8230;Please wait</string>
@@ -141,6 +141,8 @@
     <string name="opt_nodeindex_desc">L\'ID utente viene ricavato dal dispositivo, ora vale %1$d.</string>
     <string name="opt_checkconnection">Check Connessione</string>
     <string name="opt_checkconnection_desc">Check connectivity to Souliss HTTP Server</string>
+    <string name="opt_title_broadcast">Broadcast Discovery</string>
+    <string name="opt_summary_broadcast">Souliss proverà a determinare l\'indirizzo del bridge automaticamente</string>
     <string name="opt_networkdesc">Impostazioni rete locale e remota</string>
     <string name="opt_dbexp">Esporta DB</string>
     <string name="opt_dbexp_desc">Scrivi un .csv contenente la configurazione attuale e la storia dei nodi</string>

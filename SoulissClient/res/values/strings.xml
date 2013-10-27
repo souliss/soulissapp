@@ -123,7 +123,7 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
-
+	<string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expired</font></b>]]>.Souliss may not be available</string>
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
     <string name="status_updating">Updating DB&#8230;Please wait</string>

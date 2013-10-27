@@ -10370,6 +10370,15 @@ it.angelic.soulissclient.net.Constants: java.lang.Byte[] PING_BCAST_PAYLOAD
 it.angelic.soulissclient.net.Constants: java.lang.Byte[] DBSTRUCT_PAYLOAD
 it.angelic.soulissclient.net.Constants: void <clinit>()
 it.angelic.soulissclient.net.Constants: Constants()
+it.angelic.soulissclient.helpers.NetUtils
+it.angelic.soulissclient.helpers.NetUtils: NetUtils()
+it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress getLocalIpAddress()
+it.angelic.soulissclient.helpers.NetUtils: int getSubnet(android.content.Context)
+it.angelic.soulissclient.helpers.NetUtils: boolean belongsToNode(java.net.InetAddress,java.net.InetAddress)
+it.angelic.soulissclient.helpers.NetUtils: boolean belongsToSameSubnet(java.net.InetAddress,java.net.InetAddress,java.net.InetAddress)
+it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress extractTargetAddress(java.util.ArrayList)
+it.angelic.soulissclient.helpers.NetUtils: byte byteOfInt(int,int)
+it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress intToInet(int)
 it.angelic.soulissclient.net.UDPHelper
 it.angelic.soulissclient.net.UDPHelper: UDPHelper()
 it.angelic.soulissclient.net.UDPHelper: java.lang.String issueSoulissCommand(java.lang.String,java.lang.String,it.angelic.soulissclient.helpers.SoulissPreferenceHelper,int,java.lang.String[])
@@ -10406,6 +10415,7 @@ it.angelic.soulissclient.net.UDPSoulissDecoder: it.angelic.soulissclient.helpers
 it.angelic.soulissclient.net.UDPSoulissDecoder: it.angelic.soulissclient.db.SoulissDBLowHelper database
 it.angelic.soulissclient.net.UDPSoulissDecoder: android.content.SharedPreferences soulissSharedPreference
 it.angelic.soulissclient.net.UDPSoulissDecoder: android.content.Context context
+it.angelic.soulissclient.net.UDPSoulissDecoder: java.net.InetAddress localHost
 it.angelic.soulissclient.net.UDPSoulissDecoder: UDPSoulissDecoder(it.angelic.soulissclient.helpers.SoulissPreferenceHelper,android.content.Context)
 it.angelic.soulissclient.net.UDPSoulissDecoder: void decodeVNetDatagram(java.net.DatagramPacket)
 it.angelic.soulissclient.net.UDPSoulissDecoder: void decodeMacaco(java.util.ArrayList)
@@ -10415,7 +10425,7 @@ it.angelic.soulissclient.net.UDPSoulissDecoder: void decodeDBStructRequest(java.
 it.angelic.soulissclient.net.UDPSoulissDecoder: void decodeTypRequest(java.util.ArrayList)
 it.angelic.soulissclient.net.UDPSoulissDecoder: void decodeStateRequest(java.util.ArrayList)
 it.angelic.soulissclient.net.UDPSoulissDecoder: void decodeHealthRequest(java.util.ArrayList)
-it.angelic.soulissclient.net.UDPSoulissDecoder: void sendNotification(android.content.Context,java.lang.String,java.lang.String,int)
+it.angelic.soulissclient.net.UDPSoulissDecoder: void sendAntiTheftNotification(android.content.Context,java.lang.String,java.lang.String,int)
 it.angelic.soulissclient.net.UDPSoulissDecoder$1
 it.angelic.soulissclient.net.UDPSoulissDecoder$1: it.angelic.soulissclient.net.UDPSoulissDecoder this$0
 it.angelic.soulissclient.net.UDPSoulissDecoder$1: int val$nodes
