@@ -7,8 +7,6 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.net.UDPHelper;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,9 +16,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -99,18 +99,20 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
 		}
 	}
-	@SuppressLint("NewApi")
 	@Override
 	protected void onStart() {
 		database = new SoulissDBHelper(this);
 		// TODO Auto-generated method stub
 		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
+			ActionBar actionBar = getSupportActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+	/**
+	 * chiamato dal layout
+	 */
+	public void startOptions(View v){
+		opzioni.setBestAddress();
 	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();

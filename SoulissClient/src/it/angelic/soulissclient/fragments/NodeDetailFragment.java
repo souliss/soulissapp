@@ -84,7 +84,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class NodeDetailFragment extends AbstractTypicalFragment {
-	private static final String TAG = "SOULISSCLIENT - Node detail";
 	private SoulissNode collected;
 	private SoulissPreferenceHelper opzioni;
 	private ListView listaTypicalsView;
@@ -94,6 +93,11 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 	private TextView tt;
 	private TypicalsListAdapter ta;
 	private TextView upda;
+	private ImageView nodeic;
+	private Handler timeoutHandler;
+	private boolean mDualPane;
+	private ActionBar actionBar;
+
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -122,22 +126,14 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
 			if (ta != null)
 				ta.setmBoundService(mBoundService);
-			// Tell the user about this for our demo.
-			// Toast.makeText(NodeDetailActivity.this, "Dataservice connected",
-			// Toast.LENGTH_SHORT).show();
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
 			mBoundService = null;
 			// if (ta != null)
 			ta.setmBoundService(null);
-			// Toast.makeText(NodeDetailActivity.this,
-			// "Dataservice disconnected", Toast.LENGTH_SHORT).show();
 		}
 	};
-	private ImageView nodeic;
-	private Handler timeoutHandler;
-	private boolean mDualPane;
 
 	// private SwipeGestureListener gestureListener;
 
@@ -161,32 +157,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		View ret = inflater.inflate(R.layout.frag_nodedetail, container, false);
 		return ret;
 	}
-	private void refreshStatusIcon() {
-		try {
-			ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
-			actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(getString(R.string.manual_title));
-			View ds = actionBar.getCustomView();
-			ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-			
-			if (!opzioni.isSoulissReachable()) {
-				online.setBackgroundResource(R.drawable.red);
-				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-				statusOnline.setText(R.string.offline);
-			} else {
-				online.setBackgroundResource(R.drawable.green);
-				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-				statusOnline.setText(R.string.Online);
-				
-			}
-			statusOnline.invalidate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
@@ -195,6 +166,10 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+		actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		super.onActivityCreated(savedInstanceState);
 		timeoutHandler = new Handler();
 		setHasOptionsMenu(true);
@@ -241,7 +216,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 			createHeader();
 			registerForContextMenu(listaTypicalsView);
 		} else
-			Log.e(TAG, "porcatroia");
+			Log.e(Constants.TAG, "porcatroia");
 
 	}
 
@@ -349,7 +324,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		} else {
 			Intent nodeDatail = null;
 			if (target.isSensor()) {
-				Log.d(TAG, getResources().getString(R.string.manual_showing_typ) + index);
+				Log.d(Constants.TAG, getResources().getString(R.string.manual_showing_typ) + index);
 				// Activity Dettaglio nodo
 				nodeDatail = new Intent(getActivity(), SensorDetailActivity.class);
 				nodeDatail.putExtra("TIPICO", target);
@@ -393,7 +368,28 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		upda.setText(getResources().getString(R.string.update) + " " + Constants.getTimeAgo(collected.getRefreshedAt()));
 
 	}
-
+	private void refreshStatusIcon() {
+		try {
+			View ds = actionBar.getCustomView();
+			ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+			actionTitle.setText(collected.getNiceName());
+			
+			if (!opzioni.isSoulissReachable()) {
+				online.setBackgroundResource(R.drawable.red);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+				statusOnline.setText(R.string.offline);
+			} else {
+				online.setBackgroundResource(R.drawable.green);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+				statusOnline.setText(R.string.Online);
+			}
+			statusOnline.invalidate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * Riga grigia cra spazio
 	 * 
@@ -431,7 +427,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		par.setMax(Constants.MAX_HEALTH);
 		refreshHeader();
 
-		Log.d(TAG, "Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
+		Log.d(Constants.TAG, "Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
 
 		// Font dei titoli
 		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
@@ -490,7 +486,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 
-		// this is only used for refresh UI
+		// timeout handler
 		IntentFilter filtera = new IntentFilter();
 		filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		getActivity().registerReceiver(timeoutReceiver, filtera);
@@ -540,7 +536,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			try {
-				Log.d(TAG, "Detected data arrival, refresh from DB");
+				Log.d(Constants.TAG, "Detected data arrival, refresh from DB");
 				// cancel timeout
 				timeoutHandler.removeCallbacks(timeExpired);
 				if (listaTypicalsView == null)
@@ -576,20 +572,21 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 	Runnable timeExpired = new Runnable() {
 		@Override
 		public void run() {
-			Log.e(TAG, "TIMEOUT detected!!!");
+			Log.e(Constants.TAG, "TIMEOUT detected!!!");
 			// Reset cachedaddress
 			//opzioni.reload();
 			opzioni.getAndSetCachedAddress();
 			refreshStatusIcon();
 		}
 	};
+
 	// meccanismo per timeout detection
 	private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Bundle extras = intent.getExtras();
 			int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-			Log.w(TAG, "Posting timeout, delay " + delay);
+			Log.w(Constants.TAG, "Posting timeout, delay " + delay);
 			timeoutHandler.postDelayed(timeExpired, delay);
 		}
 	};

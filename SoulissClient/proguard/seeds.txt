@@ -6475,6 +6475,7 @@ it.angelic.soulissclient.NodesListActivity
 it.angelic.soulissclient.NodesListActivity: it.angelic.soulissclient.db.SoulissDBHelper datasource
 it.angelic.soulissclient.NodesListActivity: java.util.List goer
 it.angelic.soulissclient.NodesListActivity: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
+it.angelic.soulissclient.NodesListActivity: android.widget.ImageButton online
 it.angelic.soulissclient.NodesListActivity: NodesListActivity()
 it.angelic.soulissclient.NodesListActivity: void onCreate(android.os.Bundle)
 it.angelic.soulissclient.NodesListActivity: void onStart()
@@ -6927,6 +6928,7 @@ it.angelic.soulissclient.R$drawable: int green2
 it.angelic.soulissclient.R$drawable: int green3
 it.angelic.soulissclient.R$drawable: int green4
 it.angelic.soulissclient.R$drawable: int green5
+it.angelic.soulissclient.R$drawable: int green_dot
 it.angelic.soulissclient.R$drawable: int hand
 it.angelic.soulissclient.R$drawable: int home
 it.angelic.soulissclient.R$drawable: int home2
@@ -7081,6 +7083,7 @@ it.angelic.soulissclient.R$id: int abs__submit_area
 it.angelic.soulissclient.R$id: int abs__textButton
 it.angelic.soulissclient.R$id: int abs__title
 it.angelic.soulissclient.R$id: int abs__up
+it.angelic.soulissclient.R$id: int action_starred
 it.angelic.soulissclient.R$id: int blue
 it.angelic.soulissclient.R$id: int blue2
 it.angelic.soulissclient.R$id: int blue3
@@ -7150,6 +7153,7 @@ it.angelic.soulissclient.R$id: int midDivider
 it.angelic.soulissclient.R$id: int modeSpinner
 it.angelic.soulissclient.R$id: int node_icon
 it.angelic.soulissclient.R$id: int normal
+it.angelic.soulissclient.R$id: int online_status
 it.angelic.soulissclient.R$id: int position_icon
 it.angelic.soulissclient.R$id: int progressBarHealth
 it.angelic.soulissclient.R$id: int progressBarNodo
@@ -7301,6 +7305,7 @@ it.angelic.soulissclient.R$layout: int abs__search_dropdown_item_icons_2line
 it.angelic.soulissclient.R$layout: int abs__search_view
 it.angelic.soulissclient.R$layout: int abs__simple_dropdown_hint
 it.angelic.soulissclient.R$layout: int add_command_dialog
+it.angelic.soulissclient.R$layout: int custom_actionbar
 it.angelic.soulissclient.R$layout: int dialog_equalizer
 it.angelic.soulissclient.R$layout: int frag_nodedetail
 it.angelic.soulissclient.R$layout: int frag_nodelist
@@ -7345,6 +7350,7 @@ it.angelic.soulissclient.R$menu: R$menu()
 it.angelic.soulissclient.R$string
 it.angelic.soulissclient.R$string: int OFF
 it.angelic.soulissclient.R$string: int ON
+it.angelic.soulissclient.R$string: int Online
 it.angelic.soulissclient.R$string: int Souliss_AutoCmd_desc
 it.angelic.soulissclient.R$string: int Souliss_Auto_mode
 it.angelic.soulissclient.R$string: int Souliss_CloseCmd_desc
@@ -7520,6 +7526,7 @@ it.angelic.soulissclient.R$string: int node_empty_desc
 it.angelic.soulissclient.R$string: int nodeidxhint
 it.angelic.soulissclient.R$string: int nodes
 it.angelic.soulissclient.R$string: int notconfigured
+it.angelic.soulissclient.R$string: int offline
 it.angelic.soulissclient.R$string: int on_node
 it.angelic.soulissclient.R$string: int open
 it.angelic.soulissclient.R$string: int opt_Thold
@@ -7567,10 +7574,12 @@ it.angelic.soulissclient.R$string: int opt_servicehomepos
 it.angelic.soulissclient.R$string: int opt_servicehomepos_desc
 it.angelic.soulissclient.R$string: int opt_serviceinterval
 it.angelic.soulissclient.R$string: int opt_serviceinterval_desc
+it.angelic.soulissclient.R$string: int opt_summary_broadcast
 it.angelic.soulissclient.R$string: int opt_tetxfx
 it.angelic.soulissclient.R$string: int opt_tetxfx_desc
 it.angelic.soulissclient.R$string: int opt_timeout_pubb
 it.angelic.soulissclient.R$string: int opt_timeout_pubb_desc
+it.angelic.soulissclient.R$string: int opt_title_broadcast
 it.angelic.soulissclient.R$string: int opt_userindex
 it.angelic.soulissclient.R$string: int opt_userindex_desc
 it.angelic.soulissclient.R$string: int opt_visual
@@ -7641,6 +7650,7 @@ it.angelic.soulissclient.R$string: int test_ping
 it.angelic.soulissclient.R$string: int test_poll
 it.angelic.soulissclient.R$string: int test_typ
 it.angelic.soulissclient.R$string: int test_typ_title
+it.angelic.soulissclient.R$string: int timeout_expired
 it.angelic.soulissclient.R$string: int timer
 it.angelic.soulissclient.R$string: int title_activity_main
 it.angelic.soulissclient.R$string: int title_edittext_IP
@@ -8663,6 +8673,7 @@ it.angelic.soulissclient.fragments.NodeDetailFragment: it.angelic.soulissclient.
 it.angelic.soulissclient.fragments.NodeDetailFragment: void doBindService()
 it.angelic.soulissclient.fragments.NodeDetailFragment: void doUnbindService()
 it.angelic.soulissclient.fragments.NodeDetailFragment: android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)
+it.angelic.soulissclient.fragments.NodeDetailFragment: void refreshStatusIcon()
 it.angelic.soulissclient.fragments.NodeDetailFragment: void onActivityCreated(android.os.Bundle)
 it.angelic.soulissclient.fragments.NodeDetailFragment: void onStart()
 it.angelic.soulissclient.fragments.NodeDetailFragment: void onConfigurationChanged(android.content.res.Configuration)
@@ -8672,7 +8683,6 @@ it.angelic.soulissclient.fragments.NodeDetailFragment: void createHeader()
 it.angelic.soulissclient.fragments.NodeDetailFragment: void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo)
 it.angelic.soulissclient.fragments.NodeDetailFragment: boolean onContextItemSelected(android.view.MenuItem)
 it.angelic.soulissclient.fragments.NodeDetailFragment: void onResume()
-it.angelic.soulissclient.fragments.NodeDetailFragment: boolean onOptionsItemSelected(android.view.MenuItem)
 it.angelic.soulissclient.fragments.NodeDetailFragment: void onPause()
 it.angelic.soulissclient.fragments.NodeDetailFragment: void access$0(it.angelic.soulissclient.fragments.NodeDetailFragment,it.angelic.soulissclient.SoulissDataService)
 it.angelic.soulissclient.fragments.NodeDetailFragment: it.angelic.soulissclient.adapters.TypicalsListAdapter access$1(it.angelic.soulissclient.fragments.NodeDetailFragment)
@@ -8684,7 +8694,8 @@ it.angelic.soulissclient.fragments.NodeDetailFragment: it.angelic.soulissclient.
 it.angelic.soulissclient.fragments.NodeDetailFragment: void access$7(it.angelic.soulissclient.fragments.NodeDetailFragment,it.angelic.soulissclient.model.SoulissNode)
 it.angelic.soulissclient.fragments.NodeDetailFragment: void access$8(it.angelic.soulissclient.fragments.NodeDetailFragment)
 it.angelic.soulissclient.fragments.NodeDetailFragment: it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$9(it.angelic.soulissclient.fragments.NodeDetailFragment)
-it.angelic.soulissclient.fragments.NodeDetailFragment: void access$10(it.angelic.soulissclient.fragments.NodeDetailFragment,int,it.angelic.soulissclient.model.SoulissTypical)
+it.angelic.soulissclient.fragments.NodeDetailFragment: void access$10(it.angelic.soulissclient.fragments.NodeDetailFragment)
+it.angelic.soulissclient.fragments.NodeDetailFragment: void access$11(it.angelic.soulissclient.fragments.NodeDetailFragment,int,it.angelic.soulissclient.model.SoulissTypical)
 it.angelic.soulissclient.fragments.NodeDetailFragment$1
 it.angelic.soulissclient.fragments.NodeDetailFragment$1: it.angelic.soulissclient.fragments.NodeDetailFragment this$0
 it.angelic.soulissclient.fragments.NodeDetailFragment$1: NodeDetailFragment$1(it.angelic.soulissclient.fragments.NodeDetailFragment)
@@ -8725,16 +8736,22 @@ it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.h
 it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.db.SoulissDBHelper datasource
 it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.adapters.NodesListAdapter nodesAdapter
 it.angelic.soulissclient.fragments.NodesListFragment: int mCurCheckPosition
+it.angelic.soulissclient.fragments.NodesListFragment: android.os.Handler timeoutHandler
 it.angelic.soulissclient.fragments.NodesListFragment: java.util.Timer autoUpdate
 it.angelic.soulissclient.fragments.NodesListFragment: android.widget.TextView tt
 it.angelic.soulissclient.fragments.NodesListFragment: boolean mDualPane
 it.angelic.soulissclient.fragments.NodesListFragment: android.widget.TextView textHeadListInfo
+it.angelic.soulissclient.fragments.NodesListFragment: android.widget.ImageButton online
+it.angelic.soulissclient.fragments.NodesListFragment: android.widget.TextView statusOnline
 it.angelic.soulissclient.fragments.NodesListFragment: android.content.BroadcastReceiver datareceiver
+it.angelic.soulissclient.fragments.NodesListFragment: java.lang.Runnable timeExpired
+it.angelic.soulissclient.fragments.NodesListFragment: android.content.BroadcastReceiver timeoutReceiver
 it.angelic.soulissclient.fragments.NodesListFragment: NodesListFragment()
 it.angelic.soulissclient.fragments.NodesListFragment: void onConfigurationChanged(android.content.res.Configuration)
 it.angelic.soulissclient.fragments.NodesListFragment: android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle)
 it.angelic.soulissclient.fragments.NodesListFragment: void onActivityCreated(android.os.Bundle)
 it.angelic.soulissclient.fragments.NodesListFragment: void showDetails(int)
+it.angelic.soulissclient.fragments.NodesListFragment: void refreshStatusIcon()
 it.angelic.soulissclient.fragments.NodesListFragment: void onSaveInstanceState(android.os.Bundle)
 it.angelic.soulissclient.fragments.NodesListFragment: void onStart()
 it.angelic.soulissclient.fragments.NodesListFragment: void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo)
@@ -8743,10 +8760,12 @@ it.angelic.soulissclient.fragments.NodesListFragment: void onPause()
 it.angelic.soulissclient.fragments.NodesListFragment: void onResume()
 it.angelic.soulissclient.fragments.NodesListFragment: void onDestroy()
 it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.db.SoulissDBHelper access$0(it.angelic.soulissclient.fragments.NodesListFragment)
-it.angelic.soulissclient.fragments.NodesListFragment: void access$1(it.angelic.soulissclient.fragments.NodesListFragment,it.angelic.soulissclient.model.SoulissNode[])
-it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.model.SoulissNode[] access$2(it.angelic.soulissclient.fragments.NodesListFragment)
-it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.adapters.NodesListAdapter access$3(it.angelic.soulissclient.fragments.NodesListFragment)
-it.angelic.soulissclient.fragments.NodesListFragment: void access$4(it.angelic.soulissclient.fragments.NodesListFragment,int)
+it.angelic.soulissclient.fragments.NodesListFragment: android.os.Handler access$1(it.angelic.soulissclient.fragments.NodesListFragment)
+it.angelic.soulissclient.fragments.NodesListFragment: void access$2(it.angelic.soulissclient.fragments.NodesListFragment,it.angelic.soulissclient.model.SoulissNode[])
+it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.model.SoulissNode[] access$3(it.angelic.soulissclient.fragments.NodesListFragment)
+it.angelic.soulissclient.fragments.NodesListFragment: it.angelic.soulissclient.adapters.NodesListAdapter access$4(it.angelic.soulissclient.fragments.NodesListFragment)
+it.angelic.soulissclient.fragments.NodesListFragment: void access$5(it.angelic.soulissclient.fragments.NodesListFragment)
+it.angelic.soulissclient.fragments.NodesListFragment: void access$6(it.angelic.soulissclient.fragments.NodesListFragment,int)
 it.angelic.soulissclient.fragments.NodesListFragment$1
 it.angelic.soulissclient.fragments.NodesListFragment$1: it.angelic.soulissclient.fragments.NodesListFragment this$0
 it.angelic.soulissclient.fragments.NodesListFragment$1: NodesListFragment$1(it.angelic.soulissclient.fragments.NodesListFragment)
@@ -8754,16 +8773,24 @@ it.angelic.soulissclient.fragments.NodesListFragment$1: void onReceive(android.c
 it.angelic.soulissclient.fragments.NodesListFragment$2
 it.angelic.soulissclient.fragments.NodesListFragment$2: it.angelic.soulissclient.fragments.NodesListFragment this$0
 it.angelic.soulissclient.fragments.NodesListFragment$2: NodesListFragment$2(it.angelic.soulissclient.fragments.NodesListFragment)
-it.angelic.soulissclient.fragments.NodesListFragment$2: void onItemClick(android.widget.AdapterView,android.view.View,int,long)
+it.angelic.soulissclient.fragments.NodesListFragment$2: void run()
 it.angelic.soulissclient.fragments.NodesListFragment$3
 it.angelic.soulissclient.fragments.NodesListFragment$3: it.angelic.soulissclient.fragments.NodesListFragment this$0
 it.angelic.soulissclient.fragments.NodesListFragment$3: NodesListFragment$3(it.angelic.soulissclient.fragments.NodesListFragment)
-it.angelic.soulissclient.fragments.NodesListFragment$3: void run()
-it.angelic.soulissclient.fragments.NodesListFragment$3: it.angelic.soulissclient.fragments.NodesListFragment access$0(it.angelic.soulissclient.fragments.NodesListFragment$3)
-it.angelic.soulissclient.fragments.NodesListFragment$3$1
-it.angelic.soulissclient.fragments.NodesListFragment$3$1: it.angelic.soulissclient.fragments.NodesListFragment$3 this$1
-it.angelic.soulissclient.fragments.NodesListFragment$3$1: NodesListFragment$3$1(it.angelic.soulissclient.fragments.NodesListFragment$3)
-it.angelic.soulissclient.fragments.NodesListFragment$3$1: void run()
+it.angelic.soulissclient.fragments.NodesListFragment$3: void onReceive(android.content.Context,android.content.Intent)
+it.angelic.soulissclient.fragments.NodesListFragment$4
+it.angelic.soulissclient.fragments.NodesListFragment$4: it.angelic.soulissclient.fragments.NodesListFragment this$0
+it.angelic.soulissclient.fragments.NodesListFragment$4: NodesListFragment$4(it.angelic.soulissclient.fragments.NodesListFragment)
+it.angelic.soulissclient.fragments.NodesListFragment$4: void onItemClick(android.widget.AdapterView,android.view.View,int,long)
+it.angelic.soulissclient.fragments.NodesListFragment$5
+it.angelic.soulissclient.fragments.NodesListFragment$5: it.angelic.soulissclient.fragments.NodesListFragment this$0
+it.angelic.soulissclient.fragments.NodesListFragment$5: NodesListFragment$5(it.angelic.soulissclient.fragments.NodesListFragment)
+it.angelic.soulissclient.fragments.NodesListFragment$5: void run()
+it.angelic.soulissclient.fragments.NodesListFragment$5: it.angelic.soulissclient.fragments.NodesListFragment access$0(it.angelic.soulissclient.fragments.NodesListFragment$5)
+it.angelic.soulissclient.fragments.NodesListFragment$5$1
+it.angelic.soulissclient.fragments.NodesListFragment$5$1: it.angelic.soulissclient.fragments.NodesListFragment$5 this$1
+it.angelic.soulissclient.fragments.NodesListFragment$5$1: NodesListFragment$5$1(it.angelic.soulissclient.fragments.NodesListFragment$5)
+it.angelic.soulissclient.fragments.NodesListFragment$5$1: void run()
 it.angelic.soulissclient.fragments.RGBAdvancedFragment
 it.angelic.soulissclient.fragments.RGBAdvancedFragment: it.angelic.soulissclient.db.SoulissDBHelper datasource
 it.angelic.soulissclient.fragments.RGBAdvancedFragment: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
@@ -9443,6 +9470,15 @@ it.angelic.soulissclient.helpers.ListToggleButton
 it.angelic.soulissclient.helpers.ListToggleButton: ListToggleButton(android.content.Context,android.util.AttributeSet)
 it.angelic.soulissclient.helpers.ListToggleButton: ListToggleButton(android.content.Context)
 it.angelic.soulissclient.helpers.ListToggleButton: void setPressed(boolean)
+it.angelic.soulissclient.helpers.NetUtils
+it.angelic.soulissclient.helpers.NetUtils: NetUtils()
+it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress getLocalIpAddress()
+it.angelic.soulissclient.helpers.NetUtils: int getSubnet(android.content.Context)
+it.angelic.soulissclient.helpers.NetUtils: boolean belongsToNode(java.net.InetAddress,java.net.InetAddress)
+it.angelic.soulissclient.helpers.NetUtils: boolean belongsToSameSubnet(java.net.InetAddress,java.net.InetAddress,java.net.InetAddress)
+it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress extractTargetAddress(java.util.ArrayList)
+it.angelic.soulissclient.helpers.NetUtils: byte byteOfInt(int,int)
+it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress intToInet(int)
 it.angelic.soulissclient.helpers.ScenesDialogHelper
 it.angelic.soulissclient.helpers.ScenesDialogHelper: android.app.ProgressDialog progressDialog
 it.angelic.soulissclient.helpers.ScenesDialogHelper: ScenesDialogHelper()
@@ -9554,6 +9590,7 @@ it.angelic.soulissclient.helpers.SoulissPreferenceHelper: float eqLow
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: float eqMed
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: float eqHigh
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: int homeThold
+it.angelic.soulissclient.helpers.SoulissPreferenceHelper: boolean broadCastEnabled
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: SoulissPreferenceHelper(android.content.Context)
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: void reload()
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: void initializePrefs()
@@ -9615,7 +9652,9 @@ it.angelic.soulissclient.helpers.SoulissPreferenceHelper: float getEqMed()
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: void setEqMed(float)
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: float getEqHigh()
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: void setEqHigh(float)
+it.angelic.soulissclient.helpers.SoulissPreferenceHelper: boolean isBroadCastEnabled()
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper: android.content.SharedPreferences access$0(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
+it.angelic.soulissclient.helpers.SoulissPreferenceHelper: boolean access$1(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper$1
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper$1: it.angelic.soulissclient.helpers.SoulissPreferenceHelper this$0
 it.angelic.soulissclient.helpers.SoulissPreferenceHelper$1: SoulissPreferenceHelper$1(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
@@ -10370,15 +10409,6 @@ it.angelic.soulissclient.net.Constants: java.lang.Byte[] PING_BCAST_PAYLOAD
 it.angelic.soulissclient.net.Constants: java.lang.Byte[] DBSTRUCT_PAYLOAD
 it.angelic.soulissclient.net.Constants: void <clinit>()
 it.angelic.soulissclient.net.Constants: Constants()
-it.angelic.soulissclient.helpers.NetUtils
-it.angelic.soulissclient.helpers.NetUtils: NetUtils()
-it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress getLocalIpAddress()
-it.angelic.soulissclient.helpers.NetUtils: int getSubnet(android.content.Context)
-it.angelic.soulissclient.helpers.NetUtils: boolean belongsToNode(java.net.InetAddress,java.net.InetAddress)
-it.angelic.soulissclient.helpers.NetUtils: boolean belongsToSameSubnet(java.net.InetAddress,java.net.InetAddress,java.net.InetAddress)
-it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress extractTargetAddress(java.util.ArrayList)
-it.angelic.soulissclient.helpers.NetUtils: byte byteOfInt(int,int)
-it.angelic.soulissclient.helpers.NetUtils: java.net.InetAddress intToInet(int)
 it.angelic.soulissclient.net.UDPHelper
 it.angelic.soulissclient.net.UDPHelper: UDPHelper()
 it.angelic.soulissclient.net.UDPHelper: java.lang.String issueSoulissCommand(java.lang.String,java.lang.String,it.angelic.soulissclient.helpers.SoulissPreferenceHelper,int,java.lang.String[])
@@ -10404,11 +10434,11 @@ it.angelic.soulissclient.net.UDPRunnable: java.util.concurrent.ThreadPoolExecuto
 it.angelic.soulissclient.net.UDPRunnable: int maxThreads
 it.angelic.soulissclient.net.UDPRunnable: UDPRunnable(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
 it.angelic.soulissclient.net.UDPRunnable: void run()
-it.angelic.soulissclient.net.UDPRunnable: it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$0(it.angelic.soulissclient.net.UDPRunnable)
 it.angelic.soulissclient.net.UDPRunnable$1
 it.angelic.soulissclient.net.UDPRunnable$1: it.angelic.soulissclient.net.UDPRunnable this$0
+it.angelic.soulissclient.net.UDPRunnable$1: it.angelic.soulissclient.net.UDPSoulissDecoder val$decoder
 it.angelic.soulissclient.net.UDPRunnable$1: java.net.DatagramPacket val$packet
-it.angelic.soulissclient.net.UDPRunnable$1: UDPRunnable$1(it.angelic.soulissclient.net.UDPRunnable,java.net.DatagramPacket)
+it.angelic.soulissclient.net.UDPRunnable$1: UDPRunnable$1(it.angelic.soulissclient.net.UDPRunnable,it.angelic.soulissclient.net.UDPSoulissDecoder,java.net.DatagramPacket)
 it.angelic.soulissclient.net.UDPRunnable$1: void run()
 it.angelic.soulissclient.net.UDPSoulissDecoder
 it.angelic.soulissclient.net.UDPSoulissDecoder: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni

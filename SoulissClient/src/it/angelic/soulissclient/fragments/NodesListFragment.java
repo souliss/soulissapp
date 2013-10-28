@@ -87,6 +87,10 @@ public class NodesListFragment extends SherlockListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		Log.d(TAG, "onActivityCreated");
 		opzioni = SoulissClient.getOpzioni();
+		ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE); // show
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		setHasOptionsMenu(true);
 		//opzioni.reload();
 		// Remove title bar
@@ -165,8 +169,6 @@ public class NodesListFragment extends SherlockListFragment {
 	 */
 	private void showDetails(int index) {
 		mCurCheckPosition = index;
-		
-
 		if (mDualPane) {
 			refreshStatusIcon();
 			//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -205,14 +207,12 @@ public class NodesListFragment extends SherlockListFragment {
 	private void refreshStatusIcon() {
 		try {
 			ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
-			actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setTitle(getString(R.string.manual_title));
 			View ds = actionBar.getCustomView();
 			online = (ImageButton) ds.findViewById(R.id.action_starred);
 			statusOnline = (TextView) ds.findViewById(R.id.online_status);
-			
+			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+			actionTitle.setText(getString(R.string.manual_title));
 			if (!opzioni.isSoulissReachable()) {
 				online.setBackgroundResource(R.drawable.red);
 				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
@@ -238,19 +238,17 @@ public class NodesListFragment extends SherlockListFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		opzioni.reload();
+		opzioni.initializePrefs();
 		// doBindService();
 		datasource.open();
+		refreshStatusIcon();
 		// prendo tipici dal DB
 		final List<SoulissNode> goer = datasource.getAllNodes();
 		nodiArray = new SoulissNode[goer.size()];
 		nodiArray = goer.toArray(nodiArray);
 		timeoutHandler = new Handler();
 		Log.i(TAG, "mostro numnodi:" + goer.size());
-		// final TextView shootTextView = (TextView)
-		// findViewById(R.id.TextViewListaTitle);
-		// shootTextView.setText(strMeatMsg);
-
+		
 		nodesAdapter = new NodesListAdapter(getActivity().getApplicationContext(), nodiArray, opzioni);
 		// Adapter della lista
 		// setListAdapter(nodesAdapter);
@@ -330,6 +328,7 @@ public class NodesListFragment extends SherlockListFragment {
 		super.onPause();
 
 		getActivity().unregisterReceiver(datareceiver);
+		getActivity().unregisterReceiver(timeoutReceiver);
 	}
 	
 	Runnable timeExpired = new Runnable() {
@@ -340,7 +339,6 @@ public class NodesListFragment extends SherlockListFragment {
 			opzioni.getAndSetCachedAddress();
 		}
 	};
-	
 	// meccanismo per network detection
 		private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
 
@@ -358,6 +356,11 @@ public class NodesListFragment extends SherlockListFragment {
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
+		// timeout handler
+		IntentFilter filtera = new IntentFilter();
+		filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
+		getActivity().registerReceiver(timeoutReceiver, filtera);
+		
 		autoUpdate = new Timer();
 		autoUpdate.schedule(new TimerTask() {
 			@Override

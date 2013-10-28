@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 /**
@@ -54,8 +55,7 @@ public class SoulissClient extends Application implements Serializable{
 			displayHeight = metrics.heightPixels;
 			gra.setDither(true);
 		} catch (Exception e) {
-			// fa nulla, solo chincaglierie
-			e.printStackTrace();
+			Log.w(Constants.TAG,"Couldn't set background:"+e.getMessage());
 		}
     }
     public void onCreate(){

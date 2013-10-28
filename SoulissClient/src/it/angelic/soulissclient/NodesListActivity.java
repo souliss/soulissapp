@@ -50,13 +50,14 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(getString(R.string.manual_title));
 		View ds = actionBar.getCustomView();
 		online = (ImageButton) ds.findViewById(R.id.action_starred);
 		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
 		
+		actionTitle.setText(getString(R.string.manual_title));
 		if (!opzioni.isSoulissReachable()) {
 			online.setBackgroundResource(R.drawable.red);
 			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
@@ -94,6 +95,13 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
+	/**
+	 * chiamato dal layout
+	 */
+	public void startOptions(View v){
+		opzioni.setBestAddress();
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

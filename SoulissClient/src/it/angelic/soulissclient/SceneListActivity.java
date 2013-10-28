@@ -12,7 +12,6 @@ import it.angelic.soulissclient.model.SoulissScene;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,6 +27,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -57,6 +57,7 @@ public class SceneListActivity extends SherlockActivity {
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
 	private TextView tt;
+	private ActionBar actionBar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -111,16 +112,13 @@ public class SceneListActivity extends SherlockActivity {
 		registerForContextMenu(listaScenesView);
 	}
 	
-	@SuppressLint("NewApi")
 	@Override
 	protected void onStart() {
+		actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		setActionBarInfo();
 		super.onStart();
-	    if (Constants.versionNumber >= 11) {
-	            ActionBar actionBar = getSupportActionBar();
-	            actionBar.setDisplayHomeAsUpEnabled(true);
-	            //actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_drawable));
-	    }
-		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
+		opzioni = SoulissClient.getOpzioni();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
 		}
@@ -246,6 +244,31 @@ public class SceneListActivity extends SherlockActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	private void setActionBarInfo() {
+		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		View ds = actionBar.getCustomView();
+		ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+		actionTitle.setText(getString(R.string.scenes_title));
+		if (!opzioni.isSoulissReachable()) {
+			online.setBackgroundResource(R.drawable.red);
+			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+			statusOnline.setText(R.string.offline);
+		} else {
+			online.setBackgroundResource(R.drawable.green);
+			statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+			statusOnline.setText(R.string.Online);
+		}
+	}
+	/**
+	 * chiamato dal layout
+	 */
+	public void startOptions(View v){
+		opzioni.setBestAddress();
 	}
 
 	@Override
