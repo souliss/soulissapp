@@ -3,4 +3,5 @@
     <dimen name="text_size_small">18sp</dimen>
    <dimen name="text_size">24sp</dimen>
    <dimen name="text_size_big">36sp</dimen>
+   <dimen name="text_size_vbig">48sp</dimen>
 </resources>

@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -61,7 +60,7 @@ public class SceneListActivity extends SherlockActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
+		opzioni = SoulissClient.getOpzioni();
 		// Remove title bar
 		//this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		if (opzioni.isLightThemeSelected())
@@ -76,10 +75,10 @@ public class SceneListActivity extends SherlockActivity {
 		setContentView(R.layout.main_scenes);
 		//final Button buttAddProgram = (Button) findViewById(R.id.buttonAddScene);
 		tt = (TextView) findViewById(R.id.TextViewScenes);
-		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
+		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
 			Typeface font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
 			tt.setTypeface(font, Typeface.NORMAL);
-		}
+		}*/
 		
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
@@ -118,7 +117,7 @@ public class SceneListActivity extends SherlockActivity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		setActionBarInfo();
 		super.onStart();
-		opzioni = SoulissClient.getOpzioni();
+		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
 		}

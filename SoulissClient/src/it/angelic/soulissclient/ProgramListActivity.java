@@ -16,7 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -69,10 +68,10 @@ public class ProgramListActivity extends SherlockActivity {
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
 		
 		
-		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
+		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
 			Typeface font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
 			tt.setTypeface(font, Typeface.NORMAL);
-		}
+		}*/
 
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
 		

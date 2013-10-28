@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -116,11 +115,11 @@ public class NodesListFragment extends SherlockListFragment {
 		ImageView nodeic = (ImageView) getActivity().findViewById(R.id.scene_icon);
 		tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
 		textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewManualDesc);
-		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
+		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
 			Typeface font = Typeface.createFromAsset(getActivity().getAssets(), opzioni.getPrefFont());
 			tt.setTypeface(font, Typeface.NORMAL);
 			// titolo.setTypeface(font, Typeface.NORMAL);
-		}
+		}*/
 
 		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());

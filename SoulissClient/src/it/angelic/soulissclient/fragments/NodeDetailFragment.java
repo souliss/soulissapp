@@ -52,7 +52,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.graphics.LinearGradient;
-import android.graphics.Typeface;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
@@ -430,11 +429,11 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 		Log.d(Constants.TAG, "Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
 
 		// Font dei titoli
-		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
+		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
 			Typeface font = Typeface.createFromAsset(getActivity().getAssets(), opzioni.getPrefFont());
 			tt.setTypeface(font, Typeface.NORMAL);
 			// titolo.setTypeface(font, Typeface.NORMAL);
-		}
+		}*/
 		return;
 	}
 
