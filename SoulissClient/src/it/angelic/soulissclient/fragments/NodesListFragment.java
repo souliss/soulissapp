@@ -57,7 +57,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
  */
 public class NodesListFragment extends SherlockListFragment {
 	private SoulissNode[] nodiArray;
-	SoulissPreferenceHelper opzioni;
+	private SoulissPreferenceHelper opzioni;
 	private SoulissDBHelper datasource;
 	private NodesListAdapter nodesAdapter;
 	int mCurCheckPosition = 0;
@@ -125,7 +125,7 @@ public class NodesListFragment extends SherlockListFragment {
 				getActivity().getWindowManager());
 
 		// check se IP non settato
-		if (!opzioni.isSoulissIpConfigured()) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			// refreshButton.setEnabled(false);
 			// GoButt.setEnabled(false);
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(getActivity());

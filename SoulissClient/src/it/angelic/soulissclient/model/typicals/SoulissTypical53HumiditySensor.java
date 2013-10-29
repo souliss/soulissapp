@@ -8,7 +8,6 @@ import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -57,9 +56,8 @@ public class SoulissTypical53HumiditySensor extends SoulissTypical {
 	}
 
 	public String getOutputPercent() {
-		DecimalFormat df = new DecimalFormat("###.##");
 
-		return df.format(getOutputFloat() );
+		return Constants.twoDecimalFormat.format(getOutputFloat() );
 	}
 
 	@Override

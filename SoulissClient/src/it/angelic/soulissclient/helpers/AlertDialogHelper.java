@@ -151,11 +151,11 @@ public class AlertDialogHelper {
 		final CheckBox checkBox = new CheckBox(source);
 		TextView textView = new TextView(source);
 		if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_service))) {
-
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+				checkBox.setTextColor(source.getResources().getColor(R.color.white_bitaplha));
 			checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
-			if (opts.isLightThemeSelected() && Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-				checkBox.setTextColor(source.getResources().getColor(R.color.black));
 			alert.setMessage(source.getResources().getString(R.string.dialog_notinited_service));
+
 			LinearLayout linearLayout = new LinearLayout(source);
 			linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.MATCH_PARENT));
@@ -219,7 +219,8 @@ public class AlertDialogHelper {
 								editor.remove("numNodi");
 							if (soulissCust.contains("numTipici"))
 								editor.remove("numTipici");
-							//Toast.makeText(source, "Souliss DB Deleted", Toast.LENGTH_SHORT).show();
+							// Toast.makeText(source, "Souliss DB Deleted",
+							// Toast.LENGTH_SHORT).show();
 							editor.commit();
 							Log.w(TAG, "Souliss DB dropped");
 							// source.finish();
@@ -467,28 +468,27 @@ public class AlertDialogHelper {
 		alert2.setIcon(android.R.drawable.ic_dialog_dialer);
 		// loads gallery and requires icon selection*/
 		final EcoGallery gallery = new EcoGallery(context);
-		//final Gallery gallery = new Gallery(context);
+		// final Gallery gallery = new Gallery(context);
 		// Gallery gallery = (Gallery) findViewById(R.id.gallery);
-		//gallery.setMinimumHeight(300);
-		//gallery.setLayoutParams(new Layo);
+		// gallery.setMinimumHeight(300);
+		// gallery.setLayoutParams(new Layo);
 		gallery.setAdapter(new SoulissIconAdapter(context));
 		alert2.setView(gallery);
 
-		/*gallery.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(EcoGalleryAdapterView<?> parent, View view, int position, long id) {
-				SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
-				toRename.setIconResourceId(ad.getItemResId(position));
-			}
-		});
-		/*gallery.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
-				toRename.setIconResourceId(ad.getItemResId(position));
-			}
-		});*/
+		/*
+		 * gallery.setOnItemClickListener(new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(EcoGalleryAdapterView<?> parent,
+		 * View view, int position, long id) { SoulissIconAdapter ad =
+		 * (SoulissIconAdapter) gallery.getAdapter();
+		 * toRename.setIconResourceId(ad.getItemResId(position)); } });
+		 * /*gallery.setOnItemClickListener(new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(AdapterView<?> arg0, View arg1, int
+		 * position, long arg3) { SoulissIconAdapter ad = (SoulissIconAdapter)
+		 * gallery.getAdapter();
+		 * toRename.setIconResourceId(ad.getItemResId(position)); } });
+		 */
 
 		alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
@@ -554,98 +554,70 @@ public class AlertDialogHelper {
 	 * @param opzioni
 	 * @return il dialogo da mostrare
 	 */
-	/*public static ProgressDialog checkConnectionResultDialog(final Activity preferencesActivity, final String local_ip,
-			final String public_ip, final SoulissPreferenceHelper opzioni) {
-		final ProgressDialog mProgressDialog = new ProgressDialog(preferencesActivity);
-		mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
-		mProgressDialog.setTitle(SoulissClient.getAppContext().getString(R.string.dialog_net_test));
-		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-		new Thread() {
-			public void run() {
-				preferencesActivity.runOnUiThread(new Runnable() {
-					public void run() {
-						mProgressDialog.setMessage(SoulissClient.getAppContext().getString(R.string.dialog_local_test)
-								+ "\n");
-					}
-				});
-
-				final StringBuilder memo = new StringBuilder();
-				try {
-					Thread.sleep(400);
-					if (local_ip != null && "".compareTo(local_ip) != 0) {
-						// IP LOCALE
-						if (JSONHelper.checkSoulissHttp(local_ip, opzioni.getRemoteTimeoutPref() * 2)) {
-							memo.append(SoulissClient.getAppContext().getString(R.string.dialog_local_ok) + "\n");
-							// opzioni.setBestAddress();
-						} else {
-							memo.append(SoulissClient.getAppContext().getString(R.string.dialog_warn_wifi) + "\n");
-						}
-						preferencesActivity.runOnUiThread(new Runnable() {
-							public void run() {
-								mProgressDialog.setMessage(memo.toString());
-							}
-						});
-					}
-					if (public_ip != null && "".compareTo(public_ip) != 0) {
-						// PUBLIC TEST, NON Else perche non esclusivo
-						memo.append("\n" + SoulissClient.getAppContext().getString(R.string.dialog_remote_test));
-						preferencesActivity.runOnUiThread(new Runnable() {
-							public void run() {
-								mProgressDialog.setMessage(memo.toString());
-							}
-						});
-						Thread.sleep(500);
-						// TEST REMOTO
-						if (JSONHelper.checkSoulissHttp(public_ip, opzioni.getRemoteTimeoutPref() * 3)) {
-							// memo.delete(memo.indexOf("Executing remote test..."),
-							// memo.length());
-							memo.append("\n" + SoulissClient.getAppContext().getString(R.string.dialog_remote_ok)
-									+ "\n");
-							// opzioni.setBestAddress();
-						} else {
-							memo.delete(
-									memo.indexOf(SoulissClient.getAppContext().getString(R.string.dialog_remote_test)),
-									memo.length());
-							memo.append(SoulissClient.getAppContext().getString(R.string.dialog_remote_notok));
-						}
-						preferencesActivity.runOnUiThread(new Runnable() {
-							public void run() {
-								mProgressDialog.setMessage(memo.toString());
-							}
-						});
-					} else if (local_ip == null || "".compareTo(local_ip) == 0) {
-						memo.append(SoulissClient.getAppContext().getString(R.string.dialog_notconf) + "\n");
-						preferencesActivity.runOnUiThread(new Runnable() {
-							public void run() {
-								mProgressDialog.setMessage(memo.toString());
-							}
-						});
-					}
-
-					// TODO togliere ??
-					mProgressDialog.getListView();
-
-				} catch (final Exception e) {
-					preferencesActivity.runOnUiThread(new Runnable() {
-						public void run() {
-							mProgressDialog.setMessage("Test Failed: " + e.getLocalizedMessage());
-						}
-					});
-					Log.e(TAG, "Connection test FAILED", e);
-				}
-			}
-		}.start();
-
-		mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				mProgressDialog.dismiss();
-			}
-		});
-
-		return mProgressDialog;
-
-	}*/
+	/*
+	 * public static ProgressDialog checkConnectionResultDialog(final Activity
+	 * preferencesActivity, final String local_ip, final String public_ip, final
+	 * SoulissPreferenceHelper opzioni) { final ProgressDialog mProgressDialog =
+	 * new ProgressDialog(preferencesActivity);
+	 * mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
+	 * mProgressDialog
+	 * .setTitle(SoulissClient.getAppContext().getString(R.string.
+	 * dialog_net_test));
+	 * mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	 * 
+	 * new Thread() { public void run() { preferencesActivity.runOnUiThread(new
+	 * Runnable() { public void run() {
+	 * mProgressDialog.setMessage(SoulissClient.
+	 * getAppContext().getString(R.string.dialog_local_test) + "\n"); } });
+	 * 
+	 * final StringBuilder memo = new StringBuilder(); try { Thread.sleep(400);
+	 * if (local_ip != null && "".compareTo(local_ip) != 0) { // IP LOCALE if
+	 * (JSONHelper.checkSoulissHttp(local_ip, opzioni.getRemoteTimeoutPref() *
+	 * 2)) {
+	 * memo.append(SoulissClient.getAppContext().getString(R.string.dialog_local_ok
+	 * ) + "\n"); // opzioni.setBestAddress(); } else {
+	 * memo.append(SoulissClient
+	 * .getAppContext().getString(R.string.dialog_warn_wifi) + "\n"); }
+	 * preferencesActivity.runOnUiThread(new Runnable() { public void run() {
+	 * mProgressDialog.setMessage(memo.toString()); } }); } if (public_ip !=
+	 * null && "".compareTo(public_ip) != 0) { // PUBLIC TEST, NON Else perche
+	 * non esclusivo memo.append("\n" +
+	 * SoulissClient.getAppContext().getString(R.string.dialog_remote_test));
+	 * preferencesActivity.runOnUiThread(new Runnable() { public void run() {
+	 * mProgressDialog.setMessage(memo.toString()); } }); Thread.sleep(500); //
+	 * TEST REMOTO if (JSONHelper.checkSoulissHttp(public_ip,
+	 * opzioni.getRemoteTimeoutPref() * 3)) { //
+	 * memo.delete(memo.indexOf("Executing remote test..."), // memo.length());
+	 * memo.append("\n" +
+	 * SoulissClient.getAppContext().getString(R.string.dialog_remote_ok) +
+	 * "\n"); // opzioni.setBestAddress(); } else { memo.delete(
+	 * memo.indexOf(SoulissClient
+	 * .getAppContext().getString(R.string.dialog_remote_test)), memo.length());
+	 * memo
+	 * .append(SoulissClient.getAppContext().getString(R.string.dialog_remote_notok
+	 * )); } preferencesActivity.runOnUiThread(new Runnable() { public void
+	 * run() { mProgressDialog.setMessage(memo.toString()); } }); } else if
+	 * (local_ip == null || "".compareTo(local_ip) == 0) {
+	 * memo.append(SoulissClient
+	 * .getAppContext().getString(R.string.dialog_notconf) + "\n");
+	 * preferencesActivity.runOnUiThread(new Runnable() { public void run() {
+	 * mProgressDialog.setMessage(memo.toString()); } }); }
+	 * 
+	 * // TODO togliere ?? mProgressDialog.getListView();
+	 * 
+	 * } catch (final Exception e) { preferencesActivity.runOnUiThread(new
+	 * Runnable() { public void run() {
+	 * mProgressDialog.setMessage("Test Failed: " + e.getLocalizedMessage()); }
+	 * }); Log.e(TAG, "Connection test FAILED", e); } } }.start();
+	 * 
+	 * mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int whichButton) { mProgressDialog.dismiss(); } });
+	 * 
+	 * return mProgressDialog;
+	 * 
+	 * }
+	 */
 
 	/**
 	 * Dialogo creazione DB
@@ -680,7 +652,7 @@ public class AlertDialogHelper {
 									UDPHelper.dbStructRequest(opts);
 								}
 							}.start();
-							
+
 						}
 					});
 		} else {

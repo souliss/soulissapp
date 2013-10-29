@@ -97,7 +97,7 @@ public class SoulissIconAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView = new ImageView(mContext);
         imageView.setImageResource(mImageIds[position]);
-        imageView.setLayoutParams(new EcoGallery.LayoutParams(250,250));
+        imageView.setLayoutParams(new EcoGallery.LayoutParams(200,200));
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageView.setBackgroundResource(mGalleryItemBackground);
 

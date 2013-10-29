@@ -42,6 +42,8 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 				final String newval = newValue.toString();
 
 				if (newval != null && newval.compareTo("") == 0) {// SET vuoto
+					opzioni.clearCachedAddress();
+					opzioni.getAndSetCachedAddress();
 					parent.runOnUiThread(new Runnable() {
 						public void run() {
 							if ("edittext_IP_pubb".compareTo(preference.getKey()) == 0) {

@@ -9,7 +9,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -36,7 +35,7 @@ import android.widget.TextView;
  * 
  */
 public class SoulissTypical52TemperatureSensor extends SoulissTypical implements ISoulissTypical {
-	private final DecimalFormat df = new DecimalFormat("###.##");
+	//private final DecimalFormat df = new DecimalFormat("###.##");
 	public SoulissTypical52TemperatureSensor(SoulissPreferenceHelper pre) {
 		super(pre);
 	}
@@ -64,9 +63,8 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 	}
 
 	public String getOutputCelsius() {
-		
 
-		return df.format(getOutputFloat() );
+		return Constants.twoDecimalFormat.format(getOutputFloat() );
 	}
 
 	@Override
@@ -111,6 +109,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		
 		RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
+		lp2.setMargins(2,2,4,2);
 		par.setLayoutParams(lp2);
 		par.setMax(50);
 		par.setProgress(20);

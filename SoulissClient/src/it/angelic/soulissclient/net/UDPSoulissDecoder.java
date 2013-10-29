@@ -295,11 +295,9 @@ public class UDPSoulissDecoder {
 		// se trovo F e` locale, se trovo B e` Remoto
 
 		SharedPreferences.Editor editor = soulissSharedPreference.edit();
-		// if (soulissSharedPreference.contains("cachedAddress"))
-		// editor.remove("cachedAddress");
-		boolean alreadyPrivate = soulissSharedPreference.getString("cachedAddress", "").compareTo(
-				opzioni.getPrefIPAddress()) == 0;
-
+		// se ho gia` indirizzo privato che funziona (!= 0) 
+		boolean alreadyPrivate = (soulissSharedPreference.getString("cachedAddress", "").compareTo(
+				opzioni.getPrefIPAddress()) == 0 && "".compareTo(opzioni.getPrefIPAddress())!=0);
 		if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
 			opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
 			editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
@@ -376,6 +374,7 @@ public class UDPSoulissDecoder {
 
 		Log.i(Constants.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
 				+ maxrequests);
+		database.open();
 		database.createOrUpdateStructure(nodes, maxTypicalXnode);
 		// Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
 

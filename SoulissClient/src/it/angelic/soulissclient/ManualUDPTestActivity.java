@@ -266,7 +266,7 @@ public class ManualUDPTestActivity extends Activity {
 		super.onStart();
 		opzioni = SoulissClient.getOpzioni();
 		// check se IP non settato
-		if (!opzioni.isSoulissIpConfigured()) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			refreshButton.setEnabled(false);
 			stateRequestButton.setEnabled(false);
 			GoButt.setEnabled(false);

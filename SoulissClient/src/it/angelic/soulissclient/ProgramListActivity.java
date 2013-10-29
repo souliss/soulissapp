@@ -48,7 +48,7 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public class ProgramListActivity extends SherlockActivity {
 	private SoulissCommand[] programsArray;
-	SoulissPreferenceHelper opzioni;
+	private SoulissPreferenceHelper opzioni;
 	private ListView listaProgrammiView;
 	private SoulissDBHelper datasource;
 	private ProgramListAdapter progsAdapter;
@@ -78,7 +78,7 @@ public class ProgramListActivity extends SherlockActivity {
 		SoulissClient.setBackground((RelativeLayout) findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato
-		if (!opzioni.isSoulissIpConfigured() ) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(this);
 			alert.show();
 		}
@@ -145,6 +145,7 @@ public class ProgramListActivity extends SherlockActivity {
 	 */
 	public void startOptions(View v){
 		opzioni.setBestAddress();
+		Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
 	}
 	
 	@Override

@@ -51,7 +51,7 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public class SceneListActivity extends SherlockActivity {
 	private SoulissScene[] scenesArray;
-	SoulissPreferenceHelper opzioni;
+	private SoulissPreferenceHelper opzioni;
 	private ListView listaScenesView;
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
@@ -85,7 +85,7 @@ public class SceneListActivity extends SherlockActivity {
 		SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
 
 		// check se IP non settato
-		if (!opzioni.isSoulissIpConfigured()) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(this);
 			alert.show();
 		}
@@ -268,6 +268,7 @@ public class SceneListActivity extends SherlockActivity {
 	 */
 	public void startOptions(View v){
 		opzioni.setBestAddress();
+		Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
