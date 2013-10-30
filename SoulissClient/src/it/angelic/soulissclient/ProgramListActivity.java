@@ -10,15 +10,12 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -27,11 +24,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -49,15 +48,16 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public class ProgramListActivity extends SherlockActivity {
 	private SoulissCommand[] programsArray;
-	SoulissPreferenceHelper opzioni;
+	private SoulissPreferenceHelper opzioni;
 	private ListView listaProgrammiView;
 	private SoulissDBHelper datasource;
 	private ProgramListAdapter progsAdapter;
 	private TextView tt;
+	private ActionBar actionBar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
+		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else
@@ -66,21 +66,19 @@ public class ProgramListActivity extends SherlockActivity {
 		setContentView(R.layout.main_programs);
 		setTitle(getString(R.string.app_name) + " - " + getString(R.string.programs_title));
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
-		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
+		
+		
+		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
 			Typeface font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
 			tt.setTypeface(font, Typeface.NORMAL);
-		}
-		//tt.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto() + tt.getTextSize());
-
-		//ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
-		//nodeic.setAlpha(150);
+		}*/
 
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
 		
 		SoulissClient.setBackground((RelativeLayout) findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato
-		if (!opzioni.isSoulissIpConfigured() ) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(this);
 			alert.show();
 		}
@@ -96,15 +94,12 @@ public class ProgramListActivity extends SherlockActivity {
 		registerForContextMenu(listaProgrammiView);
 	}
 	
-	@SuppressLint("NewApi")
 	@Override
 	protected void onStart() {
+		actionBar = getSupportActionBar();
+		setActionBarInfo();
 		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = this.getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-		//opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
+		
 		datasource.open();
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
@@ -126,6 +121,32 @@ public class ProgramListActivity extends SherlockActivity {
 
 	}
 
+	private void setActionBarInfo() {
+		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		View ds = actionBar.getCustomView();
+		ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+		actionTitle.setText(getString(R.string.programs_title));
+		if (!opzioni.isSoulissReachable()) {
+			online.setBackgroundResource(R.drawable.red);
+			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+			statusOnline.setText(R.string.offline);
+		} else {
+			online.setBackgroundResource(R.drawable.green);
+			statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+			statusOnline.setText(R.string.Online);
+		}
+	}
+	/**
+	 * chiamato dal layout
+	 */
+	public void startOptions(View v){
+		opzioni.setBestAddress();
+		Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
+	}
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

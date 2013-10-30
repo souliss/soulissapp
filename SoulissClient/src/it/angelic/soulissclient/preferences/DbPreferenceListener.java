@@ -136,7 +136,8 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 	}
 
 	private boolean createDbRequest() {
-		if (!opzioni.isSoulissIpConfigured()) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
+			//mostro anche con IP privato non configurato MA souliss raggiungibile
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(parent);
 			alert.show();
 			return true;

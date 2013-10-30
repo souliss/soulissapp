@@ -63,7 +63,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 					Location luogo = locationManager.getLastKnownLocation(provider);
 					opzioni.setHomeLatitude(luogo.getLatitude());
 					opzioni.setHomeLongitude(luogo.getLongitude());
-					opzioni.reload();
+					opzioni.initializePrefs();
 					resetMesg(setHomeLocation);
 					Toast.makeText(getActivity(),getString(R.string.opt_homepos_set) , Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {

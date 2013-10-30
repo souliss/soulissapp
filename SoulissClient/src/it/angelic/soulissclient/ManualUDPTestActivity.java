@@ -237,7 +237,7 @@ public class ManualUDPTestActivity extends Activity {
 						final String cmdOutput = UDPHelper.issueSoulissCommand(idspinner.getSelectedItem().toString(),
 								slotspinner.getSelectedItem().toString(), opzioni, Constants.COMMAND_SINGLE, editCmd
 										.getText().toString());
-						final LinearLayout OutputLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutOutput);
+						//final LinearLayout OutputLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutOutput);
 
 						GoButt.post(new Runnable() {
 							public void run() {
@@ -266,7 +266,7 @@ public class ManualUDPTestActivity extends Activity {
 		super.onStart();
 		opzioni = SoulissClient.getOpzioni();
 		// check se IP non settato
-		if (!opzioni.isSoulissIpConfigured()) {
+		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			refreshButton.setEnabled(false);
 			stateRequestButton.setEnabled(false);
 			GoButt.setEnabled(false);
@@ -316,7 +316,7 @@ public class ManualUDPTestActivity extends Activity {
 			Bundle extras = intent.getExtras();
 			if (extras != null) {
 				ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
-				Log.w(TAG, "RAW DATA: " + vers);
+				Log.d(TAG, "Broadcast RAW DATA: " + vers);
 				timeoutHandler.removeCallbacks(timeExpired);
 				TextView ito = (TextView) findViewById(R.id.textOutputError);
 				ito.setVisibility(View.GONE);

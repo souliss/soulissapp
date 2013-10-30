@@ -11,12 +11,16 @@ import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
+import it.angelic.soulissclient.helpers.NetUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -40,7 +44,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 /**
- * Classe per il decode dei pacchetti nativi souliss 
+ * Classe per il decode dei pacchetti nativi souliss
  * 
  * This class decodes incoming Souliss packets, starting from decodevNet
  * 
@@ -53,6 +57,7 @@ public class UDPSoulissDecoder {
 	private SoulissDBLowHelper database;
 	private SharedPreferences soulissSharedPreference;
 	private Context context;
+	private InetAddress localHost;
 
 	public UDPSoulissDecoder(SoulissPreferenceHelper opts, Context ctx) {
 		this.opzioni = opts;
@@ -60,6 +65,11 @@ public class UDPSoulissDecoder {
 		database = new SoulissDBLowHelper(ctx);
 		soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		database.open();
+		try {
+			localHost = NetUtils.getLocalIpAddress();
+		} catch (SocketException e) {
+			Log.e(Constants.TAG, "CANT GET LOCALADDR");
+		} 
 	}
 
 	/**
@@ -70,7 +80,7 @@ public class UDPSoulissDecoder {
 	 */
 	public void decodeVNetDatagram(DatagramPacket packet) {
 		int checklen = packet.getLength();
-		// Log.d("UDPDecoder", "** Packet received");
+		// Log.d(Constants.TAG, "** Packet received");
 		ArrayList<Short> mac = new ArrayList<Short>();
 		for (int ig = 7; ig < checklen; ig++) {
 			mac.add((short) (packet.getData()[ig] & 0xFF));
@@ -85,7 +95,7 @@ public class UDPSoulissDecoder {
 				dump.append("0x" + Long.toHexString(0xFF & packet.getData()[ig]) + " ");
 				// dump.append(":"+packet.getData()[ig]);
 			}
-			Log.e("UDPDecoder", "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
+			Log.e(Constants.TAG, "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
 					+ "\n" + dump.toString());
 		} else {
 			decodeMacaco(mac);
@@ -95,7 +105,7 @@ public class UDPSoulissDecoder {
 		 * DEBUG PACCHETTO StringBuilder dump = new StringBuilder(); for (int ig
 		 * = 0; ig < checklen; ig++) { // 0xFF & buf[index] dump.append("0x" +
 		 * Long.toHexString(0xFF & packet.getData()[ig]) + " "); //
-		 * dump.append(":"+packet.getData()[ig]); } Log.d("UDPDecoder", "***" +
+		 * dump.append(":"+packet.getData()[ig]); } Log.d(Constants.TAG, "***" +
 		 * dump.toString());
 		 */
 		// Qualcosa ho ricevuto, invia broadcast
@@ -121,52 +131,57 @@ public class UDPSoulissDecoder {
 		// NUMBEROF 1 byte
 		int startOffset = macacoPck.get(3);
 		int numberOf = macacoPck.get(4);
-		Log.d("UDPDecoder", "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
+		Log.d(Constants.TAG, "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
 		switch (functionalCode) {
 		case Constants.Souliss_UDP_function_subscribe_data:
-			Log.d("UDPDecoder", "** Subscription answer");
+			Log.d(Constants.TAG, "** Subscription answer");
 			decodeStateRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_poll_resp:
-			Log.d("UDPDecoder", "** Poll answer");
+			Log.d(Constants.TAG, "** Poll answer");
 			decodeStateRequest(macacoPck);
 			processTriggers();
 			break;
 		case Constants.Souliss_UDP_function_ping_resp:
 			// assertEquals(mac.size(), 8);
-			Log.d("UDPDecoder", "** Ping response bytes " + macacoPck.size());
+			Log.d(Constants.TAG, "** Ping response bytes " + macacoPck.size());
+			decodePing(macacoPck);
+			break;
+		case Constants.Souliss_UDP_function_ping_bcast_resp:
+			// assertEquals(mac.size(), 8);
+			Log.d(Constants.TAG, "** Ping BROADCAST response bytes " + macacoPck.size());
 			decodePing(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_subscribe_resp:
-			Log.d("UDPDecoder", "** State request answer");
+			Log.d(Constants.TAG, "** State request answer");
 			decodeStateRequest(macacoPck);
 			processTriggers();
 			break;
 		case Constants.Souliss_UDP_function_typreq_resp:// Answer for assigned
 														// typical logic
-			Log.d("UDPDecoder", "** TypReq answer");
+			Log.d(Constants.TAG, "** TypReq answer");
 			decodeTypRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_health_resp:// Answer nodes healty
-			Log.d("UDPDecoder", "** Health answer");
+			Log.d(Constants.TAG, "** Health answer");
 			decodeHealthRequest(macacoPck);
 			break;
 		case Constants.Souliss_UDP_function_db_struct_resp:// Answer nodes
 			assertEquals(macacoPck.size(), 9); // healty
-			Log.w("UDPDecoder", "** DB Structure answer");
+			Log.w(Constants.TAG, "** DB Structure answer");
 			decodeDBStructRequest(macacoPck);
 			break;
 		case 0x83:
-			Log.e("UDPDecoder", "** (Functional code not supported)");
+			Log.e(Constants.TAG, "** (Functional code not supported)");
 			break;
 		case 0x84:
-			Log.e("UDPDecoder", "** (Data out of range)");
+			Log.e(Constants.TAG, "** (Data out of range)");
 			break;
 		case 0x85:
-			Log.e("UDPDecoder", "** (Subscription refused)");
+			Log.e(Constants.TAG, "** (Subscription refused)");
 			break;
 		default:
-			Log.e("UDPDecoder", "** Unknown functional code: " + functionalCode);
+			Log.e(Constants.TAG, "** Unknown functional code: " + functionalCode);
 			break;
 		}
 
@@ -196,7 +211,7 @@ public class UDPSoulissDecoder {
 						// check Antitheft
 						if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 								&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-							sendNotification(context, context.getString(R.string.antitheft_notify),
+							sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
 									context.getString(R.string.antitheft_notify_desc), R.drawable.shield);
 							break;
 						}
@@ -280,19 +295,60 @@ public class UDPSoulissDecoder {
 		// se trovo F e` locale, se trovo B e` Remoto
 
 		SharedPreferences.Editor editor = soulissSharedPreference.edit();
-		// if (soulissSharedPreference.contains("cachedAddress"))
-		// editor.remove("cachedAddress");
-		boolean alreadyPrivate = soulissSharedPreference.getString("cachedAddress", "").compareTo(
-				opzioni.getPrefIPAddress()) == 0;
-
-		if (putIn == 0xB && !alreadyPrivate) {
+		// se ho gia` indirizzo privato che funziona (!= 0) 
+		boolean alreadyPrivate = (soulissSharedPreference.getString("cachedAddress", "").compareTo(
+				opzioni.getPrefIPAddress()) == 0 && "".compareTo(opzioni.getPrefIPAddress())!=0);
+		if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
 			opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
 			editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getIPPreferencePublic());
-		} else if (putIn == 0xF) {
+		} else if (putIn == 0xF) {// PRIVATO
 			opzioni.setCachedAddr(opzioni.getPrefIPAddress());
 			editor.putString("cachedAddress", opzioni.getPrefIPAddress());
 			Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getPrefIPAddress());
+		} else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
+
+			try {// sanity check
+				final InetAddress toverify = NetUtils.extractTargetAddress(mac);
+				Log.i(Constants.TAG, "Parsed private IP: " + toverify.getHostAddress());
+				/**
+				 * deve essere determinato se l'indirizzo appartiene ad un nodo
+				 * e se è all'interno della propria subnet. Se entrambe le
+				 * verifiche hanno esito positivo, si può utilizzare tale
+				 * indirizzo, altrimenti si continua ad usare broadcast.
+				 */
+				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)))
+						&& NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),
+								localHost)) {
+					Log.d(Constants.TAG, "BROADCAST detected, IP to verify: " + toverify);
+					Log.d(Constants.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getSubnet(context)));
+					Log.d(Constants.TAG, "BROADCAST, me: " + localHost);
+
+					Log.d(Constants.TAG,
+							"BROADCAST, belongsToNode: "
+									+ NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))));
+					Log.d(Constants.TAG,
+							"BROADCAST, belongsToSameSubnet: "
+									+ NetUtils.belongsToSameSubnet(toverify,
+											NetUtils.intToInet(NetUtils.getSubnet(context)), localHost));
+					
+					opzioni.setCachedAddr(toverify.getHostAddress());
+					editor.putString("cachedAddress", toverify.getHostAddress());
+					if (!opzioni.isSoulissIpConfigured()) {// forse e` da
+															// togliere
+						Log.w(Constants.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
+						opzioni.setIPPreference(opzioni.getCachedAddress());
+					}
+				} else {
+					throw new UnknownHostException("belongsToNode or belongsToSameSubnet = FALSE");
+				}
+			} catch (final Exception e) {
+				Log.e(Constants.TAG, "Error in address parsing, using BCAST address: " + e.getMessage(), e);
+					opzioni.setCachedAddr(Constants.BROADCASTADDR);
+					editor.putString("cachedAddress", Constants.BROADCASTADDR);
+				
+			}
+
 		} else if (alreadyPrivate) {
 			Log.w(Constants.TAG,
 					"Local address already set. I'll NOT overwrite it: "
@@ -318,6 +374,7 @@ public class UDPSoulissDecoder {
 
 		Log.i(Constants.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
 				+ maxrequests);
+		database.open();
 		database.createOrUpdateStructure(nodes, maxTypicalXnode);
 		// Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
 
@@ -356,24 +413,28 @@ public class UDPSoulissDecoder {
 			int done = 0;
 			// SoulissNode node = database.getSoulissNode(tgtnode);
 			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
+			Log.i(Constants.TAG, "--DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
+					+ typXnodo);
 			// creates Souliss nodes
 			for (int j = 0; j < numberOf; j++) {
 				if (mac.get(5 + j) != 0) {// create only not-empty typicals
 					SoulissTypicalDTO dto = new SoulissTypicalDTO();
 					dto.setTypical(mac.get(5 + j));
 					dto.setSlot(((short) (j % typXnodo)));// magia
-					dto.setNodeId((short) (j / typXnodo));
+					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// conta solo i master
 					if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
 						done++;
+					Log.d(Constants.TAG, "---PERSISTING TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
+							+ " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
 					dto.persist();
 				}
 			}
 			if (soulissSharedPreference.contains("numTipici"))
-				editor.remove("numTipici");//unused
+				editor.remove("numTipici");// unused
 			editor.putInt("numTipici", done);
 			editor.commit();
-			Log.d(Constants.TAG, "Refreshed typicals for node " + tgtnode);
+			Log.i(Constants.TAG, "Refreshed " + numberOf + " typicals for node " + tgtnode);
 		} catch (Exception uy) {
 			Log.e(Constants.TAG, "decodeTypRequest ERROR", uy);
 		}
@@ -389,24 +450,35 @@ public class UDPSoulissDecoder {
 	private void decodeStateRequest(ArrayList<Short> mac) {
 		try {
 			List<SoulissNode> nodes = database.getAllNodes();
-			short tgtnode = mac.get(3);
+			Log.d(Constants.TAG, "---Nodes on DB: " + nodes.size());
+			int tgtnode = mac.get(3);
 			int numberOf = mac.get(4);
-			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
-			Log.d(Constants.TAG, "---DECODE MACACO OFFSET:"+tgtnode+" NUMOF:"+numberOf);
+			int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 8);
+			Log.d(Constants.TAG, "---DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
 			SoulissTypicalDTO dto = new SoulissTypicalDTO();
-			//refresh typicals
+			// refresh typicals
 			for (short j = 0; j < numberOf; j++) {
+				// Log.d(Constants.TAG, "---REFRESHING NODE:"+(((int)j /
+				// typXnodo) + tgtnode)+" SLOT:"+(j % typXnodo));
 				try {
-					SoulissNode it = nodes.get(j / typXnodo + tgtnode);
+					SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
 					it.getTypical((short) (j % typXnodo));
 					dto.setOutput(mac.get(5 + j));
 					dto.setSlot(((short) (j % typXnodo)));
 					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// sufficiente una refresh
-					Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
+					//Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
 					dto.refresh();
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");
+					// Log.d(Constants.TAG, "---REFRESHING NODE ERROR:"+(((int)j
+					// / typXnodo) + tgtnode)+" SLOT/TYP:"+(j %
+					// typXnodo)+e.getMessage());
+
+					continue;
+				} catch (Exception e) {
+					// unknown error
+					Log.e(Constants.TAG, e.getMessage());
 					continue;
 				}
 			}
@@ -433,7 +505,7 @@ public class UDPSoulissDecoder {
 		int numberOf = mac.get(4);
 
 		ArrayList<Short> healths = new ArrayList<Short>();
-		//build an array containing healths
+		// build an array containing healths
 		for (int i = 5; i < 5 + numberOf; i++) {
 			healths.add(Short.valueOf(mac.get(i)));
 		}
@@ -456,14 +528,13 @@ public class UDPSoulissDecoder {
 	 * @param longdesc
 	 * @param icon
 	 */
-	private static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
+	private static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon) {
 
 		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		Resources res = ctx.getResources();
-
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
 		builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
@@ -476,7 +547,7 @@ public class UDPSoulissDecoder {
 			Ringtone r = RingtoneManager.getRingtone(ctx, notification);
 			r.play();
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "Unable toplaysounds:" + e.getMessage());
+			Log.e(Constants.TAG, "Unable to play sounds:" + e.getMessage());
 		}
 	}
 

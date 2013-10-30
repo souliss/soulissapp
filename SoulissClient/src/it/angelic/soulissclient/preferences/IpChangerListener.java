@@ -4,7 +4,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.UDPHelper;
 
 import java.net.InetAddress;
 
@@ -42,21 +41,24 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 				}
 				final String newval = newValue.toString();
 
-				if (newval != null && newval.compareTo("") == 0) {
+				if (newval != null && newval.compareTo("") == 0) {// SET vuoto
+					opzioni.clearCachedAddress();
+					opzioni.getAndSetCachedAddress();
 					parent.runOnUiThread(new Runnable() {
 						public void run() {
-							if ("edittext_IP_pubb".compareTo(preference.getKey()) == 0)
+							if ("edittext_IP_pubb".compareTo(preference.getKey()) == 0) {
 								preference.setSummary(parent.getString(R.string.summary_edittext_IP_pubb));
-							else if ("edittext_IP".compareTo(preference.getKey()) == 0)
+								opzioni.setIPPreferencePublic("");
+							} else if ("edittext_IP".compareTo(preference.getKey()) == 0) {
 								preference.setSummary(parent.getString(R.string.summary_edittext_IP));
+								opzioni.setIPPreference("");
+							}
 						}
 					});
 
-					opzioni.setIPPreferencePublic("");
 					return;
 				}
-				// sanity check
-				try {
+				try {// sanity check
 					final InetAddress checkIPt = InetAddress.getByName(newValue.toString());
 					final String pars = " (" + checkIPt.getHostName() + ")";
 					parent.runOnUiThread(new Runnable() {
@@ -77,12 +79,12 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 					return;
 				}
 				// trigger connection test se il valore pubblico e`
-				// ok e
-				// diverso dal vecchio
+				// ok e diverso dal vecchio
 				if (old.compareTo(newval) != 0) {
 
 					opzioni.clearCachedAddress();
-					UDPHelper.checkSoulissUdp(opzioni.getRemoteTimeoutPref(), opzioni, newval);
+					opzioni.setBestAddress();
+					//UDPHelper.checkSoulissUdp(opzioni.getRemoteTimeoutPref(), opzioni, newval);
 					// TODO error after timeout
 					if (preference.getKey() != null && preference.getKey().compareTo("edittext_IP_pubb") == 0) {
 						opzioni.setIPPreferencePublic(newval);

@@ -1,8 +1,8 @@
 package it.angelic.soulissclient.fragments;
 
-import android.support.v4.app.ListFragment;
+import com.actionbarsherlock.app.SherlockListFragment;
 
-public class AbstractTypicalFragment extends ListFragment {
+public class AbstractTypicalFragment extends SherlockListFragment {
 
 	public AbstractTypicalFragment() {
 		super();

@@ -48,10 +48,11 @@
 
     <TextView
         android:id="@+id/TextViewTypicalsTitle"
-        style="@style/CodeFontTitle"
+        style="@style/CodeFontTitleBig"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/progressBarNodo"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:text="@string/manual_typicals" >
     </TextView>

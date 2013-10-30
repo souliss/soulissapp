@@ -9,7 +9,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -82,8 +81,7 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
-		DecimalFormat df = new DecimalFormat("###.##");
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + df.format(getOutputFloat() )));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputFloat() ));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

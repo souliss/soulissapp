@@ -7,12 +7,14 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -22,6 +24,7 @@ public class NodesListActivity extends SherlockFragmentActivity {
 	private SoulissDBHelper datasource;
 	List<SoulissNode> goer;
 	private SoulissPreferenceHelper opzioni;
+	private ImageButton online;
 
 	// private FragmentTabHost mTabHost;
 
@@ -34,21 +37,37 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+
 		datasource = new SoulissDBHelper(getBaseContext());
 		// use fragmented panel/ separate /land
 		setContentView(R.layout.main_frags);
 
 	}
-	@SuppressLint("NewApi")
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
-		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(getString(R.string.manual_title));
+		
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		View ds = actionBar.getCustomView();
+		online = (ImageButton) ds.findViewById(R.id.action_starred);
+		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+		
+		actionTitle.setText(getString(R.string.manual_title));
+		if (!opzioni.isSoulissReachable()) {
+			online.setBackgroundResource(R.drawable.red);
+			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+			statusOnline.setText(R.string.offline);
+		} else {
+			online.setBackgroundResource(R.drawable.green);
+			statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+			statusOnline.setText(R.string.Online);
 		}
+		super.onStart();
 		datasource.open();
 		// prendo tipici dal DB
 		goer = datasource.getAllNodes();
@@ -68,22 +87,34 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		}).start();
 
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.nodeslist_menu, menu);
 		return true;
 	}
+
+	/**
+	 * chiamato dal layout
+	 */
+	public void startOptions(View v){
+		opzioni.setBestAddress();
+		Toast.makeText(this, getString(R.string.ping) + " - " + getString(R.string.command_sent), Toast.LENGTH_SHORT)
+				.show();
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-            // app icon in action bar clicked; go home
-            /*Intent intent = new Intent(NodesListActivity.this, LauncherActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return true;*/
+			// app icon in action bar clicked; go home
+			/*
+			 * Intent intent = new Intent(NodesListActivity.this,
+			 * LauncherActivity.class);
+			 * intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			 * startActivity(intent); return true;
+			 */
 			finish();
 			return true;
 		case R.id.Opzioni:
@@ -101,12 +132,13 @@ public class NodesListActivity extends SherlockFragmentActivity {
 			}).start();
 
 			if (!opzioni.isSoulissReachable())
-				Toast.makeText(NodesListActivity.this, "Refresh failed: " + getString(R.string.status_souliss_notreachable),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(NodesListActivity.this,
+						"Refresh failed: " + getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+						.show();
 			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 }

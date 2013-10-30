@@ -51,7 +51,9 @@ public class UDPRunnable implements Runnable {
 		// Souliss listens on port 23000
 		Looper.prepare();
 		// lifecycle
-		Log.d("UDP", "***Creating server bind on port" + Constants.SERVERPORT);
+		
+		final UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
+		Log.d("UDP", "***Created decoder:" + decoder.toString());
 		while (true) {
 			try {
 				// InetAddress serverAddr = InetAddress.getByName(SOULISSIP);
@@ -60,7 +62,7 @@ public class UDPRunnable implements Runnable {
 
 				// socket = new DatagramSocket();
 				socket.setReuseAddress(true);
-
+				socket.setBroadcast(true);
 				// port to receive souliss board data
 				InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
 				socket.bind(sa);
@@ -78,7 +80,7 @@ public class UDPRunnable implements Runnable {
 				tpe.execute(new Runnable() {
 					@Override
 					public void run() {
-						UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
+						
 						decoder.decodeVNetDatagram(packet);
 					}
 				});

@@ -77,7 +77,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.hlt.setProgress(0);
 			holder.hlt.setMax((int) Constants.MAX_HEALTH);
 			holder.hlt
-					.setBackgroundDrawable(context.getResources().getDrawable(android.R.drawable.progress_horizontal));
+					.setBackgroundResource(android.R.drawable.progress_horizontal);
 			holder.imageRes = nodi[position].getDefaultIconResourceId();
 			//pgDrawable.getPaint().setStrokeWidth(3);
 			pgDrawable.getPaint().setDither(true);
@@ -108,7 +108,7 @@ public class NodesListAdapter extends BaseAdapter {
 		
 		StringBuilder txtTypInfo = new StringBuilder(nodi[position].getActiveTypicals().size() + " "
 				+ context.getString(R.string.manual_typicals));
-		txtTypInfo.append(" - "+context.getString(R.string.update) + Constants.getTimeAgo(nodi[position].getRefreshedAt()));
+		txtTypInfo.append(" - "+context.getString(R.string.update)+" "+ Constants.getTimeAgo(nodi[position].getRefreshedAt()));
 		holder.textTyp.setText(txtTypInfo.toString());
 		
 		if (opzioni.isLightThemeSelected()) {

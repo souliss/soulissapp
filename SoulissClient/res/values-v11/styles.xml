@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="LightThemeSelector" parent="Theme.Sherlock.Light">
         <item name="android:windowBackground">@drawable/radialbacklight</item>
@@ -51,6 +51,12 @@
         <item name="android:shadowRadius">1.5</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
+    </style>
+    
+    <style name="CodeFontTitleBig" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_vbig</item>
     </style>
 
 </resources>

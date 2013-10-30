@@ -46,6 +46,7 @@ public class PreferencesActivity extends PreferenceActivity {
 	// private String strVersionCode;
 	private String strVersionName;
 	SoulissPreferenceHelper opzioni;
+	private String currentScreen;
 
 	@TargetApi(11)
 	@Override
@@ -104,7 +105,7 @@ public class PreferencesActivity extends PreferenceActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		String action = getIntent().getAction();
+		currentScreen = getIntent().getAction();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// PrefsFragment pf = new PrefsFragment();
 			/*
@@ -122,11 +123,11 @@ public class PreferencesActivity extends PreferenceActivity {
 			Log.d(TAG, "Going thru preference onStart()");
 			return;
 		}
-		opzioni.reload();
+		opzioni.initializePrefs();
 		/*
 		 * arrivo dai fragments, evido code Dup SCHERMATA NETWORK
 		 */
-		if (action != null && action.equals("network_setup")) {
+		if (currentScreen != null && currentScreen.equals("network_setup")) {
 			Preference privateIP = (Preference) findPreference("edittext_IP");
 			// Vedi se e` gia` settato l'IP PUBBLICO
 			Preference publicIP = (Preference) findPreference("edittext_IP_pubb");
@@ -143,13 +144,13 @@ public class PreferencesActivity extends PreferenceActivity {
 			publicIP.setOnPreferenceChangeListener(ipChanger);
 			final Preference userIdx = (Preference) findPreference("userindexIC");
 			final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
-			
+
 			String strMeatFormat = getString(R.string.opt_nodeindex_desc);
-			nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
-			
+			nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
+
 			String stdrMeatFormat = getString(R.string.opt_userindex_desc);
-			userIdx.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
-			
+			userIdx.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
+
 			userIdx.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				@Override
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -157,13 +158,19 @@ public class PreferencesActivity extends PreferenceActivity {
 					try {
 						String ics = (String) newValue;
 						Integer rete = Integer.parseInt(ics);
-						if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1 )//enforce 0 < x < 0xfe
+						if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1)// enforce
+																								// 0
+																								// <
+																								// x
+																								// <
+																								// 0xfe
 							throw new IllegalArgumentException();
 						opzioni.setUserIndex(rete);
 						String stdrMeatFormat = getString(R.string.opt_userindex_desc);
-						userIdx.setSummary(String.format(stdrMeatFormat,  opzioni.getUserIndex()));
+						userIdx.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
 					} catch (Exception e) {
-						Toast.makeText(PreferencesActivity.this,getString(R.string.useridxhint), Toast.LENGTH_SHORT).show();
+						Toast.makeText(PreferencesActivity.this, getString(R.string.useridxhint), Toast.LENGTH_SHORT)
+								.show();
 					}
 					return true;
 				}
@@ -175,19 +182,23 @@ public class PreferencesActivity extends PreferenceActivity {
 					Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
 					try {
 						String ics = (String) newValue;
-						if (Integer.parseInt(ics) >= it.angelic.soulissclient.Constants.MAX_NODE_IDX || Integer.parseInt(ics) < 1 )//enforce 1 < x < 100
+						if (Integer.parseInt(ics) >= it.angelic.soulissclient.Constants.MAX_NODE_IDX
+								|| Integer.parseInt(ics) < 1)// enforce 1 < x <
+																// 100
 							throw new IllegalArgumentException();
 						opzioni.setNodeIndex(Integer.parseInt(ics));
 						String strMeatFormat = getString(R.string.opt_nodeindex_desc);
-						nodeIndex.setSummary(String.format(strMeatFormat,  opzioni.getNodeIndex()));
+						nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 					} catch (Exception e) {
-						Toast.makeText(PreferencesActivity.this, getString(R.string.nodeidxhint), Toast.LENGTH_SHORT).show();
+						Toast.makeText(PreferencesActivity.this, getString(R.string.nodeidxhint), Toast.LENGTH_SHORT)
+								.show();
 					}
 					return true;
 				}
 			});
 
-		} else if (action != null && action.equals("db_setup")) {//SCHERMATA DBINFO
+		} else if (currentScreen != null && currentScreen.equals("db_setup")) {// SCHERMATA
+																				// DBINFO
 			Preference createDbPref = (Preference) findPreference("createdb");
 			Preference dropDbPref = (Preference) findPreference("dropdb");
 			Preference exportDBPref = (Preference) findPreference("dbexp");
@@ -203,12 +214,11 @@ public class PreferencesActivity extends PreferenceActivity {
 			dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(this));
 
 			String strMeatFormat = getString(R.string.opt_dbinfo_desc);
-			String nonode = getString(R.string.opt_dbinfo_desc); 
-			final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(
+			final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? getString(R.string.dialog_disabled_db) : String.format(
 					strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
 					opzioni.getCustomPref().getInt("numTipici", 0));
 			dbinfopref.setSummary(strMeatMsg);
-		} else if (action != null && action.equals("service_setup")) {
+		} else if (currentScreen != null && currentScreen.equals("service_setup")) {
 			final Preference serviceActive = (Preference) findPreference("checkboxService");
 			final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
 			final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
@@ -275,7 +285,7 @@ public class PreferencesActivity extends PreferenceActivity {
 			setHomeLocation.setSummary("Home location set to: " + (loc == null ? "" : loc) + " ("
 					+ opzioni.getHomeLatitude() + " : " + opzioni.getHomeLongitude() + ")");
 
-		} else if (action != null && action.equals("visual_setup")) {
+		} else if (currentScreen != null && currentScreen.equals("visual_setup")) {
 
 			final Preference restoreWarns = (Preference) findPreference("restoredialogs");
 			restoreWarns.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -321,32 +331,36 @@ public class PreferencesActivity extends PreferenceActivity {
 				case Constants.Souliss_UDP_function_typreq_resp:
 					;// fallthrought x refresh dicitura tipici
 				case Constants.Souliss_UDP_function_db_struct_resp:
-					Intent inten = PreferencesActivity.this.getIntent();
-					inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-					PreferencesActivity.this.finish();
-					PreferencesActivity.this.overridePendingTransition(0, 0);
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-						inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
-					inten.setAction("db_setup");
-					Toast.makeText(PreferencesActivity.this,
-							PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
-							Toast.LENGTH_SHORT).show();
-					PreferencesActivity.this.startActivity(inten);
+					if (currentScreen != null && currentScreen.equals("db_setup")) {
+						Intent inten = PreferencesActivity.this.getIntent();
+						inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						PreferencesActivity.this.finish();
+						PreferencesActivity.this.overridePendingTransition(0, 0);
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+							inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
+						inten.setAction("db_setup");
+						Toast.makeText(PreferencesActivity.this,
+								PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
+								Toast.LENGTH_SHORT).show();
+						PreferencesActivity.this.startActivity(inten);
+					}
 					break;
-				case Constants.Souliss_UDP_function_ping_resp:
-					Intent intend = PreferencesActivity.this.getIntent();
-					intend.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-					PreferencesActivity.this.finish();
-					PreferencesActivity.this.overridePendingTransition(0, 0);
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-						AlertDialogHelper.setExtra(intend, NetSettingsFragment.class.getName());
-					// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
-					intend.setAction("network_setup");
+				case Constants.Souliss_UDP_function_ping_resp:// restart
+					if (currentScreen != null && currentScreen.equals("network_setup")) {
+						Intent intend = PreferencesActivity.this.getIntent();
+						intend.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+						PreferencesActivity.this.finish();
+						PreferencesActivity.this.overridePendingTransition(0, 0);
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+							AlertDialogHelper.setExtra(intend, NetSettingsFragment.class.getName());
+						// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
+						intend.setAction("network_setup");
 
-					intend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						intend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-					PreferencesActivity.this.overridePendingTransition(0, 0);
-					PreferencesActivity.this.startActivity(intend);
+						PreferencesActivity.this.overridePendingTransition(0, 0);
+						PreferencesActivity.this.startActivity(intend);
+					}
 					break;
 				default:
 					break;

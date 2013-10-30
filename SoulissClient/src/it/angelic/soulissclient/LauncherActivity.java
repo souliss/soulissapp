@@ -174,7 +174,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		Eula.show(this);
-		opzioni.clearCachedAddress();
+		
 		setContentView(R.layout.main_launcher);
 		geocoder = new Geocoder(this, Locale.getDefault());
 		soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
@@ -341,7 +341,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			return;
 		}
 		String base = opzioni.getAndSetCachedAddress();
-		Log.i(TAG, "cached Address: " + base);
+		Log.d(TAG, "cached Address: " + base);
 		if (base != null && "".compareTo(base) != 0) {
 			basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"> " + base
 					+ "</font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
@@ -462,8 +462,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		@Override
 		public void run() {
 			Log.e(TAG, "TIMEOUT!!!");
-			serviceInfoFoot.setText(Html.fromHtml("Command timeout <b><font color=\"#FF4444\">expired</font></b>."
-					+ " Be sure to set correct Souliss address "));
+			serviceInfoFoot.setText(Html.fromHtml(getString(R.string.timeout_expired)));
 			opzioni.getAndSetCachedAddress();
 		}
 	};

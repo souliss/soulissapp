@@ -74,6 +74,9 @@ public class Constants {
 	public static final short Souliss_T52_TemperatureSensor = 0x52;
 	public static final short Souliss_T53_HumiditySensor = 0x53;
 	public static final short Souliss_T54_LuxSensor = 0x54;
+	public static final short Souliss_T55_VoltageSensor = 0x55;
+	public static final short Souliss_T56_CurrentSensor = 0x56;
+	public static final short Souliss_T57_PowerSensor = 0x57;
 
 	// #define Souliss_T3n_AirCon_OnCmd 0xF0
 	// #define Souliss_T3n_AirCon_OffCmd 0xFC
