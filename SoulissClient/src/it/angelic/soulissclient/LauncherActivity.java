@@ -144,6 +144,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+		doBindService();
 		Eula.show(this);
 		
 		setContentView(R.layout.main_launcher);
@@ -202,7 +203,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
 			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
 		}
-		doBindService();
+		
 		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 
 		// Log.w(TAG, "WARNTEST");

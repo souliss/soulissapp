@@ -1,7 +1,6 @@
 package it.angelic.soulissclient;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.net.UDPHelper;
 
@@ -15,15 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class NodesListActivity extends SherlockFragmentActivity {
+public class NodesListActivity extends AbstractStatusedFragmentActivity {
 	private SoulissDBHelper datasource;
 	List<SoulissNode> goer;
-	private SoulissPreferenceHelper opzioni;
+	
 	private ImageButton online;
 
 	// private FragmentTabHost mTabHost;
@@ -95,14 +93,7 @@ public class NodesListActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
-	/**
-	 * chiamato dal layout
-	 */
-	public void startOptions(View v){
-		opzioni.setBestAddress();
-		Toast.makeText(this, getString(R.string.ping) + " - " + getString(R.string.command_sent), Toast.LENGTH_SHORT)
-				.show();
-	}
+	
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

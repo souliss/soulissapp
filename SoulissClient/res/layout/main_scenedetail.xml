@@ -37,11 +37,10 @@
 
         <TextView
             android:id="@+id/TextViewTypicals"
-            style="@style/CodeFontTitle"
+            style="@style/CodeFontTitleBig"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/TextViewHealth"
             android:layout_marginLeft="2dp"
-            android:layout_marginTop="15dp"
             android:ellipsize="end"
             android:text="@string/scene_commands" >
         </TextView>

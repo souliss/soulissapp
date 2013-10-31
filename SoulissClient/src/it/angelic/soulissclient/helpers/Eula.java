@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.helpers;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -101,6 +102,8 @@ public class Eula {
 
 	    private static void accept(SharedPreferences preferences) {
 	        preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true).commit();
+	        //this tries to auto-configure Souliss at first run
+	        SoulissClient.getOpzioni().getAndSetCachedAddress();
 	    }
 
 	    private static void refuse(Activity activity) {
