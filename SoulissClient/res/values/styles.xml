@@ -66,6 +66,12 @@
         <!-- <item name="android:typeface">monospace</item> -->
 
     </style>
+    
+    <style name="CodeFontActionBar" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+    </style>
 
     <style name="ButtonText">
         <item name="android:gravity">center</item>
