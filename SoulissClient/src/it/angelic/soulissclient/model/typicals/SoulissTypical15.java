@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.RGBIrActivity;
+import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -100,7 +100,7 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 
 				Thread t = new Thread() {
 					public void run() {
-						Intent nodeDatail = new Intent(ctx, RGBIrActivity.class);
+						Intent nodeDatail = new Intent(ctx, T15RGBIrActivity.class);
 						nodeDatail.putExtra("TIPICO", (SoulissTypical15) SoulissTypical15.this);
 						ctx.startActivity(nodeDatail);
 

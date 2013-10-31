@@ -6,18 +6,14 @@ import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 
 import java.util.ArrayList;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -33,14 +29,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class SceneDetailActivity extends SherlockActivity {
+public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 	private SoulissScene collected;
-	private SoulissPreferenceHelper opzioni;
 	private ListView listaComandiView;
 	private SoulissDBHelper datasource;
 	// private boolean thru;
@@ -49,7 +43,7 @@ public class SceneDetailActivity extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
+		opzioni = SoulissClient.getOpzioni();
 		// recuper nodo da extra
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissScene) extras.get("SCENA");
@@ -80,19 +74,14 @@ public class SceneDetailActivity extends SherlockActivity {
 		registerForContextMenu(listaComandiView);
 
 	}
-
-	@SuppressLint("NewApi")
 	@Override
 	protected void onStart() {
-		int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+		//int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
 		super.onStart();
-		if (versionNumber >= 11) {
-			ActionBar actionBar = this.getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+		
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissScene) extras.get("SCENA");
-
+		setActionBarInfo(collected==null?getString(R.string.scenes_title):collected.getNiceName());
 		createHeader();
 
 		// tipici dal DB
@@ -138,13 +127,6 @@ public class SceneDetailActivity extends SherlockActivity {
 
 		upda.setText(collected.toString());
 		health.setText("Scene with " + collected.getCommandArray().size() + " commands");
-
-		// Font dei titoli
-		if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
-			Typeface font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
-			tt.setTypeface(font, Typeface.NORMAL);
-			// titolo.setTypeface(font, Typeface.NORMAL);
-		}
 
 		return;
 	}

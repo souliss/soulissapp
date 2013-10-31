@@ -4,7 +4,6 @@ import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
@@ -12,8 +11,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,13 +22,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class RGBIrActivity extends SherlockFragmentActivity {
+public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
+	//TODO check this
 	private SoulissDBHelper datasource = new SoulissDBHelper(this);
-	private SoulissPreferenceHelper opzioni;
 
 	private Button buttPlus;
 	private Button buttMinus;
@@ -64,7 +60,6 @@ public class RGBIrActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		opzioni = SoulissClient.getOpzioni();
 		// tema
 		if (opzioni.isLightThemeSelected())
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
@@ -151,14 +146,10 @@ public class RGBIrActivity extends SherlockFragmentActivity {
 		// Integer.valueOf(collected.getTypicalDTO().getOutput());
 	}
 
-	@SuppressLint({ "NewApi", "NewApi" })
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = this.getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+		setActionBarInfo(collected.getNiceName());
 		// final ToggleButton tog = (ToggleButton)
 		// findViewById(R.id.toggleButton1);
 

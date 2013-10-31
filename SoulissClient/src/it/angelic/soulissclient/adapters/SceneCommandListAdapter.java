@@ -61,7 +61,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
 		CommandViewHolder holder;
 
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.listview_command_timed, null);
+			convertView = mInflater.inflate(R.layout.listview_scene_detail, null);
 			holder = new CommandViewHolder();
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);

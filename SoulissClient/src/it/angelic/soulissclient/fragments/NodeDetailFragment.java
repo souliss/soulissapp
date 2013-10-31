@@ -7,11 +7,11 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T19;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
 import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.AirConActivity;
+import it.angelic.soulissclient.T32AirConActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.RGBIrActivity;
+import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.SensorDetailActivity;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
@@ -34,8 +34,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;
@@ -81,8 +79,9 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockListFragment;
 
-public class NodeDetailFragment extends AbstractTypicalFragment {
+public class NodeDetailFragment extends SherlockListFragment {
 	private SoulissNode collected;
 	private SoulissPreferenceHelper opzioni;
 	private ListView listaTypicalsView;
@@ -100,7 +99,12 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
-
+	protected int getShownIndex() {
+		if (getArguments() != null)
+			return getArguments().getInt("index", 0);
+		else
+			return 0;
+	}
 	
 	public static NodeDetailFragment newInstance(int index, SoulissNode content) {
 		NodeDetailFragment f = new NodeDetailFragment();
@@ -301,7 +305,7 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 			// Check what fragment is currently shown, replace if needed.
 			Fragment details = getFragmentManager().findFragmentById(R.id.details);
 			// Istanzia e ci mette l'indice
-			if (target instanceof SoulissTypicalHumiditySensor || target instanceof SoulissTypicalTemperatureSensor)
+			if (target.isSensor())
 				details = SensorDetailFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical16AdvancedRGB)
 				details = RGBAdvancedFragment.newInstance(index, target);
@@ -328,11 +332,11 @@ public class NodeDetailFragment extends AbstractTypicalFragment {
 				nodeDatail = new Intent(getActivity(), SensorDetailActivity.class);
 				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
-				nodeDatail = new Intent(getActivity(), AirConActivity.class);
+				nodeDatail = new Intent(getActivity(), T32AirConActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical32AirCon) target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getTypicalDTO().getSlot() + 1)));
 			} else if (target.getTypicalDTO().getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB) {
-				nodeDatail = new Intent(getActivity(), RGBIrActivity.class);
+				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical15) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T16) {
 				nodeDatail = new Intent(getActivity(), T16RGBAdvancedActivity.class);

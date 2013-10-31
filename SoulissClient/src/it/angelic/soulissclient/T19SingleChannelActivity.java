@@ -1,28 +1,19 @@
 package it.angelic.soulissclient;
 
 import static junit.framework.Assert.assertTrue;
+import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
+import it.angelic.soulissclient.model.SoulissTypical;
+import android.content.res.Configuration;
+import android.os.Bundle;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
-import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissTypical;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-
-public class T19SingleChannelActivity extends SherlockFragmentActivity {
-	private SoulissPreferenceHelper opzioni;
+public class T19SingleChannelActivity extends AbstractStatusedFragmentActivity {
 	private SoulissTypical collected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else
@@ -40,6 +31,7 @@ public class T19SingleChannelActivity extends SherlockFragmentActivity {
 		if (extras != null && extras.get("TIPICO") != null)
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
+		setActionBarInfo(collected.getNiceName());
 		if (savedInstanceState == null) {
 			T19SingleChannelLedFragment details = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
@@ -48,15 +40,6 @@ public class T19SingleChannelActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onStart() {
-		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);

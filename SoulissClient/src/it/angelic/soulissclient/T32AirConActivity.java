@@ -3,7 +3,6 @@ package it.angelic.soulissclient;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
@@ -11,8 +10,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.List;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -32,13 +29,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class AirConActivity extends SherlockActivity {
+public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 	private SoulissDBHelper datasource = new SoulissDBHelper(this);
-	private SoulissPreferenceHelper opzioni;
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -85,7 +80,7 @@ public class AirConActivity extends SherlockActivity {
 
 	void doBindService() {
 		if (!mIsBound) {
-			bindService(new Intent(AirConActivity.this, SoulissDataService.class), mConnection,
+			bindService(new Intent(T32AirConActivity.this, SoulissDataService.class), mConnection,
 					Context.BIND_AUTO_CREATE);
 			mIsBound = true;
 		}
@@ -103,7 +98,6 @@ public class AirConActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
 		// tema
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
@@ -139,7 +133,7 @@ public class AirConActivity extends SherlockActivity {
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissTypical32AirCon) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical32AirCon);
-
+		
 		related = (SoulissTypical) extras.get("RELATO");
 		collected.setCtx(this);
 
@@ -196,15 +190,10 @@ public class AirConActivity extends SherlockActivity {
 
 	}
 
-	@SuppressLint({ "NewApi", "NewApi" })
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = this.getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-
+		setActionBarInfo(collected.getNiceName());
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
 				int act = Integer.parseInt(textviewTemperature.getText().toString());
@@ -240,7 +229,7 @@ public class AirConActivity extends SherlockActivity {
 		// Cancel
 		OnClickListener simplecan = new OnClickListener() {
 			public void onClick(View v) {
-				// AirConActivity.this.finish();
+				// T32AirConActivity.this.finish();
 				issueIrCommand(buildIrCommand(0));
 				return;
 			}
@@ -340,12 +329,12 @@ public class AirConActivity extends SherlockActivity {
 				Looper.prepare();
 
 				// comando da due bytes
-				//alternativa maschere di bit ma non ho voglia
+				// alternativa maschere di bit ma non ho voglia
 				String pars = Long.toHexString(finalCommand);
 				String par1, par2;
-				//i primi 4 bit possono essere tutti a 0
+				// i primi 4 bit possono essere tutti a 0
 				if (pars.length() == 3)
-					pars = "0"+pars;
+					pars = "0" + pars;
 				par1 = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
 				par2 = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
 
@@ -378,6 +367,7 @@ public class AirConActivity extends SherlockActivity {
 			// SoulissNode[] numversioni = new SoulissNode[(int) howmany];
 			int temp = (int) howmany - 1;
 
+			//TODO sta qua e` roba vetusta. Controllare
 			while (temp >= 0) {
 				SoulissNode temrp = (SoulissNode) vers.getSerializable("" + temp);
 				temp--;

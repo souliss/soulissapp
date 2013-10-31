@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.angelic.soulissclient"
     android:installLocation="auto"
-    android:versionCode="114"
+    android:versionCode="116"
     android:versionName="1.2.7" >
 
     <uses-sdk
@@ -131,7 +131,7 @@
             android:label="@string/app_addprog" >
         </activity>
         <activity
-            android:name="AirConActivity"
+            android:name="T32AirConActivity"
             android:exported="false"
             android:icon="@drawable/remote"
             android:label="@string/Souliss_TAircon_desc" >
@@ -140,7 +140,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="RGBIrActivity"
+            android:name="T15RGBIrActivity"
             android:exported="false"
             android:icon="@drawable/remote"
             android:label="@string/Souliss_TRGB_desc" >

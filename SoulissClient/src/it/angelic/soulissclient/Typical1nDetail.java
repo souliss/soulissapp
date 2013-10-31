@@ -1,26 +1,17 @@
 package it.angelic.soulissclient;
 
 import static junit.framework.Assert.assertTrue;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
-public class Typical1nDetail extends SherlockFragmentActivity {
-	private SoulissPreferenceHelper opzioni;
+public class Typical1nDetail extends AbstractStatusedFragmentActivity {
 	private SoulissTypical collected;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
@@ -40,6 +31,7 @@ public class Typical1nDetail extends SherlockFragmentActivity {
 		if (extras != null && extras.get("TIPICO") != null)
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
+		setActionBarInfo(collected.getNiceName());
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
 			T1nGenericLightFragment details = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(),
@@ -49,16 +41,6 @@ public class Typical1nDetail extends SherlockFragmentActivity {
 		}
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	}
 	// meccanismo per timeout detection
 	/*
 	 * private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {

@@ -6,7 +6,6 @@ import it.angelic.soulissclient.adapters.SceneListAdapter.SceneViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissScene;
 
 import java.util.LinkedList;
@@ -26,15 +25,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -49,14 +45,13 @@ import com.actionbarsherlock.view.MenuItem;
  * @author Ale
  * 
  */
-public class SceneListActivity extends SherlockActivity {
+public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	private SoulissScene[] scenesArray;
-	private SoulissPreferenceHelper opzioni;
 	private ListView listaScenesView;
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
 	private TextView tt;
-	private ActionBar actionBar;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +66,6 @@ public class SceneListActivity extends SherlockActivity {
 		
 		
 		setTitle(getString(R.string.app_name)+" - "+getString(R.string.scenes_title));
-		
 		setContentView(R.layout.main_scenes);
 		//final Button buttAddProgram = (Button) findViewById(R.id.buttonAddScene);
 		tt = (TextView) findViewById(R.id.TextViewScenes);
@@ -106,17 +100,13 @@ public class SceneListActivity extends SherlockActivity {
 			}
 		});
 
-		
-
 		registerForContextMenu(listaScenesView);
 	}
 	
 	@Override
 	protected void onStart() {
-		actionBar = getSupportActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		setActionBarInfo();
 		super.onStart();
+		setActionBarInfo(getString(R.string.scenes_title));
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
@@ -199,6 +189,7 @@ public class SceneListActivity extends SherlockActivity {
 			// Adapter della lista
 			listaScenesView.setAdapter(progsAdapter);
 			listaScenesView.invalidateViews();
+			setActionBarInfo(getString(R.string.scenes_title));
 		}
 	};
 
@@ -244,32 +235,8 @@ public class SceneListActivity extends SherlockActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	private void setActionBarInfo() {
-		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		View ds = actionBar.getCustomView();
-		ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-		actionTitle.setText(getString(R.string.scenes_title));
-		if (!opzioni.isSoulissReachable()) {
-			online.setBackgroundResource(R.drawable.red);
-			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-			statusOnline.setText(R.string.offline);
-		} else {
-			online.setBackgroundResource(R.drawable.green);
-			statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-			statusOnline.setText(R.string.Online);
-		}
-	}
-	/**
-	 * chiamato dal layout
-	 */
-	public void startOptions(View v){
-		opzioni.setBestAddress();
-		Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-	}
+	
+	
 
 	@Override
 	protected void onPause() {

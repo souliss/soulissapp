@@ -1,17 +1,9 @@
 package it.angelic.soulissclient;
 
 import static junit.framework.Assert.assertTrue;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.fragments.SensorDetailFragment;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,10 +11,11 @@ import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.FragmentActivity;
 
-public class SensorDetailActivity extends SherlockFragmentActivity {
-	private SoulissPreferenceHelper opzioni;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
+public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 	private TypicalsListAdapter ta;
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -71,7 +64,6 @@ public class SensorDetailActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
@@ -90,21 +82,12 @@ public class SensorDetailActivity extends SherlockFragmentActivity {
 		if (extras != null && extras.get("TIPICO") != null)
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
+		setActionBarInfo(collected.getNiceName());
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
 			SensorDetailFragment details = SensorDetailFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
-		}
-	}
-	@SuppressLint("NewApi")
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 	}
 

@@ -4,7 +4,6 @@ import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 
 import java.util.LinkedList;
@@ -24,14 +23,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -46,14 +42,12 @@ import com.actionbarsherlock.view.MenuItem;
  * @author Ale
  * 
  */
-public class ProgramListActivity extends SherlockActivity {
+public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	private SoulissCommand[] programsArray;
-	private SoulissPreferenceHelper opzioni;
 	private ListView listaProgrammiView;
 	private SoulissDBHelper datasource;
 	private ProgramListAdapter progsAdapter;
 	private TextView tt;
-	private ActionBar actionBar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -96,10 +90,8 @@ public class ProgramListActivity extends SherlockActivity {
 	
 	@Override
 	protected void onStart() {
-		actionBar = getSupportActionBar();
-		setActionBarInfo();
 		super.onStart();
-		
+		setActionBarInfo(getString(R.string.programs_title));
 		datasource.open();
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
@@ -121,32 +113,6 @@ public class ProgramListActivity extends SherlockActivity {
 
 	}
 
-	private void setActionBarInfo() {
-		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		View ds = actionBar.getCustomView();
-		ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-		actionTitle.setText(getString(R.string.programs_title));
-		if (!opzioni.isSoulissReachable()) {
-			online.setBackgroundResource(R.drawable.red);
-			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-			statusOnline.setText(R.string.offline);
-		} else {
-			online.setBackgroundResource(R.drawable.green);
-			statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-			statusOnline.setText(R.string.Online);
-		}
-	}
-	/**
-	 * chiamato dal layout
-	 */
-	public void startOptions(View v){
-		opzioni.setBestAddress();
-		Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-	}
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
