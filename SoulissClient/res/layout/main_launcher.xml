@@ -155,6 +155,18 @@
             android:textIsSelectable="false"
             android:layout_marginLeft="5dip" />
     </TableRow>
+    
+     <TableRow
+        android:id="@+id/TableRowWebService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewWebService"
+            style="@style/CodeFontMain"
+            android:textIsSelectable="false"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
 
     <TableRow
         android:layout_width="fill_parent"

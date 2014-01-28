@@ -42,6 +42,10 @@ public class SoulissTypicalHumiditySensor extends SoulissTypical {
 	/**
 	 * 
 	 */
+	@Override
+	public Float getOutput() {
+		return getOutputFloat();
+	}
 	private static final long serialVersionUID = 3784476625375333669L;
 
 	public float getOutputFloat() {

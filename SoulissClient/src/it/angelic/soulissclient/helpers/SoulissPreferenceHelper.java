@@ -60,6 +60,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private float eqLow;
 	private float eqMed;
 	private float eqHigh;
+	private boolean webserverEnabled;
 	private int homeThold;
 	private boolean broadCastEnabled;
 
@@ -124,6 +125,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
 		homeThold = prefs.getInt("distanceThold", 150);
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
+		webserverEnabled = prefs.getBoolean("webserverEnabled", false);
 		userIndex = prefs.getInt("userIndex", -1);
 		nodeIndex = prefs.getInt("nodeIndex", -1);
 		animations = prefs.getBoolean("checkboxAnimazione", true);
@@ -507,6 +509,15 @@ public class SoulissPreferenceHelper implements Serializable {
 		pesta.commit();
 	}
 
+
+	public boolean isWebserverEnabled() {
+		return webserverEnabled;
+	}
+
+	public void setWebserverEnabled(boolean webserverEnabled) {
+		this.webserverEnabled = webserverEnabled;
+	}
+	
 	public boolean isBroadCastEnabled() {
 		return broadCastEnabled;
 	}

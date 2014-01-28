@@ -467,7 +467,7 @@ public class UDPSoulissDecoder {
 					dto.setSlot(((short) (j % typXnodo)));
 					dto.setNodeId((short) (j / typXnodo + tgtnode));
 					// sufficiente una refresh
-
+					//Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
 					dto.refresh();
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");

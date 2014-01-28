@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-feature android:name="android.software.app_widgets" android:required="false"/>
 
     <application
         android:name="it.angelic.soulissclient.SoulissClient"
@@ -200,6 +201,11 @@
 
         <service
             android:name="it.angelic.soulissclient.SoulissDataService"
+            android:enabled="true"
+            android:process=":souliss_process" />
+        
+        <service
+            android:name="it.angelic.soulissclient.net.webserver.HTTPService"
             android:enabled="true"
             android:process=":souliss_process" />
 

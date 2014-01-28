@@ -10,6 +10,7 @@ import it.angelic.soulissclient.preferences.IpChangerListener;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServicePreferenceListener;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.preferences.WebServerPreferenceListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -219,6 +220,7 @@ public class PreferencesActivity extends PreferenceActivity {
 			dbinfopref.setSummary(strMeatMsg);
 		} else if (currentScreen != null && currentScreen.equals("service_setup")) {
 			final Preference serviceActive = (Preference) findPreference("checkboxService");
+			final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
 			final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
 			final LocationManager locationManager;
 			// EXPORT
@@ -232,6 +234,9 @@ public class PreferencesActivity extends PreferenceActivity {
 
 			/* START STOP SoulissDataService */
 			serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(this));
+			
+			/* START STOP SoulissDataService */
+			webserviceActive.setOnPreferenceChangeListener(new WebServerPreferenceListener(this));
 
 			// Setta home location
 			setHomeLocation.setOnPreferenceClickListener(new OnPreferenceClickListener() {

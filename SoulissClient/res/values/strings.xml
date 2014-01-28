@@ -123,6 +123,8 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
+    <string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
+    <string name="webservice_enabled">Zozzariello <b>enabled</b> listening on </string>
     <string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expired</font></b>]]>.Souliss may not be available</string>
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
@@ -161,7 +163,7 @@
     <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
     <string name="title_edittext_IP_pubb">Souliss public Address</string>
     <string name="opt_fontsizedesc">Choose text size</string>
-    <string name="opt_fonttitledesc">Personalizza l\'aspetto dei titoli</string>
+    <string name="opt_fonttitledesc">Texts font used for titles</string>
     <string name="opt_tetxfx">Text Effects</string>
     <string name="opt_tetxfx_desc">Animate icons and text</string>
     <string name="opt_animfx">Animations</string>
@@ -174,18 +176,28 @@
     <string name="opt_fontsize">Text Size</string>
     <string name="opt_fonttitle">Change Title font</string>
     <string name="opt_visualdesc">Text size and effects</string>
-    <string name="opt_servicedesc">Configure Souliss client background data retrieval</string>
+    <string name="opt_servicedesc">Configure Souliss background services and home position</string>
     <string name="opt_serviceEnable">Data Service Enabled</string>
     <string name="opt_serviceEnable_desc">Background service keeps Souliss synchronized</string>
     <string name="opt_serviceinterval">Service Interval</string>
     <string name="opt_serviceinterval_desc">Higher speeds require more battery and resources</string>
+    <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
+    <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
+    
+    <string name="opt_WebServerPort">Http Port</string>
+    <string name="opt_WebServerPort_desc">Port used for incoming connections</string>
+    <string name="opt_WebServerUser">User</string>
+    <string name="opt_WebServerUser_desc">If not empty, Zozzariello will ask for user and password</string>
+    <string name="opt_WebServerPass">Password</string>
+    <string name="opt_WebServerPass_desc">Souliss webserver password</string>
+    
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_Thold_desc">Range at which you\'ll be considered out of home when you leave</string>
     <string name="opt_Thold">Distance Threshold</string>
     <string name="opt_homepos_err">Error getting current position</string>
     <string name="opt_homepos_set">Home position set</string>
-    <string name="opt_service">Background Service</string>
+    <string name="opt_service">Background Services</string>
     <string name="opt_timeout_pubb">Connection Timeout</string>
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>

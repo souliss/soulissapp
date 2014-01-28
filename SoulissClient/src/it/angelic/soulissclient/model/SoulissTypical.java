@@ -64,8 +64,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 
 	}
 	
-	public short getOutput() {
-		return typicalDTO.getOutput();
+	public Float getOutput() {
+		return Float.valueOf(typicalDTO.getOutput());
 	}
 
 	@Override

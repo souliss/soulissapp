@@ -175,6 +175,8 @@
     <string name="opt_serviceEnable_desc">Servicio en segundo plano deja Souliss sincronizado</string>
     <string name="opt_serviceinterval">Intervalo del Servicio</string>
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
+    <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
+    <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_Thold_desc">Distanza entro cui si viene considerati "in casa"</string>
@@ -230,7 +232,7 @@
     <string name="Souliss_TRGB_sleep">Dormir</string>
     <string name="Souliss_TRGB_flash">Intermitente</string>
     <string name="Souliss_TRGB_white">Blanco</string>
-    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string> 
+    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string>
     <string name="Souliss_emptycmd_desc">Comando no seleccionado</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Modo: Auto - 20°</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Modo: Auto - 24°</string>

@@ -45,6 +45,10 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 	/**
 	 * 
 	 */
+	@Override
+	public Float getOutput() {
+		return getOutputFloat();
+	}
 	private static final long serialVersionUID = 3784476625375361669L;
 
 	/**

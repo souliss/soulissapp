@@ -123,7 +123,8 @@
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
-<string name="timeout_expired">Timeout <![CDATA[<b><font color=\"#FF4444\">scaduto</font></b>]]>. Souliss potrebbe non essere raggiungibile</string>
+    <string name="webservice_enabled">Zozzariello <b>abilitato</b>, in ascolto su </string>
+    <string name="timeout_expired">Timeout <![CDATA[<b><font color=\"#FF4444\">scaduto</font></b>]]>. Souliss potrebbe non essere raggiungibile</string>
     <!-- STATUS -->
     <string name="status_souliss">Souliss\' Status</string>
     <string name="status_updating">Updating DB&#8230;Please wait</string>
@@ -181,6 +182,8 @@
     <string name="opt_serviceEnable_desc">Il servizio mantiene souliss aggiornato anche se non è in esecuzione e provvede al logging dei sensori</string>
     <string name="opt_serviceinterval">Intervallo esecuzione</string>
     <string name="opt_serviceinterval_desc">Aggiornamenti frequenti richiedono più batteria e risorse</string>
+    <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
+    <string name="opt_WebServerEnable_desc">Con il webserver Souliss puoi esporre i dispositivi sul web. Apre la porta 8080</string>
     <string name="opt_servicehomepos">Sono a casa</string>
     <string name="opt_servicehomepos_desc">usa la posizione corrente come riferimento per i programmi posizionali</string>
     <string name="opt_Thold_desc">Distanza entro cui si viene considerati in casa</string>
@@ -227,9 +230,9 @@
     <string name="Souliss_T52_desc">Input Analogico, root mean value</string>
     <string name="Souliss_T53_desc">Input Analogico, max iterative</string>
     <string name="Souliss_T54_desc">Sensore Luminosità</string>
-	<string name="Souliss_T55_desc">Sensore Tensione</string>
-	<string name="Souliss_T56_desc">Sensore Corrente</string>
-	<string name="Souliss_T57_desc">Sensore Potenza</string>
+    <string name="Souliss_T55_desc">Sensore Tensione</string>
+    <string name="Souliss_T56_desc">Sensore Corrente</string>
+    <string name="Souliss_T57_desc">Sensore Potenza</string>
     <string name="Souliss_TCurrentSensor_desc">Sensore Corrente</string>
     <string name="Souliss_TTemperature_desc">Sensore Temperatura</string>
     <string name="Souliss_THumidity_desc">Sensore umidità</string>
