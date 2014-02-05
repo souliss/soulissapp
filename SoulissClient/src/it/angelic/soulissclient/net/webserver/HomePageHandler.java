@@ -1,6 +1,8 @@
 package it.angelic.soulissclient.net.webserver;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.StaticUtils;
 
 import java.io.IOException;
@@ -21,31 +23,31 @@ import org.apache.http.protocol.HttpRequestHandler;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class HomePageHandler implements HttpRequestHandler {
 	private Context context = null;
 	final String contentType = "text/html; charset=UTF-8";
 	private SharedPreferences pref;
+	private SoulissPreferenceHelper opzioni;
 
 	public HomePageHandler(Context context) {
 		this.context = context;
 		pref = PreferenceManager.getDefaultSharedPreferences(context);
-
+		opzioni = new SoulissPreferenceHelper(context);
 	}
-
-	
 
 	@Override
 	public void handle(HttpRequest request, HttpResponse response, HttpContext httpContext) throws HttpException,
 			IOException {
-		//LOGIN STUFF
+		// LOGIN STUFF
 		try {
 			Zozzariello.doLogin(request, response, httpContext, pref);
 		} catch (AuthenticationException e) {
 			if ("".compareTo(pref.getString("webUser", "")) == 0) {
 				// user disabilitata nelle opzioni
 			} else {
-				//non si passa
+				// non si passa
 				response.addHeader("WWW-Authenticate", "Basic");
 				response.setStatusCode(HttpStatus.SC_UNAUTHORIZED);
 				return;
@@ -55,8 +57,13 @@ public class HomePageHandler implements HttpRequestHandler {
 		HttpEntity entity = new EntityTemplate(new ContentProducer() {
 			public void writeTo(final OutputStream outstream) throws IOException {
 				OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
-				String resp = StaticUtils.openHTMLString(context, R.raw.json_manual);
-
+				String resp;
+				try {
+					resp = StaticUtils.openHTMLStringfromURI(context, opzioni.getChosenHtmlRootfile());
+				} catch (Exception e) {
+					resp = StaticUtils.openHTMLString(context, R.raw.json_manual);
+					Log.e(Constants.TAG, e.getMessage());
+				}
 				writer.write(resp);
 				writer.flush();
 			}

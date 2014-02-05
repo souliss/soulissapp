@@ -63,6 +63,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private boolean webserverEnabled;
 	private int homeThold;
 	private boolean broadCastEnabled;
+	private String chosenHtmlRootfile;
 
 	public SoulissPreferenceHelper(Context contx) {
 		super();
@@ -79,7 +80,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		if (userIndex == -1) {// MAI inizializzato, lo calcolo
 			/* USER INDEX, statico */
 			Random r = new Random(Calendar.getInstance().getTimeInMillis());
-			int casual = r.nextInt(Constants.MAX_USER_IDX);// 100
+			int casual = r.nextInt(Constants.MAX_USER_IDX-1);// 100
 			setUserIndex(casual);
 			Log.i(Constants.TAG, "automated userIndex-index Using: " + casual);
 		}
@@ -88,9 +89,9 @@ public class SoulissPreferenceHelper implements Serializable {
 			try {
 				final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
 				if (tm.getDeviceId() != null)
-					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % Constants.MAX_NODE_IDX);
+					nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % (Constants.MAX_NODE_IDX-1));
 				else
-					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % Constants.MAX_NODE_IDX);
+					nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % (Constants.MAX_NODE_IDX-1));
 				nodeIndex = Math.abs(nodeIndex);
 				if (nodeIndex == 0)
 					nodeIndex++;
@@ -98,7 +99,7 @@ public class SoulissPreferenceHelper implements Serializable {
 				setNodeIndex(nodeIndex);
 			} catch (Exception e) {// fallito il computo, uso random e lo salvo
 				Random r = new Random(Calendar.getInstance().getTimeInMillis());
-				int casual = r.nextInt(99) + 1;
+				int casual = r.nextInt(98) + 1;
 				setNodeIndex(casual);
 				Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage() + ". Using " + casual);
 			}
@@ -135,6 +136,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		eqLow = prefs.getFloat("eqLow", 1f);
 		eqMed = prefs.getFloat("eqMed", 1f);
 		eqHigh = prefs.getFloat("eqHigh", 1f);
+		chosenHtmlRootfile= prefs.getString("mChosenFile", "");
 		Calendar fake = Calendar.getInstance();
 		fake.add(Calendar.MONTH, -2);// Default value in the past
 		serviceLastrun = prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
@@ -520,5 +522,17 @@ public class SoulissPreferenceHelper implements Serializable {
 	
 	public boolean isBroadCastEnabled() {
 		return broadCastEnabled;
+	}
+
+	public void setHtmlRoot(String mChosenFile) {
+		chosenHtmlRootfile = mChosenFile;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putString("mChosenFile", mChosenFile);
+		pesta.commit();
+		
+	}
+
+	public String getChosenHtmlRootfile() {
+		return chosenHtmlRootfile;
 	}
 }

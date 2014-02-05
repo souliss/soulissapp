@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 public class HTTPService extends Service {
 
@@ -23,15 +24,13 @@ public class HTTPService extends Service {
 	@Override
 	public void onDestroy() {
 		server.stopThread();
-
+		Log.i(Constants.TAG, "webserver onDestroy()");
 		super.onDestroy();
 	}
 
 	private void startWebServer() {
 		if (server == null || !server.isAlive()) {
-
 			server.setPriority(Thread.MIN_PRIORITY + 1);
-
 			server.startThread();
 			Log.i(Constants.TAG, "webserver started");
 		}
@@ -42,14 +41,18 @@ public class HTTPService extends Service {
 
 		startWebServer();
 
-		showNotification();
+		Log.i(Constants.TAG, "Service onStartCommand()");
+		Toast.makeText(server.getContext(), "Zozzariello ON", Toast.LENGTH_SHORT).show();
+		
 
 		return START_STICKY;
 	}
+	
 
 	@Override
 	public boolean onUnbind(Intent intent) {
 		return super.onUnbind(intent);
+		
 	}
 
 	@Override
@@ -57,31 +60,7 @@ public class HTTPService extends Service {
 		return mBinder;
 	}
 
-	private void showNotification() {
-		Log.i(Constants.TAG, "TOAST TO DO");
-		/*
-		 * String text = getString(R.string.service_started); Notification
-		 * notification = new Notification(R.drawable.notificationicon, text,
-		 * System.currentTimeMillis());
-		 * 
-		 * Intent startIntent = new Intent(this,SoulissClient.class);
-		 * 
-		 * startIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		 * 
-		 * PendingIntent intent = PendingIntent.getActivity(this, 0,
-		 * startIntent, Intent.FLAG_ACTIVITY_NEW_TASK);
-		 * 
-		 * notification.flags |= Notification.FLAG_ONGOING_EVENT |
-		 * Notification.FLAG_NO_CLEAR;
-		 * 
-		 * notification.setLatestEventInfo(this,
-		 * getString(R.string.notification_started_title),
-		 * getString(R.string.notification_started_text), intent);
-		 * 
-		 * 
-		 * notifyManager.notify(NOTIFICATION_STARTED_ID, notification);
-		 */
-	}
+	
 
 	/**
 	 * Class for clients to access. Because we know this service always runs in

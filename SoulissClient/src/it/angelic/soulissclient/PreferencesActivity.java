@@ -10,6 +10,7 @@ import it.angelic.soulissclient.preferences.IpChangerListener;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServicePreferenceListener;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.preferences.SetHtmlRootListener;
 import it.angelic.soulissclient.preferences.WebServerPreferenceListener;
 
 import java.io.IOException;
@@ -47,7 +48,8 @@ public class PreferencesActivity extends PreferenceActivity {
 	private String strVersionName;
 	SoulissPreferenceHelper opzioni;
 	private String currentScreen;
-
+	
+	
 	@TargetApi(11)
 	@Override
 	public void onBuildHeaders(List<Header> target) {
@@ -98,7 +100,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
 		ListView v = getListView();
 		v.setCacheColorHint(0);
-
 	}
 
 	@SuppressLint("NewApi")
@@ -222,6 +223,7 @@ public class PreferencesActivity extends PreferenceActivity {
 			final Preference serviceActive = (Preference) findPreference("checkboxService");
 			final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
 			final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
+			final Preference setHtmlRoot = (Preference) findPreference("setHtmlRoot");
 			final LocationManager locationManager;
 			// EXPORT
 
@@ -265,6 +267,9 @@ public class PreferencesActivity extends PreferenceActivity {
 					return true;
 				}
 			});
+			
+			setHtmlRoot.setOnPreferenceClickListener(new SetHtmlRootListener(this));
+
 
 			String loc = null;
 			if (opzioni.getHomeLatitude() != 0) {
@@ -386,6 +391,8 @@ public class PreferencesActivity extends PreferenceActivity {
 		unregisterReceiver(macacoRawDataReceiver);
 		super.onPause();
 	}
+	
+	
 
 	@Deprecated
 	private void hackBackGroundLights() {

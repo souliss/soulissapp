@@ -31,15 +31,16 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class Zozzariello extends Thread {
 	private static final String SERVER_NAME = "Zozzariello";
 	private static final String ALL_PATTERN = "*";
 	private static final String PATTERN_MESSAGE = "/message*";
-	private static final String  PATTERN_STRUCTURE  = "/structure*";
-	private static final String  PATTERN_STATUS  = "/status*";
-	private static final String  PATTERN_FORCE  = "/force*";
-	private static final String  PATTERN_GETMAPPINGS = "/mappings";
+	private static final String PATTERN_STRUCTURE = "/structure*";
+	private static final String PATTERN_STATUS = "/status*";
+	private static final String PATTERN_FORCE = "/force*";
+	private static final String PATTERN_GETMAPPINGS = "/mappings";
 
 	private boolean isRunning = false;
 	private Context context = null;
@@ -51,29 +52,25 @@ public class Zozzariello extends Thread {
 	private HttpService httpService = null;
 	private HttpRequestHandlerRegistry registry = null;
 	private NotificationManager notifyManager = null;
-	
+
 	/*
-	HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
-	    public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
-	        AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
-	        CredentialsProvider credsProvider = (CredentialsProvider) context.getAttribute(
-	                ClientContext.CREDS_PROVIDER);
-	        HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-	       request.getHeaders("WWW-Authenticate");
-	       
-	       
-	       
-	        if (authState.getAuthScheme() == null) {
-	            AuthScope authScope = new AuthScope(targetHost.getHostName(), targetHost.getPort());
-	            Credentials creds = credsProvider.getCredentials(authScope);
-	            if (creds != null) {
-	                authState.setAuthScheme(new BasicScheme());
-	                authState.setCredentials(creds);
-	            }
-	        }
-	    }    
-	};
-*/
+	 * HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
+	 * public void process(final HttpRequest request, final HttpContext context)
+	 * throws HttpException, IOException { AuthState authState = (AuthState)
+	 * context.getAttribute(ClientContext.TARGET_AUTH_STATE);
+	 * CredentialsProvider credsProvider = (CredentialsProvider)
+	 * context.getAttribute( ClientContext.CREDS_PROVIDER); HttpHost targetHost
+	 * = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+	 * request.getHeaders("WWW-Authenticate");
+	 * 
+	 * 
+	 * 
+	 * if (authState.getAuthScheme() == null) { AuthScope authScope = new
+	 * AuthScope(targetHost.getHostName(), targetHost.getPort()); Credentials
+	 * creds = credsProvider.getCredentials(authScope); if (creds != null) {
+	 * authState.setAuthScheme(new BasicScheme());
+	 * authState.setCredentials(creds); } } } };
+	 */
 	public Zozzariello(Context context) {
 		super(SERVER_NAME);
 
@@ -90,10 +87,10 @@ public class Zozzariello extends Thread {
 		httpproc.addInterceptor(new ResponseServer());
 		httpproc.addInterceptor(new ResponseContent());
 		httpproc.addInterceptor(new ResponseConnControl());
-	//	httpproc.addInterceptor(preemptiveAuth);
+		// httpproc.addInterceptor(preemptiveAuth);
 
 		httpService = new HttpService(httpproc, new DefaultConnectionReuseStrategy(), new DefaultHttpResponseFactory());
-		
+
 		registry = new HttpRequestHandlerRegistry();
 
 		registry.register(ALL_PATTERN, new HomePageHandler(context));
@@ -105,7 +102,7 @@ public class Zozzariello extends Thread {
 
 		httpService.setHandlerResolver(registry);
 	}
-	
+
 	@Override
 	public void run() {
 		super.run();
@@ -140,13 +137,16 @@ public class Zozzariello extends Thread {
 	}
 
 	public synchronized void startThread() {
-		isRunning = true;
-
-		super.start();
+		if (!isRunning) {
+			isRunning = true;
+			super.start();
+			Log.w(Constants.TAG, "Zozzariello startThread()");
+		}
 	}
 
 	public synchronized void stopThread() {
 		isRunning = false;
+		Log.w(Constants.TAG, "Zozzariello stopThread()");
 	}
 
 	public void setNotifyManager(NotificationManager notifyManager) {
@@ -168,8 +168,9 @@ public class Zozzariello extends Thread {
 	public int getServerPort() {
 		return serverPort;
 	}
-	protected static void doLogin(HttpRequest request, HttpResponse response, HttpContext httpContext, SharedPreferences pref)
-			throws AuthenticationException {
+
+	protected static void doLogin(HttpRequest request, HttpResponse response, HttpContext httpContext,
+			SharedPreferences pref) throws AuthenticationException {
 		if (request.getHeaders("Authorization").length == 0) {
 
 			throw new AuthenticationException();

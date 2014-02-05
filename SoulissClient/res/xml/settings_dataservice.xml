@@ -12,6 +12,7 @@
             android:key="checkboxService"
             android:summary="@string/opt_serviceEnable_desc"
             android:title="@string/opt_serviceEnable" />
+
         <com.robobunny.SeekBarPreference
             android:defaultValue="15"
             android:key="updateRate"
@@ -22,31 +23,32 @@
             robobunny:unitsLeft=""
             robobunny:unitsRight="minutes" />
     </PreferenceCategory>
-    
     <PreferenceCategory android:title="Zozzariello miniWebServer" >
-     <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="webserverEnabled"
-        android:summary="@string/opt_WebServerEnable_desc"
-        android:title="@string/opt_WebServerEnable" />
-
-    <EditTextPreference
-        android:defaultValue="8080"
-        android:key="prefServerPort"
-        android:summary="@string/opt_WebServerPort_desc"
-        android:title="@string/opt_WebServerPort" />
-    
-    <EditTextPreference
-        android:defaultValue=""
-        android:key="webUser"
-        android:summary="@string/opt_WebServerUser_desc"
-        android:title="@string/opt_WebServerUser" />
-    
-    <EditTextPreference
-        android:defaultValue=""
-        android:key="webPass"
-        android:summary="@string/opt_WebServerPass_desc"
-        android:title="@string/opt_WebServerPass" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="webserverEnabled"
+            android:summary="@string/opt_WebServerEnable_desc"
+            android:title="@string/opt_WebServerEnable" />
+        <EditTextPreference
+            android:defaultValue="8080"
+            android:key="prefServerPort"
+            android:summary="@string/opt_WebServerPort_desc"
+            android:title="@string/opt_WebServerPort" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="webUser"
+            android:summary="@string/opt_WebServerUser_desc"
+            android:title="@string/opt_WebServerUser" />
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="webPass"
+            android:summary="@string/opt_WebServerPass_desc"
+            android:title="@string/opt_WebServerPass" />
+        <Preference
+            android:name="setHtmlRoot"
+            android:key="setHtmlRoot"
+            android:summary="@string/opt_setHtmlRoot_desc"
+            android:title="@string/opt_setHtmlRoot" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/position" >
         <Preference
@@ -54,6 +56,7 @@
             android:key="setHomeLocation"
             android:summary="@string/opt_servicehomepos_desc"
             android:title="@string/opt_servicehomepos" />
+
         <com.robobunny.SeekBarPreference
             android:defaultValue="150"
             android:key="distanceThold"
@@ -64,5 +67,5 @@
             robobunny:unitsLeft=""
             robobunny:unitsRight="m." />
     </PreferenceCategory>
->>>>>>> master
+
 </PreferenceScreen>

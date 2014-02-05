@@ -34,7 +34,6 @@ public class WebServerPreferenceListener implements OnPreferenceChangeListener {
 			try {
 				Intent serviceIntent = new Intent(parent, HTTPService.class);
 				if ((Boolean) newValue) {
-
 					parent.startService(serviceIntent);
 					Log.w(Constants.TAG, "Startin Souliss WEBSERVER");
 				} else {
@@ -44,7 +43,7 @@ public class WebServerPreferenceListener implements OnPreferenceChangeListener {
 				return true;
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "errore webServer", e);
-				Toast.makeText(parent, parent.getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();
+				Toast.makeText(parent, parent.getString(R.string.opt_WebServerPass_err), Toast.LENGTH_SHORT).show();
 				return true;
 			}
 		} else {

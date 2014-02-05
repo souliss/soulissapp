@@ -28,6 +28,7 @@
     <string name="dialog_remove_title">Delete Program</string>
     <string name="dialog_remove_cmd">Are you sure you want to delete this command ?</string>
     <string name="dialog_choose_icon">Select icon for </string>
+    <string name="dialog_choose_html">Choose a .html file inside /sdcard/Souliss folder</string>
     <string name="dialog_warn_wifi">Local test Failed. Have you enabled Wireless network?</string>
     <string name="dialog_local_test">Executing local test&#8230;</string>
     <string name="dialog_local_ok">Local test successful!</string>
@@ -148,6 +149,8 @@
     <string name="opt_networkdesc">Home and remote network settings</string>
     <string name="opt_dbexp">Export DB</string>
     <string name="opt_dbexp_desc">Write a .csv file on sdcard containing current db</string>
+    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
+    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Import DB</string>
     <string name="opt_dbimp_desc">Import a .csv file. Warning! Souliss Data will be ovewritten!</string>
     <string name="opt_db">Souliss DB</string>
@@ -183,14 +186,13 @@
     <string name="opt_serviceinterval_desc">Higher speeds require more battery and resources</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
-    
     <string name="opt_WebServerPort">Http Port</string>
     <string name="opt_WebServerPort_desc">Port used for incoming connections</string>
     <string name="opt_WebServerUser">User</string>
     <string name="opt_WebServerUser_desc">If not empty, Zozzariello will ask for user and password</string>
     <string name="opt_WebServerPass">Password</string>
     <string name="opt_WebServerPass_desc">Souliss webserver password</string>
-    
+    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_Thold_desc">Range at which you\'ll be considered out of home when you leave</string>

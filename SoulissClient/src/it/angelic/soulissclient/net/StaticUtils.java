@@ -4,6 +4,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,7 +16,9 @@ import org.apache.http.conn.util.InetAddressUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 public class StaticUtils {
@@ -93,6 +96,15 @@ public class StaticUtils {
 
 	public static String openHTMLString(Context context, int id) {
 		InputStream is = context.getResources().openRawResource(id);
+
+		return StaticUtils.convertStreamToString(is);
+	}
+
+	public static String openHTMLStringfromURI(Context context, String id) throws FileNotFoundException {
+		ContentResolver cr = context.getContentResolver();
+		Log.d(Constants.TAG, "fileUriString = " + id);
+		  Uri tempuri = Uri.parse(id);
+		  InputStream is = cr.openInputStream(tempuri);
 
 		return StaticUtils.convertStreamToString(is);
 	}

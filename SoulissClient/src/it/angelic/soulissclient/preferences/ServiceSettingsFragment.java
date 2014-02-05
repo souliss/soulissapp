@@ -5,6 +5,8 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +30,8 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 
 	private SoulissPreferenceHelper opzioni;
 
+	//private static final int DIALOG_LOAD_FILE = 1000;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
@@ -48,12 +52,15 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 		final Preference serviceActive = (Preference) findPreference("checkboxService");
 		final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
 		final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
-
+		final Preference setHtmlRoot = (Preference) findPreference("setHtmlRoot");
 		/* START STOP SoulissDataService */
 		serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(getActivity()));
-		
+
 		webserviceActive.setOnPreferenceChangeListener(new WebServerPreferenceListener(getActivity()));
 
+		setHtmlRoot.setOnPreferenceClickListener(new SetHtmlRootListener(getActivity()));
+		
+		
 		// Setta home location
 		setHomeLocation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -65,7 +72,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 					opzioni.setHomeLongitude(luogo.getLongitude());
 					opzioni.initializePrefs();
 					resetMesg(setHomeLocation);
-					Toast.makeText(getActivity(),getString(R.string.opt_homepos_set) , Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), getString(R.string.opt_homepos_set), Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {
 					Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
 					Toast.makeText(getActivity(), getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();
@@ -73,12 +80,33 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
+
 		
-		
-		
+
 		// Setta home location
 		resetMesg(setHomeLocation);
 
+	}
+
+	public static String[] loadFileList(File mPath, final String ftype) {
+		String[] mFileList;
+		try {
+			mPath.mkdirs();
+		} catch (SecurityException e) {
+			Log.e(Constants.TAG, "unable to write on the sd card " + e.toString());
+		}
+		if (mPath.exists()) {
+			FilenameFilter filter = new FilenameFilter() {
+				public boolean accept(File dir, String filename) {
+					File sel = new File(dir, filename);
+					return filename.contains(ftype) || sel.isDirectory();
+				}
+			};
+			mFileList = mPath.list(filter);
+		} else {
+			mFileList = new String[0];
+		}
+		return mFileList;
 	}
 
 	private void resetMesg(Preference setHomeLocation) {
@@ -99,7 +127,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 			}
 
 		}
-		setHomeLocation.setSummary(getString(R.string.opt_homepos_set)+": " + (loc == null ? "" : loc) + " ("
+		setHomeLocation.setSummary(getString(R.string.opt_homepos_set) + ": " + (loc == null ? "" : loc) + " ("
 				+ opzioni.getHomeLatitude() + " : " + opzioni.getHomeLongitude() + ")");
 	}
 }
