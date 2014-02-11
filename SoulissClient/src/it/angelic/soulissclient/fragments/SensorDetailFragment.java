@@ -27,19 +27,15 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
-import android.content.res.Configuration;
 import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -50,7 +46,10 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class SensorDetailFragment extends Fragment {
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+public class SensorDetailFragment extends AbstractTypicalFragment {
 
 	private GraphicalView BarChartView;
 	private SoulissTypical collected;
@@ -99,16 +98,24 @@ public class SensorDetailFragment extends Fragment {
 			View ret = inflater.inflate(R.layout.frag_typicaldetail, container, false);
 			TextView nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
 			upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
-
-			collected.setCtx(getActivity());
 			assertTrue("TIPICO NULLO", collected != null);
-
+			collected.setCtx(getActivity());
+			
+			//Setta STATUS BAR
+			super.setCollected(collected);
+			super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+			super.actionBar.setCustomView(R.layout.custom_actionbar); // load
+			super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
+			super.actionBar.setDisplayHomeAsUpEnabled(true);
+			refreshStatusIcon();
+			
 			datasource = new SoulissDBHelper(getActivity());
 			datasource.open();
 
 			/* SFONDO */
-			//SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.containerlista),
-			//		getActivity().getWindowManager());
+			// SoulissClient.setBackground((RelativeLayout)
+			// getActivity().findViewById(R.id.containerlista),
+			// getActivity().getWindowManager());
 			nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
 					+ " " + collected.getTypicalDTO().getSlot());
 
@@ -153,14 +160,15 @@ public class SensorDetailFragment extends Fragment {
 		final Spinner rangeSpinner = (Spinner) getActivity().findViewById(R.id.spinnerGraphRange);
 		ImageView icon = (ImageView) getActivity().findViewById(R.id.typ_icon);
 
+		super.refreshStatusIcon();
+
 		ProgressBar par = (ProgressBar) getActivity().findViewById(R.id.progressBarTypNodo);
 		par.setMax(Constants.MAX_HEALTH);
 
 		// ProgressBar sfumata
 		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, getResources()
-				.getColor(color.aa_red), getResources().getColor(color.aa_green),
-				android.graphics.Shader.TileMode.CLAMP);
+		final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, getResources().getColor(color.aa_red),
+				getResources().getColor(color.aa_green), android.graphics.Shader.TileMode.CLAMP);
 		pgDrawable.getPaint().setStrokeWidth(3);
 		pgDrawable.getPaint().setDither(true);
 		pgDrawable.getPaint().setShader(gradient);
@@ -212,6 +220,7 @@ public class SensorDetailFragment extends Fragment {
 				}
 				redrawGraph(len, pos);
 			}
+
 			public void onNothingSelected(AdapterView<?> parent) {
 			}
 		};
@@ -224,13 +233,13 @@ public class SensorDetailFragment extends Fragment {
 		final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
 		// Log.i(TAG, selectedVal);
 		if (graphType == 0) {
-			if (collected.isSensor()) {//STORIA
+			if (collected.isSensor()) {// STORIA
 				HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
-				tinfo.setText(getString(R.string.historyof)+" "+collected.getNiceName());
+				tinfo.setText(getString(R.string.historyof) + " " + collected.getNiceName());
 				drawHistoryGraph(layout, logs, collected.getTypicalDTO().getTypical());
 			}
 		} else if (graphType == 2) {
-			if (collected.isSensor()) {//GIORNALIERO
+			if (collected.isSensor()) {// GIORNALIERO
 				SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
 				tinfo.setText(getString(R.string.daily));
 				drawGroupedGraph(layout, logs, 1, collected.getTypicalDTO().getTypical());
@@ -244,36 +253,30 @@ public class SensorDetailFragment extends Fragment {
 		}
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				NodeDetailFragment details = NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
-						collected.getParentNode());
-				// Execute a transaction, replacing any existing fragment
-				// with this one inside the frame.
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				if (opzioni.isAnimationsEnabled())
-					ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-				ft.replace(R.id.details, details);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-				ft.commit();
-			} else {
-				
-				getActivity().finish();
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-				}
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
+	/*
+	 * @Override public boolean onOptionsItemSelected(MenuItem item) { switch
+	 * (item.getItemId()) { case android.R.id.home: if
+	 * (getResources().getConfiguration().orientation ==
+	 * Configuration.ORIENTATION_LANDSCAPE) { NodeDetailFragment details =
+	 * NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
+	 * collected.getParentNode()); // Execute a transaction, replacing any
+	 * existing fragment // with this one inside the frame. FragmentTransaction
+	 * ft = getFragmentManager().beginTransaction(); if
+	 * (opzioni.isAnimationsEnabled())
+	 * ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+	 * ft.replace(R.id.details, details);
+	 * ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+	 * ft.commit(); } else {
+	 * 
+	 * getActivity().finish(); if (opzioni.isAnimationsEnabled())
+	 * getActivity().overridePendingTransition(R.anim.slide_in_left,
+	 * R.anim.slide_out_right); } return true; } return
+	 * super.onOptionsItemSelected(item); }
+	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		//datasource.close();
+		// datasource.close();
 	}
 
 	/**
@@ -300,7 +303,8 @@ public class SensorDetailFragment extends Fragment {
 			renderer.setYAxisMax(100);
 			renderer.setYTitle("Celsius degrees");
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T51://generic analog
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T51:// generic
+																			// analog
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;

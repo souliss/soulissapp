@@ -44,8 +44,6 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
-		
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show

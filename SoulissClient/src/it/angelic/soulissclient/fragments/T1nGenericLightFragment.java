@@ -41,13 +41,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
-public class T1nGenericLightFragment extends SherlockFragment {
+public class T1nGenericLightFragment extends AbstractTypicalFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -59,7 +59,6 @@ public class T1nGenericLightFragment extends SherlockFragment {
 	private Button btSleep;
 
 	// Color change listener.
-
 	private VisualizerView mVisualizerView;
 	private TextView timerInfo;
 	private Button buttAuto;
@@ -73,6 +72,7 @@ public class T1nGenericLightFragment extends SherlockFragment {
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt("index", index);
+		
 		// Ci metto il nodo dentro
 		if (content != null) {
 			args.putSerializable("TIPICO", (SoulissTypical) content);
@@ -135,6 +135,14 @@ public class T1nGenericLightFragment extends SherlockFragment {
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
 		collected.setPrefs(opzioni);
 		collected.setCtx(getActivity());
+		
+		super.setCollected(collected);
+		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
+		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
+		super.actionBar.setDisplayHomeAsUpEnabled(true);
+		refreshStatusIcon();
+		
 		if (Constants.versionNumber >= 11) {
 			ActionBar actionBar = getActivity().getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
@@ -355,6 +363,7 @@ public class T1nGenericLightFragment extends SherlockFragment {
 				} else {
 					Log.w(Constants.TAG, "Unknown status");
 				}
+				refreshStatusIcon();
 				// datasource.close();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);

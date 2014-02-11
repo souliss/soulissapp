@@ -15,19 +15,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +38,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
@@ -207,7 +203,13 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setTitle(collected.getNiceName());
 		}
-
+		super.setCollected(collected);
+		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
+		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
+		super.actionBar.setDisplayHomeAsUpEnabled(true);
+		refreshStatusIcon();
+		
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
 		togMulticast = (ToggleButton) ret.findViewById(R.id.checkBoxMulticast);
@@ -432,13 +434,9 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		return f;
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// inflater.inflate(R.menu.queue_options, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
 
-	@Override
+
+/*	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -462,7 +460,7 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+*/
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -505,7 +503,7 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Errore broadcast Receive!",e);
 			}
-
+refreshStatusIcon();
 		}
 	};
 

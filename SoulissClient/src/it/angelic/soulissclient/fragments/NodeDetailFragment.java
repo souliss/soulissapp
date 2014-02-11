@@ -7,16 +7,16 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T19;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
 import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.T32AirConActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.SensorDetailActivity;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
+import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.T16RGBAdvancedActivity;
 import it.angelic.soulissclient.T19SingleChannelActivity;
+import it.angelic.soulissclient.T32AirConActivity;
 import it.angelic.soulissclient.Typical1nDetail;
 import it.angelic.soulissclient.Typical4nDetail;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
@@ -96,16 +96,16 @@ public class NodeDetailFragment extends SherlockListFragment {
 	private boolean mDualPane;
 	private ActionBar actionBar;
 
-
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
+
 	protected int getShownIndex() {
 		if (getArguments() != null)
 			return getArguments().getInt("index", 0);
 		else
 			return 0;
 	}
-	
+
 	public static NodeDetailFragment newInstance(int index, SoulissNode content) {
 		NodeDetailFragment f = new NodeDetailFragment();
 
@@ -160,7 +160,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 		View ret = inflater.inflate(R.layout.frag_nodedetail, container, false);
 		return ret;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
@@ -169,9 +169,9 @@ public class NodeDetailFragment extends SherlockListFragment {
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-		actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+		actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		super.onActivityCreated(savedInstanceState);
 		timeoutHandler = new Handler();
@@ -355,7 +355,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 
 			}
 
-			if (nodeDatail != null) {//se ho fatto uno degli if precedente
+			if (nodeDatail != null) {// se ho fatto uno degli if precedente
 				NodeDetailFragment.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -371,28 +371,32 @@ public class NodeDetailFragment extends SherlockListFragment {
 		upda.setText(getResources().getString(R.string.update) + " " + Constants.getTimeAgo(collected.getRefreshedAt()));
 
 	}
+
 	private void refreshStatusIcon() {
 		try {
 			View ds = actionBar.getCustomView();
-			ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-			actionTitle.setText(collected.getNiceName());
-			
-			if (!opzioni.isSoulissReachable()) {
-				online.setBackgroundResource(R.drawable.red);
-				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-				statusOnline.setText(R.string.offline);
-			} else {
-				online.setBackgroundResource(R.drawable.green);
-				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-				statusOnline.setText(R.string.Online);
+			if (ds != null) {
+				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+				TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+				actionTitle.setText(collected.getNiceName());
+
+				if (!opzioni.isSoulissReachable()) {
+					online.setBackgroundResource(R.drawable.red);
+					statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+					statusOnline.setText(R.string.offline);
+				} else {
+					online.setBackgroundResource(R.drawable.green);
+					statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+					statusOnline.setText(R.string.Online);
+				}
+				statusOnline.invalidate();
 			}
-			statusOnline.invalidate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Riga grigia cra spazio
 	 * 
@@ -430,14 +434,16 @@ public class NodeDetailFragment extends SherlockListFragment {
 		par.setMax(Constants.MAX_HEALTH);
 		refreshHeader();
 
-		Log.d(Constants.TAG, "Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
+		Log.d(Constants.TAG,
+				"Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
 
 		// Font dei titoli
-		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
-			Typeface font = Typeface.createFromAsset(getActivity().getAssets(), opzioni.getPrefFont());
-			tt.setTypeface(font, Typeface.NORMAL);
-			// titolo.setTypeface(font, Typeface.NORMAL);
-		}*/
+		/*
+		 * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
+		 * font = Typeface.createFromAsset(getActivity().getAssets(),
+		 * opzioni.getPrefFont()); tt.setTypeface(font, Typeface.NORMAL); //
+		 * titolo.setTypeface(font, Typeface.NORMAL); }
+		 */
 		return;
 	}
 
@@ -508,21 +514,16 @@ public class NodeDetailFragment extends SherlockListFragment {
 		}, 100, Constants.GUI_UPDATE_INTERVAL); // updates GUI each 40 secs
 	}
 
-	/*@Override FIXME
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				// nothing to do here...
-			} else {
-				getActivity().finish();
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-			}
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}*/
+	/*
+	 * @Override FIXME public boolean onOptionsItemSelected(MenuItem item) {
+	 * switch (item.getItemId()) { case android.R.id.home: if
+	 * (getResources().getConfiguration().orientation ==
+	 * Configuration.ORIENTATION_LANDSCAPE) { // nothing to do here... } else {
+	 * getActivity().finish(); if (opzioni.isAnimationsEnabled())
+	 * getActivity().overridePendingTransition(R.anim.slide_in_left,
+	 * R.anim.slide_out_right); } return true; } return
+	 * super.onOptionsItemSelected(item); }
+	 */
 
 	@Override
 	public void onPause() {
@@ -577,7 +578,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 		public void run() {
 			Log.e(Constants.TAG, "TIMEOUT detected!!!");
 			// Reset cachedaddress
-			//opzioni.reload();
+			// opzioni.reload();
 			opzioni.getAndSetCachedAddress();
 			refreshStatusIcon();
 		}

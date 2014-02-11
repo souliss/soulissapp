@@ -1,6 +1,7 @@
 package it.angelic.soulissclient;
 
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -8,11 +9,12 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 /**
- * Tutte le activity con l'icona stato online
- * devono estendere questa
+ * Tutte le activity con l'icona stato online devono estendere questa
+ * 
  * @author Ale
- *
+ * 
  */
 public class AbstractStatusedFragmentActivity extends SherlockFragmentActivity {
 	protected SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
@@ -29,7 +31,6 @@ public class AbstractStatusedFragmentActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
@@ -38,22 +39,24 @@ public class AbstractStatusedFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	protected void setActionBarInfo(String title) {
-		View ds = actionBar.getCustomView();
-		ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-		TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-		TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-		actionTitle.setText(title);
-		if (!opzioni.isSoulissReachable()) {
-			online.setBackgroundResource(R.drawable.red);
-			statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-			statusOnline.setText(R.string.offline);
-		} else {
-			online.setBackgroundResource(R.drawable.green);
-			statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-			statusOnline.setText(R.string.Online);
+		try {
+			actionBar = getSupportActionBar();
+			View ds = actionBar.getCustomView();
+			ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+			actionTitle.setText(title);
+			if (!opzioni.isSoulissReachable()) {
+				online.setBackgroundResource(R.drawable.red);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+				statusOnline.setText(R.string.offline);
+			} else {
+				online.setBackgroundResource(R.drawable.green);
+				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+				statusOnline.setText(R.string.Online);
+			}
+		} catch (Exception e) {
+			Log.e(Constants.TAG, "null bar? " + e.getMessage());
 		}
 	}
-
-	
-	
 }

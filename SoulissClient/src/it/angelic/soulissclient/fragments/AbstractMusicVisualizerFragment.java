@@ -1,12 +1,11 @@
 package it.angelic.soulissclient.fragments;
 
-import android.support.v4.app.Fragment;
 /**
  * Generic LED typical with dimmable lights
  * @author Ale
  *
  */
-public abstract class AbstractMusicVisualizerFragment  extends Fragment  {
+public abstract class AbstractMusicVisualizerFragment  extends AbstractTypicalFragment  {
 	/**
 	 * In case of single channel only red is used
 	 * @param val

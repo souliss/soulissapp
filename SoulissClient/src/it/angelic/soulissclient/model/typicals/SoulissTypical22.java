@@ -32,41 +32,43 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 
 	@Override
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Close )
+		if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Close
+				|| typicalDTO.getOutput() == Constants.Souliss_T2n_LimSwitch_Close)
 			return "CLOSED";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Open)
+		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Open
+				|| typicalDTO.getOutput() == Constants.Souliss_T2n_LimSwitch_Open)
 			return "OPENED";
 		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Stop)
 			return "STOP";
+		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_NoLimSwitch)
+			return "MIDDLE";
 		else
 			return "UNKNOWN";
 	}
-	
+
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
 		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
-		
+
 		SoulissCommand t = new SoulissCommand(ctx, this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T2n_CloseCmd);
 		t.getCommandDTO().setSlot(typicalDTO.getSlot());
 		t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(t);
-		
-		
-		SoulissCommand rset = new SoulissCommand(ctx,this);
+
+		SoulissCommand rset = new SoulissCommand(ctx, this);
 		rset.getCommandDTO().setCommand(Constants.Souliss_T2n_OpenCmd);
 		rset.getCommandDTO().setSlot(typicalDTO.getSlot());
 		rset.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(rset);
-		
-		
-		SoulissCommand rsest = new SoulissCommand(ctx,this);
+
+		SoulissCommand rsest = new SoulissCommand(ctx, this);
 		rsest.getCommandDTO().setCommand(Constants.Souliss_T2n_StopCmd);
 		rsest.getCommandDTO().setSlot(typicalDTO.getSlot());
 		rsest.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(rsest);
-		
+
 		return ret;
 	}
 
@@ -84,9 +86,10 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 			View convertView, final ViewGroup parent) {
 		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
-		//LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-			//	LinearLayout.LayoutParams.MATCH_PARENT);
-		
+		// LinearLayout.LayoutParams lp = new
+		// LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+		// LinearLayout.LayoutParams.MATCH_PARENT);
+
 		cont.addView(getQuickActionTitle());
 		/*
 		 * 
@@ -99,7 +102,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 		final ListButton openButton = new ListButton(ctx);
 		openButton.setText(ctx.getString(R.string.open));
 		cont.addView(openButton);
-		
+
 		final ListButton stopButton = new ListButton(ctx);
 		stopButton.setText(ctx.getString(R.string.stop));
 		cont.addView(stopButton);
@@ -117,7 +120,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 			}
 
 		});
-		
+
 		openButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Thread t = new Thread() {
@@ -131,7 +134,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 			}
 
 		});
-		
+
 		stopButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				Thread t = new Thread() {
@@ -145,7 +148,6 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 			}
 
 		});
-
 
 	}
 }
