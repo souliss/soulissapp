@@ -150,14 +150,10 @@
                 android:id="@+id/tableRowLamp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/black"
                 android:gravity="center"
                 android:weightSum="1" >
 
-                <Button
-                    android:id="@+id/buttonLamp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
+               
             </TableRow>
 
             <TableRow
