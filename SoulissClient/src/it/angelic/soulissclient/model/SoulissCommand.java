@@ -87,7 +87,9 @@ public class SoulissCommand implements Serializable {
 				resId = R.drawable.light_off;
 			else
 				resId = R.drawable.rgb;
-		} else if (typical == Constants.Souliss_T21)
+		} else if (typical == Constants.Souliss_T19)
+			resId = R.drawable.candle;
+		else if (typical == Constants.Souliss_T21)
 			resId = R.drawable.sos;
 		else if (typical == Constants.Souliss_T22)
 			resId = R.drawable.sos;
