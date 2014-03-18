@@ -2,6 +2,7 @@ package it.angelic.soulissclient.net;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -114,9 +115,20 @@ public class StaticUtils {
 		try {
 			objecttyp.put("typ", Integer.toHexString(soulissTypical.getTypicalDTO().getTypical()));
 			objecttyp.put("slo", soulissTypical.getTypicalDTO().getSlot());
-			objecttyp.put("val", soulissTypical.getOutput());
+						
+			if(soulissTypical.getClass()== SoulissTypical5nCurrentVoltagePowerSensor.class){
+				//se si tratta del tipico per la misurazione dei consumi allora per la restituzione del valore chiamo un metodo differente
+				objecttyp.put("val", ((SoulissTypical5nCurrentVoltagePowerSensor) soulissTypical).getOutputFloat());
+			} else {
+				objecttyp.put("val", soulissTypical.getOutput());				
+			}
+			
+			
 			objecttyp.put("ddesc", soulissTypical.getNiceName());
 
+			
+			
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,7 +139,15 @@ public class StaticUtils {
 		JSONObject objecttyp = new JSONObject();
 		try {
 			objecttyp.put("typ", Integer.toHexString(soulissTypical.getTypicalDTO().getTypical()));
-			objecttyp.put("val", soulissTypical.getOutput());
+			
+			if(soulissTypical.getClass()== SoulissTypical5nCurrentVoltagePowerSensor.class){
+				//se si tratta del tipico per la misurazione dei consumi allora per la restituzione del valore chiamo un metodo differente
+				objecttyp.put("val", ((SoulissTypical5nCurrentVoltagePowerSensor) soulissTypical).getOutputFloat());
+			} else {
+				objecttyp.put("val", soulissTypical.getOutput());				
+			}
+				
+
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
