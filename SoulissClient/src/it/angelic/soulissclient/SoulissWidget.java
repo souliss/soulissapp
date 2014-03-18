@@ -125,14 +125,15 @@ public class SoulissWidget extends AppWidgetProvider {
 							updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
 							// TODO edittext name
 							updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-							UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
+							
 							//Toast.makeText(context,
 								//	"Command sent to node " + customSharedPreference.getInt(got + "_NODE", -1),
 								//	Toast.LENGTH_LONG).show();
 
 						}
 					});
-
+					UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
+					
 					handler.postDelayed(new Runnable() {
 
 						@Override
