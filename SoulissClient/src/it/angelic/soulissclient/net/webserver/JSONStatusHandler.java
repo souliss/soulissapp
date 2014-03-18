@@ -52,23 +52,24 @@ public class JSONStatusHandler implements HttpRequestHandler {
 			Log.i(it.angelic.soulissclient.Constants.TAG, "URI: " + uriString);
 			Log.i(it.angelic.soulissclient.Constants.TAG, "Decoded ID: " + message);
 		} catch (Exception e) {
-			Log.e(it.angelic.soulissclient.Constants.TAG, e.getMessage(),e);
+			Log.e(it.angelic.soulissclient.Constants.TAG, e.getMessage(), e);
 		}
 		final int target = mellow;
-		
 
 		HttpEntity entity = new EntityTemplate(new ContentProducer() {
 			public void writeTo(final OutputStream outstream) throws IOException {
 				OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
-				//Log.v(it.angelic.soulissclient.Constants.TAG,writeJSON(target));
+				// Log.v(it.angelic.soulissclient.Constants.TAG,writeJSON(target));
 				writer.write(writeJSON(target));
 				writer.flush();
 			}
 		});
-		//Log.d(it.angelic.soulissclient.Constants.TAG, "Encoding:"+entity.getContentEncoding());
+		// Log.d(it.angelic.soulissclient.Constants.TAG,
+		// "Encoding:"+entity.getContentEncoding());
 		response.setHeader("Content-Type", "text/html; charset=UTF-8");
 		response.setEntity(entity);
 	}
+
 	/**
 	 * Write the entire live data if target < 0
 	 * 
@@ -78,7 +79,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 	private String writeJSON(int target) {
 		db.open();
 		List<SoulissNode> nodes;
-		//Se target < 0, allora metto tutto
+		// Se target < 0, allora metto tutto
 		if (target < 0)
 			nodes = db.getAllNodes();
 		else {
@@ -86,6 +87,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 			nodes.add(db.getSoulissNode(target));
 		}
 		JSONArray nodesArr = new JSONArray();
+		JSONObject glob = new JSONObject();
 		for (SoulissNode soulissNode : nodes) {
 			JSONObject object = new JSONObject();
 			JSONArray typArr = new JSONArray();
@@ -99,26 +101,22 @@ public class JSONStatusHandler implements HttpRequestHandler {
 				object.put("slot", typArr);
 				object.put("hlt", soulissNode.getHealth());
 			} catch (JSONException e) {
-				Log.e(Constants.TAG, "Zozzariello ERROR:",e);
+				Log.e(Constants.TAG, "Zozzariello ERROR:", e);
 			}
-			
-			//nodesArr.put("id",soulissNode.getId() );
-			JSONObject glob = new JSONObject();
-			try {
-				glob.put("id", object);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			nodesArr.put(glob);
+
+			// nodesArr.put("id",soulissNode.getId() );
+
+			nodesArr.put(object);
+
+		}
+		try {
+			glob.put("id", nodesArr);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		/*
-		 * JSONObject object = new JSONObject(); try { object.put("name",
-		 * "Jack Hack"); object.put("score", new Integer(200));
-		 * object.put("current", new Double(152.32)); object.put("nickname",
-		 * "Hacker"); } catch (JSONException e) { e.printStackTrace(); }
-		 */
-		return nodesArr.toString();
+
+		return glob.toString();
 	}
 }
