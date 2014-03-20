@@ -139,6 +139,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			mIsWebBound = false;
 		}
 	};
+	private View webServiceInfoLine;
 
 	void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
@@ -187,6 +188,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		dbwarn = (TextView) findViewById(R.id.textViewDBWarn);
 		dbwarnline = (View) findViewById(R.id.textViewDBWarnLine);
 		posInfoLine = (View) findViewById(R.id.PositionWarnLine);
+		webServiceInfoLine = (View) findViewById(R.id.TextViewWebServiceLine);
 		serviceInfo = (TextView) findViewById(R.id.TextViewServiceActions);
 		webserviceInfo = (TextView) findViewById(R.id.TextViewWebService);
 		coordinfo = (TextView) findViewById(R.id.TextViewCoords);
@@ -214,15 +216,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			Location location = locationManager.getLastKnownLocation(provider);
 			// Initialize the location fields
 			if (location != null) {
-				Log.i(TAG, "Geo-Provider " + provider + getString(R.string.status_provider_selected));
-				double lat = location.getLatitude();
-				double lng = location.getLongitude();
-				coordinfo.setText((Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: "
-						+ Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng))));
-				float[] res = new float[3];
-				Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
-				homedist.setText(Html.fromHtml(getString(R.string.homedist) + res[0]));
-				posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_green));
+				onLocationChanged(location);
 			}
 		} else if (opzioni.getHomeLatitude() != 0) {
 			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
@@ -344,8 +338,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		String base = opzioni.getAndSetCachedAddress();
 		Log.d(TAG, "cached Address: " + base);
 		if (base != null && "".compareTo(base) != 0) {
-			basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"> " + base
-					+ "</font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
+			basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
+					+ "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
 		} else if (base != null && getString(R.string.unavailable).compareTo(base) != 0) {
 			basinfo.setText(getString(R.string.unavailable));
 		} else {
@@ -443,17 +437,13 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				sb.append(getString(R.string.webservice_enabled));
 				sb.append(StaticUtils.getLocalIpAddress()+":");
 				sb.append(mBoundWebService.getPort());
-				// PORT 8080 TODO
-				// sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
-				// +
-				// Constants.getScaledTime(opzioni.getDataServiceIntervalMsec()
-				// / 1000));
+				webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 			} else {
 				sb.append(getString(R.string.service_warnbound));
 				Intent serviceIntent = new Intent(this, HTTPService.class);
 				Log.w(TAG, "WEB Service not bound yet, restarting");
 				startService(serviceIntent);
-				webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+				webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
 			}
 		}
 		webserviceInfo.setText(Html.fromHtml(sb.toString()));
@@ -609,7 +599,6 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				@Override
 				public void run() {
 					String loc = null;
-
 					try {
 						List<Address> list;
 						list = geocoder.getFromLocation(lat, lng, 1);

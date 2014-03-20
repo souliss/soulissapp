@@ -155,19 +155,6 @@
             android:textIsSelectable="false"
             android:layout_marginLeft="5dip" />
     </TableRow>
-    
-     <TableRow
-        android:id="@+id/TableRowWebService"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/TextViewWebService"
-            style="@style/CodeFontMain"
-            android:textIsSelectable="false"
-            android:layout_marginLeft="5dip" />
-    </TableRow>
-
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -180,6 +167,30 @@
             android:background="@color/std_green" >
         </View>
     </TableRow>
+     <TableRow
+        android:id="@+id/TableRowWebService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/TextViewWebService"
+            style="@style/CodeFontMain"
+            android:textIsSelectable="false"
+            android:layout_marginLeft="5dip" />
+    </TableRow>
+	<TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/TextViewWebServiceLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="2dip"
+            android:background="@color/std_green" >
+        </View>
+    </TableRow>
+    
 
     <TableRow
         android:id="@+id/TableRowNodes"
