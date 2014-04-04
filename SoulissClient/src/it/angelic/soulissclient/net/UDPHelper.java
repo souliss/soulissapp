@@ -92,6 +92,14 @@ public class UDPHelper {
 
 	}
 
+	/**
+	 * Builds a broadcast command to all typicals of the same type
+	 * 
+	 * @param typ
+	 * @param prefs
+	 * @param cmd varargs of commands
+	 * @return
+	 */
 	public static String issueMassiveCommand(String typ, SoulissPreferenceHelper prefs, String... cmd) {
 		InetAddress serverAddr;
 		DatagramSocket sender = null;
@@ -607,6 +615,12 @@ public class UDPHelper {
 		return merd;
 	}
 
+	/**
+	 * Questo e` un metodo fico
+	 * 
+	 * @param serverAddr
+	 * @return
+	 */
 	private static DatagramSocket getSenderSocket(InetAddress serverAddr) {
 		DatagramSocket sender = null;
 		try {

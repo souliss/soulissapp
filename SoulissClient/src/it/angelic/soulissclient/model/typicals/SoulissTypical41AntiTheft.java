@@ -34,9 +34,6 @@ import android.widget.TextView;
  */
 public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulissTypical {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4553488985062232592L;
 
 	// Context ctx;
@@ -151,7 +148,6 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 				};
 				t.start();
 			}
-
 		});
 
 		tog.setOnClickListener(new OnClickListener() {
@@ -162,9 +158,13 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 
 				Thread t = new Thread() {
 					public void run() {
-						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
+						/*UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
-								String.valueOf(Constants.Souliss_T4n_ReArm));
+								String.valueOf(Constants.Souliss_T4n_ReArm));*/
+						
+						//FIXES #40 ?
+						UDPHelper.issueMassiveCommand(String.valueOf(getTypicalDTO().getTypical()), prefs, String.valueOf(Constants.Souliss_T4n_ReArm));
+						
 						// cmd.setText("Souliss command sent");
 
 					}

@@ -253,26 +253,6 @@ public class SensorDetailFragment extends AbstractTypicalFragment {
 		}
 	}
 
-	/*
-	 * @Override public boolean onOptionsItemSelected(MenuItem item) { switch
-	 * (item.getItemId()) { case android.R.id.home: if
-	 * (getResources().getConfiguration().orientation ==
-	 * Configuration.ORIENTATION_LANDSCAPE) { NodeDetailFragment details =
-	 * NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
-	 * collected.getParentNode()); // Execute a transaction, replacing any
-	 * existing fragment // with this one inside the frame. FragmentTransaction
-	 * ft = getFragmentManager().beginTransaction(); if
-	 * (opzioni.isAnimationsEnabled())
-	 * ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-	 * ft.replace(R.id.details, details);
-	 * ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-	 * ft.commit(); } else {
-	 * 
-	 * getActivity().finish(); if (opzioni.isAnimationsEnabled())
-	 * getActivity().overridePendingTransition(R.anim.slide_in_left,
-	 * R.anim.slide_out_right); } return true; } return
-	 * super.onOptionsItemSelected(item); }
-	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

@@ -3,24 +3,27 @@ package it.angelic.soulissclient.fragments;
 /**
  * Antifurto, deve poter leggere lo stato di tutti i sensori. Il pannello e` unico
  */
-import static it.angelic.soulissclient.model.typicals.Constants.*;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Group;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Alarm;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Antitheft;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Armed;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NoAntitheft;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NotArmed;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_ReArm;
 import static junit.framework.Assert.assertTrue;
-
-import java.util.List;
-
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.net.UDPHelper;
+
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
@@ -40,7 +43,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -55,7 +57,7 @@ public class T4nFragment extends SherlockFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
-	private ToggleButton buttPlus;
+	private ToggleButton toggleButton;
 
 	private SoulissTypical collected;
 	// private SoulissTypical related;
@@ -117,8 +119,6 @@ public class T4nFragment extends SherlockFragment {
 		}
 	}
 
-	
-
 	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -151,12 +151,14 @@ public class T4nFragment extends SherlockFragment {
 			actionBar.setTitle(collected.getNiceName());
 		}
 
-		buttPlus = (ToggleButton) ret.findViewById(R.id.buttonPlus);
+		toggleButton = (ToggleButton) ret.findViewById(R.id.buttonPlus);
+		resetButton = (Button) ret.findViewById(R.id.resetButton);
+
 		alarmInfoTextView = (TextView) ret.findViewById(R.id.textviewAlarmInfo);
 		notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
 		infoTyp = (TextView) ret.findViewById(R.id.textView4nInfo);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-		resetButton = (Button) ret.findViewById(R.id.resetButton);
+
 		textviewSensors = (TextView) ret.findViewById(R.id.textviewSensors);
 
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
@@ -175,14 +177,15 @@ public class T4nFragment extends SherlockFragment {
 			}
 
 		};
-		buttPlus.setOnClickListener(plus);
+		toggleButton.setOnClickListener(plus);
 
 		// Listener generico
 		OnClickListener resett = new OnClickListener() {
 			public void onClick(View v) {
-				//if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-					reset();
-				//}
+				// if (senseiMaster.getTypicalDTO().getOutput() ==
+				// Souliss_T4n_InAlarm) {
+				reset();
+				// }
 				return;
 			}
 
@@ -208,22 +211,32 @@ public class T4nFragment extends SherlockFragment {
 		 * buttAuto.setVisibility(View.GONE); autoInfo.setVisibility(View.GONE);
 		 * }
 		 */
-		// sfondo bottone
-		if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft)
-			buttPlus.setChecked(true);
-		// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
-		else if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft)
-			buttPlus.setChecked(false);
-		else if (senseiMaster.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
-			buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.alert_theft));
-			buttPlus.setTextOn("ALARM");
-			buttPlus.setTextOff("ALARM");
-			// alarmInfoTextView.setText("Cycles to shutoff: " +
-			// collected.getTypicalDTO().getOutput());
-		}
-		// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+		setToggleButtonDrawable();
+		// toggleButton.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
 		return ret;
 	}
+
+	private void setToggleButtonDrawable() {
+		// sfondo bottone
+		if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft) {
+			toggleButton.setChecked(true);
+			toggleButton.setBackgroundDrawable(null);
+		}
+		// toggleButton.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
+		else if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft) {
+			toggleButton.setChecked(false);
+			toggleButton.setBackgroundDrawable(null);
+		} else if (senseiMaster.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
+			toggleButton.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.alert_theft));
+			toggleButton.setTextOn("ALARM");
+			toggleButton.setTextOff("ALARM");
+			// alarmInfoTextView.setText("Cycles to shutoff: " +
+			// collected.getTypicalDTO().getOutput());
+		} else {
+			Log.w(Constants.TAG, "Unknown toggleButton Alarm status");
+		}
+	}
+	
 
 	/**
 	 * comandi sempre inviati al master
@@ -347,26 +360,14 @@ public class T4nFragment extends SherlockFragment {
 				senseiMaster = datasource.getAntiTheftMasterTypical();
 				alarmInfoTextView.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
 						+ senseiMaster.getOutputDesc()));
-				if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_Antitheft) {
-					buttPlus.setChecked(true);
-					// buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.round_button));
-				} else if (senseiMaster.getTypicalDTO().getOutput() == Souliss_T4n_NoAntitheft) {
-					buttPlus.setChecked(false);
-				} else if (senseiMaster.getTypicalDTO().getOutput() >= Souliss_T4n_Alarm) {
-					buttPlus.setBackgroundDrawable(getActivity().getResources().getDrawable(R.drawable.alert_theft));
-					buttPlus.setTextOn("ALARM");
-					buttPlus.setTextOff("ALARM");
-					// alarmInfoTextView.setText("Cycles to shutoff: " +
-					// collected.getTypicalDTO().getOutput());
-				} else {
-					Log.w(Constants.TAG, "Unknown status");
-				}
+				
 				setSensorsView();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
 			}
 		}
 	};
+
 	private void setSensorsView() {
 		StringBuilder tmp = new StringBuilder();
 
