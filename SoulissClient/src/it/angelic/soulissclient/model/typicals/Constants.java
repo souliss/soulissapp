@@ -70,6 +70,13 @@ public class Constants {
 																	// integration
 																	// (Peer)
 
+	/*Souliss_Logic_T52 - Temperature measure (-20, +50) °C
+	Souliss_Logic_T53 - Humidity measure (0, 100) %
+	Souliss_Logic_T54 - Light Sensor (0, 40) kLux
+	Souliss_Logic_T55 - Voltage (0, 400) V
+	Souliss_Logic_T56 - Current (0, 25)  A
+	Souliss_Logic_T57 - Power (0, 6500)  W
+	Souliss_Logic_T58 - Pressure measure (0, 1500) hPa*/
 	public static final short Souliss_T51 = 0x51;
 	public static final short Souliss_T52_TemperatureSensor = 0x52;
 	public static final short Souliss_T53_HumiditySensor = 0x53;
@@ -77,6 +84,7 @@ public class Constants {
 	public static final short Souliss_T55_VoltageSensor = 0x55;
 	public static final short Souliss_T56_CurrentSensor = 0x56;
 	public static final short Souliss_T57_PowerSensor = 0x57;
+	public static final short Souliss_T58_PressureSensor = 0x58;
 
 	// #define Souliss_T3n_AirCon_OnCmd 0xF0
 	// #define Souliss_T3n_AirCon_OffCmd 0xFC

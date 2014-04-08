@@ -49,7 +49,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class SensorDetailFragment extends AbstractTypicalFragment {
+public class T5nSensorFragment extends AbstractTypicalFragment {
 
 	private GraphicalView BarChartView;
 	private SoulissTypical collected;
@@ -132,8 +132,8 @@ public class SensorDetailFragment extends AbstractTypicalFragment {
 		}
 	}
 
-	public static SensorDetailFragment newInstance(int index, SoulissTypical content) {
-		SensorDetailFragment f = new SensorDetailFragment();
+	public static T5nSensorFragment newInstance(int index, SoulissTypical content) {
+		T5nSensorFragment f = new T5nSensorFragment();
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt("index", index);
@@ -281,7 +281,7 @@ public class SensorDetailFragment extends AbstractTypicalFragment {
 		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
-			renderer.setYTitle("Celsius degrees");
+			renderer.setYTitle("Humidity %");
 			break;
 		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T51:// generic
 																			// analog
@@ -290,7 +290,13 @@ public class SensorDetailFragment extends AbstractTypicalFragment {
 			break;
 		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
-			renderer.setYAxisMax(255);
+			renderer.setYAxisMax(1024);
+			renderer.setYTitle("Lux");
+			break;
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T58_PressureSensor:
+			renderer.setYAxisMin(0);
+			renderer.setYAxisMax(1024);
+			renderer.setYTitle("hPa");
 			break;
 		default:
 			break;
@@ -350,7 +356,11 @@ public class SensorDetailFragment extends AbstractTypicalFragment {
 			break;
 		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
-			renderer.setYAxisMax(255);
+			renderer.setYAxisMax(1024);
+			break;
+		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T58_PressureSensor:
+			renderer.setYAxisMin(0);
+			renderer.setYAxisMax(1024);
 			break;
 		default:
 			break;

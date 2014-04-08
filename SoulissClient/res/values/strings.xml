@@ -241,6 +241,7 @@
     <string name="Souliss_T55_desc">Voltage Sensor</string>
     <string name="Souliss_T56_desc">Current Sensor</string>
     <string name="Souliss_T57_desc">Power Sensor</string>
+    <string name="Souliss_T58_desc">Pressure Sensor</string>
     <string name="Souliss_TCurrentSensor_desc">Current Sensor</string>
     <string name="Souliss_TTemperature_desc">Temperature Sensor</string>
     <string name="Souliss_THumidity_desc">Humidity Sensor</string>

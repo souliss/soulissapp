@@ -23,8 +23,8 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 
@@ -184,14 +184,10 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest.setSensor(true);
 			break;
 			
-		/*case Constants.Souliss_T52:
-			rest = new SoulissTypical5n(opts);
-			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());
+		case Constants.Souliss_T58_PressureSensor:
+			rest = new SoulissTypical58PressureSensor(opts);
+			rest.setSensor(true);
 			break;
-		case Constants.Souliss_T53:
-			rest = new SoulissTypical5n(opts);
-			((SoulissTypical5n) rest).setTransientVal(dto.getOutput());
-			break;*/
 		default:
 			rest = new SoulissTypical(opts);
 			break;
@@ -256,6 +252,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_T56_desc;
 		else if (typical == Constants.Souliss_T57_PowerSensor)
 			id = R.string.Souliss_T57_desc;
+		else if (typical == Constants.Souliss_T58_PressureSensor)
+			id = R.string.Souliss_T58_desc;
 		else
 			id = R.string.unknown_typical;
 
@@ -318,7 +316,8 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.lightning;
 		else if (typical == Constants.Souliss_T57_PowerSensor)
 			return R.drawable.lightning;
-		
+		else if (typical == Constants.Souliss_T58_PressureSensor)
+			return R.drawable.sun;
 		else
 			return R.drawable.empty_narrow;
 	}

@@ -306,7 +306,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 			Fragment details = getFragmentManager().findFragmentById(R.id.details);
 			// Istanzia e ci mette l'indice
 			if (target.isSensor())
-				details = SensorDetailFragment.newInstance(index, target);
+				details = T5nSensorFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical16AdvancedRGB)
 				details = RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
