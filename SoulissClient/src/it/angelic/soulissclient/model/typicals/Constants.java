@@ -69,6 +69,7 @@ public class Constants {
 	public static final short Souliss_T42_Antitheft_Peer = 0x42; // Anti-theft
 																	// integration
 																	// (Peer)
+	public static final short Souliss_T43_Antitheft_LocalPeer = 0x43;
 
 	/*Souliss_Logic_T52 - Temperature measure (-20, +50) °C
 	Souliss_Logic_T53 - Humidity measure (0, 100) %

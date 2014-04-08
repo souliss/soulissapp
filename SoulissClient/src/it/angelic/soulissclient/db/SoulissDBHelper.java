@@ -13,6 +13,7 @@ import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
@@ -424,8 +425,8 @@ public class SoulissDBHelper {
 			throw new NoSuchElementException();
 	}
 	
-	public List<SoulissTypical42AntiTheftPeer> getAntiTheftSensors() {
-		List<SoulissTypical42AntiTheftPeer> comments = new ArrayList<SoulissTypical42AntiTheftPeer>();
+	public List<SoulissTypical> getAntiTheftSensors() {
+		List<SoulissTypical> comments = new ArrayList<SoulissTypical>();
 		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
 				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null, null, null);
 		cursor.moveToFirst();
@@ -441,6 +442,23 @@ public class SoulissDBHelper {
 		}
 		// Make sure to close the cursor
 		cursor.close();
+		
+		cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer, null, null, null, null);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+			SoulissNode parent = getSoulissNode(dto.getNodeId());
+			SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypical.typicalFactory(dto.getTypical(), parent, dto, opts);
+			newTyp.setParentNode(parent);
+			// if (newTyp.getTypical() !=
+			// Constants.Souliss_T_CurrentSensor_slave)
+			comments.add(newTyp);
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		
 		return comments;
 	}
 

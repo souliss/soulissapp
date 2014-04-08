@@ -6,6 +6,7 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T16;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T19;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -34,6 +35,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;
@@ -313,7 +315,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				details = T19SingleChannelLedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)
 				details = T1nGenericLightFragment.newInstance(index, target);
-			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer)
+			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer|| target instanceof SoulissTypical43AntiTheftLocalPeer)
 				details = T4nFragment.newInstance(index, target);
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (opzioni.isAnimationsEnabled())
@@ -349,7 +351,8 @@ public class NodeDetailFragment extends SherlockListFragment {
 				nodeDatail = new Intent(getActivity(), Typical1nDetail.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
-					|| target.getTypicalDTO().getTypical() == Souliss_T42_Antitheft_Peer) {
+					|| target.getTypicalDTO().getTypical() == Souliss_T42_Antitheft_Peer
+					|| target.getTypicalDTO().getTypical() == Souliss_T43_Antitheft_LocalPeer) {
 				nodeDatail = new Intent(getActivity(), Typical4nDetail.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 

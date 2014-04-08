@@ -19,7 +19,6 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.List;
@@ -73,7 +72,7 @@ public class T4nFragment extends SherlockFragment {
 	private TextView textviewSensors;
 	private Button resetButton;
 	private SoulissTypical41AntiTheft senseiMaster;
-	private List<SoulissTypical42AntiTheftPeer> sensei;
+	private List<SoulissTypical> sensei;
 
 	public static T4nFragment newInstance(int index, SoulissTypical content) {
 		T4nFragment f = new T4nFragment();
@@ -372,7 +371,7 @@ public class T4nFragment extends SherlockFragment {
 		StringBuilder tmp = new StringBuilder();
 
 		sensei = datasource.getAntiTheftSensors();
-		for (SoulissTypical42AntiTheftPeer soulissTypical42AntiTheftPeer : sensei) {
+		for (SoulissTypical soulissTypical42AntiTheftPeer : sensei) {
 			tmp.append(soulissTypical42AntiTheftPeer.getParentNode().getNiceName() + " - "
 					+ soulissTypical42AntiTheftPeer.getNiceName() + " - "
 					+ soulissTypical42AntiTheftPeer.getOutputDesc() + "\n");

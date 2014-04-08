@@ -19,6 +19,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical22;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
@@ -150,6 +151,9 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		case Constants.Souliss_T42_Antitheft_Peer:
 			rest = new SoulissTypical42AntiTheftPeer(opts);
 			break;
+		case Constants.Souliss_T43_Antitheft_LocalPeer:
+			rest = new SoulissTypical43AntiTheftLocalPeer(opts);
+			break;
 		case Constants.Souliss_T_related:
 			rest = new SoulissTypical(opts);
 			rest.setRelated(true);
@@ -236,7 +240,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			id = R.string.Souliss_TRGB_desc;
 		else if (typical == Constants.Souliss_T41_Antitheft_Main)
 			id = R.string.Souliss_T41_desc;
-		else if (typical == Constants.Souliss_T42_Antitheft_Peer)
+		else if (typical == Constants.Souliss_T42_Antitheft_Peer||typical == Constants.Souliss_T43_Antitheft_LocalPeer)
 			id = R.string.Souliss_T42_desc;
 		else if (typical == Constants.Souliss_T51)
 			id = R.string.Souliss_T51_desc;
@@ -290,7 +294,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			return R.drawable.thermometer;
 		else if (typical == Constants.Souliss_T41_Antitheft_Main)
 			return R.drawable.shield;
-		else if (typical == Constants.Souliss_T42_Antitheft_Peer)
+		else if (typical == Constants.Souliss_T42_Antitheft_Peer||typical == Constants.Souliss_T43_Antitheft_LocalPeer)
 			return R.drawable.shield;		
 		else if (typical == Constants.Souliss_T_TemperatureSensor)
 			return R.drawable.thermometer;
