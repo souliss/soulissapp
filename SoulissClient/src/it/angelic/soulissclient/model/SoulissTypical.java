@@ -277,7 +277,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		else if (typical == Constants.Souliss_T12)
 			return R.drawable.button;
 		else if (typical == Constants.Souliss_T13)
-			return R.drawable.shock;
+			return R.drawable.light_on;
 		else if (typical == Constants.Souliss_T14)
 			return R.drawable.locked;
 		else if (typical == Constants.Souliss_T16)
