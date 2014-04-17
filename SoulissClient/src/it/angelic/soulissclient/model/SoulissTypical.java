@@ -24,7 +24,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor
 import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 
@@ -275,7 +274,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		else if (typical == Constants.Souliss_T12)
 			return R.drawable.button;
 		else if (typical == Constants.Souliss_T13)
-			return R.drawable.shock;
+			return R.drawable.light_on;
 		else if (typical == Constants.Souliss_T14)
 			return R.drawable.locked;
 		else if (typical == Constants.Souliss_T16)
