@@ -25,10 +25,10 @@
     <string name="dialog_create_db">Todos los Nodos Souliss van a ser borrados y creados de nuevo desde http://</string>
     <string name="dialog_create_db2">. Va a perder cualquier configuración previa y el historial. ¿Seguir?</string>
     <string name="dialog_title_edittext_IP_pubb">Dirección pública</string>
-    <string name="dialog_remove_title">Delete Program</string>
-    <string name="dialog_remove_cmd">Está seguro que quiere borrar este program ?</string>
-    <string name="dialog_choose_icon">Seleccione ícono para </string>
-    <string name="dialog_choose_html">Choose a .html file inside /sdcard/Souliss folder</string>
+    <string name="dialog_remove_title">Borrar Programa</string>
+    <string name="dialog_remove_cmd">Está seguro que quiere borrar este programa?</string>
+    <string name="dialog_choose_icon">Seleccione icono para </string>
+    <string name="dialog_choose_html">Escoja un archivo .html en la carpeta /sdcard/Souliss</string>
     <string name="allnodes">Todos los Nodos</string>
 
     <!-- PROGRAMS_SECTION -->
@@ -39,7 +39,7 @@
     <string name="programs_unexecuted">Programas activos</string>
     <string name="programs_desc">El cliente Souliss admite programas temporizados (morado), programas geolocalizados (azul) y comandos basados en sensores (rojo) </string>
     <string name="programs_target">Elige objetivo del programa. Sólo será ejecutado una vez</string>
-    <string name="programs_recursive">The command will not be repeated. It will be executed once only</string>
+    <string name="programs_recursive">El comando no será repetido. Sólo será ejecutado una vez</string>
     <string name="programs_leave">El comando se repetirá cada vez que el usuario se vaya de casa</string>
     <string name="programs_come">El comando se repetirá cada vez que el usuario regrese a casa</string>
     <string name="programs_when">El comando será ejecutado junto al slot</string>
@@ -55,9 +55,9 @@
     <string name="scenes_title">Escenas</string>
     <string name="scenes_delete">Borrar escena</string>
     <string name="scenes_rename">Renombrar escena</string>
-    <string name="scenes_changeicon">Cambiar ícono de escena</string>
+    <string name="scenes_changeicon">Cambiar icono de escena</string>
     <string name="scenes_add">Añadir escena</string>
-    <string name="scenes_empty">!!Escena vacía!</string>
+    <string name="scenes_empty">!!Escena vacía!!</string>
     <string name="scenes_empty_desc">Utilice el siguiente botón para añadir un comando para esta escena</string>
     <string name="scenes_desc">Las escenas se componen de varios comandos souliss. Realice una pulsación larga para editar o ejecutar una escena. Realice una pulsación corta para abrir detalles. Utilice el botón + para crear una nueva escena vacía</string>
     <string name="scene_turnoff_lights">Apagar luces</string>
@@ -68,7 +68,7 @@
     <string name="scene_del_command">Borrar comando</string>
     <string name="scene_send_command">Enviar comando</string>
     <string name="scene_cmd_order">Ejecutar orden: </string>
-    <string name="scene_cmd_massive">Global command</string>
+    <string name="scene_cmd_massive">Comando Global</string>
     <string name="scene_subtitle">Escena basada en %1$d comandos</string>
 
     <!-- ADD PROGRAMS_SECTION -->
@@ -89,8 +89,8 @@
     <string name="menu_test">Modo prueba</string>
     <string name="menu_test_udp">Prueba UDP</string>
     <string name="menu_rename">Renombrar Nodo</string>
-    <string name="menu_changenodeicon">Cambiar el ícono del Nodo</string>
-    <string name="menu_changetypicon">Cambiar el ícono del dispositivo</string>
+    <string name="menu_changenodeicon">Cambiar el icono del Nodo</string>
+    <string name="menu_changetypicon">Cambiar el icono del dispositivo</string>
     <string name="rename_typical">Renombrar dispositivo</string>
 
     <!-- TEST_UDP -->
@@ -107,7 +107,7 @@
     <string name="inserire_almeno">Elija el ID del Nodo, slot e introduzca un comando</string>
     <string name="manual_id_prompt">Elija el ID de un Nodo</string>
     <string name="manual_slot_prompt">Elija un SLOT</string>
-    <string name="icon_select">Selccione un ícono</string>
+    <string name="icon_select">Seleccione un icono</string>
     <string name="manual_showing_typ">Mostrando detalle del dispositivo: </string>
     <string name="manual_desc">Envía comandos al los Nodos Souliss de forma manual. Pulse sobre el Nodo para abrir los detalles, mantenga pulsado para editarlo</string>
     <string name="node_empty">¡El Nodo está vacío!</string>
@@ -117,8 +117,8 @@
     <string name="service_disabled">Souliss Servicio de Datos <b>desactivado</b></string>
     <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
 	<string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
-    <string name="webservice_enabled">Zozzariello <b>enabled</b> listening on </string>
-    <string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expired</font></b>]]>.Souliss may not be available</string>
+    <string name="webservice_enabled">Zozzariello <b>habilitado</b> escuchando </string>
+    <string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expirado</font></b>]]>.Souliss podría no estar disponible</string>
    
     <!-- STATUS -->
     <string name="status_souliss">Estado Souliss</string>
@@ -140,8 +140,8 @@
     <string name="opt_networkdesc">Ajuste de red local y remoto</string>
     <string name="opt_dbexp">Exportar Base de Datos</string>
     <string name="opt_dbexp_desc">Escribe un fichero .csv en la sdcard conteniendo la actual Base de Datos</string>
-    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
-    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
+    <string name="opt_setHtmlRoot">Página Principal Zozzariello</string>
+    <string name="opt_setHtmlRoot_desc">Escoja un archivo .html en la tarjeta sd para usar como root</string>
     <string name="opt_dbimp">Importar Base de datos</string>
     <string name="opt_dbimp_desc">Importar un archivo .csv. ¡Atención! ¡Se va a sobreescribir la Base de Datos Souliss!</string>
     <string name="opt_db">Base de Datos Souliss</string>
@@ -176,28 +176,28 @@
     <string name="opt_serviceinterval">Intervalo del Servicio</string>
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
-    <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
-    <string name="opt_WebServerPort">Http Port</string>
-    <string name="opt_WebServerPort_desc">Port used for incoming connections</string>
-    <string name="opt_WebServerUser">User</string>
-    <string name="opt_WebServerUser_desc">If not empty, Zozzariello will ask for user and password</string>
-    <string name="opt_WebServerPass">Password</string>
-    <string name="opt_WebServerPass_desc">Souliss webserver password</string>
+    <string name="opt_WebServerEnable_desc">El Webserver Souliss conecta su red Souliss con HTTP. Abrir puerto 8080 en este dispositivo</string>
+    <string name="opt_WebServerPort">Puerto Http</string>
+    <string name="opt_WebServerPort_desc">Puerto usado para conexiones entrantes</string>
+    <string name="opt_WebServerUser">Usuario</string>
+    <string name="opt_WebServerUser_desc">Si no está vacío, Zozzariello preguntará por usuario y contraseña</string>
+    <string name="opt_WebServerPass">Contraseña</string>
+    <string name="opt_WebServerPass_desc">Contraseña webserver Souliss</string>
     <string name="opt_WebServerPass_err">Zozzaziello panic</string>
-    <string name="opt_servicehomepos">Set Home Location</string>
-    <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
-    <string name="opt_Thold_desc">Distanza entro cui si viene considerati "in casa"</string>
-    <string name="opt_Thold">Soglia Posizione</string>
-    <string name="opt_homepos_err">Error getting current position</string>
-    <string name="opt_homepos_set">Home position set</string>
-    <string name="opt_service">Servicio en segundo plan</string>
+    <string name="opt_servicehomepos">Establecer localización Casa</string>
+    <string name="opt_servicehomepos_desc">establecer posición actual como referencia para Programas de posicionamiento</string>
+    <string name="opt_Thold_desc">Distancia dentro de la cual se considera "en casa"</string>
+    <string name="opt_Thold">Posición Umbral</string>
+    <string name="opt_homepos_err">Error adquiriendo posición actual</string>
+    <string name="opt_homepos_set">Establecer posición de Casa</string>
+    <string name="opt_service">Servicio en segundo plano</string>
     <string name="opt_timeout_pubb">Tiempo límite de conexión</string>
     <string name="opt_timeout_pubb_desc">Elija límite de tiempo de conexión cuando esté usando internet</string>
     <string name="opt_dialog_restored">Restaurados todos los diálogos</string>
     <string name="unknown_typical">Dispositivo desconocido</string>
-    <string name="opt_net_home">Network</string>
-    <string name="opt_net_remote">Remote Network (optional)</string>
-    <string name="opt_db_upd_desc">updates Souliss hardware nodes configuration. Be sure to configure network first</string>
+    <string name="opt_net_home">Red</string>
+    <string name="opt_net_remote">Red remota (opcional)</string>
+    <string name="opt_db_upd_desc">actualiza la configuración de los nodos de hardware Souliss. Asegúrese de configurar la red primero</string>
 
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Encender</string>
@@ -215,29 +215,29 @@
     <string name="Souliss_T13_desc">Valor de la entrada digital</string>
     <string name="Souliss_T14_desc">Pulso en la salida digitalPulse Digital Output</string>
     <string name="Souliss_T16_desc">Tira de LED RGB</string>
-    <string name="Souliss_T18_desc">ON/OFF Digital Output</string>
-    <string name="Souliss_T19_desc">Dimmable Light</string>
-    <string name="Souliss_T19_received">Current brightness:</string>
-    <string name="Souliss_T19_set">Setting brightness to:</string>
+    <string name="Souliss_T18_desc">ON/OFF Salida Digital</string>
+    <string name="Souliss_T19_desc">Luz Regulable</string>
+    <string name="Souliss_T19_received">Brillo actual:</string>
+    <string name="Souliss_T19_set">Configurar brillo a:</string>
     <string name="Souliss_UndefinedCmd_desc">Indefinido</string>
     <string name="Souliss_T21_desc">Dispositivo motorizado (con final de carrera)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizado</string>
     <string name="Souliss_T31_desc">Termómetro</string>
-    <string name="Souliss_T41_desc">AntiTheft System</string>
-    <string name="Souliss_T42_desc">AntiTheft Peer</string>
+    <string name="Souliss_T41_desc">Sistema antirobo</string>
+    <string name="Souliss_T42_desc">Peer antirobo</string>
     <string name="Souliss_T51_desc">Entrada analógica</string>
     <string name="Souliss_T52_desc">Entrada analógica, valor medio</string>
     <string name="Souliss_T53_desc">Entrada analógica, interactividad máxima</string>
     <string name="Souliss_T54_desc">Sensor de luz</string>
-	<string name="Souliss_T55_desc">Voltage Sensor</string>
-	<string name="Souliss_T56_desc">Current Sensor</string>
-	<string name="Souliss_T57_desc">Power Sensor</string>
-	<string name="Souliss_T58_desc">Pressure Sensor</string>
-    <string name="Souliss_TCurrentSensor_desc">Sensor de corriente</string>
-    <string name="Souliss_TTemperature_desc">Sensor de temperatura</string>
-    <string name="Souliss_THumidity_desc">Sensor de humedad</string>
+	<string name="Souliss_T55_desc">Sensor de Voltaje</string>
+	<string name="Souliss_T56_desc">Sensor de Corriente</string>
+	<string name="Souliss_T57_desc">Sensor de Potencia</string>
+	<string name="Souliss_T58_desc">Sensor de Presión</string>
+    <string name="Souliss_TCurrentSensor_desc">Sensor de Corriente</string>
+    <string name="Souliss_TTemperature_desc">Sensor de Temperatura</string>
+    <string name="Souliss_THumidity_desc">Sensor de Humedad</string>
     <string name="Souliss_TAircon_desc">Aire acondicionado</string>
-    <string name="Souliss_TRGB_desc">Iluminación RGB gobernado por infrarrojos</string>
+    <string name="Souliss_TRGB_desc">Iluminación RGB gobernada por infrarrojos</string>
     <string name="Souliss_TRGB_fade">Desvanecer</string>
     <string name="Souliss_TRGB_smooth">Fluído</string>
     <string name="Souliss_TRGB_strobe">Estroboscopio</string>
