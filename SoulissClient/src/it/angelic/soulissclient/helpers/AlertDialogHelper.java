@@ -100,8 +100,8 @@ public class AlertDialogHelper {
 		if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_db))) {
 			final CheckBox checkBox = new CheckBox(source);
 			checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
-			if (opts.isLightThemeSelected() && Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-				checkBox.setTextColor(source.getResources().getColor(R.color.black));
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+				checkBox.setTextColor(source.getResources().getColor(R.color.white_bitaplha));
 			LinearLayout linearLayout = new LinearLayout(source);
 			linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.FILL_PARENT));
