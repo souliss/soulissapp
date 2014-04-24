@@ -28,14 +28,7 @@
     <string name="dialog_remove_title">Delete Program</string>
     <string name="dialog_remove_cmd">Está seguro que quiere borrar este program ?</string>
     <string name="dialog_choose_icon">Seleccione ícono para </string>
-    <string name="dialog_warn_wifi">Prueba local fallida. ¿Ha activado la red inalámbrica?</string>
-    <string name="dialog_local_test">Ejecutando prueba local&#8230;</string>
-    <string name="dialog_local_ok">!Prueba local con éxito!</string>
-    <string name="dialog_net_test">Comprobando redes</string>
-    <string name="dialog_remote_test">Ejecutando prueba remota&#8230;</string>
-    <string name="dialog_remote_ok">!Conexión remota con éxito!</string>
-    <string name="dialog_remote_notok">Prueba remota fallida</string>
-    <string name="dialog_notconf">Ambas direcciones están vacías o no son válidas</string>
+    <string name="dialog_choose_html">Choose a .html file inside /sdcard/Souliss folder</string>
     <string name="allnodes">Todos los Nodos</string>
 
     <!-- PROGRAMS_SECTION -->
@@ -46,6 +39,7 @@
     <string name="programs_unexecuted">Programas activos</string>
     <string name="programs_desc">El cliente Souliss admite programas temporizados (morado), programas geolocalizados (azul) y comandos basados en sensores (rojo) </string>
     <string name="programs_target">Elige objetivo del programa. Sólo será ejecutado una vez</string>
+    <string name="programs_recursive">The command will not be repeated. It will be executed once only</string>
     <string name="programs_leave">El comando se repetirá cada vez que el usuario se vaya de casa</string>
     <string name="programs_come">El comando se repetirá cada vez que el usuario regrese a casa</string>
     <string name="programs_when">El comando será ejecutado junto al slot</string>
@@ -74,6 +68,7 @@
     <string name="scene_del_command">Borrar comando</string>
     <string name="scene_send_command">Enviar comando</string>
     <string name="scene_cmd_order">Ejecutar orden: </string>
+    <string name="scene_cmd_massive">Global command</string>
     <string name="scene_subtitle">Escena basada en %1$d comandos</string>
 
     <!-- ADD PROGRAMS_SECTION -->
@@ -121,7 +116,10 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Servicio de Datos <b>desactivado</b></string>
     <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
-
+	<string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
+    <string name="webservice_enabled">Zozzariello <b>enabled</b> listening on </string>
+    <string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expired</font></b>]]>.Souliss may not be available</string>
+   
     <!-- STATUS -->
     <string name="status_souliss">Estado Souliss</string>
     <string name="status_updating">Actualizando Base de Datos &#8230;Por favor espere</string>
@@ -137,11 +135,13 @@
     <string name="opt_userindex_desc">El índice de usuario identifica el cliente Android con Souliss. Valor actual es %1$d. No debe ser cambiado</string>
     <string name="opt_nodeindex">Índice de Nodo</string>
     <string name="opt_nodeindex_desc">El índice de Nodo identifica este dispositio en las placas Souliss. El valor actual es%1$d. Pulse para cambiarlo</string>
-    <string name="opt_checkconnection">Verifique conexión</string>
-    <string name="opt_checkconnection_desc">Verifique conectividad en el servidor HTTP Souliss</string>
+    <string name="opt_title_broadcast">Broadcast Discovery</string>
+    <string name="opt_summary_broadcast">On local LANs Souliss can discover bridge node automatically</string>
     <string name="opt_networkdesc">Ajuste de red local y remoto</string>
     <string name="opt_dbexp">Exportar Base de Datos</string>
     <string name="opt_dbexp_desc">Escribe un fichero .csv en la sdcard conteniendo la actual Base de Datos</string>
+    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
+    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importar Base de datos</string>
     <string name="opt_dbimp_desc">Importar un archivo .csv. ¡Atención! ¡Se va a sobreescribir la Base de Datos Souliss!</string>
     <string name="opt_db">Base de Datos Souliss</string>
@@ -177,6 +177,13 @@
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
+    <string name="opt_WebServerPort">Http Port</string>
+    <string name="opt_WebServerPort_desc">Port used for incoming connections</string>
+    <string name="opt_WebServerUser">User</string>
+    <string name="opt_WebServerUser_desc">If not empty, Zozzariello will ask for user and password</string>
+    <string name="opt_WebServerPass">Password</string>
+    <string name="opt_WebServerPass_desc">Souliss webserver password</string>
+    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_Thold_desc">Distanza entro cui si viene considerati "in casa"</string>
@@ -208,6 +215,10 @@
     <string name="Souliss_T13_desc">Valor de la entrada digital</string>
     <string name="Souliss_T14_desc">Pulso en la salida digitalPulse Digital Output</string>
     <string name="Souliss_T16_desc">Tira de LED RGB</string>
+    <string name="Souliss_T18_desc">ON/OFF Digital Output</string>
+    <string name="Souliss_T19_desc">Dimmable Light</string>
+    <string name="Souliss_T19_received">Current brightness:</string>
+    <string name="Souliss_T19_set">Setting brightness to:</string>
     <string name="Souliss_UndefinedCmd_desc">Indefinido</string>
     <string name="Souliss_T21_desc">Dispositivo motorizado (con final de carrera)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizado</string>
@@ -221,6 +232,7 @@
 	<string name="Souliss_T55_desc">Voltage Sensor</string>
 	<string name="Souliss_T56_desc">Current Sensor</string>
 	<string name="Souliss_T57_desc">Power Sensor</string>
+	<string name="Souliss_T58_desc">Pressure Sensor</string>
     <string name="Souliss_TCurrentSensor_desc">Sensor de corriente</string>
     <string name="Souliss_TTemperature_desc">Sensor de temperatura</string>
     <string name="Souliss_THumidity_desc">Sensor de humedad</string>

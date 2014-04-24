@@ -18,12 +18,11 @@
     <string name="ago">atrás</string>
     <string name="multicast">multidifusão</string>
     <string name="multicast_desc">Enviar para todos os dispositivos deste tipo</string>
-    <string name="music">Sincronizar música</string>
     <string name="days">dias</string>
     <string name="poll">Poll</string>
     <string name="refresh">Recarregar</string>
+    <string name="reset">Reset</string>
     <string name="save">Salvar</string>
-    <string name="updated">Atualizado</string>
     <string name="brightness">Brilho</string>
     <string name="proceed">Prosseguir</string>
     <string name="scene">Cena</string>

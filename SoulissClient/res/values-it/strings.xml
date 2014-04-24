@@ -28,14 +28,7 @@
     <string name="dialog_remove_title">Elimina Programma</string>
     <string name="dialog_remove_cmd">Sicuro di eliminare questo comando?</string>
     <string name="dialog_choose_icon">Scegli icona per </string>
-    <string name="dialog_warn_wifi">Test locale fallito. Il WIFI è abilitato?</string>
-    <string name="dialog_local_test">Test in esecuzione&#8230;</string>
-    <string name="dialog_local_ok">Test locale riuscito!</string>
-    <string name="dialog_net_test">Check di rete</string>
-    <string name="dialog_remote_test">Test remoto in esecuzione&#8230;</string>
-    <string name="dialog_remote_ok">Test remoto riuscito!</string>
-    <string name="dialog_remote_notok">Test remoto fallito</string>
-    <string name="dialog_notconf">Entrambi gli indirizzi sono vuoti/non validi</string>
+    <string name="dialog_choose_html">Scegli un file .html in /sdcard/Souliss</string>
     <string name="allnodes">Tutti</string>
 
     <!-- PROGRAMS_SECTION -->
@@ -123,6 +116,7 @@
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
+    <string name="service_warnbound">Servizio <b>abilitato</b> ma <b>non in esecuzione</b></string>
     <string name="webservice_enabled">Zozzariello <b>abilitato</b>, in ascolto su </string>
     <string name="timeout_expired">Timeout <![CDATA[<b><font color=\"#FF4444\">scaduto</font></b>]]>. Souliss potrebbe non essere raggiungibile</string>
     <!-- STATUS -->
@@ -140,13 +134,13 @@
     <string name="opt_userindex_desc">Indica a Souliss il tipo di dispositivo. Ora vale %1$d. Non dovrebbe essere necessario cambiarlo</string>
     <string name="opt_nodeindex">Index Nodo</string>
     <string name="opt_nodeindex_desc">L\'ID utente viene ricavato dal dispositivo, ora vale %1$d.</string>
-    <string name="opt_checkconnection">Check Connessione</string>
-    <string name="opt_checkconnection_desc">Check connectivity to Souliss HTTP Server</string>
     <string name="opt_title_broadcast">Broadcast Discovery</string>
     <string name="opt_summary_broadcast">Souliss proverà a determinare l\'indirizzo del bridge automaticamente</string>
     <string name="opt_networkdesc">Impostazioni rete locale e remota</string>
     <string name="opt_dbexp">Esporta DB</string>
     <string name="opt_dbexp_desc">Scrivi un .csv contenente la configurazione attuale e la storia dei nodi</string>
+    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
+    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importa DB</string>
     <string name="opt_dbimp_desc">Importa .csv. Attenzione! La configurazione attuale verrà sovrascritta!</string>
     <string name="opt_db">Souliss DB</string>
@@ -159,8 +153,6 @@
     <string name="title_edittext_IP">Indirizzo Souliss locale (obbligatorio)</string>
     <string name="summary_edittext_IP">Inserire l\'indirizzo IP di Souliss sulla rete locale (obbligatorio)</string>
     <string name="dialog_title_edittext_IP">Indirizzo IP</string>
-    <string name="summary_edittext_IP_VPN">Insert Souliss Node\'s IP Address when using Android VPN</string>
-    <string name="dialog_title_edittext_IP_VPN">VPN IP Address</string>
     <string name="summary_edittext_IP_pubb">Indirizzo pubblico di Souliss, da usare quando fuori casa.</string>
     <string name="title_edittext_IP_pubb">Indirizzo pubblico di Souliss</string>
     <string name="opt_fontsizedesc">Personalizza le dimensioni del testo nei titoli</string>
@@ -184,6 +176,13 @@
     <string name="opt_serviceinterval_desc">Aggiornamenti frequenti richiedono più batteria e risorse</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Con il webserver Souliss puoi esporre i dispositivi sul web. Apre la porta 8080</string>
+    <string name="opt_WebServerPort">Porta HTTP</string>
+    <string name="opt_WebServerPort_desc">Porta usata per le connessioni in entrata</string>
+    <string name="opt_WebServerUser">User</string>
+    <string name="opt_WebServerUser_desc">Se valorizzati, Souliss richiederà nome utente e password per visualizzare la pagina</string>
+    <string name="opt_WebServerPass">Password</string>
+    <string name="opt_WebServerPass_desc">Webserver password</string>
+    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
     <string name="opt_servicehomepos">Sono a casa</string>
     <string name="opt_servicehomepos_desc">usa la posizione corrente come riferimento per i programmi posizionali</string>
     <string name="opt_Thold_desc">Distanza entro cui si viene considerati in casa</string>
@@ -205,7 +204,6 @@
     <string name="Souliss_ResetCmd_desc">Reset</string>
     <string name="Souliss_ToggleCmd_desc">Inverti</string>
     <string name="Souliss_AutoCmd_desc">Auto</string>
-    <string name="music">Sync con la musica</string>
     <string name="Souliss_Auto_mode">Modalità automatica</string>
     <string name="Souliss_T_modes">Colori - Modalità</string>
     <string name="Souliss_OpenCmd_desc">Open</string>
@@ -233,6 +231,7 @@
     <string name="Souliss_T55_desc">Sensore Tensione</string>
     <string name="Souliss_T56_desc">Sensore Corrente</string>
     <string name="Souliss_T57_desc">Sensore Potenza</string>
+    <string name="Souliss_T58_desc">Sensore Pressione Atmosferica</string>
     <string name="Souliss_TCurrentSensor_desc">Sensore Corrente</string>
     <string name="Souliss_TTemperature_desc">Sensore Temperatura</string>
     <string name="Souliss_THumidity_desc">Sensore umidità</string>

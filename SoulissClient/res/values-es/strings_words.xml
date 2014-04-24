@@ -22,11 +22,11 @@
     <string name="poll">Obtener</string>
     <string name="refresh">Actualizar</string>
     <string name="save">Guardar</string>
-    <string name="updated">Actualizado</string>
     <string name="brightness">Brillo</string>
     <string name="proceed">Seguir</string>
     <string name="scene">Escena</string>
     <string name="rename">Renombrar</string>
+    <string name="reset">Reset</string>
     <string name="typical">Dispositivo</string>
     <string name="ON">ON</string>
     <string name="power">Alimentación</string>

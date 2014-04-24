@@ -25,7 +25,6 @@ public class SoulissIconAdapter extends BaseAdapter {
             R.drawable.check,
             R.drawable.envelope,
             R.drawable.exit,
-            R.drawable.extinguisher,
             R.drawable.faucet,
             R.drawable.filmmaker,
             R.drawable.fire,

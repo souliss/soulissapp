@@ -9,8 +9,8 @@
     <string name="currentlyin">atualmente em</string>
     <string name="positionfrom"><b>posição de </b></string>
     <string name="homewarn"><b>Posição inicial não definida</b>, usar opção de serviço de suporte para definir sua posição inicial</string>
-    <string name="useridxhint">Please insert a number in range 1-100</string>
-    <string name="nodeidxhint">Please insert a number in range 1-254</string>
+    <string name="useridxhint">Please insert a number in range 1&#8211;100</string>
+    <string name="nodeidxhint">Please insert a number in range 1&#8211;254</string>
     <string name="dbstruct_req">DB Structure requested</string>
     <string name="antitheft_status">Antitheft Status:</string>
     <string name="antitheft_notify_desc">Check for antitheft peers tapping on this notification</string>
