@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -34,6 +35,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.settings_net);
 		Preference privateIP = (Preference) findPreference("edittext_IP");
 		Preference publicIP = (Preference) findPreference("edittext_IP_pubb");
+		Preference bCast = (Preference) findPreference("advbroadcastKey");
 
 		String summar = getResources().getString(R.string.summary_edittext_IP);
 		privateIP.setSummary(opzioni.getPrefIPAddress().compareToIgnoreCase("") == 0 ? summar : opzioni
@@ -56,6 +58,9 @@ public class NetSettingsFragment extends PreferenceFragment {
 			Log.e(Constants.TAG, "Cannot load Version!", e);
 			strVersionName = "Cannot load Version!";
 		}
+		//BROADCAST Settings
+		bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(getActivity()));
+		
 		// GOOGLE PLUS link
 		Preference creditsPref = (Preference) findPreference("credits");
 		creditsPref.setTitle(getResources().getString(R.string.app_name) + " Version " + strVersionName);

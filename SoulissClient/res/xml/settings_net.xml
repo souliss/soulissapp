@@ -11,11 +11,6 @@
             android:key="edittext_IP"
             android:summary="@string/summary_edittext_IP"
             android:title="@string/title_edittext_IP" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="checkboxBroadcast"
-            android:summary="@string/opt_summary_broadcast"
-            android:title="@string/opt_title_broadcast" />
 
         <ListPreference
             android:defaultValue="10000"
@@ -31,7 +26,22 @@
             android:summary="@string/summary_edittext_IP_pubb"
             android:title="@string/title_edittext_IP_pubb" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Device ID" >
+    <PreferenceCategory android:title="Advanced" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkboxBroadcast"
+            android:summary="@string/opt_summary_broadcast"
+            android:title="@string/opt_title_broadcast" />
+		<Preference
+            android:name="advbroadcast"
+            android:dialogTitle="@string/opt_userindex"
+            android:key="advbroadcastKey"
+            android:summary="blblbl"
+            android:title="Broadcast Setting" >
+            <extra
+            android:name="opt_screen"
+            android:value="bcast_setup" />
+            </Preference>
         <EditTextPreference
             android:name="userindex"
             android:dialogTitle="@string/opt_userindex"

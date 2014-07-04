@@ -4,6 +4,7 @@ import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.Constants;
+import it.angelic.soulissclient.preferences.BroadcastSettingsPreferenceListener;
 import it.angelic.soulissclient.preferences.DbPreferenceListener;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.IpChangerListener;
@@ -146,7 +147,10 @@ public class PreferencesActivity extends PreferenceActivity {
 			publicIP.setOnPreferenceChangeListener(ipChanger);
 			final Preference userIdx = (Preference) findPreference("userindexIC");
 			final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
-
+			final Preference bCast = (Preference) findPreference("advbroadcastKey");
+			bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(this));
+			
+			
 			String strMeatFormat = getString(R.string.opt_nodeindex_desc);
 			nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 
@@ -324,7 +328,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		}
 
 	}
-
+	
 	// Aggiorna la schermata
 	private BroadcastReceiver macacoRawDataReceiver = new BroadcastReceiver() {
 		@Override
