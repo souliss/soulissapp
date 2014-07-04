@@ -7,6 +7,7 @@ import it.angelic.soulissclient.helpers.ImportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.io.File;
+import java.io.FilenameFilter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,7 +46,7 @@ public class SetHtmlRootListener implements OnPreferenceClickListener {
 	public boolean onPreferenceClick(Preference preference) {
 		Dialog dialog = null;
 		AlertDialog.Builder builder = new Builder(parent);
-		mFileList = ServiceSettingsFragment.loadFileList(mPath, FTYPE);
+		mFileList = loadFileList(mPath, FTYPE);
 		builder.setTitle(parent.getString(R.string.dialog_choose_html));
 		if (mFileList == null) {
 			Log.e(Constants.TAG, "Showing file picker before loading the file list");
@@ -61,6 +62,27 @@ public class SetHtmlRootListener implements OnPreferenceClickListener {
 		dialog = builder.show();
 		// return dialog;
 		return true;
+	}
+	
+	public static String[] loadFileList(File mPath, final String ftype) {
+		String[] mFileList;
+		try {
+			mPath.mkdirs();
+		} catch (SecurityException e) {
+			Log.e(Constants.TAG, "unable to write on the sd card " + e.toString());
+		}
+		if (mPath.exists()) {
+			FilenameFilter filter = new FilenameFilter() {
+				public boolean accept(File dir, String filename) {
+					File sel = new File(dir, filename);
+					return filename.contains(ftype) || sel.isDirectory();
+				}
+			};
+			mFileList = mPath.list(filter);
+		} else {
+			mFileList = new String[0];
+		}
+		return mFileList;
 	}
 
 

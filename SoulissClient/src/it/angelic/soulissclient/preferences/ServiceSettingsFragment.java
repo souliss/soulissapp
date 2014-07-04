@@ -88,26 +88,6 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 
 	}
 
-	public static String[] loadFileList(File mPath, final String ftype) {
-		String[] mFileList;
-		try {
-			mPath.mkdirs();
-		} catch (SecurityException e) {
-			Log.e(Constants.TAG, "unable to write on the sd card " + e.toString());
-		}
-		if (mPath.exists()) {
-			FilenameFilter filter = new FilenameFilter() {
-				public boolean accept(File dir, String filename) {
-					File sel = new File(dir, filename);
-					return filename.contains(ftype) || sel.isDirectory();
-				}
-			};
-			mFileList = mPath.list(filter);
-		} else {
-			mFileList = new String[0];
-		}
-		return mFileList;
-	}
 
 	private void resetMesg(Preference setHomeLocation) {
 		String loc = null;
