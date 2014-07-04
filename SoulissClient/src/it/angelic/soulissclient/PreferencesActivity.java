@@ -11,6 +11,7 @@ import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServicePreferenceListener;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.preferences.SetHtmlRootListener;
+import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 import it.angelic.soulissclient.preferences.WebServerPreferenceListener;
 
 import java.io.IOException;
@@ -392,6 +393,15 @@ public class PreferencesActivity extends PreferenceActivity {
 		super.onPause();
 	}
 	
+	@Override
+	protected boolean isValidFragment (String fragmentName) {
+	  if(DbSettingsFragment.class.getName().equals(fragmentName)) return true;
+	  if(NetSettingsFragment.class.getName().equals(fragmentName)) return true;
+	  if(ServiceSettingsFragment.class.getName().equals(fragmentName)) return true;
+	  if(VisualSettingsFragment.class.getName().equals(fragmentName)) return true;
+		 
+	  return false;
+	}
 	
 
 	@Deprecated

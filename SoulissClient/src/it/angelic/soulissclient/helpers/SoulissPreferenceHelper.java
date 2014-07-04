@@ -64,6 +64,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private int homeThold;
 	private boolean broadCastEnabled;
 	private String chosenHtmlRootfile;
+	private boolean rgbSendAllDefault;
 
 	public SoulissPreferenceHelper(Context contx) {
 		super();
@@ -133,6 +134,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
 		broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
+		rgbSendAllDefault = prefs.getBoolean("rgbSendAllDefault", true);
 		eqLow = prefs.getFloat("eqLow", 1f);
 		eqMed = prefs.getFloat("eqMed", 1f);
 		eqHigh = prefs.getFloat("eqHigh", 1f);
@@ -179,6 +181,8 @@ public class SoulissPreferenceHelper implements Serializable {
 		editor.putFloat("lastDistance", in);
 		editor.commit();
 	}
+	
+	
 
 	/*
 	 * return currently used Souliss address may return null and then
@@ -350,6 +354,17 @@ public class SoulissPreferenceHelper implements Serializable {
 
 	public boolean isDataServiceEnabled() {
 		return dataServiceEnabled;
+	}
+	
+	public boolean isRgbSendAllDefault() {
+		return rgbSendAllDefault;
+	}
+
+	public void setRgbSendAllDefault(boolean rgbSendAllDefault) {
+		this.rgbSendAllDefault = rgbSendAllDefault;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putBoolean("rgbSendAllDefault", rgbSendAllDefault);
+		pesta.commit();
 	}
 
 	public void setDontShowAgain(String string, boolean val) {

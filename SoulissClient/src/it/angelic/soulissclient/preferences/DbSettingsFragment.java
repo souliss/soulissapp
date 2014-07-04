@@ -48,5 +48,5 @@ public class DbSettingsFragment extends PreferenceFragment {
 		// TODO Auto-generated method stub
 		super.onStart();
 	}
-
+	
 }

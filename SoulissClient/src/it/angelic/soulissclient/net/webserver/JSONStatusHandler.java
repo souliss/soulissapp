@@ -4,7 +4,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.StaticUtils;
+import it.angelic.soulissclient.net.NetUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -94,7 +94,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 
 			ArrayList<SoulissTypical> tipici = soulissNode.getActiveTypicals();
 			for (SoulissTypical soulissTypical : tipici) {
-				typArr.put(StaticUtils.getJSONSoulissLiveData(soulissTypical));
+				typArr.put(NetUtils.getJSONSoulissLiveData(soulissTypical));
 			}
 
 			try {

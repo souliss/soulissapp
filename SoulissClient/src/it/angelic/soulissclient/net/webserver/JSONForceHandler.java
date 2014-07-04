@@ -5,7 +5,7 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.StaticUtils;
+import it.angelic.soulissclient.net.NetUtils;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import java.io.IOException;
@@ -99,7 +99,7 @@ public class JSONForceHandler implements HttpRequestHandler {
 
 			ArrayList<SoulissTypical> tipici = soulissNode.getActiveTypicals();
 			for (SoulissTypical soulissTypical : tipici) {
-				typArr.put(StaticUtils.getJSONSoulissLiveData(soulissTypical));
+				typArr.put(NetUtils.getJSONSoulissLiveData(soulissTypical));
 			}
 
 			try {

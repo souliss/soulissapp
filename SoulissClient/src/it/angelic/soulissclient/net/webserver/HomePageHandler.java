@@ -3,7 +3,7 @@ package it.angelic.soulissclient.net.webserver;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.StaticUtils;
+import it.angelic.soulissclient.net.NetUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -59,9 +59,9 @@ public class HomePageHandler implements HttpRequestHandler {
 				OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
 				String resp;
 				try {
-					resp = StaticUtils.openHTMLStringfromURI(context, opzioni.getChosenHtmlRootfile());
+					resp = NetUtils.openHTMLStringfromURI(context, opzioni.getChosenHtmlRootfile());
 				} catch (Exception e) {
-					resp = StaticUtils.openHTMLString(context, R.raw.json_manual);
+					resp = NetUtils.openHTMLString(context, R.raw.json_manual);
 					Log.e(Constants.TAG, e.getMessage());
 				}
 				writer.write(resp);

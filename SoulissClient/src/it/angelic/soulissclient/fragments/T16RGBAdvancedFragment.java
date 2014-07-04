@@ -31,6 +31,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -42,7 +44,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
+public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -213,7 +215,7 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
 		togMulticast = (ToggleButton) ret.findViewById(R.id.checkBoxMulticast);
-
+		togMulticast.setChecked(opzioni.isRgbSendAllDefault());
 		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
 		// checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
@@ -273,7 +275,7 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 					seekChannelBlue.setProgress(Color.blue(color));
 				} else {// music
 					if (Constants.versionNumber >= 9) {
-						mVisualizerView.setFrag(RGBAdvancedFragment.this);
+						mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
 						mVisualizerView.link(togMulticast.isChecked());
 						addBarGraphRenderers();
 					} else {
@@ -316,7 +318,6 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		OnClickListener plusEq = new OnClickListener() {
 			public void onClick(View v) {
 				AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
-
 				return;
 			}
 
@@ -335,11 +336,25 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 					stopIncrementing();
 					break;
 				}
-
 				return true;
 			}
-
 		};
+		
+		togMulticast.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+		        if(isChecked)
+		        {
+		            opzioni.setRgbSendAllDefault(true);
+		        }
+		        else
+		        {
+		        	opzioni.setRgbSendAllDefault(false);
+		        }
+		    }
+		});
+		
+		
 		OnTouchListener decListener = new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				Short cmd = (Short) v.getTag();
@@ -419,8 +434,8 @@ public class RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		mVisualizerView.addRenderer(barGraphRendererTop);
 	}
 
-	public static RGBAdvancedFragment newInstance(int index, SoulissTypical content) {
-		RGBAdvancedFragment f = new RGBAdvancedFragment();
+	public static T16RGBAdvancedFragment newInstance(int index, SoulissTypical content) {
+		T16RGBAdvancedFragment f = new T16RGBAdvancedFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();

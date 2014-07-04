@@ -6,7 +6,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-import it.angelic.soulissclient.fragments.RGBAdvancedFragment;
+import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import android.annotation.SuppressLint;
@@ -40,7 +40,7 @@ public class T16RGBAdvancedActivity extends SherlockFragmentActivity {
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
 		if (savedInstanceState == null) {
-			RGBAdvancedFragment details = RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(),
+			T16RGBAdvancedFragment details = T16RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();

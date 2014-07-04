@@ -310,7 +310,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 			if (target.isSensor())
 				details = T5nSensorFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical16AdvancedRGB)
-				details = RGBAdvancedFragment.newInstance(index, target);
+				details = T16RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
 				details = T19SingleChannelLedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)

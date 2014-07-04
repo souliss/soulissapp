@@ -11,7 +11,6 @@ import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
-import it.angelic.soulissclient.helpers.NetUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
@@ -66,7 +65,7 @@ public class UDPSoulissDecoder {
 		soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		database.open();
 		try {
-			localHost = NetUtils.getLocalIpAddress();
+			localHost = NetUtils.getInetLocalIpAddress();
 		} catch (SocketException e) {
 			Log.e(Constants.TAG, "CANT GET LOCALADDR");
 		} 
@@ -317,20 +316,20 @@ public class UDPSoulissDecoder {
 				 * verifiche hanno esito positivo, si può utilizzare tale
 				 * indirizzo, altrimenti si continua ad usare broadcast.
 				 */
-				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)))
-						&& NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getSubnet(context)),
+				if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)))
+						&& NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)),
 								localHost)) {
 					Log.d(Constants.TAG, "BROADCAST detected, IP to verify: " + toverify);
-					Log.d(Constants.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getSubnet(context)));
+					Log.d(Constants.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)));
 					Log.d(Constants.TAG, "BROADCAST, me: " + localHost);
 
 					Log.d(Constants.TAG,
 							"BROADCAST, belongsToNode: "
-									+ NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getSubnet(context))));
+									+ NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context))));
 					Log.d(Constants.TAG,
 							"BROADCAST, belongsToSameSubnet: "
 									+ NetUtils.belongsToSameSubnet(toverify,
-											NetUtils.intToInet(NetUtils.getSubnet(context)), localHost));
+											NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)), localHost));
 					
 					opzioni.setCachedAddr(toverify.getHostAddress());
 					editor.putString("cachedAddress", toverify.getHostAddress());

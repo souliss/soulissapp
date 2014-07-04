@@ -6,7 +6,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.net.StaticUtils;
+import it.angelic.soulissclient.net.NetUtils;
 import it.angelic.soulissclient.net.webserver.HTTPService;
 
 import java.io.File;
@@ -435,7 +435,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			webserviceInfo.setVisibility(View.VISIBLE);
 			if (mIsWebBound && mBoundWebService != null) {
 				sb.append(getString(R.string.webservice_enabled));
-				sb.append(StaticUtils.getLocalIpAddress()+":");
+				sb.append(NetUtils.getLocalIpAddress()+":");
 				sb.append(mBoundWebService.getPort());
 				webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 			} else {
