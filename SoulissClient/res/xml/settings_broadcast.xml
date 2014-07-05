@@ -8,17 +8,17 @@
     <EditTextPreference
         android:dialogTitle="Bridge Address"
         android:key="bcast_IP"
-        android:summary="IP to be dynamically assigned to Souliss&apos; bridge node"
+        android:summary="@string/bridge_IP"
         android:title="Bridge Address" />
     <EditTextPreference
         android:dialogTitle="Bridge Subnet"
         android:key="bcast_subnet"
-        android:summary="Subnet mask for Souliss&apos; bridge node"
+        android:summary="@string/bridge_subnet"
         android:title="Bridge Subnet" />
     <EditTextPreference
         android:dialogTitle="Bridge Gateway"
         android:key="bcast_gateway"
-        android:summary="Gateway for Souliss&apos; bridge node, most likely your router's address"
+        android:summary="@string/bridge_gateway"
         android:title="Bridge Gateway" />
     <EditTextPreference
         android:dialogTitle="Wi-fi SSID"
@@ -27,8 +27,15 @@
         android:title="Wi-fi SSID" />
     <EditTextPreference
         android:dialogTitle="Input Password"
-        android:key="edittext_IP"
-        android:summary="password for bla bla"
+        android:key="bcast_passwd"
+        android:inputType="textPassword" 
+        android:summary="password of your wi-fi network"
         android:title="Wi-fi password" />
+
+    <Preference
+        android:name="sndBcast"
+        android:key="sndBcast"
+        android:summary="Send a broadcast packet to configure Souliss with these settings"
+        android:title="Send Configuration Now" />
 
 </PreferenceScreen>

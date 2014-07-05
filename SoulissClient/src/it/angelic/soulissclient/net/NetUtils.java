@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -71,13 +72,39 @@ public class NetUtils {
 		 * s_leaseDuration="Lease Time: "+String.valueOf(d.leaseDuration);
 		 */
 		return d.netmask;
-
 	}
+	public static String getDeviceSubnetMaskString(Context ctx) {
+		byte[] bytes = BigInteger.valueOf(getDeviceSubnetMask(ctx)).toByteArray();
+		InetAddress address;
+		try {
+			address = InetAddress.getByAddress(bytes);
+			return address.getHostAddress().toString();
+		} catch (UnknownHostException e) {
+			Log.e("getDeviceSubnetMaskString: ", e.toString());
+			return null;
+		}
+		
 	
+	}
 	public static int getDeviceGateway(Context ctx) {
 		WifiManager wifii = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
 		DhcpInfo d = wifii.getDhcpInfo();
+		
 		return d.gateway;
+	}
+	
+	public static String getDeviceGatewayString(Context ctx) {
+		byte[] bytes = BigInteger.valueOf(getDeviceGateway(ctx)).toByteArray();
+		InetAddress address;
+		try {
+			address = InetAddress.getByAddress(bytes);
+			return address.getHostAddress().toString();
+		} catch (UnknownHostException e) {
+			Log.e("getDeviceGateway: ", e.toString());
+			return null;
+		}
+		
+	
 	}
 
 	/**

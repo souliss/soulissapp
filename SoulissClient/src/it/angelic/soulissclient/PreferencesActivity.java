@@ -4,6 +4,7 @@ import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.Constants;
+import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.BroadcastSettingsPreferenceListener;
 import it.angelic.soulissclient.preferences.DbPreferenceListener;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
@@ -149,7 +150,6 @@ public class PreferencesActivity extends PreferenceActivity {
 			final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
 			final Preference bCast = (Preference) findPreference("advbroadcastKey");
 			bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(this));
-			
 			
 			String strMeatFormat = getString(R.string.opt_nodeindex_desc);
 			nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
@@ -403,6 +403,8 @@ public class PreferencesActivity extends PreferenceActivity {
 	  if(NetSettingsFragment.class.getName().equals(fragmentName)) return true;
 	  if(ServiceSettingsFragment.class.getName().equals(fragmentName)) return true;
 	  if(VisualSettingsFragment.class.getName().equals(fragmentName)) return true;
+	  if(BroadcastSettingsFragment.class.getName().equals(fragmentName)) return true;
+		 
 		 
 	  return false;
 	}

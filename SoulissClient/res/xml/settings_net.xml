@@ -36,7 +36,7 @@
             android:name="advbroadcast"
             android:dialogTitle="@string/opt_userindex"
             android:key="advbroadcastKey"
-            android:summary="blblbl"
+            android:summary="Remotely configure Souliss Bridge Node"
             android:title="Broadcast Setting" >
             <extra
             android:name="opt_screen"

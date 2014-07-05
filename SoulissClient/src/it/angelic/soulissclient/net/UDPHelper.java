@@ -92,12 +92,56 @@ public class UDPHelper {
 
 	}
 
+	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, List<Byte> bcastPayload) {
+		InetAddress serverAddr;
+		DatagramSocket sender = null;
+		DatagramPacket packet;
+		try {
+			// Log.d(TAG, "Issuing command " + cmd[0]);
+			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			sender = getSenderSocket(serverAddr);
+			
+			//bcastPayload = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
+			String ip = Constants.BROADCASTADDR;
+			sender.setBroadcast(true);
+			
+			//bcastPayload.set(1, whoami);
+			
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(bcastPayload, ip,prefs.getUserIndex(),
+					prefs.getNodeIndex());
+			/* indirizzo ip
+			  (4 byte) | subnetmask (4 byte) | gateway ip (4 byte) | lunghezza SSID (1
+					 * byte) | lunghezza password (1 byte) | SSID (lunghezza SSID byte) | password
+					 * (lunghezza password byte)*/
+			byte[] merd = new byte[buf.size()];
+			for (int i = 0; i < buf.size(); i++) {
+				merd[i] = (byte) buf.get(i);
+			}
+			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+
+			//sender.send(packet);
+			Log.d(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
+			Log.d(Constants.TAG, "***BYTES: " + buf.toString());
+			
+		} catch (UnknownHostException ed) {
+			ed.printStackTrace();
+		} catch (SocketException et) {
+			et.printStackTrace();
+		} catch (Exception e) {
+			Log.d(Constants.TAG, "***Fail", e);
+		} finally {
+			if (sender != null && !sender.isClosed())
+				sender.close();
+		}
+	}
+
 	/**
 	 * Builds a broadcast command to all typicals of the same type
 	 * 
 	 * @param typ
 	 * @param prefs
-	 * @param cmd varargs of commands
+	 * @param cmd
+	 *            varargs of commands
 	 * @return
 	 */
 	public static String issueMassiveCommand(String typ, SoulissPreferenceHelper prefs, String... cmd) {
@@ -172,7 +216,6 @@ public class UDPHelper {
 
 			// hole punch
 			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
-			
 
 			List<Byte> macaco = new ArrayList<Byte>();
 			macaco = Arrays.asList(Constants.PING_PAYLOAD);
@@ -501,8 +544,8 @@ public class UDPHelper {
 		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD
 		// n broadcast : La comunicazione avviene utilizzando l'indirizzo IP
 		// 255.255.255.255 a cui associare l'indirizzo vNet 0xFFFF.
-			frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);
-																					// 192.168.XX.0
+		frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);
+		// 192.168.XX.0
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX
 
