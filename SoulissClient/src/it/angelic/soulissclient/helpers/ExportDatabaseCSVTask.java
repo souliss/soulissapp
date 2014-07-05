@@ -1,22 +1,28 @@
 package it.angelic.soulissclient.helpers;
 
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -105,7 +111,7 @@ private int exportedNodes;
 			csvWrite.close();
 			curCSV.close();
 
-			return true;
+			//return true;
 
 		}
 
@@ -118,6 +124,11 @@ private int exportedNodes;
 			Log.e(TAG, e.getMessage(), e);
 			return false;
 		}
+		
+		//ESPORTA PREFS
+		File filePrefs = new File(exportDir, yearFormat.format(now) + "_SoulissDB.csv.prefs");
+		saveSharedPreferencesToFile(filePrefs);
+		return true;
 
 	}
 
@@ -127,16 +138,46 @@ private int exportedNodes;
 	protected void onPostExecute(final Boolean success)
 
 	{
-
+		String strMeatFormat =context.getString(R.string.export_ok);
 		if (success) {
-			Toast.makeText(SoulissClient.getAppContext(), "Exported successfully "+exportedNodes+" nodes", Toast.LENGTH_SHORT).show();
+			Toast.makeText(SoulissClient.getAppContext(), String.format(strMeatFormat, exportedNodes), Toast.LENGTH_SHORT).show();
 		}
-
 		else {
 			Toast.makeText(SoulissClient.getAppContext(), "Export failed", Toast.LENGTH_SHORT).show();
 			Log.e(TAG, "Souliss DB export Failed");
 		}
 
 	}
+	/*
+	 * Esporto tutte le pref utente, non quelle cached
+	 * */
+	private boolean saveSharedPreferencesToFile(File dst) {
+	    boolean res = false;
+	    ObjectOutputStream output = null;
+	    try {
+	        output = new ObjectOutputStream(new FileOutputStream(dst));
+	        SharedPreferences pref = 
+	        		PreferenceManager.getDefaultSharedPreferences(context);
+	        output.writeObject(pref.getAll());
+
+	        res = true;
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }finally {
+	        try {
+	            if (output != null) {
+	                output.flush();
+	                output.close();
+	            }
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return res;
+	}
+
+	
 
 }

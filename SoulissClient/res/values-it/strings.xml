@@ -45,6 +45,7 @@
     <string name="programs_notyet">Il comando non è ancora stato eseguito</string>
     <string name="programs_when">Il comando verrà ripetuto ogni volta che lo slot</string>
     <string name="programs_every">The command will be repeated every %1$d seconds</string>
+    <string name="export_ok">Esportati con successo %1$d nodi</string>
     <string name="command_sent">- comando inviato</string>
     <string name="command_send">Invia comando</string>
     <string name="compatible">i dispositivi compatibili</string>

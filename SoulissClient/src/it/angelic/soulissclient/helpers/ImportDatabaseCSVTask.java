@@ -11,20 +11,27 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -59,6 +66,8 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 	private Activity activity;
 	ProgressDialog mProgressDialog;
 
+	private File importDir;
+
 	@Override
 	protected void onPreExecute()
 
@@ -89,7 +98,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		try {
 			Looper.prepare();
 			
-			File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+		 importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
 
 			if (!importDir.exists())
 				Toast.makeText(SoulissClient.getAppContext(), SoulissClient.getAppContext().getString(R.string.dialog_import_nofolder), Toast.LENGTH_SHORT).show();
@@ -102,9 +111,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
 			activity.runOnUiThread(new Runnable() {
 				public void run() {
-
 					mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-
 					mProgressDialog.setMessage("Preparing import");
 					mProgressDialog.show();
 				}
@@ -207,6 +214,18 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		} finally {
 			mProgressDialog.dismiss();
 		}
+		activity.runOnUiThread(new Runnable() {
+			public void run() {
+				mProgressDialog.setMessage("Importing Preferences");
+			}
+		});
+		try {
+			File filePrefs = new File(importDir, file.getName() + ".prefs");
+			loadSharedPreferencesFromFile(filePrefs);
+		} catch (Exception e) {
+			Log.e(TAG, "Errore import prefs", e);
+		}
+		
 		return true;
 
 	}
@@ -219,7 +238,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			log.setSlot(Short.valueOf(temp[2]));
 			log.setTypical(Short.valueOf(temp[3]));
 			log.setLogValue(Float.valueOf(temp[4]));
-
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(new Date(Long.valueOf(temp[5])));
 			log.setLogTime(cal);
@@ -227,7 +245,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		} catch (Exception e) {
 			Log.w("skipped log", e.getMessage());
 		}
-
 	}
 
 	private void insertTypical(String[] temp) {
@@ -261,7 +278,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			Log.w("Untimed typ", e.getMessage());
 		}
 		typo.persist();
-
 	}
 
 	private void insertNode(String[] temp) {
@@ -287,7 +303,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			Log.w("Untimed node", e.getMessage());
 		}
 		DBob.createOrUpdateNode(nit);
-
 	}
 
 	// can use UI thread here
@@ -317,6 +332,49 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			Toast.makeText(SoulissClient.getAppContext(), "Import failed", Toast.LENGTH_SHORT).show();
 		}
 
+	}
+	
+	private boolean loadSharedPreferencesFromFile(File src) {
+	    boolean res = false;
+	    ObjectInputStream input = null;
+	    try {
+	        input = new ObjectInputStream(new FileInputStream(src));
+	            Editor prefEdit =PreferenceManager.getDefaultSharedPreferences(activity).edit();
+	            prefEdit.clear();
+	            Map<String, ?> entries = (Map<String, ?>) input.readObject();
+	            for (Entry<String, ?> entry : entries.entrySet()) {
+	                Object v = entry.getValue();
+	                String key = entry.getKey();
+
+	                if (v instanceof Boolean)
+	                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+	                else if (v instanceof Float)
+	                    prefEdit.putFloat(key, ((Float) v).floatValue());
+	                else if (v instanceof Integer)
+	                    prefEdit.putInt(key, ((Integer) v).intValue());
+	                else if (v instanceof Long)
+	                    prefEdit.putLong(key, ((Long) v).longValue());
+	                else if (v instanceof String)
+	                    prefEdit.putString(key, ((String) v));
+	            }
+	            prefEdit.commit();
+	        res = true;         
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }finally {
+	        try {
+	            if (input != null) {
+	                input.close();
+	            }
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return res;
 	}
 
 }
