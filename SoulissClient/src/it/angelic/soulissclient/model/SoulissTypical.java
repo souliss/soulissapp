@@ -311,7 +311,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		else if (typical == Constants.Souliss_T52_TemperatureSensor)
 			return R.drawable.thermometer;
 		else if (typical == Constants.Souliss_T53_HumiditySensor)
-			return R.drawable.thermometer;
+			return R.drawable.raindrop;
 		else if (typical == Constants.Souliss_T54_LuxSensor)
 			return R.drawable.home;
 		else if (typical == Constants.Souliss_T55_VoltageSensor)

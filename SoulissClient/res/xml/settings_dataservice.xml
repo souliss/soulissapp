@@ -23,6 +23,22 @@
             robobunny:unitsLeft=""
             robobunny:unitsRight="minutes" />
     </PreferenceCategory>
+     <PreferenceCategory android:title="@string/position" >
+        <Preference
+            android:name="setHomeLocation"
+            android:key="setHomeLocation"
+            android:summary="@string/opt_servicehomepos_desc"
+            android:title="@string/opt_servicehomepos" />
+        <com.robobunny.SeekBarPreference
+            android:defaultValue="150"
+            android:key="distanceThold"
+            android:max="1200"
+            android:summary="@string/opt_Thold_desc"
+            android:title="@string/opt_Thold"
+            robobunny:min="30"
+            robobunny:unitsLeft=""
+            robobunny:unitsRight="m." />
+    </PreferenceCategory>
     <PreferenceCategory android:title="Zozzariello miniWebServer" >
         <CheckBoxPreference
             android:defaultValue="false"
@@ -50,22 +66,6 @@
             android:summary="@string/opt_setHtmlRoot_desc"
             android:title="@string/opt_setHtmlRoot" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/position" >
-        <Preference
-            android:name="setHomeLocation"
-            android:key="setHomeLocation"
-            android:summary="@string/opt_servicehomepos_desc"
-            android:title="@string/opt_servicehomepos" />
-
-        <com.robobunny.SeekBarPreference
-            android:defaultValue="150"
-            android:key="distanceThold"
-            android:max="1200"
-            android:summary="@string/opt_Thold_desc"
-            android:title="@string/opt_Thold"
-            robobunny:min="30"
-            robobunny:unitsLeft=""
-            robobunny:unitsRight="m." />
-    </PreferenceCategory>
+   
 
 </PreferenceScreen>

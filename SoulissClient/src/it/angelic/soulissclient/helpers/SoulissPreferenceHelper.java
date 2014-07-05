@@ -33,7 +33,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private static final long serialVersionUID = -7522863636731669014L;
 	private Context contx;
 	// numNodes ed altri valori cached
-	private SharedPreferences customSharedPreference;
+	private SharedPreferences customCachedPrefs;
 
 	// effetti fade-in e cagate
 	private boolean fxOn;
@@ -69,7 +69,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	public SoulissPreferenceHelper(Context contx) {
 		super();
 		this.contx = contx;
-		customSharedPreference = contx.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+		customCachedPrefs = contx.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		initializePrefs();
 		// Log.d(TAG, "Constructing prefs");
 	}
@@ -157,8 +157,8 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	public void clearCachedAddress() {
-		SharedPreferences.Editor editor = customSharedPreference.edit();
-		if (customSharedPreference.contains("cachedAddress"))
+		SharedPreferences.Editor editor = customCachedPrefs.edit();
+		if (customCachedPrefs.contains("cachedAddress"))
 			editor.remove("cachedAddress");
 		editor.commit();
 		cachedAddr = null;
@@ -167,17 +167,17 @@ public class SoulissPreferenceHelper implements Serializable {
 	/**
 	 * Serve perche l'oggetto PreferenceHelper potrebbe essere ri-creato e non
 	 * consistente rispetto alla rete. Salvo in
-	 * customSharedPreference.cachedAddress l'indirizzo attuale dopo la chiamata
+	 * customCachedPrefs.cachedAddress l'indirizzo attuale dopo la chiamata
 	 * a setBestAddress
 	 * 
 	 * @return
 	 */
 	public float getPrevDistance() {
-		return customSharedPreference.getFloat("lastDistance", 0);
+		return customCachedPrefs.getFloat("lastDistance", 0);
 	}
 
 	public void setPrevDistance(float in) {
-		SharedPreferences.Editor editor = customSharedPreference.edit();
+		SharedPreferences.Editor editor = customCachedPrefs.edit();
 		editor.putFloat("lastDistance", in);
 		editor.commit();
 	}
@@ -190,9 +190,9 @@ public class SoulissPreferenceHelper implements Serializable {
 	 */
 	public String getAndSetCachedAddress() {
 		if (cachedAddr == null) {
-			if (customSharedPreference.contains("cachedAddress")) {
+			if (customCachedPrefs.contains("cachedAddress")) {
 
-				cachedAddr = customSharedPreference.getString("cachedAddress", "");
+				cachedAddr = customCachedPrefs.getString("cachedAddress", "");
 				Log.i(TAG, "returning Cachedaddress: " + cachedAddr);
 
 				return cachedAddr;
@@ -218,16 +218,16 @@ public class SoulissPreferenceHelper implements Serializable {
 		new Thread() {
 			public void run() {
 				// basta che sia connesso
-				if (isSoulissPublicIpConfigured() && customSharedPreference.contains("connection"))
+				if (isSoulissPublicIpConfigured() && customCachedPrefs.contains("connection"))
 					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
 							getIPPreferencePublic());
 				// ci vuole WIFI
 				if (isSoulissIpConfigured()
-						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI)
+						&& customCachedPrefs.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI)
 					UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this,
 							getPrefIPAddress());
 				else if (broadCastEnabled
-						&& customSharedPreference.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI) {
+						&& customCachedPrefs.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI) {
 					// Broadcast
 					Log.w(Constants.TAG, "if everything bad, try BROADCAST address");
 						UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this, it.angelic.soulissclient.net.Constants.BROADCASTADDR);
@@ -239,7 +239,19 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	public SharedPreferences getCustomPref() {
-		return customSharedPreference;
+		return customCachedPrefs;
+	}
+	
+	/**
+	 * Ritorna se il DB � configurato. Basato sulla presenza o meno in
+	 * sharedPrefs del numero di nodi su DB
+	 * 
+	 * @return true se DB popolato
+	 */
+	public boolean isDbConfigured() {
+		if ((customCachedPrefs.contains("numNodi")) && customCachedPrefs.getInt("numNodi", 0) != 0)
+			return true;
+		return false;
 	}
 
 	public String getIPPreferencePublic() {
@@ -270,17 +282,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		return animations;
 	}
 
-	/**
-	 * Ritorna se il DB � configurato. Basato sulla presenza o meno in
-	 * sharedPrefs del numero di nodi su DB
-	 * 
-	 * @return true se DB popolato
-	 */
-	public boolean isDbConfigured() {
-		if ((customSharedPreference.contains("numNodi")) && customSharedPreference.getInt("numNodi", 0) != 0)
-			return true;
-		return false;
-	}
+	
 
 	/**
 	 * legge cached address per vedere se connesso
@@ -368,33 +370,33 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	public void setDontShowAgain(String string, boolean val) {
-		Editor pesta = customSharedPreference.edit();
+		Editor pesta = customCachedPrefs.edit();
 		pesta.putBoolean("dontshow" + string, val);
 		pesta.commit();
 	}
 
 	public boolean getDontShowAgain(String string) {
-		return customSharedPreference.getBoolean("dontshow" + string, false);
+		return customCachedPrefs.getBoolean("dontshow" + string, false);
 	}
 
 	public void setHomeLatitude(double lat) {
-		Editor pesta = customSharedPreference.edit();
+		Editor pesta = customCachedPrefs.edit();
 		pesta.putString("homelatitude", String.valueOf(lat));
 		pesta.commit();
 	}
 
 	public double getHomeLatitude() {
-		return Double.parseDouble(customSharedPreference.getString("homelatitude", "0"));
+		return Double.parseDouble(customCachedPrefs.getString("homelatitude", "0"));
 	}
 
 	public void setHomeLongitude(double lat) {
-		Editor pesta = customSharedPreference.edit();
+		Editor pesta = customCachedPrefs.edit();
 		pesta.putString("homelongitude", String.valueOf(lat));
 		pesta.commit();
 	}
 
 	public double getHomeLongitude() {
-		double ret = Double.parseDouble(customSharedPreference.getString("homelongitude", "0"));
+		double ret = Double.parseDouble(customCachedPrefs.getString("homelongitude", "0"));
 		return ret;
 	}
 
@@ -446,12 +448,10 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	public boolean isAntitheftPresent() {
-		// TODO Auto-generated method stub
 		return antitheftPresent;
 	}
 
 	public boolean isAntitheftNotify() {
-		// TODO Auto-generated method stub
 		return antitheftNotify;
 	}
 

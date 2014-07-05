@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -87,7 +88,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 			FilenameFilter filter = new FilenameFilter() {
 				public boolean accept(File dir, String filename) {
 					File sel = new File(dir, filename);
-					return filename.contains(FTYPE) || sel.isDirectory();
+					return filename.endsWith(FTYPE) || sel.isDirectory();
 				}
 			};
 			mFileList = mPath.list(filter);
@@ -112,7 +113,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 			if (opzioni.isDbConfigured()){
 				Log.w(Constants.TAG, "DB not empty, can't import");
 				dialog = builder.create();
-				Toast.makeText(parent, "DB not empty. Drop DB first", Toast.LENGTH_SHORT).show();
+				Toast.makeText(parent, parent.getString(R.string.db_notempty), Toast.LENGTH_SHORT).show();
 				return dialog;
 			}
 			builder.setItems(mFileList, new DialogInterface.OnClickListener() {
