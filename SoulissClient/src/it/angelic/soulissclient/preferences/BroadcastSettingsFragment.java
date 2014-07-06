@@ -87,10 +87,11 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
 			public boolean onPreferenceClick(Preference preference) {
 
 				final List<Byte> bcastPayload = new ArrayList<Byte>();
-
 				bcastPayload.add(Constants.Souliss_UDP_function_broadcast_configure);
 
 				try {
+					if (bcast_IP.getText().length() == 0)
+						throw new Exception("empty parameter: IP address");
 					InetAddress i4 = InetAddress.getByName(bcast_IP.getText());
 					for (int tper = 0; tper < i4.getAddress().length; tper++) {
 						bcastPayload.add(i4.getAddress()[tper]);

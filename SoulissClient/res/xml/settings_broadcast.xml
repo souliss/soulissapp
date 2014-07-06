@@ -23,13 +23,13 @@
     <EditTextPreference
         android:dialogTitle="Wi-fi SSID"
         android:key="bcast_ssid"
-        android:summary="Name of your wi-fi network. Dario completa"
+        android:summary="@string/bridge_ssid"
         android:title="Wi-fi SSID" />
     <EditTextPreference
         android:dialogTitle="Input Password"
         android:key="bcast_passwd"
         android:inputType="textPassword" 
-        android:summary="password of your wi-fi network"
+        android:summary="@string/bridge_wifipass"
         android:title="Wi-fi password" />
 
     <Preference

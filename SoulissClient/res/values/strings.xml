@@ -6,9 +6,11 @@
     <string name="app_opt">SoulissApp - Options</string>
     <string name="app_addprog">SoulissApp - Add Program</string>
     <string name="opt_network">Network Options</string>
-   <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
+    <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
     <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>
     <string name="bridge_gateway">Gateway for Souliss bridge node, most likely your router\'s address</string>
+    <string name="bridge_ssid">Name of your wireless network, to be used by Souliss bridge</string>
+    <string name="bridge_wifipass">Password of wireless network indicated above</string>
     <string name="last_update">Last update at:</string>
     <string name="last_exec">Last exec at:</string>
     <string name="waiting">Waiting for updates&#8230;</string>

@@ -98,11 +98,12 @@ public class UDPHelper {
 		DatagramPacket packet;
 		try {
 			// Log.d(TAG, "Issuing command " + cmd[0]);
-			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
+			String ip = Constants.BROADCASTADDR;
+			serverAddr = InetAddress.getByName(ip);
 			sender = getSenderSocket(serverAddr);
 			
 			//bcastPayload = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
-			String ip = Constants.BROADCASTADDR;
+			
 			sender.setBroadcast(true);
 			
 			//bcastPayload.set(1, whoami);
@@ -120,8 +121,9 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
 
 			//sender.send(packet);
-			Log.d(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
-			Log.d(Constants.TAG, "***BYTES: " + buf.toString());
+			//Log.d(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
+			debugByteArray(buf);
+		//	Log.d(Constants.TAG, "***BYTES: " + buf.toString());
 			
 		} catch (UnknownHostException ed) {
 			ed.printStackTrace();
@@ -555,13 +557,9 @@ public class UDPHelper {
 
 		frame.addAll(macaco);
 
-		Byte[] ret = new Byte[frame.size()];
+		//Byte[] ret = new Byte[frame.size()];
 
-		StringBuilder deb = new StringBuilder();
-		for (int i = 0; i < ret.length; i++) {
-			deb.append("0x" + Long.toHexString((long) frame.get(i) & 0xff) + " ");
-		}
-		Log.v(Constants.TAG, "vNet   frame built: " + deb.toString());
+		debugByteArray(frame);
 
 		// Send broadcast timeout
 		Intent i = new Intent();
@@ -572,6 +570,14 @@ public class UDPHelper {
 		SoulissClient.getOpzioni().getContx().sendBroadcast(i);
 
 		return frame;
+	}
+
+	private static void debugByteArray(ArrayList<Byte> frame) {
+		StringBuilder deb = new StringBuilder();
+		for (int i = 0; i < frame.size(); i++) {
+			deb.append("0x" + Long.toHexString((long) frame.get(i) & 0xff) + " ");
+		}
+		Log.v(Constants.TAG, "frame debug: " + deb.toString());
 	}
 
 	/**
