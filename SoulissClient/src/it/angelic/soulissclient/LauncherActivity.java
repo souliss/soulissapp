@@ -3,6 +3,9 @@ package it.angelic.soulissclient;
 import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerItemClickListener;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
@@ -151,6 +154,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private ListView mDrawerList;
 	private CharSequence mTitle;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private DrawerMenuHelper dmh;
 
 	void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
@@ -216,6 +220,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		criteria.setPowerRequirement(Criteria.POWER_LOW);
 		// criteria.setAccuracy(Criteria.ACCURACY_HIGH);
 		// criteria.setSpeedRequired(true);
+		dmh = new DrawerMenuHelper();
+		
 		provider = locationManager.getBestProvider(criteria, true);
 		boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
 		if (enabled) {
@@ -269,9 +275,10 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 		// Instantiating an adapter to store each items
 		// R.layout.drawer_layout defines the layout of each item
-		SimpleAdapter mAdapter = new SimpleAdapter(this, DrawerMenuHelper.getArray(), R.layout.drawer_list_item,
-				DrawerMenuHelper.getFrom(), DrawerMenuHelper.getTo());
+		//SimpleAdapter mAdapter = new SimpleAdapter(this, DrawerMenuHelper.getArray(), R.layout.drawer_list_item,
+		//		DrawerMenuHelper.getFrom(), DrawerMenuHelper.getTo());
 
+		NavDrawerAdapter mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
 		// Set the adapter for the list view
 		// mDrawerList.setAdapter(new ArrayAdapter<String>(this,
 		// R.layout.drawer_list_item, mPlanetTitles));

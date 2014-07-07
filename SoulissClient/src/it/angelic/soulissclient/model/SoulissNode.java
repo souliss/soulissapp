@@ -27,7 +27,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
 	private static final long serialVersionUID = 8673027563853737718L;
 	private short health;
 	/* Icon resource ID */
-	private int iconId = 0;
+	private int iconId = R.drawable.square;
 	private short id;
 	private String Name;
 	private Calendar refreshedAt;
