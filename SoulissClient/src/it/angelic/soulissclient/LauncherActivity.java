@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -38,6 +39,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
@@ -46,6 +51,8 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -140,6 +147,10 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		}
 	};
 	private View webServiceInfoLine;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private CharSequence mTitle;
+	private ActionBarDrawerToggle mDrawerToggle;
 
 	void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
@@ -176,7 +187,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		super.onCreate(savedInstanceState);
 		doBindService();
 		Eula.show(this);
-		
+
 		setContentView(R.layout.main_launcher);
 		geocoder = new Geocoder(this, Locale.getDefault());
 		soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
@@ -227,12 +238,84 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
 			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
 		}
+
+		// DRAWER
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+		mDrawerLayout, /* DrawerLayout object */
+		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
+		R.string.warn_wifi, /* "open drawer" description */
+		R.string.warn_wifi /* "close drawer" description */
+		) {
+
+			/** Called when a drawer has settled in a completely closed state. */
+			public void onDrawerClosed(View view) {
+				super.onDrawerClosed(view);
+				ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
+			}
+
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
+			}
+		};
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
+
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		// Instantiating an adapter to store each items
+		// R.layout.drawer_layout defines the layout of each item
+		SimpleAdapter mAdapter = new SimpleAdapter(this, DrawerMenuHelper.getArray(), R.layout.drawer_list_item,
+				DrawerMenuHelper.getFrom(), DrawerMenuHelper.getTo());
+
+		// Set the adapter for the list view
+		// mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+		// R.layout.drawer_list_item, mPlanetTitles));
+		mDrawerList.setAdapter(mAdapter);
+		// Set the list's click listener
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
+
 		doBindService();
 		doBindWebService();
 		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 
 		// Log.w(TAG, "WARNTEST");
 	}
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content
+		// view
+		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		// menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+		for (int i = 0; i < menu.size(); i++) {
+			menu.getItem(i).setVisible(!drawerOpen);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	/*
+	 * @Override public void setTitle(CharSequence title) { mTitle = title;
+	 * getActionBar().setTitle(mTitle); }
+	 */
 
 	@Override
 	protected void onStart() {
@@ -297,6 +380,14 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+
+			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+				mDrawerLayout.closeDrawer(mDrawerList);
+			} else {
+				mDrawerLayout.openDrawer(mDrawerList);
+			}
+		}
 		switch (item.getItemId()) {
 
 		case R.id.Opzioni:
@@ -424,7 +515,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 	private void setWebServiceInfo() {
 		StringBuilder sb = new StringBuilder();
-		//webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+		// webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 		/* SERVICE MANAGEMENT */
 		if (!opzioni.isWebserverEnabled()) {
 			if (mIsWebBound && mBoundWebService != null)
@@ -435,7 +526,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			webserviceInfo.setVisibility(View.VISIBLE);
 			if (mIsWebBound && mBoundWebService != null) {
 				sb.append(getString(R.string.webservice_enabled));
-				sb.append(NetUtils.getLocalIpAddress()+":");
+				sb.append(NetUtils.getLocalIpAddress() + ":");
 				sb.append(mBoundWebService.getPort());
 				webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 			} else {
