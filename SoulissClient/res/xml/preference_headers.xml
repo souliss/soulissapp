@@ -4,8 +4,8 @@
     <header
         android:fragment="it.angelic.soulissclient.preferences.NetSettingsFragment"
         android:icon="@android:drawable/ic_menu_mylocation"
-        android:summary="@string/opt_network"
-        android:title="@string/opt_networkdesc" >
+        android:title="@string/opt_network"
+        android:summary="@string/opt_networkdesc" >
         <extra
             android:name="opt_screen"
             android:value="network_setup" />

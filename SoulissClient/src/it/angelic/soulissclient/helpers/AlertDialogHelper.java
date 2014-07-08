@@ -259,7 +259,6 @@ public class AlertDialogHelper {
 	@TargetApi(11)
 	public static void setExtra(Intent preferencesActivity, String name) {
 		preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, name);
-
 	}
 
 	/**

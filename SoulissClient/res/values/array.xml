@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-
+ 	<string-array name="func_array">
+        <item>Scenari</item>
+        <item>Programmi</item>
+        <item>Manuale</item>
+        <item>Impostazioni Rete</item>
+        <item>@string/unknown_typical</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
     <string-array name="slot_array">
         <item>0</item>
         <item>1</item>
