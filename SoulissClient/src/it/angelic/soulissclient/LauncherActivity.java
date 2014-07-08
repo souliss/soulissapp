@@ -5,6 +5,7 @@ import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -44,7 +45,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -53,9 +53,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -155,6 +155,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private CharSequence mTitle;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerMenuHelper dmh;
+	private ArrayAdapter<INavDrawerItem> mAdapter;
 
 	void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
@@ -278,7 +279,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		//SimpleAdapter mAdapter = new SimpleAdapter(this, DrawerMenuHelper.getArray(), R.layout.drawer_list_item,
 		//		DrawerMenuHelper.getFrom(), DrawerMenuHelper.getTo());
 
-		NavDrawerAdapter mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
+		//mAdapter = new ExpandableDrawerAdapter(this,dmh.getStuff(), dmh.getNodes());
 		// Set the adapter for the list view
 		// mDrawerList.setAdapter(new ArrayAdapter<String>(this,
 		// R.layout.drawer_list_item, mPlanetTitles));
@@ -288,6 +290,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 		doBindService();
 		doBindWebService();
+		
 		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 
 		// Log.w(TAG, "WARNTEST");
@@ -366,7 +369,10 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			}
 		};
 		soulissManualBtn.setOnClickListener(simpleOnClickListener);
-
+		//forza refresh drawer
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
+		mDrawerList.setAdapter(mAdapter);
+		
 		// refresh testo
 		setHeadInfo();
 		setDbInfo();

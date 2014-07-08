@@ -37,10 +37,10 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         NavMenuItemHolder navMenuItemHolder = null;
        
         if (convertView == null) {
-        	//if (menuItem.getId() < 0)
+        	if (menuItem.getId() < 0)
                 convertView = inflater.inflate( R.layout.drawer_list_item, parentView, false);
-        	//else
-        	//	convertView = inflater.inflate( R.layout.drawer_list_item_son, parentView, false);
+        	else
+        		convertView = inflater.inflate( R.layout.drawer_list_item_son, parentView, false);
         	
         	TextView labelView = (TextView) convertView
                     .findViewById( R.id.dtitle );

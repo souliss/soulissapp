@@ -1,23 +1,22 @@
 package it.angelic.soulissclient.drawer;
 
+import it.angelic.soulissclient.ManualUDPTestActivity;
 import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.NodesListActivity;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.ProgramListActivity;
-import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SceneListActivity;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -96,7 +95,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				myIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 					AlertDialogHelper.setExtra(myIntent4, NetSettingsFragment.class.getName());
-				// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
 				myIntent4.setAction("network_setup");
 				mActivity.startActivity(myIntent4);
 				break;
@@ -108,7 +106,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				myIntent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 					AlertDialogHelper.setExtra(myIntent5, DbSettingsFragment.class.getName());
-				// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
 				myIntent5.setAction("db_setup");
 				mActivity.startActivity(myIntent5);
 				break;
@@ -120,7 +117,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				myIntent6.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 					AlertDialogHelper.setExtra(myIntent6, ServiceSettingsFragment.class.getName());
-				// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
 				myIntent6.setAction("service_setup");
 				mActivity.startActivity(myIntent6);
 				break;
@@ -131,10 +127,17 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				Intent myIntent7 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent7.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-					AlertDialogHelper.setExtra(myIntent7, ServiceSettingsFragment.class.getName());
-				// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
+					AlertDialogHelper.setExtra(myIntent7, VisualSettingsFragment.class.getName());
 				myIntent7.setAction("visual_setup");
 				mActivity.startActivity(myIntent7);
+				break;
+			case DrawerMenuHelper.SETTINGS_UDPTEST:
+				mDrawerList.setItemChecked(position, true);
+				// setTitle(mPlanetTitles[position]);
+				mDrawerLayout.closeDrawer(mDrawerList);
+				Intent myIntent8 = new Intent(mActivity, ManualUDPTestActivity.class);
+				myIntent8.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				mActivity.startActivity(myIntent8);
 				break;
 			default:
 				break;

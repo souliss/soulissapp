@@ -2,18 +2,14 @@ package it.angelic.soulissclient.drawer;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.R.drawable;
-import it.angelic.soulissclient.R.string;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 
 public class DrawerMenuHelper {
 	private static Context ctx = SoulissClient.getAppContext();
@@ -27,15 +23,7 @@ public class DrawerMenuHelper {
 	public static final int SETTINGS_DB=-5;
 	public static final int SETTINGS_SERVICE=-6;
 	public static final int SETTINGS_VISUAL=-7;
-
-	private static int[] mFlags = { R.drawable.lamp, R.drawable.remote, R.drawable.hand,
-			android.R.drawable.ic_menu_mylocation, android.R.drawable.ic_menu_save, android.R.drawable.ic_menu_rotate,
-			android.R.drawable.ic_menu_gallery, android.R.drawable.ic_menu_agenda };
-	private static String[] mCountries = { ctx.getString(R.string.scenes_title),
-			ctx.getString(R.string.programs_title), ctx.getString(R.string.manual_title),
-			ctx.getString(R.string.opt_network), ctx.getString(R.string.opt_db),
-			ctx.getString(R.string.opt_service), ctx.getString(R.string.opt_visualdesc),
-			ctx.getString(R.string.menu_test_udp) };
+	public static final int SETTINGS_UDPTEST=-8;
 
 /*	public static ArrayList<HashMap<String, String>> getArray() {
 		// Each row in the list stores country name, count and flag
@@ -49,6 +37,27 @@ public class DrawerMenuHelper {
 		return mList;
 	}
 */	
+	public INavDrawerItem[] getNodes() {
+		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();
+
+		SoulissDBHelper db = new SoulissDBHelper(ctx);
+		db.open();
+		List<SoulissNode> nodes = db.getAllNodes();
+		// Aggiungi nodi
+		for (Iterator<SoulissNode> iterator = nodes.iterator(); iterator.hasNext();) {
+			SoulissNode object = (SoulissNode) iterator.next();
+			NavMenuItem item2 = new NavMenuItem();
+			item2.setId(object.getId());
+			item2.setLabel(object.getNiceName());
+			item2.setIcon(object.getDefaultIconResourceId());
+			item2.setUpdateActionBarTitle(false);
+			tmp.add(item2);
+		}
+
+		INavDrawerItem[] tmpa = new INavDrawerItem[tmp.size()];
+		tmp.toArray(tmpa);
+		return tmpa;
+	}
 	public INavDrawerItem[] getStuff(){
 		
 		
@@ -73,6 +82,7 @@ public class DrawerMenuHelper {
 		SoulissDBHelper db = new SoulissDBHelper(ctx);
 		db.open();
 		List<SoulissNode> nodes = db.getAllNodes();
+		//Aggiungi nodi
 		for (Iterator<SoulissNode>  iterator = nodes.iterator(); iterator.hasNext();) {
 			SoulissNode object = (SoulissNode) iterator.next();
 			NavMenuItem item2 = new NavMenuItem();
@@ -96,6 +106,9 @@ public class DrawerMenuHelper {
 		NavMenuItem op5 = new NavMenuItem(SETTINGS_VISUAL, ctx.getString(R.string.opt_visual),android.R.drawable.ic_menu_gallery,
 				false, ctx);
 		tmp.add(op5);
+		NavMenuItem op6 = new NavMenuItem(SETTINGS_UDPTEST, ctx.getString(R.string.menu_test_udp),android.R.drawable.ic_menu_agenda,
+				false, ctx);
+		tmp.add(op6);
 		
 		INavDrawerItem[] tmpa = new INavDrawerItem[tmp.size()];
 		tmp.toArray(tmpa);
