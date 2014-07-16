@@ -7,8 +7,8 @@
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="6dip"
-        android:layout_marginRight="6dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:layout_marginTop="4dip"
         android:background="@drawable/list_rect_green"
         android:focusable="false" >
@@ -25,8 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="6dip"
-            android:layout_marginTop="2dip"
+            android:layout_marginRight="8dip"
+            android:layout_marginTop="4dip"
             android:contentDescription="@string/app_name"
             android:src="@drawable/soulisslogo" />
 
@@ -61,7 +61,7 @@
             android:id="@+id/textViewStatusVal"
             style="@style/CodeFontMain"
             android:layout_below="@id/TextViewUpdated"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="4dp"
             android:layout_toRightOf="@id/textViewStatus"
             android:gravity="left"
             android:textIsSelectable="false" />
@@ -80,8 +80,8 @@
         android:layout_width="fill_parent"
         android:layout_height="4dp"
         android:layout_below="@id/LinearLayout01"
-        android:layout_marginLeft="9dip"
-        android:layout_marginRight="9dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:background="@drawable/shadow_left" />
 
 </RelativeLayout>

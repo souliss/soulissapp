@@ -2,7 +2,6 @@ package it.angelic.soulissclient.adapters;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -40,8 +39,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
 
 	public int getCount() {
 		// Hack lista vuota
-		if (comandiScena == null || comandiScena.length == 0)
-			return 1;
+		//if (comandiScena == null || comandiScena.length == 0)
+		//	return 1;
 		return (int) comandiScena.length;
 	}
 
@@ -61,12 +60,12 @@ public class SceneCommandListAdapter extends BaseAdapter {
 		CommandViewHolder holder;
 
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.listview_scene_detail, null);
+			convertView = mInflater.inflate(R.layout.listview_scene_detail, parent, false);
 			holder = new CommandViewHolder();
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
 			holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-			holder.evidenza = (View) convertView.findViewById(R.id.command_color);
+			//holder.evidenza = (View) convertView.findViewById(R.id.command_color);
 			holder.image = (ImageView) convertView.findViewById(R.id.command_icon);
 			if (comandiScena.length > 0)
 				holder.data = comandiScena[position];
@@ -87,7 +86,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
 			holder.textCmd.setText(context.getResources().getString(R.string.scenes_empty));
 			holder.textCmdWhen.setText(context.getResources().getString(R.string.scenes_empty_desc));
-			holder.evidenza.setBackgroundColor(context.getResources().getColor(color.trans_black));
+			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.trans_black));
 		}
 		/* comando singolo */
 		else if (holder.data.getType() == Constants.COMMAND_SINGLE) {
@@ -110,7 +109,6 @@ public class SceneCommandListAdapter extends BaseAdapter {
 				info.append(dto.getNodeId());
 			info.append(")");
 			holder.textCmd.setText(info.toString());
-			holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_yellow));
 			holder.textCmdWhen.setText(context.getResources().getString(R.string.scene_cmd_order) + dto.getInterval());
 			/* comando massivo */
 		} else {
@@ -120,7 +118,6 @@ public class SceneCommandListAdapter extends BaseAdapter {
 			holder.image.setColorFilter(context.getResources().getColor(R.color.aa_violet),
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
 			SoulissCommandDTO dto = holder.data.getCommandDTO();
-			holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_violet));
 			holder.textCmd.setText(context.getResources().getString(R.string.scene_send_command) + " \""
 					+ holder.data.toString() + "\" " + context.getResources().getString(R.string.to_all) + " "
 					+ context.getResources().getString(R.string.compatible) + " ("
@@ -148,7 +145,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
 	}
 
 	public static class CommandViewHolder {
-		public View evidenza;
+		//public View evidenza;
 		TextView textCmd;
 		TextView textCmdWhen;
 		TextView textCmdInfo;

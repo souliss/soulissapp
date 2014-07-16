@@ -126,8 +126,10 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		}
 
 		upda.setText(collected.toString());
-		health.setText("Scene with " + collected.getCommandArray().size() + " commands");
-
+		String strMeatFormat = getString(R.string.scene_subtitle);
+		health.setText(String.format(strMeatFormat, collected.getCommandArray().size()));
+		
+		
 		return;
 	}
 

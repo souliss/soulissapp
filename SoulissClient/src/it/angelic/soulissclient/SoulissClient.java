@@ -47,8 +47,7 @@ public class SoulissClient extends Application implements Serializable{
     public static void setBackground(View target, WindowManager mgr){
     	try {
 			mgr.getDefaultDisplay().getMetrics(metrics);
-
-			StateListDrawable gras = (StateListDrawable) target.getRootView().getBackground();
+			//StateListDrawable gras = (StateListDrawable) target.getRootView().getBackground();
 			GradientDrawable gra = (GradientDrawable) target.getRootView().getBackground();
 			gra.setGradientRadius(metrics.widthPixels / 2f);
 			displayWidth = metrics.widthPixels;

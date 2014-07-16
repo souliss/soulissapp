@@ -64,7 +64,7 @@ public class NodesListAdapter extends BaseAdapter {
 					color.aa_red), context.getResources().getColor(color.aa_green),
 					android.graphics.Shader.TileMode.CLAMP);
 
-			convertView = mInflater.inflate(R.layout.listview, null);
+			convertView = mInflater.inflate(R.layout.listview, parent, false);
 			holder = new NodeViewHolder();
 			holder.text = (TextView) convertView.findViewById(R.id.TextView01);
 			holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);

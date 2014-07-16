@@ -48,6 +48,8 @@
     <string name="programs_notyet">The command hasn\'t been executed yet</string>
     <string name="command_sent">command Sent</string>
     <string name="command_send">Send command</string>
+    <string name="command_inserted">New Program has been saved</string>
+    <string name="command_inserted_fail">Error saving new Program </string>
     <string name="compatible">compatible typicals</string>
     <string name="to_all">to all</string>
     <string name="to">to</string>

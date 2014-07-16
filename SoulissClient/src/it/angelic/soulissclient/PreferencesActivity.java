@@ -109,20 +109,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		super.onStart();
 		currentScreen = getIntent().getAction();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// PrefsFragment pf = new PrefsFragment();
-			/*
-			 * if (action != null &&
-			 * !"android.intent.action.MAIN".equals(action)){ Bundle b = new
-			 * Bundle(); b.putString(EXTRA_SHOW_FRAGMENT, action);
-			 * 
-			 * pf.setArguments(b);
-			 * getFragmentManager().beginTransaction().replace
-			 * (android.R.id.content, pf).commit(); }
-			 */
-
-			// loadHeadersFromResource(R.xml.preference_headers, new
-			// ArrayList<Header>());
-			Log.d(TAG, "Going thru preference onStart()");
+			Log.d(TAG, "Going thru preference onStart(), screeN: "+currentScreen);
 			return;
 		}
 		opzioni.initializePrefs();
@@ -160,12 +147,8 @@ public class PreferencesActivity extends PreferenceActivity {
 					try {
 						String ics = (String) newValue;
 						Integer rete = Integer.parseInt(ics);
-						if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1)// enforce
-																								// 0
-																								// <
-																								// x
-																								// <
-																								// 0xfe
+						// enforce  0  <  x < 0xfe
+						if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1)
 							throw new IllegalArgumentException();
 						opzioni.setUserIndex(rete);
 						String stdrMeatFormat = getString(R.string.opt_userindex_desc);
@@ -178,7 +161,6 @@ public class PreferencesActivity extends PreferenceActivity {
 				}
 			});
 			nodeIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
 				@Override
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
 					Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);

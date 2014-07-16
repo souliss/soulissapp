@@ -56,22 +56,19 @@ public class SceneListAdapter extends BaseAdapter {
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
 			holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-			//holder.evidenza = (View) convertView.findViewById(R.id.command_color);
 			holder.image = (ImageView) convertView.findViewById(R.id.command_icon);
 			holder.data = scene[position];
+			
 			convertView.setTag(holder);
 		} else {
 			holder = (SceneViewHolder) convertView.getTag();
 		}
 		// holder.data.getCommand().getNodeId()
-
 		if (opzioni.isLightThemeSelected()) {
 			holder.textCmdWhen.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textCmd.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textCmdInfo.setTextColor(context.getResources().getColor(R.color.black));
 		}
-
-		//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_yellow));
 		holder.image.setImageResource(holder.data.getDefaultIconResourceId());
 		holder.image.setColorFilter(context.getResources().getColor(color.aa_yellow),
 				android.graphics.PorterDuff.Mode.SRC_ATOP);
@@ -88,11 +85,6 @@ public class SceneListAdapter extends BaseAdapter {
 		//EMPTY space for info
 		//holder.textCmdInfo.setText("Info 2");
 		holder.textCmdInfo.setVisibility(View.GONE);
-		// Progress = health
-		// holder.hlt.setProgress(programmi[position].getExecutedTime());
-
-		/* Dimensioni del testo settate dalle opzioni */
-		//holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
 
 		if (opzioni.getTextFx()) {
 			Animation a2 = AnimationUtils.loadAnimation(context, R.anim.scalerotale);
@@ -106,7 +98,6 @@ public class SceneListAdapter extends BaseAdapter {
 	}
 
 	public static class SceneViewHolder {
-		//public View evidenza;
 		TextView textCmd;
 		TextView textCmdWhen;
 		TextView textCmdInfo;

@@ -431,7 +431,7 @@ public class UDPSoulissDecoder {
 			}
 			if (soulissSharedPreference.contains("numTipici"))
 				editor.remove("numTipici");// unused
-			editor.putInt("numTipici", done);
+			editor.putInt("numTipici", database.countTypicals());
 			editor.commit();
 			Log.i(Constants.TAG, "Refreshed " + numberOf + " typicals for node " + tgtnode);
 		} catch (Exception uy) {

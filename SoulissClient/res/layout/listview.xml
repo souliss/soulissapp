@@ -7,8 +7,8 @@
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="6dip"
-        android:layout_marginRight="6dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:layout_marginTop="4dip"
         android:background="@drawable/list_rect_green" >
 
@@ -65,10 +65,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="2sp"
-                android:layout_marginLeft="2sp"
-                android:layout_marginRight="4sp"
-                android:layout_marginTop="2sp" />
+                android:layout_margin="4dp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -76,8 +73,8 @@
         android:layout_width="fill_parent"
         android:layout_height="4dp"
         android:layout_below="@id/LinearLayout01"
-        android:layout_marginLeft="9dip"
-        android:layout_marginRight="9dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:background="@drawable/shadow_left" />
 
 </RelativeLayout>

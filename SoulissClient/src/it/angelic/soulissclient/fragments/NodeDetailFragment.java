@@ -296,7 +296,8 @@ public class NodeDetailFragment extends SherlockListFragment {
 	 */
 	private void showDetails(int index, SoulissTypical target) {
 		// mCurCheckPosition = index;
-
+		if (target == null)
+			return;//capita con lista vuota
 		if (mDualPane) {
 			ListView li = getListView();
 			li.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

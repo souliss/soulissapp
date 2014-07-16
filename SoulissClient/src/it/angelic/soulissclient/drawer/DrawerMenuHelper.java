@@ -25,18 +25,6 @@ public class DrawerMenuHelper {
 	public static final int SETTINGS_VISUAL=-7;
 	public static final int SETTINGS_UDPTEST=-8;
 
-/*	public static ArrayList<HashMap<String, String>> getArray() {
-		// Each row in the list stores country name, count and flag
-		ArrayList<HashMap<String, String>> mList = new ArrayList<HashMap<String, String>>();
-		for (int i = 0; i < 8; i++) {
-			HashMap<String, String> hm = new HashMap<String, String>();
-			hm.put(IMG, Integer.toString(mFlags[i]));
-			hm.put(TITLE, mCountries[i]);
-			mList.add(hm);
-		}
-		return mList;
-	}
-*/	
 	public INavDrawerItem[] getNodes() {
 		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();
 
@@ -58,11 +46,9 @@ public class DrawerMenuHelper {
 		tmp.toArray(tmpa);
 		return tmpa;
 	}
-	public INavDrawerItem[] getStuff(){
+	public INavDrawerItem[] getStuff(){		
 		
-		
-		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();
-		
+		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();	
 		
 		NavMenuSection it = NavMenuSection.create(-9, "FUNZIONI");
 		tmp.add(it);

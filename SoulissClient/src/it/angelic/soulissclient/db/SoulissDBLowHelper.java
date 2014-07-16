@@ -76,9 +76,8 @@ public class SoulissDBLowHelper extends SoulissDBHelper {
 				ret += upd;
 		}
 		return ret;
-		
-
 	}
+
 	
 
 

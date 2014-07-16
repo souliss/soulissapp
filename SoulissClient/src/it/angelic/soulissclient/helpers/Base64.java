@@ -16,6 +16,8 @@
 
 package it.angelic.soulissclient.helpers;
 
+import it.angelic.soulissclient.BuildConfig;
+
 import java.io.UnsupportedEncodingException;
 
 import android.util.Base64OutputStream;
@@ -536,8 +538,9 @@ public class Base64 {
         encoder.output = new byte[output_len];
         encoder.process(input, offset, len, true);
 
-        assert encoder.op == output_len;
-
+        if(BuildConfig.DEBUG && !(encoder.op == output_len))
+        	throw new RuntimeException("ASSERT encoder.op == output_len FAIL");
+        
         return encoder.output;
     }
 
@@ -718,8 +721,10 @@ public class Base64 {
                     output[op++] = '\n';
                 }
 
-                assert tailLen == 0;
-                assert p == len;
+                if(BuildConfig.DEBUG && !(tailLen == 0))
+                    throw new RuntimeException("Check BASE64");
+                if(BuildConfig.DEBUG && !(p == len))
+                    throw new RuntimeException("Check BASE64 p==len");
             } else {
                 // Save the leftovers in tail to be consumed on the next
                 // call to encodeInternal.
