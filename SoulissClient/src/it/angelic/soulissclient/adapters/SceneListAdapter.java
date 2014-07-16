@@ -51,7 +51,7 @@ public class SceneListAdapter extends BaseAdapter {
 		SceneViewHolder holder;
 
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.listview_scenes, null);
+			convertView = mInflater.inflate(R.layout.listview_scenes, parent, false);
 			holder = new SceneViewHolder();
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);

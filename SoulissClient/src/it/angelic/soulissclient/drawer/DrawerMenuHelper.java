@@ -13,8 +13,6 @@ import android.content.Context;
 
 public class DrawerMenuHelper {
 	private static Context ctx = SoulissClient.getAppContext();
-	final static private String IMG = "icon";
-	final static private String TITLE = "title";
 	
 	public static final int SCENES=-1;
 	public static final int PROGRAMS=-2;

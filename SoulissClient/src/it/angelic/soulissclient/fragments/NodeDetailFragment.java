@@ -90,7 +90,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 	private SoulissDBHelper datasource;
 	private Timer autoUpdate;
 	private ProgressBar par;
-	private TextView tt;
+	//private TextView tt;
 	private TypicalsListAdapter ta;
 	private TextView upda;
 	private ImageView nodeic;
@@ -182,7 +182,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 		View detailsFrame = getActivity().findViewById(R.id.details);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 		// nodoInfo.removeAllViews();
-		tt = (TextView) getActivity().findViewById(R.id.TextViewTypicalsTitle);
+		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicalsTitle);
 		// health = (TextView) findViewById(R.id.TextViewHealth);
 		upda = (TextView) getActivity().findViewById(R.id.TextViewNodeUpdate);
 		par = (ProgressBar) getActivity().findViewById(R.id.progressBarNodo);

@@ -60,13 +60,13 @@ public class T4nFragment extends SherlockFragment {
 
 	private SoulissTypical collected;
 	// private SoulissTypical related;
-	private Button btSleep;
+	//private Button btSleep;
 
 	// Color change listener.
 
 	private VisualizerView mVisualizerView;
 	private TextView alarmInfoTextView;
-	private ToggleButton togMassive;
+	//private ToggleButton togMassive;
 	private CheckBox notifCheckbox;
 	private TextView infoTyp;
 	private TextView textviewSensors;

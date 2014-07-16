@@ -90,7 +90,7 @@ public class ProgramListAdapter extends BaseAdapter {
 		/* programma temporale */
 		if (holder.data.getType() == Constants.COMMAND_TIMED) {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_purple));
+			don.setBackgroundResource(R.drawable.list_rect_purple);
 			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
 			holder.image.setImageResource(R.drawable.clock);
 			holder.image.setColorFilter(context.getResources().getColor(color.aa_violet),
@@ -114,7 +114,7 @@ public class ProgramListAdapter extends BaseAdapter {
 		else if (holder.data.getType() == Constants.COMMAND_COMEBACK_CODE
 				|| holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_blue));
+			don.setBackgroundResource(R.drawable.list_rect_blue);
 			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
 			holder.image.setImageResource(R.drawable.exit);
 			holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
@@ -136,7 +136,7 @@ public class ProgramListAdapter extends BaseAdapter {
 			/* COMANDO TRIGGERED */
 		} else if (holder.data.getType() == Constants.COMMAND_TRIGGERED) {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_red));
+			don.setBackgroundResource(R.drawable.list_rect_red);
 			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_red_shadow));
 			holder.image.setImageResource(R.drawable.lighthouse);
 			holder.image.setColorFilter(context.getResources().getColor(color.aa_red), PorterDuff.Mode.SRC_ATOP);

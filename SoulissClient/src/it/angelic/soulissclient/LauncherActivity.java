@@ -152,7 +152,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private View webServiceInfoLine;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-	private CharSequence mTitle;
+	//private CharSequence mTitle;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerMenuHelper dmh;
 	private ArrayAdapter<INavDrawerItem> mAdapter;

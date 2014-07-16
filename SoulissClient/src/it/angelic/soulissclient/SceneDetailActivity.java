@@ -111,7 +111,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 	private void createHeader() {
 		// nodoInfo.removeAllViews();
 		// titolo = (TextView) findViewById(R.id.TextViewNodeTitle);
-		TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
+		//TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
 		TextView health = (TextView) findViewById(R.id.TextViewHealth);
 		upda = (TextView) findViewById(R.id.TextViewNodeUpdate);
 		ImageView icon = (ImageView) findViewById(R.id.scene_icon);

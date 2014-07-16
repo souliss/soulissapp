@@ -113,7 +113,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
 			/* comando massivo */
 		} else {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_purple));
+			don.setBackgroundResource(R.drawable.list_rect_purple);
 			holder.image.setImageResource(holder.data.getIconResId());
 			holder.image.setColorFilter(context.getResources().getColor(R.color.aa_violet),
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
