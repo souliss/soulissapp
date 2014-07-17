@@ -152,10 +152,11 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private View webServiceInfoLine;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
-	//private CharSequence mTitle;
+	// private CharSequence mTitle;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerMenuHelper dmh;
 	private ArrayAdapter<INavDrawerItem> mAdapter;
+	private Criteria criteria;
 
 	void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
@@ -214,37 +215,12 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		// gestore timeout dei comandi
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		timeoutHandler = new Handler();
-
 		// Get the location manager
 		// Define the criteria how to select the locatioin provider
-		Criteria criteria = new Criteria();
+		criteria = new Criteria();
 		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		// criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-		// criteria.setSpeedRequired(true);
+		// action bar drawer
 		dmh = new DrawerMenuHelper();
-		
-		provider = locationManager.getBestProvider(criteria, true);
-		boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-		if (enabled) {
-			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
-					+ "</b>)"));
-			// ogni minuto, minimo 100 metri
-			locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-					Constants.POSITION_UPDATE_MIN_DIST, this);
-			Location location = locationManager.getLastKnownLocation(provider);
-			// Initialize the location fields
-			if (location != null) {
-				onLocationChanged(location);
-			}
-		} else if (opzioni.getHomeLatitude() != 0) {
-			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
-			homedist.setVisibility(View.GONE);
-			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
-		} else {
-			coordinfo.setVisibility(View.GONE);
-			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
-		}
 
 		// DRAWER
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -254,7 +230,6 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		R.string.warn_wifi, /* "open drawer" description */
 		R.string.warn_wifi /* "close drawer" description */
 		) {
-
 			/** Called when a drawer has settled in a completely closed state. */
 			public void onDrawerClosed(View view) {
 				super.onDrawerClosed(view);
@@ -274,25 +249,15 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		// Instantiating an adapter to store each items
-		// R.layout.drawer_layout defines the layout of each item
-		//SimpleAdapter mAdapter = new SimpleAdapter(this, DrawerMenuHelper.getArray(), R.layout.drawer_list_item,
-		//		DrawerMenuHelper.getFrom(), DrawerMenuHelper.getTo());
-
 		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
-		//mAdapter = new ExpandableDrawerAdapter(this,dmh.getStuff(), dmh.getNodes());
-		// Set the adapter for the list view
-		// mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-		// R.layout.drawer_list_item, mPlanetTitles));
 		mDrawerList.setAdapter(mAdapter);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
 
 		doBindService();
 		doBindWebService();
-		
-		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 
+		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 		// Log.w(TAG, "WARNTEST");
 	}
 
@@ -337,6 +302,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 		NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
 
+		initLocationProvider();
 		/* SCENES */
 		OnClickListener simpleOnClickListener2 = new OnClickListener() {
 			public void onClick(View v) {
@@ -369,10 +335,10 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			}
 		};
 		soulissManualBtn.setOnClickListener(simpleOnClickListener);
-		//forza refresh drawer
+		// forza refresh drawer
 		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
 		mDrawerList.setAdapter(mAdapter);
-		
+
 		// refresh testo
 		setHeadInfo();
 		setDbInfo();
@@ -691,39 +657,37 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		final double lng = (location.getLongitude());
 		coordinfo.setVisibility(View.VISIBLE);
 		homedist.setVisibility(View.VISIBLE);
-		coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: "
-				+ Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng)));
+		String adString = "";
+
+		String loc = null;
+		try {
+			List<Address> list;
+			list = geocoder.getFromLocation(lat, lng, 1);
+			if (list != null && list.size() > 0) {
+				Address address = list.get(0);
+				loc = address.getLocality();
+				if (address.getAddressLine(0) != null)
+					adString = ", " + address.getAddressLine(0);
+			}
+		} catch (final IOException e) {
+			Log.e(TAG, "Geocoder ERROR", e);
+			homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
+			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
+			loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
+		}
+		final String ff = loc;
+
+		coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + loc
+				+ adString));
 
 		final float[] res = new float[3];
 		// Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
 		Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
 		if (opzioni.getHomeLatitude() != 0) {
-
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
-					String loc = null;
-					try {
-						List<Address> list;
-						list = geocoder.getFromLocation(lat, lng, 1);
-						if (list != null && list.size() > 0) {
-							Address address = list.get(0);
-							loc = address.getLocality();
-						}
-					} catch (final IOException e) {
-						Log.e(TAG, "Geocoder ERROR", e);
-						runOnUiThread(new Runnable() {
-							public void run() {
-								homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: "
-										+ e.getMessage()));
-								posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
 
-							}
-						});
-						loc = null;
-					}
-
-					final String ff = loc;
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -761,12 +725,35 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	public void onProviderEnabled(String provider) {
 		Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
 		Log.i(TAG, "Enabled new provider " + provider);
-
 	}
-
 	@Override
 	public void onProviderDisabled(String provider) {
 		Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
 		Log.i(TAG, "Disabled provider " + provider);
+	}
+	private void initLocationProvider() {
+		// criteria.setAccuracy(Criteria.ACCURACY_HIGH);
+		provider = locationManager.getBestProvider(criteria, true);
+		boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
+		if (enabled) {
+			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
+					+ "</b>)"));
+			// ogni minuto, minimo 100 metri
+			locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+					Constants.POSITION_UPDATE_MIN_DIST, this);
+			Location location = locationManager.getLastKnownLocation(provider);
+			// Initialize the location fields
+			if (location != null) {
+				onLocationChanged(location);
+			}
+		} else if (opzioni.getHomeLatitude() != 0) {
+			coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
+			homedist.setVisibility(View.GONE);
+			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
+		} else {
+			coordinfo.setVisibility(View.GONE);
+			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
+			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
+		}
 	}
 }
