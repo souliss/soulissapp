@@ -15,6 +15,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -211,7 +212,7 @@ public class UDPSoulissDecoder {
 						if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 								&& ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
 							sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
-									context.getString(R.string.antitheft_notify_desc), R.drawable.shield);
+									context.getString(R.string.antitheft_notify_desc), R.drawable.shield, ty);
 							break;
 						}
 					}
@@ -526,10 +527,12 @@ public class UDPSoulissDecoder {
 	 * @param desc
 	 * @param longdesc
 	 * @param icon
+	 * @param ty 
 	 */
-	private static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon) {
+	public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
 
 		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);
+		notificationIntent.putExtra("TIPICO", (SoulissTypical32AirCon) ty);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
