@@ -336,6 +336,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 					stopIncrementing();
 					break;
 				}
+				v.performClick();
 				return true;
 			}
 		};

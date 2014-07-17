@@ -38,7 +38,7 @@
     <ListView
         android:id="@+id/ListViewListaProgs"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@id/TextViewTypicals"
         android:cacheColorHint="@color/trans_black"
         android:divider="@android:color/transparent"

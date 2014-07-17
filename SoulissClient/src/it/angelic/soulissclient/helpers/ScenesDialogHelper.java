@@ -401,17 +401,6 @@ public class ScenesDialogHelper {
 				} catch (Exception e) {
 					Log.e(ScenesDialogHelper.class.getName(), e.getMessage(), e);
 				}
-
-				/*
-				 * if (!opt.isUdpMode()) { datasource.open(); final
-				 * HashMap<Short, SoulissNode> names = JSONHelper.getAllNodes();
-				 * 
-				 * if (names == null || names.size() == 0) {
-				 * preferencesActivity.runOnUiThread(new Runnable() { public
-				 * void run() { Toast.makeText(preferencesActivity,
-				 * "Souliss not reachable, network error",
-				 * Toast.LENGTH_SHORT).show(); } }); } }
-				 */
 				progressDialog.dismiss();
 
 			}

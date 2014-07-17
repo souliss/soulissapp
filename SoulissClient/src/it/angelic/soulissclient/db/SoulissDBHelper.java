@@ -541,6 +541,15 @@ public class SoulissDBHelper {
 		cursor.close();
 		return comments;
 	}
+	
+	public int countTypicals() {
+		Cursor mCount= database.rawQuery("select count(*) from "+SoulissDB.TABLE_TYPICALS+" where "+SoulissDB.COLUMN_TYPICAL+" <> "+it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related, null);
+		mCount.moveToFirst();
+		int count= mCount.getInt(0);
+		mCount.close();
+		return count;
+	}
+	
 
 	public List<SoulissTrigger> getAllTriggers(Context context) {
 		List<SoulissTrigger> ret = new ArrayList<SoulissTrigger>();

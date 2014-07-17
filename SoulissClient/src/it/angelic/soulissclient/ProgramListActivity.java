@@ -61,14 +61,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		setTitle(getString(R.string.app_name) + " - " + getString(R.string.programs_title));
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
 		
-		
-		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
-			Typeface font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
-			tt.setTypeface(font, Typeface.NORMAL);
-		}*/
-
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
-		
 		SoulissClient.setBackground((RelativeLayout) findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato
@@ -123,22 +116,23 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
         if(resultCode==RESULT_OK && requestCode==12){
         	switch (msg) {
 			case Constants.COMMAND_TIMED:
-				Toast.makeText(this, "Timed Command inserted", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.command_inserted) , Toast.LENGTH_SHORT).show();
 				break;
 			case Constants.COMMAND_COMEBACK_CODE:	
+				;//fall throught
 			case Constants.COMMAND_GOAWAY_CODE:	
-				Toast.makeText(this, "Positional Command inserted", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.command_inserted), Toast.LENGTH_SHORT).show();
 				break;
 			case Constants.COMMAND_TRIGGERED:
-				Toast.makeText(this, "Triggered Command inserted", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.command_inserted), Toast.LENGTH_SHORT).show();
 				break;
 			default:
-				Toast.makeText(this, "Insertion Failed", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.command_inserted_fail), Toast.LENGTH_LONG).show();
 				break;
 			}
         }
         else{
-            Toast.makeText(this, "Insertion Failed", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.command_inserted_fail), Toast.LENGTH_LONG).show();
         }
         }
     }

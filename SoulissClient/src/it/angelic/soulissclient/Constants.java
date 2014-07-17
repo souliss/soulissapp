@@ -3,6 +3,7 @@ package it.angelic.soulissclient;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Constants {
 	public static final String TAG = "SoulissApp";
@@ -12,8 +13,8 @@ public class Constants {
 	public static final int ICON_REQUEST = 1;
 	public static final float[] roundedCorners = new float[] { 5,5,5,5,5,5,5,5 };
 	public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
-	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
-	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd");
+	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
+	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
 	public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");

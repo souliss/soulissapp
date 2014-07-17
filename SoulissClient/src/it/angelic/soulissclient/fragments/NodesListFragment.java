@@ -64,7 +64,7 @@ public class NodesListFragment extends SherlockListFragment {
 	private Handler timeoutHandler;
 	private Timer autoUpdate;
 
-	private TextView tt;
+	//private TextView tt;
 	private boolean mDualPane;
 	private TextView textHeadListInfo;
 	private ImageButton online;
@@ -113,14 +113,9 @@ public class NodesListFragment extends SherlockListFragment {
 		
 
 		ImageView nodeic = (ImageView) getActivity().findViewById(R.id.scene_icon);
-		tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
+		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
 		textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewManualDesc);
-		/*if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) {
-			Typeface font = Typeface.createFromAsset(getActivity().getAssets(), opzioni.getPrefFont());
-			tt.setTypeface(font, Typeface.NORMAL);
-			// titolo.setTypeface(font, Typeface.NORMAL);
-		}*/
-
+		
 		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());
 

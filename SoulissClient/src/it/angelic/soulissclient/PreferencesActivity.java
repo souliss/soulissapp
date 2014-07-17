@@ -51,8 +51,7 @@ public class PreferencesActivity extends PreferenceActivity {
 	private String strVersionName;
 	SoulissPreferenceHelper opzioni;
 	private String currentScreen;
-	
-	
+
 	@TargetApi(11)
 	@Override
 	public void onBuildHeaders(List<Header> target) {
@@ -111,7 +110,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		super.onStart();
 		currentScreen = getIntent().getAction();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			Log.d(TAG, "Going thru preference onStart()");
+			Log.d(TAG, "Going thru preference onStart(), screeN: " + currentScreen);
 			return;
 		}
 		opzioni.initializePrefs();
@@ -137,7 +136,7 @@ public class PreferencesActivity extends PreferenceActivity {
 			final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
 			final Preference bCast = (Preference) findPreference("advbroadcastKey");
 			bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(this));
-			
+
 			String strMeatFormat = getString(R.string.opt_nodeindex_desc);
 			nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 
@@ -151,8 +150,8 @@ public class PreferencesActivity extends PreferenceActivity {
 					try {
 						String ics = (String) newValue;
 						Integer rete = Integer.parseInt(ics);
+						// enforce 0 < x < 0xfe
 						if (rete >= it.angelic.soulissclient.Constants.MAX_USER_IDX || rete < 1)
-
 							throw new IllegalArgumentException();
 						opzioni.setUserIndex(rete);
 						String stdrMeatFormat = getString(R.string.opt_userindex_desc);
@@ -165,7 +164,6 @@ public class PreferencesActivity extends PreferenceActivity {
 				}
 			});
 			nodeIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
 				@Override
 				public boolean onPreferenceChange(Preference preference, Object newValue) {
 					Log.w(Constants.TAG, "CHANGING NODE INDEX:" + newValue);
@@ -203,9 +201,9 @@ public class PreferencesActivity extends PreferenceActivity {
 			dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(this));
 
 			String strMeatFormat = getString(R.string.opt_dbinfo_desc);
-			final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? getString(R.string.dialog_disabled_db) : String.format(
-					strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
-					opzioni.getCustomPref().getInt("numTipici", 0));
+			final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? getString(R.string.dialog_disabled_db)
+					: String.format(strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0), opzioni
+							.getCustomPref().getInt("numTipici", 0));
 			dbinfopref.setSummary(strMeatMsg);
 		} else if (currentScreen != null && currentScreen.equals("service_setup")) {
 			final Preference serviceActive = (Preference) findPreference("checkboxService");
@@ -224,7 +222,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
 			/* START STOP SoulissDataService */
 			serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(this));
-			
+
 			/* START STOP SoulissDataService */
 			webserviceActive.setOnPreferenceChangeListener(new WebServerPreferenceListener(this));
 
@@ -255,9 +253,8 @@ public class PreferencesActivity extends PreferenceActivity {
 					return true;
 				}
 			});
-			
-			setHtmlRoot.setOnPreferenceClickListener(new SetHtmlRootListener(this));
 
+			setHtmlRoot.setOnPreferenceClickListener(new SetHtmlRootListener(this));
 
 			String loc = null;
 			if (opzioni.getHomeLatitude() != 0) {
@@ -311,7 +308,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		}
 
 	}
-	
+
 	// Aggiorna la schermata
 	private BroadcastReceiver macacoRawDataReceiver = new BroadcastReceiver() {
 		@Override
@@ -379,19 +376,22 @@ public class PreferencesActivity extends PreferenceActivity {
 		unregisterReceiver(macacoRawDataReceiver);
 		super.onPause();
 	}
-	
+
 	@Override
-	protected boolean isValidFragment (String fragmentName) {
-	  if(DbSettingsFragment.class.getName().equals(fragmentName)) return true;
-	  if(NetSettingsFragment.class.getName().equals(fragmentName)) return true;
-	  if(ServiceSettingsFragment.class.getName().equals(fragmentName)) return true;
-	  if(VisualSettingsFragment.class.getName().equals(fragmentName)) return true;
-	  if(BroadcastSettingsFragment.class.getName().equals(fragmentName)) return true;
-		 
-		 
-	  return false;
+	protected boolean isValidFragment(String fragmentName) {
+		if (DbSettingsFragment.class.getName().equals(fragmentName))
+			return true;
+		if (NetSettingsFragment.class.getName().equals(fragmentName))
+			return true;
+		if (ServiceSettingsFragment.class.getName().equals(fragmentName))
+			return true;
+		if (VisualSettingsFragment.class.getName().equals(fragmentName))
+			return true;
+		if (BroadcastSettingsFragment.class.getName().equals(fragmentName))
+			return true;
+
+		return false;
 	}
-	
 
 	@Deprecated
 	private void hackBackGroundLights() {

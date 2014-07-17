@@ -629,7 +629,7 @@ public class UDPHelper {
 		assertEquals(true, functional < Byte.MAX_VALUE);
 		ArrayList<Byte> frame = new ArrayList<Byte>();
 
-		frame.add(new Byte((byte) functional));// functional code
+		frame.add(Byte.valueOf(functional));// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));

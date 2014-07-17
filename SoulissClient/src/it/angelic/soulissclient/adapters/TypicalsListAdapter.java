@@ -81,7 +81,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		TypicalViewHolder holder;
 		
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.listview_typical, null);
+			convertView = mInflater.inflate(R.layout.listview_typical, parent, false);
 			final View ccopy = convertView;
 			holder = new TypicalViewHolder();
 			holder.expand = (ImageView) convertView.findViewById(R.id.imageButtonExpand);

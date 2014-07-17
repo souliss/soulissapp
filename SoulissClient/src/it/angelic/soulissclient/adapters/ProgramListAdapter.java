@@ -59,13 +59,12 @@ public class ProgramListAdapter extends BaseAdapter {
 		CommandViewHolder holder;
 
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.listview_command_timed, null);
+			convertView = mInflater.inflate(R.layout.listview_program, parent, false);
 			holder = new CommandViewHolder();
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
 			holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-			holder.evidenza = (View) convertView.findViewById(R.id.command_color);
-			holder.image = (ImageView) convertView.findViewById(R.id.command_icon);
+			holder.image = (ImageView) convertView.findViewById(R.id.program_icon);
 			holder.data = programmi[position];
 			convertView.setTag(holder);
 		} else {
@@ -91,8 +90,8 @@ public class ProgramListAdapter extends BaseAdapter {
 		/* programma temporale */
 		if (holder.data.getType() == Constants.COMMAND_TIMED) {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_purple));
-			holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
+			don.setBackgroundResource(R.drawable.list_rect_purple);
+			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
 			holder.image.setImageResource(R.drawable.clock);
 			holder.image.setColorFilter(context.getResources().getColor(color.aa_violet),
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
@@ -115,8 +114,8 @@ public class ProgramListAdapter extends BaseAdapter {
 		else if (holder.data.getType() == Constants.COMMAND_COMEBACK_CODE
 				|| holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_blue));
-			holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
+			don.setBackgroundResource(R.drawable.list_rect_blue);
+			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
 			holder.image.setImageResource(R.drawable.exit);
 			holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
 			// se gia eseguito, dico quando
@@ -137,8 +136,8 @@ public class ProgramListAdapter extends BaseAdapter {
 			/* COMANDO TRIGGERED */
 		} else if (holder.data.getType() == Constants.COMMAND_TRIGGERED) {
 			RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-			don.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.list_rect_red));
-			holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_red_shadow));
+			don.setBackgroundResource(R.drawable.list_rect_red);
+			//holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_red_shadow));
 			holder.image.setImageResource(R.drawable.lighthouse);
 			holder.image.setColorFilter(context.getResources().getColor(color.aa_red), PorterDuff.Mode.SRC_ATOP);
 
@@ -169,7 +168,7 @@ public class ProgramListAdapter extends BaseAdapter {
 	}
 
 	public static class CommandViewHolder {
-		public View evidenza;
+		//public View evidenza;
 		TextView textCmd;
 		TextView textCmdWhen;
 		TextView textCmdInfo;

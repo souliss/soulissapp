@@ -111,7 +111,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 	private void createHeader() {
 		// nodoInfo.removeAllViews();
 		// titolo = (TextView) findViewById(R.id.TextViewNodeTitle);
-		TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
+		//TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
 		TextView health = (TextView) findViewById(R.id.TextViewHealth);
 		upda = (TextView) findViewById(R.id.TextViewNodeUpdate);
 		ImageView icon = (ImageView) findViewById(R.id.scene_icon);
@@ -126,8 +126,10 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		}
 
 		upda.setText(collected.toString());
-		health.setText("Scene with " + collected.getCommandArray().size() + " commands");
-
+		String strMeatFormat = getString(R.string.scene_subtitle);
+		health.setText(String.format(strMeatFormat, collected.getCommandArray().size()));
+		
+		
 		return;
 	}
 

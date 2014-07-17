@@ -259,7 +259,6 @@ public class AlertDialogHelper {
 	@TargetApi(11)
 	public static void setExtra(Intent preferencesActivity, String name) {
 		preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, name);
-
 	}
 
 	/**
@@ -640,7 +639,6 @@ public class AlertDialogHelper {
 			// alert.setIcon()
 			alert.setMessage(preferencesActivity.getResources().getString(R.string.dialog_create_db) + ip
 					+ preferencesActivity.getResources().getString(R.string.dialog_create_db2));
-
 			alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
 					new DialogInterface.OnClickListener() {
 
