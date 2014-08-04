@@ -81,6 +81,11 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			public void run() {
 				while (isIncrementing()) {
 					issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						Log.e(Constants.TAG, "Error Thread.sleep:");
+					}
 				}
 			}
 		}).start();
@@ -105,6 +110,11 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			public void run() {
 				while (isDecrementing()) {
 					issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						Log.e(Constants.TAG, "Error Thread.sleep:");
+					}
 				}
 			}
 		}).start();
@@ -292,12 +302,14 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					startIncrementing(cmd);
+					v.setPressed(true);
 					break;
 				case MotionEvent.ACTION_UP:
 					stopIncrementing();
+					v.setPressed(false);
 					break;
 				}
-
+				v.performClick();
 				return true;
 			}
 
@@ -309,12 +321,14 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					startDecrementing(cmd);
+					v.setPressed(true);
 					break;
 				case MotionEvent.ACTION_UP:
 					stopDecrementing();
+					v.setPressed(false);
 					break;
 				}
-
+				v.performClick();
 				return true;
 			}
 

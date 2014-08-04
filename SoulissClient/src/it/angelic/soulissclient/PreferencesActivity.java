@@ -321,7 +321,8 @@ public class PreferencesActivity extends PreferenceActivity {
 				case Constants.Souliss_UDP_function_typreq_resp:
 					;// fallthrought x refresh dicitura tipici
 				case Constants.Souliss_UDP_function_db_struct_resp:
-					if (currentScreen != null && currentScreen.equals("db_setup")) {
+					Log.w(TAG, "DB STRUCT: " + currentScreen);
+					//if (currentScreen != null && currentScreen.equals("db_setup")) {
 						Intent inten = PreferencesActivity.this.getIntent();
 						inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						PreferencesActivity.this.finish();
@@ -329,13 +330,14 @@ public class PreferencesActivity extends PreferenceActivity {
 						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 							inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
 						inten.setAction("db_setup");
+						inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						Toast.makeText(PreferencesActivity.this,
 								PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
 								Toast.LENGTH_SHORT).show();
 						PreferencesActivity.this.startActivity(inten);
-					}
+					//}
 					break;
-				case Constants.Souliss_UDP_function_ping_resp:// restart
+				/*case Constants.Souliss_UDP_function_ping_resp:// restart
 					if (currentScreen != null && currentScreen.equals("network_setup")) {
 						Intent intend = PreferencesActivity.this.getIntent();
 						intend.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -351,7 +353,7 @@ public class PreferencesActivity extends PreferenceActivity {
 						PreferencesActivity.this.overridePendingTransition(0, 0);
 						PreferencesActivity.this.startActivity(intend);
 					}
-					break;
+					break;*/
 				default:
 					break;
 				}

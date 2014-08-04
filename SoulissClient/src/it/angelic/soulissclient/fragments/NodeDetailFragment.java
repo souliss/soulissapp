@@ -383,7 +383,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 				TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-				actionTitle.setText(collected.getNiceName());
+				actionTitle.setText(getString(R.string.app_name) + " - " + collected.getNiceName());
 
 				if (!opzioni.isSoulissReachable()) {
 					online.setBackgroundResource(R.drawable.red);
@@ -440,14 +440,6 @@ public class NodeDetailFragment extends SherlockListFragment {
 
 		Log.d(Constants.TAG,
 				"Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
-
-		// Font dei titoli
-		/*
-		 * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
-		 * font = Typeface.createFromAsset(getActivity().getAssets(),
-		 * opzioni.getPrefFont()); tt.setTypeface(font, Typeface.NORMAL); //
-		 * titolo.setTypeface(font, Typeface.NORMAL); }
-		 */
 		return;
 	}
 

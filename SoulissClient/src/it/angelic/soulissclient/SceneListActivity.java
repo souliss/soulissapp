@@ -65,7 +65,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		super.onCreate(savedInstanceState);
 		
 		
-		setTitle(getString(R.string.app_name)+" - "+getString(R.string.scenes_title));
 		setContentView(R.layout.main_scenes);
 		//final Button buttAddProgram = (Button) findViewById(R.id.buttonAddScene);
 		tt = (TextView) findViewById(R.id.TextViewScenes);
@@ -106,7 +105,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setActionBarInfo(getString(R.string.scenes_title));
+		setActionBarInfo(getString(R.string.app_name)+" - "+getString(R.string.scenes_title));
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);

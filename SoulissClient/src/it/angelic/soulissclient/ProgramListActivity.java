@@ -84,7 +84,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setActionBarInfo(getString(R.string.programs_title));
+		setActionBarInfo(getString(R.string.app_name) + " - " + getString(R.string.programs_title));
 		datasource.open();
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {

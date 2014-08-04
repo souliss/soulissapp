@@ -97,6 +97,11 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 				while (isIncrementing()) {
 					issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
 							togMulticast.isChecked());
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						Log.e(Constants.TAG, "Error Thread.sleep:");
+					}
 				}
 			}
 		}).start();
@@ -122,6 +127,11 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 				while (isDecrementing()) {
 					issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
 							togMulticast.isChecked());
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						Log.e(Constants.TAG, "Error Thread.sleep:");
+					}
 				}
 			}
 		}).start();
@@ -211,7 +221,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
 		refreshStatusIcon();
-		
+
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
 		togMulticast = (ToggleButton) ret.findViewById(R.id.checkBoxMulticast);
@@ -255,7 +265,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 		final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				if (pos == 0) {//cerchio RGB
+				if (pos == 0) {// cerchio RGB
 					tableRowVis.setVisibility(View.GONE);
 					mVisualizerView.setVisibility(View.GONE);
 					tableRowChannel.setVisibility(View.GONE);
@@ -323,6 +333,17 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 		};
 
+		togMulticast.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+				if (isChecked) {
+					opzioni.setRgbSendAllDefault(true);
+				} else {
+					opzioni.setRgbSendAllDefault(false);
+				}
+			}
+		});
+
 		// start thread x decremento
 		OnTouchListener incListener = new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
@@ -331,31 +352,18 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					startIncrementing(cmd);
+					v.setPressed(true);
 					break;
 				case MotionEvent.ACTION_UP:
 					stopIncrementing();
+					v.setPressed(false);
 					break;
 				}
 				v.performClick();
 				return true;
 			}
 		};
-		
-		togMulticast.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-		        if(isChecked)
-		        {
-		            opzioni.setRgbSendAllDefault(true);
-		        }
-		        else
-		        {
-		        	opzioni.setRgbSendAllDefault(false);
-		        }
-		    }
-		});
-		
-		
 		OnTouchListener decListener = new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				Short cmd = (Short) v.getTag();
@@ -363,12 +371,14 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:
 					startDecrementing(cmd);
+					v.setPressed(true);
 					break;
 				case MotionEvent.ACTION_UP:
 					stopDecrementing();
+					v.setPressed(false);
 					break;
 				}
-
+				v.performClick();
 				return true;
 			}
 
@@ -380,14 +390,13 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		btEqualizer.setOnClickListener(plusEq);
 		btFlash.setOnClickListener(plus);
 		btSleep.setOnClickListener(plus);
-		
+
 		String strDisease2Format = getResources().getString(R.string.Souliss_TRGB_eq);
-		String strDisease2Msg = String.format(strDisease2Format,
-				Constants.twoDecimalFormat.format(opzioni.getEqLow()),
+		String strDisease2Msg = String.format(strDisease2Format, Constants.twoDecimalFormat.format(opzioni.getEqLow()),
 				Constants.twoDecimalFormat.format(opzioni.getEqMed()),
 				Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
 		eqText.setText(strDisease2Msg);
-		
+
 		// bianco manuale
 		btWhite.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -404,8 +413,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			public void colorChanged(int c) {
 				// Log.i(Constants.TAG, "color changed:" + c);
 				color = c;
-
-				// e
 				collected.issueRGBCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
 						Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
 			}
@@ -413,7 +420,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color);
 		// cpv.setCenterColor(collected.getColor());
 		colorSwitchRelativeLayout.addView(cpv);
-
 		return ret;
 	}
 
@@ -450,33 +456,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		return f;
 	}
 
-
-
-/*	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				NodeDetailFragment details = NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
-						collected.getParentNode());
-				// Execute a transaction, replacing any existing fragment
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				if (opzioni.isAnimationsEnabled())
-					ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-				ft.replace(R.id.details, details);
-				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-				ft.commit();
-			} else {
-				getActivity().finish();
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
-			}
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-*/
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -506,20 +485,20 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		public void onReceive(Context context, Intent intent) {
 			// SoulissNode coll = datasource.getSoulissNode();
 			try {
-			collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected.getTypicalDTO()
-					.getNodeId(), collected.getTypicalDTO().getSlot());
-			// Bundle extras = intent.getExtras();
-			// Bundle vers = (Bundle) extras.get("NODES");
-			//color = collected.getColor();
-			Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor()) + " G"
-					+ Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
-			cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
-					Color.blue(collected.getColor())));
-			cpv.invalidate();
+				collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected.getTypicalDTO()
+						.getNodeId(), collected.getTypicalDTO().getSlot());
+				// Bundle extras = intent.getExtras();
+				// Bundle vers = (Bundle) extras.get("NODES");
+				// color = collected.getColor();
+				Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor())
+						+ " G" + Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
+				cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
+						Color.blue(collected.getColor())));
+				cpv.invalidate();
 			} catch (Exception e) {
-				Log.e(Constants.TAG, "Errore broadcast Receive!",e);
+				Log.e(Constants.TAG, "Errore broadcast Receive!", e);
 			}
-refreshStatusIcon();
+			refreshStatusIcon();
 		}
 	};
 
@@ -606,7 +585,7 @@ refreshStatusIcon();
 		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 			int width = getRootView().getWidth();
 			int h = getRootView().getHeight();
-			
+
 			if (width == 0) {
 				width = colorSwitchRelativeLayout.getWidth();
 				h = colorSwitchRelativeLayout.getHeight();
@@ -622,7 +601,7 @@ refreshStatusIcon();
 		 * {@inheritDoc}
 		 */
 		public boolean onTouchEvent(MotionEvent event) {
-			//remove offset
+			// remove offset
 			int centerX = colorSwitchRelativeLayout.getWidth() / 2;
 			float r = (centerX - paint.getStrokeWidth()) / 2;
 			float x = event.getX() - centerX;
@@ -641,14 +620,13 @@ refreshStatusIcon();
 				// centerPaint.setColor(interpColor(colors, unit));
 				// fa inviare il comando ir
 				dialogColorChangedListener.colorChanged(interpColor(colors, unit));
-				invalidate();
 				break;
 			case MotionEvent.ACTION_UP:
 				collected.issueRefresh();// change center color
 				// ColorDialogPreference.this.color = centerPaint.getColor();
 				break;
 			}
-
+			invalidate();
 			return true;
 		}
 	}
