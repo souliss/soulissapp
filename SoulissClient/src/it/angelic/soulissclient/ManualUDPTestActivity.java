@@ -53,7 +53,7 @@ public class ManualUDPTestActivity extends Activity {
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_manualudptest);
-		setTitle(getString(R.string.menu_test) + " - " + getString(R.string.app_name));
+		setTitle(getString(R.string.app_name) + " - " + getString(R.string.menu_test));
 
 		// DB
 		datasource = new SoulissDBHelper(this);
@@ -132,7 +132,7 @@ public class ManualUDPTestActivity extends Activity {
 								if (opzioni.isLightThemeSelected())
 									txt.setTextColor(getResources().getColor(R.color.black));
 
-								txt.setText(Constants.hourFormat.format(new Date()) + ": subscribe sent");
+								txt.setText(Constants.hourFormat.format(new Date()) + ": poll request sent");
 								errorText.setVisibility(View.GONE);
 							}
 						});

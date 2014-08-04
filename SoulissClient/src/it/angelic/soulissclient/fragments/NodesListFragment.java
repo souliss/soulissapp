@@ -201,12 +201,12 @@ public class NodesListFragment extends SherlockListFragment {
 	private void refreshStatusIcon() {
 		try {
 			ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
-			actionBar.setTitle(getString(R.string.manual_title));
+			//actionBar.setTitle(getString(R.string.manual_title));
 			View ds = actionBar.getCustomView();
 			online = (ImageButton) ds.findViewById(R.id.action_starred);
 			statusOnline = (TextView) ds.findViewById(R.id.online_status);
-			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-			actionTitle.setText(getString(R.string.manual_title));
+//			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+//			actionTitle.setText(getString(R.string.manual_title));
 			if (!opzioni.isSoulissReachable()) {
 				online.setBackgroundResource(R.drawable.red);
 				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
@@ -215,7 +215,6 @@ public class NodesListFragment extends SherlockListFragment {
 				online.setBackgroundResource(R.drawable.green);
 				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
 				statusOnline.setText(R.string.Online);
-				
 			}
 			statusOnline.invalidate();
 		} catch (Exception e) {

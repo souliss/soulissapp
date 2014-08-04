@@ -43,10 +43,5 @@ public class DbSettingsFragment extends PreferenceFragment {
 		dbinfopref.setSummary(strMeatMsg);
 
 	}
-	@Override
-	public void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-	}
 	
 }

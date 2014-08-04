@@ -413,8 +413,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			public void colorChanged(int c) {
 				// Log.i(Constants.TAG, "color changed:" + c);
 				color = c;
-
-				// e
 				collected.issueRGBCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
 						Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
 			}
@@ -422,7 +420,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color);
 		// cpv.setCenterColor(collected.getColor());
 		colorSwitchRelativeLayout.addView(cpv);
-
 		return ret;
 	}
 
@@ -459,26 +456,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		return f;
 	}
 
-	/*
-	 * @Override public boolean onOptionsItemSelected(MenuItem item) { switch
-	 * (item.getItemId()) { case android.R.id.home: if
-	 * (getResources().getConfiguration().orientation ==
-	 * Configuration.ORIENTATION_LANDSCAPE) { NodeDetailFragment details =
-	 * NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
-	 * collected.getParentNode()); // Execute a transaction, replacing any
-	 * existing fragment FragmentTransaction ft =
-	 * getFragmentManager().beginTransaction(); if
-	 * (opzioni.isAnimationsEnabled())
-	 * ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-	 * ft.replace(R.id.details, details);
-	 * ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-	 * ft.commit(); } else { getActivity().finish(); if
-	 * (opzioni.isAnimationsEnabled())
-	 * getActivity().overridePendingTransition(R.anim.slide_in_left,
-	 * R.anim.slide_out_right);
-	 * 
-	 * } return true; } return super.onOptionsItemSelected(item); }
-	 */
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -643,14 +620,13 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 				// centerPaint.setColor(interpColor(colors, unit));
 				// fa inviare il comando ir
 				dialogColorChangedListener.colorChanged(interpColor(colors, unit));
-				invalidate();
 				break;
 			case MotionEvent.ACTION_UP:
 				collected.issueRefresh();// change center color
 				// ColorDialogPreference.this.color = centerPaint.getColor();
 				break;
 			}
-
+			invalidate();
 			return true;
 		}
 	}

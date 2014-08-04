@@ -12,6 +12,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="8dip"
+        android:layout_marginRight="4dip"
         android:contentDescription="@string/app_name"
         android:src="@drawable/square" />
 

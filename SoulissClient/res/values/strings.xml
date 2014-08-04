@@ -89,7 +89,7 @@
     <!-- MENU -->
     <string name="menu_exit">Exit</string>
     <string name="menu_options">Options</string>
-    <string name="menu_test">Test Mode</string>
+    <string name="menu_test">Test Low-level UDP connectivity</string>
     <string name="menu_test_udp">Test UDP</string>
     <string name="menu_rename">Rename Node</string>
     <string name="menu_changenodeicon">Change Node Icon</string>

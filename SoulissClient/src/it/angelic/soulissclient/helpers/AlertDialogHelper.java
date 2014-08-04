@@ -79,7 +79,7 @@ public class AlertDialogHelper {
 						// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
 						preferencesActivity.setAction("network_setup");
 						preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-						preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						//preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 						source.startActivity(preferencesActivity);
 					}
@@ -237,7 +237,7 @@ public class AlertDialogHelper {
 							// preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
 							preferencesActivity.setAction("db_setup");
 							preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-							preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 							source.startActivity(preferencesActivity);
 
 						} else {
