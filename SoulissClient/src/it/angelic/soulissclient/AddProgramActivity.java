@@ -250,6 +250,12 @@ public class AddProgramActivity extends SherlockActivity {
 				datasource.open();
 				if (radioTimed.isChecked()) {// temporal schedule
 					Calendar base = Calendar.getInstance();
+					
+					//se l'ora e` gia passata, fai domani
+					if (tp.getCurrentHour().compareTo(base.get(Calendar.HOUR_OF_DAY))<0&&
+							tp.getCurrentMinute().compareTo(base.get(Calendar.MINUTE))<0)
+						base.add(Calendar.DAY_OF_YEAR, 1);
+					
 					base.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
 					base.set(Calendar.MINUTE, tp.getCurrentMinute());
 					programToSave.getCommandDTO().setType(Constants.COMMAND_TIMED);
