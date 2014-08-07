@@ -404,7 +404,7 @@ public class AlertDialogHelper {
 		final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
 
 		LayoutInflater factory = LayoutInflater.from(context);
-		final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null);
+		final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null, false);
 
 		final SeekBar low = (SeekBar) deleteDialogView.findViewById(R.id.seekBarLow);
 		final SeekBar med = (SeekBar) deleteDialogView.findViewById(R.id.seekBarMed);
@@ -437,6 +437,7 @@ public class AlertDialogHelper {
 					}
 				});
 		final AlertDialog deleteDialog = deleteBuilder.create();
+		
 		deleteDialog.setView(deleteDialogView);
 
 		deleteDialog.setTitle("Global equalizer");

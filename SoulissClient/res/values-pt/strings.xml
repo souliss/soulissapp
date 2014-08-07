@@ -12,6 +12,11 @@
     <string name="historyof">Histórico de</string>
     <string name="daily">Média diária</string>
     <string name="monthly">Média Mensal</string>
+    <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
+    <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>
+    <string name="bridge_gateway">Gateway for Souliss bridge node, most likely your router\'s address</string>
+    <string name="bridge_ssid">Name of your wireless network, to be used by Souliss bridge</string>
+    <string name="bridge_wifipass">Password of wireless network indicated above</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss não está configurado. Por favor configure o endereço local do Souliss na tela de preferências</string>
@@ -44,9 +49,12 @@
     <string name="programs_come">O comando será executado toda vez que o usuário voltar para casa</string>
     <string name="programs_when">O comando será executado quando o slot</string>
     <string name="programs_every">O comando será executado a cada %1$d seconds</string>
+     <string name="export_ok">Exported successfully %1$d nodes</string>
     <string name="programs_notyet">O comando não foi executado ainda</string>
     <string name="command_sent">comando Enviado</string>
     <string name="command_send">Enviar comando</string>
+    <string name="command_inserted">New Program has been saved</string>
+    <string name="command_inserted_fail">Error saving new Program </string>
     <string name="compatible">módulos compatíveis</string>
     <string name="to_all">a todos</string>
     <string name="to">a</string>
@@ -105,6 +113,7 @@
     <string name="manual_slot">SLOT</string>
     <string name="manual_typicals">Módulos</string>
     <string name="inserire_almeno">Escolha o ID da central, o slot e insira o Comando</string>
+     <string name="db_notempty">DB not empty. Drop DB first</string>
     <string name="manual_id_prompt">Escolha o ID da central</string>
     <string name="manual_slot_prompt">Escolha um SLOT</string>
     <string name="icon_select">Selecione Ícone</string>

@@ -53,6 +53,8 @@
     <string name="export_ok">Esportati con successo %1$d nodi</string>
     <string name="command_sent">- comando inviato</string>
     <string name="command_send">Invia comando</string>
+    <string name="command_inserted">Programma salvato correttamente</string>
+    <string name="command_inserted_fail">Errore nel salvataggio del programma</string>
     <string name="compatible">i dispositivi compatibili</string>
     <string name="to_all">a tutti</string>
     <string name="to">a</string>
@@ -111,6 +113,7 @@
     <string name="manual_slot">SLOT</string>
     <string name="manual_typicals">Dispositivi</string>
     <string name="inserire_almeno">Scegli un nodo, uno slot ed il comando da inviare</string>
+     <string name="db_notempty">Il DB non è vuoto. Eliminare la configurazione attuale per procedere</string>
     <string name="manual_id_prompt">Scegli l\'ID del nodo</string>
     <string name="manual_slot_prompt">Scegli uno SLOT</string>
     <string name="icon_select">Scegli Icona</string>
