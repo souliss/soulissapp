@@ -103,10 +103,12 @@ public class NodesListFragment extends SherlockListFragment {
 		super.onActivityCreated(savedInstanceState);
 		// getActivity().setContentView(R.layout.frag_nodelist);
 		getActivity().setTitle(getString(R.string.app_name) + " - " + getString(R.string.nodes));
-
+		Bundle extras = getActivity().getIntent().getExtras();
 		if (savedInstanceState != null) {
 			// Restore last state for checked position.
 			mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+		}else if (extras != null && extras.get("index") != null){
+			mCurCheckPosition = (Integer)extras.get("index");
 		}
 		// Check to see if we have a frame in which to embed the details
 		// fragment directly in the containing UI.
