@@ -252,6 +252,7 @@ public class AddProgramActivity extends SherlockActivity {
 					Calendar base = Calendar.getInstance();
 					base.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
 					base.set(Calendar.MINUTE, tp.getCurrentMinute());
+					//FIXME se scelgo un'ora precedente a quella attuale, aggiungere un giorno
 					programToSave.getCommandDTO().setType(Constants.COMMAND_TIMED);
 					programToSave.getCommandDTO().setScheduledTime(base);
 					if (checkboxRecursive.isChecked()) {

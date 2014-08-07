@@ -219,10 +219,9 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		// Define the criteria how to select the locatioin provider
 		criteria = new Criteria();
 		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		// action bar drawer
-		dmh = new DrawerMenuHelper();
 
 		// DRAWER
+		dmh = new DrawerMenuHelper();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
