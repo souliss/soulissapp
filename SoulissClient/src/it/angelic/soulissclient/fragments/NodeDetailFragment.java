@@ -549,9 +549,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				List<SoulissTypical> goer = collected.getTypicals();
 				ArrayList<SoulissTypical> copy = new ArrayList<SoulissTypical>();
 				for (SoulissTypical soulissTypical : goer) {
-					if (!soulissTypical.isEmpty() && !soulissTypical.isRelated())// tolgo
-																					// el.
-																					// vuoti
+					if (!soulissTypical.isEmpty() && !soulissTypical.isRelated())// tolgo  vuoti
 						copy.add(soulissTypical);
 				}
 				SoulissTypical[] typs = new SoulissTypical[copy.size()];
