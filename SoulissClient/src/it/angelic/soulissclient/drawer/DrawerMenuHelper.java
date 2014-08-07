@@ -23,7 +23,7 @@ public class DrawerMenuHelper {
 	public static final int SETTINGS_VISUAL=-7;
 	public static final int SETTINGS_UDPTEST=-8;
 
-	public INavDrawerItem[] getNodes() {
+	private INavDrawerItem[] getNodes() {
 		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();
 
 		SoulissDBHelper db = new SoulissDBHelper(ctx);
