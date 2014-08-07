@@ -104,8 +104,6 @@ public class SoulissWidgetConfig extends Activity {
 
 		@Override
 		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-
 			final Context context = SoulissWidgetConfig.this;
 			customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
 			SharedPreferences.Editor editor = customSharedPreference.edit();
@@ -141,7 +139,6 @@ public class SoulissWidgetConfig extends Activity {
 	};
 	
 	private Button.OnClickListener configCancelButtonOnClickListener = new Button.OnClickListener() {
-		private SharedPreferences customSharedPreference;
 		@Override
 		public void onClick(View arg0) {
 			finish();
@@ -167,7 +164,6 @@ public class SoulissWidgetConfig extends Activity {
 	 * @param dec
 	 */
 	private void setTypicalSpinner(Spinner tgt, SoulissNode ref) {
-		// TODO omettere SLOT vuoti
 		try {
 			SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
 			ref.getActiveTypicals().toArray(strArray);
