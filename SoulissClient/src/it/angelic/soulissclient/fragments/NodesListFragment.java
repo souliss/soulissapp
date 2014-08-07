@@ -6,6 +6,8 @@ import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
+import it.angelic.soulissclient.adapters.NodesListAdapter.NodeViewHolder;
+import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -101,10 +103,12 @@ public class NodesListFragment extends SherlockListFragment {
 		super.onActivityCreated(savedInstanceState);
 		// getActivity().setContentView(R.layout.frag_nodelist);
 		getActivity().setTitle(getString(R.string.app_name) + " - " + getString(R.string.nodes));
-
+		Bundle extras = getActivity().getIntent().getExtras();
 		if (savedInstanceState != null) {
 			// Restore last state for checked position.
 			mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+		}else if (extras != null && extras.get("index") != null){
+			mCurCheckPosition = (Integer)extras.get("index");
 		}
 		// Check to see if we have a frame in which to embed the details
 		// fragment directly in the containing UI.
@@ -142,14 +146,16 @@ public class NodesListFragment extends SherlockListFragment {
 			getListView().setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					Log.i(TAG, "Showing Node Detail:" + arg2);
+					NodeViewHolder holder = (NodeViewHolder) arg1.getTag();
+					
 					// Activity Dettaglio nodo
-					showDetails(arg2);
+					showDetails(arg2, holder.data);
 				}
 			});
 			registerForContextMenu(getListView());
 			if (mDualPane) {
 				// Make sure our UI is in the correct state.
-				showDetails(mCurCheckPosition);
+				showDetails(mCurCheckPosition, nodiArray[mCurCheckPosition]);
 				textHeadListInfo.setVisibility(View.GONE);
 				nodeic.setVisibility(View.GONE);
 			}
@@ -160,8 +166,9 @@ public class NodesListFragment extends SherlockListFragment {
 	 * Helper function to show the details of a selected item, either by
 	 * displaying a fragment in-place in the current UI, or starting a whole new
 	 * activity in which it is displayed.
+	 * @param data 
 	 */
-	private void showDetails(int index) {
+	private void showDetails(int index, SoulissNode data) {
 		mCurCheckPosition = index;
 		if (mDualPane) {
 			refreshStatusIcon();
@@ -174,7 +181,7 @@ public class NodesListFragment extends SherlockListFragment {
 			// getFragmentManager().findFragmentById(R.id.details);
 			// if (details == null)
 			// Istanzia e ci mette l'indice
-			NodeDetailFragment details = NodeDetailFragment.newInstance(index, nodiArray[index]);
+			NodeDetailFragment details = NodeDetailFragment.newInstance(index, data);
 
 			// Execute a transaction, replacing any existing fragment
 			// with this one inside the frame.
@@ -191,7 +198,7 @@ public class NodesListFragment extends SherlockListFragment {
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), NodeDetailActivity.class);
 			intent.putExtra("index", index);
-			intent.putExtra("NODO", (SoulissNode) nodiArray[index]);
+			intent.putExtra("NODO", data);
 			startActivity(intent);
 			if (opzioni.isAnimationsEnabled())
 				getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -68,7 +68,6 @@ public class SoulissDataService extends Service implements LocationListener {
 		// subito
 		startUDPListener();
 
-		// toDoDBAdapter = new ToDoDBAdapter(getApplicationContext());
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		Criteria crit = new Criteria();
 		crit.setPowerRequirement(Criteria.POWER_LOW);

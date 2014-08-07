@@ -219,10 +219,9 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		// Define the criteria how to select the locatioin provider
 		criteria = new Criteria();
 		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		// action bar drawer
-		dmh = new DrawerMenuHelper();
 
 		// DRAWER
+		dmh = new DrawerMenuHelper();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
@@ -249,7 +248,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
 		mDrawerList.setAdapter(mAdapter);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
@@ -336,7 +335,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		};
 		soulissManualBtn.setOnClickListener(simpleOnClickListener);
 		// forza refresh drawer
-		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff());
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
 		mDrawerList.setAdapter(mAdapter);
 
 		// refresh testo
@@ -360,12 +359,12 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
-
 			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 				mDrawerLayout.closeDrawer(mDrawerList);
 			} else {
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
+			return true;//cliccato sul drawer, non far altro
 		}
 		switch (item.getItemId()) {
 
