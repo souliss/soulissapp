@@ -249,26 +249,30 @@ public class AddProgramActivity extends SherlockActivity {
 				Intent intent = AddProgramActivity.this.getIntent();
 				datasource.open();
 				if (radioTimed.isChecked()) {// temporal schedule
-					Calendar base = Calendar.getInstance();
-					
-					//se l'ora e` gia passata, fai domani
-					if (tp.getCurrentHour().compareTo(base.get(Calendar.HOUR_OF_DAY))<0&&
-							tp.getCurrentMinute().compareTo(base.get(Calendar.MINUTE))<0)
-						base.add(Calendar.DAY_OF_YEAR, 1);
-					
-					base.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
-					base.set(Calendar.MINUTE, tp.getCurrentMinute());
-					//FIXME se scelgo un'ora precedente a quella attuale, aggiungere un giorno
+					Calendar baseNow = Calendar.getInstance();
+
+					// se l'ora e` gia passata, fai domani
+					if (tp.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) < 0
+							|| (tp.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) == 0 && tp
+									.getCurrentMinute().compareTo(baseNow.get(Calendar.MINUTE)) < 0)) {
+						baseNow.add(Calendar.DAY_OF_YEAR, 1);
+						Log.i(Constants.TAG, "Timed program delayed by one day");
+					}
+					baseNow.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
+					baseNow.set(Calendar.MINUTE, tp.getCurrentMinute());
+					// FIXME se scelgo un'ora precedente a quella attuale,
+					// aggiungere un giorno
 					programToSave.getCommandDTO().setType(Constants.COMMAND_TIMED);
-					programToSave.getCommandDTO().setScheduledTime(base);
+					programToSave.getCommandDTO().setScheduledTime(baseNow);
 					if (checkboxRecursive.isChecked()) {
 						final int[] spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
-						programToSave.getCommandDTO().setInterval(spinnerArrVal[spinnerInterval.getSelectedItemPosition()]);
+						programToSave.getCommandDTO().setInterval(
+								spinnerArrVal[spinnerInterval.getSelectedItemPosition()]);
 					}
 					// inserimento nuovo
 					programToSave.getCommandDTO().persistCommand(datasource);
 					intent.putExtra("returnedData", Constants.COMMAND_TIMED);
-				} else if (radioPositional.isChecked()) {//POSIZIONALE
+				} else if (radioPositional.isChecked()) {// POSIZIONALE
 					if (togglehomeaway.isChecked()) {
 						programToSave.getCommandDTO().setType(Constants.COMMAND_COMEBACK_CODE);
 					} else {
@@ -300,7 +304,7 @@ public class AddProgramActivity extends SherlockActivity {
 					trigger.persist(datasource);
 					intent.putExtra("returnedData", Constants.COMMAND_TRIGGERED);
 				}
-				//datasource.close();
+				// datasource.close();
 				AddProgramActivity.this.setResult(RESULT_OK, intent);
 				AddProgramActivity.this.finish();
 				return;
@@ -398,7 +402,7 @@ public class AddProgramActivity extends SherlockActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		//datasource.close();
+		// datasource.close();
 	}
 
 }
