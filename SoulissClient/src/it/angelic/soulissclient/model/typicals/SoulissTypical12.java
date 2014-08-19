@@ -126,9 +126,6 @@ public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical 
 
 		turnOnButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnOnButton.setEnabled(false);
-				turnOffButton.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 
@@ -145,9 +142,6 @@ public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical 
 
 		turnOffButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnOnButton.setEnabled(false);
-				turnOffButton.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
@@ -166,22 +160,16 @@ public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical 
 
 		tog.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnOnButton.setEnabled(false);
-				turnOffButton.setEnabled(false);
-
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
 								String.valueOf(Constants.Souliss_T1n_AutoCmd));
 						// cmd.setText("Souliss command sent");
-
 					}
 				};
 
 				t.start();
-
 			}
 
 		});

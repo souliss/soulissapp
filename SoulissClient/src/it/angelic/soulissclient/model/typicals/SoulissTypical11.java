@@ -119,9 +119,9 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 
 		turnOnButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnOnButton.setEnabled(false);
-				turnOffButton.setEnabled(false);
+				//tog.setEnabled(false);
+				//turnOnButton.setEnabled(false);
+				//turnOffButton.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
@@ -136,17 +136,15 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 
 		turnOffButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnOnButton.setEnabled(false);
-				turnOffButton.setEnabled(false);
+				//tog.setEnabled(false);
+				//turnOnButton.setEnabled(false);
+				//turnOffButton.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
 								String.valueOf(Constants.Souliss_T1n_OffCmd));
-
 					}
-
 				};
 
 				t.start();
@@ -157,9 +155,9 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 
 		tog.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnOnButton.setEnabled(false);
-				turnOffButton.setEnabled(false);
+				//tog.setEnabled(false);
+				//turnOnButton.setEnabled(false);
+				//turnOffButton.setEnabled(false);
 
 				Thread t = new Thread() {
 					public void run() {
@@ -167,14 +165,10 @@ public class SoulissTypical11 extends SoulissTypical implements ISoulissTypical 
 								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
 								String.valueOf(Constants.Souliss_T1n_ToogleCmd));
 						// cmd.setText("Souliss command sent");
-
 					}
 				};
-
 				t.start();
-
 			}
-
 		});
 
 	}

@@ -72,7 +72,7 @@ public class SoulissTypical14 extends SoulissTypical implements ISoulissTypical 
 
 		turnOnButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				turnOnButton.setEnabled(false);
+				//turnOnButton.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),

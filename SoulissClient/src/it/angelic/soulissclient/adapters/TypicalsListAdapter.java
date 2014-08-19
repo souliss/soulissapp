@@ -90,8 +90,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
 			holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
 			holder.image = (ImageView) convertView.findViewById(R.id.node_icon);
-			if (tipici.length > 0) // magari e` vuoto
-				holder.data = tipici[position];
+			
 			holder.linearActionsLayout = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 			// linButton.removeAllViews();
 			convertView.setTag(holder);
@@ -106,14 +105,10 @@ public class TypicalsListAdapter extends BaseAdapter {
 		} else {
 			holder = (TypicalViewHolder) convertView.getTag();
 		}
+		//fuori da if-else per evitare #74
+		if (tipici.length > 0) // magari e` vuoto
+			holder.data = tipici[position];
 
-		/* Dimensioni del testo settate dalle opzioni */
-		// holder.textUpdated.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-		// opzioni.getListDimensTesto());
-		// holder.textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-		// opzioni.getListDimensTesto());
-		// holder.textslot.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-		// opzioni.getListDimensTesto());
 
 		if (opzioni.isLightThemeSelected()) {
 			holder.textslot.setTextColor(context.getResources().getColor(R.color.black));

@@ -97,13 +97,11 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 
 		tog.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-
 				Thread t = new Thread() {
 					public void run() {
 						Intent nodeDatail = new Intent(ctx, T15RGBIrActivity.class);
 						nodeDatail.putExtra("TIPICO", (SoulissTypical15) SoulissTypical15.this);
 						ctx.startActivity(nodeDatail);
-
 					}
 				};
 
@@ -115,9 +113,9 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 
 		turnON.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnON.setEnabled(false);
-				turnOFF.setEnabled(false);
+				//tog.setEnabled(false);
+				//turnON.setEnabled(false);
+				//turnOFF.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
@@ -133,9 +131,9 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 
 		turnOFF.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				tog.setEnabled(false);
-				turnON.setEnabled(false);
-				turnOFF.setEnabled(false);
+				//tog.setEnabled(false);
+				//turnON.setEnabled(false);
+				//turnOFF.setEnabled(false);
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
