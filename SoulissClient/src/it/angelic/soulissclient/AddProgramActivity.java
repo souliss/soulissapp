@@ -130,8 +130,8 @@ public class AddProgramActivity extends SherlockActivity {
 		OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 				// if (pos > 0) {
-				ArrayList<SoulissTypical> re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()]
-						.getActiveTypicals();
+				List<SoulissTypical> re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()]
+						.getActiveTypicals(AddProgramActivity.this);
 
 				fillCommandSpinner(outputCommandSpinner, re.get(pos));
 			}

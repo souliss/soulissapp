@@ -92,7 +92,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 			JSONObject object = new JSONObject();
 			JSONArray typArr = new JSONArray();
 
-			ArrayList<SoulissTypical> tipici = soulissNode.getActiveTypicals();
+			List<SoulissTypical> tipici = soulissNode.getActiveTypicals();
 			for (SoulissTypical soulissTypical : tipici) {
 				typArr.put(NetUtils.getJSONSoulissLiveData(soulissTypical));
 			}

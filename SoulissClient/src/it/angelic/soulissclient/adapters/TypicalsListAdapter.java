@@ -7,6 +7,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.content.Context;
@@ -32,14 +33,16 @@ public class TypicalsListAdapter extends BaseAdapter {
 	SoulissDataService mBoundService;
 
 	public TypicalsListAdapter(Context context, SoulissDataService serv, SoulissTypical[] versio, Intent forExtra,
-			SoulissDBHelper removeMe, SoulissPreferenceHelper op) {
+			 SoulissPreferenceHelper op) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
 		this.tipici = versio;
+		
 		for (int i = 0; i < versio.length; i++) {
 			if (versio[i].getCtx() == null)
-				versio[i].setCtx(context);
+				throw new RuntimeException("Non dovrebbe essere nullo, controlla il giro");
 		}
+		
 		opzioni = op;
 		parentIntent = forExtra;
 		// dataSource = ds;
@@ -138,32 +141,34 @@ public class TypicalsListAdapter extends BaseAdapter {
 		if (tipici[position].getDefaultIconResourceId() != 0)
 			holder.image.setImageResource(tipici[position].getDefaultIconResourceId());
 		// nascondi gli slot slave
-		if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
+		//if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
 			// holder.textStatusVal.setText(tipici[position].getOutputDesc());
 			// TODO remove following
 			holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
-
 			tipici[position].setOutputDescView(holder.textStatusVal);
-			convertView.setVisibility(View.VISIBLE);
+		/*	convertView.setVisibility(View.VISIBLE);
 			holder.image.setVisibility(View.VISIBLE);
 			holder.textslot.setVisibility(View.VISIBLE);
 			holder.textUpdated.setVisibility(View.VISIBLE);
 			holder.textStatus.setVisibility(View.VISIBLE);
 			holder.textStatusVal.setVisibility(View.VISIBLE);
 			holder.expand.setVisibility(View.VISIBLE);
-		} else if (tipici[position].isRelated()) {
+		/*} else if (tipici[position].isRelated()) {
 			convertView.setVisibility(View.GONE);
+			
 			holder.image.setVisibility(View.GONE);
+			//holder.shader.setVisibility(View.GONE);
 			holder.textslot.setVisibility(View.GONE);
 			holder.textUpdated.setVisibility(View.GONE);
 			holder.textStatus.setVisibility(View.GONE);
 			holder.textStatusVal.setVisibility(View.GONE);
 			holder.expand.setVisibility(View.GONE);
+			return convertView;
 		} else {
 			// lascia slot vuoti
 			return convertView;
 
-		}
+		}*/
 		/* Aggiunta dei comandi */
 		// LinearLayout cont = (LinearLayout)
 		// convertView.findViewById(R.id.linearLayoutButtons);
@@ -179,10 +184,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			}
 			holder.linearActionsLayout.addView(na);
 		}
-		// linearActionsLayout.setVisibility(View.VISIBLE);
-		if (tipici[position].isEmpty() || tipici[position].isRelated()) {
-			// linButton.setVisibility(View.GONE);
-		}
+		// linearActionsLayout.setVisibility(View.VISIBLE);	
 
 		if (opzioni.getTextFx()) {
 			Animation a = AnimationUtils.loadAnimation(context, R.anim.scalerotale);
@@ -196,6 +198,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 
 	public static class TypicalViewHolder {
 		public ImageView expand;
+		View shader;
 		TextView textStatus;
 		TextView textStatusVal;
 		TextView textslot;

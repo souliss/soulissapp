@@ -217,7 +217,7 @@ public class SoulissDBHelper {
 		// come sono grezzo, 'sta riga fa schifo
 		for (SoulissTypical soulissTypical : cod) {
 			// if (soulissTypical.getNodeId() == comment.getId())
-			ret.add(soulissTypical);
+			ret.addTypical(soulissTypical);
 		}
 		cursor.close();
 		return ret;
@@ -532,7 +532,7 @@ public class SoulissDBHelper {
 			// come sono grezzo, 'sta riga fa schifo
 			for (SoulissTypical soulissTypical : cod) {
 				// if (soulissTypical.getNodeId() == comment.getId())
-				comment.add(soulissTypical);
+				comment.addTypical(soulissTypical);
 			}
 			comments.add(comment);
 			cursor.moveToNext();

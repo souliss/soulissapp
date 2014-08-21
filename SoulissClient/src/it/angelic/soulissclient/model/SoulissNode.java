@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 
@@ -61,7 +62,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
 		return comment;
 	}
 
-	public void add(SoulissTypical rest) {
+	public void addTypical(SoulissTypical rest) {
 		soulissTypicals.add(rest);
 
 	}
@@ -97,21 +98,23 @@ public class SoulissNode implements Serializable, ISoulissObject {
 	public List<SoulissTypical> getTypicals() {
 		return soulissTypicals;
 	}
-
-	/**
-	 * 
-	 * @return solo i tipici MASTER
-	 */
-	public ArrayList<SoulissTypical> getActiveTypicals() {
-
+	public List<SoulissTypical> getActiveTypicals(Context context) {
 		ArrayList<SoulissTypical> copy = new ArrayList<SoulissTypical>();
 
 		for (SoulissTypical soulissTypical : soulissTypicals) {
+			soulissTypical.setCtx(context);
 			if (!soulissTypical.isRelated() && !soulissTypical.isEmpty())
 				copy.add(soulissTypical);
 		}
 
 		return copy;
+	}
+	/**
+	 * 
+	 * @return solo i tipici MASTER
+	 */
+	public List<SoulissTypical> getActiveTypicals() {
+		return getActiveTypicals(null);
 	}
 
 	public void setHealth(short health) {
@@ -151,4 +154,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
 	public String getName() {
 				return Name;
 	}
+
+	
 }

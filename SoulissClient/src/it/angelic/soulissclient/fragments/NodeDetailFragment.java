@@ -254,18 +254,12 @@ public class NodeDetailFragment extends SherlockListFragment {
 
 			createHeader();
 			// tipici dal DB
-			List<SoulissTypical> goer = collected.getTypicals();
-			ArrayList<SoulissTypical> copy = new ArrayList<SoulissTypical>();
-			for (SoulissTypical soulissTypical : goer) {
-				if (!soulissTypical.isEmpty() && !soulissTypical.isRelated())// tolgo
-																				// el.
-																				// vuoti
-					copy.add(soulissTypical);
-			}
-			SoulissTypical[] typs = new SoulissTypical[copy.size()];
-			typs = copy.toArray(typs);
+			List<SoulissTypical> goer = collected.getActiveTypicals(getActivity());
+			
+			SoulissTypical[] typs = new SoulissTypical[goer.size()];
+			typs = goer.toArray(typs);
 
-			ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(), datasource,
+			ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(),
 					opzioni);
 			listaTypicalsView = getListView();
 			// Adapter della lista
@@ -546,18 +540,10 @@ public class NodeDetailFragment extends SherlockListFragment {
 				collected = datasource.getSoulissNode(collected.getId());
 				refreshHeader();
 
-				List<SoulissTypical> goer = collected.getTypicals();
-				ArrayList<SoulissTypical> copy = new ArrayList<SoulissTypical>();
-				for (SoulissTypical soulissTypical : goer) {
-					if (!soulissTypical.isEmpty() && !soulissTypical.isRelated())// tolgo  vuoti
-						copy.add(soulissTypical);
-				}
-				SoulissTypical[] typs = new SoulissTypical[copy.size()];
+				List<SoulissTypical> goer = collected.getActiveTypicals(context);
+				SoulissTypical[] typs = new SoulissTypical[goer.size()];
 				typs = goer.toArray(typs);
-				for (int i = 0; i < typs.length; i++) {
-					typs[i].setPrefs(opzioni);
-					typs[i].setCtx(context);
-				}
+				
 				ta.setTypicals(typs);
 				ta.notifyDataSetChanged();
 
@@ -566,7 +552,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				View v = listaTypicalsView.getChildAt(0);
 				int top = (v == null) ? 0 : v.getTop();
 				// Adapter della lista
-				listaTypicalsView.setAdapter(ta);
+				//listaTypicalsView.setAdapter(ta);
 				listaTypicalsView.invalidateViews();
 				listaTypicalsView.setSelectionFromTop(index, top);
 			} catch (Exception e) {

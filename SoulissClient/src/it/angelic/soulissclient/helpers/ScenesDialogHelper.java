@@ -200,8 +200,8 @@ public class ScenesDialogHelper {
 		/* Cambiando tipico, cambia i comandi */
 		OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				ArrayList<SoulissTypical> re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()]
-						.getActiveTypicals();
+				List<SoulissTypical> re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()]
+						.getActiveTypicals(context);
 				if (re.size() > 0) { // node could be empty
 					fillCommandSpinner(outputCommandSpinner, re.get(pos), context);
 				} else {
@@ -280,7 +280,7 @@ public class ScenesDialogHelper {
 	private static void setTypicalSpinner(Spinner tgt, SoulissNode ref, Context ctx) {
 		try {
 
-			SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
+			SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals(ctx).size()];
 			ref.getActiveTypicals().toArray(strArray);
 			// set del contesto
 			for (SoulissTypical soulissTypical : strArray) {
