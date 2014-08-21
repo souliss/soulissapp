@@ -189,7 +189,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 
 		Thread t = new Thread() {
 			public void run() {
-				Looper.prepare();
+				//Looper.prepare();
 
 				if (togMulticast)//a tutti i nodi
 					UDPHelper.issueMassiveCommand(""+Constants.Souliss_T16, prefs,""+val, "" + r, ""

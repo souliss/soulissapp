@@ -273,6 +273,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 					mVisualizerView.setEnabled(false);
 					colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
 				} else if (pos == 1) {// channels
+					Log.i(Constants.TAG, "channel mode, color="+collected.getColor());
 					tableRowVis.setVisibility(View.GONE);
 					mVisualizerView.setVisibility(View.GONE);
 					tableRowChannel.setVisibility(View.VISIBLE);
@@ -280,9 +281,16 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 					colorSwitchRelativeLayout.setVisibility(View.GONE);
 					tableRowEq.setVisibility(View.GONE);
 					// TODO questi non vanno
-					seekChannelRed.setProgress(Color.red(color));
-					seekChannelGreen.setProgress(Color.green(color));
-					seekChannelBlue.setProgress(Color.blue(color));
+					seekChannelRed.setProgress(0);
+					seekChannelRed.invalidate();
+					seekChannelGreen.setProgress(0);
+					seekChannelGreen.invalidate();
+					seekChannelBlue.setProgress(0);
+					seekChannelBlue.invalidate();
+					seekChannelRed.setProgress(Color.red(collected.getColor()));
+					seekChannelGreen.setProgress(Color.green(collected.getColor()));
+					seekChannelBlue.setProgress(Color.blue(collected.getColor()));
+					tableRowChannel.invalidate();
 				} else {// music
 					if (Constants.versionNumber >= 9) {
 						mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
@@ -524,8 +532,10 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 		// solo per sicurezza
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
-					Color.green(color), Color.blue(color), togMulticast.isChecked());
+			
+			collected.issueRefresh();
+			//issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
+			//		Color.green(color), Color.blue(color), togMulticast.isChecked());
 		}
 
 	}
@@ -577,6 +587,16 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			canvas.drawOval(swapRect, paint);
 			canvas.drawCircle(0, 0, CENTER_RADIUS, centerPaint);
 
+		}
+		
+		@SuppressLint("NewApi")
+		@Override
+		protected void onVisibilityChanged(View changedView, int visibility) {
+			super.onVisibilityChanged(changedView, visibility);
+			Log.d(Constants.TAG, "vis CHANGE");
+			cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
+					Color.blue(collected.getColor())));
+			cpv.invalidate();
 		}
 
 		/**
