@@ -241,12 +241,15 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
 			}
 		};
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+		
 
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		
+		getSupportActionBar().setIcon(R.drawable.ic_drawer);
+		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
 		mDrawerList.setAdapter(mAdapter);
