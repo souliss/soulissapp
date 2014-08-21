@@ -75,7 +75,10 @@ public class PreferencesActivity extends PreferenceActivity {
 			addPreferencesFromResource(R.xml.settings_dataservice);
 		} else if (action != null && action.equals("visual_setup")) {
 			addPreferencesFromResource(R.xml.settings_visual);
-		} else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+		} else if (action != null && action.equals("bcast_setup")) {
+			addPreferencesFromResource(R.xml.settings_broadcast);
+		} 
+		else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			// Load the legacy preferences headers
 			addPreferencesFromResource(R.xml.preferences_legacy);
 		}
@@ -290,6 +293,11 @@ public class PreferencesActivity extends PreferenceActivity {
 					return true;
 				}
 			});
+		}else if (currentScreen != null && currentScreen.equals("bcast_setup")) {
+			Toast.makeText(PreferencesActivity.this,
+					"Function not supported on Android 2, sorry", Toast.LENGTH_LONG)
+					.show();
+			
 		} else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			try {
 				packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);

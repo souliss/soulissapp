@@ -166,11 +166,7 @@ public class SoulissWidgetConfig extends Activity {
 	private void setTypicalSpinner(Spinner tgt, SoulissNode ref) {
 		try {
 			SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
-			ref.getActiveTypicals().toArray(strArray);
-			// set del contesto
-			for (SoulissTypical soulissTypical : strArray) {
-				soulissTypical.setCtx(this);
-			}
+			ref.getActiveTypicals(this).toArray(strArray);
 
 			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(this,
 					android.R.layout.simple_spinner_item, strArray);

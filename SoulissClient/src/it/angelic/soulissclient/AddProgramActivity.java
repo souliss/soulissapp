@@ -361,11 +361,11 @@ public class AddProgramActivity extends SherlockActivity {
 	private void setTypicalSpinner(Spinner tgt, SoulissNode ref) {
 		try {
 			SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
-			ref.getActiveTypicals().toArray(strArray);
+			ref.getActiveTypicals(this).toArray(strArray);
 			// set del contesto
-			for (SoulissTypical soulissTypical : strArray) {
+			/*for (SoulissTypical soulissTypical : strArray) {
 				soulissTypical.setCtx(this);
-			}
+			}*/
 
 			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(this,
 					android.R.layout.simple_spinner_item, strArray);

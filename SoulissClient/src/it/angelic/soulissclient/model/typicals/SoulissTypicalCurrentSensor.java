@@ -29,6 +29,7 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
+@Deprecated
 public class SoulissTypicalCurrentSensor extends SoulissTypical {
 
 	public SoulissTypicalCurrentSensor(SoulissPreferenceHelper pre) {

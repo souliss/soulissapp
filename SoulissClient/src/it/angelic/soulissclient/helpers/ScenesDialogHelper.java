@@ -281,11 +281,8 @@ public class ScenesDialogHelper {
 		try {
 
 			SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals(ctx).size()];
-			ref.getActiveTypicals().toArray(strArray);
-			// set del contesto
-			for (SoulissTypical soulissTypical : strArray) {
-				soulissTypical.setCtx(ctx);
-			}
+			ref.getActiveTypicals(ctx).toArray(strArray);
+			
 			if (strArray.length == 0) {// nodo vuoto
 				SoulissTypical fake = new SoulissTypical(SoulissClient.getOpzioni());
 				fake.setName(ctx.getString(R.string.node_empty));

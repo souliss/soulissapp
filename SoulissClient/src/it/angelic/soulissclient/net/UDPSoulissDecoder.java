@@ -16,6 +16,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -532,7 +533,7 @@ public class UDPSoulissDecoder {
 	public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
 
 		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);
-		notificationIntent.putExtra("TIPICO", (SoulissTypical32AirCon) ty);
+		notificationIntent.putExtra("TIPICO", (SoulissTypical41AntiTheft) ty);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 

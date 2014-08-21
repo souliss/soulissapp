@@ -38,9 +38,6 @@
             android:key="advbroadcastKey"
             android:summary="Remotely configure Souliss Bridge Node"
             android:title="Broadcast Setting" >
-            <extra
-            android:name="opt_screen"
-            android:value="bcast_setup" />
             </Preference>
         <EditTextPreference
             android:name="userindex"

@@ -26,8 +26,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,6 +38,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * Modella un tipico, ovvero una classe di dispositivi
+ * Per ogni nodo ce ne possono essere da 0 a n, con
+ * n < MAX_TYP_PER_NODE
+ * 
+ * @author shine@angelic.it
+ *
+ */
 public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTypical {
 	/**
 	 * 
@@ -53,6 +59,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 	private boolean isSlave = false;// indica se includerlo nelle liste
 	private boolean isSensor = false;// indica se va loggato
 
+	//transient per evitare problemi di serializzazione
 	protected transient Context ctx;
 	protected transient SoulissPreferenceHelper prefs;
 
@@ -60,7 +67,6 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 	public String getNiceName() {
 		if (typicalDTO.getName() != null)
 			return typicalDTO.getName();
-
 		return getDefaultName();
 
 	}
@@ -81,7 +87,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 	}
 
 	public void setRelated(SoulissTypical in) {
-		Log.e(Constants.TAG, "Called setRealted on a single typical");
+		throw new RuntimeException("Can't call setRelated on a single generic typical");
 	}
 
 	public SoulissTypical(SoulissPreferenceHelper pre) {
@@ -132,15 +138,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			break;
 		case Constants.Souliss_T22:
 			rest = new SoulissTypical22(opts);
-			break;
-		case Constants.Souliss_T_TemperatureSensor:
-			rest = new SoulissTypicalTemperatureSensor(opts);
-			rest.setSensor(true);
-			break;
-		case Constants.Souliss_T_HumiditySensor:
-			rest = new SoulissTypicalHumiditySensor(opts);
-			rest.setSensor(true);
-			break;
+			break;		
 		case Constants.Souliss_T32_IrCom_AirCon:
 			rest = new SoulissTypical32AirCon(opts);
 			break;
@@ -181,8 +179,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		case Constants.Souliss_T56_CurrentSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
 			rest.setSensor(true);
-			break;
-			
+			break;			
 		case Constants.Souliss_T57_PowerSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
 			rest.setSensor(true);
@@ -193,6 +190,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest.setSensor(true);
 			break;
 		default:
+			Log.w(Constants.TAG, "warning, unknown typical");
 			rest = new SoulissTypical(opts);
 			break;
 		}
@@ -375,7 +373,6 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 
 	public void setCtx(Context ctx) {
 		this.ctx = ctx;
-		// setPrefs(new SoulissPreferenceHelper(ctx));
 	}
 
 	public boolean isSensor() {
