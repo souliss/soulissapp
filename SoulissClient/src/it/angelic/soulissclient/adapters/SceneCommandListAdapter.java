@@ -122,7 +122,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
 					+ holder.data.toString() + "\" " + context.getResources().getString(R.string.to_all) + " "
 					+ context.getResources().getString(R.string.compatible) + " ("
 					+ holder.data.getParentTypical().getNiceName() + ")");
-			holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order) + dto.getInterval() +
+			holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order)+" " + dto.getInterval() +
 					" - "+context.getString(R.string.scene_cmd_massive));
 		}
 		if (holder.data != null && holder.data.getCtx() == null)

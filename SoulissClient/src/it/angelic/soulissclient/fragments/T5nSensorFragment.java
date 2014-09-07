@@ -301,6 +301,9 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		default:
 			break;
 		}
+		
+		renderer.setFitLegend(true);
+		renderer.setLegendTextSize(12);
 
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		TimeSeries avgSeries = new TimeSeries("Average");
@@ -365,6 +368,10 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		default:
 			break;
 		}
+		
+		renderer.setAxisTitleTextSize(14);
+		//renderer.setChartValuesTextSize(arg0);
+		
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		RangeCategorySeries minmaxserie = new RangeCategorySeries("Temperature");
 		XYSeries sunSeries = new XYSeries("Average");

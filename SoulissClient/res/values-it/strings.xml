@@ -13,6 +13,7 @@
     <string name="bridge_wifipass">Password della rete wi-fi sopra indicata</string>
     <string name="last_update">Ultimo aggiornamento:</string>
     <string name="last_exec">Ultima esecuzione:</string>
+    <string name="db_size">Dimensione DB</string>
     <string name="waiting">In attesa di aggiornamenti&#8230;</string>
     <string name="historyof">Storico: </string>
     <string name="daily">Media giornaliera</string>
