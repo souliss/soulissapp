@@ -11,7 +11,6 @@ public class SoulissLogDTO {
 	Long logId;
 	short nodeId;
 	short slot;
-	short typical;
 	float logValue;
 	Calendar logTime;
 
@@ -20,15 +19,13 @@ public class SoulissLogDTO {
 	}
 
 	public SoulissLogDTO(Cursor cursor) {
-		setLogId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_ID)));
-		setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_NODE_ID)));
-		setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_SLOT)));
-		setTypical(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_TYPICAL)));
+		logId = (cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_ID)));
+		nodeId = (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_NODE_ID)));
+		slot = (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_SLOT)));
 		Calendar now = Calendar.getInstance();
 		now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE))));
-		setLogTime(now);
-		
-		setLogValue(cursor.getFloat(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_VAL)));
+		logTime = (now);
+		logValue = (cursor.getFloat(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_VAL)));
 	}
 	
 	
@@ -42,7 +39,6 @@ public class SoulissLogDTO {
 		// values.put(SoulissDB.COLUMN_COMMAND_ID, typicalIN.getCommandId());
 		values.put(SoulissDB.COLUMN_LOG_NODE_ID, nodeId);
 		values.put(SoulissDB.COLUMN_LOG_SLOT, slot);
-		values.put(SoulissDB.COLUMN_LOG_TYPICAL, typical);
 		values.put(SoulissDB.COLUMN_LOG_VAL, logValue);
 		values.put(SoulissDB.COLUMN_LOG_DATE, logTime.getTime().getTime());
 		
@@ -84,14 +80,6 @@ public class SoulissLogDTO {
 
 	public void setSlot(short slot) {
 		this.slot = slot;
-	}
-
-	public short getTypical() {
-		return typical;
-	}
-
-	public void setTypical(short typical) {
-		this.typical = typical;
 	}
 
 	public float getLogValue() {

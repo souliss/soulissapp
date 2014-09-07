@@ -103,12 +103,14 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private boolean mIsWebBound;
 	private Timer autoUpdate;
 	private Geocoder geocoder;
+	
+	private SoulissDBHelper db;
 
 	/* SOULISS DATA SERVICE BINDINGS */
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-			Log.i(TAG, "Dataservice connected");
+			Log.i(TAG, "Dataservice connected, BackedOffServiceInterval="+opzioni.getBackedOffServiceInterval());
 
 			Calendar shouldHaveDoneAt = Calendar.getInstance();
 			shouldHaveDoneAt.add(Calendar.MILLISECOND, (int) -(opzioni.getBackedOffServiceInterval()));
@@ -341,6 +343,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
 		mDrawerList.setAdapter(mAdapter);
 
+		db = new SoulissDBHelper(this);
 		// refresh testo
 		setHeadInfo();
 		setDbInfo();
@@ -420,7 +423,8 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 	}
 
-	private void setDbInfo() {
+	private void setDbInfo( ) {
+		
 		/* DB Warning */
 		if (!opzioni.isDbConfigured()) {
 			dbwarn.setVisibility(View.VISIBLE);
@@ -437,7 +441,9 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 				dbwarnline.startAnimation(a3);
 			}
 		} else {
-			dbwarn.setVisibility(View.GONE);
+			db.open();
+			dbwarn.setText(getString(R.string.db_size)+": "+db.getSize()+"B");
+			dbwarn.setVisibility(View.VISIBLE);
 			dbwarnline.setVisibility(View.GONE);
 		}
 	}
@@ -445,7 +451,6 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	private void setAntiTheftInfo() {
 		if (opzioni.isAntitheftPresent()) {
 			serviceInfoAntiTheft.setVisibility(View.VISIBLE);
-			SoulissDBHelper db = new SoulissDBHelper(this);
 			db.open();
 			try {
 				SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();

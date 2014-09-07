@@ -332,33 +332,6 @@ public class SoulissDataService extends Service implements LocationListener {
 
 	};
 
-	/*
-	 * private void issueRefreshSensors(List<SoulissNode> ref, Map<Short,
-	 * SoulissNode> refreshedNodes) { for (SoulissNode soulissNode : ref) {
-	 * refreshedNodes.put(soulissNode.getId(), soulissNode);
-	 * List<SoulissTypical> tips = soulissNode.getTypicals(); for
-	 * (SoulissTypical tp : tips) { if (tp.isSensor()) { Log.i(TAG,
-	 * "Issuing sensor refresh.."); if (tp instanceof
-	 * SoulissTypicalTemperatureSensor) { UDPHelper.issueSoulissCommand("" +
-	 * soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(), opts,
-	 * Constants.COMMAND_SINGLE, "" +
-	 * it.angelic.soulissclient.model.typicals.Constants
-	 * .Souliss_T_TemperatureSensor_refresh); break;// basta uno per nodo } else
-	 * if (tp instanceof SoulissTypicalHumiditySensor) {
-	 * UDPHelper.issueSoulissCommand("" + soulissNode.getId(), "" +
-	 * tp.getTypicalDTO().getSlot(), opts, Constants.COMMAND_SINGLE, "" +
-	 * it.angelic
-	 * .soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor_refresh
-	 * ); break;// basta uno per nodo } else if (tp instanceof
-	 * SoulissTypical54LuxSensor) { UDPHelper.issueSoulissCommand("" +
-	 * soulissNode.getId(), "" + tp.getTypicalDTO().getSlot(), opts,
-	 * Constants.COMMAND_SINGLE, "" +
-	 * it.angelic.soulissclient.model.typicals.Constants
-	 * .Souliss_T_HumiditySensor_refresh); break;// basta uno per nodo } else {
-	 * Log.e(TAG, "Uninplemented.."); } } } }
-	 * 
-	 * }
-	 */
 
 	private void logThings(Map<Short, SoulissNode> refreshedNodes) {
 		Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");

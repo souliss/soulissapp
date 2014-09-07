@@ -18,6 +18,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +54,11 @@ public class SoulissDBHelper {
 	public static synchronized SQLiteDatabase getDatabase() {
 		return database;
 	}
+	
+	public long getSize(){
+		return new File(database.getPath()).length();
+	}
+	
 
 	public SoulissDBHelper(Context context) {
 		soulissDatabase = new SoulissDB(context);
@@ -188,6 +194,7 @@ public class SoulissDBHelper {
 		if (soulissTypical instanceof SoulissTypical51AnalogueSensor) {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
 		} else if (soulissTypical instanceof SoulissTypical52TemperatureSensor) {
+			
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical52TemperatureSensor) soulissTypical).getOutputFloat());
 		} else if (soulissTypical instanceof SoulissTypical53HumiditySensor) {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical53HumiditySensor) soulissTypical).getOutputFloat());
@@ -198,7 +205,7 @@ public class SoulissDBHelper {
 			database.insert(SoulissDB.TABLE_LOGS, null, values);
 		} catch (SQLiteConstraintException e) {
 			// sensori NaN violano il constraint
-			Log.e(Constants.TAG, "error saving log:"+e);
+			Log.e(Constants.TAG, "error saving log: "+e);
 		}
 		
 	}

@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.db;
 
-import it.angelic.soulissclient.model.typicals.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.model.typicals.Constants;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -31,7 +31,7 @@ public class SoulissDB extends SQLiteOpenHelper {
 	public static final String TABLE_SCENES = "scenes";
 	public static final String DATABASE_NAME = "souliss.db";
 
-	private static final int DATABASE_VERSION = 27;
+	private static final int DATABASE_VERSION = 28;
 
 	/*
 	 * NODES TABLE
@@ -161,7 +161,6 @@ public class SoulissDB extends SQLiteOpenHelper {
 	/* TABELLA LOGGING */
 	public static final String COLUMN_LOG_ID = "logid";
 	public static final String COLUMN_LOG_NODE_ID = "intlognodeid";
-	public static final String COLUMN_LOG_TYPICAL = "intlogtypid";
 	public static final String COLUMN_LOG_SLOT = "intlogslo";
 	public static final String COLUMN_LOG_VAL = "flologval";
 	public static final String COLUMN_LOG_DATE = "cldlogwhen";
@@ -176,12 +175,12 @@ public class SoulissDB extends SQLiteOpenHelper {
 			COLUMN_LOG_SLOT
 			+ " integer not null, "
 			+ // input slot
-			COLUMN_LOG_TYPICAL + " integer not null, " + COLUMN_LOG_VAL + " float not null, " + COLUMN_LOG_DATE
+			COLUMN_LOG_VAL + " float not null, " + COLUMN_LOG_DATE
 			+ " integer not null, " + " FOREIGN KEY( " + COLUMN_LOG_NODE_ID + "," + COLUMN_LOG_SLOT + ") "
 			+ " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
 
 	public static final String[] ALLCOLUMNS_LOGS = { COLUMN_LOG_ID, COLUMN_LOG_NODE_ID, COLUMN_LOG_SLOT,
-			COLUMN_LOG_TYPICAL, COLUMN_LOG_VAL, COLUMN_LOG_DATE };
+			COLUMN_LOG_VAL, COLUMN_LOG_DATE };
 
 	/* TABELLA SCENES */
 	public static final String COLUMN_SCENE_ID = "sceneid";
@@ -267,5 +266,6 @@ public class SoulissDB extends SQLiteOpenHelper {
 		onCreate(db);
 
 	}
+	
 
 }
