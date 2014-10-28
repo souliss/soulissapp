@@ -52,8 +52,8 @@ public class UDPRunnable implements Runnable {
 		Looper.prepare();
 		// lifecycle
 		
-		final UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
-		Log.d("UDP", "***Created decoder:" + decoder.toString());
+		//final UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
+		
 		while (true) {
 			try {
 				// InetAddress serverAddr = InetAddress.getByName(SOULISSIP);
@@ -76,31 +76,24 @@ public class UDPRunnable implements Runnable {
 				socket.setSoTimeout(to);
 				// wait to receive the packet
 				socket.receive(packet);
-				tpe.getActiveCount();
+				// spawn a decoder and go on
 				tpe.execute(new Runnable() {
 					@Override
 					public void run() {
-						
+						UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
+						Log.d("UDP", "***Created decoder:" + decoder.toString());
 						decoder.decodeVNetDatagram(packet);
 					}
 				});
 				Log.d(TAG, "***ThreadPool, active=" + tpe.getActiveCount()+", completed:"+tpe.getCompletedTaskCount()+", poolsize:"+tpe.getPoolSize());
-				// spawn a decoder and go on
-				/*
-				 * new Thread(new Runnable() {
-				 * 
-				 * @Override public void run() { UDPSoulissDecoder decoder = new
-				 * UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
-				 * decoder.decodeVNetDatagram(packet); } }).start();
-				 */
-
+				
 				socket.close();
 
 			} catch (BindException e) {
-				Log.e(TAG, "***UDP Port busy, Souliss already listening: " + e.getMessage());
+				Log.e(TAG, "***UDP Port busy, Souliss already listening? " + e.getMessage());
 				e.printStackTrace();
 				try {
-					Thread.sleep(opzioni.getDataServiceIntervalMsec());
+					//Thread.sleep(opzioni.getDataServiceIntervalMsec());
 					socket.close();
 				} catch (Exception e1) {
 					Log.e(TAG, "***UDP close failed" + e1.toString());
