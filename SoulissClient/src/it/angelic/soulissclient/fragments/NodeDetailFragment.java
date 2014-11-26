@@ -38,7 +38,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.net.UDPHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -268,6 +267,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 			listaTypicalsView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					TypicalViewHolder holder = (TypicalViewHolder) arg1.getTag();
+					//Log.i(getTag(), "Showing typical idx:"+arg2+" holder slot: "+holder.data.getTypicalDTO().getSlot());
 					showDetails(arg2, (SoulissTypical) holder.data);
 				}
 			});

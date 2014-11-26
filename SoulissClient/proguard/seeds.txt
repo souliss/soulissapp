@@ -6,7 +6,8 @@ android.support.v4.app.ActionBarDrawerToggle: android.app.Activity mActivity
 android.support.v4.app.ActionBarDrawerToggle: android.support.v4.app.ActionBarDrawerToggle$Delegate mActivityImpl
 android.support.v4.app.ActionBarDrawerToggle: android.support.v4.widget.DrawerLayout mDrawerLayout
 android.support.v4.app.ActionBarDrawerToggle: boolean mDrawerIndicatorEnabled
-android.support.v4.app.ActionBarDrawerToggle: android.graphics.drawable.Drawable mThemeImage
+android.support.v4.app.ActionBarDrawerToggle: boolean mHasCustomUpIndicator
+android.support.v4.app.ActionBarDrawerToggle: android.graphics.drawable.Drawable mHomeAsUpIndicator
 android.support.v4.app.ActionBarDrawerToggle: android.graphics.drawable.Drawable mDrawerImage
 android.support.v4.app.ActionBarDrawerToggle: android.support.v4.app.ActionBarDrawerToggle$SlideDrawable mSlider
 android.support.v4.app.ActionBarDrawerToggle: int mDrawerImageResource
@@ -14,7 +15,11 @@ android.support.v4.app.ActionBarDrawerToggle: int mOpenDrawerContentDescRes
 android.support.v4.app.ActionBarDrawerToggle: int mCloseDrawerContentDescRes
 android.support.v4.app.ActionBarDrawerToggle: java.lang.Object mSetIndicatorInfo
 android.support.v4.app.ActionBarDrawerToggle: ActionBarDrawerToggle(android.app.Activity,android.support.v4.widget.DrawerLayout,int,int,int)
+android.support.v4.app.ActionBarDrawerToggle: boolean assumeMaterial(android.content.Context)
+android.support.v4.app.ActionBarDrawerToggle: ActionBarDrawerToggle(android.app.Activity,android.support.v4.widget.DrawerLayout,boolean,int,int,int)
 android.support.v4.app.ActionBarDrawerToggle: void syncState()
+android.support.v4.app.ActionBarDrawerToggle: void setHomeAsUpIndicator(android.graphics.drawable.Drawable)
+android.support.v4.app.ActionBarDrawerToggle: void setHomeAsUpIndicator(int)
 android.support.v4.app.ActionBarDrawerToggle: void setDrawerIndicatorEnabled(boolean)
 android.support.v4.app.ActionBarDrawerToggle: boolean isDrawerIndicatorEnabled()
 android.support.v4.app.ActionBarDrawerToggle: void onConfigurationChanged(android.content.res.Configuration)
@@ -96,6 +101,46 @@ android.support.v4.app.ActivityCompat: boolean invalidateOptionsMenu(android.app
 android.support.v4.app.ActivityCompat: void startActivity(android.app.Activity,android.content.Intent,android.os.Bundle)
 android.support.v4.app.ActivityCompat: void startActivityForResult(android.app.Activity,android.content.Intent,int,android.os.Bundle)
 android.support.v4.app.ActivityCompat: void finishAffinity(android.app.Activity)
+android.support.v4.app.ActivityCompat: void finishAfterTransition(android.app.Activity)
+android.support.v4.app.ActivityCompat: void setEnterSharedElementCallback(android.app.Activity,android.support.v4.app.SharedElementCallback)
+android.support.v4.app.ActivityCompat: void setExitSharedElementCallback(android.app.Activity,android.support.v4.app.SharedElementCallback)
+android.support.v4.app.ActivityCompat: void postponeEnterTransition(android.app.Activity)
+android.support.v4.app.ActivityCompat: void startPostponedEnterTransition(android.app.Activity)
+android.support.v4.app.ActivityCompat: android.support.v4.app.ActivityCompat21$SharedElementCallback21 createCallback(android.support.v4.app.SharedElementCallback)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: android.support.v4.app.SharedElementCallback mCallback
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: ActivityCompat$SharedElementCallback21Impl(android.support.v4.app.SharedElementCallback)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: void onSharedElementStart(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: void onSharedElementEnd(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: void onRejectSharedElements(java.util.List)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: void onMapSharedElements(java.util.List,java.util.Map)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: android.os.Parcelable onCaptureSharedElementSnapshot(android.view.View,android.graphics.Matrix,android.graphics.RectF)
+android.support.v4.app.ActivityCompat$SharedElementCallback21Impl: android.view.View onCreateSnapshotView(android.content.Context,android.os.Parcelable)
+android.support.v4.app.ActivityCompat21
+android.support.v4.app.ActivityCompat21: ActivityCompat21()
+android.support.v4.app.ActivityCompat21: void finishAfterTransition(android.app.Activity)
+android.support.v4.app.ActivityCompat21: void setEnterSharedElementCallback(android.app.Activity,android.support.v4.app.ActivityCompat21$SharedElementCallback21)
+android.support.v4.app.ActivityCompat21: void setExitSharedElementCallback(android.app.Activity,android.support.v4.app.ActivityCompat21$SharedElementCallback21)
+android.support.v4.app.ActivityCompat21: void postponeEnterTransition(android.app.Activity)
+android.support.v4.app.ActivityCompat21: void startPostponedEnterTransition(android.app.Activity)
+android.support.v4.app.ActivityCompat21: android.app.SharedElementCallback createCallback(android.support.v4.app.ActivityCompat21$SharedElementCallback21)
+android.support.v4.app.ActivityCompat21$SharedElementCallback21
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: ActivityCompat21$SharedElementCallback21()
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: void onSharedElementStart(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: void onSharedElementEnd(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: void onRejectSharedElements(java.util.List)
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: void onMapSharedElements(java.util.List,java.util.Map)
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: android.os.Parcelable onCaptureSharedElementSnapshot(android.view.View,android.graphics.Matrix,android.graphics.RectF)
+android.support.v4.app.ActivityCompat21$SharedElementCallback21: android.view.View onCreateSnapshotView(android.content.Context,android.os.Parcelable)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: android.support.v4.app.ActivityCompat21$SharedElementCallback21 mCallback
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: ActivityCompat21$SharedElementCallbackImpl(android.support.v4.app.ActivityCompat21$SharedElementCallback21)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: void onSharedElementStart(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: void onSharedElementEnd(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: void onRejectSharedElements(java.util.List)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: void onMapSharedElements(java.util.List,java.util.Map)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: android.os.Parcelable onCaptureSharedElementSnapshot(android.view.View,android.graphics.Matrix,android.graphics.RectF)
+android.support.v4.app.ActivityCompat21$SharedElementCallbackImpl: android.view.View onCreateSnapshotView(android.content.Context,android.os.Parcelable)
 android.support.v4.app.ActivityCompatHoneycomb
 android.support.v4.app.ActivityCompatHoneycomb: ActivityCompatHoneycomb()
 android.support.v4.app.ActivityCompatHoneycomb: void invalidateOptionsMenu(android.app.Activity)
@@ -105,18 +150,38 @@ android.support.v4.app.ActivityCompatJB: ActivityCompatJB()
 android.support.v4.app.ActivityCompatJB: void startActivity(android.content.Context,android.content.Intent,android.os.Bundle)
 android.support.v4.app.ActivityCompatJB: void startActivityForResult(android.app.Activity,android.content.Intent,int,android.os.Bundle)
 android.support.v4.app.ActivityCompatJB: void finishAffinity(android.app.Activity)
+android.support.v4.app.ActivityManagerCompat
+android.support.v4.app.ActivityManagerCompat: ActivityManagerCompat()
+android.support.v4.app.ActivityManagerCompat: boolean isLowRamDevice(android.app.ActivityManager)
+android.support.v4.app.ActivityManagerCompatKitKat
+android.support.v4.app.ActivityManagerCompatKitKat: ActivityManagerCompatKitKat()
+android.support.v4.app.ActivityManagerCompatKitKat: boolean isLowRamDevice(android.app.ActivityManager)
 android.support.v4.app.ActivityOptionsCompat
 android.support.v4.app.ActivityOptionsCompat: android.support.v4.app.ActivityOptionsCompat makeCustomAnimation(android.content.Context,int,int)
 android.support.v4.app.ActivityOptionsCompat: android.support.v4.app.ActivityOptionsCompat makeScaleUpAnimation(android.view.View,int,int,int,int)
 android.support.v4.app.ActivityOptionsCompat: android.support.v4.app.ActivityOptionsCompat makeThumbnailScaleUpAnimation(android.view.View,android.graphics.Bitmap,int,int)
+android.support.v4.app.ActivityOptionsCompat: android.support.v4.app.ActivityOptionsCompat makeSceneTransitionAnimation(android.app.Activity,android.view.View,java.lang.String)
+android.support.v4.app.ActivityOptionsCompat: android.support.v4.app.ActivityOptionsCompat makeSceneTransitionAnimation(android.app.Activity,android.support.v4.util.Pair[])
 android.support.v4.app.ActivityOptionsCompat: ActivityOptionsCompat()
 android.support.v4.app.ActivityOptionsCompat: android.os.Bundle toBundle()
 android.support.v4.app.ActivityOptionsCompat: void update(android.support.v4.app.ActivityOptionsCompat)
+android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImpl21
+android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImpl21: android.support.v4.app.ActivityOptionsCompat21 mImpl
+android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImpl21: ActivityOptionsCompat$ActivityOptionsImpl21(android.support.v4.app.ActivityOptionsCompat21)
+android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImpl21: android.os.Bundle toBundle()
+android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImpl21: void update(android.support.v4.app.ActivityOptionsCompat)
 android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImplJB
 android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImplJB: android.support.v4.app.ActivityOptionsCompatJB mImpl
 android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImplJB: ActivityOptionsCompat$ActivityOptionsImplJB(android.support.v4.app.ActivityOptionsCompatJB)
 android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImplJB: android.os.Bundle toBundle()
 android.support.v4.app.ActivityOptionsCompat$ActivityOptionsImplJB: void update(android.support.v4.app.ActivityOptionsCompat)
+android.support.v4.app.ActivityOptionsCompat21
+android.support.v4.app.ActivityOptionsCompat21: android.app.ActivityOptions mActivityOptions
+android.support.v4.app.ActivityOptionsCompat21: android.support.v4.app.ActivityOptionsCompat21 makeSceneTransitionAnimation(android.app.Activity,android.view.View,java.lang.String)
+android.support.v4.app.ActivityOptionsCompat21: android.support.v4.app.ActivityOptionsCompat21 makeSceneTransitionAnimation(android.app.Activity,android.view.View[],java.lang.String[])
+android.support.v4.app.ActivityOptionsCompat21: ActivityOptionsCompat21(android.app.ActivityOptions)
+android.support.v4.app.ActivityOptionsCompat21: android.os.Bundle toBundle()
+android.support.v4.app.ActivityOptionsCompat21: void update(android.support.v4.app.ActivityOptionsCompat21)
 android.support.v4.app.ActivityOptionsCompatJB
 android.support.v4.app.ActivityOptionsCompatJB: android.app.ActivityOptions mActivityOptions
 android.support.v4.app.ActivityOptionsCompatJB: android.support.v4.app.ActivityOptionsCompatJB makeCustomAnimation(android.content.Context,int,int)
@@ -154,6 +219,8 @@ android.support.v4.app.BackStackRecord: int mBreadCrumbTitleRes
 android.support.v4.app.BackStackRecord: java.lang.CharSequence mBreadCrumbTitleText
 android.support.v4.app.BackStackRecord: int mBreadCrumbShortTitleRes
 android.support.v4.app.BackStackRecord: java.lang.CharSequence mBreadCrumbShortTitleText
+android.support.v4.app.BackStackRecord: java.util.ArrayList mSharedElementSourceNames
+android.support.v4.app.BackStackRecord: java.util.ArrayList mSharedElementTargetNames
 android.support.v4.app.BackStackRecord: java.lang.String toString()
 android.support.v4.app.BackStackRecord: void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[])
 android.support.v4.app.BackStackRecord: void dump(java.lang.String,java.io.PrintWriter,boolean)
@@ -178,6 +245,7 @@ android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransacti
 android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransaction setCustomAnimations(int,int)
 android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransaction setCustomAnimations(int,int,int,int)
 android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransaction setTransition(int)
+android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransaction addSharedElement(android.view.View,java.lang.String)
 android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransaction setTransitionStyle(int)
 android.support.v4.app.BackStackRecord: android.support.v4.app.FragmentTransaction addToBackStack(java.lang.String)
 android.support.v4.app.BackStackRecord: boolean isAddToBackStackAllowed()
@@ -191,11 +259,62 @@ android.support.v4.app.BackStackRecord: int commit()
 android.support.v4.app.BackStackRecord: int commitAllowingStateLoss()
 android.support.v4.app.BackStackRecord: int commitInternal(boolean)
 android.support.v4.app.BackStackRecord: void run()
-android.support.v4.app.BackStackRecord: void popFromBackStack(boolean)
+android.support.v4.app.BackStackRecord: void setFirstOut(android.util.SparseArray,android.support.v4.app.Fragment)
+android.support.v4.app.BackStackRecord: void setLastIn(android.util.SparseArray,android.support.v4.app.Fragment)
+android.support.v4.app.BackStackRecord: void calculateFragments(android.util.SparseArray,android.util.SparseArray)
+android.support.v4.app.BackStackRecord: void calculateBackFragments(android.util.SparseArray,android.util.SparseArray)
+android.support.v4.app.BackStackRecord: android.support.v4.app.BackStackRecord$TransitionState popFromBackStack(boolean,android.support.v4.app.BackStackRecord$TransitionState,android.util.SparseArray,android.util.SparseArray)
 android.support.v4.app.BackStackRecord: java.lang.String getName()
 android.support.v4.app.BackStackRecord: int getTransition()
 android.support.v4.app.BackStackRecord: int getTransitionStyle()
 android.support.v4.app.BackStackRecord: boolean isEmpty()
+android.support.v4.app.BackStackRecord: android.support.v4.app.BackStackRecord$TransitionState beginTransition(android.util.SparseArray,android.util.SparseArray,boolean)
+android.support.v4.app.BackStackRecord: java.lang.Object getEnterTransition(android.support.v4.app.Fragment,boolean)
+android.support.v4.app.BackStackRecord: java.lang.Object getExitTransition(android.support.v4.app.Fragment,boolean)
+android.support.v4.app.BackStackRecord: java.lang.Object getSharedElementTransition(android.support.v4.app.Fragment,android.support.v4.app.Fragment,boolean)
+android.support.v4.app.BackStackRecord: java.lang.Object captureExitingViews(java.lang.Object,android.support.v4.app.Fragment,java.util.ArrayList,android.support.v4.util.ArrayMap)
+android.support.v4.app.BackStackRecord: android.support.v4.util.ArrayMap remapSharedElements(android.support.v4.app.BackStackRecord$TransitionState,android.support.v4.app.Fragment,boolean)
+android.support.v4.app.BackStackRecord: boolean configureTransitions(int,android.support.v4.app.BackStackRecord$TransitionState,boolean,android.util.SparseArray,android.util.SparseArray)
+android.support.v4.app.BackStackRecord: void prepareSharedElementTransition(android.support.v4.app.BackStackRecord$TransitionState,android.view.View,java.lang.Object,android.support.v4.app.Fragment,android.support.v4.app.Fragment,boolean,java.util.ArrayList)
+android.support.v4.app.BackStackRecord: void callSharedElementEnd(android.support.v4.app.BackStackRecord$TransitionState,android.support.v4.app.Fragment,android.support.v4.app.Fragment,boolean,android.support.v4.util.ArrayMap)
+android.support.v4.app.BackStackRecord: void setEpicenterIn(android.support.v4.util.ArrayMap,android.support.v4.app.BackStackRecord$TransitionState)
+android.support.v4.app.BackStackRecord: android.support.v4.util.ArrayMap mapSharedElementsIn(android.support.v4.app.BackStackRecord$TransitionState,boolean,android.support.v4.app.Fragment)
+android.support.v4.app.BackStackRecord: android.support.v4.util.ArrayMap remapNames(java.util.ArrayList,java.util.ArrayList,android.support.v4.util.ArrayMap)
+android.support.v4.app.BackStackRecord: android.support.v4.util.ArrayMap mapEnteringSharedElements(android.support.v4.app.BackStackRecord$TransitionState,android.support.v4.app.Fragment,boolean)
+android.support.v4.app.BackStackRecord: void excludeHiddenFragmentsAfterEnter(android.view.View,android.support.v4.app.BackStackRecord$TransitionState,int,java.lang.Object)
+android.support.v4.app.BackStackRecord: void excludeHiddenFragments(android.support.v4.app.BackStackRecord$TransitionState,int,java.lang.Object)
+android.support.v4.app.BackStackRecord: void setNameOverride(android.support.v4.util.ArrayMap,java.lang.String,java.lang.String)
+android.support.v4.app.BackStackRecord: void setNameOverrides(android.support.v4.app.BackStackRecord$TransitionState,java.util.ArrayList,java.util.ArrayList)
+android.support.v4.app.BackStackRecord: void setBackNameOverrides(android.support.v4.app.BackStackRecord$TransitionState,android.support.v4.util.ArrayMap,boolean)
+android.support.v4.app.BackStackRecord: void setNameOverrides(android.support.v4.app.BackStackRecord$TransitionState,android.support.v4.util.ArrayMap,boolean)
+android.support.v4.app.BackStackRecord: android.support.v4.util.ArrayMap access$000(android.support.v4.app.BackStackRecord,android.support.v4.app.BackStackRecord$TransitionState,boolean,android.support.v4.app.Fragment)
+android.support.v4.app.BackStackRecord: void access$100(android.support.v4.app.BackStackRecord,android.support.v4.util.ArrayMap,android.support.v4.app.BackStackRecord$TransitionState)
+android.support.v4.app.BackStackRecord: void access$200(android.support.v4.app.BackStackRecord,android.support.v4.app.BackStackRecord$TransitionState,android.support.v4.app.Fragment,android.support.v4.app.Fragment,boolean,android.support.v4.util.ArrayMap)
+android.support.v4.app.BackStackRecord: void access$300(android.support.v4.app.BackStackRecord,android.support.v4.app.BackStackRecord$TransitionState,int,java.lang.Object)
+android.support.v4.app.BackStackRecord$1
+android.support.v4.app.BackStackRecord$1: android.support.v4.app.Fragment val$inFragment
+android.support.v4.app.BackStackRecord$1: android.support.v4.app.BackStackRecord this$0
+android.support.v4.app.BackStackRecord$1: BackStackRecord$1(android.support.v4.app.BackStackRecord,android.support.v4.app.Fragment)
+android.support.v4.app.BackStackRecord$1: android.view.View getView()
+android.support.v4.app.BackStackRecord$2
+android.support.v4.app.BackStackRecord$2: android.view.View val$sceneRoot
+android.support.v4.app.BackStackRecord$2: java.lang.Object val$sharedElementTransition
+android.support.v4.app.BackStackRecord$2: java.util.ArrayList val$sharedElementTargets
+android.support.v4.app.BackStackRecord$2: android.support.v4.app.BackStackRecord$TransitionState val$state
+android.support.v4.app.BackStackRecord$2: boolean val$isBack
+android.support.v4.app.BackStackRecord$2: android.support.v4.app.Fragment val$inFragment
+android.support.v4.app.BackStackRecord$2: android.support.v4.app.Fragment val$outFragment
+android.support.v4.app.BackStackRecord$2: android.support.v4.app.BackStackRecord this$0
+android.support.v4.app.BackStackRecord$2: BackStackRecord$2(android.support.v4.app.BackStackRecord,android.view.View,java.lang.Object,java.util.ArrayList,android.support.v4.app.BackStackRecord$TransitionState,boolean,android.support.v4.app.Fragment,android.support.v4.app.Fragment)
+android.support.v4.app.BackStackRecord$2: boolean onPreDraw()
+android.support.v4.app.BackStackRecord$3
+android.support.v4.app.BackStackRecord$3: android.view.View val$sceneRoot
+android.support.v4.app.BackStackRecord$3: android.support.v4.app.BackStackRecord$TransitionState val$state
+android.support.v4.app.BackStackRecord$3: int val$containerId
+android.support.v4.app.BackStackRecord$3: java.lang.Object val$transition
+android.support.v4.app.BackStackRecord$3: android.support.v4.app.BackStackRecord this$0
+android.support.v4.app.BackStackRecord$3: BackStackRecord$3(android.support.v4.app.BackStackRecord,android.view.View,android.support.v4.app.BackStackRecord$TransitionState,int,java.lang.Object)
+android.support.v4.app.BackStackRecord$3: boolean onPreDraw()
 android.support.v4.app.BackStackRecord$Op
 android.support.v4.app.BackStackRecord$Op: android.support.v4.app.BackStackRecord$Op next
 android.support.v4.app.BackStackRecord$Op: android.support.v4.app.BackStackRecord$Op prev
@@ -207,6 +326,13 @@ android.support.v4.app.BackStackRecord$Op: int popEnterAnim
 android.support.v4.app.BackStackRecord$Op: int popExitAnim
 android.support.v4.app.BackStackRecord$Op: java.util.ArrayList removed
 android.support.v4.app.BackStackRecord$Op: BackStackRecord$Op()
+android.support.v4.app.BackStackRecord$TransitionState
+android.support.v4.app.BackStackRecord$TransitionState: android.support.v4.util.ArrayMap nameOverrides
+android.support.v4.app.BackStackRecord$TransitionState: java.util.ArrayList hiddenFragmentViews
+android.support.v4.app.BackStackRecord$TransitionState: android.support.v4.app.FragmentTransitionCompat21$EpicenterView enteringEpicenterView
+android.support.v4.app.BackStackRecord$TransitionState: android.view.View nonExistentView
+android.support.v4.app.BackStackRecord$TransitionState: android.support.v4.app.BackStackRecord this$0
+android.support.v4.app.BackStackRecord$TransitionState: BackStackRecord$TransitionState(android.support.v4.app.BackStackRecord)
 android.support.v4.app.BackStackState
 android.support.v4.app.BackStackState: int[] mOps
 android.support.v4.app.BackStackState: int mTransition
@@ -217,6 +343,8 @@ android.support.v4.app.BackStackState: int mBreadCrumbTitleRes
 android.support.v4.app.BackStackState: java.lang.CharSequence mBreadCrumbTitleText
 android.support.v4.app.BackStackState: int mBreadCrumbShortTitleRes
 android.support.v4.app.BackStackState: java.lang.CharSequence mBreadCrumbShortTitleText
+android.support.v4.app.BackStackState: java.util.ArrayList mSharedElementSourceNames
+android.support.v4.app.BackStackState: java.util.ArrayList mSharedElementTargetNames
 android.support.v4.app.BackStackState: android.os.Parcelable$Creator CREATOR
 android.support.v4.app.BackStackState: BackStackState(android.support.v4.app.FragmentManagerImpl,android.support.v4.app.BackStackRecord)
 android.support.v4.app.BackStackState: BackStackState(android.os.Parcel)
@@ -281,6 +409,7 @@ android.support.v4.app.DialogFragment: void onDestroyView()
 android.support.v4.app.DialogFragment$DialogStyle
 android.support.v4.app.Fragment
 android.support.v4.app.Fragment: android.support.v4.util.SimpleArrayMap sClassMap
+android.support.v4.app.Fragment: java.lang.Object USE_DEFAULT_TRANSITION
 android.support.v4.app.Fragment: int INITIALIZING
 android.support.v4.app.Fragment: int CREATED
 android.support.v4.app.Fragment: int ACTIVITY_CREATED
@@ -328,6 +457,16 @@ android.support.v4.app.Fragment: boolean mUserVisibleHint
 android.support.v4.app.Fragment: android.support.v4.app.LoaderManagerImpl mLoaderManager
 android.support.v4.app.Fragment: boolean mLoadersStarted
 android.support.v4.app.Fragment: boolean mCheckedForLoaderManager
+android.support.v4.app.Fragment: java.lang.Object mEnterTransition
+android.support.v4.app.Fragment: java.lang.Object mReturnTransition
+android.support.v4.app.Fragment: java.lang.Object mExitTransition
+android.support.v4.app.Fragment: java.lang.Object mReenterTransition
+android.support.v4.app.Fragment: java.lang.Object mSharedElementEnterTransition
+android.support.v4.app.Fragment: java.lang.Object mSharedElementReturnTransition
+android.support.v4.app.Fragment: java.lang.Boolean mAllowReturnTransitionOverlap
+android.support.v4.app.Fragment: java.lang.Boolean mAllowEnterTransitionOverlap
+android.support.v4.app.Fragment: android.support.v4.app.SharedElementCallback mEnterTransitionCallback
+android.support.v4.app.Fragment: android.support.v4.app.SharedElementCallback mExitTransitionCallback
 android.support.v4.app.Fragment: Fragment()
 android.support.v4.app.Fragment: android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String)
 android.support.v4.app.Fragment: android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String,android.os.Bundle)
@@ -404,6 +543,24 @@ android.support.v4.app.Fragment: void onCreateContextMenu(android.view.ContextMe
 android.support.v4.app.Fragment: void registerForContextMenu(android.view.View)
 android.support.v4.app.Fragment: void unregisterForContextMenu(android.view.View)
 android.support.v4.app.Fragment: boolean onContextItemSelected(android.view.MenuItem)
+android.support.v4.app.Fragment: void setEnterSharedElementCallback(android.support.v4.app.SharedElementCallback)
+android.support.v4.app.Fragment: void setExitSharedElementCallback(android.support.v4.app.SharedElementCallback)
+android.support.v4.app.Fragment: void setEnterTransition(java.lang.Object)
+android.support.v4.app.Fragment: java.lang.Object getEnterTransition()
+android.support.v4.app.Fragment: void setReturnTransition(java.lang.Object)
+android.support.v4.app.Fragment: java.lang.Object getReturnTransition()
+android.support.v4.app.Fragment: void setExitTransition(java.lang.Object)
+android.support.v4.app.Fragment: java.lang.Object getExitTransition()
+android.support.v4.app.Fragment: void setReenterTransition(java.lang.Object)
+android.support.v4.app.Fragment: java.lang.Object getReenterTransition()
+android.support.v4.app.Fragment: void setSharedElementEnterTransition(java.lang.Object)
+android.support.v4.app.Fragment: java.lang.Object getSharedElementEnterTransition()
+android.support.v4.app.Fragment: void setSharedElementReturnTransition(java.lang.Object)
+android.support.v4.app.Fragment: java.lang.Object getSharedElementReturnTransition()
+android.support.v4.app.Fragment: void setAllowEnterTransitionOverlap(boolean)
+android.support.v4.app.Fragment: boolean getAllowEnterTransitionOverlap()
+android.support.v4.app.Fragment: void setAllowReturnTransitionOverlap(boolean)
+android.support.v4.app.Fragment: boolean getAllowReturnTransitionOverlap()
 android.support.v4.app.Fragment: void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[])
 android.support.v4.app.Fragment: android.support.v4.app.Fragment findFragmentByWho(java.lang.String)
 android.support.v4.app.Fragment: void instantiateChildFragmentManager()
@@ -430,6 +587,7 @@ android.support.v4.app.Fragment$1
 android.support.v4.app.Fragment$1: android.support.v4.app.Fragment this$0
 android.support.v4.app.Fragment$1: Fragment$1(android.support.v4.app.Fragment)
 android.support.v4.app.Fragment$1: android.view.View findViewById(int)
+android.support.v4.app.Fragment$1: boolean hasView()
 android.support.v4.app.Fragment$InstantiationException
 android.support.v4.app.Fragment$InstantiationException: Fragment$InstantiationException(java.lang.String,java.lang.Exception)
 android.support.v4.app.Fragment$SavedState
@@ -468,6 +626,11 @@ android.support.v4.app.FragmentActivity: android.support.v4.app.LoaderManagerImp
 android.support.v4.app.FragmentActivity: FragmentActivity()
 android.support.v4.app.FragmentActivity: void onActivityResult(int,int,android.content.Intent)
 android.support.v4.app.FragmentActivity: void onBackPressed()
+android.support.v4.app.FragmentActivity: void supportFinishAfterTransition()
+android.support.v4.app.FragmentActivity: void setEnterSharedElementCallback(android.support.v4.app.SharedElementCallback)
+android.support.v4.app.FragmentActivity: void setExitSharedElementCallback(android.support.v4.app.SharedElementCallback)
+android.support.v4.app.FragmentActivity: void supportPostponeEnterTransition()
+android.support.v4.app.FragmentActivity: void supportStartPostponedEnterTransition()
 android.support.v4.app.FragmentActivity: void onConfigurationChanged(android.content.res.Configuration)
 android.support.v4.app.FragmentActivity: void onCreate(android.os.Bundle)
 android.support.v4.app.FragmentActivity: boolean onCreatePanelMenu(int,android.view.Menu)
@@ -511,13 +674,7 @@ android.support.v4.app.FragmentActivity$2
 android.support.v4.app.FragmentActivity$2: android.support.v4.app.FragmentActivity this$0
 android.support.v4.app.FragmentActivity$2: FragmentActivity$2(android.support.v4.app.FragmentActivity)
 android.support.v4.app.FragmentActivity$2: android.view.View findViewById(int)
-android.support.v4.app.FragmentActivity$FragmentTag
-android.support.v4.app.FragmentActivity$FragmentTag: int[] Fragment
-android.support.v4.app.FragmentActivity$FragmentTag: int Fragment_id
-android.support.v4.app.FragmentActivity$FragmentTag: int Fragment_name
-android.support.v4.app.FragmentActivity$FragmentTag: int Fragment_tag
-android.support.v4.app.FragmentActivity$FragmentTag: FragmentActivity$FragmentTag()
-android.support.v4.app.FragmentActivity$FragmentTag: void <clinit>()
+android.support.v4.app.FragmentActivity$2: boolean hasView()
 android.support.v4.app.FragmentActivity$NonConfigurationInstances
 android.support.v4.app.FragmentActivity$NonConfigurationInstances: java.lang.Object activity
 android.support.v4.app.FragmentActivity$NonConfigurationInstances: java.lang.Object custom
@@ -527,6 +684,7 @@ android.support.v4.app.FragmentActivity$NonConfigurationInstances: android.suppo
 android.support.v4.app.FragmentActivity$NonConfigurationInstances: FragmentActivity$NonConfigurationInstances()
 android.support.v4.app.FragmentContainer
 android.support.v4.app.FragmentContainer: android.view.View findViewById(int)
+android.support.v4.app.FragmentContainer: boolean hasView()
 android.support.v4.app.FragmentManager
 android.support.v4.app.FragmentManager: int POP_BACK_STACK_INCLUSIVE
 android.support.v4.app.FragmentManager: FragmentManager()
@@ -678,6 +836,8 @@ android.support.v4.app.FragmentManagerImpl: boolean dispatchContextItemSelected(
 android.support.v4.app.FragmentManagerImpl: void dispatchOptionsMenuClosed(android.view.Menu)
 android.support.v4.app.FragmentManagerImpl: int reverseTransit(int)
 android.support.v4.app.FragmentManagerImpl: int transitToStyleIndex(int,boolean)
+android.support.v4.app.FragmentManagerImpl: android.view.View onCreateView(java.lang.String,android.content.Context,android.util.AttributeSet)
+android.support.v4.app.FragmentManagerImpl: android.view.LayoutInflater$Factory getLayoutInflaterFactory()
 android.support.v4.app.FragmentManagerImpl: void <clinit>()
 android.support.v4.app.FragmentManagerImpl$1
 android.support.v4.app.FragmentManagerImpl$1: android.support.v4.app.FragmentManagerImpl this$0
@@ -706,6 +866,13 @@ android.support.v4.app.FragmentManagerImpl$5: FragmentManagerImpl$5(android.supp
 android.support.v4.app.FragmentManagerImpl$5: void onAnimationEnd(android.view.animation.Animation)
 android.support.v4.app.FragmentManagerImpl$5: void onAnimationRepeat(android.view.animation.Animation)
 android.support.v4.app.FragmentManagerImpl$5: void onAnimationStart(android.view.animation.Animation)
+android.support.v4.app.FragmentManagerImpl$FragmentTag
+android.support.v4.app.FragmentManagerImpl$FragmentTag: int[] Fragment
+android.support.v4.app.FragmentManagerImpl$FragmentTag: int Fragment_id
+android.support.v4.app.FragmentManagerImpl$FragmentTag: int Fragment_name
+android.support.v4.app.FragmentManagerImpl$FragmentTag: int Fragment_tag
+android.support.v4.app.FragmentManagerImpl$FragmentTag: FragmentManagerImpl$FragmentTag()
+android.support.v4.app.FragmentManagerImpl$FragmentTag: void <clinit>()
 android.support.v4.app.FragmentManagerState
 android.support.v4.app.FragmentManagerState: android.support.v4.app.FragmentState[] mActive
 android.support.v4.app.FragmentManagerState: int[] mAdded
@@ -861,6 +1028,7 @@ android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTrans
 android.support.v4.app.FragmentTransaction: boolean isEmpty()
 android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTransaction setCustomAnimations(int,int)
 android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTransaction setCustomAnimations(int,int,int,int)
+android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTransaction addSharedElement(android.view.View,java.lang.String)
 android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTransaction setTransition(int)
 android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTransaction setTransitionStyle(int)
 android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTransaction addToBackStack(java.lang.String)
@@ -873,6 +1041,62 @@ android.support.v4.app.FragmentTransaction: android.support.v4.app.FragmentTrans
 android.support.v4.app.FragmentTransaction: int commit()
 android.support.v4.app.FragmentTransaction: int commitAllowingStateLoss()
 android.support.v4.app.FragmentTransaction$Transit
+android.support.v4.app.FragmentTransitionCompat21
+android.support.v4.app.FragmentTransitionCompat21: FragmentTransitionCompat21()
+android.support.v4.app.FragmentTransitionCompat21: java.lang.String getTransitionName(android.view.View)
+android.support.v4.app.FragmentTransitionCompat21: java.lang.Object cloneTransition(java.lang.Object)
+android.support.v4.app.FragmentTransitionCompat21: java.lang.Object captureExitingViews(java.lang.Object,android.view.View,java.util.ArrayList,java.util.Map)
+android.support.v4.app.FragmentTransitionCompat21: void excludeTarget(java.lang.Object,android.view.View,boolean)
+android.support.v4.app.FragmentTransitionCompat21: void beginDelayedTransition(android.view.ViewGroup,java.lang.Object)
+android.support.v4.app.FragmentTransitionCompat21: void setEpicenter(java.lang.Object,android.view.View)
+android.support.v4.app.FragmentTransitionCompat21: void addTransitionTargets(java.lang.Object,java.lang.Object,android.view.View,android.support.v4.app.FragmentTransitionCompat21$ViewRetriever,android.view.View,android.support.v4.app.FragmentTransitionCompat21$EpicenterView,java.util.Map,java.util.ArrayList,java.util.Map,java.util.ArrayList)
+android.support.v4.app.FragmentTransitionCompat21: java.lang.Object mergeTransitions(java.lang.Object,java.lang.Object,java.lang.Object,boolean)
+android.support.v4.app.FragmentTransitionCompat21: void setSharedElementEpicenter(android.transition.Transition,android.support.v4.app.FragmentTransitionCompat21$EpicenterView)
+android.support.v4.app.FragmentTransitionCompat21: android.graphics.Rect getBoundsOnScreen(android.view.View)
+android.support.v4.app.FragmentTransitionCompat21: void captureTransitioningViews(java.util.ArrayList,android.view.View)
+android.support.v4.app.FragmentTransitionCompat21: void findNamedViews(java.util.Map,android.view.View)
+android.support.v4.app.FragmentTransitionCompat21: void cleanupTransitions(android.view.View,android.view.View,java.lang.Object,java.util.ArrayList,java.lang.Object,java.util.ArrayList,java.lang.Object,java.util.ArrayList,java.lang.Object,java.util.ArrayList,java.util.Map)
+android.support.v4.app.FragmentTransitionCompat21: void removeTargets(java.lang.Object,java.util.ArrayList)
+android.support.v4.app.FragmentTransitionCompat21: void addTargets(java.lang.Object,java.util.ArrayList)
+android.support.v4.app.FragmentTransitionCompat21: void access$000(java.util.ArrayList,android.view.View)
+android.support.v4.app.FragmentTransitionCompat21: android.graphics.Rect access$100(android.view.View)
+android.support.v4.app.FragmentTransitionCompat21$1
+android.support.v4.app.FragmentTransitionCompat21$1: android.graphics.Rect val$epicenter
+android.support.v4.app.FragmentTransitionCompat21$1: FragmentTransitionCompat21$1(android.graphics.Rect)
+android.support.v4.app.FragmentTransitionCompat21$1: android.graphics.Rect onGetEpicenter(android.transition.Transition)
+android.support.v4.app.FragmentTransitionCompat21$2
+android.support.v4.app.FragmentTransitionCompat21$2: android.view.View val$container
+android.support.v4.app.FragmentTransitionCompat21$2: android.support.v4.app.FragmentTransitionCompat21$ViewRetriever val$inFragment
+android.support.v4.app.FragmentTransitionCompat21$2: java.util.Map val$nameOverrides
+android.support.v4.app.FragmentTransitionCompat21$2: java.util.Map val$renamedViews
+android.support.v4.app.FragmentTransitionCompat21$2: android.transition.Transition val$enterTransition
+android.support.v4.app.FragmentTransitionCompat21$2: java.util.ArrayList val$enteringViews
+android.support.v4.app.FragmentTransitionCompat21$2: FragmentTransitionCompat21$2(android.view.View,android.support.v4.app.FragmentTransitionCompat21$ViewRetriever,java.util.Map,java.util.Map,android.transition.Transition,java.util.ArrayList)
+android.support.v4.app.FragmentTransitionCompat21$2: boolean onPreDraw()
+android.support.v4.app.FragmentTransitionCompat21$3
+android.support.v4.app.FragmentTransitionCompat21$3: android.graphics.Rect mEpicenter
+android.support.v4.app.FragmentTransitionCompat21$3: android.support.v4.app.FragmentTransitionCompat21$EpicenterView val$epicenterView
+android.support.v4.app.FragmentTransitionCompat21$3: FragmentTransitionCompat21$3(android.support.v4.app.FragmentTransitionCompat21$EpicenterView)
+android.support.v4.app.FragmentTransitionCompat21$3: android.graphics.Rect onGetEpicenter(android.transition.Transition)
+android.support.v4.app.FragmentTransitionCompat21$4
+android.support.v4.app.FragmentTransitionCompat21$4: android.view.View val$sceneRoot
+android.support.v4.app.FragmentTransitionCompat21$4: android.transition.Transition val$enterTransition
+android.support.v4.app.FragmentTransitionCompat21$4: android.view.View val$nonExistentView
+android.support.v4.app.FragmentTransitionCompat21$4: java.util.ArrayList val$enteringViews
+android.support.v4.app.FragmentTransitionCompat21$4: android.transition.Transition val$exitTransition
+android.support.v4.app.FragmentTransitionCompat21$4: java.util.ArrayList val$exitingViews
+android.support.v4.app.FragmentTransitionCompat21$4: android.transition.Transition val$sharedElementTransition
+android.support.v4.app.FragmentTransitionCompat21$4: java.util.ArrayList val$sharedElementTargets
+android.support.v4.app.FragmentTransitionCompat21$4: java.util.Map val$renamedViews
+android.support.v4.app.FragmentTransitionCompat21$4: java.util.ArrayList val$hiddenViews
+android.support.v4.app.FragmentTransitionCompat21$4: android.transition.Transition val$overallTransition
+android.support.v4.app.FragmentTransitionCompat21$4: FragmentTransitionCompat21$4(android.view.View,android.transition.Transition,android.view.View,java.util.ArrayList,android.transition.Transition,java.util.ArrayList,android.transition.Transition,java.util.ArrayList,java.util.Map,java.util.ArrayList,android.transition.Transition)
+android.support.v4.app.FragmentTransitionCompat21$4: boolean onPreDraw()
+android.support.v4.app.FragmentTransitionCompat21$EpicenterView
+android.support.v4.app.FragmentTransitionCompat21$EpicenterView: android.view.View epicenter
+android.support.v4.app.FragmentTransitionCompat21$EpicenterView: FragmentTransitionCompat21$EpicenterView()
+android.support.v4.app.FragmentTransitionCompat21$ViewRetriever
+android.support.v4.app.FragmentTransitionCompat21$ViewRetriever: android.view.View getView()
 android.support.v4.app.INotificationSideChannel
 android.support.v4.app.INotificationSideChannel: void notify(java.lang.String,int,java.lang.String,android.app.Notification)
 android.support.v4.app.INotificationSideChannel: void cancel(java.lang.String,int,java.lang.String)
@@ -1078,6 +1302,7 @@ android.support.v4.app.NotificationCompat: java.lang.String EXTRA_TEXT
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_SUB_TEXT
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_INFO_TEXT
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_SUMMARY_TEXT
+android.support.v4.app.NotificationCompat: java.lang.String EXTRA_BIG_TEXT
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_SMALL_ICON
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_LARGE_ICON
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_LARGE_ICON_BIG
@@ -1085,9 +1310,32 @@ android.support.v4.app.NotificationCompat: java.lang.String EXTRA_PROGRESS
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_PROGRESS_MAX
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_PROGRESS_INDETERMINATE
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_SHOW_CHRONOMETER
+android.support.v4.app.NotificationCompat: java.lang.String EXTRA_SHOW_WHEN
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_PICTURE
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_TEXT_LINES
+android.support.v4.app.NotificationCompat: java.lang.String EXTRA_TEMPLATE
 android.support.v4.app.NotificationCompat: java.lang.String EXTRA_PEOPLE
+android.support.v4.app.NotificationCompat: java.lang.String EXTRA_BACKGROUND_IMAGE_URI
+android.support.v4.app.NotificationCompat: java.lang.String EXTRA_MEDIA_SESSION
+android.support.v4.app.NotificationCompat: java.lang.String EXTRA_COMPACT_ACTIONS
+android.support.v4.app.NotificationCompat: int COLOR_DEFAULT
+android.support.v4.app.NotificationCompat: int VISIBILITY_PUBLIC
+android.support.v4.app.NotificationCompat: int VISIBILITY_PRIVATE
+android.support.v4.app.NotificationCompat: int VISIBILITY_SECRET
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_CALL
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_MESSAGE
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_EMAIL
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_EVENT
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_PROMO
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_ALARM
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_PROGRESS
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_SOCIAL
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_ERROR
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_TRANSPORT
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_SYSTEM
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_SERVICE
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_RECOMMENDATION
+android.support.v4.app.NotificationCompat: java.lang.String CATEGORY_STATUS
 android.support.v4.app.NotificationCompat: android.support.v4.app.NotificationCompat$NotificationCompatImpl IMPL
 android.support.v4.app.NotificationCompat: NotificationCompat()
 android.support.v4.app.NotificationCompat: void addActionsToBuilder(android.support.v4.app.NotificationBuilderWithActions,java.util.ArrayList)
@@ -1096,6 +1344,7 @@ android.support.v4.app.NotificationCompat: android.app.Notification[] getNotific
 android.support.v4.app.NotificationCompat: android.os.Bundle getExtras(android.app.Notification)
 android.support.v4.app.NotificationCompat: int getActionCount(android.app.Notification)
 android.support.v4.app.NotificationCompat: android.support.v4.app.NotificationCompat$Action getAction(android.app.Notification,int)
+android.support.v4.app.NotificationCompat: java.lang.String getCategory(android.app.Notification)
 android.support.v4.app.NotificationCompat: boolean getLocalOnly(android.app.Notification)
 android.support.v4.app.NotificationCompat: java.lang.String getGroup(android.app.Notification)
 android.support.v4.app.NotificationCompat: boolean isGroupSummary(android.app.Notification)
@@ -1149,9 +1398,15 @@ android.support.v4.app.NotificationCompat$Action$Extender: android.support.v4.ap
 android.support.v4.app.NotificationCompat$Action$WearableExtender
 android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.String EXTRA_WEARABLE_EXTENSIONS
 android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.String KEY_FLAGS
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.String KEY_IN_PROGRESS_LABEL
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.String KEY_CONFIRM_LABEL
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.String KEY_CANCEL_LABEL
 android.support.v4.app.NotificationCompat$Action$WearableExtender: int FLAG_AVAILABLE_OFFLINE
 android.support.v4.app.NotificationCompat$Action$WearableExtender: int DEFAULT_FLAGS
 android.support.v4.app.NotificationCompat$Action$WearableExtender: int mFlags
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.CharSequence mInProgressLabel
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.CharSequence mConfirmLabel
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.CharSequence mCancelLabel
 android.support.v4.app.NotificationCompat$Action$WearableExtender: NotificationCompat$Action$WearableExtender()
 android.support.v4.app.NotificationCompat$Action$WearableExtender: NotificationCompat$Action$WearableExtender(android.support.v4.app.NotificationCompat$Action)
 android.support.v4.app.NotificationCompat$Action$WearableExtender: android.support.v4.app.NotificationCompat$Action$Builder extend(android.support.v4.app.NotificationCompat$Action$Builder)
@@ -1159,6 +1414,12 @@ android.support.v4.app.NotificationCompat$Action$WearableExtender: android.suppo
 android.support.v4.app.NotificationCompat$Action$WearableExtender: android.support.v4.app.NotificationCompat$Action$WearableExtender setAvailableOffline(boolean)
 android.support.v4.app.NotificationCompat$Action$WearableExtender: boolean isAvailableOffline()
 android.support.v4.app.NotificationCompat$Action$WearableExtender: void setFlag(int,boolean)
+android.support.v4.app.NotificationCompat$Action$WearableExtender: android.support.v4.app.NotificationCompat$Action$WearableExtender setInProgressLabel(java.lang.CharSequence)
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.CharSequence getInProgressLabel()
+android.support.v4.app.NotificationCompat$Action$WearableExtender: android.support.v4.app.NotificationCompat$Action$WearableExtender setConfirmLabel(java.lang.CharSequence)
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.CharSequence getConfirmLabel()
+android.support.v4.app.NotificationCompat$Action$WearableExtender: android.support.v4.app.NotificationCompat$Action$WearableExtender setCancelLabel(java.lang.CharSequence)
+android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.CharSequence getCancelLabel()
 android.support.v4.app.NotificationCompat$Action$WearableExtender: java.lang.Object clone()
 android.support.v4.app.NotificationCompat$BigPictureStyle
 android.support.v4.app.NotificationCompat$BigPictureStyle: android.graphics.Bitmap mPicture
@@ -1178,6 +1439,7 @@ android.support.v4.app.NotificationCompat$BigTextStyle: android.support.v4.app.N
 android.support.v4.app.NotificationCompat$BigTextStyle: android.support.v4.app.NotificationCompat$BigTextStyle setSummaryText(java.lang.CharSequence)
 android.support.v4.app.NotificationCompat$BigTextStyle: android.support.v4.app.NotificationCompat$BigTextStyle bigText(java.lang.CharSequence)
 android.support.v4.app.NotificationCompat$Builder
+android.support.v4.app.NotificationCompat$Builder: int MAX_CHARSEQUENCE_LENGTH
 android.support.v4.app.NotificationCompat$Builder: android.content.Context mContext
 android.support.v4.app.NotificationCompat$Builder: java.lang.CharSequence mContentTitle
 android.support.v4.app.NotificationCompat$Builder: java.lang.CharSequence mContentText
@@ -1188,6 +1450,7 @@ android.support.v4.app.NotificationCompat$Builder: android.graphics.Bitmap mLarg
 android.support.v4.app.NotificationCompat$Builder: java.lang.CharSequence mContentInfo
 android.support.v4.app.NotificationCompat$Builder: int mNumber
 android.support.v4.app.NotificationCompat$Builder: int mPriority
+android.support.v4.app.NotificationCompat$Builder: boolean mShowWhen
 android.support.v4.app.NotificationCompat$Builder: boolean mUseChronometer
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Style mStyle
 android.support.v4.app.NotificationCompat$Builder: java.lang.CharSequence mSubText
@@ -1199,10 +1462,16 @@ android.support.v4.app.NotificationCompat$Builder: boolean mGroupSummary
 android.support.v4.app.NotificationCompat$Builder: java.lang.String mSortKey
 android.support.v4.app.NotificationCompat$Builder: java.util.ArrayList mActions
 android.support.v4.app.NotificationCompat$Builder: boolean mLocalOnly
+android.support.v4.app.NotificationCompat$Builder: java.lang.String mCategory
 android.support.v4.app.NotificationCompat$Builder: android.os.Bundle mExtras
+android.support.v4.app.NotificationCompat$Builder: int mColor
+android.support.v4.app.NotificationCompat$Builder: int mVisibility
+android.support.v4.app.NotificationCompat$Builder: android.app.Notification mPublicVersion
 android.support.v4.app.NotificationCompat$Builder: android.app.Notification mNotification
+android.support.v4.app.NotificationCompat$Builder: java.util.ArrayList mPeople
 android.support.v4.app.NotificationCompat$Builder: NotificationCompat$Builder(android.content.Context)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setWhen(long)
+android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setShowWhen(boolean)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setUsesChronometer(boolean)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setSmallIcon(int)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setSmallIcon(int,int)
@@ -1227,9 +1496,11 @@ android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.Notifi
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setOnlyAlertOnce(boolean)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setAutoCancel(boolean)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setLocalOnly(boolean)
+android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setCategory(java.lang.String)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setDefaults(int)
 android.support.v4.app.NotificationCompat$Builder: void setFlag(int,boolean)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setPriority(int)
+android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder addPerson(java.lang.String)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setGroup(java.lang.String)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setGroupSummary(boolean)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setSortKey(java.lang.String)
@@ -1239,9 +1510,13 @@ android.support.v4.app.NotificationCompat$Builder: android.os.Bundle getExtras()
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder addAction(int,java.lang.CharSequence,android.app.PendingIntent)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder addAction(android.support.v4.app.NotificationCompat$Action)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setStyle(android.support.v4.app.NotificationCompat$Style)
+android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setColor(int)
+android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setVisibility(int)
+android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder setPublicVersion(android.app.Notification)
 android.support.v4.app.NotificationCompat$Builder: android.support.v4.app.NotificationCompat$Builder extend(android.support.v4.app.NotificationCompat$Extender)
 android.support.v4.app.NotificationCompat$Builder: android.app.Notification getNotification()
 android.support.v4.app.NotificationCompat$Builder: android.app.Notification build()
+android.support.v4.app.NotificationCompat$Builder: java.lang.CharSequence limitCharSequenceLength(java.lang.CharSequence)
 android.support.v4.app.NotificationCompat$Extender
 android.support.v4.app.NotificationCompat$Extender: android.support.v4.app.NotificationCompat$Builder extend(android.support.v4.app.NotificationCompat$Builder)
 android.support.v4.app.NotificationCompat$InboxStyle
@@ -1258,6 +1533,7 @@ android.support.v4.app.NotificationCompat$NotificationCompatImpl: int getActionC
 android.support.v4.app.NotificationCompat$NotificationCompatImpl: android.support.v4.app.NotificationCompat$Action getAction(android.app.Notification,int)
 android.support.v4.app.NotificationCompat$NotificationCompatImpl: android.support.v4.app.NotificationCompat$Action[] getActionsFromParcelableArrayList(java.util.ArrayList)
 android.support.v4.app.NotificationCompat$NotificationCompatImpl: java.util.ArrayList getParcelableArrayListForActions(android.support.v4.app.NotificationCompat$Action[])
+android.support.v4.app.NotificationCompat$NotificationCompatImpl: java.lang.String getCategory(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImpl: boolean getLocalOnly(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImpl: java.lang.String getGroup(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImpl: boolean isGroupSummary(android.app.Notification)
@@ -1272,6 +1548,10 @@ android.support.v4.app.NotificationCompat$NotificationCompatImplApi20: boolean g
 android.support.v4.app.NotificationCompat$NotificationCompatImplApi20: java.lang.String getGroup(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImplApi20: boolean isGroupSummary(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImplApi20: java.lang.String getSortKey(android.app.Notification)
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21: NotificationCompat$NotificationCompatImplApi21()
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21: android.app.Notification build(android.support.v4.app.NotificationCompat$Builder)
+android.support.v4.app.NotificationCompat$NotificationCompatImplApi21: java.lang.String getCategory(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: NotificationCompat$NotificationCompatImplBase()
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: android.app.Notification build(android.support.v4.app.NotificationCompat$Builder)
@@ -1280,6 +1560,7 @@ android.support.v4.app.NotificationCompat$NotificationCompatImplBase: int getAct
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: android.support.v4.app.NotificationCompat$Action getAction(android.app.Notification,int)
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: android.support.v4.app.NotificationCompat$Action[] getActionsFromParcelableArrayList(java.util.ArrayList)
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: java.util.ArrayList getParcelableArrayListForActions(android.support.v4.app.NotificationCompat$Action[])
+android.support.v4.app.NotificationCompat$NotificationCompatImplBase: java.lang.String getCategory(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: boolean getLocalOnly(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: java.lang.String getGroup(android.app.Notification)
 android.support.v4.app.NotificationCompat$NotificationCompatImplBase: boolean isGroupSummary(android.app.Notification)
@@ -1401,6 +1682,7 @@ android.support.v4.app.NotificationCompat$WearableExtender: void setFlag(int,boo
 android.support.v4.app.NotificationCompat$WearableExtender: java.lang.Object clone()
 android.support.v4.app.NotificationCompatApi20
 android.support.v4.app.NotificationCompatApi20: NotificationCompatApi20()
+android.support.v4.app.NotificationCompatApi20: void addAction(android.app.Notification$Builder,android.support.v4.app.NotificationCompatBase$Action)
 android.support.v4.app.NotificationCompatApi20: android.support.v4.app.NotificationCompatBase$Action getAction(android.app.Notification,int,android.support.v4.app.NotificationCompatBase$Action$Factory,android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory)
 android.support.v4.app.NotificationCompatApi20: android.support.v4.app.NotificationCompatBase$Action getActionCompatFromAction(android.app.Notification$Action,android.support.v4.app.NotificationCompatBase$Action$Factory,android.support.v4.app.RemoteInputCompatBase$RemoteInput$Factory)
 android.support.v4.app.NotificationCompatApi20: android.app.Notification$Action getActionFromActionCompat(android.support.v4.app.NotificationCompatBase$Action)
@@ -1412,10 +1694,34 @@ android.support.v4.app.NotificationCompatApi20: boolean isGroupSummary(android.a
 android.support.v4.app.NotificationCompatApi20: java.lang.String getSortKey(android.app.Notification)
 android.support.v4.app.NotificationCompatApi20$Builder
 android.support.v4.app.NotificationCompatApi20$Builder: android.app.Notification$Builder b
-android.support.v4.app.NotificationCompatApi20$Builder: NotificationCompatApi20$Builder(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,int,java.lang.CharSequence,boolean,android.os.Bundle,java.lang.String,boolean,java.lang.String)
+android.support.v4.app.NotificationCompatApi20$Builder: android.os.Bundle mExtras
+android.support.v4.app.NotificationCompatApi20$Builder: NotificationCompatApi20$Builder(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,boolean,int,java.lang.CharSequence,boolean,java.util.ArrayList,android.os.Bundle,java.lang.String,boolean,java.lang.String)
 android.support.v4.app.NotificationCompatApi20$Builder: void addAction(android.support.v4.app.NotificationCompatBase$Action)
 android.support.v4.app.NotificationCompatApi20$Builder: android.app.Notification$Builder getBuilder()
 android.support.v4.app.NotificationCompatApi20$Builder: android.app.Notification build()
+android.support.v4.app.NotificationCompatApi21
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_CALL
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_MESSAGE
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_EMAIL
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_EVENT
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_PROMO
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_ALARM
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_PROGRESS
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_SOCIAL
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_ERROR
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_TRANSPORT
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_SYSTEM
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_SERVICE
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_RECOMMENDATION
+android.support.v4.app.NotificationCompatApi21: java.lang.String CATEGORY_STATUS
+android.support.v4.app.NotificationCompatApi21: NotificationCompatApi21()
+android.support.v4.app.NotificationCompatApi21: java.lang.String getCategory(android.app.Notification)
+android.support.v4.app.NotificationCompatApi21$Builder
+android.support.v4.app.NotificationCompatApi21$Builder: android.app.Notification$Builder b
+android.support.v4.app.NotificationCompatApi21$Builder: NotificationCompatApi21$Builder(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,boolean,int,java.lang.CharSequence,boolean,java.lang.String,java.util.ArrayList,android.os.Bundle,int,int,android.app.Notification,java.lang.String,boolean,java.lang.String)
+android.support.v4.app.NotificationCompatApi21$Builder: void addAction(android.support.v4.app.NotificationCompatBase$Action)
+android.support.v4.app.NotificationCompatApi21$Builder: android.app.Notification$Builder getBuilder()
+android.support.v4.app.NotificationCompatApi21$Builder: android.app.Notification build()
 android.support.v4.app.NotificationCompatBase
 android.support.v4.app.NotificationCompatBase: NotificationCompatBase()
 android.support.v4.app.NotificationCompatBase$Action
@@ -1511,12 +1817,11 @@ android.support.v4.app.NotificationCompatKitKat$Builder
 android.support.v4.app.NotificationCompatKitKat$Builder: android.app.Notification$Builder b
 android.support.v4.app.NotificationCompatKitKat$Builder: android.os.Bundle mExtras
 android.support.v4.app.NotificationCompatKitKat$Builder: java.util.List mActionExtrasList
-android.support.v4.app.NotificationCompatKitKat$Builder: NotificationCompatKitKat$Builder(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,int,java.lang.CharSequence,boolean,android.os.Bundle,java.lang.String,boolean,java.lang.String)
+android.support.v4.app.NotificationCompatKitKat$Builder: NotificationCompatKitKat$Builder(android.content.Context,android.app.Notification,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,android.widget.RemoteViews,int,android.app.PendingIntent,android.app.PendingIntent,android.graphics.Bitmap,int,int,boolean,boolean,boolean,int,java.lang.CharSequence,boolean,java.util.ArrayList,android.os.Bundle,java.lang.String,boolean,java.lang.String)
 android.support.v4.app.NotificationCompatKitKat$Builder: void addAction(android.support.v4.app.NotificationCompatBase$Action)
 android.support.v4.app.NotificationCompatKitKat$Builder: android.app.Notification$Builder getBuilder()
 android.support.v4.app.NotificationCompatKitKat$Builder: android.app.Notification build()
 android.support.v4.app.NotificationCompatSideChannelService
-android.support.v4.app.NotificationCompatSideChannelService: int BUILD_VERSION_CODE_KITKAT_WATCH
 android.support.v4.app.NotificationCompatSideChannelService: NotificationCompatSideChannelService()
 android.support.v4.app.NotificationCompatSideChannelService: android.os.IBinder onBind(android.content.Intent)
 android.support.v4.app.NotificationCompatSideChannelService: void notify(java.lang.String,int,java.lang.String,android.app.Notification)
@@ -1536,6 +1841,7 @@ android.support.v4.app.NotificationManagerCompat
 android.support.v4.app.NotificationManagerCompat: java.lang.String TAG
 android.support.v4.app.NotificationManagerCompat: java.lang.String EXTRA_USE_SIDE_CHANNEL
 android.support.v4.app.NotificationManagerCompat: java.lang.String ACTION_BIND_SIDE_CHANNEL
+android.support.v4.app.NotificationManagerCompat: int MAX_SIDE_CHANNEL_SDK_VERSION
 android.support.v4.app.NotificationManagerCompat: int SIDE_CHANNEL_RETRY_BASE_INTERVAL_MS
 android.support.v4.app.NotificationManagerCompat: int SIDE_CHANNEL_RETRY_MAX_COUNT
 android.support.v4.app.NotificationManagerCompat: java.lang.String SETTING_ENABLED_NOTIFICATION_LISTENERS
@@ -1822,6 +2128,15 @@ android.support.v4.app.ShareCompatICS: void configureMenuItem(android.view.MenuI
 android.support.v4.app.ShareCompatJB
 android.support.v4.app.ShareCompatJB: ShareCompatJB()
 android.support.v4.app.ShareCompatJB: java.lang.String escapeHtml(java.lang.CharSequence)
+android.support.v4.app.SharedElementCallback
+android.support.v4.app.SharedElementCallback: android.graphics.Matrix mTempMatrix
+android.support.v4.app.SharedElementCallback: SharedElementCallback()
+android.support.v4.app.SharedElementCallback: void onSharedElementStart(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.SharedElementCallback: void onSharedElementEnd(java.util.List,java.util.List,java.util.List)
+android.support.v4.app.SharedElementCallback: void onRejectSharedElements(java.util.List)
+android.support.v4.app.SharedElementCallback: void onMapSharedElements(java.util.List,java.util.Map)
+android.support.v4.app.SharedElementCallback: android.os.Parcelable onCaptureSharedElementSnapshot(android.view.View,android.graphics.Matrix,android.graphics.RectF)
+android.support.v4.app.SharedElementCallback: android.view.View onCreateSnapshotView(android.content.Context,android.os.Parcelable)
 android.support.v4.app.SuperNotCalledException
 android.support.v4.app.SuperNotCalledException: SuperNotCalledException(java.lang.String)
 android.support.v4.app.TaskStackBuilder
@@ -1883,6 +2198,7 @@ android.support.v4.app.Watson$OnOptionsItemSelectedListener
 android.support.v4.app.Watson$OnOptionsItemSelectedListener: boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 android.support.v4.app.Watson$OnPrepareOptionsMenuListener
 android.support.v4.app.Watson$OnPrepareOptionsMenuListener: void onPrepareOptionsMenu(com.actionbarsherlock.view.Menu)
+android.support.v4.content.ContextCompat: java.lang.String TAG
 android.support.v4.content.ContextCompat: java.lang.String DIR_ANDROID
 android.support.v4.content.ContextCompat: java.lang.String DIR_DATA
 android.support.v4.content.ContextCompat: java.lang.String DIR_OBB
@@ -1895,8 +2211,20 @@ android.support.v4.content.ContextCompat: java.io.File[] getObbDirs(android.cont
 android.support.v4.content.ContextCompat: java.io.File[] getExternalFilesDirs(android.content.Context,java.lang.String)
 android.support.v4.content.ContextCompat: java.io.File[] getExternalCacheDirs(android.content.Context)
 android.support.v4.content.ContextCompat: java.io.File buildPath(java.io.File,java.lang.String[])
+android.support.v4.content.ContextCompat: android.graphics.drawable.Drawable getDrawable(android.content.Context,int)
+android.support.v4.content.ContextCompat: java.io.File getNoBackupFilesDir(android.content.Context)
+android.support.v4.content.ContextCompat: java.io.File getCodeCacheDir(android.content.Context)
+android.support.v4.content.ContextCompat: java.io.File createFilesDir(java.io.File)
 android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
 android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.media.MediaMetadataCompat
+android.support.v4.media.MediaMetadataCompat: android.os.Parcelable$Creator CREATOR
+android.support.v4.media.RatingCompat
+android.support.v4.media.RatingCompat: android.os.Parcelable$Creator CREATOR
+android.support.v4.media.session.MediaSessionCompat$Token
+android.support.v4.media.session.MediaSessionCompat$Token: android.os.Parcelable$Creator CREATOR
+android.support.v4.media.session.PlaybackStateCompat
+android.support.v4.media.session.PlaybackStateCompat: android.os.Parcelable$Creator CREATOR
 android.support.v4.view.PagerAdapter: android.database.DataSetObservable mObservable
 android.support.v4.view.PagerAdapter: int POSITION_UNCHANGED
 android.support.v4.view.PagerAdapter: int POSITION_NONE
@@ -1997,6 +2325,9 @@ android.support.v4.widget.DrawerLayout: DrawerLayout(android.content.Context,and
 android.support.v4.widget.DrawerLayout: void setScrimColor(int)
 android.support.v4.widget.DrawerLayout: void setDrawerListener(android.support.v4.widget.DrawerLayout$DrawerListener)
 android.support.v4.widget.DrawerLayout: void setDrawerLockMode(int)
+android.support.v4.widget.DrawerLayout: void setStatusBarBackground(android.graphics.drawable.Drawable)
+android.support.v4.widget.DrawerLayout: void setStatusBarBackground(int)
+android.support.v4.widget.DrawerLayout: void setStatusBarBackgroundColor(int)
 android.support.v4.widget.DrawerLayout$SavedState
 android.support.v4.widget.DrawerLayout$SavedState: android.os.Parcelable$Creator CREATOR
 android.support.v4.widget.ResourceCursorAdapter: int mLayout
@@ -2024,10 +2355,16 @@ android.support.v4.widget.SlidingPaneLayout: void setShadowResourceLeft(int)
 android.support.v4.widget.SlidingPaneLayout: void setShadowResourceRight(int)
 android.support.v4.widget.SlidingPaneLayout$SavedState
 android.support.v4.widget.SlidingPaneLayout$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.SwipeRefreshLayout: void setColorViewAlpha(int)
+android.support.v4.widget.SwipeRefreshLayout: void setSize(int)
 android.support.v4.widget.SwipeRefreshLayout: void setOnRefreshListener(android.support.v4.widget.SwipeRefreshLayout$OnRefreshListener)
-android.support.v4.widget.SwipeRefreshLayout: void setTriggerPercentage(float)
 android.support.v4.widget.SwipeRefreshLayout: void setRefreshing(boolean)
-android.support.v4.widget.SwipeRefreshLayout: void setTargetOffsetTopAndBottom(int)
+android.support.v4.widget.SwipeRefreshLayout: void setAnimationProgress(float)
+android.support.v4.widget.SwipeRefreshLayout: void setProgressBackgroundColor(int)
+android.support.v4.widget.SwipeRefreshLayout: void setColorScheme(int[])
+android.support.v4.widget.SwipeRefreshLayout: void setColorSchemeResources(int[])
+android.support.v4.widget.SwipeRefreshLayout: void setColorSchemeColors(int[])
+android.support.v4.widget.SwipeRefreshLayout: void setDistanceToTriggerSync(int)
 com.actionbarsherlock.ActionBarSherlock
 com.actionbarsherlock.ActionBarSherlock: java.lang.String TAG
 com.actionbarsherlock.ActionBarSherlock: boolean DEBUG
@@ -6745,6 +7082,7 @@ it.angelic.soulissclient.LauncherActivity: boolean mIsBound
 it.angelic.soulissclient.LauncherActivity: boolean mIsWebBound
 it.angelic.soulissclient.LauncherActivity: java.util.Timer autoUpdate
 it.angelic.soulissclient.LauncherActivity: android.location.Geocoder geocoder
+it.angelic.soulissclient.LauncherActivity: it.angelic.soulissclient.db.SoulissDBHelper db
 it.angelic.soulissclient.LauncherActivity: android.content.ServiceConnection mConnection
 it.angelic.soulissclient.LauncherActivity: android.content.ServiceConnection mWebConnection
 it.angelic.soulissclient.LauncherActivity: android.view.View webServiceInfoLine
@@ -8029,6 +8367,7 @@ it.angelic.soulissclient.R$string: int currentlyin
 it.angelic.soulissclient.R$string: int daily
 it.angelic.soulissclient.R$string: int days
 it.angelic.soulissclient.R$string: int db_notempty
+it.angelic.soulissclient.R$string: int db_size
 it.angelic.soulissclient.R$string: int dbstruct_req
 it.angelic.soulissclient.R$string: int dialog_choose_html
 it.angelic.soulissclient.R$string: int dialog_choose_icon
@@ -9045,7 +9384,7 @@ it.angelic.soulissclient.adapters.TypicalsListAdapter: it.angelic.soulissclient.
 it.angelic.soulissclient.adapters.TypicalsListAdapter: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
 it.angelic.soulissclient.adapters.TypicalsListAdapter: android.content.Intent parentIntent
 it.angelic.soulissclient.adapters.TypicalsListAdapter: it.angelic.soulissclient.SoulissDataService mBoundService
-it.angelic.soulissclient.adapters.TypicalsListAdapter: TypicalsListAdapter(android.content.Context,it.angelic.soulissclient.SoulissDataService,it.angelic.soulissclient.model.SoulissTypical[],android.content.Intent,it.angelic.soulissclient.db.SoulissDBHelper,it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
+it.angelic.soulissclient.adapters.TypicalsListAdapter: TypicalsListAdapter(android.content.Context,it.angelic.soulissclient.SoulissDataService,it.angelic.soulissclient.model.SoulissTypical[],android.content.Intent,it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
 it.angelic.soulissclient.adapters.TypicalsListAdapter: void setTypicals(it.angelic.soulissclient.model.SoulissTypical[])
 it.angelic.soulissclient.adapters.TypicalsListAdapter: void setmBoundService(it.angelic.soulissclient.SoulissDataService)
 it.angelic.soulissclient.adapters.TypicalsListAdapter: it.angelic.soulissclient.SoulissDataService getmBoundService()
@@ -9061,6 +9400,7 @@ it.angelic.soulissclient.adapters.TypicalsListAdapter$1: TypicalsListAdapter$1(i
 it.angelic.soulissclient.adapters.TypicalsListAdapter$1: void onClick(android.view.View)
 it.angelic.soulissclient.adapters.TypicalsListAdapter$TypicalViewHolder
 it.angelic.soulissclient.adapters.TypicalsListAdapter$TypicalViewHolder: android.widget.ImageView expand
+it.angelic.soulissclient.adapters.TypicalsListAdapter$TypicalViewHolder: android.view.View shader
 it.angelic.soulissclient.adapters.TypicalsListAdapter$TypicalViewHolder: android.widget.TextView textStatus
 it.angelic.soulissclient.adapters.TypicalsListAdapter$TypicalViewHolder: android.widget.TextView textStatusVal
 it.angelic.soulissclient.adapters.TypicalsListAdapter$TypicalViewHolder: android.widget.TextView textslot
@@ -9150,7 +9490,6 @@ it.angelic.soulissclient.db.SoulissDB: java.lang.String DATABASE_CREATE_TRIGGERS
 it.angelic.soulissclient.db.SoulissDB: java.lang.String[] ALLCOLUMNS_TRIGGERS
 it.angelic.soulissclient.db.SoulissDB: java.lang.String COLUMN_LOG_ID
 it.angelic.soulissclient.db.SoulissDB: java.lang.String COLUMN_LOG_NODE_ID
-it.angelic.soulissclient.db.SoulissDB: java.lang.String COLUMN_LOG_TYPICAL
 it.angelic.soulissclient.db.SoulissDB: java.lang.String COLUMN_LOG_SLOT
 it.angelic.soulissclient.db.SoulissDB: java.lang.String COLUMN_LOG_VAL
 it.angelic.soulissclient.db.SoulissDB: java.lang.String COLUMN_LOG_DATE
@@ -9171,6 +9510,7 @@ it.angelic.soulissclient.db.SoulissDBHelper: android.database.sqlite.SQLiteDatab
 it.angelic.soulissclient.db.SoulissDBHelper: it.angelic.soulissclient.db.SoulissDB soulissDatabase
 it.angelic.soulissclient.db.SoulissDBHelper: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opts
 it.angelic.soulissclient.db.SoulissDBHelper: android.database.sqlite.SQLiteDatabase getDatabase()
+it.angelic.soulissclient.db.SoulissDBHelper: long getSize()
 it.angelic.soulissclient.db.SoulissDBHelper: SoulissDBHelper(android.content.Context)
 it.angelic.soulissclient.db.SoulissDBHelper: void open()
 it.angelic.soulissclient.db.SoulissDBHelper: void close()
@@ -9225,7 +9565,6 @@ it.angelic.soulissclient.db.SoulissLogDTO
 it.angelic.soulissclient.db.SoulissLogDTO: java.lang.Long logId
 it.angelic.soulissclient.db.SoulissLogDTO: short nodeId
 it.angelic.soulissclient.db.SoulissLogDTO: short slot
-it.angelic.soulissclient.db.SoulissLogDTO: short typical
 it.angelic.soulissclient.db.SoulissLogDTO: float logValue
 it.angelic.soulissclient.db.SoulissLogDTO: java.util.Calendar logTime
 it.angelic.soulissclient.db.SoulissLogDTO: SoulissLogDTO()
@@ -9237,8 +9576,6 @@ it.angelic.soulissclient.db.SoulissLogDTO: short getNodeId()
 it.angelic.soulissclient.db.SoulissLogDTO: void setNodeId(short)
 it.angelic.soulissclient.db.SoulissLogDTO: short getSlot()
 it.angelic.soulissclient.db.SoulissLogDTO: void setSlot(short)
-it.angelic.soulissclient.db.SoulissLogDTO: short getTypical()
-it.angelic.soulissclient.db.SoulissLogDTO: void setTypical(short)
 it.angelic.soulissclient.db.SoulissLogDTO: float getLogValue()
 it.angelic.soulissclient.db.SoulissLogDTO: void setLogValue(float)
 it.angelic.soulissclient.db.SoulissLogDTO: java.util.Calendar getLogTime()
@@ -9722,6 +10059,7 @@ it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: it.an
 it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: T16RGBAdvancedFragment$ColorPickerView(it.angelic.soulissclient.fragments.T16RGBAdvancedFragment,android.content.Context,it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$OnColorChangedListener,int)
 it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: void setCenterColor(int)
 it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: void onDraw(android.graphics.Canvas)
+it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: void onVisibilityChanged(android.view.View,int)
 it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: void onMeasure(int,int)
 it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$ColorPickerView: boolean onTouchEvent(android.view.MotionEvent)
 it.angelic.soulissclient.fragments.T16RGBAdvancedFragment$OnColorChangedListener
@@ -9744,6 +10082,7 @@ it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: it.angelic.souli
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.Button btFlash
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.Button btSleep
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: int intensity
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: int intensityReal
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: com.pheelicks.visualizer.VisualizerView mVisualizerView
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: boolean continueIncrementing
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: boolean continueDecrementing
@@ -9775,35 +10114,35 @@ it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void issueIrComm
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: it.angelic.soulissclient.db.SoulissDBHelper access$0(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel access$1(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$2(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.TextView access$3(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.SeekBar access$4(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$5(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,int)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: int access$6(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.ToggleButton access$7(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: boolean access$8(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: boolean access$9(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.TableRow access$10(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: com.pheelicks.visualizer.VisualizerView access$11(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.view.View access$12(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.TableRow access$13(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$14(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$15(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,java.lang.Short)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$3(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,int)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: int access$4(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.TextView access$5(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.SeekBar access$6(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$7(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,int)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: int access$8(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.ToggleButton access$9(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: boolean access$10(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: boolean access$11(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.TableRow access$12(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: com.pheelicks.visualizer.VisualizerView access$13(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.view.View access$14(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: android.widget.TableRow access$15(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$16(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$17(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,java.lang.Short)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$18(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$19(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,java.lang.Short)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment: void access$20(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$1
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$1: it.angelic.soulissclient.fragments.T19SingleChannelLedFragment this$0
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$1: T19SingleChannelLedFragment$1(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$1: void onReceive(android.content.Context,android.content.Intent)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$2
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$2: it.angelic.soulissclient.fragments.T19SingleChannelLedFragment this$0
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$2: java.lang.Short val$cmd
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$2: T19SingleChannelLedFragment$2(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,java.lang.Short)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$2: T19SingleChannelLedFragment$2(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$2: void run()
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$3
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$3: it.angelic.soulissclient.fragments.T19SingleChannelLedFragment this$0
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$3: java.lang.Short val$cmd
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$3: T19SingleChannelLedFragment$3(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment,java.lang.Short)
+it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$3: T19SingleChannelLedFragment$3(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$3: void run()
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$4
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$4: it.angelic.soulissclient.fragments.T19SingleChannelLedFragment this$0
@@ -9822,8 +10161,6 @@ it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$7
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$7: it.angelic.soulissclient.fragments.T19SingleChannelLedFragment this$0
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$7: T19SingleChannelLedFragment$7(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$7: boolean onTouch(android.view.View,android.view.MotionEvent)
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$OnColorChangedListener
-it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$OnColorChangedListener: void colorChanged(int)
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$channelInputListener
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$channelInputListener: it.angelic.soulissclient.fragments.T19SingleChannelLedFragment this$0
 it.angelic.soulissclient.fragments.T19SingleChannelLedFragment$channelInputListener: T19SingleChannelLedFragment$channelInputListener(it.angelic.soulissclient.fragments.T19SingleChannelLedFragment)
@@ -10355,9 +10692,9 @@ it.angelic.soulissclient.helpers.ScenesDialogHelper$5: void onNothingSelected(an
 it.angelic.soulissclient.helpers.ScenesDialogHelper$6
 it.angelic.soulissclient.helpers.ScenesDialogHelper$6: it.angelic.soulissclient.model.SoulissNode[] val$nodiArray
 it.angelic.soulissclient.helpers.ScenesDialogHelper$6: android.widget.Spinner val$outputNodeSpinner
-it.angelic.soulissclient.helpers.ScenesDialogHelper$6: android.widget.Spinner val$outputCommandSpinner
 it.angelic.soulissclient.helpers.ScenesDialogHelper$6: android.content.Context val$context
-it.angelic.soulissclient.helpers.ScenesDialogHelper$6: ScenesDialogHelper$6(it.angelic.soulissclient.model.SoulissNode[],android.widget.Spinner,android.widget.Spinner,android.content.Context)
+it.angelic.soulissclient.helpers.ScenesDialogHelper$6: android.widget.Spinner val$outputCommandSpinner
+it.angelic.soulissclient.helpers.ScenesDialogHelper$6: ScenesDialogHelper$6(it.angelic.soulissclient.model.SoulissNode[],android.widget.Spinner,android.content.Context,android.widget.Spinner)
 it.angelic.soulissclient.helpers.ScenesDialogHelper$6: void onItemSelected(android.widget.AdapterView,android.view.View,int,long)
 it.angelic.soulissclient.helpers.ScenesDialogHelper$6: void onNothingSelected(android.widget.AdapterView)
 it.angelic.soulissclient.helpers.ScenesDialogHelper$7
@@ -10532,7 +10869,7 @@ it.angelic.soulissclient.model.SoulissNode: java.util.Calendar refreshedAt
 it.angelic.soulissclient.model.SoulissNode: java.util.List soulissTypicals
 it.angelic.soulissclient.model.SoulissNode: SoulissNode(short)
 it.angelic.soulissclient.model.SoulissNode: it.angelic.soulissclient.model.SoulissNode cursorToNode(android.database.Cursor)
-it.angelic.soulissclient.model.SoulissNode: void add(it.angelic.soulissclient.model.SoulissTypical)
+it.angelic.soulissclient.model.SoulissNode: void addTypical(it.angelic.soulissclient.model.SoulissTypical)
 it.angelic.soulissclient.model.SoulissNode: short getHealth()
 it.angelic.soulissclient.model.SoulissNode: int getDefaultIconResourceId()
 it.angelic.soulissclient.model.SoulissNode: void setIconResourceId(int)
@@ -10540,7 +10877,8 @@ it.angelic.soulissclient.model.SoulissNode: short getId()
 it.angelic.soulissclient.model.SoulissNode: java.lang.String getNiceName()
 it.angelic.soulissclient.model.SoulissNode: java.util.Calendar getRefreshedAt()
 it.angelic.soulissclient.model.SoulissNode: java.util.List getTypicals()
-it.angelic.soulissclient.model.SoulissNode: java.util.ArrayList getActiveTypicals()
+it.angelic.soulissclient.model.SoulissNode: java.util.List getActiveTypicals(android.content.Context)
+it.angelic.soulissclient.model.SoulissNode: java.util.List getActiveTypicals()
 it.angelic.soulissclient.model.SoulissNode: void setHealth(short)
 it.angelic.soulissclient.model.SoulissNode: void setId(short)
 it.angelic.soulissclient.model.SoulissNode: void setName(java.lang.String)
@@ -10770,10 +11108,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical11: it.angelic.soulissclie
 it.angelic.soulissclient.model.typicals.SoulissTypical11: it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$1(it.angelic.soulissclient.model.typicals.SoulissTypical11)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$1
 it.angelic.soulissclient.model.typicals.SoulissTypical11$1: it.angelic.soulissclient.model.typicals.SoulissTypical11 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical11$1: it.angelic.soulissclient.helpers.ListToggleButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical11$1: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical11$1: it.angelic.soulissclient.helpers.ListButton val$turnOffButton
-it.angelic.soulissclient.model.typicals.SoulissTypical11$1: SoulissTypical11$1(it.angelic.soulissclient.model.typicals.SoulissTypical11,it.angelic.soulissclient.helpers.ListToggleButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical11$1: SoulissTypical11$1(it.angelic.soulissclient.model.typicals.SoulissTypical11)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$1: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$1: it.angelic.soulissclient.model.typicals.SoulissTypical11 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical11$1)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$1$1
@@ -10782,10 +11117,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical11$1$1: SoulissTypical11$1
 it.angelic.soulissclient.model.typicals.SoulissTypical11$1$1: void run()
 it.angelic.soulissclient.model.typicals.SoulissTypical11$2
 it.angelic.soulissclient.model.typicals.SoulissTypical11$2: it.angelic.soulissclient.model.typicals.SoulissTypical11 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical11$2: it.angelic.soulissclient.helpers.ListToggleButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical11$2: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical11$2: it.angelic.soulissclient.helpers.ListButton val$turnOffButton
-it.angelic.soulissclient.model.typicals.SoulissTypical11$2: SoulissTypical11$2(it.angelic.soulissclient.model.typicals.SoulissTypical11,it.angelic.soulissclient.helpers.ListToggleButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical11$2: SoulissTypical11$2(it.angelic.soulissclient.model.typicals.SoulissTypical11)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$2: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$2: it.angelic.soulissclient.model.typicals.SoulissTypical11 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical11$2)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$2$1
@@ -10794,10 +11126,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical11$2$1: SoulissTypical11$2
 it.angelic.soulissclient.model.typicals.SoulissTypical11$2$1: void run()
 it.angelic.soulissclient.model.typicals.SoulissTypical11$3
 it.angelic.soulissclient.model.typicals.SoulissTypical11$3: it.angelic.soulissclient.model.typicals.SoulissTypical11 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical11$3: it.angelic.soulissclient.helpers.ListToggleButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical11$3: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical11$3: it.angelic.soulissclient.helpers.ListButton val$turnOffButton
-it.angelic.soulissclient.model.typicals.SoulissTypical11$3: SoulissTypical11$3(it.angelic.soulissclient.model.typicals.SoulissTypical11,it.angelic.soulissclient.helpers.ListToggleButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical11$3: SoulissTypical11$3(it.angelic.soulissclient.model.typicals.SoulissTypical11)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$3: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$3: it.angelic.soulissclient.model.typicals.SoulissTypical11 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical11$3)
 it.angelic.soulissclient.model.typicals.SoulissTypical11$3$1
@@ -10815,10 +11144,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical12: it.angelic.soulissclie
 it.angelic.soulissclient.model.typicals.SoulissTypical12: it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$1(it.angelic.soulissclient.model.typicals.SoulissTypical12)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$1
 it.angelic.soulissclient.model.typicals.SoulissTypical12$1: it.angelic.soulissclient.model.typicals.SoulissTypical12 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical12$1: it.angelic.soulissclient.helpers.ListButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical12$1: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical12$1: it.angelic.soulissclient.helpers.ListButton val$turnOffButton
-it.angelic.soulissclient.model.typicals.SoulissTypical12$1: SoulissTypical12$1(it.angelic.soulissclient.model.typicals.SoulissTypical12,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical12$1: SoulissTypical12$1(it.angelic.soulissclient.model.typicals.SoulissTypical12)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$1: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$1: it.angelic.soulissclient.model.typicals.SoulissTypical12 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical12$1)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$1$1
@@ -10827,10 +11153,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical12$1$1: SoulissTypical12$1
 it.angelic.soulissclient.model.typicals.SoulissTypical12$1$1: void run()
 it.angelic.soulissclient.model.typicals.SoulissTypical12$2
 it.angelic.soulissclient.model.typicals.SoulissTypical12$2: it.angelic.soulissclient.model.typicals.SoulissTypical12 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical12$2: it.angelic.soulissclient.helpers.ListButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical12$2: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical12$2: it.angelic.soulissclient.helpers.ListButton val$turnOffButton
-it.angelic.soulissclient.model.typicals.SoulissTypical12$2: SoulissTypical12$2(it.angelic.soulissclient.model.typicals.SoulissTypical12,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical12$2: SoulissTypical12$2(it.angelic.soulissclient.model.typicals.SoulissTypical12)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$2: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$2: it.angelic.soulissclient.model.typicals.SoulissTypical12 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical12$2)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$2$1
@@ -10839,10 +11162,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical12$2$1: SoulissTypical12$2
 it.angelic.soulissclient.model.typicals.SoulissTypical12$2$1: void run()
 it.angelic.soulissclient.model.typicals.SoulissTypical12$3
 it.angelic.soulissclient.model.typicals.SoulissTypical12$3: it.angelic.soulissclient.model.typicals.SoulissTypical12 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical12$3: it.angelic.soulissclient.helpers.ListButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical12$3: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical12$3: it.angelic.soulissclient.helpers.ListButton val$turnOffButton
-it.angelic.soulissclient.model.typicals.SoulissTypical12$3: SoulissTypical12$3(it.angelic.soulissclient.model.typicals.SoulissTypical12,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical12$3: SoulissTypical12$3(it.angelic.soulissclient.model.typicals.SoulissTypical12)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$3: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$3: it.angelic.soulissclient.model.typicals.SoulissTypical12 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical12$3)
 it.angelic.soulissclient.model.typicals.SoulissTypical12$3$1
@@ -10865,8 +11185,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical14: it.angelic.soulissclie
 it.angelic.soulissclient.model.typicals.SoulissTypical14: it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$1(it.angelic.soulissclient.model.typicals.SoulissTypical14)
 it.angelic.soulissclient.model.typicals.SoulissTypical14$1
 it.angelic.soulissclient.model.typicals.SoulissTypical14$1: it.angelic.soulissclient.model.typicals.SoulissTypical14 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical14$1: it.angelic.soulissclient.helpers.ListButton val$turnOnButton
-it.angelic.soulissclient.model.typicals.SoulissTypical14$1: SoulissTypical14$1(it.angelic.soulissclient.model.typicals.SoulissTypical14,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical14$1: SoulissTypical14$1(it.angelic.soulissclient.model.typicals.SoulissTypical14)
 it.angelic.soulissclient.model.typicals.SoulissTypical14$1: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical14$1: it.angelic.soulissclient.model.typicals.SoulissTypical14 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical14$1)
 it.angelic.soulissclient.model.typicals.SoulissTypical14$1$1
@@ -10894,10 +11213,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical15$1$1: SoulissTypical15$1
 it.angelic.soulissclient.model.typicals.SoulissTypical15$1$1: void run()
 it.angelic.soulissclient.model.typicals.SoulissTypical15$2
 it.angelic.soulissclient.model.typicals.SoulissTypical15$2: it.angelic.soulissclient.model.typicals.SoulissTypical15 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical15$2: it.angelic.soulissclient.helpers.ListButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical15$2: it.angelic.soulissclient.helpers.ListButton val$turnON
-it.angelic.soulissclient.model.typicals.SoulissTypical15$2: it.angelic.soulissclient.helpers.ListButton val$turnOFF
-it.angelic.soulissclient.model.typicals.SoulissTypical15$2: SoulissTypical15$2(it.angelic.soulissclient.model.typicals.SoulissTypical15,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical15$2: SoulissTypical15$2(it.angelic.soulissclient.model.typicals.SoulissTypical15)
 it.angelic.soulissclient.model.typicals.SoulissTypical15$2: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical15$2: it.angelic.soulissclient.model.typicals.SoulissTypical15 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical15$2)
 it.angelic.soulissclient.model.typicals.SoulissTypical15$2$1
@@ -10906,10 +11222,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical15$2$1: SoulissTypical15$2
 it.angelic.soulissclient.model.typicals.SoulissTypical15$2$1: void run()
 it.angelic.soulissclient.model.typicals.SoulissTypical15$3
 it.angelic.soulissclient.model.typicals.SoulissTypical15$3: it.angelic.soulissclient.model.typicals.SoulissTypical15 this$0
-it.angelic.soulissclient.model.typicals.SoulissTypical15$3: it.angelic.soulissclient.helpers.ListButton val$tog
-it.angelic.soulissclient.model.typicals.SoulissTypical15$3: it.angelic.soulissclient.helpers.ListButton val$turnON
-it.angelic.soulissclient.model.typicals.SoulissTypical15$3: it.angelic.soulissclient.helpers.ListButton val$turnOFF
-it.angelic.soulissclient.model.typicals.SoulissTypical15$3: SoulissTypical15$3(it.angelic.soulissclient.model.typicals.SoulissTypical15,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton,it.angelic.soulissclient.helpers.ListButton)
+it.angelic.soulissclient.model.typicals.SoulissTypical15$3: SoulissTypical15$3(it.angelic.soulissclient.model.typicals.SoulissTypical15)
 it.angelic.soulissclient.model.typicals.SoulissTypical15$3: void onClick(android.view.View)
 it.angelic.soulissclient.model.typicals.SoulissTypical15$3: it.angelic.soulissclient.model.typicals.SoulissTypical15 access$0(it.angelic.soulissclient.model.typicals.SoulissTypical15$3)
 it.angelic.soulissclient.model.typicals.SoulissTypical15$3$1
@@ -11162,6 +11475,7 @@ it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: int maxTemp
 it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: int minTemp
 it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: long serialVersionUID
 it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: SoulissTypical54LuxSensor(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
+it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: int getOutputLux()
 it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: java.lang.String getOutputDesc()
 it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor: void getActionsLayout(it.angelic.soulissclient.adapters.TypicalsListAdapter,android.content.Context,android.content.Intent,android.view.View,android.view.ViewGroup)
 it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor
@@ -11220,24 +11534,6 @@ it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor: int getOutp
 it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor: java.lang.String getOutputAmperes()
 it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor: java.lang.String getOutputDesc()
 it.angelic.soulissclient.model.typicals.SoulissTypicalCurrentSensor: void getActionsLayout(it.angelic.soulissclient.adapters.TypicalsListAdapter,android.content.Context,android.content.Intent,android.view.View,android.view.ViewGroup)
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: long serialVersionUID
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: SoulissTypicalHumiditySensor(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: java.lang.Float getOutput()
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: float getOutputFloat()
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: java.lang.String getOutputPercent()
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: java.lang.String getOutputDesc()
-it.angelic.soulissclient.model.typicals.SoulissTypicalHumiditySensor: void getActionsLayout(it.angelic.soulissclient.adapters.TypicalsListAdapter,android.content.Context,android.content.Intent,android.view.View,android.view.ViewGroup)
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: int maxTemp
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: int minTemp
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: long serialVersionUID
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: SoulissTypicalTemperatureSensor(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: java.lang.Float getOutput()
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: float getOutputFloat()
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: java.lang.String getOutputCelsius()
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: java.lang.String getOutputDesc()
-it.angelic.soulissclient.model.typicals.SoulissTypicalTemperatureSensor: void getActionsLayout(it.angelic.soulissclient.adapters.TypicalsListAdapter,android.content.Context,android.content.Intent,android.view.View,android.view.ViewGroup)
 it.angelic.soulissclient.net.Constants
 it.angelic.soulissclient.net.Constants: java.lang.String TAG
 it.angelic.soulissclient.net.Constants: java.lang.String CUSTOM_INTENT_SOULISS_RAWDATA
@@ -11321,11 +11617,11 @@ it.angelic.soulissclient.net.UDPRunnable: java.util.concurrent.ThreadPoolExecuto
 it.angelic.soulissclient.net.UDPRunnable: int maxThreads
 it.angelic.soulissclient.net.UDPRunnable: UDPRunnable(it.angelic.soulissclient.helpers.SoulissPreferenceHelper)
 it.angelic.soulissclient.net.UDPRunnable: void run()
+it.angelic.soulissclient.net.UDPRunnable: it.angelic.soulissclient.helpers.SoulissPreferenceHelper access$0(it.angelic.soulissclient.net.UDPRunnable)
 it.angelic.soulissclient.net.UDPRunnable$1
 it.angelic.soulissclient.net.UDPRunnable$1: it.angelic.soulissclient.net.UDPRunnable this$0
-it.angelic.soulissclient.net.UDPRunnable$1: it.angelic.soulissclient.net.UDPSoulissDecoder val$decoder
 it.angelic.soulissclient.net.UDPRunnable$1: java.net.DatagramPacket val$packet
-it.angelic.soulissclient.net.UDPRunnable$1: UDPRunnable$1(it.angelic.soulissclient.net.UDPRunnable,it.angelic.soulissclient.net.UDPSoulissDecoder,java.net.DatagramPacket)
+it.angelic.soulissclient.net.UDPRunnable$1: UDPRunnable$1(it.angelic.soulissclient.net.UDPRunnable,java.net.DatagramPacket)
 it.angelic.soulissclient.net.UDPRunnable$1: void run()
 it.angelic.soulissclient.net.UDPSoulissDecoder
 it.angelic.soulissclient.net.UDPSoulissDecoder: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
