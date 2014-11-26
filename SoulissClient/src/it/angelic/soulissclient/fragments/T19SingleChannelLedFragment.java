@@ -48,18 +48,16 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 	private Button btOff;
 	private Button btOn;
 	private SoulissTypical19AnalogChannel collected;
-	// private SoulissTypical related;
 
 	private Button btFlash;
 	private Button btSleep;
 
 	private int intensity = 0;
+	private int intensityReal = 0;
 	// Color change listener.
 	private VisualizerView mVisualizerView;
-	// private CheckBox checkMusic;
 
 	private boolean continueIncrementing;
-	// private Runnable senderThread;
 	private boolean continueDecrementing;
 	private ToggleButton togMulticast;
 	private TableRow tableRowVis;
@@ -68,7 +66,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 	private Spinner modeSpinner;
 	private SeekBar seekChannelIntensity;
 	private TextView redChanabel;
-//	private View buttLamp;
 
 	/**
 	 * Serve per poter tenuto il bottone brightness
@@ -80,11 +77,12 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		new Thread(new Runnable() {
 			public void run() {
 				while (isIncrementing()) {
-					issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
+					intensity +=5;
+					issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity, 0, 0, togMulticast.isChecked());
 					try {
-						Thread.sleep(500);
+						Thread.sleep(250);
 					} catch (InterruptedException e) {
-						Log.e(Constants.TAG, "Error Thread.sleep:");
+						Log.e(Constants.TAG, "Error Thread.sleep:"+e.getMessage());
 					}
 				}
 			}
@@ -93,6 +91,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	synchronized private void stopIncrementing() {
 		setIsIncrementing(false);
+		collected.issueRefresh();
 	}
 
 	synchronized private boolean isIncrementing() {
@@ -108,12 +107,13 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		setIsDecrementing(true);
 		new Thread(new Runnable() {
 			public void run() {
-				while (isDecrementing()) {
-					issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
+				while (isDecrementing() && intensity > 5) {
+					intensity -= 5;
+					issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity, 0, 0, togMulticast.isChecked());
 					try {
-						Thread.sleep(500);
+						Thread.sleep(250);
 					} catch (InterruptedException e) {
-						Log.e(Constants.TAG, "Error Thread.sleep:");
+						Log.e(Constants.TAG, "Error Thread.sleep:"+e.getMessage());
 					}
 				}
 			}
@@ -122,6 +122,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	synchronized private void stopDecrementing() {
 		setIsDecrementing(false);
+		collected.issueRefresh();
 	}
 
 	/**
@@ -139,19 +140,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	synchronized void setIsDecrementing(boolean newSetting) {
 		continueDecrementing = newSetting;
-	}
-
-	/**
-	 * Interface describing a intensity change listener.
-	 */
-	public interface OnColorChangedListener {
-		/**
-		 * Method colorChanged is called when a new intensity is selected.
-		 * 
-		 * @param intensity
-		 *            new intensity.
-		 */
-		void colorChanged(int color);
 	}
 
 	@Override
@@ -199,6 +187,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		}
 
 		super.setCollected(collected);
+		collected.issueRefresh();
 		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
@@ -289,6 +278,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 				assertTrue(cmd != null);
 
 				issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
+				collected.issueRefresh();
 				return;
 			}
 
@@ -376,26 +366,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		return f;
 	}
 
-	/*
-	 * @Override public boolean onOptionsItemSelected(MenuItem item) { switch
-	 * (item.getItemId()) { case android.R.id.home: if
-	 * (getResources().getConfiguration().orientation ==
-	 * Configuration.ORIENTATION_LANDSCAPE) { NodeDetailFragment details =
-	 * NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
-	 * collected.getParentNode()); // Execute a transaction, replacing any
-	 * existing fragment FragmentTransaction ft =
-	 * getFragmentManager().beginTransaction(); if
-	 * (opzioni.isAnimationsEnabled())
-	 * ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-	 * ft.replace(R.id.details, details);
-	 * ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-	 * ft.commit(); } else { getActivity().finish(); if
-	 * (opzioni.isAnimationsEnabled())
-	 * getActivity().overridePendingTransition(R.anim.slide_in_left,
-	 * R.anim.slide_out_right);
-	 * 
-	 * } return true; } return super.onOptionsItemSelected(item); }
-	 */
+	
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -404,7 +375,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
 					.getNodeId(), collected.getTypicalDTO().getSlot());
 			collected.issueRefresh();
-			seekChannelIntensity.setProgress(collected.getIntensity());
 		}
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
@@ -427,7 +397,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	// Aggiorna il feedback
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// SoulissNode coll = datasource.getSoulissNode();
@@ -435,8 +404,10 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 					.getNodeId(), collected.getTypicalDTO().getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");
-			Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + collected.getIntensity());
-			redChanabel.setText(getString(R.string.Souliss_T19_received) + " " + collected.getIntensity());
+			intensityReal = collected.getIntensity();
+			Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + intensityReal);
+			redChanabel.setText(getString(R.string.Souliss_T19_received) + " " + intensityReal);
+			seekChannelIntensity.setProgress(intensityReal);
 			refreshStatusIcon();
 		}
 	};
@@ -448,15 +419,14 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 			// curva quadratica
-			float val = seekChannelIntensity.getProgress();
-			int out = (int) (val * val * 255 / 100 / 100);
+			int val = seekChannelIntensity.getProgress();
+			/*int out = (int) (val * val * 255 / 100 / 100);
 			if (out > 255)
-				out = 255;
-			intensity = out;
+				out = 255;*/
+			intensity = val;
 			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity, 0, 0,
 					togMulticast.isChecked());
-			redChanabel.setText(getString(R.string.Souliss_T19_set) + " " + out);
-
+			redChanabel.setText(getString(R.string.Souliss_T19_set) + " " + val);
 		}
 
 		public void onStartTrackingTouch(SeekBar seekBar) {
