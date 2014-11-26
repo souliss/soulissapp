@@ -103,7 +103,7 @@ private int exportedNodes;
 			csvWrite.writeNext(curCSV.getColumnNames());
 			while (curCSV.moveToNext()) {
 				String arrStr[] = { curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3),
-						curCSV.getString(4), curCSV.getString(5) };
+						curCSV.getString(4) };
 				csvWrite.writeNext(arrStr);
 			}
 			Log.i(TAG, "exported LOG rows:" + curCSV.getCount());

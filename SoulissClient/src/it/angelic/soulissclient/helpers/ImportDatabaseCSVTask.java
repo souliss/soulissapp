@@ -236,10 +236,9 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			log.setLogId(Long.valueOf(temp[0]));
 			log.setNodeId(Short.valueOf(temp[1]));
 			log.setSlot(Short.valueOf(temp[2]));
-			//log.setTypical(Short.valueOf(temp[3]));
-			log.setLogValue(Float.valueOf(temp[4]));
+			log.setLogValue(Float.valueOf(temp[3]));
 			Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date(Long.valueOf(temp[5])));
+			cal.setTime(new Date(Long.valueOf(temp[4])));
 			log.setLogTime(cal);
 			log.persist();
 		} catch (Exception e) {
