@@ -37,8 +37,7 @@
             android:dialogTitle="@string/opt_userindex"
             android:key="advbroadcastKey"
             android:summary="Remotely configure Souliss Bridge Node"
-            android:title="Broadcast Setting" >
-            </Preference>
+            android:title="Broadcast Setting" />
         <EditTextPreference
             android:name="userindex"
             android:dialogTitle="@string/opt_userindex"
