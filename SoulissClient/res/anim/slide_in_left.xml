@@ -6,6 +6,5 @@
         android:fromXDelta="-100%"
         android:toXDelta="0%" >
     </translate>
-    <alpha android:fromAlpha="0.0" android:toAlpha="1.0"
-            android:duration="@android:integer/config_mediumAnimTime" />
+    
 </set>
