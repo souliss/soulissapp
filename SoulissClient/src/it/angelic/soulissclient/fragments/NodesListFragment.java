@@ -7,7 +7,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.NodesListAdapter.NodeViewHolder;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -259,8 +258,6 @@ public class NodesListFragment extends SherlockListFragment {
 
 	// Aggiorna il feedback
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-		
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Log.i(TAG, "Broadcast received, refresh from DB");
@@ -281,8 +278,6 @@ public class NodesListFragment extends SherlockListFragment {
 		}
 	};
 
-	
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
@@ -295,9 +290,8 @@ public class NodesListFragment extends SherlockListFragment {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		nodesAdapter = (NodesListAdapter) getListView().getAdapter();
-		long arrayAdapterPosition = info.position;
-		final SoulissNode todoItem = (SoulissNode) nodesAdapter.getItem((int) arrayAdapterPosition);
+		//BUG?
+		final SoulissNode todoItem = nodiArray[(int) info.position];
 
 		switch (item.getItemId()) {
 		case R.id.rinominaNodo:
@@ -371,7 +365,7 @@ public class NodesListFragment extends SherlockListFragment {
 							refreshStatusIcon();
 							getListView().invalidateViews();
 						} catch (Exception e) {
-							Log.e(Constants.TAG, "InvalidateViews fallita");
+							Log.e(Constants.TAG, "InvalidateViews fallita:"+e.getMessage());
 						}
 
 					}

@@ -6,7 +6,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.util.Calendar;
@@ -34,7 +34,7 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulissTypicalSensor {
 
 	public SoulissTypical54LuxSensor(SoulissPreferenceHelper pre) {
 		super(pre);
@@ -51,6 +51,13 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
 	 */
 	public int getOutputLux() {
+		float ret = getOutputFloat();
+		int casted = (int) ret * 1000;
+		return casted;
+	}
+	
+	@Override
+	public float getOutputFloat() {
 		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
 				.getTypicalDTO().getOutput();
 		// ora ho i due bytes, li converto
@@ -60,10 +67,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 						+ Long.toHexString((long) miofratello) + " LUX SENSOR Reading:"
 						+ Long.toHexString((long) shifted + typicalDTO.getOutput()));
 
-		float ret = HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
-		int casted = (int) ret * 1000;
-		return casted;
-
+		return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 	}
 
 	@Override
@@ -119,4 +123,6 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		cont.addView(par);
 
 	}
+
+	
 }

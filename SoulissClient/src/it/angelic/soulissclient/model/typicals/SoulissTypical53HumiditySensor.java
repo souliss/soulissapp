@@ -6,6 +6,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.util.Calendar;
@@ -33,11 +34,10 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-public class SoulissTypical53HumiditySensor extends SoulissTypical {
+public class SoulissTypical53HumiditySensor extends SoulissTypical implements ISoulissTypicalSensor{
 
 	public SoulissTypical53HumiditySensor(SoulissPreferenceHelper pre) {
 		super(pre);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

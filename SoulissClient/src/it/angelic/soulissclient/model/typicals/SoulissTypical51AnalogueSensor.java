@@ -6,7 +6,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.util.Calendar;
@@ -34,7 +34,7 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-public class SoulissTypical51AnalogueSensor extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical51AnalogueSensor extends SoulissTypical implements ISoulissTypicalSensor {
 
 	public SoulissTypical51AnalogueSensor(SoulissPreferenceHelper pre) {
 		super(pre);

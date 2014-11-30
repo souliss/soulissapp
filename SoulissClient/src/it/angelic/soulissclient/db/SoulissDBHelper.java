@@ -6,6 +6,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -15,8 +16,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 
 import java.io.File;
 import java.text.ParseException;
@@ -191,14 +190,9 @@ public class SoulissDBHelper {
 		values.put(SoulissDB.COLUMN_LOG_NODE_ID, soulissTypical.getTypicalDTO().getNodeId());
 		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
 		values.put(SoulissDB.COLUMN_LOG_SLOT, soulissTypical.getTypicalDTO().getSlot());
-		if (soulissTypical instanceof SoulissTypical51AnalogueSensor) {
+		if (soulissTypical instanceof ISoulissTypicalSensor) {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
-		} else if (soulissTypical instanceof SoulissTypical52TemperatureSensor) {
-			
-			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical52TemperatureSensor) soulissTypical).getOutputFloat());
-		} else if (soulissTypical instanceof SoulissTypical53HumiditySensor) {
-			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical53HumiditySensor) soulissTypical).getOutputFloat());
-		} else {
+		}  else {
 			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
 		}
 		try {
