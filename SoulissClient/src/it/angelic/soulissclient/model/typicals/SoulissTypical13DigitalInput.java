@@ -25,7 +25,7 @@ import android.widget.TextView;
  * @author Ale
  * 
  */
-public class SoulissTypical13 extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical13DigitalInput extends SoulissTypical implements ISoulissTypical {
 
 	/**
 	 * 
@@ -34,7 +34,7 @@ public class SoulissTypical13 extends SoulissTypical implements ISoulissTypical 
 
 	// Context ctx;
 
-	public SoulissTypical13(SoulissPreferenceHelper fg) {
+	public SoulissTypical13DigitalInput(SoulissPreferenceHelper fg) {
 		super(fg);
 	}
 

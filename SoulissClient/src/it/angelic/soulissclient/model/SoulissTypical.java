@@ -7,10 +7,10 @@ import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.Constants;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12;
-import it.angelic.soulissclient.model.typicals.SoulissTypical13;
-import it.angelic.soulissclient.model.typicals.SoulissTypical14;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
+import it.angelic.soulissclient.model.typicals.SoulissTypical13DigitalInput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical14PulseOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
@@ -46,7 +46,7 @@ import android.widget.TextView;
  * @author shine@angelic.it
  *
  */
-public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTypical {
+public class SoulissTypical implements Serializable, ISoulissTypical {
 	/**
 	 * 
 	 */
@@ -110,16 +110,16 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 		assertTrue(opts != null);
 		switch (typ) {
 		case Constants.Souliss_T11:
-			rest = new SoulissTypical11(opts);
+			rest = new SoulissTypical11DigitalOutput(opts);
 			break;
 		case Constants.Souliss_T12:
-			rest = new SoulissTypical12(opts);
+			rest = new SoulissTypical12DigitalOutputAuto(opts);
 			break;
 		case Constants.Souliss_T13:
-			rest = new SoulissTypical13(opts);
+			rest = new SoulissTypical13DigitalInput(opts);
 			break;
 		case Constants.Souliss_T14:
-			rest = new SoulissTypical14(opts);
+			rest = new SoulissTypical14PulseOutput(opts);
 			break;
 		case Constants.Souliss_T1n_RGB:
 			rest = new SoulissTypical15(opts);
@@ -128,7 +128,7 @@ public class SoulissTypical implements Serializable, ISoulissObject, ISoulissTyp
 			rest = new SoulissTypical16AdvancedRGB(opts);
 			break;
 		case Constants.Souliss_T18:
-			rest = new SoulissTypical11(opts);
+			rest = new SoulissTypical11DigitalOutput(opts);
 			break;
 		case Constants.Souliss_T19:
 			rest = new SoulissTypical19AnalogChannel(opts);

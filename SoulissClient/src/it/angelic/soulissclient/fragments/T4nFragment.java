@@ -200,13 +200,13 @@ public class T4nFragment extends SherlockFragment {
 			}
 		});
 		/*
-		 * if (collected instanceof SoulissTypical12) {
+		 * if (collected instanceof SoulissTypical12DigitalOutputAuto) {
 		 * btSleep.setVisibility(View.GONE);
 		 * alarmInfoTextView.setVisibility(View.GONE); // Check AUTO mode if
 		 * (collected.getOutputDesc().contains("AUTO"))
 		 * autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON"); else
 		 * autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF"); }
-		 * else if (collected instanceof SoulissTypical11) {
+		 * else if (collected instanceof SoulissTypical11DigitalOutput) {
 		 * buttAuto.setVisibility(View.GONE); autoInfo.setVisibility(View.GONE);
 		 * }
 		 */

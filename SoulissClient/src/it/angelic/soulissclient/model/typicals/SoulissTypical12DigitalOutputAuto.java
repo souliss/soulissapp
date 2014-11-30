@@ -20,14 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class SoulissTypical12 extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements ISoulissTypical {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4292781263370980816L;
 
-	public SoulissTypical12(SoulissPreferenceHelper fg) {
+	public SoulissTypical12DigitalOutputAuto(SoulissPreferenceHelper fg) {
 		super(fg);
 
 	}

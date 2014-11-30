@@ -17,8 +17,8 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -211,7 +211,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		};
 		btSleep.setOnClickListener(plusSlip);
 
-		if (collected instanceof SoulissTypical12) {
+		if (collected instanceof SoulissTypical12DigitalOutputAuto) {
 			btSleep.setVisibility(View.GONE);
 			timer.setVisibility(View.GONE);
 			timerInfo.setVisibility(View.GONE);
@@ -220,7 +220,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON");
 			else
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF");
-		} else if (collected instanceof SoulissTypical11) {
+		} else if (collected instanceof SoulissTypical11DigitalOutput) {
 			buttAuto.setVisibility(View.GONE);
 			autoInfo.setVisibility(View.GONE);
 		}

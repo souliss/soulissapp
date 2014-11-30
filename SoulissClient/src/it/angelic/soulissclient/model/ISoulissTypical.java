@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 
-public interface ISoulissTypical {
+public interface ISoulissTypical extends ISoulissObject {
 	/**
 	 * Has to be overridden in child typicals
 	 * 

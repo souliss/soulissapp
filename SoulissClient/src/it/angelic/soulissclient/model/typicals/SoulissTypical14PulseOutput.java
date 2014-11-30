@@ -17,17 +17,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+/**
+ * 
+ * Typical 14 : Pulse Digital Output
+ * 
+ * One way trigger switch. The only command available will turn it on. 
+ * Souliss will turn it off after some cycle individually
+ * 
+ * @author shine@angelic.it
+ *
+ */
+public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoulissTypical {
 
-public class SoulissTypical14 extends SoulissTypical implements ISoulissTypical {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4553488325062232092L;
 
-	// Context ctx;
 
-	public SoulissTypical14(SoulissPreferenceHelper fg) {
+	public SoulissTypical14PulseOutput(SoulissPreferenceHelper fg) {
 		super(fg);
 	}
 
@@ -90,7 +95,6 @@ public class SoulissTypical14 extends SoulissTypical implements ISoulissTypical 
 	@Override
 	public String getOutputDesc() {
 		return "NA";
-
 	}
 
 }

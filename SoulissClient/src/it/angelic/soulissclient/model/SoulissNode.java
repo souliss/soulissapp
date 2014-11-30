@@ -30,7 +30,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
 	/* Icon resource ID */
 	private int iconId = R.drawable.square;
 	private short id;
-	private String Name;
+	private String name;
 	private Calendar refreshedAt;
 
 	private List<SoulissTypical> soulissTypicals;
@@ -84,8 +84,8 @@ public class SoulissNode implements Serializable, ISoulissObject {
 	}
 
 	public String getNiceName() {
-		if (Name != null && "".compareToIgnoreCase(Name) != 0)
-			return Name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
+		if (name != null && "".compareToIgnoreCase(name) != 0)
+			return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
 		else
 			return SoulissClient.getAppContext().getString(R.string.node)+" "+ Constants.int2roman(getId());
 
@@ -125,8 +125,8 @@ public class SoulissNode implements Serializable, ISoulissObject {
 		this.id = id;
 	}
 
-	public void setName(String name) {
-		Name = name;
+	public void setName(String namer) {
+		name = namer;
 	}
 
 	public void setRefreshedAt(Calendar refreshedAt) {
@@ -152,7 +152,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
 	}
 
 	public String getName() {
-				return Name;
+		return name;
 	}
 
 	

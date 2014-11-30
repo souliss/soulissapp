@@ -11,6 +11,9 @@ public interface ISoulissObject {
 
 	public void setIconResourceId(int resId);
 	public int getDefaultIconResourceId();
+	
 	public void setName(String newName);
+	
+	
 	public String getNiceName();
 }

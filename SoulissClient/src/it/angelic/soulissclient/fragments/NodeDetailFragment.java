@@ -27,8 +27,8 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
@@ -308,7 +308,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				details = T16RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
 				details = T19SingleChannelLedFragment.newInstance(index, target);
-			else if (target instanceof SoulissTypical11 || target instanceof SoulissTypical12)
+			else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
 				details = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer|| target instanceof SoulissTypical43AntiTheftLocalPeer)
 				details = T4nFragment.newInstance(index, target);
