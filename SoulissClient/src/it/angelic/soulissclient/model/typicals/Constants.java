@@ -71,13 +71,13 @@ public class Constants {
 																	// (Peer)
 	public static final short Souliss_T43_Antitheft_LocalPeer = 0x43;
 
-	/*Souliss_Logic_T52 - Temperature measure (-20, +50) °C
-	Souliss_Logic_T53 - Humidity measure (0, 100) %
-	Souliss_Logic_T54 - Light Sensor (0, 40) kLux
-	Souliss_Logic_T55 - Voltage (0, 400) V
-	Souliss_Logic_T56 - Current (0, 25)  A
-	Souliss_Logic_T57 - Power (0, 6500)  W
-	Souliss_Logic_T58 - Pressure measure (0, 1500) hPa*/
+	/*
+	 * Souliss_Logic_T52 - Temperature measure (-20, +50) °C Souliss_Logic_T53 -
+	 * Humidity measure (0, 100) % Souliss_Logic_T54 - Light Sensor (0, 40) kLux
+	 * Souliss_Logic_T55 - Voltage (0, 400) V Souliss_Logic_T56 - Current (0,
+	 * 25) A Souliss_Logic_T57 - Power (0, 6500) W Souliss_Logic_T58 - Pressure
+	 * measure (0, 1500) hPa
+	 */
 	public static final short Souliss_T51 = 0x51;
 	public static final short Souliss_T52_TemperatureSensor = 0x52;
 	public static final short Souliss_T53_HumiditySensor = 0x53;
@@ -224,14 +224,15 @@ public class Constants {
 	// General defines for T3n
 	public static final short Souliss_T3n_InSetPoint = 0x01;
 	public static final short Souliss_T3n_OutSetPoint = 0x02;
-	public static final short Souliss_T3n_LowRange = 0x10;
-	public static final short Souliss_T3n_MaxRange = 0x7F;
-
-	public static final short Souliss_T3n_MinSetPoint = 0x10;
-	public static final short Souliss_T3n_MaxSetPoint = 0x7F;
-	public static final short Souliss_T3n_ZeroSetPoint = 0x80;
-	public static final short Souliss_T3n_DeadBand = 0x05;
-	public static final short Souliss_T3n_RstCmd = 0x00;
+	public static final short Souliss_T3n_AsMeasured = 0x03;
+	public static final short Souliss_T3n_Cooling = 0x04;
+	public static final short Souliss_T3n_Heating = 0x05;
+	public static final short Souliss_T3n_FanOff = 0x06;
+	public static final short Souliss_T3n_FanLow = 0x07;
+	public static final short Souliss_T3n_FanMed = 0x08;
+	public static final short Souliss_T3n_FanHigh = 0x09;
+	public static final short Souliss_T3n_FanAuto = 0x0A;
+	public static final short Souliss_T3n_FanManual = 0x0B;
 
 	// General defines for T4n
 	public static final short Souliss_T4n_Alarm = 0x01; // Alarm Condition

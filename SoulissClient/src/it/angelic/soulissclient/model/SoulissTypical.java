@@ -16,6 +16,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical21;
 import it.angelic.soulissclient.model.typicals.SoulissTypical22;
+import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
@@ -138,7 +139,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 			break;
 		case Constants.Souliss_T22:
 			rest = new SoulissTypical22(opts);
-			break;		
+			break;	
+		case Constants.Souliss_T31:
+			rest = new SoulissTypical31Heating(opts);
+			break;	
 		case Constants.Souliss_T32_IrCom_AirCon:
 			rest = new SoulissTypical32AirCon(opts);
 			break;
