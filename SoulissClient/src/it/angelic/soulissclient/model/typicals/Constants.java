@@ -55,7 +55,7 @@ public class Constants {
 	public static final short Souliss_T22 = 0x22;// Motorized devices with limit
 													// switches and middle
 													// position
-	public static final short Souliss_T31 = 0x31;
+	public static final short Souliss_T31 = 0x31;//HEATING
 	public static final short Souliss_T32_IrCom_AirCon = 0x32;
 
 	public static final short Souliss_T42_Antitheft_Group = 0x40; // Anti-theft
@@ -222,8 +222,8 @@ public class Constants {
 	public static final short Souliss_T2n_Coil_Off = 0x00;
 
 	// General defines for T3n
-	public static final short Souliss_T3n_InSetPoint = 0x01;
-	public static final short Souliss_T3n_OutSetPoint = 0x02;
+	public static final short Souliss_T3n_IncSetPoint = 0x01;
+	public static final short Souliss_T3n_DecSetPoint = 0x02;
 	public static final short Souliss_T3n_AsMeasured = 0x03;
 	public static final short Souliss_T3n_Cooling = 0x04;
 	public static final short Souliss_T3n_Heating = 0x05;
@@ -233,6 +233,8 @@ public class Constants {
 	public static final short Souliss_T3n_FanHigh = 0x09;
 	public static final short Souliss_T3n_FanAuto = 0x0A;
 	public static final short Souliss_T3n_FanManual = 0x0B;
+	public static final short Souliss_T3n_Set = 0x0C;
+	public static final short Souliss_T3n_ShutOff = 0x0D;
 
 	// General defines for T4n
 	public static final short Souliss_T4n_Alarm = 0x01; // Alarm Condition

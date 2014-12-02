@@ -6,7 +6,7 @@ import static junit.framework.Assert.assertEquals;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.Typical4nDetail;
+import it.angelic.soulissclient.T4nFragWrapper;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
@@ -532,7 +532,7 @@ public class UDPSoulissDecoder {
 	 */
 	public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
 
-		Intent notificationIntent = new Intent(ctx, Typical4nDetail.class);
+		Intent notificationIntent = new Intent(ctx, T4nFragWrapper.class);
 		notificationIntent.putExtra("TIPICO", (SoulissTypical41AntiTheft) ty);
 		PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
 		NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);

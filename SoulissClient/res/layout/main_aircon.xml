@@ -85,7 +85,7 @@
             android:layout_below="@id/buttonPlus"
             android:layout_marginLeft="15dip"
             android:layout_marginRight="15dip"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="15dip"
             android:layout_toRightOf="@id/textviewTemp"
             android:text="@string/minus" />
     </RelativeLayout>

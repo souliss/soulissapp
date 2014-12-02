@@ -1,9 +1,9 @@
 package it.angelic.soulissclient.fragments;
-
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T11;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T12;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T16;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T19;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T31;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer;
@@ -16,10 +16,11 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.T16RGBAdvancedActivity;
-import it.angelic.soulissclient.T19SingleChannelActivity;
+import it.angelic.soulissclient.T19SingleChannelFragWrapper;
 import it.angelic.soulissclient.T32AirConActivity;
-import it.angelic.soulissclient.Typical1nDetail;
-import it.angelic.soulissclient.Typical4nDetail;
+import it.angelic.soulissclient.T1nFragWrapper;
+import it.angelic.soulissclient.T31FragWrapper;
+import it.angelic.soulissclient.T4nFragWrapper;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -32,6 +33,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
@@ -308,6 +310,8 @@ public class NodeDetailFragment extends SherlockListFragment {
 				details = T16RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
 				details = T19SingleChannelLedFragment.newInstance(index, target);
+			else if (target instanceof SoulissTypical31Heating)
+				details = T31HeatingFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
 				details = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer|| target instanceof SoulissTypical43AntiTheftLocalPeer)
@@ -339,16 +343,19 @@ public class NodeDetailFragment extends SherlockListFragment {
 				nodeDatail = new Intent(getActivity(), T16RGBAdvancedActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical16AdvancedRGB) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T19) {
-				nodeDatail = new Intent(getActivity(), T19SingleChannelActivity.class);
+				nodeDatail = new Intent(getActivity(), T19SingleChannelFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical19AnalogChannel) target);
+			}  else if (target.getTypicalDTO().getTypical() == Souliss_T31) {
+				nodeDatail = new Intent(getActivity(), T31FragWrapper.class);
+				nodeDatail.putExtra("TIPICO", (SoulissTypical31Heating) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T11
 					|| target.getTypicalDTO().getTypical() == Souliss_T12) {
-				nodeDatail = new Intent(getActivity(), Typical1nDetail.class);
+				nodeDatail = new Intent(getActivity(), T1nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
 					|| target.getTypicalDTO().getTypical() == Souliss_T42_Antitheft_Peer
 					|| target.getTypicalDTO().getTypical() == Souliss_T43_Antitheft_LocalPeer) {
-				nodeDatail = new Intent(getActivity(), Typical4nDetail.class);
+				nodeDatail = new Intent(getActivity(), T4nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 
 			}

@@ -105,6 +105,11 @@
         <item>Fan</item>
         <item>Heat</item>
     </string-array>
+    
+    <string-array name="HeatingFunction">
+        <item>Cool</item>
+        <item>Heat</item>
+    </string-array>
 
     <integer-array name="AirConFunctionValues">
         <item>15</item>

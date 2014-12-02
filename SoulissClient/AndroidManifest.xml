@@ -159,7 +159,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="T19SingleChannelActivity"
+            android:name="T19SingleChannelFragWrapper"
             android:exported="false"
             android:icon="@drawable/candle"
             android:label="@string/Souliss_T19_desc" >
@@ -168,7 +168,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="Typical1nDetail"
+            android:name="T1nFragWrapper"
             android:exported="false"
             android:icon="@drawable/light_off"
             android:label="@string/typical" >
@@ -177,7 +177,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="Typical4nDetail"
+            android:name="T4nFragWrapper"
+            android:exported="false"
+            android:icon="@drawable/light_off"
+            android:label="@string/typical" >
+            <intent-filter>
+                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="T31FragWrapper"
             android:exported="false"
             android:icon="@drawable/light_off"
             android:label="@string/typical" >

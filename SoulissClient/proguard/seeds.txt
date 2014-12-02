@@ -9188,12 +9188,12 @@ it.angelic.soulissclient.T16RGBAdvancedActivity: void onCreate(android.os.Bundle
 it.angelic.soulissclient.T16RGBAdvancedActivity: void onStart()
 it.angelic.soulissclient.T16RGBAdvancedActivity: boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
 it.angelic.soulissclient.T16RGBAdvancedActivity: boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
-it.angelic.soulissclient.T19SingleChannelActivity
-it.angelic.soulissclient.T19SingleChannelActivity: it.angelic.soulissclient.model.SoulissTypical collected
-it.angelic.soulissclient.T19SingleChannelActivity: T19SingleChannelActivity()
-it.angelic.soulissclient.T19SingleChannelActivity: void onCreate(android.os.Bundle)
-it.angelic.soulissclient.T19SingleChannelActivity: boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
-it.angelic.soulissclient.T19SingleChannelActivity: boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
+it.angelic.soulissclient.T19SingleChannelFragWrapper
+it.angelic.soulissclient.T19SingleChannelFragWrapper: it.angelic.soulissclient.model.SoulissTypical collected
+it.angelic.soulissclient.T19SingleChannelFragWrapper: T19SingleChannelActivity()
+it.angelic.soulissclient.T19SingleChannelFragWrapper: void onCreate(android.os.Bundle)
+it.angelic.soulissclient.T19SingleChannelFragWrapper: boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
+it.angelic.soulissclient.T19SingleChannelFragWrapper: boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem)
 it.angelic.soulissclient.T32AirConActivity
 it.angelic.soulissclient.T32AirConActivity: it.angelic.soulissclient.db.SoulissDBHelper datasource
 it.angelic.soulissclient.T32AirConActivity: it.angelic.soulissclient.SoulissDataService mBoundService
@@ -9280,16 +9280,16 @@ it.angelic.soulissclient.T32AirConActivity$9
 it.angelic.soulissclient.T32AirConActivity$9: it.angelic.soulissclient.T32AirConActivity this$0
 it.angelic.soulissclient.T32AirConActivity$9: T32AirConActivity$9(it.angelic.soulissclient.T32AirConActivity)
 it.angelic.soulissclient.T32AirConActivity$9: void onClick(android.view.View)
-it.angelic.soulissclient.Typical1nDetail
-it.angelic.soulissclient.Typical1nDetail: it.angelic.soulissclient.model.SoulissTypical collected
-it.angelic.soulissclient.Typical1nDetail: Typical1nDetail()
-it.angelic.soulissclient.Typical1nDetail: void onCreate(android.os.Bundle)
-it.angelic.soulissclient.Typical4nDetail
-it.angelic.soulissclient.Typical4nDetail: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
-it.angelic.soulissclient.Typical4nDetail: it.angelic.soulissclient.model.SoulissTypical collected
-it.angelic.soulissclient.Typical4nDetail: Typical4nDetail()
-it.angelic.soulissclient.Typical4nDetail: void onCreate(android.os.Bundle)
-it.angelic.soulissclient.Typical4nDetail: void onStart()
+it.angelic.soulissclient.T1nFragWrapper
+it.angelic.soulissclient.T1nFragWrapper: it.angelic.soulissclient.model.SoulissTypical collected
+it.angelic.soulissclient.T1nFragWrapper: Typical1nDetail()
+it.angelic.soulissclient.T1nFragWrapper: void onCreate(android.os.Bundle)
+it.angelic.soulissclient.T4nFragWrapper
+it.angelic.soulissclient.T4nFragWrapper: it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni
+it.angelic.soulissclient.T4nFragWrapper: it.angelic.soulissclient.model.SoulissTypical collected
+it.angelic.soulissclient.T4nFragWrapper: Typical4nDetail()
+it.angelic.soulissclient.T4nFragWrapper: void onCreate(android.os.Bundle)
+it.angelic.soulissclient.T4nFragWrapper: void onStart()
 it.angelic.soulissclient.adapters.NodesListAdapter
 it.angelic.soulissclient.adapters.NodesListAdapter: android.view.LayoutInflater mInflater
 it.angelic.soulissclient.adapters.NodesListAdapter: android.content.Context context

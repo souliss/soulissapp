@@ -10100,7 +10100,7 @@ it.angelic.soulissclient.T16RGBAdvancedActivity -> it.angelic.soulissclient.T16R
     53:58:void onStart() -> onStart
     61:62:boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
     67:75:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-it.angelic.soulissclient.T19SingleChannelActivity -> it.angelic.soulissclient.T19SingleChannelActivity:
+it.angelic.soulissclient.T19SingleChannelFragWrapper -> it.angelic.soulissclient.T19SingleChannelFragWrapper:
     it.angelic.soulissclient.model.SoulissTypical collected -> collected
     17:41:void onCreate(android.os.Bundle) -> onCreate
     45:46:boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu) -> onCreateOptionsMenu
@@ -10180,10 +10180,10 @@ it.angelic.soulissclient.T32AirConActivity$8 -> it.angelic.soulissclient.T32AirC
 it.angelic.soulissclient.T32AirConActivity$9 -> it.angelic.soulissclient.T32AirConActivity$9:
     it.angelic.soulissclient.T32AirConActivity this$0 -> this$0
     233:234:void onClick(android.view.View) -> onClick
-it.angelic.soulissclient.Typical1nDetail -> it.angelic.soulissclient.Typical1nDetail:
+it.angelic.soulissclient.T1nFragWrapper -> it.angelic.soulissclient.T1nFragWrapper:
     it.angelic.soulissclient.model.SoulissTypical collected -> collected
     15:42:void onCreate(android.os.Bundle) -> onCreate
-it.angelic.soulissclient.Typical4nDetail -> it.angelic.soulissclient.Typical4nDetail:
+it.angelic.soulissclient.T4nFragWrapper -> it.angelic.soulissclient.T4nFragWrapper:
     it.angelic.soulissclient.helpers.SoulissPreferenceHelper opzioni -> opzioni
     it.angelic.soulissclient.model.SoulissTypical collected -> collected
     24:51:void onCreate(android.os.Bundle) -> onCreate

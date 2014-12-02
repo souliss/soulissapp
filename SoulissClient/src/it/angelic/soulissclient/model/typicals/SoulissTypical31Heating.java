@@ -55,7 +55,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 	// Context ctx;
 	private SoulissTypical TemperatureSetpointValue;
 	private SoulissTypical TemperatureSetpointValue2;
-	
+
 	private float TemperatureMeasuredVal;
 
 	public SoulissTypical31Heating(SoulissPreferenceHelper pp) {
@@ -115,21 +115,22 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 	 */
 	public String getOutputDesc() {
 		statusByte = getTypicalDTO().getOutput();
-		short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1)).getTypicalDTO().getOutput();
-		short TemperatureMeasuredValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 2)).getTypicalDTO().getOutput();
-		
-		
-		//ora ho i due bytes, li converto
+		short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
+				.getTypicalDTO().getOutput();
+		short TemperatureMeasuredValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 2))
+				.getTypicalDTO().getOutput();
+
+		// ora ho i due bytes, li converto
 		int shifted = TemperatureMeasuredValue2 << 8;
-		
 
 		TemperatureMeasuredVal = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
-		
-		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) TemperatureMeasuredValue)+
-				" second:"+ Long.toHexString((long) TemperatureMeasuredValue2)+ 
-				"SENSOR Reading:" + TemperatureMeasuredVal );
-		
-		//Serve solo per dare comandi, da togliere
+
+		Log.i(Constants.TAG,
+				"first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"
+						+ Long.toHexString((long) TemperatureMeasuredValue2) + "SENSOR Reading:"
+						+ TemperatureMeasuredVal);
+
+		// Serve solo per dare comandi, da togliere
 		TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
 		TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
 
@@ -140,26 +141,45 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		 * (TemperatureMeasuredValue.getTypicalDTO().getOutput()));
 		 */
 		StringBuilder strout = new StringBuilder();
-	//	int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
-		Log.i(Constants.TAG,"status: "+ Integer.toBinaryString(typicalDTO.getOutput()));
-		
+		// int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
+		Log.i(Constants.TAG, "status: " + Integer.toBinaryString(typicalDTO.getOutput()));
+
 		if (typicalDTO.getOutput() >> 6 == 1)
 			strout.append("HEAT");
 		else if (typicalDTO.getOutput() >> 5 == 1)
-			strout.append( "COOL" );
-		
+			strout.append("COOL");
+
 		if (typicalDTO.getOutput() >> 4 == 1)
 			strout.append(" - FAN LOw");
 		else if (typicalDTO.getOutput() >> 3 == 1)
-			strout.append( " - FAN MED ");
+			strout.append(" - FAN MED ");
 		else if (typicalDTO.getOutput() >> 2 == 1)
-			strout.append( " - FAN HI ");
-		
-		strout.append(" "+TemperatureMeasuredVal+"°");
-			return strout.toString();
+			strout.append(" - FAN HI ");
+
+		strout.append(" " + TemperatureMeasuredVal + "°");
+		return strout.toString();
 	}
 
-
-
+	public void issueCommand(final int function, final Float temp) {
+		Thread t = new Thread() {
+			public void run() {
+				if (temp == null) {
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + Float.toHexString((float) function));
+				//	UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+			//				SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + function);
+				
+				} else {
+					int re = HalfFloatUtils.fromFloat(temp);
+					String first = String.valueOf(re << 4);
+					String second = String.valueOf(re >> 4);
+					String[] cmd = { String.valueOf(function), "0x0", "0x0", first, second };
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + cmd);
+					//UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+					//		SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + cmd);
+				}
+			}
+		};
+		t.start();
+	}
 
 }

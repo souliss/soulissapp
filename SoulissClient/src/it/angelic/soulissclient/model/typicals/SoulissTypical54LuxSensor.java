@@ -109,7 +109,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 
 		ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
 		par.setProgressDrawable(progress);
-		par.setBackgroundDrawable(ctx.getResources().getDrawable(android.R.drawable.progress_horizontal));
+		par.setBackgroundResource(android.R.drawable.progress_horizontal);
 
 		RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -117,7 +117,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		par.setMax(50);
 		par.setProgress(20);
 		par.setProgress(0);
-		par.setMax(40000);
+		par.setMax(130000);
 		par.setProgress(getOutputLux());
 
 		cont.addView(par);
