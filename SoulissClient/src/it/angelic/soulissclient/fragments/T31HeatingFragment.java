@@ -1,10 +1,12 @@
 package it.angelic.soulissclient.fragments;
+
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil_Auto;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil_Auto;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_DecSetPoint;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_IncSetPoint;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_ShutOff;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -52,6 +54,8 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 	private Spinner functionSpinner;
 	private Spinner fanSpiner;
 	private TextView textviewTemperature;
+	private Button buttOn;
+	private Button buttOff;
 	
 	
 	
@@ -127,7 +131,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
+		
+		buttOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+		buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
 		textviewTemperature = (TextView) ret.findViewById(R.id.textviewTemp);
+		
 		functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
 		fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
 		
@@ -185,6 +193,22 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 				if (act > 16)
 					textviewTemperature.setText("" + (act - 1));
 				collected.issueCommand(Souliss_T3n_DecSetPoint, null);
+			}
+		});
+		
+		buttOn.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				int act = Integer.parseInt(textviewTemperature.getText().toString());
+				if (act > 16)
+					textviewTemperature.setText("" + (act - 1));
+				collected.issueCommand(Souliss_T3n_DecSetPoint, Float.valueOf(textviewTemperature.getText().toString()));
+			}
+		});
+		
+		buttOff.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				
+				collected.issueCommand(Souliss_T3n_ShutOff, null);
 			}
 		});
 
@@ -259,7 +283,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			try {
-				Log.i(Constants.TAG, "Broadcast received, intent" + intent.toString());
+				Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
 				datasource.open();
 				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
 				collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());

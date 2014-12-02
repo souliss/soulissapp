@@ -170,10 +170,11 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 				
 				} else {
 					int re = HalfFloatUtils.fromFloat(temp);
-					String first = String.valueOf(re << 4);
-					String second = String.valueOf(re >> 4);
-					String[] cmd = { String.valueOf(function), "0x0", "0x0", first, second };
-					Log.i(Constants.TAG, "ISSUE COMMAND:" + cmd);
+					String pars = Long.toHexString(re);
+					String first = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
+					String second = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
+					String[] cmd = { String.valueOf(function), "0", "0", first, second };
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0x0 0x0 "+first+" "+second);
 					//UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
 					//		SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + cmd);
 				}
