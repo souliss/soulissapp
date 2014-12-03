@@ -53,11 +53,10 @@ public class SoulissDBHelper {
 	public static synchronized SQLiteDatabase getDatabase() {
 		return database;
 	}
-	
-	public long getSize(){
+
+	public long getSize() {
 		return new File(database.getPath()).length();
 	}
-	
 
 	public SoulissDBHelper(Context context) {
 		soulissDatabase = new SoulissDB(context);
@@ -182,6 +181,7 @@ public class SoulissDBHelper {
 
 	/**
 	 * Decide come interpretare gli out e logga
+	 * 
 	 * @param soulissTypical
 	 */
 	public void logTypical(SoulissTypical soulissTypical) {
@@ -192,16 +192,16 @@ public class SoulissDBHelper {
 		values.put(SoulissDB.COLUMN_LOG_SLOT, soulissTypical.getTypicalDTO().getSlot());
 		if (soulissTypical instanceof ISoulissTypicalSensor) {
 			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
-		}  else {
+		} else {
 			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
 		}
 		try {
 			database.insert(SoulissDB.TABLE_LOGS, null, values);
 		} catch (SQLiteConstraintException e) {
 			// sensori NaN violano il constraint
-			Log.e(Constants.TAG, "error saving log: "+e);
+			Log.e(Constants.TAG, "error saving log: " + e);
 		}
-		
+
 	}
 
 	public SoulissNode getSoulissNode(int nodeIN) {
@@ -379,19 +379,65 @@ public class SoulissDBHelper {
 		for (int i = 0; i < tot; i++) {
 			comments.put(i, new SoulissGraphData());
 		}
+		Log.d(Constants.TAG, "QUERY GROUPED:");
+		// database.queryWithFactory(cursorFactory, distinct, table, columns,
+		// selection, selectionArgs, groupBy, having, orderBy, limit,
+		// cancellationSignal)
+		// Cursor cursorLogged = new SQLiteCursor(database, masterQuery,
+		// editTable, query);
+		SQLiteCursorFactory cf = new SQLiteCursorFactory();
 
-		Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[] {
-				"strftime('" + groupBy + "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
-				"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
-				"MAX(CAST(flologval AS FLOAT)) AS MAX" }, SoulissDB.COLUMN_LOG_NODE_ID + " = "
-				+ tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-				+ tgt.getTypicalDTO().getSlot() + limitCause + " ", null, "strftime('" + groupBy
-				+ "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))", null, "IDX ASC");
-		cursor.moveToFirst();
+//		Cursor cursor = database.queryWithFactory(cf, false, // DISTINCT
+//
+//				SoulissDB.TABLE_LOGS,
+//
+//				new String[] {
+//						"strftime('" + groupBy + "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
+//						"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
+//						"MAX(CAST(flologval AS FLOAT)) AS MAX" },
+//
+//				SoulissDB.COLUMN_LOG_NODE_ID + " = " + tgt.getTypicalDTO().getNodeId() + " AND "
+//						+ SoulissDB.COLUMN_LOG_SLOT + " = " + tgt.getTypicalDTO().getSlot() + limitCause + " ",
+//
+//				null,// String[] selectionArgs
+//				
+//				//GROUPBY
+//				"strftime('" + groupBy + "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))",
+//
+//				null,//HAVING
+//
+//				"IDX ASC",//ORDER BY
+//
+//				null);//LIMIT
+
+		 Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[] {
+		 "strftime('" + groupBy +
+		 "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
+		 "AVG(CAST(flologval AS FLOAT)) AS AVG",
+		 "MIN(CAST(flologval AS FLOAT)) AS MIN",
+		 "MAX(CAST(flologval AS FLOAT)) AS MAX" },
+		
+		 SoulissDB.COLUMN_LOG_NODE_ID
+		 + " = "// selection
+		 + tgt.getTypicalDTO().getNodeId() + " AND " +
+		 SoulissDB.COLUMN_LOG_SLOT + " = "
+		 + tgt.getTypicalDTO().getSlot() + limitCause + " ",
+		
+		 null,// String[] selectionArgs
+		 
+		
+		 "strftime('" + groupBy// GROUP BY
+		 + "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))",
+		
+		 null, // HAVING
+		
+		 "IDX ASC");// ORDER BY
+		 cursor.moveToFirst();
+
 		while (!cursor.isAfterLast()) {
 			SoulissGraphData dto = new SoulissGraphData(cursor);
-			assertEquals(true, dto.key >= 0);
-			comments.put(dto.key, dto);
+			//assertEquals(true, dto.key >= 0);
+			comments.put(Integer.parseInt(dto.key), dto);
 			cursor.moveToNext();
 		}
 
@@ -411,26 +457,30 @@ public class SoulissDBHelper {
 		// query with primary key
 		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
 				SoulissDB.COLUMN_TYPICAL + " = "
-						+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main, null, null, null,
-				null);
+						+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main, null, null,
+				null, null);
 		if (cursor.moveToFirst()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-			SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypical.typicalFactory(dto.getTypical(), getSoulissNode(dto.getNodeId()), dto, opts);
+			SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypical.typicalFactory(dto.getTypical(),
+					getSoulissNode(dto.getNodeId()), dto, opts);
 			cursor.close();
 			return ret;
 		} else
 			throw new NoSuchElementException();
 	}
-	
+
 	public List<SoulissTypical> getAntiTheftSensors() {
 		List<SoulissTypical> comments = new ArrayList<SoulissTypical>();
 		Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null, null, null);
+				SoulissDB.COLUMN_TYPICAL + " = "
+						+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null,
+				null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 			SoulissNode parent = getSoulissNode(dto.getNodeId());
-			SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypical.typicalFactory(dto.getTypical(), parent, dto, opts);
+			SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypical.typicalFactory(
+					dto.getTypical(), parent, dto, opts);
 			newTyp.setParentNode(parent);
 			// if (newTyp.getTypical() !=
 			// Constants.Souliss_T_CurrentSensor_slave)
@@ -439,14 +489,16 @@ public class SoulissDBHelper {
 		}
 		// Make sure to close the cursor
 		cursor.close();
-		
-		cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-				SoulissDB.COLUMN_TYPICAL + " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer, null, null, null, null);
+
+		cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, SoulissDB.COLUMN_TYPICAL
+				+ " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer, null,
+				null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 			SoulissNode parent = getSoulissNode(dto.getNodeId());
-			SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypical.typicalFactory(dto.getTypical(), parent, dto, opts);
+			SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypical
+					.typicalFactory(dto.getTypical(), parent, dto, opts);
 			newTyp.setParentNode(parent);
 			// if (newTyp.getTypical() !=
 			// Constants.Souliss_T_CurrentSensor_slave)
@@ -455,7 +507,7 @@ public class SoulissDBHelper {
 		}
 		// Make sure to close the cursor
 		cursor.close();
-		
+
 		return comments;
 	}
 
@@ -477,8 +529,6 @@ public class SoulissDBHelper {
 		cursor.close();
 		return ret;
 	}
-	
-
 
 	public SoulissTriggerDTO getSoulissTrigger(long insertId) {
 		Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS,
@@ -538,15 +588,16 @@ public class SoulissDBHelper {
 		cursor.close();
 		return comments;
 	}
-	
+
 	public int countTypicals() {
-		Cursor mCount= database.rawQuery("select count(*) from "+SoulissDB.TABLE_TYPICALS+" where "+SoulissDB.COLUMN_TYPICAL+" <> "+it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related, null);
+		Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
+				+ SoulissDB.COLUMN_TYPICAL + " <> "
+				+ it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related, null);
 		mCount.moveToFirst();
-		int count= mCount.getInt(0);
+		int count = mCount.getInt(0);
 		mCount.close();
 		return count;
 	}
-	
 
 	public List<SoulissTrigger> getAllTriggers(Context context) {
 		List<SoulissTrigger> ret = new ArrayList<SoulissTrigger>();
@@ -671,8 +722,7 @@ public class SoulissDBHelper {
 		cursor.moveToFirst();
 
 		while (!cursor.isAfterLast()) {
-			SoulissScene comment = new SoulissScene(cursor.getInt(cursor
-					.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
+			SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
 			comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
 			comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
 			cursor.moveToNext();
@@ -708,7 +758,5 @@ public class SoulissDBHelper {
 		cursor.close();
 		return ret;
 	}
-
-	
 
 }

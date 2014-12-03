@@ -2,12 +2,14 @@ package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.ArrayList;
 
@@ -142,19 +144,21 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		 */
 		StringBuilder strout = new StringBuilder();
 		// int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
-		Log.i(Constants.TAG, "status: " + Integer.toBinaryString(typicalDTO.getOutput()));
+		Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(typicalDTO.getOutput()));
 
 		if (typicalDTO.getOutput() >> 6 == 1)
 			strout.append("HEAT");
 		else if (typicalDTO.getOutput() >> 5 == 1)
 			strout.append("COOL");
+		else 
+			strout.append("OFF");
 
 		if (typicalDTO.getOutput() >> 4 == 1)
 			strout.append(" - FAN LOw");
 		else if (typicalDTO.getOutput() >> 3 == 1)
-			strout.append(" - FAN MED ");
+			strout.append(" - FAN MED");
 		else if (typicalDTO.getOutput() >> 2 == 1)
-			strout.append(" - FAN HI ");
+			strout.append(" - FAN HIG");
 
 		strout.append(" " + TemperatureMeasuredVal + "°");
 		return strout.toString();
@@ -164,9 +168,9 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		Thread t = new Thread() {
 			public void run() {
 				if (temp == null) {
-					Log.i(Constants.TAG, "ISSUE COMMAND:" + Float.toHexString((float) function));
-				//	UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-			//				SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + function);
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf((float) function));
+					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+							SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + function);
 				
 				} else {
 					int re = HalfFloatUtils.fromFloat(temp);
@@ -174,9 +178,9 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 					String first = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
 					String second = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
 					String[] cmd = { String.valueOf(function), "0", "0", first, second };
-					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0x0 0x0 "+first+" "+second);
-					//UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-					//		SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + cmd);
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 "+first+" "+second);
+					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+							SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, cmd);
 				}
 			}
 		};
