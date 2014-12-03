@@ -15,7 +15,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 
 import java.net.DatagramPacket;
@@ -472,9 +471,6 @@ public class UDPSoulissDecoder {
 					dto.refresh();
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");
-					// Log.d(Constants.TAG, "---REFRESHING NODE ERROR:"+(((int)j
-					// / typXnodo) + tgtnode)+" SLOT/TYP:"+(j %
-					// typXnodo)+e.getMessage());
 
 					continue;
 				} catch (Exception e) {

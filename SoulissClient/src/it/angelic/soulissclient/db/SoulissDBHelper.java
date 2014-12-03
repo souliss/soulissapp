@@ -6,7 +6,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -15,7 +14,6 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
-import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 
 import java.io.File;
 import java.text.ParseException;
@@ -32,7 +30,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
@@ -179,30 +176,6 @@ public class SoulissDBHelper {
 
 	}
 
-	/**
-	 * Decide come interpretare gli out e logga
-	 * 
-	 * @param soulissTypical
-	 */
-	public void logTypical(SoulissTypical soulissTypical) {
-		ContentValues values = new ContentValues();
-		// wrap values from object
-		values.put(SoulissDB.COLUMN_LOG_NODE_ID, soulissTypical.getTypicalDTO().getNodeId());
-		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
-		values.put(SoulissDB.COLUMN_LOG_SLOT, soulissTypical.getTypicalDTO().getSlot());
-		if (soulissTypical instanceof ISoulissTypicalSensor) {
-			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
-		} else {
-			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
-		}
-		try {
-			database.insert(SoulissDB.TABLE_LOGS, null, values);
-		} catch (SQLiteConstraintException e) {
-			// sensori NaN violano il constraint
-			Log.e(Constants.TAG, "error saving log: " + e);
-		}
-
-	}
 
 	public SoulissNode getSoulissNode(int nodeIN) {
 		Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID

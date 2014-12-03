@@ -153,8 +153,9 @@ public class NodesListFragment extends SherlockListFragment {
 			});
 			registerForContextMenu(getListView());
 			if (mDualPane) {
-				// Make sure our UI is in the correct state.
-				showDetails(mCurCheckPosition, nodiArray[mCurCheckPosition]);
+				// Capita arrayOutofbound con size 0
+				if (mCurCheckPosition < nodiArray.length)
+					showDetails(mCurCheckPosition, nodiArray[mCurCheckPosition]);
 				textHeadListInfo.setVisibility(View.GONE);
 				nodeic.setVisibility(View.GONE);
 			}

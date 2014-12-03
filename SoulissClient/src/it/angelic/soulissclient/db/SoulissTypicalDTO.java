@@ -1,6 +1,8 @@
 package it.angelic.soulissclient.db;
 
 import static junit.framework.Assert.assertTrue;
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import java.io.Serializable;
@@ -9,6 +11,8 @@ import java.util.Date;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 
 public class SoulissTypicalDTO implements Serializable {
 	/**
@@ -86,12 +90,48 @@ public class SoulissTypicalDTO implements Serializable {
 	}
 
 	/**
+	 * Decide come interpretare gli out e logga
+	 * 
+	 * @param soulissTypical
+	 */
+	public void logTypical() {
+		ContentValues values = new ContentValues();
+		// wrap values from object
+		values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
+		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
+		values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
+		if (this instanceof ISoulissTypicalSensor) {
+			values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
+		} else {
+			values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
+		}
+		try {
+			SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);
+		} catch (SQLiteConstraintException e) {
+			// sensori NaN violano il constraint
+			Log.e(Constants.TAG, "error saving log: " + e);
+		}
+
+	}
+	
+	/**
 	 * Aggiorna un tipico, ma solo il valore
 	 * 
 	 * @param typicalIN
 	 * @return
 	 */
 	public int refresh() {
+		if (true) {
+			Cursor cursor = SoulissDBHelper.getDatabase().query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+					SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + nodeId + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
+							+ slot, null, null, null, null);
+			cursor.moveToFirst();
+			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+			if (dto.getOutput() != getOutput()){
+				logTypical();
+				Log.i(Constants.TAG, "logging state change: " + getName());}
+			cursor.close();
+		}
 		ContentValues values = new ContentValues();
 		assertTrue(getSlot() != -1);
 		values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());

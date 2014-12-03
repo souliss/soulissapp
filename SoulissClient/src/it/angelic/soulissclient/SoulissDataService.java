@@ -340,7 +340,7 @@ public class SoulissDataService extends Service implements LocationListener {
 			List<SoulissTypical> tips = pirt.getTypicals();
 			for (SoulissTypical soulissTypical : tips) {
 				if (soulissTypical.isSensor()) {
-					db.logTypical(soulissTypical);
+					soulissTypical.getTypicalDTO().logTypical();
 				}
 			}
 		}
