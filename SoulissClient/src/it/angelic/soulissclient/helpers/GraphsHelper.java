@@ -1,10 +1,11 @@
 package it.angelic.soulissclient.helpers;
 
 
+import it.angelic.soulissclient.R;
+
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
-import it.angelic.soulissclient.R;
 
 import org.achartengine.chart.PointStyle;
 import org.achartengine.renderer.SimpleSeriesRenderer;
@@ -16,6 +17,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 
 public class GraphsHelper {
 
@@ -86,6 +88,7 @@ public class GraphsHelper {
 		
 		renderer.setPanEnabled(true, true);
 		renderer.setZoomEnabled(true, false);
+		
 		DisplayMetrics metrics = new DisplayMetrics();
 		((Activity) ctx).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
@@ -104,7 +107,6 @@ public class GraphsHelper {
 		SimpleSeriesRenderer rangeRenderer = new SimpleSeriesRenderer();
 		rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
 		rangeRenderer.setDisplayChartValues(false);
-		rangeRenderer.setChartValuesTextSize(12);
 		// r.setChartValuesSpacing(3);
 		rangeRenderer.setGradientEnabled(true);
 		rangeRenderer.setGradientStart(-10, ctx.getResources().getColor(R.color.std_blue));
@@ -113,6 +115,7 @@ public class GraphsHelper {
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
 		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
 		lightRenderer.setDisplayChartValues(true);
+		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
 		// lightRenderer.setGradientEnabled(true);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.DIAMOND);
@@ -136,7 +139,7 @@ public class GraphsHelper {
 		// Background fix
 		renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 
-		setChartSettings(renderer, "Hour of Day", "Celsius degrees", -2, 30, Color.GRAY, Color.LTGRAY);
+		setChartSettings(ctx, renderer, "Hour of Day", "Celsius degrees", -2, 30, Color.GRAY, Color.LTGRAY);
 		return renderer;
 	}
 
@@ -146,7 +149,7 @@ public class GraphsHelper {
 		SimpleSeriesRenderer rangeRenderer = new SimpleSeriesRenderer();
 		rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
 		rangeRenderer.setDisplayChartValues(true);
-		rangeRenderer.setChartValuesTextSize(12);
+		rangeRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
 		// r.setChartValuesSpacing(3);
 		rangeRenderer.setGradientEnabled(true);
 		rangeRenderer.setGradientStart(-10, ctx.getResources().getColor(R.color.std_blue));
@@ -157,6 +160,7 @@ public class GraphsHelper {
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
 		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
 		lightRenderer.setDisplayChartValues(true);
+		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
 		// lightRenderer.setGradientEnabled(true);
 
 		lightRenderer.setFillPoints(true);
@@ -213,7 +217,7 @@ public class GraphsHelper {
 		// Background fix
 		renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 
-		setChartSettings(renderer, "Month", "Celsius degrees", 0, 13, Color.GRAY, Color.LTGRAY);
+		setChartSettings(ctx, renderer, "Month", "Celsius degrees", 0, 13, Color.GRAY, Color.LTGRAY);
 		return renderer;
 	}
 
@@ -224,6 +228,7 @@ public class GraphsHelper {
 	 *            the series renderers colors
 	 * @return the bar multiple series renderer
 	 */
+	@Deprecated
 	protected static XYMultipleSeriesRenderer buildBarRenderer(int[] colors) {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 		renderer.setAxisTitleTextSize(16);
@@ -265,7 +270,7 @@ public class GraphsHelper {
 	 * @param labelsColor
 	 *            the labels color
 	 */
-	public static void setChartSettings(XYMultipleSeriesRenderer renderer, String title, String yTitle, double xMin,
+	public static void setChartSettings(Context ctx,XYMultipleSeriesRenderer renderer, String title, String yTitle, double xMin,
 			double xMax, int axesColor, int labelsColor) {
 
 		renderer.setChartTitle(title);
@@ -276,10 +281,14 @@ public class GraphsHelper {
 		renderer.setAxesColor(axesColor);
 		renderer.setLabelsColor(labelsColor);
 
-		renderer.setAxisTitleTextSize(12);
-		renderer.setChartTitleTextSize(16);
-		renderer.setLabelsTextSize(12);
-		renderer.setLegendTextSize(12);
+		DisplayMetrics metrics = ctx.getResources().getDisplayMetrics();
+		float val = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, metrics);
+		
+		renderer.setAxisTitleTextSize(val);
+		renderer.setChartTitleTextSize(val);
+		renderer.setLabelsTextSize(val);
+		renderer.setLegendTextSize(val);
+		renderer.setChartValuesTextSize(val-2);
 	}
 
 }

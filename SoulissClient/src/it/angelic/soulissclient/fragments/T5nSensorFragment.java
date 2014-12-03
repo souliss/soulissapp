@@ -369,25 +369,26 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			break;
 		}
 		
-		renderer.setAxisTitleTextSize(14);
-		//renderer.setChartValuesTextSize(arg0);
+		//renderer.setAxisTitleTextSize(14);
 		
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		RangeCategorySeries minmaxserie = new RangeCategorySeries("Temperature");
 		XYSeries sunSeries = new XYSeries("Average");
 
 		int lengt = logs.size();
-		for (int k = 1; k < lengt + 1; k++) {
-			if (((SoulissGraphData) logs.get(k - 1)).min != 0) {
-				minmaxserie.add(((SoulissGraphData) logs.get(k - 1)).min - 2,
-						((SoulissGraphData) logs.get(k - 1)).max + 2);
-				Log.d(TAG, "Adding serie " + (k - 1) + ": min=" + ((SoulissGraphData) logs.get(k - 1)).min + " max="
-						+ ((SoulissGraphData) logs.get(k - 1)).max);
+		for (int k = 0; k < lengt; k++) {
+			Log.d(TAG, "Adding serie " + (k ) + ": min=" + ((SoulissGraphData) logs.get(k)).min + " max="
+					+ ((SoulissGraphData) logs.get(k)).max
+					 + " AVG=" + ((SoulissGraphData) logs.get(k)).average);
+			
+			if (((SoulissGraphData) logs.get(k )).min != 0) {
+				minmaxserie.add(((SoulissGraphData) logs.get(k )).min,
+						((SoulissGraphData) logs.get(k )).max);
 			} else {
 				minmaxserie.add(0, 0);
 			}
-			sunSeries.add(k, ((SoulissGraphData) logs.get(k - 1)).average);
-			Log.d(TAG, "Adding serie " + (k - 1) + " AVG=" + ((SoulissGraphData) logs.get(k - 1)).average);
+			sunSeries.add(k+1, ((SoulissGraphData) logs.get(k)).average);
+			Log.d(TAG, "Adding serie " + (k) + " AVG=" + ((SoulissGraphData) logs.get(k)).average);
 		}
 
 		dataset.addSeries(0, minmaxserie.toXYSeries());
