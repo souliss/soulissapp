@@ -136,8 +136,9 @@ public class TypicalsListAdapter extends BaseAdapter {
 				+ ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
 				+ context.getResources().getString(R.string.status));
 		/* Icona del nodo */
-		if (tipici[position].getDefaultIconResourceId() != 0)
+		if (tipici[position].getDefaultIconResourceId() != 0){
 			holder.image.setImageResource(tipici[position].getDefaultIconResourceId());
+			}
 		// nascondi gli slot slave
 		//if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
 			// holder.textStatusVal.setText(tipici[position].getOutputDesc());

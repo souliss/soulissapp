@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -66,18 +68,14 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 			View convertView, final ViewGroup parent) {
 		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
-		// RelativeLayout.LayoutParams lp = new
-		// RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-		// RelativeLayout.LayoutParams.WRAP_CONTENT);
-
-		// Infotext nascosto all'inizio
-		// final TextView cmd = getQuickActionTitle();
-		// cmd.setTextSize(ctx.getResources().getDimension(R.dimen.text_size));
-		// cmd.setText(ctx.getString(R.string.Souliss_T13_desc) +
-		// " has no software commands");
-
+		// NO ACTIONS
 	}
 
+	/**
+	 * Indicates if n-th bit is set
+	 * @param bitNum
+	 * @return
+	 */
 	public boolean isnThOn(int bitNum) {
 		return ((getTypicalDTO().getOutput() & (1L << bitNum)) != 0);
 	}
@@ -96,7 +94,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		TextView vw = textStatusVal;
 		// ■
 		// Set the EditText's text.
-		vw.setText(" ■ ■ ■ ■\n ■ ■ ■ ■");
+		//vw.setText(" ■ ■ ■ ■\n ■ ■ ■ ■");
 
 		// If this were just a TextView, we could do:
 		// vw.setText("Italic, highlighted, bold.",
@@ -105,7 +103,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		// Or we could specify that in the XML.
 
 		// Get the EditText's internal text storage
-		Spannable str = new SpannableString("■■■■■■■■");
+		Spannable str = new SpannableString("\u25A0\u25A0\u25A0\u25A0\u25A0\u25A0\u25A0\u25A0");
 		int onCol = R.color.std_green;
 		int offCol = R.color.std_red;
 		// Create our span sections, and assign a format to each.
@@ -115,34 +113,20 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		for (int i = 0; i < 8; i++) {
-			
 			str.setSpan(new ForegroundColorSpan(bitColor(i)), i, i  + 1,
 					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 			// cmd.setVisibility(View.GONE);
 		}
 		// str.setSpan(new ForegroundColorSpan(offCol), 6, 7, 0);
-
+		/*LayoutParams params = textStatusVal.getLayoutParams();
+		params.height += 2;
+		textStatusVal.setLayoutParams(params);*/
+		textStatusVal.setGravity(Gravity.TOP);
+		textStatusVal.setBackgroundResource(0);
 		textStatusVal.setText(str, BufferType.SPANNABLE);
-		textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
-		/*
-		 * if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil ||
-		 * typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback ||
-		 * "UNKNOWN".compareTo(getOutputDesc()) == 0 ||
-		 * "NA".compareTo(getOutputDesc()) == 0) {
-		 * textStatusVal.setTextColor(ctx
-		 * .getResources().getColor(R.color.std_red));
-		 * textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
-		 * //textStatusVal
-		 * .setBackground(ctx.getResources().getDrawable(R.drawable
-		 * .borderedbackoff)); } else {
-		 * textStatusVal.setTextColor(ctx.getResources
-		 * ().getColor(R.color.std_green));
-		 * textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
-		 * //textStatusVal
-		 * .setBackground(ctx.getResources().getDrawable(R.drawable
-		 * .borderedbackon)); }
-		 */
+		textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_PX,getCtx().getResources().getDimensionPixelSize(R.dimen.text_size_vbig) );
+		//textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 	}
 
 	@Override
