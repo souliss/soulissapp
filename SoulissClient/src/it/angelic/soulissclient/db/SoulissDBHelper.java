@@ -16,7 +16,6 @@ import it.angelic.soulissclient.model.SoulissTypicalFactory;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
-import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 
 import java.io.File;
 import java.text.ParseException;
@@ -192,7 +191,7 @@ public class SoulissDBHelper {
 		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
 		values.put(SoulissDB.COLUMN_LOG_SLOT, soulissTypical.getTypicalDTO().getSlot());
 		if (soulissTypical instanceof ISoulissTypicalSensor) {
-			values.put(SoulissDB.COLUMN_LOG_VAL, ((SoulissTypical51AnalogueSensor) soulissTypical).getOutputFloat());
+			values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) soulissTypical).getOutputFloat());
 		} else {
 			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
 		}
