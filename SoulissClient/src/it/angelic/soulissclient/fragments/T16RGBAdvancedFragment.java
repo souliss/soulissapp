@@ -109,6 +109,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 	synchronized private void stopIncrementing() {
 		setIsIncrementing(false);
+		collected.issueRefresh();
 	}
 
 	synchronized private boolean isIncrementing() {
@@ -139,6 +140,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 	synchronized private void stopDecrementing() {
 		setIsDecrementing(false);
+		collected.issueRefresh();
 	}
 
 	/**
@@ -210,6 +212,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical16AdvancedRGB);
 		collected.setPrefs(opzioni);
 		collected.setCtx(getActivity());
+		
+		
 		if (Constants.versionNumber >= 11) {
 			ActionBar actionBar = getActivity().getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
@@ -273,7 +277,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 					mVisualizerView.setEnabled(false);
 					colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
 				} else if (pos == 1) {// channels
-					Log.i(Constants.TAG, "channel mode, color="+collected.getColor());
+					Log.i(Constants.TAG, "channel mode, color=" + collected.getColor());
 					tableRowVis.setVisibility(View.GONE);
 					mVisualizerView.setVisibility(View.GONE);
 					tableRowChannel.setVisibility(View.VISIBLE);
@@ -325,9 +329,20 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			public void onClick(View v) {
 				Short cmd = (Short) v.getTag();
 				assertTrue(cmd != null);
-
 				issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
-				return;
+				
+				new Thread(new Runnable() {
+					public void run() {
+						while (isIncrementing()) {
+							try {
+								Thread.sleep(500);
+								collected.issueRefresh();
+							} catch (InterruptedException e) {
+								Log.e(Constants.TAG, "Error Thread.sleep:");
+							}
+						}
+					}
+				}).start();
 			}
 
 		};
@@ -426,7 +441,10 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			}
 		};
 		cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color);
-		// cpv.setCenterColor(collected.getColor());
+
+		cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
+				Color.green(collected.getColor()), Color.blue(collected.getColor())));
+		
 		colorSwitchRelativeLayout.addView(cpv);
 		return ret;
 	}
@@ -498,10 +516,15 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 				// Bundle extras = intent.getExtras();
 				// Bundle vers = (Bundle) extras.get("NODES");
 				// color = collected.getColor();
-				Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor())
-						+ " G" + Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
-				cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
-						Color.blue(collected.getColor())));
+				if (collected.getOutput() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil) {
+					cpv.setCenterColor(getResources().getColor(R.color.black));
+				} else {
+					Log.d(Constants.TAG, "RGB Out (slot 0):" + collected.getOutput());
+					Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor())
+							+ " G" + Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
+					cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
+							Color.green(collected.getColor()), Color.blue(collected.getColor())));
+				}
 				cpv.invalidate();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Errore broadcast Receive!", e);
@@ -532,10 +555,11 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 		// solo per sicurezza
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			
+
 			collected.issueRefresh();
-			//issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
-			//		Color.green(color), Color.blue(color), togMulticast.isChecked());
+			// issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
+			// Color.red(color),
+			// Color.green(color), Color.blue(color), togMulticast.isChecked());
 		}
 
 	}
@@ -588,7 +612,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			canvas.drawCircle(0, 0, CENTER_RADIUS, centerPaint);
 
 		}
-		
+
 		@SuppressLint("NewApi")
 		@Override
 		protected void onVisibilityChanged(View changedView, int visibility) {
