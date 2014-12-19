@@ -6,11 +6,13 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypicalFactory;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
@@ -30,6 +32,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
@@ -177,6 +180,31 @@ public class SoulissDBHelper {
 	}
 
 
+	/**
+	 * Decide come interpretare gli out e logga
+	 * 
+	 * @param soulissTypical
+	 */
+	public void logTypical(SoulissTypical soulissTypical) {
+		ContentValues values = new ContentValues();
+		// wrap values from object
+		values.put(SoulissDB.COLUMN_LOG_NODE_ID, soulissTypical.getTypicalDTO().getNodeId());
+		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
+		values.put(SoulissDB.COLUMN_LOG_SLOT, soulissTypical.getTypicalDTO().getSlot());
+		if (soulissTypical instanceof ISoulissTypicalSensor) {
+			values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) soulissTypical).getOutputFloat());
+		} else {
+			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
+		}
+		try {
+			database.insert(SoulissDB.TABLE_LOGS, null, values);
+		} catch (SQLiteConstraintException e) {
+			// sensori NaN violano il constraint
+			Log.e(Constants.TAG, "error saving log: " + e);
+		}
+
+	}
+
 	public SoulissNode getSoulissNode(int nodeIN) {
 		Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID
 				+ " = " + nodeIN, null, null, null, null);
@@ -207,7 +235,7 @@ public class SoulissDBHelper {
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-			SoulissTypical newTyp = SoulissTypical.typicalFactory(dto.getTypical(), parent, dto, opts);
+			SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
 			newTyp.setParentNode(parent);
 			// if (newTyp.getTypical() !=
 			// Constants.Souliss_T_CurrentSensor_slave)
@@ -230,7 +258,7 @@ public class SoulissDBHelper {
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-			SoulissTypical newTyp = SoulissTypical.typicalFactory(dto.getTypical(), parent, dto, opts);
+			SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
 
 			newTyp.setParentNode(parent);
 			// if (newTyp.getTypical() !=
@@ -434,7 +462,7 @@ public class SoulissDBHelper {
 				null, null);
 		if (cursor.moveToFirst()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-			SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypical.typicalFactory(dto.getTypical(),
+			SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypicalFactory.getTypical(dto.getTypical(),
 					getSoulissNode(dto.getNodeId()), dto, opts);
 			cursor.close();
 			return ret;
@@ -452,7 +480,7 @@ public class SoulissDBHelper {
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 			SoulissNode parent = getSoulissNode(dto.getNodeId());
-			SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypical.typicalFactory(
+			SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypicalFactory.getTypical(
 					dto.getTypical(), parent, dto, opts);
 			newTyp.setParentNode(parent);
 			// if (newTyp.getTypical() !=
@@ -470,8 +498,7 @@ public class SoulissDBHelper {
 		while (!cursor.isAfterLast()) {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 			SoulissNode parent = getSoulissNode(dto.getNodeId());
-			SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypical
-					.typicalFactory(dto.getTypical(), parent, dto, opts);
+			SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
 			newTyp.setParentNode(parent);
 			// if (newTyp.getTypical() !=
 			// Constants.Souliss_T_CurrentSensor_slave)
@@ -498,7 +525,7 @@ public class SoulissDBHelper {
 						+ slot, null, null, null, null);
 		cursor.moveToFirst();
 		SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-		SoulissTypical ret = SoulissTypical.typicalFactory(dto.getTypical(), getSoulissNode(node), dto, opts);
+		SoulissTypical ret =SoulissTypicalFactory.getTypical(dto.getTypical(), getSoulissNode(node), dto, opts);
 		cursor.close();
 		return ret;
 	}

@@ -3,11 +3,9 @@ package it.angelic.soulissclient.adapters;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import android.content.Context;
@@ -138,13 +136,14 @@ public class TypicalsListAdapter extends BaseAdapter {
 				+ ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
 				+ context.getResources().getString(R.string.status));
 		/* Icona del nodo */
-		if (tipici[position].getDefaultIconResourceId() != 0)
+		if (tipici[position].getDefaultIconResourceId() != 0){
 			holder.image.setImageResource(tipici[position].getDefaultIconResourceId());
+			}
 		// nascondi gli slot slave
 		//if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
 			// holder.textStatusVal.setText(tipici[position].getOutputDesc());
 			// TODO remove following
-			holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
+			//holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
 			tipici[position].setOutputDescView(holder.textStatusVal);
 		/*	convertView.setVisibility(View.VISIBLE);
 			holder.image.setVisibility(View.VISIBLE);

@@ -1687,7 +1687,6 @@ org.achartengine.renderer.DefaultRenderer:
     private boolean mDisplayValues
     172:173:public void removeSeriesRenderer(org.achartengine.renderer.SimpleSeriesRenderer)
     179:180:public void removeAllRenderers()
-    207:207:public org.achartengine.renderer.SimpleSeriesRenderer[] getSeriesRenderers()
     225:226:public void setBackgroundColor(int)
     243:244:public void setApplyBackgroundColor(boolean)
     315:316:public void setShowAxes(boolean)
@@ -1720,7 +1719,6 @@ org.achartengine.renderer.SimpleSeriesRenderer:
     288:288:public boolean isHighlighted()
     297:298:public void setHighlighted(boolean)
     315:316:public void setDisplayBoundingPoints(boolean)
-    333:334:public void setChartValuesFormat(java.text.NumberFormat)
 org.achartengine.renderer.XYMultipleSeriesRenderer:
     184:185:public void setOrientation(org.achartengine.renderer.XYMultipleSeriesRenderer$Orientation)
     202:203:public void setXTitle(java.lang.String)
@@ -1746,7 +1744,6 @@ org.achartengine.renderer.XYMultipleSeriesRenderer:
     686:687:public void clearYTextLabels()
     695:696:public synchronized void clearYTextLabels(int)
     723:727:public void setDisplayChartValues(boolean)
-    736:740:public void setChartValuesTextSize(float)
     757:758:public void setBarWidth(float)
     804:805:public void setPanEnabled(boolean)
     852:852:public double getBarsSpacing()

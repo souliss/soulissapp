@@ -292,6 +292,11 @@ public class NodesListFragment extends SherlockListFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		//BUG?
+		if (info.position >= nodiArray.length){
+			Log.e(TAG, "info.position >= nodiArray.length");
+			return super.onContextItemSelected(item);
+		}
+			
 		final SoulissNode todoItem = nodiArray[(int) info.position];
 
 		switch (item.getItemId()) {

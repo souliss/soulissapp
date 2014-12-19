@@ -48,6 +48,12 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
 		tr.getCommandDTO().setSlot(typicalDTO.getSlot());
 		tr.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(tr);
+		
+		SoulissCommand tj = new SoulissCommand(ctx, this);
+		tj.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
+		tj.getCommandDTO().setSlot(typicalDTO.getSlot());
+		tj.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+		ret.add(tj);
 
 		SoulissCommand td = new SoulissCommand(ctx, this);
 		td.getCommandDTO().setCommand(Constants.Souliss_T1n_AutoCmd);
