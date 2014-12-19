@@ -43,6 +43,7 @@ public class SoulissTypicalDTO implements Serializable {
 
 		return false;
 	}
+
 	@Override
 	public int hashCode() {
 		return getNodeId();
@@ -113,7 +114,7 @@ public class SoulissTypicalDTO implements Serializable {
 		}
 
 	}
-	
+
 	/**
 	 * Aggiorna un tipico, ma solo il valore
 	 * 
@@ -122,14 +123,17 @@ public class SoulissTypicalDTO implements Serializable {
 	 */
 	public int refresh() {
 		if (true) {
-			Cursor cursor = SoulissDBHelper.getDatabase().query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+			Cursor cursor = SoulissDBHelper.getDatabase().query(
+					SoulissDB.TABLE_TYPICALS,
+					SoulissDB.ALLCOLUMNS_TYPICALS,
 					SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + nodeId + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
 							+ slot, null, null, null, null);
 			cursor.moveToFirst();
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-			if (dto.getOutput() != getOutput()){
+			if (dto.getOutput() != getOutput()) {
 				logTypical();
-				Log.i(Constants.TAG, "logging state change: " + getName());}
+				Log.i(Constants.TAG, "logging state change: " + getName());
+			}
 			cursor.close();
 		}
 		ContentValues values = new ContentValues();

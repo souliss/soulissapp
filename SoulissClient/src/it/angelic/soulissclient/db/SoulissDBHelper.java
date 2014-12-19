@@ -95,12 +95,12 @@ public class SoulissDBHelper {
 		return (int) upd;
 	}
 
-	public int refreshAllTypicalsTime() {
+	/*public int refreshAllTypicalsTime() {
 		ContentValues values = new ContentValues();
 		// wrap values from object
 		values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
 		return database.update(SoulissDB.TABLE_TYPICALS, values, null, null);
-	}
+	}*/
 
 	/**
 	 * presuppone che il nodo esista, asserError altrimenti Light update, solo
@@ -329,6 +329,62 @@ public class SoulissDBHelper {
 				dff = Constants.yearFormat.parse(cursor.getString(0));
 				SoulissHistoryGraphData dto = new SoulissHistoryGraphData(cursor, dff);
 				comments.put(dto.key, dto);
+			} catch (ParseException e) {
+				Log.e(TAG, "getHistoryTypicalLogs", e);
+			}
+
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		return comments;
+	}
+	/**
+	 * torna la storia di uno slot, raggruppata per giorno
+	 * 
+	 * @param tgt
+	 * @return
+	 */
+	public HashMap<Date, SoulissTypical> getHistoryTypicalHashMap(SoulissTypical tgt, int range) {
+		HashMap<Date, SoulissTypical> comments = new HashMap<Date, SoulissTypical>();
+
+		Date dff;
+		String limitCause = "";
+		Calendar now = Calendar.getInstance();
+		switch (range) {
+
+		case 0:
+			// tutti i dati
+			break;
+		case 2:
+			now.add(Calendar.DATE, -7);
+			limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+			break;
+		case 1:
+			now.add(Calendar.MONTH, -1);
+			limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+			break;
+		default:
+			Log.e("DB", "Unexpected switch ERROR");
+			break;
+		}
+		Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[] {
+				"flologval",
+				"cldlogwhen"
+				//"strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
+				//"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
+				//"MAX(CAST(flologval AS FLOAT)) AS MAX" 
+				}
+		
+				, SoulissDB.COLUMN_LOG_NODE_ID + " = "
+				+ tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+				+ tgt.getTypicalDTO().getSlot() + limitCause + " ", null,null, null, "IDX ASC");
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			try {
+				dff = Constants.yearFormat.parse(cursor.getString(0));
+				//SoulissTypical dto = new SoulissHistoryGraphData(cursor, dff);
+				//comments.put(dto.key, dto);
 			} catch (ParseException e) {
 				Log.e(TAG, "getHistoryTypicalLogs", e);
 			}
