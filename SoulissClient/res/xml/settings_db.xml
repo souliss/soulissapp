@@ -17,6 +17,11 @@
             android:key="dropdb"
             android:summary="@string/opt_dbdrop_desc"
             android:title="@string/opt_dbdrop" />
+         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="checkboxLogHistory"
+            android:summary="@string/opt_loghist_desc"
+            android:title="@string/opt_loghist" />
     </PreferenceCategory>
     <PreferenceCategory android:title="DB maintenance" >
         <Preference

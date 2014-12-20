@@ -339,16 +339,19 @@ public class SoulissDBHelper {
 		cursor.close();
 		return comments;
 	}
+	
+
 	/**
 	 * torna la storia di uno slot, raggruppata per giorno
 	 * 
 	 * @param tgt
 	 * @return
 	 */
-	public HashMap<Date, SoulissTypical> getHistoryTypicalHashMap(SoulissTypical tgt, int range) {
-		HashMap<Date, SoulissTypical> comments = new HashMap<Date, SoulissTypical>();
+	public HashMap<Date, Short> getHistoryTypicalHashMap(SoulissTypical tgt, int range) {
+		HashMap<Date, Short> comments = new HashMap<Date, Short>();
 
 		Date dff;
+		Short how ;
 		String limitCause = "";
 		Calendar now = Calendar.getInstance();
 		switch (range) {
@@ -369,29 +372,30 @@ public class SoulissDBHelper {
 			break;
 		}
 		Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[] {
+				"cldlogwhen",
 				"flologval",
-				"cldlogwhen"
 				//"strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
 				//"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
 				//"MAX(CAST(flologval AS FLOAT)) AS MAX" 
 				}
-		
 				, SoulissDB.COLUMN_LOG_NODE_ID + " = "
 				+ tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
 				+ tgt.getTypicalDTO().getSlot() + limitCause + " ", null,null, null, "IDX ASC");
 		cursor.moveToFirst();
+		
 		while (!cursor.isAfterLast()) {
 			try {
-				dff = Constants.yearFormat.parse(cursor.getString(0));
-				//SoulissTypical dto = new SoulissHistoryGraphData(cursor, dff);
+				dff = new Date(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
+				how = (short) cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE));
+				//SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 				//comments.put(dto.key, dto);
-			} catch (ParseException e) {
-				Log.e(TAG, "getHistoryTypicalLogs", e);
+				comments.put(dff, how);
+			} catch (Exception e) {
+				Log.e(TAG, "getHistoryTypicalHashMap", e);
 			}
 
 			cursor.moveToNext();
 		}
-		// Make sure to close the cursor
 		cursor.close();
 		return comments;
 	}

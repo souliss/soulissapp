@@ -2,6 +2,7 @@ package it.angelic.soulissclient.db;
 
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -122,7 +123,7 @@ public class SoulissTypicalDTO implements Serializable {
 	 * @return
 	 */
 	public int refresh() {
-		if (true) {
+		if (SoulissClient.getOpzioni().isLogHistoryEnabled()) {
 			Cursor cursor = SoulissDBHelper.getDatabase().query(
 					SoulissDB.TABLE_TYPICALS,
 					SoulissDB.ALLCOLUMNS_TYPICALS,

@@ -157,6 +157,8 @@
     <string name="opt_db_desc">(Re)create database, import and export</string>
     <string name="opt_dbdrop">Drop DB</string>
     <string name="opt_dbdrop_desc">Delete ALL nodes and Logs</string>
+    <string name="opt_loghist_desc">Save every Devices\' status change</string>
+    <string name="opt_loghist">History enabled</string>
     <string name="opt_dbinfo">DB Status</string>
     <string name="opt_dbinfo_desc">%1$d Souliss nodes are stored in DB, totally %2$d typicals are present.</string>
     <string name="opt_invalidAddress">Invalid address!!</string>
