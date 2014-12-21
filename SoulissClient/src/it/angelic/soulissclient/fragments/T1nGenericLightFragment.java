@@ -65,6 +65,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 	private TextView autoInfo;
 	private TextView infoTyp;
 	private ToggleButton togMassive;
+	private TextView infoHistory;
 	
 	public static T1nGenericLightFragment newInstance(int index, SoulissTypical content) {
 		T1nGenericLightFragment f = new T1nGenericLightFragment();
@@ -156,10 +157,17 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
 		btSleep = (Button) ret.findViewById(R.id.sleep);
 		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
+		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
 		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+		
 		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
+		if (opzioni.isLogHistoryEnabled())
+		infoHistory.setText("Questo dispositivo e` rimasto acceso per " + datasource.getTypicalOnDurationMsec(collected,TimeRangeEnum.LAST_MONTH)/1000 + " secondi nell'ultimo mese");
+		
+		//datasource.getHistoryTypicalHashMap(collected, 0);
+		
 		btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
 		// Listener generico
 		OnClickListener plus = new OnClickListener() {
@@ -231,6 +239,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil
 				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil_Auto)
 			buttPlus.setBackgroundResource(R.drawable.bulb_off);
+		
 		return ret;
 	}
 

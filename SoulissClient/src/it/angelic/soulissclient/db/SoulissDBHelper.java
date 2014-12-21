@@ -5,8 +5,8 @@ import static junit.framework.Assert.assertEquals;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.fragments.TimeRangeEnum;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -32,7 +33,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
@@ -185,7 +185,7 @@ public class SoulissDBHelper {
 	 * 
 	 * @param soulissTypical
 	 */
-	public void logTypical(SoulissTypical soulissTypical) {
+	/*public void logTypical(SoulissTypical soulissTypical) {
 		ContentValues values = new ContentValues();
 		// wrap values from object
 		values.put(SoulissDB.COLUMN_LOG_NODE_ID, soulissTypical.getTypicalDTO().getNodeId());
@@ -203,7 +203,7 @@ public class SoulissDBHelper {
 			Log.e(Constants.TAG, "error saving log: " + e);
 		}
 
-	}
+	}*/
 
 	public SoulissNode getSoulissNode(int nodeIN) {
 		Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID
@@ -340,6 +340,30 @@ public class SoulissDBHelper {
 		return comments;
 	}
 	
+	/**
+	 * TO TEST
+	 * 
+	 * @param tgt
+	 * @param range
+	 * @return
+	 */
+	public int getTypicalOnDurationMsec(SoulissTypical tgt, TimeRangeEnum range) {
+		LinkedHashMap<Date, Short> comments =getHistoryTypicalHashMap(tgt, range);
+		int accumulator = 0;
+		boolean firstGo = true;
+		Date accStart = new Date();
+		for (Date cur : comments.keySet()) {
+			Short val = comments.get(cur);
+			if (val == 0){
+				//spento, inizia nuovo per
+				accStart = cur;
+				firstGo = false;
+			}else if (!firstGo){
+				accumulator += cur.getTime() - accStart.getTime();
+			}
+		}
+		return accumulator;
+	}
 
 	/**
 	 * torna la storia di uno slot, raggruppata per giorno
@@ -347,8 +371,8 @@ public class SoulissDBHelper {
 	 * @param tgt
 	 * @return
 	 */
-	public HashMap<Date, Short> getHistoryTypicalHashMap(SoulissTypical tgt, int range) {
-		HashMap<Date, Short> comments = new HashMap<Date, Short>();
+	public LinkedHashMap<Date, Short> getHistoryTypicalHashMap(SoulissTypical tgt, TimeRangeEnum range) {
+		LinkedHashMap<Date, Short> comments = new LinkedHashMap<Date, Short>();
 
 		Date dff;
 		Short how ;
@@ -356,15 +380,19 @@ public class SoulissDBHelper {
 		Calendar now = Calendar.getInstance();
 		switch (range) {
 
-		case 0:
+		case ALL_DATA:
 			// tutti i dati
 			break;
-		case 2:
+		case LAST_WEEK:
 			now.add(Calendar.DATE, -7);
 			limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
 			break;
-		case 1:
+		case LAST_MONTH:
 			now.add(Calendar.MONTH, -1);
+			limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+			break;
+		case LAST_DAY:
+			now.add(Calendar.DAY_OF_WEEK_IN_MONTH, -1);
 			limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
 			break;
 		default:
@@ -372,21 +400,21 @@ public class SoulissDBHelper {
 			break;
 		}
 		Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[] {
-				"cldlogwhen",
-				"flologval",
+				SoulissDB.COLUMN_LOG_DATE,
+				SoulissDB.COLUMN_LOG_VAL,
 				//"strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
 				//"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
 				//"MAX(CAST(flologval AS FLOAT)) AS MAX" 
 				}
 				, SoulissDB.COLUMN_LOG_NODE_ID + " = "
 				+ tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-				+ tgt.getTypicalDTO().getSlot() + limitCause + " ", null,null, null, "IDX ASC");
+				+ tgt.getTypicalDTO().getSlot() + limitCause + " ", null,null, null, SoulissDB.COLUMN_LOG_DATE+" ASC");
 		cursor.moveToFirst();
 		
 		while (!cursor.isAfterLast()) {
 			try {
-				dff = new Date(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
-				how = (short) cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE));
+				dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
+				how = (short) cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_VAL));
 				//SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 				//comments.put(dto.key, dto);
 				comments.put(dff, how);

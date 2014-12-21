@@ -98,6 +98,7 @@ public class SoulissTypicalDTO implements Serializable {
 	 */
 	public void logTypical() {
 		ContentValues values = new ContentValues();
+		
 		// wrap values from object
 		values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
 		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
@@ -133,7 +134,7 @@ public class SoulissTypicalDTO implements Serializable {
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 			if (dto.getOutput() != getOutput()) {
 				logTypical();
-				Log.i(Constants.TAG, "logging state change: " + getName());
+				Log.i(Constants.TAG, "logging state change from: " +dto.getOutput()+" to "+getOutput());
 			}
 			cursor.close();
 		}
