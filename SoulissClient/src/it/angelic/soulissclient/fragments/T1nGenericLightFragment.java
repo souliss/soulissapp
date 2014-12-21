@@ -20,6 +20,9 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
+
+import java.util.Date;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.BroadcastReceiver;
@@ -66,14 +69,14 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 	private TextView infoTyp;
 	private ToggleButton togMassive;
 	private TextView infoHistory;
-	
+
 	public static T1nGenericLightFragment newInstance(int index, SoulissTypical content) {
 		T1nGenericLightFragment f = new T1nGenericLightFragment();
 
 		// Supply index input as an argument.
 		Bundle args = new Bundle();
 		args.putInt("index", index);
-		
+
 		// Ci metto il nodo dentro
 		if (content != null) {
 			args.putSerializable("TIPICO", (SoulissTypical) content);
@@ -82,7 +85,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 
 		return f;
 	}
-
 
 	/**
 	 * Interface describing a color change listener.
@@ -136,14 +138,14 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
 		collected.setPrefs(opzioni);
 		collected.setCtx(getActivity());
-		
+
 		super.setCollected(collected);
 		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
 		refreshStatusIcon();
-		
+
 		if (Constants.versionNumber >= 11) {
 			ActionBar actionBar = getActivity().getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
@@ -160,14 +162,24 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
 		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-		
+
 		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
-		if (opzioni.isLogHistoryEnabled())
-		infoHistory.setText("Questo dispositivo e` rimasto acceso per " + datasource.getTypicalOnDurationMsec(collected,TimeRangeEnum.LAST_MONTH)/1000 + " secondi nell'ultimo mese");
-		
-		//datasource.getHistoryTypicalHashMap(collected, 0);
-		
+		if (opzioni.isLogHistoryEnabled()) {
+			StringBuilder str = new StringBuilder();
+			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
+			if (collected.getOutput() != 0) {
+				Date when = collected.getTypicalDTO().getLastStatusChange();
+				str.append( "Acceso da " + Constants.getDuration(new Date().getTime() - when.getTime()));
+				msecOn += new Date().getTime() - when.getTime();
+			}
+			str.append("\n");
+			str.append("Questo dispositivo e` rimasto acceso per " + Constants.getDuration(msecOn)
+					+ " nell'ultimo mese");
+			infoHistory.setText(str.toString());
+		}
+		// datasource.getHistoryTypicalHashMap(collected, 0);
+
 		btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
 		// Listener generico
 		OnClickListener plus = new OnClickListener() {
@@ -239,7 +251,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil
 				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil_Auto)
 			buttPlus.setBackgroundResource(R.drawable.bulb_off);
-		
+
 		return ret;
 	}
 
@@ -295,7 +307,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 
 	}
 
-	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		// inflater.inflate(R.menu.queue_options, menu);

@@ -68,6 +68,19 @@ public class Constants {
 		long diffDays = diffHours / (24);
 			return "" + diffDays + SoulissClient.getAppContext().getString(R.string.days);
 	}
+	public static String getDuration(long typicalOnDurationMsec) {
+		long secondi = typicalOnDurationMsec / 1000;
+		if (secondi < 60)
+			return "" + secondi + " sec.";
+		long diffMinutes = secondi / 60;
+		secondi = secondi  % 60;//resto
+		if (diffMinutes < 120)
+			return "" + diffMinutes + " minuti e "+secondi+" secondi";
+		long diffHours = diffMinutes / (60);
+		diffMinutes = diffMinutes % 60;
+			return "" + diffHours + " ore e "+diffMinutes+" minuti";	
+		//return null;
+	}
 	private static final String[] ROM = {"X\u0305", "V\u0305", "M", "D", "C", "L", "X", "V", "I"};
 	private static final int MAX = 10000; // value of R[0], must be a power of 10
 
@@ -97,6 +110,7 @@ public class Constants {
 	    }
 	    return sb.toString();
 	}
+	
 
 
 }

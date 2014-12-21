@@ -354,12 +354,13 @@ public class SoulissDBHelper {
 		Date accStart = new Date();
 		for (Date cur : comments.keySet()) {
 			Short val = comments.get(cur);
-			if (val == 0){
+			if (val != 0){
 				//spento, inizia nuovo per
 				accStart = cur;
 				firstGo = false;
-			}else if (!firstGo){
+			}else if (val == 0 && !firstGo){
 				accumulator += cur.getTime() - accStart.getTime();
+				firstGo = true;
 			}
 		}
 		return accumulator;
@@ -846,5 +847,6 @@ public class SoulissDBHelper {
 		cursor.close();
 		return ret;
 	}
+
 
 }

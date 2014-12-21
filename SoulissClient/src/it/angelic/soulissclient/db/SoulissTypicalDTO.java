@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.db;
 
+import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissClient;
@@ -98,7 +99,7 @@ public class SoulissTypicalDTO implements Serializable {
 	 */
 	public void logTypical() {
 		ContentValues values = new ContentValues();
-		
+
 		// wrap values from object
 		values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
 		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
@@ -117,14 +118,44 @@ public class SoulissTypicalDTO implements Serializable {
 
 	}
 
+	public Date getLastStatusChange() {
+		Cursor cursor = SoulissDBHelper.getDatabase().query(
+				SoulissDB.TABLE_LOGS,
+				new String[] { SoulissDB.COLUMN_LOG_DATE, SoulissDB.COLUMN_LOG_VAL,
+				// "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
+				// "AVG(CAST(flologval AS FLOAT)) AS AVG",
+				// "MIN(CAST(flologval AS FLOAT)) AS MIN",
+				// "MAX(CAST(flologval AS FLOAT)) AS MAX"
+				},
+				SoulissDB.COLUMN_LOG_NODE_ID + " = " + this.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+						+ this.getSlot() + " AND " + SoulissDB.COLUMN_LOG_ID + " = ( SELECT MAX("
+						+ SoulissDB.COLUMN_LOG_ID + ") FROM " + SoulissDB.TABLE_LOGS + " WHERE "
+						+ SoulissDB.COLUMN_LOG_NODE_ID + " = " + this.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT
+						+ " = " + this.getSlot() + ")", null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
+		cursor.moveToFirst();
+
+		while (!cursor.isAfterLast()) {
+			try {
+				Date dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
+				return dff;
+			} catch (Exception e) {
+				Log.e(TAG, "getHistoryTypicalHashMap", e);
+			}
+
+			cursor.moveToNext();
+		}
+		return null;
+	}
+
 	/**
-	 * Aggiorna un tipico, ma solo il valore
+	 * Aggiorna un tipico, ma solo il valore eventualmente logga storia
 	 * 
 	 * @param typicalIN
 	 * @return
 	 */
 	public int refresh() {
-		if (SoulissClient.getOpzioni().isLogHistoryEnabled()) {
+		if (SoulissClient.getOpzioni().isLogHistoryEnabled() && !(this instanceof ISoulissTypicalSensor)) {
+			// se e` un sensore viene loggato altrove
 			Cursor cursor = SoulissDBHelper.getDatabase().query(
 					SoulissDB.TABLE_TYPICALS,
 					SoulissDB.ALLCOLUMNS_TYPICALS,
@@ -133,8 +164,8 @@ public class SoulissTypicalDTO implements Serializable {
 			cursor.moveToFirst();
 			SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
 			if (dto.getOutput() != getOutput()) {
-				logTypical();
-				Log.i(Constants.TAG, "logging state change from: " +dto.getOutput()+" to "+getOutput());
+				logTypical();// logga il nuovo
+				Log.i(Constants.TAG, "logging new state from: " + dto.getOutput() + " to " + getOutput());
 			}
 			cursor.close();
 		}
