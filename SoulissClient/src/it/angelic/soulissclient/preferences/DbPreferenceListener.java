@@ -54,6 +54,9 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 			return true;
 		} else if ("createdb".equals(arg0.getKey())) {
 			return createDbRequest();
+		} else if ("dbopt".equals(arg0.getKey())) {
+			Toast.makeText(parent, "TO IMPLEMENT", Toast.LENGTH_SHORT).show();
+			return true;
 		} else if ("dropdb".equals(arg0.getKey())) {
 			AlertDialog.Builder alert = AlertDialogHelper.dropSoulissDBDialog(parent, datasource);
 			datasource.open();
@@ -110,7 +113,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 				dialog = builder.create();
 				return dialog;
 			}
-			if (opzioni.isDbConfigured()){
+			if (opzioni.isDbConfigured()) {
 				Log.w(Constants.TAG, "DB not empty, can't import");
 				dialog = builder.create();
 				Toast.makeText(parent, parent.getString(R.string.db_notempty), Toast.LENGTH_SHORT).show();
@@ -138,7 +141,8 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 
 	private boolean createDbRequest() {
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
-			//mostro anche con IP privato non configurato MA souliss raggiungibile
+			// mostro anche con IP privato non configurato MA souliss
+			// raggiungibile
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(parent);
 			alert.show();
 			return true;

@@ -28,13 +28,15 @@ public class DbSettingsFragment extends PreferenceFragment {
 		Preference dropDbPref = (Preference) findPreference("dropdb");
 		Preference exportDBPref = (Preference) findPreference("dbexp");
 		Preference imortDBPref = (Preference) findPreference("dbimp");
+		Preference optimDBPref = (Preference) findPreference("dbopt");
 		Preference dbinfopref = (Preference) findPreference("dbinfo");
 		/* listeners DB */
 		exportDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		imortDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		createDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-
+		optimDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
+		
 		String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
 		String nonode = getString(R.string.dialog_disabled_db);
 		final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(

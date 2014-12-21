@@ -39,6 +39,11 @@
             android:key="dbimp"
             android:summary="@string/opt_dbimp_desc"
             android:title="@string/opt_dbimp" />
+         <Preference
+            android:name="dbopt"
+            android:key="dbopt"
+            android:summary="@string/opt_dbopt_desc"
+            android:title="@string/opt_dbopt" />
     </PreferenceCategory>
 
 </PreferenceScreen>
