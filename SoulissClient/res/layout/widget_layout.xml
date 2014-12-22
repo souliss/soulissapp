@@ -54,7 +54,6 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:text="@string/node"
         android:textColor="@color/white" >
     </TextView>
 

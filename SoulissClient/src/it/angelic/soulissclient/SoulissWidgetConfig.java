@@ -5,7 +5,6 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
@@ -107,15 +106,16 @@ public class SoulissWidgetConfig extends Activity {
 			final Context context = SoulissWidgetConfig.this;
 			customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
 			SharedPreferences.Editor editor = customSharedPreference.edit();
-			SoulissCommand ccm =(SoulissCommand)outputCommandSpinner.getSelectedItem();
-			if (ccm == null){
-				Toast.makeText(context, "Command empty/not selected" , Toast.LENGTH_LONG).show();
+			SoulissCommand ccm = (SoulissCommand) outputCommandSpinner.getSelectedItem();
+			if (outputTypicalSpinner.getSelectedItem() == null){
+				Toast.makeText(context, getString(R.string.widget_cantsave)  , Toast.LENGTH_LONG).show();
 				return;
 			}
 			
 			editor.putInt(mAppWidgetId+"_NODE", ((SoulissNode)outputNodeSpinner.getSelectedItem()).getId());
 			editor.putInt(mAppWidgetId+"_SLOT",((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getSlot());
-			editor.putLong(mAppWidgetId+"_CMD",(ccm).getCommandDTO().getCommand());
+			if (ccm != null)
+				editor.putLong(mAppWidgetId+"_CMD",(ccm).getCommandDTO().getCommand());
 			editor.putString(mAppWidgetId+"_NAME",widgetLabel.getText().toString());
 			
 			//editor.putString("COMMAND", outputCommandSpinner.getSelectedItem());

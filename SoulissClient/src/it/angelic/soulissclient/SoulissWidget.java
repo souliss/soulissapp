@@ -2,8 +2,11 @@ package it.angelic.soulissclient;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.net.UDPHelper;
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -18,11 +21,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 public class SoulissWidget extends AppWidgetProvider {
 
 	private static final String TAG = "SoulissWidget";
+	private static SoulissDBHelper db;
 	private Handler handler;
 
 	public static void forcedUpdate(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
@@ -38,7 +41,7 @@ public class SoulissWidget extends AppWidgetProvider {
 			Log.e(TAG, "missing widget preferences, aborting");
 			return;
 		}
-		SoulissDBHelper db = new SoulissDBHelper(context);
+		db = new SoulissDBHelper(context);
 		db.open();
 		final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
 		tgt.setCtx(context);
@@ -52,16 +55,15 @@ public class SoulissWidget extends AppWidgetProvider {
 		updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getDefaultIconResourceId());
 		updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
 		updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
-		// Register an onClickListener
+		
+		// UPDATE SINCRONO
 		Intent intent = new Intent(context, SoulissWidget.class);
 		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 		Uri data = Uri.withAppendedPath(Uri.parse("W://widget/id/"), String.valueOf(appWidgetId));
 		intent.setData(data);
 		intent.putExtra("_ID", appWidgetId);
-		// intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		updateViews.setOnClickPendingIntent(R.id.button1, pendingIntent);
-
 		appWidgetManager.updateAppWidget(appWidgetId, updateViews);
 
 		// Toast.makeText(context, "forcedUpdate(), node " +
@@ -89,10 +91,13 @@ public class SoulissWidget extends AppWidgetProvider {
 			final String name = customSharedPreference.getString(got + "_NAME", "");
 			final RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 			// sfondo rosso...
-			updateViews.setTextViewText(R.id.button1, "Sending command...");
+			if (cmd != -1) {
+				updateViews.setTextViewText(R.id.button1, "Sending command...");
+			}
 			updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_active);
 			updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
 			updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
+			// UPDATE SINCRONO
 			intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 			intent.putExtra("_ID", got);
 			Uri data = Uri.withAppendedPath(Uri.parse("W://widget/id/"), String.valueOf(got));
@@ -100,7 +105,6 @@ public class SoulissWidget extends AppWidgetProvider {
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
 			updateViews.setOnClickPendingIntent(R.id.button1, pendingIntent);
-			// refresh sincrono
 			awm.updateAppWidget(got, updateViews);
 
 			new Thread(new Runnable() {
@@ -109,50 +113,68 @@ public class SoulissWidget extends AppWidgetProvider {
 				@Override
 				public void run() {
 					Looper.prepare();
-					SoulissPreferenceHelper prefs = SoulissClient.getOpzioni();
+
 					db = new SoulissDBHelper(context);
 					db.open();
 					final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
 					tgt.setCtx(context);
+
+					UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
+
 					final SoulissCommand cmdd = new SoulissCommand(context, tgt);
 					cmdd.getCommandDTO().setCommand(cmd);
-					// UDPHelper.issueSoulissCommand(cmdd, prefs);
-					final String res = UDPHelper.issueSoulissCommand(cmdd, prefs);
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							updateViews.setTextViewText(R.id.button1, cmdd.toString());
-							updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
-							// TODO edittext name
-							updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-							
-							//Toast.makeText(context,
-								//	"Command sent to node " + customSharedPreference.getInt(got + "_NODE", -1),
-								//	Toast.LENGTH_LONG).show();
-
-						}
-					});
-					UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
-					
+					// se comando non vuoto
+					if (cmd != -1) {
+						final String res = UDPHelper.issueSoulissCommand(cmdd, opzioni);
+					}
+					/*
+					 * handler.post(new Runnable() {
+					 * 
+					 * @Override public void run() {
+					 * updateViews.setTextViewText(R.id.button1,
+					 * cmdd.toString());
+					 * updateViews.setTextViewText(R.id.wid_info,
+					 * (tgt.getOutputDesc())); // TODO edittext name
+					 * updateViews.setInt(R.id.widgetcontainer,
+					 * "setBackgroundResource", R.drawable.widget_shape);
+					 * 
+					 * //Toast.makeText(context, // "Command sent to node " +
+					 * customSharedPreference.getInt(got + "_NODE", -1), //
+					 * Toast.LENGTH_LONG).show();
+					 * 
+					 * } });
+					 */
 					handler.postDelayed(new Runnable() {
 
 						@Override
 						public void run() {
 							// TODO carica stato dal DB
-
-							updateViews.setTextViewText(R.id.button1, cmdd.toString());
-							updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
+							SoulissTypical ref = db.getSoulissTypical(node, (short) slot);
+							ref.setCtx(context);
+							if (!name.equals(""))
+								updateViews.setTextViewText(R.id.button1, name);
+							else
+								updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
+							if (ref instanceof ISoulissTypicalSensor) {
+								if (ref instanceof SoulissTypical53HumiditySensor)
+									updateViews.setTextViewText(R.id.wid_info,
+											String.valueOf((((ISoulissTypicalSensor) ref).getOutputFloat())) + "%");
+								else if (ref instanceof SoulissTypical52TemperatureSensor)
+									updateViews.setTextViewText(R.id.wid_info,
+											String.valueOf((((ISoulissTypicalSensor) ref).getOutputFloat())) + "%");
+								else
+									updateViews.setTextViewText(R.id.wid_info,
+											String.valueOf((((ISoulissTypicalSensor) ref).getOutputFloat())));
+							} else
+								updateViews.setTextViewText(R.id.wid_info, (ref.getOutputDesc()));
 							// edittext name
 							updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
 
-							Toast.makeText(context, res, Toast.LENGTH_LONG).show();
 							// refresh asincrono x ripristino widget
 							awm.updateAppWidget(got, updateViews);
 						}
 					}, 2000);
-
 				}
-
 			}).start();
 		}
 	}
