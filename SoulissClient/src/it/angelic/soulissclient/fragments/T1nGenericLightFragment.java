@@ -170,12 +170,16 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
 			if (collected.getOutput() != 0) {
 				Date when = collected.getTypicalDTO().getLastStatusChange();
-				str.append( "Acceso da " + Constants.getDuration(new Date().getTime() - when.getTime()));
 				msecOn += new Date().getTime() - when.getTime();
+				String strMeatFormat = getResources().getString(R.string.manual_litfrom);
+				String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn) );
+				str.append( strMeatMsg);
+				
 			}
 			str.append("\n");
-			str.append("Questo dispositivo e` rimasto acceso per " + Constants.getDuration(msecOn)
-					+ " nell'ultimo mese");
+			String strMeatFormat = getResources().getString(R.string.manual_tyinf);
+			String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn) );
+			str.append(strMeatMsg);
 			infoHistory.setText(str.toString());
 		}
 		// datasource.getHistoryTypicalHashMap(collected, 0);
