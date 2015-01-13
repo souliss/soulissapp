@@ -475,7 +475,7 @@ public class SoulissDBHelper {
 		// cancellationSignal)
 		// Cursor cursorLogged = new SQLiteCursor(database, masterQuery,
 		// editTable, query);
-		SQLiteCursorFactory cf = new SQLiteCursorFactory();
+		//SQLiteCursorFactory cf = new SQLiteCursorFactory();
 
 //		Cursor cursor = database.queryWithFactory(cf, false, // DISTINCT
 //

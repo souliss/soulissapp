@@ -170,9 +170,10 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
 			if (collected.getOutput() != 0) {
 				Date when = collected.getTypicalDTO().getLastStatusChange();
-				msecOn += new Date().getTime() - when.getTime();
+				long swap =new Date().getTime() - when.getTime();
+				msecOn += swap;
 				String strMeatFormat = getResources().getString(R.string.manual_litfrom);
-				String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn) );
+				String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(swap) );
 				str.append( strMeatMsg);
 				
 			}
