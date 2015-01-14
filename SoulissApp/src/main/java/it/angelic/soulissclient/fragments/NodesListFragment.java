@@ -138,8 +138,8 @@ public class NodesListFragment extends SherlockListFragment {
                     }
                 }).start();
             }} );
-        swipeLayout.setColorSchemeResources (android.R.color.holo_blue_bright,
-                android.R.color.holo_blue_dark);
+        swipeLayout.setColorSchemeResources (R.color.std_blue,
+                R.color.std_blue_shadow);
 		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());
 

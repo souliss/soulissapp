@@ -151,20 +151,6 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 					collected);
 			alert.show();
 			return true;
-		case R.id.Refresh:
-			if (opzioni.isSoulissReachable()) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						UDPHelper.pollRequest(opzioni, 1, collected.getId());
-					}
-				}).start();
-
-			}else{
-				Log.e(Constants.TAG, "Souliss Unavailable");
-				Toast.makeText(NodeDetailActivity.this, getString(R.string.souliss_unavailable), Toast.LENGTH_SHORT).show();
-			}
-			return true;
 		}
 
 		return super.onOptionsItemSelected(item);

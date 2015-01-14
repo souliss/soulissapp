@@ -19,11 +19,4 @@
         android:title="@string/menu_changenodeicon"
         android:showAsAction="ifRoom|collapseActionView|withText"
         android:orderInCategory="2"/>
-    <item
-        android:id="@+id/Refresh"
-        android:icon="@android:drawable/ic_menu_rotate"
-        android:title="@string/refresh"
-        android:showAsAction="ifRoom|collapseActionView|withText"
-        android:orderInCategory="0"/>
-
 </menu>

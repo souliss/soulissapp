@@ -61,6 +61,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -79,6 +80,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -101,8 +103,9 @@ public class NodeDetailFragment extends SherlockListFragment {
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
+    private SwipeRefreshLayout swipeLayout;
 
-	protected int getShownIndex() {
+    protected int getShownIndex() {
 		if (getArguments() != null)
 			return getArguments().getInt("index", 0);
 		else
@@ -187,7 +190,24 @@ public class NodeDetailFragment extends SherlockListFragment {
 		// health = (TextView) findViewById(R.id.TextViewHealth);
 		upda = (TextView) getActivity().findViewById(R.id.TextViewNodeUpdate);
 		par = (ProgressBar) getActivity().findViewById(R.id.progressBarNodo);
+        swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
+        swipeLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (collected != null){UDPHelper.pollRequest(opzioni, 1, collected.getId());}
 
+                        if (!opzioni.isSoulissReachable())
+                            Toast.makeText(getActivity(),
+                                    getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                    .show();
+                    }
+                }).start();
+            }} );
+        swipeLayout.setColorSchemeResources (R.color.std_blue,
+                R.color.std_blue_shadow);
 		if (upda == null)
 			return;
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -539,6 +559,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				Log.d(Constants.TAG, "Detected data arrival, refresh from DB");
 				// cancel timeout
 				timeoutHandler.removeCallbacks(timeExpired);
+                swipeLayout.setRefreshing(false);
 				if (listaTypicalsView == null)
 					return;
 				datasource.open();

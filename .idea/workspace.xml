@@ -22,11 +22,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1a2a9af-84ad-449b-82ce-384806f882d7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SoulissClient.iws" />
@@ -60,21 +61,42 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NodesListFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="NodesListFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32323232" vertical-offset="1270" max-vertical-offset="6035">
-              <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1270" max-vertical-offset="6035">
+              <caret line="141" column="41" selection-start-line="124" selection-start-column="8" selection-end-line="141" selection-end-column="41" />
               <folding>
                 <element signature="e#3949#3977#0" expanded="true" />
                 <element signature="e#3988#4013#0" expanded="true" />
                 <element signature="e#4972#5652#0" expanded="true" />
                 <element signature="e#5474#5521#0" expanded="true" />
                 <element signature="e#5650#5651#0" expanded="true" />
-                <element signature="e#6570#6875#0" expanded="true" />
-                <element signature="e#6869#6870#0" expanded="true" />
-                <element signature="e#9584#9600#0" expanded="true" />
-                <element signature="e#9767#9782#0" expanded="true" />
+                <element signature="e#6547#6852#0" expanded="true" />
+                <element signature="e#6846#6847#0" expanded="true" />
+                <element signature="e#9561#9577#0" expanded="true" />
+                <element signature="e#9744#9759#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NodeDetailFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.44781145" vertical-offset="7639" max-vertical-offset="9724">
+              <caret line="562" column="46" selection-start-line="562" selection-start-column="46" selection-end-line="562" selection-end-column="46" />
+              <folding>
+                <element signature="e#7743#8396#0" expanded="true" />
+                <element signature="e#7875#8371#0" expanded="true" />
+                <element signature="e#8218#8265#0" expanded="true" />
+                <element signature="e#8352#8353#0" expanded="true" />
+                <element signature="e#8394#8395#0" expanded="true" />
+                <element signature="e#13796#13849#0" expanded="true" />
+                <element signature="e#16355#16396#0" expanded="true" />
+                <element signature="e#16820#16848#0" expanded="true" />
+                <element signature="e#17078#17094#0" expanded="true" />
+                <element signature="e#17265#17280#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,6 +107,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="1106" max-vertical-offset="1700">
               <caret line="107" column="43" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NodeDetailActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1887" max-vertical-offset="2567">
+              <caret line="153" column="8" selection-start-line="153" selection-start-column="8" selection-end-line="153" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -103,11 +135,27 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="frag_nodedetail.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.018182" vertical-offset="770" max-vertical-offset="1360">
+              <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+              <folding>
+                <element signature="e#947#963#0" expanded="true" />
+                <element signature="e#2076#2101#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="frag_nodelist.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.925926" vertical-offset="402" max-vertical-offset="1020">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.7777777" vertical-offset="402" max-vertical-offset="1020">
+              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="40" selection-end-column="45" />
               <folding>
                 <element signature="e#572#590#0" expanded="true" />
                 <element signature="e#873#894#0" expanded="true" />
@@ -2110,7 +2158,6 @@
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/AlertDialogHelper.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/UDPSoulissDecoder.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissWidgetConfig.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ListButton.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T32AirConActivity.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/Constants.java" />
@@ -2120,11 +2167,15 @@
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T16RGBAdvancedFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/BroadcastSettingsFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/lint.xml" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" />
       </list>
     </option>
   </component>
@@ -2787,7 +2838,11 @@
       <created>1421195271262</created>
       <updated>1421195271262</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Swipe to refresh nella lista nodi, rimosso dal menu">
+      <created>1421262602047</created>
+      <updated>1421262602047</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2808,7 +2863,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30888888" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30888888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30888888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2843,7 +2898,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Switch to android Studio. Base Material support, many defects to work out" />
-    <option name="LAST_COMMIT_MESSAGE" value="Switch to android Studio. Base Material support, many defects to work out" />
+    <MESSAGE value="Swipe to refresh nella lista nodi, rimosso dal menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="Swipe to refresh nella lista nodi, rimosso dal menu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2851,34 +2907,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/NetSettingsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="998" max-vertical-offset="2125">
-          <caret line="88" column="20" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/xml/preferences_legacy.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1224">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/renderer/CircleRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
-          <caret line="31" column="49" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/renderer/LineRenderer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1649">
-          <caret line="25" column="76" selection-start-line="25" selection-start-column="76" selection-end-line="25" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/GraphsHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3854" max-vertical-offset="4743">
@@ -2946,13 +2974,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2103" max-vertical-offset="3077">
           <caret line="163" column="17" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5644" max-vertical-offset="9724">
-          <caret line="432" column="74" selection-start-line="432" selection-start-column="74" selection-end-line="432" selection-end-column="74" />
         </state>
       </provider>
     </entry>
@@ -3162,44 +3183,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout-land/main_frags.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.925926" vertical-offset="11" max-vertical-offset="578">
-          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.925926" vertical-offset="402" max-vertical-offset="1020">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <element signature="e#572#590#0" expanded="true" />
-            <element signature="e#873#894#0" expanded="true" />
-            <element signature="e#1228#1243#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25757575" vertical-offset="0" max-vertical-offset="594">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1106" max-vertical-offset="1700">
-          <caret line="107" column="43" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="43" />
           <folding />
         </state>
       </provider>
@@ -3222,18 +3209,112 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32323232" vertical-offset="1270" max-vertical-offset="6035">
-          <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1270" max-vertical-offset="6035">
+          <caret line="141" column="41" selection-start-line="124" selection-start-column="8" selection-end-line="141" selection-end-column="41" />
           <folding>
             <element signature="e#3949#3977#0" expanded="true" />
             <element signature="e#3988#4013#0" expanded="true" />
             <element signature="e#4972#5652#0" expanded="true" />
             <element signature="e#5474#5521#0" expanded="true" />
             <element signature="e#5650#5651#0" expanded="true" />
-            <element signature="e#6570#6875#0" expanded="true" />
-            <element signature="e#6869#6870#0" expanded="true" />
-            <element signature="e#9584#9600#0" expanded="true" />
-            <element signature="e#9767#9782#0" expanded="true" />
+            <element signature="e#6547#6852#0" expanded="true" />
+            <element signature="e#6846#6847#0" expanded="true" />
+            <element signature="e#9561#9577#0" expanded="true" />
+            <element signature="e#9744#9759#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout-land/main_frags.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.925926" vertical-offset="11" max-vertical-offset="578">
+          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_typicaldetail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="52.037037" vertical-offset="1405" max-vertical-offset="1972">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.7777777" vertical-offset="402" max-vertical-offset="1020">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="40" selection-end-column="45" />
+          <folding>
+            <element signature="e#572#590#0" expanded="true" />
+            <element signature="e#873#894#0" expanded="true" />
+            <element signature="e#1228#1243#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.018182" vertical-offset="770" max-vertical-offset="1360">
+          <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+          <folding>
+            <element signature="e#947#963#0" expanded="true" />
+            <element signature="e#2076#2101#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1106" max-vertical-offset="1700">
+          <caret line="107" column="43" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.57239056" vertical-offset="0" max-vertical-offset="594">
+          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1887" max-vertical-offset="2567">
+          <caret line="153" column="8" selection-start-line="153" selection-start-column="8" selection-end-line="153" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.44781145" vertical-offset="7639" max-vertical-offset="9724">
+          <caret line="562" column="46" selection-start-line="562" selection-start-column="46" selection-end-line="562" selection-end-column="46" />
+          <folding>
+            <element signature="e#7743#8396#0" expanded="true" />
+            <element signature="e#7875#8371#0" expanded="true" />
+            <element signature="e#8218#8265#0" expanded="true" />
+            <element signature="e#8352#8353#0" expanded="true" />
+            <element signature="e#8394#8395#0" expanded="true" />
+            <element signature="e#13796#13849#0" expanded="true" />
+            <element signature="e#16355#16396#0" expanded="true" />
+            <element signature="e#16820#16848#0" expanded="true" />
+            <element signature="e#17078#17094#0" expanded="true" />
+            <element signature="e#17265#17280#0" expanded="true" />
           </folding>
         </state>
       </provider>
