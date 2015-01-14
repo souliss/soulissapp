@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="LightThemeSelector" parent="android:Theme.Material">
+
+    </style>
+
+    <style name="DarkThemeSelector" parent="android:Theme.Material.Light">
+    </style>
+
+     <style name="CodeFontSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+    </style>
+
+    <style name="CodeFontMain" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <!-- <item name="android:typeface">monospace</item> -->
+    </style>
+
+    <style name="CodeFontTitle" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">top</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+        <item name="android:shadowColor">#aaaaff</item>
+        <item name="android:shadowRadius">1.5</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    
+     <style name="CodeFontTitleBig" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_vbig</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    
+     <style name="CodeFontActionBar" parent="@android:style/TextAppearance.Large">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_big</item>
+<!--         <item name="android:fontFamily">sans-serif-condensed</item> -->
+    </style>
+
+</resources>

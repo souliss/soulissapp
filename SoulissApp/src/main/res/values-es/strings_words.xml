@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+
+    <string name="unavailable">No disponible</string>
+    <string name="souliss_unavailable">!Souliss no disponible!</string>
+    <string name="notconfigured">Souliss <b>no está configurado</b> aun, la dirección IP local es obligatoria</string>
+    <string name="health">SALUD:</string>
+    <string name="status">ESTADO:</string>
+    <string name="update">ACTUALIZADO:</string>
+    <string name="actions">ACCIONES:</string>
+    <string name="node">Nodo</string>
+    <string name="nodes">Nodos</string>
+    <string name="slot">Slot</string>
+    <string name="sensors">Sensors</string>
+    <string name="ping">Ping</string>
+    <string name="ago">atrás</string>
+    <string name="multicast">Multicast</string>
+    <string name="multicast_desc">Enviar a todos los dispositivos de este tipo</string>
+    <string name="days">días</string>
+    <string name="poll">Obtener</string>
+    <string name="refresh">Actualizar</string>
+    <string name="save">Guardar</string>
+    <string name="brightness">Brillo</string>
+    <string name="proceed">Seguir</string>
+    <string name="scene">Escena</string>
+    <string name="rename">Renombrar</string>
+    <string name="reset">Reset</string>
+    <string name="typical">Dispositivo</string>
+    <string name="ON">ON</string>
+    <string name="power">Alimentación</string>
+    <string name="OFF">OFF</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
+    <string name="stop">Detener</string>
+    <string name="toggle">Cambiar</string>
+    <string name="TurnON">Encender</string>
+    <string name="TurnOFF">Apagar</string>
+    <string name="mode">Modo</string>
+    <string name="fan">Ventilador</string>
+    <string name="red">Rojo</string>
+    <string name="green">Verde</string>
+    <string name="blue">Azul</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="timer">Temporizador</string>
+    <string name="is">es</string>
+    <string name="equalizer">Equalizzatore</string>
+    <string name="meters">Metri</string>
+    <string name="service">Servizio</string>
+    <string name="position">Posizione</string>
+
+</resources>

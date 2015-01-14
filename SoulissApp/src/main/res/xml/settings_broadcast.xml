@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:icon="@android:drawable/ic_menu_mylocation"
+    android:key="network_setup"
+    android:summary="@string/opt_networkdesc"
+    android:title="@string/opt_network" >
+
+    <EditTextPreference
+        android:dialogTitle="Bridge Address"
+        android:key="bcast_IP"
+        android:summary="@string/bridge_IP"
+        android:title="Bridge Address" />
+    <EditTextPreference
+        android:dialogTitle="Bridge Subnet"
+        android:key="bcast_subnet"
+        android:summary="@string/bridge_subnet"
+        android:title="Bridge Subnet" />
+    <EditTextPreference
+        android:dialogTitle="Bridge Gateway"
+        android:key="bcast_gateway"
+        android:summary="@string/bridge_gateway"
+        android:title="Bridge Gateway" />
+    <EditTextPreference
+        android:dialogTitle="Wi-fi SSID"
+        android:key="bcast_ssid"
+        android:summary="@string/bridge_ssid"
+        android:title="Wi-fi SSID" />
+    <EditTextPreference
+        android:dialogTitle="Input Password"
+        android:key="bcast_passwd"
+        android:inputType="textPassword" 
+        android:summary="@string/bridge_wifipass"
+        android:title="Wi-fi password" />
+
+    <Preference
+        android:name="sndBcast"
+        android:key="sndBcast"
+        android:summary="Send a broadcast packet to configure Souliss with these settings"
+        android:title="Send Configuration Now" />
+
+</PreferenceScreen>

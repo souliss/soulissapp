@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:robobunny="http://robobunny.com"
+    android:icon="@android:drawable/ic_menu_gallery"
+    android:key="visual_PrefScreen"
+    android:summary="@string/opt_visualdesc"
+    android:title="@string/opt_visual" >
+
+    <PreferenceCategory android:title="Fonts" >
+        <ListPreference
+            android:defaultValue="14"
+            android:entries="@array/textsiz_array"
+            android:entryValues="@array/textsiz_values"
+            android:key="listPref"
+            android:summary="@string/opt_fontsizedesc"
+            android:title="@string/opt_fontsize" />
+        <ListPreference
+            android:defaultValue="Futura.ttf"
+            android:entries="@array/font_array"
+            android:entryValues="@array/font_values"
+            android:key="fontPref"
+            android:summary="@string/opt_fonttitledesc"
+            android:title="@string/opt_fonttitle" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Other" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="checkboxTestoEffetti"
+            android:summary="@string/opt_tetxfx_desc"
+            android:title="@string/opt_tetxfx" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkboxAnimazione"
+            android:summary="@string/opt_animfx_desc"
+            android:title="@string/opt_animfx" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkboxHoloLight"
+            android:summary="@string/opt_lighttheme_desc"
+            android:title="@string/opt_lighttheme" />
+
+        <Preference
+            android:name="restoredialogs"
+            android:key="restoredialogs"
+            android:summary="@string/opt_restore_desc"
+            android:title="@string/opt_restore" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

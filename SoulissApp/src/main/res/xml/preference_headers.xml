@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="it.angelic.soulissclient.preferences.NetSettingsFragment"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="@string/opt_network"
+        android:summary="@string/opt_networkdesc" >
+        <extra
+            android:name="opt_screen"
+            android:value="network_setup" />
+    </header>
+    <header
+        android:fragment="it.angelic.soulissclient.preferences.DbSettingsFragment"
+        android:icon="@android:drawable/ic_menu_save"
+        android:summary="@string/opt_db_desc"
+        android:title="@string/opt_db" >
+        <extra
+            android:name="opt_screen"
+            android:value="db_setup" />
+    </header>
+    <header
+        android:fragment="it.angelic.soulissclient.preferences.ServiceSettingsFragment"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:summary="@string/opt_servicedesc"
+        android:title="@string/opt_service" >
+        <extra
+            android:name="opt_screen"
+            android:value="service_setup" />
+    </header>
+    <header
+        android:fragment="it.angelic.soulissclient.preferences.VisualSettingsFragment"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:summary="@string/opt_visualdesc"
+        android:title="@string/opt_visual" >
+        <extra
+            android:name="opt_screen"
+            android:value="visual_setup" />
+    </header>
+    <header
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:summary="@string/menu_test"
+        android:title="@string/menu_test_udp" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="it.angelic.soulissclient.ManualUDPTestActivity"
+            android:targetClass="it.angelic.soulissclient.ManualUDPTestActivity"
+            android:targetPackage="it.angelic.soulissclient"  />
+    </header>
+
+</preference-headers>
