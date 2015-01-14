@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/containerlista"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1" >
+
+    <ImageView
+        android:id="@+id/node_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dip"
+        android:layout_marginRight="4dip"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/square" />
+
+    <TextView
+        android:id="@+id/TextViewNodeUpdate"
+        style="@style/CodeFontMain"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dip"
+        android:ellipsize="end"
+        android:text="@string/update" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/TextViewHealth"
+        style="@style/CodeFontMain"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/TextViewNodeUpdate"
+        android:layout_marginLeft="2dp"
+        android:text="@string/health" >
+    </TextView>
+
+    <ProgressBar
+        android:id="@+id/progressBarNodo"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextViewNodeUpdate"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="4dp"
+        android:layout_toLeftOf="@id/node_icon"
+        android:layout_toRightOf="@id/TextViewHealth" />
+
+    <TextView
+        android:id="@+id/TextViewTypicalsTitle"
+        style="@style/CodeFontTitleBig"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/progressBarNodo"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:text="@string/manual_typicals" >
+    </TextView>
+
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/TextViewTypicalsTitle"
+        android:fadeScrollbars="true"
+        android:fadingEdge="vertical"
+        android:divider="@android:color/transparent"
+        android:requiresFadingEdge="vertical"
+        android:dividerHeight="0dp" >
+    </ListView>
+
+</RelativeLayout>

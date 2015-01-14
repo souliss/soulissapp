@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Cont01"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textView4nInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <ToggleButton
+            android:id="@+id/buttonPlus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView4nInfo"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="25dip"
+            android:layout_marginRight="25dip"
+            android:gravity="center_vertical|center_horizontal"
+            android:minHeight="200dip"
+            android:padding="20dp"
+            android:textSize="26sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutAlarmInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout1"
+        android:weightSum="4" >
+
+        <TextView
+            android:id="@+id/textviewAlarmInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:gravity="center"
+            android:text="@string/timer"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <CheckBox
+            android:id="@+id/checkBoxnotifAndroid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewAlarmInfo"
+            android:text="@string/antitheftNotify" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkBoxnotifAndroid"
+            android:text="@string/reset" >
+        </Button>
+
+        <TextView
+            android:id="@+id/textviewResetInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/checkBoxnotifAndroid"
+            android:layout_margin="5dip"
+            android:layout_toRightOf="@id/resetButton"
+            android:gravity="center_vertical"
+            android:text="@string/antitheftReset"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutAlarmInfo"
+        android:weightSum="4" >
+
+        <TextView
+            android:id="@+id/textViewSensorInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center_horizontal"
+            android:text="@string/sensors"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/textviewSensors"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewSensorInfo"
+            android:layout_marginLeft="5dip"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+</RelativeLayout>
