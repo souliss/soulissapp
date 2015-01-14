@@ -11,6 +11,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.net.UDPHelper;
 
 import java.util.List;
 import java.util.Timer;
@@ -25,6 +26,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -40,6 +42,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -70,8 +73,9 @@ public class NodesListFragment extends SherlockListFragment {
 	private TextView textHeadListInfo;
 	private ImageButton online;
 	private TextView statusOnline;
+    private SwipeRefreshLayout swipeLayout;
 
-	@Override
+    @Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		View detailsFrame = getActivity().findViewById(R.id.details);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
@@ -118,7 +122,24 @@ public class NodesListFragment extends SherlockListFragment {
 		ImageView nodeic = (ImageView) getActivity().findViewById(R.id.scene_icon);
 		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
 		textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewManualDesc);
-		
+		swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
+        swipeLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (nodiArray != null)
+                            UDPHelper.healthRequest(opzioni, nodiArray.length, 0);
+                        if (!opzioni.isSoulissReachable())
+                            Toast.makeText(getActivity(),
+                                    getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                    .show();
+                    }
+                }).start();
+            }} );
+        swipeLayout.setColorSchemeResources (android.R.color.holo_blue_bright,
+                android.R.color.holo_blue_dark);
 		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());
 
@@ -264,9 +285,10 @@ public class NodesListFragment extends SherlockListFragment {
 			Log.i(TAG, "Broadcast received, refresh from DB");
 			datasource.open();
 			timeoutHandler.removeCallbacks(timeExpired);
-			// i nuovi programmi sono gia sul DB
-			// prendo tipici dal DB
+			// ferma la rotellina del refresh
+            swipeLayout.setRefreshing(false);
 			try {
+                // prendo tipici dal DB
 				List<SoulissNode> goer = datasource.getAllNodes();
 				nodiArray = new SoulissNode[goer.size()];
 				nodiArray = goer.toArray(nodiArray);
@@ -278,6 +300,7 @@ public class NodesListFragment extends SherlockListFragment {
 			}
 		}
 	};
+
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {

@@ -7,11 +7,4 @@
         android:title="@string/menu_options"
         android:showAsAction="always|collapseActionView|withText"
         android:orderInCategory="1"/>
-    <item
-        android:id="@+id/Refresh"
-        android:icon="@android:drawable/ic_menu_rotate"
-        android:title="@string/refresh"
-        android:showAsAction="ifRoom|collapseActionView|withText"
-        android:orderInCategory="0"/>
-
 </menu>

@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -105,20 +106,6 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 			startActivity(settingsActivity);
 			return true;
 			// TODO scelta tipo ordinamento
-		case R.id.Refresh:
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					UDPHelper.healthRequest(opzioni, goer.size(), 0);
-
-				}
-			}).start();
-
-			if (!opzioni.isSoulissReachable())
-				Toast.makeText(NodesListActivity.this,
-						"Refresh failed: " + getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
-						.show();
-			return true;
 		}
 
 		return super.onOptionsItemSelected(item);

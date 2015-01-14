@@ -21,541 +21,13 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: it.angelic.soulissclient" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1a2a9af-84ad-449b-82ce-384806f882d7" name="Default" comment="Switch to android Studio. Base Material support, many defects to work out">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/assets/Futura.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/assets/Robotics.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/alert_theft.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/analog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/analog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/analog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/analog.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/arrowmove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/arrowmove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/arrowmove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/arrowmove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/baby.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/baby.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/baby.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/baby.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/bathtub.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/bathtub.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/bathtub.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/bathtub.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/bedroom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/bedroom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/bedroom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/bedroom.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/bell.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/bell.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/bell.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/bell.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/bulb_off.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/bulb_off.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/bulb_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/bulb_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/button.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/button.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/button.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/button.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/cabinet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/cabinet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/cabinet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/cabinet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/cafe.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/cafe.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/cafe.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/cafe.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/candle.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/candle.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/candle.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/candle.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/car.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/car.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/car.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/car.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/check.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/check.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/check.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/check.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/clock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/clock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/clock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/clock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/empty.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/empty.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/empty.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/empty.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/empty_narrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/empty_narrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/empty_narrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/empty_narrow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/envelope.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/envelope.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/envelope.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/envelope.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/exit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/exit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/exit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/exit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/facebook.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/facebook.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/facebook.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/facebook.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/fan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/fan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/fan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/fan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/faucet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/faucet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/faucet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/faucet.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/filmmaker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/filmmaker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/filmmaker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/filmmaker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/fire.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/fire.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/fire.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/fire.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/flag.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/flag.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/flag.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/flag.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/flower.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/flower.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/flower.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/flower.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/fork.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/fork.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/fork.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/fork.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/frame.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/frame.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/frame.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/frame.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/gauge.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/gauge.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/gauge.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/gauge.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/gauge2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/gauge2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/gauge2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/gauge2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/gplus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/gplus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/gplus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/gplus.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/hand.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/hand.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/hand.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/hand.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/home.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/home2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/home2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/home2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/home2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/home3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/home3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/home3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/home3.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/ic_drawer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/ionizer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/ionizer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/ionizer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/ionizer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/knife.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/knife.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/knife.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/knife.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/lamp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/lamp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/lamp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/lamp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/light_off.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/light_off.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/light_off.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/light_off.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/light_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/light_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/light_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/light_on.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/lighthouse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/lighthouse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/lighthouse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/lighthouse.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/lightning.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/lightning.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/lightning.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/lightning.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/limit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/limit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/limit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/limit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/lock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/lock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/lock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/lock.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/locked.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/locked.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/locked.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/locked.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/mark.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/mark.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/mark.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/mark.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/moon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/moon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/moon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/moon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/plug.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/plug.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/plug.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/plug.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/pot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/pot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/pot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/pot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/power.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/power.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/power.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/power.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/raindrop.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/raindrop.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/raindrop.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/raindrop.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/remote.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/remote.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/remote.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/remote.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/rgb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/rgb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/rgb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/rgb.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/robot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/robot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/robot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/robot.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/setpoint.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/setpoint.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/setpoint.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/setpoint.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/shield.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/shield.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/shield.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/shield.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/snow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/snow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/snow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/snow.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/sos.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/sos.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/sos.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/sos.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/souliss_node.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/souliss_node.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/souliss_node.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/souliss_node.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/soulisslogo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/soulisslogo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/soulisslogo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/soulisslogo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/square.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/square.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/square.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/square.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/stairs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/stairs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/stairs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/stairs.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/stove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/stove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/stove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/stove.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/student.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/student.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/student.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/student.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/sun.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/sun.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/sun.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/sun.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/thermometer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/thermometer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/thermometer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/thermometer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/timer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/timer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/timer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/timer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/tv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/tv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/tv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/tv.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/twitter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/twitter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/twitter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/twitter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/warn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/warn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/warn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/warn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-hdpi/window.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-ldpi/window.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-mdpi/window.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable-xhdpi/window.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/AbstractMusicVisualizerFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AbstractStatusedFragmentActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/AbstractTypicalFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AddProgramActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/AlertDialogHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/AudioData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/renderer/BarGraphRenderer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/Base64.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/BroadcastSettingsFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/BroadcastSettingsPreferenceListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/CSVReader.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/CSVWriter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/renderer/CircleRenderer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/Constants.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/Constants.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/Constants.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/DbPreferenceListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/DbSettingsFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/DrawerItemClickListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/DrawerMenuHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/assets/EULA" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/Eula.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/ExpandableDrawerAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ExportDatabaseCSVTask.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/FFTData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/GetConstantsHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/GraphsHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/HTTPService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/HalfFloatUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/HomePageHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/INavDrawerItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/ISoulissObject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/ISoulissTypical.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/ISoulissTypicalSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ImportDatabaseCSVTask.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/IpChangerListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/JSONForceHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/JSONStatusHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/JSONStructureHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/LauncherActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/renderer/LineRenderer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ListButton.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ListSpinner.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ListToggleButton.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/ManualUDPTestActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/MessageCommandHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/NavDrawerAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/NavMenuItem.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/NavMenuSection.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/NetSettingsFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/NetUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/receivers/NetworkStateReceiver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/NodesListAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/PreferencesActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/ProgramListActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/ProgramListAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/renderer/Renderer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneCommandListAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneListAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ScenesDialogHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/robobunny/SeekBarPreference.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SensorDetailActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/ServicePreferenceListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/ServiceSettingsFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/SetHtmlRootListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissClient.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissCommand.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissCommandDTO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissDB.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissDBHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissDBLowHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissDataService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissGraphData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissHistoryGraphData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SoulissIconAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissLogDTO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/SoulissPreferenceHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissScene.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissTrigger.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissTriggerDTO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissTypical.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical11DigitalOutput.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical12DigitalOutputAuto.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical13DigitalInput.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical14PulseOutput.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical15.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical16AdvancedRGB.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical19AnalogChannel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical1ALightsArray.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical21.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical22.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical31Heating.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical32AirCon.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical41AntiTheft.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical42AntiTheftPeer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical43AntiTheftLocalPeer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical51AnalogueSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical52TemperatureSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical53HumiditySensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical54LuxSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical58PressureSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical5n.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical5nCurrentVoltagePowerSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypicalCurrentSensor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissTypicalDTO.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissTypicalFactory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissWidget.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissWidgetConfig.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T15RGBIrActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T16RGBAdvancedActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T16RGBAdvancedFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T19SingleChannelFragWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T19SingleChannelLedFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T1nFragWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T31FragWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T31HeatingFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T32AirConActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T4nFragWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T4nFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T5nSensorFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/TimeRangeEnum.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/TypicalsListAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/UDPHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/UDPRunnable.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/UDPSoulissDecoder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/VisualSettingsFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/com/pheelicks/visualizer/VisualizerView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/receivers/WatchDogEventReceiver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/receivers/WatchDogSetupReceiver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/WebServerPreferenceListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/Zozzariello.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/achartengine_1_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/action_bar_drawable.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/actionbarsherlock_4_4_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/alpha.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/alpha_in.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/alpha_out.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/array.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-es/array.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-it/array.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-pt/array.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/attrs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/blue.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/blue2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/blue3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/blue4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/blue5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/borderedbackoff.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/borderedbackon.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/colors.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-normal/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-small/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-xlarge/dimens.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/green.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/green2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/green3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/green4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/green5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/green_dot.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/item_selector.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/raw/json_manual.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/list_rect_blue.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/list_rect_green.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/list_rect_purple.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/list_rect_red.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/list_rect_yellow.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout-land/main_frags.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/main_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/manual_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/node_ctx_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_base_6_5_87.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_wearable_6_5_87.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/preference_headers.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/preferences_legacy.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/programs_ctx_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/programslist_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/radialback.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/radialbacklight.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_21_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/red.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/red2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/red3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/red4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/red5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/scalerotale.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenedetail_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenelist_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenes_commands_ctx_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenes_ctx_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/settings_broadcast.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/settings_dataservice.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/settings_db.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/settings_net.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/settings_visual.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/shadow_left.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/slide_in_left.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/slide_in_left_delay.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/slide_in_right.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/slide_out_left.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/slide_out_right.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/xml/souliss_widget.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-es/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-it/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-pt/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/strings_tomove.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-es/strings_tomove.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-it/strings_tomove.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-pt/strings_tomove.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/strings_words.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-es/strings_words.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-it/strings_words.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-pt/strings_words.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v11/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v16/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_21_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_21_0_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/anim/translate.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/typical_ctx_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/wearable_1_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/white.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/widget_shape.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/drawable/widget_shape_active.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="C:\Users\Ale\androidstudioworksp\SoulissClient\SoulissClient\lint.xml" afterPath="$PROJECT_DIR$/SoulissApp/lint.xml" />
-      <change type="MOVED" beforePath="C:\Users\Ale\androidstudioworksp\SoulissClient\SoulissClient\proguard.cfg" afterPath="$PROJECT_DIR$/SoulissApp/proguard.cfg" />
+    <list default="true" id="f1a2a9af-84ad-449b-82ce-384806f882d7" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SoulissClient.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -578,104 +50,69 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SoulissWidget.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissWidget.java">
+      <file leaf-file-name="lint.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/lint.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="2992">
-              <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+              <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EcoGalleryAbsSpinner.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ecoGallery/src/main/java/us/feras/ecogallery/EcoGalleryAbsSpinner.java">
+      <file leaf-file-name="NodesListFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7174" max-vertical-offset="7871">
-              <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HomePageHandler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/HomePageHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1003">
-              <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AddProgramActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AddProgramActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="527" max-vertical-offset="6035">
-              <caret line="78" column="37" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.32323232" vertical-offset="1270" max-vertical-offset="6035">
+              <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
               <folding>
-                <element signature="e#13105#13118#0" expanded="true" />
+                <element signature="e#3949#3977#0" expanded="true" />
+                <element signature="e#3988#4013#0" expanded="true" />
+                <element signature="e#4972#5652#0" expanded="true" />
+                <element signature="e#5474#5521#0" expanded="true" />
+                <element signature="e#5650#5651#0" expanded="true" />
+                <element signature="e#6570#6875#0" expanded="true" />
+                <element signature="e#6869#6870#0" expanded="true" />
+                <element signature="e#9584#9600#0" expanded="true" />
+                <element signature="e#9767#9782#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BroadcastSettingsFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/BroadcastSettingsFragment.java">
+      <file leaf-file-name="NodesListActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="2822">
-              <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1106" max-vertical-offset="1700">
+              <caret line="107" column="43" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LauncherActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/LauncherActivity.java">
+      <file leaf-file-name="main_frags.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout-land/main_frags.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2244" max-vertical-offset="11611">
-              <caret line="204" column="23" selection-start-line="204" selection-start-column="23" selection-end-line="204" selection-end-column="23" />
+            <state vertical-scroll-proportion="-10.925926" vertical-offset="11" max-vertical-offset="578">
+              <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ManualUDPTestActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/ManualUDPTestActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="5746">
-              <caret line="74" column="37" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="37" />
-              <folding />
-            </state>
+          <provider editor-type-id="android-designer">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lint.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/lint.xml">
+      <file leaf-file-name="frag_nodelist.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
-              <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lint.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ecoGallery/lint.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
-              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_frags.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_frags.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49072164" vertical-offset="0" max-vertical-offset="1139">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-10.925926" vertical-offset="402" max-vertical-offset="1020">
+              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+              <folding>
+                <element signature="e#572#590#0" expanded="true" />
+                <element signature="e#873#894#0" expanded="true" />
+                <element signature="e#1228#1243#0" expanded="true" />
+              </folding>
             </state>
           </provider>
           <provider editor-type-id="android-designer">
@@ -2682,6 +2119,12 @@
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissDBHelper.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T16RGBAdvancedFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/BroadcastSettingsFragment.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/lint.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
       </list>
     </option>
   </component>
@@ -2699,22 +2142,31 @@
             <id />
           </State>
           <State>
-            <id>Android Lint</id>
+            <id>Code style issues</id>
           </State>
           <State>
-            <id>Assignment issues</id>
+            <id>Data flow issues</id>
           </State>
           <State>
-            <id>Assignment issuesGroovy</id>
-          </State>
-          <State>
-            <id>Control flow issues</id>
+            <id>GPath inspectionsGroovy</id>
           </State>
           <State>
             <id>Groovy</id>
           </State>
           <State>
-            <id>Potentially confusing code constructsGroovy</id>
+            <id>JUnit issues</id>
+          </State>
+          <State>
+            <id>Java language level migration aids</id>
+          </State>
+          <State>
+            <id>Naming ConventionsGroovy</id>
+          </State>
+          <State>
+            <id>Naming conventions</id>
+          </State>
+          <State>
+            <id>Numeric issues</id>
           </State>
           <State>
             <id>Probable bugs</id>
@@ -2722,21 +2174,7 @@
           <State>
             <id>Probable bugsGroovy</id>
           </State>
-          <State>
-            <id>Spelling</id>
-          </State>
-          <State>
-            <id>Threading issues</id>
-          </State>
-          <State>
-            <id>Threading issuesGroovy</id>
-          </State>
         </expanded-state>
-        <selected-state>
-          <State>
-            <id>SpellCheckingInspection</id>
-          </State>
-        </selected-state>
       </profile-state>
     </entry>
   </component>
@@ -2754,7 +2192,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -2762,10 +2200,240 @@
       <hideEmptyPackages />
       <abbreviatePackageNames />
       <autoscrollToSource />
-      <autoscrollFromSource />
+      <autoscrollFromSource AndroidView="true" />
       <sortByType />
     </navigator>
     <panes>
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="styles.xml" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main_frags.xml" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="angelic" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soulissclient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="angelic" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="soulissclient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fragments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="angelic" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -2776,7 +2444,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2829,26 +2496,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SoulissClient" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SoulissClient" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="soulissClient" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2863,7 +2511,7 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="04946ed122088837" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/soulissClient/src/main/res/values-v16" />
-    <property name="options.lastSelected" value="Errors" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -2871,6 +2519,7 @@
     <property name="android.project.structure.last.selected" value="ecoGallery" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="FullScreen" value="false" />
+    <property name="LayoutCode.rearrangeEntriesXML" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -3134,42 +2783,47 @@
       <created>1421195082367</created>
       <updated>1421195082367</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Switch to android Studio. Base Material support, many defects to work out">
+      <created>1421195271262</created>
+      <updated>1421195271262</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30888888" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30888888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30888888" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -3192,63 +2846,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="Switch to android Studio. Base Material support, many defects to work out" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/import-summary.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.32" vertical-offset="0" max-vertical-offset="561">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissClient.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="569">
-          <caret line="0" column="50" selection-start-line="0" selection-start-column="50" selection-end-line="0" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical5nCurrentVoltagePowerSensor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2550">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/NetSettingsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="998" max-vertical-offset="2125">
           <caret line="88" column="20" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3256,7 +2862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1224">
           <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3264,7 +2869,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1683">
           <caret line="31" column="49" selection-start-line="31" selection-start-column="49" selection-end-line="31" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3272,7 +2876,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1649">
           <caret line="25" column="76" selection-start-line="25" selection-start-column="76" selection-end-line="25" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3280,7 +2883,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3854" max-vertical-offset="4743">
           <caret line="261" column="49" selection-start-line="261" selection-start-column="49" selection-end-line="261" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3288,7 +2890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="182" max-vertical-offset="1275">
           <caret line="34" column="72" selection-start-line="34" selection-start-column="72" selection-end-line="34" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3296,7 +2897,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="267" max-vertical-offset="1411">
           <caret line="31" column="7" selection-start-line="31" selection-start-column="7" selection-end-line="31" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3304,7 +2904,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2613" max-vertical-offset="4029">
           <caret line="180" column="0" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3312,7 +2911,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4449" max-vertical-offset="6358">
           <caret line="324" column="33" selection-start-line="324" selection-start-column="33" selection-end-line="324" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3320,7 +2918,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="522" max-vertical-offset="2091">
           <caret line="47" column="7" selection-start-line="47" selection-start-column="7" selection-end-line="47" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3328,7 +2925,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1049" max-vertical-offset="3349">
           <caret line="105" column="30" selection-start-line="105" selection-start-column="30" selection-end-line="105" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3336,7 +2932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1576" max-vertical-offset="9911">
           <caret line="161" column="61" selection-start-line="161" selection-start-column="61" selection-end-line="161" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3344,7 +2939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7441" max-vertical-offset="8721">
           <caret line="495" column="17" selection-start-line="495" selection-start-column="17" selection-end-line="495" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3352,7 +2946,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2103" max-vertical-offset="3077">
           <caret line="163" column="17" selection-start-line="163" selection-start-column="17" selection-end-line="163" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3360,27 +2953,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5644" max-vertical-offset="9724">
           <caret line="432" column="74" selection-start-line="432" selection-start-column="74" selection-end-line="432" selection-end-column="74" />
-          <folding>
-            <element signature="e#9091#9395#0" expanded="true" />
-            <element signature="e#9389#9390#0" expanded="true" />
-            <element signature="e#9872#10222#0" expanded="true" />
-            <element signature="e#10216#10217#0" expanded="true" />
-            <element signature="e#12765#12818#0" expanded="true" />
-            <element signature="e#15324#15365#0" expanded="true" />
-            <element signature="e#15789#15817#0" expanded="true" />
-            <element signature="e#16047#16063#0" expanded="true" />
-            <element signature="e#16234#16249#0" expanded="true" />
-            <element signature="e#19730#19962#0" expanded="true" />
-            <element signature="e#19816#19951#0" expanded="true" />
-            <element signature="e#19944#19945#0" expanded="true" />
-            <element signature="e#19957#19958#0" expanded="true" />
-            <element signature="e#20850#21955#0" expanded="true" />
-            <element signature="e#21951#21952#0" expanded="true" />
-            <element signature="e#21982#22198#0" expanded="true" />
-            <element signature="e#22194#22195#0" expanded="true" />
-            <element signature="e#22283#22589#0" expanded="true" />
-            <element signature="e#22585#22586#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3388,7 +2960,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5338" max-vertical-offset="8177">
           <caret line="379" column="19" selection-start-line="379" selection-start-column="19" selection-end-line="379" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3396,7 +2967,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.16601562" vertical-offset="0" max-vertical-offset="765">
           <caret line="8" column="82" selection-start-line="8" selection-start-column="82" selection-end-line="8" selection-end-column="82" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3404,9 +2974,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3281" max-vertical-offset="4590">
           <caret line="231" column="34" selection-start-line="231" selection-start-column="34" selection-end-line="231" selection-end-column="34" />
-          <folding>
-            <element signature="e#7621#7637#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3414,7 +2981,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2261" max-vertical-offset="3485">
           <caret line="147" column="54" selection-start-line="147" selection-start-column="54" selection-end-line="147" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3422,7 +2988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1751" max-vertical-offset="2941">
           <caret line="115" column="20" selection-start-line="115" selection-start-column="20" selection-end-line="115" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3430,7 +2995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="17" max-vertical-offset="2023">
           <caret line="14" column="44" selection-start-line="14" selection-start-column="44" selection-end-line="14" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3438,7 +3002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4811" max-vertical-offset="5542">
           <caret line="352" column="45" selection-start-line="352" selection-start-column="45" selection-end-line="352" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3446,7 +3009,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6953" max-vertical-offset="7718">
           <caret line="464" column="19" selection-start-line="464" selection-start-column="19" selection-end-line="464" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3454,7 +3016,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1224" max-vertical-offset="5100">
           <caret line="116" column="16" selection-start-line="116" selection-start-column="16" selection-end-line="116" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3462,7 +3023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="4726">
           <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3470,7 +3030,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2618" max-vertical-offset="4131">
           <caret line="189" column="19" selection-start-line="189" selection-start-column="19" selection-end-line="189" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3478,7 +3037,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2244" max-vertical-offset="2958">
           <caret line="162" column="15" selection-start-line="162" selection-start-column="15" selection-end-line="162" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3486,7 +3044,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="10387" max-vertical-offset="11458">
           <caret line="641" column="64" selection-start-line="641" selection-start-column="64" selection-end-line="641" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3494,7 +3051,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="4845" max-vertical-offset="12410">
           <caret line="275" column="67" selection-start-line="275" selection-start-column="67" selection-end-line="275" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3502,7 +3058,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1326">
           <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3510,7 +3065,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1547">
           <caret line="82" column="34" selection-start-line="82" selection-start-column="34" selection-end-line="82" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3518,7 +3072,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1241">
           <caret line="35" column="12" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3526,7 +3079,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5219" max-vertical-offset="13855">
           <caret line="359" column="32" selection-start-line="359" selection-start-column="32" selection-end-line="359" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3534,7 +3086,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="544" max-vertical-offset="1190">
           <caret line="55" column="12" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3542,7 +3093,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2618" max-vertical-offset="10982">
           <caret line="218" column="12" selection-start-line="218" selection-start-column="12" selection-end-line="218" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3550,7 +3100,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="2992">
           <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3558,7 +3107,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7174" max-vertical-offset="7871">
           <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3566,7 +3114,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="1003">
           <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3574,9 +3121,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="527" max-vertical-offset="6035">
           <caret line="78" column="37" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
-          <folding>
-            <element signature="e#13105#13118#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3584,7 +3128,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="867" max-vertical-offset="2822">
           <caret line="77" column="35" selection-start-line="77" selection-start-column="35" selection-end-line="77" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3592,7 +3135,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2244" max-vertical-offset="11611">
           <caret line="204" column="23" selection-start-line="204" selection-start-column="23" selection-end-line="204" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3600,15 +3142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="578" max-vertical-offset="5746">
           <caret line="74" column="37" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/lint.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
-          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3616,19 +3149,93 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="136">
           <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_frags.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49072164" vertical-offset="0" max-vertical-offset="1139">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.52577317" vertical-offset="0" max-vertical-offset="1139">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout-land/main_frags.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.925926" vertical-offset="11" max-vertical-offset="578">
+          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.925926" vertical-offset="402" max-vertical-offset="1020">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <element signature="e#572#590#0" expanded="true" />
+            <element signature="e#873#894#0" expanded="true" />
+            <element signature="e#1228#1243#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodeslist_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25757575" vertical-offset="0" max-vertical-offset="594">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1106" max-vertical-offset="1700">
+          <caret line="107" column="43" selection-start-line="107" selection-start-column="43" selection-end-line="107" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08585858" vertical-offset="0" max-vertical-offset="1003">
+          <caret line="3" column="87" selection-start-line="3" selection-start-column="87" selection-end-line="3" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/lint.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+          <caret line="3" column="7" selection-start-line="3" selection-start-column="7" selection-end-line="3" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32323232" vertical-offset="1270" max-vertical-offset="6035">
+          <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
+          <folding>
+            <element signature="e#3949#3977#0" expanded="true" />
+            <element signature="e#3988#4013#0" expanded="true" />
+            <element signature="e#4972#5652#0" expanded="true" />
+            <element signature="e#5474#5521#0" expanded="true" />
+            <element signature="e#5650#5651#0" expanded="true" />
+            <element signature="e#6570#6875#0" expanded="true" />
+            <element signature="e#6869#6870#0" expanded="true" />
+            <element signature="e#9584#9600#0" expanded="true" />
+            <element signature="e#9767#9782#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

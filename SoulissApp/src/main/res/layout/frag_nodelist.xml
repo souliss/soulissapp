@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayout1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/scene_icon"
@@ -32,20 +32,23 @@
         android:layout_marginLeft="4dp"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
-        android:text="@string/nodes" >
-    </TextView>
+        android:text="@string/nodes"></TextView>
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefreshContainer"
         android:layout_below="@id/TextViewTypicals"
-        android:background="@drawable/item_selector"
-        android:cacheColorHint="@color/trans_black"
-        android:divider="@android:color/transparent"
-        android:fadeScrollbars="true"
-        android:fadingEdge="vertical"
-        android:requiresFadingEdge="vertical" >
-    </ListView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_selector"
+            android:cacheColorHint="@color/trans_black"
+            android:divider="@android:color/transparent"
+            android:fadeScrollbars="true"
+            android:fadingEdge="vertical"
+            android:requiresFadingEdge="vertical"></ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
