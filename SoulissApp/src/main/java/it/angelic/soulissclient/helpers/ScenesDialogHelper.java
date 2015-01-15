@@ -171,7 +171,7 @@ public class ScenesDialogHelper {
 		final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
 
 		View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_command_dialog, null);
-		alert2.setTitle(context.getString(R.string.scene_add_command_to) + targetScene.toString());
+		alert2.setTitle(context.getString(R.string.scene_add_command_to) + " " +targetScene.toString());
 		alert2.setIcon(android.R.drawable.ic_dialog_dialer);
 
 		alert2.setView(dialoglayout);

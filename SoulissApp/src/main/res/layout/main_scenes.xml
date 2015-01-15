@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <!-- The main content view -->
 
@@ -12,13 +13,13 @@
         android:layout_height="fill_parent"
         android:baselineAligned="false"
         android:orientation="vertical"
-        android:weightSum="3" >
+        android:weightSum="3">
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/scene_icon"
@@ -47,27 +48,36 @@
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                android:text="@string/scenes_title" >
-            </TextView>
+                android:text="@string/scenes_title"/>
 
-            <ListView
-                android:id="@+id/ListViewListaScenes"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/TextViewScenes"
-                android:cacheColorHint="@color/trans_black"
-                android:divider="@android:color/transparent"
-                android:fadingEdge="vertical"
-                android:requiresFadingEdge="vertical" >
-            </ListView>
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/TextViewScenes">
+
+                <com.melnykov.fab.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="16dp"
+                    android:src="@drawable/ic_add_white_24dp"
+                    fab:fab_colorNormal="@color/std_green"
+                    fab:fab_colorPressed="@color/std_blue_shadow"
+                    fab:fab_colorRipple="@color/std_purple" />
+
+                <ListView
+                    android:id="@+id/ListViewListaScenes"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@color/trans_black"
+                    android:divider="@android:color/transparent"
+                    android:fadingEdge="vertical"
+                    android:requiresFadingEdge="vertical"/>
+            </FrameLayout>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </RelativeLayout>
     </LinearLayout>
 
     <ListView

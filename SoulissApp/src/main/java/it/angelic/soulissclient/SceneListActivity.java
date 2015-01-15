@@ -42,6 +42,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
+
 
 /**
  * Activity per mostrare una lista di scenari
@@ -87,9 +89,30 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		 */
 
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToListView(listaScenesView);
 		SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
 
+        //ADD NEW SCENE
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int rest = datasource.createOrUpdateScene(null);
+                // prendo comandi dal DB, setto adapter
+                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
+                //scenesArray = new SoulissScene[goer.size()];
+                scenesArray = goer.toArray(scenesArray);
+                progsAdapter = new SceneListAdapter(SceneListActivity.this, scenesArray, opzioni);
+                // Adapter della lista
+                //SceneListAdapter t = listaScenesView.getAdapter();
+                progsAdapter.setScenes(scenesArray);
+                progsAdapter.notifyDataSetChanged();
+                listaScenesView.setAdapter(progsAdapter);
+                listaScenesView.invalidateViews();
+                Toast.makeText(SceneListActivity.this,
+                        "Scene " + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
+            }
+        });
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(this);
@@ -273,19 +296,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		case R.id.Opzioni:
 			Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
 			startActivity(settingsActivity);
-			return true;
-		case R.id.AddScene:
-			int rest = datasource.createOrUpdateScene(null);
-			// prendo comandi dal DB, setto adapter
-			LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
-			scenesArray = new SoulissScene[goer.size()];
-			scenesArray = goer.toArray(scenesArray);
-			progsAdapter = new SceneListAdapter(SceneListActivity.this, scenesArray, opzioni);
-			// Adapter della lista
-			listaScenesView.setAdapter(progsAdapter);
-			listaScenesView.invalidateViews();
-			Toast.makeText(SceneListActivity.this,
-					"Scene " + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
 			return true;
 		case R.id.TestUDP:
 			Intent myIntents = new Intent(SceneListActivity.this, ManualUDPTestActivity.class);

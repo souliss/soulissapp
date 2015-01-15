@@ -16,56 +16,35 @@
     <shared>
       <config />
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_addprogram.xml">
+        <config>
+          <theme>@android:style/Theme.Material</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: it.angelic.soulissclient" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1a2a9af-84ad-449b-82ce-384806f882d7" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Users\Ale\androidstudioworksp\SoulissClient\.idea\libraries\actionbarsherlock_4_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_21_0_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AbstractStatusedFragmentActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AbstractStatusedFragmentActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/AbstractTypicalFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/AbstractTypicalFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AddProgramActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/AddProgramActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/LauncherActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/LauncherActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/NavDrawerAdapter.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/NavDrawerAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodesListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodesListFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/ProgramListActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/ProgramListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/floatingactionbutton_1_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/library_2_4_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SensorDetailActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SensorDetailActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneListAdapter.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneListAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ScenesDialogHelper.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ScenesDialogHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/SoulissApp.iml" afterPath="$PROJECT_DIR$/SoulissApp/SoulissApp.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissNode.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical12DigitalOutputAuto.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical12DigitalOutputAuto.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T15RGBIrActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T15RGBIrActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T16RGBAdvancedActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T16RGBAdvancedActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T16RGBAdvancedFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T16RGBAdvancedFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T19SingleChannelFragWrapper.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T19SingleChannelFragWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T19SingleChannelLedFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T19SingleChannelLedFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T1nFragWrapper.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T1nFragWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T31FragWrapper.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T31FragWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T31HeatingFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T31HeatingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T32AirConActivity.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T32AirConActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T4nFragWrapper.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/T4nFragWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T4nFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T4nFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T5nSensorFragment.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T5nSensorFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/TypicalsListAdapter.java" afterPath="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/TypicalsListAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/add_command_dialog.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/add_command_dialog.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/build.gradle" afterPath="$PROJECT_DIR$/SoulissApp/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/listview_typical.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/listview_typical.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_launcher.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_launcher.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_scenes.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_scenes.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_21_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_21_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenelist_menu.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenelist_menu.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-es/strings.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-es/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-it/strings.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-it/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-pt/strings.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-pt/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v11/styles.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v11/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v16/styles.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v16/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_21_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/widget_layout.xml" afterPath="$PROJECT_DIR$/SoulissApp/src/main/res/layout/widget_layout.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SoulissClient.iws" />
@@ -92,87 +71,39 @@
       <file leaf-file-name="SceneDetailActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="710" max-vertical-offset="3366">
-              <caret line="83" column="72" selection-start-line="83" selection-start-column="72" selection-end-line="83" selection-end-column="72" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SoulissWidget.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissWidget.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="476" max-vertical-offset="2992">
-              <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DrawerMenuHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/DrawerMenuHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="1751">
-              <caret line="77" column="42" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SoulissNode.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="642" max-vertical-offset="2788">
-              <caret line="54" column="45" selection-start-line="54" selection-start-column="45" selection-end-line="54" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2502" max-vertical-offset="3366">
+              <caret line="184" column="44" selection-start-line="184" selection-start-column="44" selection-end-line="184" selection-end-column="44" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1765#1766#0" expanded="true" />
-                <element signature="e#1794#1795#0" expanded="true" />
-                <element signature="e#1839#1840#0" expanded="true" />
-                <element signature="e#1868#1869#0" expanded="true" />
-                <element signature="e#1920#1921#0" expanded="true" />
-                <element signature="e#1954#1955#0" expanded="true" />
-                <element signature="e#1982#1983#0" expanded="true" />
-                <element signature="e#2007#2008#0" expanded="true" />
-                <element signature="e#2386#2387#0" expanded="true" />
-                <element signature="e#2420#2421#0" expanded="true" />
-                <element signature="e#2469#2470#0" expanded="true" />
-                <element signature="e#2507#2508#0" expanded="true" />
-                <element signature="e#3021#3022#0" expanded="true" />
-                <element signature="e#3067#3068#0" expanded="true" />
-                <element signature="e#3110#3111#0" expanded="true" />
-                <element signature="e#3146#3147#0" expanded="true" />
-                <element signature="e#3181#3182#0" expanded="true" />
-                <element signature="e#3209#3210#0" expanded="true" />
-                <element signature="e#3250#3251#0" expanded="true" />
-                <element signature="e#3278#3279#0" expanded="true" />
-                <element signature="e#3334#3335#0" expanded="true" />
-                <element signature="e#3380#3381#0" expanded="true" />
-                <element signature="e#3899#3900#0" expanded="true" />
-                <element signature="e#3935#3936#0" expanded="true" />
-                <element signature="e#3966#3967#0" expanded="true" />
-                <element signature="e#3993#3994#0" expanded="true" />
+                <element signature="e#2978#3010#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UDPSoulissDecoder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/UDPSoulissDecoder.java">
+      <file leaf-file-name="ScenesDialogHelper.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ScenesDialogHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5419" max-vertical-offset="8721">
-              <caret line="377" column="27" selection-start-line="377" selection-start-column="27" selection-end-line="377" selection-end-column="27" />
-              <folding />
+            <state vertical-scroll-proportion="0.6691358" vertical-offset="1905" max-vertical-offset="6358">
+              <caret line="173" column="75" selection-start-line="173" selection-start-column="75" selection-end-line="173" selection-end-column="75" />
+              <folding>
+                <element signature="e#6039#6087#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SoulissDBLowHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissDBLowHelper.java">
+      <file leaf-file-name="add_command_dialog.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/add_command_dialog.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="1275">
-              <caret line="67" column="27" selection-start-line="67" selection-start-column="27" selection-end-line="67" selection-end-column="27" />
-              <folding />
+            <state vertical-scroll-proportion="-5.9259257" vertical-offset="146" max-vertical-offset="1241">
+              <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+              <folding>
+                <element signature="e#706#731#0" expanded="true" />
+                <element signature="e#2061#2095#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -180,33 +111,89 @@
       <file leaf-file-name="T1nGenericLightFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5299" max-vertical-offset="6613">
-              <caret line="339" column="0" selection-start-line="339" selection-start-column="0" selection-end-line="339" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5289" max-vertical-offset="5933">
+              <caret line="394" column="42" selection-start-line="394" selection-start-column="42" selection-end-line="394" selection-end-column="42" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#9384#9433#0" expanded="true" />
+                <element signature="e#9632#9679#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SoulissTypical12DigitalOutputAuto.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical12DigitalOutputAuto.java">
+      <file leaf-file-name="SoulissTypical5n.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical5n.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.265625" vertical-offset="1479" max-vertical-offset="2669">
-              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1887">
+              <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TypicalsListAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/TypicalsListAdapter.java">
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2222" max-vertical-offset="3009">
-              <caret line="183" column="51" selection-start-line="183" selection-start-column="51" selection-end-line="183" selection-end-column="51" />
+            <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="561">
+              <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SceneListActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1684" max-vertical-offset="5661">
+              <caret line="109" column="16" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
               <folding>
-                <element signature="e#6700#6747#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#3418#4476#0" expanded="true" />
+                <element signature="e#4465#4466#0" expanded="true" />
+                <element signature="e#5000#5018#0" expanded="true" />
+                <element signature="e#5054#5072#0" expanded="true" />
+                <element signature="e#6847#6879#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SceneListAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneListAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="1530">
+              <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_scenes.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_scenes.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.333333" vertical-offset="982" max-vertical-offset="1666">
+              <caret line="71" column="54" selection-start-line="71" selection-start-column="54" selection-end-line="71" selection-end-column="54" />
+              <folding>
+                <element signature="e#1277#1295#0" expanded="true" />
+                <element signature="e#1589#1610#0" expanded="true" />
+                <element signature="e#2014#2036#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_addprogram.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_addprogram.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.5555553" vertical-offset="4447" max-vertical-offset="5066">
+              <caret line="272" column="28" selection-start-line="272" selection-start-column="28" selection-end-line="272" selection-end-column="28" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1078,9 +1065,19 @@
                 <option name="name" value="prepareComAndroidSupportAppcompatV72103Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:recyclerview-v7:21.0.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SoulissApp" />
+                <option name="name" value="prepareComAndroidSupportRecyclerviewV72100Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Prepare com.android.support:support-v4:21.0.3" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SoulissApp" />
                 <option name="name" value="prepareComAndroidSupportSupportV42103Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.melnykov:floatingactionbutton:1.1.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SoulissApp" />
+                <option name="name" value="prepareComMelnykovFloatingactionbutton110Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SoulissApp" />
@@ -1998,7 +1995,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="7106013139331" />
+        <entry key="$PROJECT_DIR$" value="7106092195545" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2181,12 +2178,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/UDPSoulissDecoder.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SoulissWidgetConfig.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ListButton.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/Constants.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/NetUtils.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/net/webserver/HTTPService.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/db/SoulissDBHelper.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/preferences/BroadcastSettingsFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/lint.xml" />
@@ -2195,7 +2186,6 @@
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_launcher.xml" />
-        <option value="$PROJECT_DIR$/SoulissApp/build.gradle" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values-v11/styles.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values-v16/styles.xml" />
@@ -2221,17 +2211,24 @@
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values-v21/styles.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/NodeDetailFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/NodeDetailActivity.java" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/ProgramListActivity.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/LauncherActivity.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/drawer/NavDrawerAdapter.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/widget_layout.xml" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/SoulissNode.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/TypicalsListAdapter.java" />
         <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical12DigitalOutputAuto.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/build.gradle" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_addprogram.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenelist_menu.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_scenes.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneListAdapter.java" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/res/layout/add_command_dialog.xml" />
+        <option value="$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ScenesDialogHelper.java" />
       </list>
     </option>
   </component>
@@ -2367,7 +2364,43 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2523,7 +2556,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="db" />
+              <option name="myItemId" value="fragments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2587,26 +2620,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SoulissClient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SoulissClient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SoulissApp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2791,7 +2805,26 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissClient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SoulissApp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2816,6 +2849,7 @@
     <property name="FullScreen" value="false" />
     <property name="LayoutCode.rearrangeEntriesXML" value="true" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+    <property name="extract.method.default.visibility" value="private" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -3091,7 +3125,11 @@
       <created>1421263428441</created>
       <updated>1421263428441</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="ActionBarSherlock rimosso&#10;fix widget depth (solo Lollipop)&#10;Drawer bugfixes">
+      <created>1421283616236</created>
+      <updated>1421283616236</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3104,15 +3142,14 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3288889" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5188889" sideWeight="0.19989339" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5188889" sideWeight="0.8001066" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5188889" sideWeight="0.8001066" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3120,13 +3157,14 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3288889" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -3149,7 +3187,8 @@
     <MESSAGE value="Switch to android Studio. Base Material support, many defects to work out" />
     <MESSAGE value="Swipe to refresh nella lista nodi, rimosso dal menu" />
     <MESSAGE value="Swipe to refresh nel dettaglio nodo&#10; rimosso dal menu voce refresh" />
-    <option name="LAST_COMMIT_MESSAGE" value="Swipe to refresh nel dettaglio nodo&#10; rimosso dal menu voce refresh" />
+    <MESSAGE value="ActionBarSherlock rimosso&#10;fix widget depth (solo Lollipop)&#10;Drawer bugfixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="ActionBarSherlock rimosso&#10;fix widget depth (solo Lollipop)&#10;Drawer bugfixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3157,89 +3196,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_typicaldetail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="52.037037" vertical-offset="1405" max-vertical-offset="1972">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodelist.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.7777777" vertical-offset="402" max-vertical-offset="1020">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="40" selection-end-column="45" />
-          <folding>
-            <element signature="e#572#590#0" expanded="true" />
-            <element signature="e#873#894#0" expanded="true" />
-            <element signature="e#1228#1243#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/frag_nodedetail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.018182" vertical-offset="770" max-vertical-offset="1360">
-          <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
-          <folding>
-            <element signature="e#947#963#0" expanded="true" />
-            <element signature="e#2076#2101#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/menu/nodedetail_menu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57239056" vertical-offset="0" max-vertical-offset="594">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout-land/main_frags.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.925926" vertical-offset="11" max-vertical-offset="578">
-          <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6493056" vertical-offset="0" max-vertical-offset="1496">
-          <caret line="22" column="59" selection-start-line="22" selection-start-column="59" selection-end-line="22" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="544">
-          <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/values-v16/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1343">
@@ -3287,9 +3243,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29166666" vertical-offset="835" max-vertical-offset="1411">
           <caret line="59" column="43" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3307,9 +3260,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27430555" vertical-offset="3820" max-vertical-offset="5253">
           <caret line="245" column="39" selection-start-line="245" selection-start-column="39" selection-end-line="245" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3317,9 +3267,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5104167" vertical-offset="1474" max-vertical-offset="2210">
           <caret line="104" column="41" selection-start-line="104" selection-start-column="41" selection-end-line="104" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3335,9 +3282,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27430555" vertical-offset="3140" max-vertical-offset="4930">
           <caret line="196" column="41" selection-start-line="196" selection-start-column="41" selection-end-line="196" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3345,9 +3289,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3582" max-vertical-offset="6732">
           <caret line="229" column="53" selection-start-line="229" selection-start-column="53" selection-end-line="229" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3355,9 +3296,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29166666" vertical-offset="563" max-vertical-offset="1139">
           <caret line="43" column="41" selection-start-line="43" selection-start-column="41" selection-end-line="43" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3365,7 +3303,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="335" max-vertical-offset="8228">
           <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3373,9 +3310,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44270834" vertical-offset="17" max-vertical-offset="1343">
           <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3383,7 +3317,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38368055" vertical-offset="0" max-vertical-offset="952">
           <caret line="17" column="46" selection-start-line="17" selection-start-column="46" selection-end-line="17" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3391,9 +3324,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2834" max-vertical-offset="7344">
           <caret line="190" column="45" selection-start-line="190" selection-start-column="45" selection-end-line="190" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3401,7 +3331,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3246528" vertical-offset="0" max-vertical-offset="952">
           <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3409,9 +3338,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="1576" max-vertical-offset="6953">
           <caret line="104" column="49" selection-start-line="104" selection-start-column="49" selection-end-line="104" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3437,33 +3363,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1397" max-vertical-offset="11475">
           <caret line="96" column="26" selection-start-line="96" selection-start-column="26" selection-end-line="96" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8858#9511#0" expanded="true" />
-            <element signature="e#8990#9486#0" expanded="true" />
-            <element signature="e#9333#9380#0" expanded="true" />
-            <element signature="e#9467#9468#0" expanded="true" />
-            <element signature="e#9509#9510#0" expanded="true" />
-            <element signature="e#9987#10291#0" expanded="true" />
-            <element signature="e#10285#10286#0" expanded="true" />
-            <element signature="e#10768#11101#0" expanded="true" />
-            <element signature="e#11095#11096#0" expanded="true" />
-            <element signature="e#13644#13697#0" expanded="true" />
-            <element signature="e#16222#16263#0" expanded="true" />
-            <element signature="e#16687#16715#0" expanded="true" />
-            <element signature="e#16945#16961#0" expanded="true" />
-            <element signature="e#17132#17147#0" expanded="true" />
-            <element signature="e#20605#20837#0" expanded="true" />
-            <element signature="e#20691#20826#0" expanded="true" />
-            <element signature="e#20819#20820#0" expanded="true" />
-            <element signature="e#20832#20833#0" expanded="true" />
-            <element signature="e#21725#22915#0" expanded="true" />
-            <element signature="e#22911#22912#0" expanded="true" />
-            <element signature="e#22942#23158#0" expanded="true" />
-            <element signature="e#23154#23155#0" expanded="true" />
-            <element signature="e#23243#23549#0" expanded="true" />
-            <element signature="e#23545#23546#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3471,7 +3370,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1717">
           <caret line="21" column="71" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3479,7 +3377,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="2516">
           <caret line="94" column="58" selection-start-line="94" selection-start-column="58" selection-end-line="94" selection-end-column="58" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3487,9 +3384,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.8214286" vertical-offset="1694" max-vertical-offset="5253">
           <caret line="101" column="13" selection-start-line="101" selection-start-column="13" selection-end-line="101" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3504,17 +3398,17 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_launcher.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.80656934" vertical-offset="221" max-vertical-offset="4148">
           <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
           <folding>
-            <element signature="e#990#1012#0" expanded="true" />
-            <element signature="e#1434#1458#0" expanded="true" />
+            <element signature="e#990#1012#0" expanded="false" />
+            <element signature="e#1434#1458#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/values/strings.xml">
@@ -3525,26 +3419,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.285714" vertical-offset="2368" max-vertical-offset="5491">
-          <caret line="150" column="30" selection-start-line="150" selection-start-column="30" selection-end-line="150" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#5556#5588#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/LauncherActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.25" vertical-offset="6355" max-vertical-offset="12665">
           <caret line="400" column="9" selection-start-line="400" selection-start-column="9" selection-end-line="400" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#13684#13712#0" expanded="true" />
-            <element signature="e#15081#15120#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3552,15 +3430,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="799" max-vertical-offset="2074">
           <caret line="61" column="40" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#3203#3204#0" expanded="false" />
-            <element signature="e#3227#3228#0" expanded="false" />
-            <element signature="e#3289#3290#0" expanded="false" />
-            <element signature="e#3344#3345#0" expanded="false" />
-            <element signature="e#3404#3405#0" expanded="false" />
-            <element signature="e#3456#3457#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3581,20 +3450,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/widget_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53968257" vertical-offset="306" max-vertical-offset="1173">
-          <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="710" max-vertical-offset="3366">
-          <caret line="83" column="72" selection-start-line="83" selection-start-column="72" selection-end-line="83" selection-end-column="72" />
+        <state vertical-scroll-proportion="0.53968257" vertical-offset="306" max-vertical-offset="1173">
+          <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -3603,7 +3464,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.26956522" vertical-offset="461" max-vertical-offset="4607">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3611,35 +3471,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="642" max-vertical-offset="2788">
           <caret line="54" column="45" selection-start-line="54" selection-start-column="45" selection-end-line="54" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1765#1766#0" expanded="true" />
-            <element signature="e#1794#1795#0" expanded="true" />
-            <element signature="e#1839#1840#0" expanded="true" />
-            <element signature="e#1868#1869#0" expanded="true" />
-            <element signature="e#1920#1921#0" expanded="true" />
-            <element signature="e#1954#1955#0" expanded="true" />
-            <element signature="e#1982#1983#0" expanded="true" />
-            <element signature="e#2007#2008#0" expanded="true" />
-            <element signature="e#2386#2387#0" expanded="true" />
-            <element signature="e#2420#2421#0" expanded="true" />
-            <element signature="e#2469#2470#0" expanded="true" />
-            <element signature="e#2507#2508#0" expanded="true" />
-            <element signature="e#3021#3022#0" expanded="true" />
-            <element signature="e#3067#3068#0" expanded="true" />
-            <element signature="e#3110#3111#0" expanded="true" />
-            <element signature="e#3146#3147#0" expanded="true" />
-            <element signature="e#3181#3182#0" expanded="true" />
-            <element signature="e#3209#3210#0" expanded="true" />
-            <element signature="e#3250#3251#0" expanded="true" />
-            <element signature="e#3278#3279#0" expanded="true" />
-            <element signature="e#3334#3335#0" expanded="true" />
-            <element signature="e#3380#3381#0" expanded="true" />
-            <element signature="e#3899#3900#0" expanded="true" />
-            <element signature="e#3935#3936#0" expanded="true" />
-            <element signature="e#3966#3967#0" expanded="true" />
-            <element signature="e#3993#3994#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3663,19 +3495,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2222" max-vertical-offset="3009">
           <caret line="183" column="51" selection-start-line="183" selection-start-column="51" selection-end-line="183" selection-end-column="51" />
-          <folding>
-            <element signature="e#6700#6747#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5299" max-vertical-offset="6613">
-          <caret line="339" column="0" selection-start-line="339" selection-start-column="0" selection-end-line="339" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3683,26 +3503,143 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1426087" vertical-offset="37" max-vertical-offset="765">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/listview_typical.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33211678" vertical-offset="991" max-vertical-offset="1564">
           <caret line="69" column="24" selection-start-line="69" selection-start-column="24" selection-end-line="69" selection-end-column="24" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical12DigitalOutputAuto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.265625" vertical-offset="1479" max-vertical-offset="2669">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1479" max-vertical-offset="2669">
           <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/model/typicals/SoulissTypical5n.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1887">
+          <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="561">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/fragments/T1nGenericLightFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5289" max-vertical-offset="5933">
+          <caret line="394" column="42" selection-start-line="394" selection-start-column="42" selection-end-line="394" selection-end-column="42" />
+          <folding>
+            <element signature="e#9384#9433#0" expanded="true" />
+            <element signature="e#9632#9679#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_addprogram.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.5555553" vertical-offset="4447" max-vertical-offset="5066">
+          <caret line="272" column="28" selection-start-line="272" selection-start-column="28" selection-end-line="272" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/menu/scenelist_menu.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+          <caret line="7" column="21" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/main_scenes.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.333333" vertical-offset="982" max-vertical-offset="1666">
+          <caret line="71" column="54" selection-start-line="71" selection-start-column="54" selection-end-line="71" selection-end-column="54" />
+          <folding>
+            <element signature="e#1277#1295#0" expanded="true" />
+            <element signature="e#1589#1610#0" expanded="true" />
+            <element signature="e#2014#2036#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/adapters/SceneListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="1530">
+          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1531" max-vertical-offset="5661">
+          <caret line="109" column="16" selection-start-line="109" selection-start-column="16" selection-end-line="109" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3418#4476#0" expanded="true" />
+            <element signature="e#4465#4466#0" expanded="true" />
+            <element signature="e#5000#5018#0" expanded="true" />
+            <element signature="e#5054#5072#0" expanded="true" />
+            <element signature="e#6847#6879#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/SceneDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2502" max-vertical-offset="3366">
+          <caret line="184" column="44" selection-start-line="184" selection-start-column="44" selection-end-line="184" selection-end-column="44" />
+          <folding>
+            <element signature="e#2978#3010#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/res/layout/add_command_dialog.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9259257" vertical-offset="146" max-vertical-offset="1241">
+          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
+          <folding>
+            <element signature="e#706#731#0" expanded="true" />
+            <element signature="e#2061#2095#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SoulissApp/src/main/java/it/angelic/soulissclient/helpers/ScenesDialogHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6691358" vertical-offset="1905" max-vertical-offset="6358">
+          <caret line="173" column="75" selection-start-line="173" selection-start-column="75" selection-end-line="173" selection-end-column="75" />
+          <folding>
+            <element signature="e#6039#6087#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
