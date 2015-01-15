@@ -22,12 +22,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -39,15 +42,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 /**
- * Activity per mostrare una lista di risultati (Nodi Souliss) questa modalita`
- * e` manuale, ovvero l'utente interagisce direttamente coi tipici
- * 
- * dalla lista dei tipici si accede TypicalsActivity
+ * Activity per mostrare una lista di scenari
  * 
  * legge dal DB tipici e tipici
  * 
@@ -108,7 +105,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
 		R.string.warn_wifi, /* "open drawer" description */
 		R.string.warn_wifi /* "close drawer" description */
 		) {
@@ -154,7 +150,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setActionBarInfo(getString(R.string.app_name) + " - " + getString(R.string.scenes_title));
+		setActionBarInfo(getString(R.string.scenes_title));
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
@@ -235,13 +231,12 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 			// Adapter della lista
 			listaScenesView.setAdapter(progsAdapter);
 			listaScenesView.invalidateViews();
-			setActionBarInfo(getString(R.string.scenes_title));
 		}
 	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.scenelist_menu, menu);
 		return true;
 

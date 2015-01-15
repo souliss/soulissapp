@@ -15,6 +15,7 @@
         android:layout_height="@dimen/text_size"
         android:layout_alignParentTop="true"
         android:gravity="right"
+        android:elevation="2dp"
         android:text="@string/node" >
     </TextView>
 
@@ -27,6 +28,7 @@
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
+        android:elevation="2dp"
         android:shadowRadius="2"
         android:text="@string/slot" >
     </TextView>
@@ -53,6 +55,8 @@
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
+        android:elevation="2dp"
+        android:text="TestoDiDebug"
         android:shadowRadius="2"
         android:textColor="@color/white" >
     </TextView>

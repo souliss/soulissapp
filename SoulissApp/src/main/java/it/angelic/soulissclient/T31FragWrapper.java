@@ -13,9 +13,9 @@ public class T31FragWrapper extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {

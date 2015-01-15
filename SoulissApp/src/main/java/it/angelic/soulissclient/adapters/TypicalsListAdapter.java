@@ -115,7 +115,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textslot.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textUpdated.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textStatus.setTextColor(context.getResources().getColor(R.color.black));
-			holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abs__ic_menu_moreoverflow_normal_holo_light));
+			holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha));
 		}
 		/* Nodo vuota */
 		if (tipici.length == 0) {
@@ -177,7 +177,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			tipici[position].getActionsLayout(this, context, parentIntent, convertView, parent);
 		} else {
 			TextView na = new TextView(context);
-			na.setText(context.getResources().getString(R.string.souliss_unavailable));
+			na.setText(context.getString(R.string.souliss_unavailable));
 			if (opzioni.isLightThemeSelected()) {
 				na.setTextColor(context.getResources().getColor(R.color.black));
 			}

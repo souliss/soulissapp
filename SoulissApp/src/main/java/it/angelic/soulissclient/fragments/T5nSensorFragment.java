@@ -32,6 +32,8 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -45,9 +47,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
 
@@ -103,7 +102,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			
 			//Setta STATUS BAR
 			super.setCollected(collected);
-			super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+			super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 			super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 			super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 			super.actionBar.setDisplayHomeAsUpEnabled(true);

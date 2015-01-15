@@ -18,12 +18,12 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 	//TODO check this
@@ -62,9 +62,9 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 
 		// tema
 		if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_irrgb);
 

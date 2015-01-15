@@ -14,9 +14,12 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -35,11 +38,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
-public class AddProgramActivity extends SherlockActivity {
+public class AddProgramActivity extends Activity {
 	private SoulissNode[] nodiArray;
 	private SoulissDBHelper datasource = new SoulissDBHelper(this);
 	private SoulissPreferenceHelper opzioni;
@@ -49,11 +49,11 @@ public class AddProgramActivity extends SherlockActivity {
 
 		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
 		// tema
-		if (opzioni.isLightThemeSelected())
+	/*	if (opzioni.isLightThemeSelected())
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-		super.onCreate(savedInstanceState);
+	*/	super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_addprogram);
 
 		if (!opzioni.isDbConfigured()) {

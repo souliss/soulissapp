@@ -15,18 +15,19 @@ import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class NodeDetailActivity extends SherlockFragmentActivity {
+public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 	private SoulissPreferenceHelper opzioni;
 	private TypicalsListAdapter ta;
 	private SoulissDBHelper database;
@@ -41,17 +42,13 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
 			if (ta != null)
 				ta.setmBoundService(mBoundService);
-			// Tell the user about this for our demo.
-			// Toast.makeText(NodeDetailActivity.this, "Dataservice connected",
-			// Toast.LENGTH_SHORT).show();
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
 			mBoundService = null;
-			// if (ta != null)
+			 if (ta != null)
 			ta.setmBoundService(null);
-			// Toast.makeText(NodeDetailActivity.this,
-			// "Dataservice disconnected", Toast.LENGTH_SHORT).show();
+			Toast.makeText(NodeDetailActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
 		}
 	};
 	//private ImageView nodeic;
@@ -96,8 +93,8 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 			// During initial setup, plug in the details fragment.
 			NodeDetailFragment details = new NodeDetailFragment();
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
-		}
+            getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+        }
 	}
 	@Override
 	protected void onStart() {
@@ -105,9 +102,9 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 		// TODO Auto-generated method stub
 		super.onStart();
 			ActionBar actionBar = getSupportActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	/**
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+    /**
 	 * chiamato dal layout
 	 */
 	public void startOptions(View v){
@@ -116,7 +113,7 @@ public class NodeDetailActivity extends SherlockFragmentActivity {
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.nodedetail_menu, menu);
 		return true;
 	}

@@ -5,9 +5,9 @@ import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
 import it.angelic.soulissclient.model.SoulissTypical;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public class T19SingleChannelFragWrapper extends AbstractStatusedFragmentActivity {
 	private SoulissTypical collected;

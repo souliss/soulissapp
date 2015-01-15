@@ -1,14 +1,16 @@
 package it.angelic.soulissclient;
 
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 /**
  * Tutte le activity con l'icona stato online devono estendere questa
@@ -16,7 +18,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
  * @author Ale
  * 
  */
-public class AbstractStatusedFragmentActivity extends SherlockFragmentActivity {
+public class AbstractStatusedFragmentActivity extends ActionBarActivity {
 	protected SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 	protected ActionBar actionBar;
 
@@ -31,7 +33,9 @@ public class AbstractStatusedFragmentActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onStart() {
+
 		actionBar = getSupportActionBar();
+
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);

@@ -24,7 +24,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,8 +32,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -44,10 +48,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment {
@@ -105,9 +105,9 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		opzioni = SoulissClient.getOpzioni();
 		// tema
 		if (opzioni.isLightThemeSelected())
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			getActivity().setTheme(R.style.LightThemeSelector);
 		else
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			getActivity().setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (!opzioni.isDbConfigured()) {
@@ -140,14 +140,14 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		collected.setCtx(getActivity());
 
 		super.setCollected(collected);
-		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
 		refreshStatusIcon();
 
 		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
+			ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setTitle(collected.getNiceName());
 		}

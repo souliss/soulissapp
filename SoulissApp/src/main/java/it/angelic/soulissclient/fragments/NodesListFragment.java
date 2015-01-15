@@ -26,7 +26,10 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -44,10 +47,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
-
 /**
  * Activity per mostrare una lista di risultati (Nodi Souliss) questa modalita`
  * e` manuale, ovvero l'utente interagisce direttamente coi tipici
@@ -59,7 +58,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
  * @author Ale
  * 
  */
-public class NodesListFragment extends SherlockListFragment {
+public class NodesListFragment extends ListFragment {
 	private SoulissNode[] nodiArray;
 	private SoulissPreferenceHelper opzioni;
 	private SoulissDBHelper datasource;
@@ -91,7 +90,7 @@ public class NodesListFragment extends SherlockListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		Log.d(TAG, "onActivityCreated");
 		opzioni = SoulissClient.getOpzioni();
-		ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+		ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -228,7 +227,7 @@ public class NodesListFragment extends SherlockListFragment {
 
 	private void refreshStatusIcon() {
 		try {
-			ActionBar actionBar = ((SherlockFragmentActivity)getActivity()).getSupportActionBar();
+			ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 			//actionBar.setTitle(getString(R.string.manual_title));
 			View ds = actionBar.getCustomView();
 			online = (ImageButton) ds.findViewById(R.id.action_starred);

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="LightThemeSelector" parent="android:Theme.Material.Light.DarkActionBar">
+    <style name="LightThemeSelector" parent="Theme.AppCompat.Light.DarkActionBar">
 
     </style>
 
-    <style name="DarkThemeSelector" parent="android:Theme.Material">
+    <style name="DarkThemeSelector" parent="Theme.AppCompat">
     </style>
 
      <style name="CodeFontSmall" parent="@android:style/TextAppearance.Small">

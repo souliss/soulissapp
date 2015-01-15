@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <style name="LightThemeSelector" parent="Theme.Sherlock.Light">
+    <style name="LightThemeSelector" parent="Theme.AppCompat.Light">
         <item name="android:windowBackground">@drawable/radialbacklight</item>
         <item name="android:listViewStyle">@style/lightListView</item>
     </style>
@@ -20,7 +20,7 @@
         <item name="android:background">#00ffffff</item>
     </style>
 
-    <style name="DarkThemeSelector" parent="Theme.Sherlock">
+    <style name="DarkThemeSelector" parent="Theme.AppCompat">
         <item name="android:windowBackground">@drawable/radialback</item>
         <item name="android:listViewStyle">@style/darkListView</item>
     </style>

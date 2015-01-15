@@ -26,6 +26,7 @@
             android:drawingCacheQuality="high"
             android:freezesText="false"
             android:text="@string/scenes_title"
+            android:elevation="2dp"
             style="@style/CodeFontMain" />
 
         <Button
@@ -33,6 +34,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:elevation="2dp"
             android:drawableTop="@drawable/remote"
             android:drawingCacheQuality="high"
             android:text="@string/programs_title"
@@ -43,6 +45,7 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:elevation="2dp"
             android:drawableTop="@drawable/hand"
             android:text="@string/manual_title"
             style="@style/CodeFontMain" />

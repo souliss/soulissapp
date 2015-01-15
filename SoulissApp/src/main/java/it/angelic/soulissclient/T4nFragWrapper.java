@@ -2,7 +2,6 @@ package it.angelic.soulissclient;
 
 import static junit.framework.Assert.assertTrue;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
 import it.angelic.soulissclient.fragments.T4nFragment;
@@ -13,8 +12,9 @@ import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 
-public class T4nFragWrapper extends SherlockFragmentActivity {
+public class T4nFragWrapper extends ActionBarActivity {
 	private SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;
 
@@ -23,9 +23,9 @@ public class T4nFragWrapper extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
