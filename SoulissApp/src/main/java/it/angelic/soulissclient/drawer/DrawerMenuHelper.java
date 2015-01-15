@@ -44,24 +44,24 @@ public class DrawerMenuHelper {
 		tmp.toArray(tmpa);
 		return tmpa;
 	}
-	public INavDrawerItem[] getStuff(int apartFromMe){		
+	public INavDrawerItem[] getStuff(){
 		
 		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();	
 		
 		NavMenuSection it = NavMenuSection.create(-9, "FUNZIONI");
 		tmp.add(it);
 		
-		if (apartFromMe != SCENES){
+		//if (apartFromMe != SCENES){
 		NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), R.drawable.lamp,
 				false, ctx);
 		tmp.add(scenes);
-		}
+	//	}
 		
-		if (apartFromMe != PROGRAMS){
+		//if (apartFromMe != PROGRAMS){
 		NavMenuItem pro = new NavMenuItem(PROGRAMS, ctx.getString(R.string.programs_title), R.drawable.remote,
 				false, ctx);
 		tmp.add(pro);
-		}
+	//	}
 		NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), R.drawable.hand,
 				false, ctx);
 		tmp.add(man);

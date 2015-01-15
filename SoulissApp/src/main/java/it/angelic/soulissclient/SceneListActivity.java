@@ -150,7 +150,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.SCENES));
+		mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
 		mDrawerList.setAdapter(mAdapter);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
@@ -190,7 +190,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		listaScenesView.invalidateViews();
 		// ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
 		// nodeic.setAlpha(150);
-		mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.SCENES));
+		mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
 		mDrawerList.setAdapter(mAdapter);
 	}
 

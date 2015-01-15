@@ -12,11 +12,14 @@ import android.widget.TextView;
 
 public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
+    private final int activeSection;
     private LayoutInflater inflater;
 
-    public NavDrawerAdapter(Context context, int textViewResourceId, INavDrawerItem[] objects) {
+    public NavDrawerAdapter(Context context, int textViewResourceId, INavDrawerItem[] objects, int mode) {
+
         super(context, textViewResourceId, objects);
         this.inflater = LayoutInflater.from(context);
+        this.activeSection = mode;
     }
 
     @Override
@@ -51,6 +54,8 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         navMenuItemHolder = new NavMenuItemHolder();
         navMenuItemHolder.labelView = labelView;
         navMenuItemHolder.iconView = iconView;
+        if (menuItem.getId() == activeSection)
+            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.grey_alpha));
 
         convertView.setTag(navMenuItemHolder);
         //  }

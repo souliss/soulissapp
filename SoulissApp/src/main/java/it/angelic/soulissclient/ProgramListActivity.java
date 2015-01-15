@@ -34,10 +34,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
 
 
 /**
@@ -114,7 +117,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		drawerAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.PROGRAMS));
+		drawerAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.PROGRAMS);
 		mDrawerList.setAdapter(drawerAdapter);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
@@ -126,6 +129,10 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		});
 
 		registerForContextMenu(listaProgrammiView);
+
+        SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
+
+
 	}
 
 	@Override
@@ -152,8 +159,19 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		listaProgrammiView.setAdapter(progsAdapter);
 		listaProgrammiView.invalidateViews();
 		// forza refresh drawer
-		drawerAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.PROGRAMS));
+		drawerAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.PROGRAMS);
 		mDrawerList.setAdapter(drawerAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToListView(listaProgrammiView);
+        //ADD NEW PROGRAM Listener
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntentt = new Intent(ProgramListActivity.this, AddProgramActivity.class);
+                ProgramListActivity.this.startActivityForResult(myIntentt, 12);
+            }
+        });
 
 	}
 
@@ -261,10 +279,6 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		case R.id.Opzioni:
 			Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
 			startActivity(settingsActivity);
-			return true;
-		case R.id.AddProgram:
-			Intent myIntentt = new Intent(ProgramListActivity.this, AddProgramActivity.class);
-			ProgramListActivity.this.startActivityForResult(myIntentt, 12);
 			return true;
 		}
 

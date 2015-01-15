@@ -23,7 +23,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -44,7 +43,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -252,7 +250,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(),DrawerMenuHelper.MANUAL);
 		mDrawerList.setAdapter(mAdapter);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
@@ -339,7 +337,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		};
 		soulissManualBtn.setOnClickListener(simpleOnClickListener);
 		// forza refresh drawer
-		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -1);
 		mDrawerList.setAdapter(mAdapter);
 
 		db = new SoulissDBHelper(this);

@@ -3,6 +3,7 @@ package it.angelic.soulissclient;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
+import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
@@ -10,6 +11,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -27,10 +29,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
 
 
 public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
@@ -63,6 +68,19 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		createHeader();
 
 		listaComandiView = (ListView) findViewById(R.id.ListViewListaScene);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToListView(listaComandiView);
+        SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
+
+        //ADD NEW SCENE
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScenesDialogHelper.executeSceneDialog(SceneDetailActivity.this, collected, opzioni);
+            }
+        });
+
 		ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
 
 		nodeic.setImageResource(collected.getDefaultIconResourceId());
@@ -188,9 +206,6 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		case R.id.CambiaIconaScena:
 			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, datasource, collected);
 			alert2.show();
-			return true;
-		case R.id.Esegui:
-			ScenesDialogHelper.executeSceneDialog(SceneDetailActivity.this, collected, opzioni);
 			return true;
 		case R.id.RinominaScena:
 			AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, upda, listaComandiView,
