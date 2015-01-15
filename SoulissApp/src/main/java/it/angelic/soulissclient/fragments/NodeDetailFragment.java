@@ -61,7 +61,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -78,15 +81,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class NodeDetailFragment extends SherlockListFragment {
+public class NodeDetailFragment extends ListFragment {
 	private SoulissNode collected;
 	private SoulissPreferenceHelper opzioni;
 	private ListView listaTypicalsView;
@@ -172,10 +171,10 @@ public class NodeDetailFragment extends SherlockListFragment {
 		opzioni = SoulissClient.getOpzioni();
 
 		if (opzioni.isLightThemeSelected())
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			getActivity().setTheme(R.style.LightThemeSelector);
 		else
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-		actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+			getActivity().setTheme(R.style.DarkThemeSelector);
+		actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -191,23 +190,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 		upda = (TextView) getActivity().findViewById(R.id.TextViewNodeUpdate);
 		par = (ProgressBar) getActivity().findViewById(R.id.progressBarNodo);
         swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
-        swipeLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (collected != null){UDPHelper.pollRequest(opzioni, 1, collected.getId());}
 
-                        if (!opzioni.isSoulissReachable())
-                            Toast.makeText(getActivity(),
-                                    getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
-                                    .show();
-                    }
-                }).start();
-            }} );
-        swipeLayout.setColorSchemeResources (R.color.std_blue,
-                R.color.std_blue_shadow);
 		if (upda == null)
 			return;
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -231,7 +214,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 		getActivity().setTitle(collected.getNiceName());
 
 		// SFONDO
-		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.containerlista), getActivity()
+		SoulissClient.setBackground(getActivity().findViewById(R.id.containerlista), getActivity()
 				.getWindowManager());
 		// listaTypicalsView = (ListView) getListView();
 		listaTypicalsView = getListView();
@@ -244,6 +227,24 @@ public class NodeDetailFragment extends SherlockListFragment {
 		} else
 			Log.e(Constants.TAG, "porcatroia");
 
+
+        swipeLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (collected != null){UDPHelper.pollRequest(opzioni, 1, collected.getId());}
+
+                        if (!opzioni.isSoulissReachable())
+                            Toast.makeText(getActivity(),
+                                    getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                    .show();
+                    }
+                }).start();
+            }} );
+        swipeLayout.setColorSchemeResources (R.color.std_blue,
+                R.color.std_blue_shadow);
 	}
 
 	@Override
@@ -290,7 +291,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 					TypicalViewHolder holder = (TypicalViewHolder) arg1.getTag();
 					//Log.i(getTag(), "Showing typical idx:"+arg2+" holder slot: "+holder.data.getTypicalDTO().getSlot());
-					showDetails(arg2, (SoulissTypical) holder.data);
+					showDetails(arg2, holder.data);
 				}
 			});
 			// gestureListener = new SwipeGestureListener(getActivity());
@@ -368,8 +369,8 @@ public class NodeDetailFragment extends SherlockListFragment {
 			}  else if (target.getTypicalDTO().getTypical() == Souliss_T31) {
 				nodeDatail = new Intent(getActivity(), T31FragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical31Heating) target);
-			} else if (target.getTypicalDTO().getTypical() == Souliss_T11
-					|| target.getTypicalDTO().getTypical() == Souliss_T12) {
+			} else if ((target.getTypicalDTO().getTypical() == Souliss_T11)
+                    || (target.getTypicalDTO().getTypical() == Souliss_T12)) {
 				nodeDatail = new Intent(getActivity(), T1nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
 			} else if (target.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
@@ -424,8 +425,6 @@ public class NodeDetailFragment extends SherlockListFragment {
 
 	/**
 	 * Riga grigia cra spazio
-	 *
-	 * @return
 	 */
 	private void createHeader() {
 
@@ -460,8 +459,7 @@ public class NodeDetailFragment extends SherlockListFragment {
 
 		Log.d(Constants.TAG,
 				"Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
-		return;
-	}
+    }
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -560,8 +558,9 @@ public class NodeDetailFragment extends SherlockListFragment {
 				// cancel timeout
 				timeoutHandler.removeCallbacks(timeExpired);
                 swipeLayout.setRefreshing(false);
-				if (listaTypicalsView == null)
-					return;
+				if (listaTypicalsView == null) {
+                    return;
+                }
 				datasource.open();
 				
 				collected = datasource.getSoulissNode(collected.getId());

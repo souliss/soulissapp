@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -43,12 +44,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -59,10 +64,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 /**
  * SoulissApp main screen
@@ -70,7 +71,7 @@ import com.actionbarsherlock.view.MenuItem;
  * @author Ale
  * 
  */
-public class LauncherActivity extends SherlockActivity implements LocationListener {
+public class LauncherActivity extends AbstractStatusedFragmentActivity implements LocationListener {
 
 	private LocationManager locationManager;
 	private String provider;
@@ -227,7 +228,6 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
 		R.string.warn_wifi, /* "open drawer" description */
 		R.string.warn_wifi /* "close drawer" description */
 		) {
@@ -248,10 +248,9 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		
-		getSupportActionBar().setIcon(R.drawable.ic_drawer);
-		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(DrawerMenuHelper.MANUAL));
 		mDrawerList.setAdapter(mAdapter);
@@ -357,7 +356,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_menu, menu);
 		return true;
 	}
@@ -392,12 +391,13 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 	}
 
 	private void setHeadInfo() {
+        setActionBarInfo(getString(R.string.app_name));
 		basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 		// check se IP non settato check system configured
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissPublicIpConfigured()) {
 			basinfo.setText(Html.fromHtml(getString(R.string.notconfigured)));
 			basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
-			return;
+            return;
 		}
 		if (!opzioni.getCustomPref().contains("connectionName")) {
 			basinfo.setText(getString(R.string.warn_connection));
@@ -416,7 +416,7 @@ public class LauncherActivity extends SherlockActivity implements LocationListen
 			basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
 					+ "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
 		} else if (base != null && getString(R.string.unavailable).compareTo(base) != 0) {
-			basinfo.setText(getString(R.string.unavailable));
+			basinfo.setText(getString(R.string.souliss_unavailable));
 		} else {
 			basinfo.setText(getString(R.string.contact_progress));
 		}

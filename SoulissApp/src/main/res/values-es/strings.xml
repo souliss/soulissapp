@@ -266,5 +266,6 @@
     <string name="eula_title">Licencia de uso</string>
     <string name="eula_accept">Aceptar</string>
     <string name="eula_refuse">Rechazar</string>
+    <string name="scenes">Scenes</string>
 
 </resources>

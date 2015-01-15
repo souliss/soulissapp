@@ -4,13 +4,14 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-public class AbstractTypicalFragment extends SherlockFragment {
+public class AbstractTypicalFragment extends Fragment {
 	protected ActionBar actionBar;
 	protected SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;

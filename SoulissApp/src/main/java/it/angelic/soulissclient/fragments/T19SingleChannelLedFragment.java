@@ -18,6 +18,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,7 +35,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
@@ -188,7 +188,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 		super.setCollected(collected);
 		collected.issueRefresh();
-		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);

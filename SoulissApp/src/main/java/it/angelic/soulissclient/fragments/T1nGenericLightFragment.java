@@ -24,7 +24,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,8 +32,13 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -44,10 +48,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment {
@@ -105,9 +105,9 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		opzioni = SoulissClient.getOpzioni();
 		// tema
 		if (opzioni.isLightThemeSelected())
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+			getActivity().setTheme(R.style.LightThemeSelector);
 		else
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
+			getActivity().setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (!opzioni.isDbConfigured()) {
@@ -140,14 +140,14 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		collected.setCtx(getActivity());
 
 		super.setCollected(collected);
-		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
 		refreshStatusIcon();
 
 		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
+			ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setTitle(collected.getNiceName());
 		}
@@ -166,22 +166,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
 		if (opzioni.isLogHistoryEnabled()) {
-			StringBuilder str = new StringBuilder();
-			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
-			if (collected.getOutput() != 0) {
-				Date when = collected.getTypicalDTO().getLastStatusChange();
-				long swap =new Date().getTime() - when.getTime();
-				msecOn += swap;
-				String strMeatFormat = getResources().getString(R.string.manual_litfrom);
-				String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(swap) );
-				str.append( strMeatMsg);
-				
-			}
-			str.append("\n");
-			String strMeatFormat = getResources().getString(R.string.manual_tyinf);
-			String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn) );
-			str.append(strMeatMsg);
-			infoHistory.setText(str.toString());
+            refreshHistoryInfo();
 		}
 		// datasource.getHistoryTypicalHashMap(collected, 0);
 
@@ -260,7 +245,26 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		return ret;
 	}
 
-	private void shutoff() {
+    private void refreshHistoryInfo() {
+        StringBuilder str = new StringBuilder();
+        int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
+        if (collected.getOutput() != 0) {
+            Date when = collected.getTypicalDTO().getLastStatusChange();
+            long swap =new Date().getTime() - when.getTime();
+            msecOn += swap;
+            String strMeatFormat = getResources().getString(R.string.manual_litfrom);
+            String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(swap) );
+            str.append( strMeatMsg);
+
+        }
+        str.append("\n");
+        String strMeatFormat = getResources().getString(R.string.manual_tyinf);
+        String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn) );
+        str.append(strMeatMsg);
+        infoHistory.setText(str.toString());
+    }
+
+    private void shutoff() {
 		Thread t = new Thread() {
 			public void run() {
 				Looper.prepare();
@@ -388,6 +392,10 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 				} else {
 					Log.w(Constants.TAG, "Unknown status");
 				}
+                //refresh "acceso da" info
+                if (opzioni.isLogHistoryEnabled()) {
+                    refreshHistoryInfo();
+                }
 				refreshStatusIcon();
 				// datasource.close();
 			} catch (Exception e) {

@@ -22,12 +22,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -39,15 +42,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import com.melnykov.fab.FloatingActionButton;
+
 
 /**
- * Activity per mostrare una lista di risultati (Nodi Souliss) questa modalita`
- * e` manuale, ovvero l'utente interagisce direttamente coi tipici
- * 
- * dalla lista dei tipici si accede TypicalsActivity
+ * Activity per mostrare una lista di scenari
  * 
  * legge dal DB tipici e tipici
  * 
@@ -90,9 +89,30 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		 */
 
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.attachToListView(listaScenesView);
 		SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
 
+        //ADD NEW SCENE
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int rest = datasource.createOrUpdateScene(null);
+                // prendo comandi dal DB, setto adapter
+                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
+                //scenesArray = new SoulissScene[goer.size()];
+                scenesArray = goer.toArray(scenesArray);
+                progsAdapter = new SceneListAdapter(SceneListActivity.this, scenesArray, opzioni);
+                // Adapter della lista
+                //SceneListAdapter t = listaScenesView.getAdapter();
+                progsAdapter.setScenes(scenesArray);
+                progsAdapter.notifyDataSetChanged();
+                listaScenesView.setAdapter(progsAdapter);
+                listaScenesView.invalidateViews();
+                Toast.makeText(SceneListActivity.this,
+                        "Scene " + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
+            }
+        });
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(this);
@@ -108,7 +128,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
 		mDrawerLayout, /* DrawerLayout object */
-		R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
 		R.string.warn_wifi, /* "open drawer" description */
 		R.string.warn_wifi /* "close drawer" description */
 		) {
@@ -154,7 +173,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setActionBarInfo(getString(R.string.app_name) + " - " + getString(R.string.scenes_title));
+		setActionBarInfo(getString(R.string.scenes_title));
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
@@ -235,13 +254,12 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 			// Adapter della lista
 			listaScenesView.setAdapter(progsAdapter);
 			listaScenesView.invalidateViews();
-			setActionBarInfo(getString(R.string.scenes_title));
 		}
 	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getSupportMenuInflater();
+		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.scenelist_menu, menu);
 		return true;
 
@@ -278,19 +296,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		case R.id.Opzioni:
 			Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
 			startActivity(settingsActivity);
-			return true;
-		case R.id.AddScene:
-			int rest = datasource.createOrUpdateScene(null);
-			// prendo comandi dal DB, setto adapter
-			LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
-			scenesArray = new SoulissScene[goer.size()];
-			scenesArray = goer.toArray(scenesArray);
-			progsAdapter = new SceneListAdapter(SceneListActivity.this, scenesArray, opzioni);
-			// Adapter della lista
-			listaScenesView.setAdapter(progsAdapter);
-			listaScenesView.invalidateViews();
-			Toast.makeText(SceneListActivity.this,
-					"Scene " + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
 			return true;
 		case R.id.TestUDP:
 			Intent myIntents = new Intent(SceneListActivity.this, ManualUDPTestActivity.class);

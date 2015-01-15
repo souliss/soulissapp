@@ -32,8 +32,12 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -43,10 +47,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 public class T31HeatingFragment extends AbstractTypicalFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
@@ -88,11 +88,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 
 		opzioni = SoulissClient.getOpzioni();
 		// tema
-		if (opzioni.isLightThemeSelected())
+	/*	if (opzioni.isLightThemeSelected())
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-		super.onCreate(savedInstanceState);
+	*/	super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());
@@ -124,7 +124,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		collected.setCtx(getActivity());
 		
 		super.setCollected(collected);
-		super.actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);

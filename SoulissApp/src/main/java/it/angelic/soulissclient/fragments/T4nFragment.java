@@ -32,10 +32,14 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -46,13 +50,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.pheelicks.visualizer.VisualizerView;
 
-public class T4nFragment extends SherlockFragment {
+public class T4nFragment extends Fragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
@@ -107,11 +107,11 @@ public class T4nFragment extends SherlockFragment {
 
 		opzioni = SoulissClient.getOpzioni();
 		// tema
-		if (opzioni.isLightThemeSelected())
+	/*	if (opzioni.isLightThemeSelected())
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
 			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-		super.onCreate(savedInstanceState);
+	*/	super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());

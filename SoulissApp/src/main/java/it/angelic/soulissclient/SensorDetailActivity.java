@@ -11,9 +11,9 @@ import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 	private TypicalsListAdapter ta;
@@ -64,11 +64,11 @@ public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (opzioni.isLightThemeSelected())
+	/*	if (opzioni.isLightThemeSelected())
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
 		else
 			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-		super.onCreate(savedInstanceState);
+	*/	super.onCreate(savedInstanceState);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the

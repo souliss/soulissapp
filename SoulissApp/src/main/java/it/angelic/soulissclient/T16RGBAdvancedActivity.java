@@ -2,9 +2,6 @@ package it.angelic.soulissclient;
 
 import static junit.framework.Assert.assertTrue;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -14,8 +11,11 @@ import android.app.ActionBar;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class T16RGBAdvancedActivity extends SherlockFragmentActivity {
+public class T16RGBAdvancedActivity extends ActionBarActivity {
 	private SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;
 

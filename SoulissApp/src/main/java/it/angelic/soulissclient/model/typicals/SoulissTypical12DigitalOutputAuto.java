@@ -126,7 +126,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
 
 		final ListButton tog = new ListButton(ctx);
 		// final int tpos = position;
-		tog.setLayoutParams(lp);
+		//tog.setLayoutParams(lp);
 		tog.setText("Auto");
 		cont.addView(tog);
 
