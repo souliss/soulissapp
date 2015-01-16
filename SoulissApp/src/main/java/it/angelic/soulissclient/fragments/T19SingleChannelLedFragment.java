@@ -279,7 +279,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 				issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
 				collected.issueRefresh();
-				return;
 			}
 
 		};

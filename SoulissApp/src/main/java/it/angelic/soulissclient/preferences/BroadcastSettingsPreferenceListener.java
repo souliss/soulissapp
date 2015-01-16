@@ -19,8 +19,7 @@ import android.preference.PreferenceActivity;
 public class BroadcastSettingsPreferenceListener implements OnPreferenceClickListener {
 
 	private Activity parent;
-	private File mPath;
-	private static final String FTYPE = ".csv";
+    private static final String FTYPE = ".csv";
 	private static final int DIALOG_LOAD_FILE = 1000;
 
 	// EXPORT
@@ -34,7 +33,7 @@ public class BroadcastSettingsPreferenceListener implements OnPreferenceClickLis
 		this.parent = parent;
 		opzioni = SoulissClient.getOpzioni();
 		datasource = new SoulissDBHelper(parent);
-		mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
+        File mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
 	}
 	private void fireBCastSubScreen(){
 		Intent inten = parent.getIntent();

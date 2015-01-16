@@ -40,11 +40,9 @@ public class SoulissTypicalDTO implements Serializable {
 			return false;
 
 		SoulissTypicalDTO tg = (SoulissTypicalDTO) o;
-		if (tg.getNodeId() == nodeId && tg.getTypical() == typical && tg.getSlot() == slot)
-			return true;
+        return tg.getNodeId() == nodeId && tg.getTypical() == typical && tg.getSlot() == slot;
 
-		return false;
-	}
+    }
 
 	@Override
 	public int hashCode() {

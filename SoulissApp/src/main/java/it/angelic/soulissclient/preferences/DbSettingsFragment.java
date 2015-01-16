@@ -11,11 +11,9 @@ import android.preference.PreferenceFragment;
 @TargetApi(11)
 public class DbSettingsFragment extends PreferenceFragment {
 
-	private SoulissPreferenceHelper opzioni;
-
-	@Override
+    @Override
 	public void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+        SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 		//String settings;
 		if (opzioni.isLightThemeSelected()) {
 			getActivity().setTheme(R.style.LightThemeSelector);

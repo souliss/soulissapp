@@ -8,7 +8,6 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 

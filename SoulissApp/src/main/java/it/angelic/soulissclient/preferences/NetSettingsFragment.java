@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;

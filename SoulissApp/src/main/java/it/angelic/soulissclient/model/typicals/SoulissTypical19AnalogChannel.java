@@ -174,7 +174,6 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 		};
 
 		t.start();
-		return;
 	}
 	public void issueRefresh() {
 
@@ -187,7 +186,6 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 		};
 
 		t.start();
-		return;
 	}
 
 }

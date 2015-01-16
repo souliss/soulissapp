@@ -236,7 +236,6 @@ public class SoulissPreferenceHelper implements Serializable {
 				}
 			}
 		}.start();
-		return;
 
 	}
 
@@ -251,10 +250,8 @@ public class SoulissPreferenceHelper implements Serializable {
 	 * @return true se DB popolato
 	 */
 	public boolean isDbConfigured() {
-		if ((customCachedPrefs.contains("numNodi")) && customCachedPrefs.getInt("numNodi", 0) != 0)
-			return true;
-		return false;
-	}
+        return (customCachedPrefs.contains("numNodi")) && customCachedPrefs.getInt("numNodi", 0) != 0;
+    }
 
 	public String getIPPreferencePublic() {
 		return IPPreferencePublic;
@@ -293,27 +290,19 @@ public class SoulissPreferenceHelper implements Serializable {
 	 */
 	public boolean isSoulissReachable() {
 		// getCachedAddress();
-		if (cachedAddr == null || cachedAddr.compareTo("") == 0
-				|| cachedAddr.compareTo(contx.getString(R.string.unavailable)) == 0)
-			return false;
+        return !(cachedAddr == null || cachedAddr.compareTo("") == 0
+                || cachedAddr.compareTo(contx.getString(R.string.unavailable)) == 0);
 
-		return true;
-	}
+    }
 
 	public boolean isSoulissIpConfigured() {
 		// check se IP non settato
-		if (getPrefIPAddress() == null || "".compareTo(getPrefIPAddress()) == 0) {
-			return false;
-		}
-		return true;
-	}
+        return !(getPrefIPAddress() == null || "".compareTo(getPrefIPAddress()) == 0);
+    }
 
 	public boolean isSoulissPublicIpConfigured() {
-		if (getIPPreferencePublic() == null || "".compareTo(getIPPreferencePublic()) == 0) {
-			return false;
-		}
-		return true;
-	}
+        return !(getIPPreferencePublic() == null || "".compareTo(getIPPreferencePublic()) == 0);
+    }
 
 	public void setFont(TextView in) {
 		Typeface font = Typeface.createFromAsset(contx.getAssets(), this.getPrefFont());

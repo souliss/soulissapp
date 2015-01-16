@@ -27,19 +27,20 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         View view = null;
         INavDrawerItem menuItem = this.getItem(position);
         if (menuItem.getType() == NavMenuItem.ITEM_TYPE) {
-            view = getItemView(convertView, parent, menuItem);
+            view = getItemView(parent, menuItem);
         } else {
             view = getSectionView(convertView, parent, menuItem);
         }
         return view;
     }
 
-    public View getItemView(View convertView, ViewGroup parentView, INavDrawerItem navDrawerItem) {
+    public View getItemView(ViewGroup parentView, INavDrawerItem navDrawerItem) {
 
         NavMenuItem menuItem = (NavMenuItem) navDrawerItem;
         NavMenuItemHolder navMenuItemHolder = null;
 
         // if (convertView == null) {
+        View convertView;
         if (menuItem.getId() < 0)
             convertView = inflater.inflate(R.layout.drawer_list_item, parentView, false);
         else

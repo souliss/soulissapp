@@ -201,7 +201,6 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 					textviewTemperature.setText("" + (act + 1));
 
 				issueIrCommand(buildIrCommand(null));
-				return;
 			}
 		};
 		buttPlus.setOnClickListener(plus);
@@ -213,7 +212,6 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 					textviewTemperature.setText("" + (act - 1));
 
 				issueIrCommand(buildIrCommand(null));
-				return;
 			}
 		};
 		buttMinus.setOnClickListener(min);
@@ -221,7 +219,6 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 		OnClickListener simpleO = new OnClickListener() {
 			public void onClick(View v) {
 				issueIrCommand(buildIrCommand(1));
-				return;
 			}
 		};
 		btOn.setOnClickListener(simpleO);

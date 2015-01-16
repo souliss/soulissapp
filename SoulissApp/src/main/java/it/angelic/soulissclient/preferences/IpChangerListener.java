@@ -95,7 +95,6 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 
 				}
 
-				return;
 			}
 		}.start();
 		return true;

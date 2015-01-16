@@ -54,9 +54,14 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 			return true;
 		} else if ("createdb".equals(arg0.getKey())) {
 			return createDbRequest();
-		} else if ("dbopt".equals(arg0.getKey())) {
-			Toast.makeText(parent, "TO IMPLEMENT", Toast.LENGTH_SHORT).show();
-			return true;
+		} else if ("dbopt".equals(arg0.getKey())) {try {
+            datasource.clean();
+            Toast.makeText(parent, "Vacuum Complete", Toast.LENGTH_SHORT).show();
+            return true;
+        }catch (Exception e){
+            Toast.makeText(parent, "CLEAN ERROR", Toast.LENGTH_SHORT).show();
+        }
+
 		} else if ("dropdb".equals(arg0.getKey())) {
 			AlertDialog.Builder alert = AlertDialogHelper.dropSoulissDBDialog(parent, datasource);
 			datasource.open();

@@ -187,7 +187,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 					Toast.makeText(this, getString(R.string.command_inserted), Toast.LENGTH_SHORT).show();
 					break;
 				case Constants.COMMAND_COMEBACK_CODE:
-					;// fall throught
+					// fall throught
 				case Constants.COMMAND_GOAWAY_CODE:
 					Toast.makeText(this, getString(R.string.command_inserted), Toast.LENGTH_SHORT).show();
 					break;

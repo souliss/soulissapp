@@ -263,7 +263,7 @@ public class SoulissDataService extends Service implements LocationListener {
 							}
 						}
 						// db.close();
-					};
+					}
 				}).start();
 
 				/* SENSORS REFRESH THREAD */

@@ -101,7 +101,13 @@ public class SoulissDBHelper {
 		values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
 		return database.update(SoulissDB.TABLE_TYPICALS, values, null, null);
 	}*/
-
+    public void clean(){
+        if (database != null && database.isOpen()) {
+            database.execSQL("VACUUM");
+        }
+        else
+            Log.w(TAG, "DB closed, clean() failed");
+    }
 	/**
 	 * presuppone che il nodo esista, asserError altrimenti Light update, solo
 	 * data ed health, pensato per JSON. Skippa refresh se tipico vuoto

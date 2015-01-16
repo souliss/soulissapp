@@ -472,11 +472,9 @@ public class UDPSoulissDecoder {
 				} catch (NotFoundException e) {
 					// skipping unexistent typical");
 
-					continue;
 				} catch (Exception e) {
 					// unknown error
 					Log.e(Constants.TAG, e.getMessage());
-					continue;
 				}
 			}
 			// Log.d(Constants.TAG, "Refreshed " + refreshed +

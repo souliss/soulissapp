@@ -183,7 +183,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 					Log.e(Constants.TAG, "OUTPUT Error");
 				}
 				assertTrue(cmd != null);
-				return;
 			}
 
 		};

@@ -351,7 +351,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		OnClickListener plusEq = new OnClickListener() {
 			public void onClick(View v) {
 				AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
-				return;
 			}
 
 		};
@@ -425,7 +424,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 			public void onClick(View v) {
 				issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, 254, 254, 254,
 						togMulticast.isChecked());
-				return;
 			}
 		});
 

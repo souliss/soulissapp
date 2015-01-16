@@ -75,8 +75,6 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			collected = (SoulissTypical) getArguments().get("TIPICO");
 		} else {
 			Log.e(Constants.TAG, "Error retriving Typical Detail:");
-			return;
-
 		}
 	}
 

@@ -3,7 +3,6 @@ package it.angelic.soulissclient;
 import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
-import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
@@ -11,7 +10,6 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -145,8 +143,6 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		String strMeatFormat = getString(R.string.scene_subtitle);
 		health.setText(String.format(strMeatFormat, collected.getCommandArray().size()));
 		
-		
-		return;
 	}
 
 	@Override

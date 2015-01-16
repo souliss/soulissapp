@@ -202,7 +202,6 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 		};
 
 		t.start();
-		return;
 	}
 	public void issueRefresh() {
 
@@ -215,7 +214,6 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 		};
 
 		t.start();
-		return;
 	}
 
 }

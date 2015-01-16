@@ -327,7 +327,7 @@ public class PreferencesActivity extends PreferenceActivity {
 				Log.w(TAG, "RAW DATA: " + vers);
 				switch (vers.get(0)) {
 				case Constants.Souliss_UDP_function_typreq_resp:
-					;// fallthrought x refresh dicitura tipici
+					// fallthrought x refresh dicitura tipici
 				case Constants.Souliss_UDP_function_db_struct_resp:
 					Log.w(TAG, "DB STRUCT: " + currentScreen);
 					//if (currentScreen != null && currentScreen.equals("db_setup")) {
@@ -397,11 +397,9 @@ public class PreferencesActivity extends PreferenceActivity {
 			return true;
 		if (VisualSettingsFragment.class.getName().equals(fragmentName))
 			return true;
-		if (BroadcastSettingsFragment.class.getName().equals(fragmentName))
-			return true;
+        return BroadcastSettingsFragment.class.getName().equals(fragmentName);
 
-		return false;
-	}
+    }
 
 	@Deprecated
 	private void hackBackGroundLights() {

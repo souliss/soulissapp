@@ -230,9 +230,9 @@ public class VisualizerView extends View {
 	 * Call to release the resources used by VisualizerView. Like with the
 	 * MediaPlayer it is good practice to call this method
 	 */
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	public void release() {
 		// XXX sposta il disable
-		//
 		mVisualizer.release();
 	}
 

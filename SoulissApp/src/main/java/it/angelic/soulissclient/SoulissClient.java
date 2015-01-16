@@ -7,7 +7,6 @@ import java.io.Serializable;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;

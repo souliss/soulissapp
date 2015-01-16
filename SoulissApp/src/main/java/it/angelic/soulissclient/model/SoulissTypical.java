@@ -212,10 +212,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 	}
 
 	public boolean isEmpty() {
-		if (typicalDTO.getTypical() == Constants.Souliss_T_empty)
-			return true;
-		else
-			return false;
+        return typicalDTO.getTypical() == Constants.Souliss_T_empty;
 	}
 
 	public boolean isRelated() {

@@ -29,7 +29,7 @@ public class ServicePreferenceListener implements OnPreferenceChangeListener {
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if ("checkboxService".equals(preference.getKey())) {
 			Intent serviceIntent = new Intent(parent, SoulissDataService.class);
-			if ((Boolean) newValue == true) {
+			if ((Boolean) newValue) {
 
 				parent.startService(serviceIntent);
 				Log.w(Constants.TAG, "Startin Souliss Service");

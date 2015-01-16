@@ -40,7 +40,7 @@ public class SoulissTriggerDTO implements Serializable {
 		return activated;
 	}
 	public void setActive(boolean int1) {
-		if (int1==true)
+		if (int1)
 			activated =1;
 		else
 			activated=0;

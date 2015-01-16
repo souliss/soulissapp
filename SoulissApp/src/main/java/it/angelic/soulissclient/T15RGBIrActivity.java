@@ -158,7 +158,6 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 				Short cmd = (Short) v.getTag();
 				assertTrue(cmd != null);
 				issueIrCommand(cmd);
-				return;
 			}
 		};
 		buttPlus.setOnClickListener(plus);
