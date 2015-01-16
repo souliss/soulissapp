@@ -88,12 +88,13 @@ public class NodesListFragment extends ListFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(TAG, "onActivityCreated");
 		opzioni = SoulissClient.getOpzioni();
-		ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+		/*ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
+        */
+
 		setHasOptionsMenu(true);
 		//opzioni.reload();
 		// Remove title bar
@@ -104,7 +105,7 @@ public class NodesListFragment extends ListFragment {
 			getActivity().setTheme(R.style.DarkThemeSelector);
 		super.onActivityCreated(savedInstanceState);
 		// getActivity().setContentView(R.layout.frag_nodelist);
-		getActivity().setTitle(getString(R.string.app_name) + " - " + getString(R.string.nodes));
+		//getActivity().setTitle(getString(R.string.app_name) + " - " + getString(R.string.nodes));
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (savedInstanceState != null) {
 			// Restore last state for checked position.
@@ -225,30 +226,6 @@ public class NodesListFragment extends ListFragment {
 		}
 	}
 
-	private void refreshStatusIcon() {
-		try {
-			ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-			//actionBar.setTitle(getString(R.string.manual_title));
-			View ds = actionBar.getCustomView();
-			online = (ImageButton) ds.findViewById(R.id.action_starred);
-			statusOnline = (TextView) ds.findViewById(R.id.online_status);
-//			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-//			actionTitle.setText(getString(R.string.manual_title));
-			if (!opzioni.isSoulissReachable()) {
-				online.setBackgroundResource(R.drawable.red);
-				statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-				statusOnline.setText(R.string.offline);
-			} else {
-				online.setBackgroundResource(R.drawable.green);
-				statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-				statusOnline.setText(R.string.Online);
-			}
-			statusOnline.invalidate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -299,7 +276,6 @@ public class NodesListFragment extends ListFragment {
 			}
 		}
 	};
-
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -408,5 +384,29 @@ public class NodesListFragment extends ListFragment {
 		// doUnbindService();
 		//datasource.close();
 	}
-
+    private void refreshStatusIcon() {
+        try {
+            ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+            //actionBar.setTitle(getString(R.string.manual_title));
+            View ds = actionBar.getCustomView();
+            online = (ImageButton) ds.findViewById(R.id.action_starred);
+            statusOnline = (TextView) ds.findViewById(R.id.online_status);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setHomeButtonEnabled(true);
+//			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+//			actionTitle.setText(getString(R.string.manual_title));
+            if (!opzioni.isSoulissReachable()) {
+                online.setBackgroundResource(R.drawable.red);
+                statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+                statusOnline.setText(R.string.offline);
+            } else {
+                online.setBackgroundResource(R.drawable.green);
+                statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+                statusOnline.setText(R.string.Online);
+            }
+            statusOnline.invalidate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
