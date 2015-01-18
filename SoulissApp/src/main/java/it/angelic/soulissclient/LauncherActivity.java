@@ -390,22 +390,22 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
 	private void setHeadInfo() {
         setActionBarInfo(getString(R.string.app_name));
-		basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+		//basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 		// check se IP non settato check system configured
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissPublicIpConfigured()) {
 			basinfo.setText(Html.fromHtml(getString(R.string.notconfigured)));
-			basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+			//basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
             return;
 		}
 		if (!opzioni.getCustomPref().contains("connectionName")) {
 			basinfo.setText(getString(R.string.warn_connection));
-			basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+			//basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
 			return;
 		}
 		if (!opzioni.isSoulissPublicIpConfigured()
 				&& !("WIFI".compareTo(opzioni.getCustomPref().getString("connectionName", "")) == 0)) {
 			basinfo.setText(Html.fromHtml(getString(R.string.warn_wifi)));
-			basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+		//	basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
 			return;
 		}
 		String base = opzioni.getAndSetCachedAddress();

@@ -46,15 +46,6 @@ public class T16RGBAdvancedActivity extends ActionBarActivity {
 		}
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onStart() {
-		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
