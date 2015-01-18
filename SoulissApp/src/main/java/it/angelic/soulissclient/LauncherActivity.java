@@ -46,6 +46,7 @@ import android.os.IBinder;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
@@ -158,8 +159,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 	private DrawerMenuHelper dmh;
 	private ArrayAdapter<INavDrawerItem> mAdapter;
 	private Criteria criteria;
+    private CardView cardViewBasicInfo;
 
-	void doBindService() {
+    void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
 		bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
 	}
@@ -213,6 +215,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		homedist = (TextView) findViewById(R.id.TextViewFromHome);
 		serviceInfoFoot = (TextView) findViewById(R.id.TextViewNodes);
 		serviceInfoAntiTheft = (TextView) findViewById(R.id.TextViewAntiTheft);
+
+        cardViewBasicInfo = (CardView) findViewById(R.id.BasicInfoCard);
 		// gestore timeout dei comandi
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		timeoutHandler = new Handler();
@@ -550,6 +554,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 			// rimuove timeout
 			timeoutHandler.removeCallbacks(timeExpired);
 			Bundle extras = intent.getExtras();
+
+            cardViewBasicInfo.getLayoutAnimation().start();
 			if (extras != null) {
 				Log.i(TAG, "Broadcast receive, refresh from DB");
 				@SuppressWarnings("unchecked")
