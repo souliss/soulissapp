@@ -56,7 +56,6 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:elevation="2dp"
-        android:text="TestoDiDebug"
         android:shadowRadius="2"
         android:textColor="@color/white" >
     </TextView>

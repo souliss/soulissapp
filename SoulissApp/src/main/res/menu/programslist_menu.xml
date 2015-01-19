@@ -6,7 +6,6 @@
         android:id="@+id/Opzioni"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/menu_options"
-        app:showAsAction="always|collapseActionView|withText"
         android:orderInCategory="1"/>
 
 </menu>

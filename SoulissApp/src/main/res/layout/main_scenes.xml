@@ -18,7 +18,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1">
 
             <ImageView
@@ -72,6 +72,7 @@
                     android:id="@+id/ListViewListaScenes"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/item_selector"
                     android:cacheColorHint="@color/trans_black"
                     android:divider="@android:color/transparent"
                     android:fadingEdge="vertical"

@@ -114,6 +114,8 @@
     <string name="manual_typicals">Dispositivos</string>
     <string name="inserire_almeno">Elija el ID del Nodo, slot e introduzca un comando</string>
      <string name="db_notempty">DB not empty. Drop DB first</string>
+    <string name="manual_litfrom">Turned on %1$s ago</string>
+    <string name="manual_tyinf">This device has been turned on for %1$s in the last month</string>
     <string name="manual_id_prompt">Elija el ID de un Nodo</string>
     <string name="manual_slot_prompt">Elija un SLOT</string>
     <string name="icon_select">Seleccione un icono</string>
@@ -125,6 +127,7 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Servicio de Datos <b>desactivado</b></string>
     <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
+    <string name="db_size">DB size</string>
     <string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
     <string name="webservice_enabled">Zozzariello <b>habilitado</b> escuchando </string>
     <string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expirado</font></b>]]>.Souliss podría no estar disponible</string>

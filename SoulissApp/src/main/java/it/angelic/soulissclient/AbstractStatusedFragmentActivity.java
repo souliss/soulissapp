@@ -17,7 +17,7 @@ import android.widget.Toast;
  * @author Ale
  * 
  */
-public class AbstractStatusedFragmentActivity extends ActionBarActivity {
+public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity {
 	protected SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 	protected ActionBar actionBar;
 

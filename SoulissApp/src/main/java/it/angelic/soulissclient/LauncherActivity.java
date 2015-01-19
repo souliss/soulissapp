@@ -271,6 +271,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
         // Log.w(TAG, "WARNTEST");
+        if (opzioni.isLightThemeSelected()) {
+            cardViewBasicInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
+            cardViewPositionInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
+            cardViewServiceInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
+        }
         Animation animation = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
         cardViewBasicInfo.startAnimation(animation);
         Animation animation2 = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));

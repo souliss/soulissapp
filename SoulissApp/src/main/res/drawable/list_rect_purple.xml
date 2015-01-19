@@ -5,6 +5,6 @@
         android:top="2dp"
         android:right="4dp"
         android:bottom="2dp" />
-<!--     <corners android:radius="3dp" /> -->
+     <corners android:radius="3dp" />
     <solid android:color="@color/grey_alpha" />
 </shape>

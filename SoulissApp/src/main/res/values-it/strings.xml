@@ -99,8 +99,8 @@
     <string name="menu_test_udp">Test UDP</string>
     <string name="menu_rename">Rinomina Nodo</string>
     <string name="menu_changenodeicon">Cambia icona Nodo</string>
-    <string name="menu_changetypicon">Cambia icona Tipico</string>
-    <string name="rename_typical">Rinomina Tipico</string>
+    <string name="menu_changetypicon">Cambia icona Dispositivo</string>
+    <string name="rename_typical">Rinomina Dispositivo</string>
 
     <!-- TEST_UDP -->
     <string name="test_health">Health request viene utilizzata per aggiornare lo stato di salute dei nodi</string>
@@ -124,7 +124,8 @@
     <string name="manual_tyinf">Questo dispositivo è rimasto acceso per %1$s nell\'ultimo mese</string>
     <string name="node_empty">Nodo Vuoto!</string>
     <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
-
+    <!-- WIDGET -->
+    <string name="widget_cantsave">Dispositivo vuoto/Non selezionato</string>
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>

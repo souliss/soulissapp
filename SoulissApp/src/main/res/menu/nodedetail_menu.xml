@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/Opzioni"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/menu_options"
-        android:showAsAction="always|withText"
+        app:showAsAction="always|withText"
         android:orderInCategory="3"/>
     <item
         android:id="@+id/Rinomina"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/menu_rename"
-        android:showAsAction="ifRoom|collapseActionView|withText"
+        app:showAsAction="ifRoom|collapseActionView|withText"
         android:orderInCategory="1"/>
     <item
         android:id="@+id/CambiaIcona"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/menu_changenodeicon"
-        android:showAsAction="ifRoom|collapseActionView|withText"
+        app:showAsAction="ifRoom|collapseActionView|withText"
         android:orderInCategory="2"/>
 </menu>

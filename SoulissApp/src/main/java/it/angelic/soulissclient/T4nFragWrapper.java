@@ -48,16 +48,7 @@ public class T4nFragWrapper extends ActionBarActivity {
 		}
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
-	}
+
 	// meccanismo per timeout detection
 	/*
 	 * private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {

@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -74,7 +75,7 @@ public class SoulissWidget extends AppWidgetProvider {
 	private SoulissPreferenceHelper opzioni;
 
 	@Override
-	public void onReceive(final Context context, final Intent intent) {
+	public void onReceive(@NonNull final Context context, final Intent intent) {
 		customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
 		opzioni = new SoulissPreferenceHelper(context);
 		handler = new Handler();

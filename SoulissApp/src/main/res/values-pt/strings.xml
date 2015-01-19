@@ -116,6 +116,9 @@
      <string name="db_notempty">DB not empty. Drop DB first</string>
     <string name="manual_id_prompt">Escolha o ID da central</string>
     <string name="manual_slot_prompt">Escolha um SLOT</string>
+    <string name="manual_litfrom">Turned on %1$s ago</string>
+    <string name="manual_tyinf">This device has been turned on for %1$s in the last month</string>
+    <string name="db_size">DB size</string>
     <string name="icon_select">Selecione Ícone</string>
     <string name="manual_showing_typ">Mostrando Detalhes do Módulo: </string>
     <string name="manual_desc">Envie comando para o módulo Souliss manualmente. Toque em um Módulo para abrir os Detalhes, mantenha pressionado para editá-lo</string>
