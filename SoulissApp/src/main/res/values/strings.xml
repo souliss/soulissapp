@@ -42,6 +42,7 @@
     <string name="programs_no">No Active program</string>
     <string name="programs_add">Add Program</string>
     <string name="execute">Execute</string>
+    <string name="programs_trigger_executed">Souliss Trigger executed</string>
     <string name="programs_unexecuted">Active Programs</string>
     <string name="programs_desc">SoulissClient supports Timed Programs (purple), Geo Programs (blue) and Sensor Based commands (red) </string>
     <string name="programs_target">Choose Program\'s Target</string>

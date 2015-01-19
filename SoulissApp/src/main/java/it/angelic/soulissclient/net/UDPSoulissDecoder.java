@@ -226,6 +226,13 @@ public class UDPSoulissDecoder {
 				// refreshedNodes.get(command.getNodeId()).getTypical(command.getSlot());
 				Calendar now = Calendar.getInstance();
 				if (!soulissTrigger.getTriggerDto().isActivated()) {
+                    // Descrizione programma
+                    StringBuilder info = new StringBuilder(soulissTrigger.toString());
+                    info.append(" slot " + command.getSlot());
+                    if ("".compareTo(source.getNiceName()) != 0)
+                        info.append(" (" + source.getNiceName() + ")");
+                    info.append(" on " + source.getParentNode().getNiceName());
+
 					String op = src.getOp();
 					if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > src.getThreshVal()) {
 						Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
@@ -234,7 +241,7 @@ public class UDPSoulissDecoder {
 								SoulissClient.getOpzioni(), command.getType(), "" + command.getCommand());
 						command.setExecutedTime(now);
 						soulissTrigger.persist(database);
-						SoulissDataService.sendNotification(context, command.toString(), soulissTrigger.toString(),
+						SoulissDataService.sendNotification(context, soulissTrigger.getCtx().getResources().getString(R.string.programs_trigger_executed), info.toString(),
 								R.drawable.lighthouse);
 					} else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < src.getThreshVal()) {
 						Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
@@ -243,7 +250,7 @@ public class UDPSoulissDecoder {
 								SoulissClient.getOpzioni(), command.getType(), "" + command.getCommand());
 						soulissTrigger.getCommandDto().setExecutedTime(now);
 						soulissTrigger.persist(database);
-						SoulissDataService.sendNotification(context, command.toString(), soulissTrigger.toString(),
+						SoulissDataService.sendNotification(context, soulissTrigger.getCtx().getResources().getString(R.string.programs_trigger_executed), info.toString(),
 								R.drawable.lighthouse);
 					} else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == src.getThreshVal()) {
 						Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
@@ -252,7 +259,7 @@ public class UDPSoulissDecoder {
 						soulissTrigger.getTriggerDto().setActive(true);
 						soulissTrigger.getCommandDto().setExecutedTime(now);
 						soulissTrigger.persist(database);
-						SoulissDataService.sendNotification(context, command.toString(), soulissTrigger.toString(),
+						SoulissDataService.sendNotification(context, soulissTrigger.getCtx().getResources().getString(R.string.programs_trigger_executed), info.toString(),
 								R.drawable.lighthouse);
 					}
 				}

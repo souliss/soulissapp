@@ -121,7 +121,7 @@ public class ProgramListAdapter extends BaseAdapter {
 			// se gia eseguito, dico quando
 			if (holder.data.getCommandDTO().getExecutedTime() != null) {
 				holder.textCmdWhen.setText(context.getString(R.string.last_exec)
-						+ Constants.hourFormat.format(holder.data.getCommandDTO().getExecutedTime().getTime()));
+                        + " "	+ Constants.hourFormat.format(holder.data.getCommandDTO().getExecutedTime().getTime()));
 			} else {
 				holder.textCmdWhen.setText(context.getString(R.string.programs_notyet));
 			}
@@ -146,11 +146,11 @@ public class ProgramListAdapter extends BaseAdapter {
 			/* Dimensioni del testo settate dalle opzioni */
 			holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
 			holder.textCmdInfo.setText(context.getString(R.string.programs_when) + " " + intrig.getInputSlotlot()
-					+ " on Node " + intrig.getInputNodeId() + context.getString(R.string.is) + " " + intrig.getOp()
+					+ " on Node " + intrig.getInputNodeId() + " " +context.getString(R.string.is) + " " + intrig.getOp()
 					+ " " + intrig.getThreshVal());
 			if (holder.data.getCommandDTO().getExecutedTime() != null)
-				holder.textCmdWhen.setText(context.getString(R.string.programs_leave)
-						+ Constants.hourFormat.format((holder.data.getCommandDTO().getExecutedTime().getTime())));
+				holder.textCmdWhen.setText(context.getString(R.string.last_exec)
+						+ " " +Constants.hourFormat.format((holder.data.getCommandDTO().getExecutedTime().getTime())));
 			else
 				holder.textCmdWhen.setText(context.getString(R.string.programs_notyet));
 		}
