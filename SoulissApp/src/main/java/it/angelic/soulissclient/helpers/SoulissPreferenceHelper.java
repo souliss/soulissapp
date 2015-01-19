@@ -136,7 +136,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
 		broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
 		rgbSendAllDefault = prefs.getBoolean("rgbSendAllDefault", true);
-		logHistoryEnabled = prefs.getBoolean("checkboxLogHistory", false);
+		logHistoryEnabled = prefs.getBoolean("checkboxLogHistory", true);
 		eqLow = prefs.getFloat("eqLow", 1f);
 		eqMed = prefs.getFloat("eqMed", 1f);
 		eqHigh = prefs.getFloat("eqHigh", 1f);

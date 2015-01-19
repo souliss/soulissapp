@@ -2,10 +2,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+>
 
     <RelativeLayout
         android:id="@+id/Cont01"
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -70,7 +72,6 @@
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dip"
             android:layout_below="@id/relativeLayout43" >
 
             <View
@@ -104,6 +105,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TimePicker
+                android:layout_centerHorizontal="true"
                 android:id="@+id/timePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -132,7 +134,6 @@
         <RelativeLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_marginTop="4dip"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativeLayout1" >
 
@@ -180,7 +181,7 @@
             android:id="@+id/relativeLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dip"
+
             android:layout_below="@id/relativeLayout2" >
 
             <View
@@ -192,9 +193,14 @@
                 android:id="@+id/RadioButtonTriggered"
                 android:layout_width="fill_parent"
                 style="@style/CodeFontTitle"
-                android:drawableRight="@drawable/lighthouse"
+                android:layout_height="wrap_content"
                 android:text="@string/addprogram_sensorial" />
-
+            <TextView
+                android:id="@+id/textViewInfoTrig"
+                android:layout_below="@id/RadioButtonTriggered"
+                android:layout_marginTop="-5dip"
+                android:text="@string/addprogram_sensorial_desc"
+                style="@style/CodeFontSmall" />
             <ImageView
                 android:id="@+id/triggered_icon"
                 android:layout_width="wrap_content"
@@ -203,12 +209,7 @@
                 android:contentDescription="@string/addprogram_sensorial"
                 android:src="@drawable/lighthouse" />
 
-            <TextView
-                android:id="@+id/textViewInfoTrig"
-                android:layout_below="@id/RadioButtonTriggered"
-                android:layout_marginTop="-5dip"
-                android:text="@string/addprogram_sensorial_desc"
-                style="@style/CodeFontSmall" />
+
 
             <View
                 android:id="@+id/strutt"
@@ -234,6 +235,8 @@
                 android:layout_toRightOf="@id/Spinner05" />
 
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/Spinner05"
@@ -270,10 +273,10 @@
         <Button
             android:id="@+id/buttonInsertProgram"
             android:layout_width="0dip"
-            style="@style/CodeFontMain"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/strut2"
+            android:layout_alignParentBottom="true"
             android:layout_below="@id/relativeLayout4"
             android:layout_marginBottom="25dp"
             android:text="@android:string/cancel"
@@ -282,10 +285,10 @@
         <Button
             android:id="@+id/buttonCancelProgram"
             android:layout_width="0dip"
-            style="@style/CodeFontMain"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/strut2"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_below="@id/relativeLayout4"
             android:text="@string/save" />
     </RelativeLayout>

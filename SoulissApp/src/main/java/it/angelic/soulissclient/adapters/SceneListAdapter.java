@@ -9,6 +9,7 @@ import it.angelic.soulissclient.model.SoulissScene;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,8 @@ public class SceneListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+
 
 	public static class SceneViewHolder {
 		TextView textCmd;

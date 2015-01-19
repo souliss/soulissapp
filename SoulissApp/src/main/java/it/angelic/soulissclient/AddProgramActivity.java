@@ -48,11 +48,11 @@ public class AddProgramActivity extends Activity {
 
 		opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
 		// tema
-	/*	if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+		if (opzioni.isLightThemeSelected())
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-	*/	super.onCreate(savedInstanceState);
+			setTheme(R.style.DarkThemeSelector);
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_addprogram);
 
 		if (!opzioni.isDbConfigured()) {
@@ -83,10 +83,7 @@ public class AddProgramActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = this.getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+
 		final Spinner outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
 		fillNodeSpinner(outputNodeSpinner);
 		final Spinner outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);

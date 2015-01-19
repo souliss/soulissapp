@@ -64,11 +64,11 @@ public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-	/*	if (opzioni.isLightThemeSelected())
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+		if (opzioni.isLightThemeSelected())
+			setTheme(R.style.LightThemeSelector);
 		else
-			setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-	*/	super.onCreate(savedInstanceState);
+			setTheme(R.style.DarkThemeSelector);
+		super.onCreate(savedInstanceState);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the

@@ -245,22 +245,26 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 	}
 
     private void refreshHistoryInfo() {
-        StringBuilder str = new StringBuilder();
-        int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
-        if (collected.getOutput() != 0) {
-            Date when = collected.getTypicalDTO().getLastStatusChange();
-            long swap =new Date().getTime() - when.getTime();
-            msecOn += swap;
-            String strMeatFormat = getResources().getString(R.string.manual_litfrom);
-            String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(swap) );
-            str.append( strMeatMsg);
+        try {
+            StringBuilder str = new StringBuilder();
+            int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
+            if (collected.getOutput() != 0) {
+                Date when = collected.getTypicalDTO().getLastStatusChange();
+                long swap = new Date().getTime() - when.getTime();
+                msecOn += swap;
+                String strMeatFormat = getResources().getString(R.string.manual_litfrom);
+                String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(swap));
+                str.append(strMeatMsg);
 
+            }
+            str.append("\n");
+            String strMeatFormat = getResources().getString(R.string.manual_tyinf);
+            String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn));
+            str.append(strMeatMsg);
+            infoHistory.setText(str.toString());
+        }catch (Exception ie){
+            Log.e(Constants.TAG,"cant refresh history:"+ie.getMessage());
         }
-        str.append("\n");
-        String strMeatFormat = getResources().getString(R.string.manual_tyinf);
-        String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn) );
-        str.append(strMeatMsg);
-        infoHistory.setText(str.toString());
     }
 
     private void shutoff() {

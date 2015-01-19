@@ -88,11 +88,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 
 		opzioni = SoulissClient.getOpzioni();
 		// tema
-	/*	if (opzioni.isLightThemeSelected())
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock_Light);
+		if (opzioni.isLightThemeSelected())
+            getActivity().setTheme(R.style.LightThemeSelector);
 		else
-			getActivity().setTheme(com.actionbarsherlock.R.style.Theme_Sherlock);
-	*/	super.onCreate(savedInstanceState);
+			getActivity().setTheme(R.style.DarkThemeSelector);
+		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());
