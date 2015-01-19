@@ -89,11 +89,11 @@ public class NodesListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
-		/*ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+		ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM | ActionBar.DISPLAY_SHOW_TITLE); // show
+		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
-        */
+
 
 		setHasOptionsMenu(true);
 		//opzioni.reload();
@@ -391,10 +391,10 @@ public class NodesListFragment extends ListFragment {
             View ds = actionBar.getCustomView();
             online = (ImageButton) ds.findViewById(R.id.action_starred);
             statusOnline = (TextView) ds.findViewById(R.id.online_status);
-            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
-//			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-//			actionTitle.setText(getString(R.string.manual_title));
+			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+            actionTitle.setText(getString(R.string.manual_title));
             if (!opzioni.isSoulissReachable()) {
                 online.setBackgroundResource(R.drawable.red);
                 statusOnline.setTextColor(getResources().getColor(R.color.std_red));

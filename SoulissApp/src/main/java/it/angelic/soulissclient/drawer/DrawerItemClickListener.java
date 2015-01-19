@@ -68,7 +68,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				// setTitle(mPlanetTitles[position]);
 				mDrawerLayout.closeDrawer(mDrawerList);
 				Intent myIntent = new Intent(mActivity, SceneListActivity.class);
-				myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent);
 				break;
 			case DrawerMenuHelper.PROGRAMS:
@@ -76,7 +76,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				// setTitle(mPlanetTitles[position]);
 				mDrawerLayout.closeDrawer(mDrawerList);
 				Intent myIntent2 = new Intent(mActivity, ProgramListActivity.class);
-				myIntent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				myIntent2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent2);
 				break;
 			case DrawerMenuHelper.MANUAL:
@@ -84,7 +84,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				// setTitle(mPlanetTitles[position]);
 				mDrawerLayout.closeDrawer(mDrawerList);
 				Intent myIntent3 = new Intent(mActivity, NodesListActivity.class);
-				myIntent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				myIntent3.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent3);
 				break;
 			case DrawerMenuHelper.SETTINGS_NET:

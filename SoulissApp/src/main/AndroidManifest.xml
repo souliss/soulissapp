@@ -109,18 +109,21 @@
             </intent-filter>
         </activity>
         <activity
+            android:parentActivityName=".LauncherActivity"
             android:name="ProgramListActivity"
             android:icon="@drawable/remote"
             android:label="@string/app_name"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
+            android:parentActivityName=".LauncherActivity"
             android:name="SceneListActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
+            android:parentActivityName=".SceneListActivity"
             android:name="SceneDetailActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"

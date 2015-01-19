@@ -76,7 +76,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
+        mAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
         mDrawerList.setAdapter(mAdapter);
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
@@ -84,11 +84,11 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onStart() {
-		ActionBar actionBar = getSupportActionBar();
+		/*ActionBar actionBar = getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
         actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(true);*/
 		//View ds = actionBar.getCustomView();
 		setActionBarInfo(getString(R.string.manual_title));
 		super.onStart();

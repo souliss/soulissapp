@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.animation.AnimatorSet;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -160,6 +161,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 	private ArrayAdapter<INavDrawerItem> mAdapter;
 	private Criteria criteria;
     private CardView cardViewBasicInfo;
+    private CardView cardViewPositionInfo;
+    private CardView cardViewServiceInfo;
 
     void doBindService() {
 		Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
@@ -217,6 +220,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		serviceInfoAntiTheft = (TextView) findViewById(R.id.TextViewAntiTheft);
 
         cardViewBasicInfo = (CardView) findViewById(R.id.BasicInfoCard);
+        cardViewPositionInfo = (CardView) findViewById(R.id.dbAndPositionCard);
+        cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
 		// gestore timeout dei comandi
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		timeoutHandler = new Handler();
@@ -254,7 +259,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(),DrawerMenuHelper.MANUAL);
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(),-99);
 		mDrawerList.setAdapter(mAdapter);
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
@@ -264,6 +269,14 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
 		Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
 		// Log.w(TAG, "WARNTEST");
+        Animation animation = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
+        cardViewBasicInfo.startAnimation(animation);
+        Animation animation2 = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
+        animation2.setStartOffset(500);
+        cardViewPositionInfo.startAnimation(animation2);
+        Animation animation3 = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
+        animation3.setStartOffset(1000);
+        cardViewServiceInfo.startAnimation(animation3);
 	}
 
 	@Override
@@ -341,7 +354,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		};
 		soulissManualBtn.setOnClickListener(simpleOnClickListener);
 		// forza refresh drawer
-		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -1);
+		mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(),-99);
 		mDrawerList.setAdapter(mAdapter);
 
 		db = new SoulissDBHelper(this);
@@ -555,8 +568,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 			timeoutHandler.removeCallbacks(timeExpired);
 			Bundle extras = intent.getExtras();
 
-            cardViewBasicInfo.getLayoutAnimation().start();
-			if (extras != null) {
+            if (extras != null) {
 				Log.i(TAG, "Broadcast receive, refresh from DB");
 				@SuppressWarnings("unchecked")
 				ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
@@ -576,7 +588,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 			} else {
 				Log.e(TAG, "EMPTY response!!");
 			}
-
 		}
 	};
 
@@ -669,9 +680,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		coordinfo.setVisibility(View.VISIBLE);
 		homedist.setVisibility(View.VISIBLE);
 		String adString = "";
-
 		String loc = null;
 		try {
+
 			List<Address> list;
 			list = geocoder.getFromLocation(lat, lng, 1);
 			if (list != null && list.size() > 0) {
@@ -724,7 +735,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 			homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
 			posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
 		}
-
 	}
 
 	@Override

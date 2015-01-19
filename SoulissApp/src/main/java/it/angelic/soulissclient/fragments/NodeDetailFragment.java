@@ -405,7 +405,7 @@ public class NodeDetailFragment extends ListFragment {
 				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 				TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-				actionTitle.setText(getString(R.string.app_name) + " - " + collected.getNiceName());
+				actionTitle.setText(collected.getNiceName());
 
 				if (!opzioni.isSoulissReachable()) {
 					online.setBackgroundResource(R.drawable.red);
