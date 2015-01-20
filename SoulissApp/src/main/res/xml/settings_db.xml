@@ -18,7 +18,7 @@
             android:summary="@string/opt_dbdrop_desc"
             android:title="@string/opt_dbdrop" />
          <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="checkboxLogHistory"
             android:summary="@string/opt_loghist_desc"
             android:title="@string/opt_loghist" />

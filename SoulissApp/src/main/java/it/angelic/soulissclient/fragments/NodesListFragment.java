@@ -25,6 +25,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -129,12 +130,21 @@ public class NodesListFragment extends ListFragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Looper.prepare();
                         if (nodiArray != null)
                             UDPHelper.healthRequest(opzioni, nodiArray.length, 0);
-                        if (!opzioni.isSoulissReachable())
-                            Toast.makeText(getActivity(),
-                                    getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
-                                    .show();
+                        if (!opzioni.isSoulissReachable()) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getActivity(),
+                                            getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                            .show();
+                                    swipeLayout.setRefreshing(false);
+                                }
+                            });
+
+
+                        }
                     }
                 }).start();
             }} );

@@ -446,7 +446,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     }
 
     private void setDbInfo() {
-		
+
 		/* DB Warning */
         if (!opzioni.isDbConfigured()) {
             dbwarn.setVisibility(View.VISIBLE);
@@ -689,8 +689,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             @Override
             public void run() {
 
-                coordinfo.setVisibility(View.VISIBLE);
-                homedist.setVisibility(View.VISIBLE);
+
                 String adString = "";
                 String loc = null;
                 try {
@@ -708,6 +707,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                         @Override
                         public void run() {
                             Log.e(TAG, "Geocoder ERROR", e);
+                            homedist.setVisibility(View.VISIBLE);
                             homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
                             posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
                         }
@@ -719,8 +719,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + ff
-                        + sonoIncapace));
+                        coordinfo.setVisibility(View.VISIBLE);
+                        coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + ff
+                                + sonoIncapace));
                     }
                 });
                 final float[] res = new float[3];
@@ -739,6 +740,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                 unit = "km";
                                 res[0] = res[0] / 1000;
                             }
+                            homedist.setVisibility(View.VISIBLE);
                             homedist.setText(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
                                     + (int) res[0] + unit
                                     + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
@@ -749,8 +751,12 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
 
                 } else {
-                    homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-                    posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
+                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
+                        }});
                 }
             }
         }).start();
