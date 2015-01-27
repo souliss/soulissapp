@@ -29,10 +29,20 @@ public class SoulissWidget extends AppWidgetProvider {
 	private static SoulissDBHelper db;
 	private Handler handler;
 
+    private SharedPreferences customSharedPreference;
+    private SoulissPreferenceHelper opzioni;
+
+    /**
+     * Chiamato per refresh del widget, anche dalla rete (stateresponse e pollResponse)
+     *
+     * @param context
+     * @param appWidgetManager
+     * @param appWidgetId
+     */
 	public static void forcedUpdate(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 		SharedPreferences customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs",
 				Activity.MODE_PRIVATE);
-
+        Log.w(TAG, "forcedUpdate for widgetId:" + appWidgetId);
 		final int node = customSharedPreference.getInt(appWidgetId + "_NODE", -1);
 		final int slot = customSharedPreference.getInt(appWidgetId + "_SLOT", -1);
 		final long cmd = customSharedPreference.getLong(appWidgetId + "_CMD", -1);
@@ -56,6 +66,19 @@ public class SoulissWidget extends AppWidgetProvider {
 		updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getDefaultIconResourceId());
 		updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
 		updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
+
+        if (tgt instanceof ISoulissTypicalSensor) {
+            if (tgt instanceof SoulissTypical53HumiditySensor)
+                updateViews.setTextViewText(R.id.wid_info,
+                        String.valueOf((((ISoulissTypicalSensor) tgt).getOutputFloat())) + "%");
+            else if (tgt instanceof SoulissTypical52TemperatureSensor)
+                updateViews.setTextViewText(R.id.wid_info,
+                        String.valueOf((((ISoulissTypicalSensor) tgt).getOutputFloat())) + "%");
+            else
+                updateViews.setTextViewText(R.id.wid_info,
+                        String.valueOf((((ISoulissTypicalSensor) tgt).getOutputFloat())));
+        } else
+            updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
 		
 		// UPDATE SINCRONO
 		Intent intent = new Intent(context, SoulissWidget.class);
@@ -70,9 +93,6 @@ public class SoulissWidget extends AppWidgetProvider {
 		// Toast.makeText(context, "forcedUpdate(), node " +
 		// String.valueOf(node), Toast.LENGTH_LONG).show();
 	}
-
-	private SharedPreferences customSharedPreference;
-	private SoulissPreferenceHelper opzioni;
 
 	@Override
 	public void onReceive(@NonNull final Context context, final Intent intent) {
@@ -98,6 +118,7 @@ public class SoulissWidget extends AppWidgetProvider {
 			updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_active);
 			updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
 			updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
+
 			// UPDATE SINCRONO
 			intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
 			intent.putExtra("_ID", got);
@@ -128,53 +149,6 @@ public class SoulissWidget extends AppWidgetProvider {
 					if (cmd != -1) {
 						final String res = UDPHelper.issueSoulissCommand(cmdd, opzioni);
 					}
-					/*
-					 * handler.post(new Runnable() {
-					 * 
-					 * @Override public void run() {
-					 * updateViews.setTextViewText(R.id.button1,
-					 * cmdd.toString());
-					 * updateViews.setTextViewText(R.id.wid_info,
-					 * (tgt.getOutputDesc())); // TODO edittext name
-					 * updateViews.setInt(R.id.widgetcontainer,
-					 * "setBackgroundResource", R.drawable.widget_shape);
-					 * 
-					 * //Toast.makeText(context, // "Command sent to node " +
-					 * customSharedPreference.getInt(got + "_NODE", -1), //
-					 * Toast.LENGTH_LONG).show();
-					 * 
-					 * } });
-					 */
-					handler.postDelayed(new Runnable() {
-
-						@Override
-						public void run() {
-							// TODO carica stato dal DB
-							SoulissTypical ref = db.getSoulissTypical(node, (short) slot);
-							ref.setCtx(context);
-							if (!name.equals(""))
-								updateViews.setTextViewText(R.id.button1, name);
-							else
-								updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-							if (ref instanceof ISoulissTypicalSensor) {
-								if (ref instanceof SoulissTypical53HumiditySensor)
-									updateViews.setTextViewText(R.id.wid_info,
-											String.valueOf((((ISoulissTypicalSensor) ref).getOutputFloat())) + "%");
-								else if (ref instanceof SoulissTypical52TemperatureSensor)
-									updateViews.setTextViewText(R.id.wid_info,
-											String.valueOf((((ISoulissTypicalSensor) ref).getOutputFloat())) + "%");
-								else
-									updateViews.setTextViewText(R.id.wid_info,
-											String.valueOf((((ISoulissTypicalSensor) ref).getOutputFloat())));
-							} else
-								updateViews.setTextViewText(R.id.wid_info, (ref.getOutputDesc()));
-							// edittext name
-							updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-
-							// refresh asincrono x ripristino widget
-							awm.updateAppWidget(got, updateViews);
-						}
-					}, 2000);
 				}
 			}).start();
 		}
@@ -182,7 +156,7 @@ public class SoulissWidget extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		Log.w(TAG, "widget onUpdate from:" + appWidgetManager);
+		Log.w(TAG, "widget onUpdate for " + appWidgetIds.length + " widgets");
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 		ComponentName thisWidget = new ComponentName(context, SoulissWidget.class);
 		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);

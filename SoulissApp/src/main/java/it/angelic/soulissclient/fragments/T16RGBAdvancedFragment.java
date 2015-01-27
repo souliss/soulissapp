@@ -212,13 +212,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 		assertTrue("TIPICO NULLO", collected != null);
 		collected.setPrefs(opzioni);
 		collected.setCtx(getActivity());
-		
-		
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(collected.getNiceName());
-		}
 		super.setCollected(collected);
 		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load

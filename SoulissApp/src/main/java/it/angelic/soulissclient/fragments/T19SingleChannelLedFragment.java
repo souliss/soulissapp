@@ -197,11 +197,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical19AnalogChannel);
 		collected.setPrefs(opzioni);
 		collected.setCtx(getActivity());
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(collected.getNiceName());
-		}
 
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);

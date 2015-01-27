@@ -6,18 +6,15 @@
         android:id="@+id/Opzioni"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/menu_options"
-        app:showAsAction="always|withText"
         android:orderInCategory="3"/>
     <item
         android:id="@+id/Rinomina"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/menu_rename"
-        app:showAsAction="ifRoom|collapseActionView|withText"
         android:orderInCategory="1"/>
     <item
         android:id="@+id/CambiaIcona"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/menu_changenodeicon"
-        app:showAsAction="ifRoom|collapseActionView|withText"
         android:orderInCategory="2"/>
 </menu>
