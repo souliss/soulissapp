@@ -44,6 +44,7 @@ public class AddProgramActivity extends Activity {
     private SoulissNode[] nodiArray;
     private SoulissDBHelper datasource = new SoulissDBHelper(this);
     private SoulissPreferenceHelper opzioni;
+    private TextView tvcommand;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class AddProgramActivity extends Activity {
         datasource.open();
 
         ImageView nodeic = (ImageView) findViewById(R.id.timed_icon);
+        tvcommand = (TextView) findViewById(R.id.textViewCommand);
         nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
         ImageView nodeic2 = (ImageView) findViewById(R.id.position_icon);
@@ -416,6 +418,7 @@ public class AddProgramActivity extends Activity {
      * @param ref tipico da cui ottenere i comandi
      */
     private void fillCommandSpinner(Spinner tgt, SoulissTypical ref) {
+        tvcommand.setVisibility(View.VISIBLE);
         tgt.setVisibility(View.VISIBLE);
         SoulissCommand[] strArray = new SoulissCommand[ref.getCommands(this).size()];
         ref.getCommands(this).toArray(strArray);
@@ -427,7 +430,7 @@ public class AddProgramActivity extends Activity {
         tgt.setAdapter(adapter);
     }
     /**
-Mette un comando fake, ovvero la scena che varra\ eseguita
+Mette un comando fake, ovvero la scena che verra\ eseguita
      NODEID = -2
      *
      * @param tgt Spinner da riempire
@@ -435,6 +438,7 @@ Mette un comando fake, ovvero la scena che varra\ eseguita
      */
     private void fillFakeCommandSpinner(Spinner tgt, SoulissScene ref) {
         tgt.setVisibility(View.INVISIBLE);
+        tvcommand.setVisibility(View.INVISIBLE);
         ISoulissExecutable[] strArray = new SoulissScene[1];
         strArray[0] = ref;
 
