@@ -125,8 +125,6 @@ public class SceneCommandListAdapter extends BaseAdapter {
 			holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order)+" " + dto.getInterval() +
 					" - "+context.getString(R.string.scene_cmd_massive));
 		}
-		if (holder.data != null && holder.data.getCtx() == null)
-			holder.data.setCtx(context);
 		// Nascondi, maf
 		holder.textCmdInfo.setVisibility(View.GONE);
 

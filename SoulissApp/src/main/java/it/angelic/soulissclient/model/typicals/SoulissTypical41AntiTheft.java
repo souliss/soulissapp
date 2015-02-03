@@ -49,19 +49,19 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
 		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
 
-		SoulissCommand t = new SoulissCommand(ctx, this);
+		SoulissCommand t = new SoulissCommand( this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T4n_Armed);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
-		SoulissCommand tt = new SoulissCommand(ctx, this);
+		SoulissCommand tt = new SoulissCommand( this);
 		tt.getCommandDTO().setCommand(Constants.Souliss_T4n_NotArmed);
 		tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tt);
 
-		SoulissCommand ter = new SoulissCommand(ctx, this);
+		SoulissCommand ter = new SoulissCommand( this);
 		ter.getCommandDTO().setCommand(Constants.Souliss_T4n_ReArm);
 		ter.getCommandDTO().setSlot(typicalDTO.getSlot());
 		ter.getCommandDTO().setNodeId(typicalDTO.getNodeId());

@@ -37,25 +37,25 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
 		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
 
-		SoulissCommand t = new SoulissCommand(ctx, this);
+		SoulissCommand t = new SoulissCommand( this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
 		t.getCommandDTO().setSlot(typicalDTO.getSlot());
 		t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(t);
 
-		SoulissCommand tr = new SoulissCommand(ctx, this);
+		SoulissCommand tr = new SoulissCommand( this);
 		tr.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
 		tr.getCommandDTO().setSlot(typicalDTO.getSlot());
 		tr.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(tr);
 		
-		SoulissCommand tj = new SoulissCommand(ctx, this);
+		SoulissCommand tj = new SoulissCommand( this);
 		tj.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
 		tj.getCommandDTO().setSlot(typicalDTO.getSlot());
 		tj.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(tj);
 
-		SoulissCommand td = new SoulissCommand(ctx, this);
+		SoulissCommand td = new SoulissCommand( this);
 		td.getCommandDTO().setCommand(Constants.Souliss_T1n_AutoCmd);
 		td.getCommandDTO().setSlot(typicalDTO.getSlot());
 		td.getCommandDTO().setNodeId(typicalDTO.getNodeId());

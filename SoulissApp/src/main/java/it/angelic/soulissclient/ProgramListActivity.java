@@ -124,9 +124,15 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 
 		listaProgrammiView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				Log.w(TAG, "press not implemented?" + arg2);
+                Log.w(TAG, "Activating SCENE " + arg2);
+                Intent nodeDatail = new Intent(ProgramListActivity.this, AddProgramActivity.class);
+                nodeDatail.putExtra("PROG", programsArray[arg2] );
+                ProgramListActivity.this.startActivity(nodeDatail);
+                if (opzioni.isAnimationsEnabled())
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
+
 
 		registerForContextMenu(listaProgrammiView);
 

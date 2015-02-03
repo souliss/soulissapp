@@ -15,38 +15,40 @@ import java.util.Calendar;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * Il comando e` nato per riflettere qualcosa da inviare
+ * poi e` stato esteso ai massivi
+ * poi agli scenari. Un programma puo` infatti voler
+ * eseguire uno scenario, e persisterlo
+ */
 public class SoulissCommand implements Serializable , ISoulissExecutable{
 
 	private static final long serialVersionUID = -918392561828980547L;
 	private SoulissCommandDTO commandDTO;
-	private transient Context ctx;
 	private SoulissTypical parentTypical;
 
 	public SoulissCommandDTO getCommandDTO() {
 		return commandDTO;
 	}
 
-	public SoulissCommand(Context ct, SoulissTypical parentTypical) {
+	public SoulissCommand(SoulissTypical parentTypical) {
 		super();
-		ctx = ct;
 		this.commandDTO = new SoulissCommandDTO();
 		commandDTO.setSlot(parentTypical.getTypicalDTO().getSlot());
 		commandDTO.setNodeId(parentTypical.getParentNode().getId());
 		this.parentTypical = parentTypical;
 	}
 
-	public SoulissCommand(Context ct, SoulissCommandDTO dto, SoulissTypical parentTypical) {
+	public SoulissCommand(SoulissCommandDTO dto, SoulissTypical parentTypical) {
 		super();
-		ctx = ct;
 		this.commandDTO = dto;
 		this.parentTypical = parentTypical;
 		if (parentTypical.getParentNode() != null)
 			assertEquals(dto.getNodeId(), parentTypical.getParentNode().getId());
 	}
 
-	public SoulissCommand(Context ct, SoulissCommandDTO dto) {
+	public SoulissCommand(SoulissCommandDTO dto) {
 		super();
-		ctx = ct;
 		this.commandDTO = dto;
 		// falso se trigger assertEquals(true, dto.getSceneId() != 0);
 	}
@@ -217,26 +219,18 @@ public class SoulissCommand implements Serializable , ISoulissExecutable{
 		} else
 			resId = R.string.Souliss_emptycmd_desc;
 
-        if (ctx == null)
-            return "WTF";
-		return this.ctx.getString(resId);
+		return SoulissClient.getAppContext().getString(resId);
 	}
 
 	public SoulissTypical getParentTypical() {
 		return parentTypical;
 	}
 
-	public Context getCtx() {
-		return ctx;
-	}
-
-	public void setCtx(Context ctx) {
-		this.ctx = ctx;
-	}
 
     @Override
     public void execute() {
         SoulissCommandDTO dto = getCommandDTO();
+        Context ctx = SoulissClient.getAppContext();
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
             int sceneId = dto.getSlot();
             SoulissDBHelper db = new SoulissDBHelper(ctx);

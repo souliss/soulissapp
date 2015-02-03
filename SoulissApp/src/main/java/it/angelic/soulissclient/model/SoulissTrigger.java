@@ -13,7 +13,7 @@ public class SoulissTrigger extends SoulissCommand {
 	private static final long serialVersionUID = -3734884921250844802L;
 
 	public SoulissTrigger(Context ct, SoulissCommandDTO dto, SoulissTypical pare) {
-		super(ct, dto,pare);
+		super( dto,pare);
 		// TODO Auto-generated constructor stub
 	}
 	private SoulissTriggerDTO triggerDto;

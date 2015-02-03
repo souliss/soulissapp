@@ -38,37 +38,37 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
 		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
 
-		SoulissCommand t = new SoulissCommand(ctx, this);
+		SoulissCommand t = new SoulissCommand(this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Auto_20);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
-		SoulissCommand ff = new SoulissCommand(ctx, this);
+		SoulissCommand ff = new SoulissCommand(this);
 		ff.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Auto_24);
 		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
 
-		SoulissCommand cf = new SoulissCommand(ctx, this);
+		SoulissCommand cf = new SoulissCommand(this);
 		cf.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Cool_18);
 		cf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		cf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(cf);
 
-		SoulissCommand df = new SoulissCommand(ctx, this);
+		SoulissCommand df = new SoulissCommand(this);
 		df.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Dry);
 		df.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		df.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(df);
 
-		SoulissCommand faf = new SoulissCommand(ctx, this);
+		SoulissCommand faf = new SoulissCommand( this);
 		faf.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Fan);
 		faf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		faf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(faf);
 
-		SoulissCommand tt = new SoulissCommand(ctx, this);
+		SoulissCommand tt = new SoulissCommand(this);
 		tt.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Off);
 		tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());

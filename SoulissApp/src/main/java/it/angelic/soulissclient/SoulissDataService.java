@@ -244,7 +244,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                 // Se ricorsivo, ricrea
                                 if (unexnex.getCommandDTO().getInterval() > 0) {
 
-                                    SoulissCommand nc = new SoulissCommand(SoulissDataService.this,
+                                    SoulissCommand nc = new SoulissCommand(
                                             unexnex.getParentTypical());
                                     nc.getCommandDTO().setNodeId(unexnex.getCommandDTO().getNodeId());
                                     nc.getCommandDTO().setSlot(unexnex.getCommandDTO().getSlot());

@@ -190,7 +190,7 @@ public class SoulissDBHelper {
      * Decide come interpretare gli out e logga
      */
     /*public void logTypical(SoulissTypical soulissTypical) {
-		ContentValues values = new ContentValues();
+        ContentValues values = new ContentValues();
 		// wrap values from object
 		values.put(SoulissDB.COLUMN_LOG_NODE_ID, soulissTypical.getTypicalDTO().getNodeId());
 		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
@@ -748,16 +748,20 @@ public class SoulissDBHelper {
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-
             SoulissCommandDTO comment = new SoulissCommandDTO(cursor);
             cursor.moveToNext();
             short node = comment.getNodeId();
             short slot = comment.getSlot();
-            //SoulissTypical tgt = getSoulissTypical(node, slot);
-            //tgt.setCtx(context);
-            //tgt.getTypicalDTO().setNodeId(node);
-            //tgt.getTypicalDTO().setSlot(slot);
-            SoulissCommand adding = new SoulissCommand(context, comment);
+            SoulissCommand adding = null;
+            if (node > Constants.MASSIVE_NODE_ID) {
+                SoulissTypical tgt = getSoulissTypical(node, slot);
+                tgt.setCtx(context);
+                tgt.getTypicalDTO().setNodeId(node);
+                tgt.getTypicalDTO().setSlot(slot);
+                adding = new SoulissCommand( comment, tgt);
+            } else {
+                adding = new SoulissCommand( comment);
+            }
             ret.add(adding);
         }
         cursor.close();
@@ -784,7 +788,7 @@ public class SoulissDBHelper {
                 tgt.setCtx(context);
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
-                adding = new SoulissCommand(context, comment, tgt);
+                adding = new SoulissCommand( comment, tgt);
                 // comando massivo
             } else {
                 SoulissTypical tgt = new SoulissTypical(opts);
@@ -792,7 +796,7 @@ public class SoulissDBHelper {
                 assertEquals(true, (node == Constants.MASSIVE_NODE_ID));
                 // in caso di comando massivo, SLOT = TYPICAL
                 tgt.getTypicalDTO().setTypical(slot);
-                adding = new SoulissCommand(context, comment, tgt);
+                adding = new SoulissCommand( comment, tgt);
             }
             ret.add(adding);
         }
@@ -852,7 +856,7 @@ public class SoulissDBHelper {
             short node = comment.getNodeId();
             short slot = comment.getSlot();
             SoulissTypical parentTypical = getSoulissTypical(node, slot);
-            SoulissCommand adding = new SoulissCommand(soulissDataService, comment, parentTypical);
+            SoulissCommand adding = new SoulissCommand( comment, parentTypical);
             // adding.setParentTypical( getSoulissTypical(tgt) );
             ret.add(adding);
         }

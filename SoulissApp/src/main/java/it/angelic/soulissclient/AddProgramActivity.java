@@ -45,6 +45,9 @@ public class AddProgramActivity extends Activity {
     private SoulissDBHelper datasource = new SoulissDBHelper(this);
     private SoulissPreferenceHelper opzioni;
     private TextView tvcommand;
+    private SoulissCommand collected;
+    private Spinner outputNodeSpinner;
+    private Spinner outputTypicalSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +89,18 @@ public class AddProgramActivity extends Activity {
         SoulissClient.setBackground((ScrollView) findViewById(R.id.ScrollView01), getWindowManager());
 
     }
-
+    private void setFields() {
+        outputNodeSpinner.setSelection(collected.getCommandDTO().getNodeId());
+        //TODO
+    }
     @SuppressLint({"NewApi", "NewApi"})
     @Override
     protected void onStart() {
         super.onStart();
 
-        final Spinner outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
+        outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
         fillNodeSpinner(outputNodeSpinner);
-        final Spinner outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);
+        outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);
         final Spinner outputCommandSpinner = (Spinner) findViewById(R.id.spinnerCommand);
 
         final RadioButton radioTimed = (RadioButton) findViewById(R.id.RadioButtonTime);
@@ -118,6 +124,12 @@ public class AddProgramActivity extends Activity {
         final Button btCancel = (Button) findViewById(R.id.buttonInsertProgram);
         final Button btSave = (Button) findViewById(R.id.buttonCancelProgram);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.get("PROG") != null){
+            collected = (SoulissCommand) extras.get("PROG");
+            Log.i(Constants.TAG,"Found a SAVED PROGRAM");
+            setFields();
+        }
         /**
          * LISTENER SPINNER DESTINATARIO, IN TESTATA
          */
@@ -257,12 +269,13 @@ public class AddProgramActivity extends Activity {
                     dto.setNodeId(Constants.COMMAND_FAKE_SCENE);
                     dto.setSlot((short)toExec.getId());
 
-                    programToSave = new SoulissCommand(AddProgramActivity.this, dto);
+                    programToSave = new SoulissCommand(dto);
                 }else if (IToSave instanceof SoulissCommand) {
                     programToSave = (SoulissCommand) IToSave;
                 }
+                //sceneId solo per i comandi che appartengono a una scena
                 programToSave.getCommandDTO().setSceneId(null);
-
+                programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
                 if (programToSave == null) {
                     Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
                     return;
@@ -344,6 +357,8 @@ public class AddProgramActivity extends Activity {
         // start with timed schedule
         radioTimed.performClick();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

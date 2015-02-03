@@ -143,7 +143,7 @@ public class SoulissWidget extends AppWidgetProvider {
 
 					UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
 
-					final SoulissCommand cmdd = new SoulissCommand(context, tgt);
+					final SoulissCommand cmdd = new SoulissCommand( tgt);
 					cmdd.getCommandDTO().setCommand(cmd);
 					// se comando non vuoto
 					if (cmd != -1) {

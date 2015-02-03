@@ -51,19 +51,19 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
 		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
 
-		SoulissCommand t = new SoulissCommand(ctx, this);
+		SoulissCommand t = new SoulissCommand(this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T2n_CloseCmd);
 		t.getCommandDTO().setSlot(typicalDTO.getSlot());
 		t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(t);
 
-		SoulissCommand rset = new SoulissCommand(ctx, this);
+		SoulissCommand rset = new SoulissCommand(this);
 		rset.getCommandDTO().setCommand(Constants.Souliss_T2n_OpenCmd);
 		rset.getCommandDTO().setSlot(typicalDTO.getSlot());
 		rset.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(rset);
 
-		SoulissCommand rsest = new SoulissCommand(ctx, this);
+		SoulissCommand rsest = new SoulissCommand(this);
 		rsest.getCommandDTO().setCommand(Constants.Souliss_T2n_StopCmd);
 		rsest.getCommandDTO().setSlot(typicalDTO.getSlot());
 		rsest.getCommandDTO().setNodeId(typicalDTO.getNodeId());

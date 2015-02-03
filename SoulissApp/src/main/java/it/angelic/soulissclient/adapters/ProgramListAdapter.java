@@ -82,15 +82,13 @@ public class ProgramListAdapter extends BaseAdapter {
         StringBuilder info = new StringBuilder(holder.data.toString());
         if (holder.data.getParentTypical() != null) {
             SoulissTypical appo = holder.data.getParentTypical();
-
             // Descrizione programma
-
             info.append(" slot " + dto.getSlot());
             if ("".compareTo(appo.getNiceName()) != 0)
                 info.append(" (" + appo.getNiceName() + ")");
             if ("".compareTo(appo.getParentNode().getNiceName()) != 0)
                 info.append(" on " + appo.getParentNode().getNiceName());
-
+        }else{
 
         }
         holder.textCmd.setText(info.toString());

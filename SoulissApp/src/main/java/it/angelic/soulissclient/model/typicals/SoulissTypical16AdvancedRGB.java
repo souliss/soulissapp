@@ -43,37 +43,37 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
 		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
 
-		SoulissCommand t = new SoulissCommand(ctx, this);
+		SoulissCommand t = new SoulissCommand( this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
-		SoulissCommand ff = new SoulissCommand(ctx, this);
+		SoulissCommand ff = new SoulissCommand( this);
 		ff.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
 		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
 		
-		SoulissCommand tf = new SoulissCommand(ctx, this);
+		SoulissCommand tf = new SoulissCommand( this);
 		tf.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
 		tf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		tf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tf);
 		
-		SoulissCommand fRed = new SoulissCommand(ctx, this);
+		SoulissCommand fRed = new SoulissCommand( this);
 		fRed.getCommandDTO().setCommand(Constants.Souliss_T16_Red);
 		fRed.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		fRed.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(fRed);
 		
-		SoulissCommand fGreen = new SoulissCommand(ctx, this);
+		SoulissCommand fGreen = new SoulissCommand( this);
 		fGreen.getCommandDTO().setCommand(Constants.Souliss_T16_Green);
 		fGreen.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		fGreen.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(fGreen);
 		
-		SoulissCommand fBlue = new SoulissCommand(ctx, this);
+		SoulissCommand fBlue = new SoulissCommand(this);
 		fBlue.getCommandDTO().setCommand(Constants.Souliss_T16_Blue);
 		fBlue.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		fBlue.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
