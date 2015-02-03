@@ -329,8 +329,16 @@ public class ScenesDialogHelper {
 	public static void executeSceneDialog(final Activity preferencesActivity, final SoulissScene toExec,
 			final SoulissPreferenceHelper opt) {
 
-		progressDialog = ProgressDialog.show(preferencesActivity, "", "Executing Scene " + toExec.getNiceName());
-
+		//progressDialog = ProgressDialog.show(preferencesActivity, "", "Executing Scene " + toExec.getNiceName());
+        toExec.execute();
+        preferencesActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(preferencesActivity,
+                        "Execution of Scene " + toExec.toString() + " complete!", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+        /*
 		new Thread() {
 
 			public void run() {
@@ -340,32 +348,10 @@ public class ScenesDialogHelper {
 				ArrayList<SoulissCommand> gino = toExec.getCommandArray();
 				// JSONHelper.setServer(ip);
 				try {
+
 					for (final SoulissCommand soulissCommand : gino) {
-						SoulissCommandDTO dto = soulissCommand.getCommandDTO();
-						if (soulissCommand.getCommandDTO().getType() == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
-							String intero = Long.toHexString(dto.getCommand());
-							String[] laCosa =  splitStringEvery(intero, 2);
-							for (int i = 0; i < laCosa.length; i++) {
-								laCosa[i] = "0x" + laCosa[i];
-							}
-							//split the command if longer
-							UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), opt, laCosa);
-							
-							//UDPHelper.issueMassiveCommand(""+Constants.Souliss_T16, prefs,""+val, "" + r, ""+ g, "" + b);
-						} else {// COMANDO SINGOLO
-							String start = Long.toHexString(dto.getCommand());
-							String[] laCosa = splitStringEvery(start, 2);
-							// String[] laCosa = start.split("(?<=\\G..)");
+						soulissCommand.execute();
 
-							for (int i = 0; i < laCosa.length; i++) {
-								laCosa[i] = "0x" + laCosa[i];
-							}
-
-							UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
-									String.valueOf(dto.getSlot()), opt, soulissCommand.getCommandDTO().getType(),
-									// pura magia della decode
-									laCosa);
-						}
 						preferencesActivity.runOnUiThread(new Runnable() {
 							public void run() {
 								if (soulissCommand.getCommandDTO().getType() != Constants.COMMAND_MASSIVE)
@@ -384,13 +370,7 @@ public class ScenesDialogHelper {
 
 					}
 
-					preferencesActivity.runOnUiThread(new Runnable() {
-						public void run() {
-							Toast.makeText(preferencesActivity,
-									"Execution of Scene " + toExec.toString() + " complete!", Toast.LENGTH_SHORT)
-									.show();
-						}
-					});
+
 				} catch (Exception e) {
 					Log.e(ScenesDialogHelper.class.getName(), e.getMessage(), e);
 				}
@@ -398,7 +378,7 @@ public class ScenesDialogHelper {
 
 			}
 
-		}.start();
+		}.start();*/
 
 	}
 

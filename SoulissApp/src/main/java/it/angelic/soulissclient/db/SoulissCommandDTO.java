@@ -10,14 +10,14 @@ import android.database.Cursor;
 public class SoulissCommandDTO implements Serializable {
 
 	private static final long serialVersionUID = 1621944596010487586L;
-	Long commandId;
-	short nodeId;
-	short slot;
-	Calendar scheduledTime;
-	Calendar executedTime;
-	long command;
-	Integer sceneId;
-	int interval;
+    private Long commandId;
+    private short nodeId;
+    private short slot;
+    private Calendar scheduledTime;
+    private Calendar executedTime;
+    private long command;
+    private Integer sceneId;
+    private int interval;
 	//see constants COMMAND_*
 	int type;
 
@@ -59,6 +59,7 @@ public class SoulissCommandDTO implements Serializable {
 		values.put(SoulissDB.COLUMN_COMMAND_SLOT, slot);
 		values.put(SoulissDB.COLUMN_COMMAND_INPUT, command);
 		values.put(SoulissDB.COLUMN_COMMAND_TYPE, type);
+        values.put(SoulissDB.COLUMN_COMMAND_SCENEID, sceneId);
 		if (scheduledTime != null)
 		values.put(SoulissDB.COLUMN_COMMAND_SCHEDTIME, scheduledTime.getTime().getTime());
 		if (executedTime != null)
@@ -67,7 +68,7 @@ public class SoulissCommandDTO implements Serializable {
 		// values.put(SoulissDB.COLUMN_EXECTIME, null);
 		if (interval != 0)
 			values.put(SoulissDB.COLUMN_COMMAND_SCHEDTIME_INTERVAL, interval);
-		values.put(SoulissDB.COLUMN_COMMAND_SCENEID, sceneId);
+
 		long upd;
 		if (commandId != null) {
 			upd = SoulissDBHelper.getDatabase().update(SoulissDB.TABLE_COMMANDS, values,
@@ -79,7 +80,7 @@ public class SoulissCommandDTO implements Serializable {
 		return upd;
 	}
 
-	public long getProgramId() {
+	public long getCommandId() {
 		return commandId;
 	}
 

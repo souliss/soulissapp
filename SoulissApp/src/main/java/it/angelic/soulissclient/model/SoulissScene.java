@@ -1,11 +1,14 @@
 package it.angelic.soulissclient.model;
 
+import android.util.Log;
+
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SoulissScene implements Serializable, ISoulissObject {
+public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecutable {
 
 
 	private static final long serialVersionUID = 375896210748961219L;
@@ -60,4 +63,20 @@ public class SoulissScene implements Serializable, ISoulissObject {
 	}
 
 
+    @Override
+    public void execute() {
+        new Thread(){public void run() {
+            for (final SoulissCommand soulissCommand : commandArray) {
+                Log.w(Constants.TAG,"EXECUTING SCENE Command:"+ soulissCommand.toString());
+                soulissCommand.execute();
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }}.start();
+
+    }
 }

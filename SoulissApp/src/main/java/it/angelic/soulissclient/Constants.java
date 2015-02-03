@@ -34,6 +34,7 @@ public class Constants {
 	public static final int COMMAND_TRIGGERED = 3;
 	public static final int COMMAND_SINGLE = 4;
 	public static final int COMMAND_MASSIVE = 5;
+    public static final short COMMAND_FAKE_SCENE = -2;
 
 	public static final int MASSIVE_NODE_ID = -1;
 	public static final int CONNECTION_NONE = -1;

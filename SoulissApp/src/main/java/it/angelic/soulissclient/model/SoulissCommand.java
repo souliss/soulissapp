@@ -2,14 +2,20 @@ package it.angelic.soulissclient.model;
 
 import static junit.framework.Assert.assertEquals;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.typicals.Constants;
+import it.angelic.soulissclient.net.UDPHelper;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import android.content.Context;
+import android.util.Log;
 
-public class SoulissCommand implements Serializable {
+public class SoulissCommand implements Serializable , ISoulissExecutable{
 
 	private static final long serialVersionUID = -918392561828980547L;
 	private SoulissCommandDTO commandDTO;
@@ -110,6 +116,9 @@ public class SoulissCommand implements Serializable {
 	@Override
 	public String toString() {
 		short typical;
+        if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
+            return "Scene execution";
+        }
 		if (commandDTO.getType() == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
 			// comando massivo
 			typical = commandDTO.getSlot();
@@ -208,6 +217,8 @@ public class SoulissCommand implements Serializable {
 		} else
 			resId = R.string.Souliss_emptycmd_desc;
 
+        if (ctx == null)
+            return "WTF";
 		return this.ctx.getString(resId);
 	}
 
@@ -223,4 +234,52 @@ public class SoulissCommand implements Serializable {
 		this.ctx = ctx;
 	}
 
+    @Override
+    public void execute() {
+        SoulissCommandDTO dto = getCommandDTO();
+        if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
+            int sceneId = dto.getSlot();
+            SoulissDBHelper db = new SoulissDBHelper(ctx);
+            SoulissScene casino = db.getScenes(ctx,sceneId);
+            casino.execute();
+            return;
+        }
+
+        Calendar now = Calendar.getInstance();
+        if (dto.getType() == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
+            String intero = Long.toHexString(dto.getCommand());
+            String[] laCosa =  ScenesDialogHelper.splitStringEvery(intero, 2);
+            for (int i = 0; i < laCosa.length; i++) {
+                laCosa[i] = "0x" + laCosa[i];
+            }
+            //split the command if longer
+            UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), SoulissClient.getOpzioni(), laCosa);
+
+            //UDPHelper.issueMassiveCommand(""+Constants.Souliss_T16, prefs,""+val, "" + r, ""+ g, "" + b);
+        }else if (getType() == it.angelic.soulissclient.Constants.COMMAND_TIMED
+                && now.after(getCommandDTO().getScheduledTime())) {
+            // esegui comando
+            Log.w(Constants.TAG, "issuing command: " + toString());
+            UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
+            getCommandDTO().setExecutedTime(now);
+
+        }else if (getType() == it.angelic.soulissclient.Constants.COMMAND_COMEBACK_CODE) {
+            Log.w(Constants.TAG, "issuing COMEBACK command: " + toString());
+            UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
+            getCommandDTO().setExecutedTime(now);
+            getCommandDTO().setSceneId(null);
+        } else {// COMANDO SINGOLO
+            String start = Long.toHexString(dto.getCommand());
+            String[] laCosa = ScenesDialogHelper.splitStringEvery(start, 2);
+            // String[] laCosa = start.split("(?<=\\G..)");
+            for (int i = 0; i < laCosa.length; i++) {
+                laCosa[i] = "0x" + laCosa[i];
+            }
+
+            UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
+                    String.valueOf(dto.getSlot()), SoulissClient.getOpzioni(), dto.getType(),
+                    // pura magia della decode
+                    laCosa);
+        }
+    }
 }

@@ -147,7 +147,7 @@ public class SoulissWidget extends AppWidgetProvider {
 					cmdd.getCommandDTO().setCommand(cmd);
 					// se comando non vuoto
 					if (cmd != -1) {
-						final String res = UDPHelper.issueSoulissCommand(cmdd, opzioni);
+						cmdd.execute();
 					}
 				}
 			}).start();
