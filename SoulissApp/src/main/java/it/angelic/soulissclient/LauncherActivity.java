@@ -45,6 +45,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -332,19 +333,33 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                LauncherActivity.this.startActivity(myIntent);
+               // myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
+                                soulissSceneBtn,   // The view which starts the transition
+                                "helloScenes"    // The transitionName of the view we’re transitioning to
+                        );
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+
+
+               // LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
-        soulissSceneBtn.setOnClickListener(simpleOnClickListener2);
+       soulissSceneBtn.setOnClickListener(simpleOnClickListener2);
 
 		/* PROGRAMS */
         OnClickListener simpleOnClickListenerProgr = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, ProgramListActivity.class);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                LauncherActivity.this.startActivity(myIntent);
+                //myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
+                                programsActivity,   // The view which starts the transition
+                                "helloPrograms"    // The transitionName of the view we’re transitioning to
+                        );
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+                //LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -355,7 +370,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, NodesListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                LauncherActivity.this.startActivity(myIntent);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
+                                soulissManualBtn,   // The view which starts the transition
+                                "helloManual"    // The transitionName of the view we’re transitioning to
+                        );
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+                //LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };

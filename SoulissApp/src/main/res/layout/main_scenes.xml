@@ -11,10 +11,10 @@
         android:id="@+id/containerlistaScenes"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:transitionName="helloScenes"
         android:baselineAligned="false"
         android:orientation="vertical"
         android:weightSum="3">
-
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
@@ -54,7 +54,6 @@
                 android:id="@+id/ListViewListaScenes"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
                 android:layout_below="@id/TextViewScenes"
                 android:background="@drawable/item_selector"
                 android:cacheColorHint="@color/trans_black"
@@ -79,7 +78,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"

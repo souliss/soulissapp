@@ -9,6 +9,7 @@
     <RelativeLayout
         android:id="@+id/containerlistaProgrammi"
         android:layout_width="match_parent"
+        android:transitionName="helloPrograms"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 

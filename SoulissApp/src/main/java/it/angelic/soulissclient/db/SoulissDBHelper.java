@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.db;
 
+import static it.angelic.soulissclient.Constants.MASSIVE_NODE_ID;
 import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertEquals;
 
@@ -758,9 +759,9 @@ public class SoulissDBHelper {
                 tgt.setCtx(context);
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
-                adding = new SoulissCommand( comment, tgt);
+                adding = new SoulissCommand(comment, tgt);
             } else {
-                adding = new SoulissCommand( comment);
+                adding = new SoulissCommand(comment);
             }
             ret.add(adding);
         }
@@ -788,7 +789,7 @@ public class SoulissDBHelper {
                 tgt.setCtx(context);
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
-                adding = new SoulissCommand( comment, tgt);
+                adding = new SoulissCommand(comment, tgt);
                 // comando massivo
             } else {
                 SoulissTypical tgt = new SoulissTypical(opts);
@@ -796,7 +797,7 @@ public class SoulissDBHelper {
                 assertEquals(true, (node == Constants.MASSIVE_NODE_ID));
                 // in caso di comando massivo, SLOT = TYPICAL
                 tgt.getTypicalDTO().setTypical(slot);
-                adding = new SoulissCommand( comment, tgt);
+                adding = new SoulissCommand(comment, tgt);
             }
             ret.add(adding);
         }
@@ -855,9 +856,12 @@ public class SoulissDBHelper {
             cursor.moveToNext();
             short node = comment.getNodeId();
             short slot = comment.getSlot();
-            SoulissTypical parentTypical = getSoulissTypical(node, slot);
-            SoulissCommand adding = new SoulissCommand( comment, parentTypical);
-            // adding.setParentTypical( getSoulissTypical(tgt) );
+            SoulissCommand adding;
+            if (node > MASSIVE_NODE_ID) {
+                SoulissTypical parentTypical = getSoulissTypical(node, slot);
+                adding = new SoulissCommand(comment, parentTypical);
+            } else
+                adding = new SoulissCommand(comment);
             ret.add(adding);
         }
         cursor.close();
