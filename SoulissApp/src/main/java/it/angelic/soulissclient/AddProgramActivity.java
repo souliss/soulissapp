@@ -42,7 +42,10 @@ import android.widget.ToggleButton;
 
 
 public class AddProgramActivity extends Activity {
+    //arrays per spinner
     private SoulissNode[] nodiArray;
+    private SoulissNode[] nodiArrayWithExtra;
+
     private SoulissDBHelper datasource = new SoulissDBHelper(this);
     private SoulissPreferenceHelper opzioni;
     private TextView tvcommand;
@@ -51,9 +54,15 @@ public class AddProgramActivity extends Activity {
     private Spinner outputTypicalSpinner;
     private RadioButton radioTimed;
     private RadioButton radioPositional;
-    private RadioButton radioSensorial;
+    private RadioButton radioTrigger;
     private ToggleButton togglehomeaway;
     private LinkedList<SoulissScene> scenes;
+    private Spinner outputCommandSpinner;
+    private TimePicker commandTimePicker;
+    private CheckBox checkboxRecursive;
+    private int[] spinnerArrVal;
+    private Spinner commandSpinnerInterval;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +82,7 @@ public class AddProgramActivity extends Activity {
 
         datasource = new SoulissDBHelper(this);
         datasource.open();
-
+        spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
         ImageView nodeic = (ImageView) findViewById(R.id.timed_icon);
         tvcommand = (TextView) findViewById(R.id.textViewCommand);
         nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
@@ -86,16 +95,27 @@ public class AddProgramActivity extends Activity {
 
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();
-        //AGGIUNGO fake
+        nodiArray = new SoulissNode[goer.size()];
+        nodiArray = goer.toArray(nodiArray);
+        //Aggiungo massivo
+        SoulissNode massive = new SoulissNode((short) Constants.COMMAND_MASSIVE);// MASSIVO
+        massive.setName(getString(R.string.allnodes));
+        massive.setTypicals(datasource.getUniqueTypicals(massive));
+        goer.add(massive);
+        //AGGIUNGO scene
         SoulissNode fake = new SoulissNode((short) Constants.COMMAND_FAKE_SCENE);// MASSIVO
         fake.setName(getString(R.string.scenes_title));
         goer.add(fake);
-        nodiArray = new SoulissNode[goer.size()];
-        nodiArray = goer.toArray(nodiArray);
+
+        nodiArrayWithExtra = new SoulissNode[goer.size()];
+        nodiArrayWithExtra = goer.toArray(nodiArrayWithExtra);
         SoulissClient.setBackground((ScrollView) findViewById(R.id.ScrollView01), getWindowManager());
 
     }
 
+    /**
+     * Carica gli spinner ed i widget ai valori salvati in precedenza
+     */
     private void setFields() {
         if (collected == null)
             return;
@@ -105,29 +125,81 @@ public class AddProgramActivity extends Activity {
             //tipici sono scene
             int sceneid = collected.getCommandDTO().getSlot();
             Log.w(Constants.TAG, "Restoring scene ID" + sceneid);
-            setTypicalSpinner(outputTypicalSpinner, nodiArray[nodiArray.length - 1]);
-           int tot = outputTypicalSpinner.getCount();
-            for (int i=0;i<tot;i++){
-                SoulissScene now = (SoulissScene)outputTypicalSpinner.getItemAtPosition(i);
-                if (now.getId() == sceneid)
+            setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[nodiArrayWithExtra.length - 1]);
+            int tot = outputTypicalSpinner.getCount();
+            for (int i = 0; i < tot; i++) {
+                SoulissScene now = (SoulissScene) outputTypicalSpinner.getItemAtPosition(i);
+                if (now.getId() == sceneid) {
+                    //seleziono la scena da eseguire
                     outputTypicalSpinner.setSelection(i);
+                    Log.i(Constants.TAG, "SELECTED:" + i);
+                }
             }
-
-            outputTypicalSpinner.setSelection(sceneid);
+            tvcommand.setVisibility(View.INVISIBLE);
+            //   outputTypicalSpinner.setSelection(sceneid);
         } else if (collected.getCommandDTO().getNodeId() == Constants.MASSIVE_NODE_ID) {
             //get last but one
             outputNodeSpinner.setSelection(outputNodeSpinner.getAdapter().getCount() - 2);
-        } else {
+            //TODO selezione comando
+        } else {//reload nodo, tipico e comando
             outputNodeSpinner.setSelection(collected.getCommandDTO().getNodeId());
+            setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[collected.getCommandDTO().getNodeId()]);
+            int tot = outputTypicalSpinner.getCount();
+            for (int i = 0; i < tot; i++) {
+                SoulissTypical now = (SoulissTypical) outputTypicalSpinner.getItemAtPosition(i);
+                if (now.getTypicalDTO().getSlot() == collected.getCommandDTO().getSlot()) {
+                    //seleziono la scena da eseguire
+                    outputTypicalSpinner.setSelection(i);
+                    Log.i(Constants.TAG, "SELECTED TYP:" + i);
+                    fillCommandSpinner(outputCommandSpinner, now);
+                    break;
+                }
+            }
+            tot = outputCommandSpinner.getCount();
+            for (int t = 0; t < tot; t++) {
+                SoulissCommand now = (SoulissCommand) outputCommandSpinner.getItemAtPosition(t);
+                if (now.getCommandDTO().getCommand() == collected.getCommandDTO().getCommand()) {
+                    //seleziono la scena da eseguire
+                    outputCommandSpinner.setSelection(t);
+                    Log.i(Constants.TAG, "SELECTED COMMAND POS:" + t);
+                    break;
+                }
+            }
+
         }
         //SETTA TYPE
         if (collected.getType() == Constants.COMMAND_TIMED) {
-            //TODO setta orario
+            Calendar sched = collected.getCommandDTO().getScheduledTime();
+            commandTimePicker.setCurrentHour(sched.get(Calendar.HOUR_OF_DAY));
+            commandTimePicker.setCurrentMinute(sched.get(Calendar.MINUTE));
+
+            if (collected.getCommandDTO().getInterval() > 0) {
+                int j = 0;
+                for (int spi : spinnerArrVal) {
+                    if (collected.getCommandDTO().getInterval() == spi)
+                        commandSpinnerInterval.setSelection(j);
+                    j++;
+                }
+                checkboxRecursive.setChecked(true);
+            }
+
         } else if (collected.getType() == Constants.COMMAND_COMEBACK_CODE || collected.getType() == Constants.COMMAND_GOAWAY_CODE) {
             radioPositional.performClick();
             togglehomeaway.setChecked(collected.getType() == Constants.COMMAND_COMEBACK_CODE);
         } else if (collected.getType() == Constants.COMMAND_TRIGGERED) {
-            radioSensorial.performClick();
+            radioTrigger.performClick();
+            //TODO carica trigger
+            /*SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
+                    // campi trigger
+                    SoulissTriggerDTO trigger = new SoulissTriggerDTO();
+                    trigger.setInputNodeId(trig.getTypicalDTO().getNodeId());
+
+                    trigger.setInputSlot(trig.getTypicalDTO().getSlot());
+                    trigger.setOp(buttComparator.getText().toString());
+                    trigger.setCommandId(programToSave.getCommandDTO().getCommandId());
+                    trigger.setThreshVal(Integer.parseInt(et.getText().toString()));
+
+                    trigger.persist(datasource);*/
         }
     }
 
@@ -137,18 +209,18 @@ public class AddProgramActivity extends Activity {
         super.onStart();
         scenes = datasource.getScenes(this);
         outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
-        fillNodeSpinner(outputNodeSpinner);
+        fillNodeSpinnerWithExtra(outputNodeSpinner);
         outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);
-        final Spinner outputCommandSpinner = (Spinner) findViewById(R.id.spinnerCommand);
+        outputCommandSpinner = (Spinner) findViewById(R.id.spinnerCommand);
 
         radioTimed = (RadioButton) findViewById(R.id.RadioButtonTime);
         radioPositional = (RadioButton) findViewById(R.id.RadioButtonPosition);
-        radioSensorial = (RadioButton) findViewById(R.id.RadioButtonTriggered);
+        radioTrigger = (RadioButton) findViewById(R.id.RadioButtonTriggered);
         // time based
         final TextView textviewTimed = (TextView) findViewById(R.id.textviewtimed);
-        final CheckBox checkboxRecursive = (CheckBox) findViewById(R.id.checkBoxRecursive);
-        final TimePicker tp = (TimePicker) findViewById(R.id.timePicker);
-        final Spinner spinnerInterval = (Spinner) findViewById(R.id.spinnerRepeatEvery);
+        checkboxRecursive = (CheckBox) findViewById(R.id.checkBoxRecursive);
+        commandTimePicker = (TimePicker) findViewById(R.id.timePicker);
+        commandSpinnerInterval = (Spinner) findViewById(R.id.spinnerRepeatEvery);
         // position based
         final TextView textviewPositional = (TextView) findViewById(R.id.textViewInfoPos);
         togglehomeaway = (ToggleButton) findViewById(R.id.toggleButtonPosition);
@@ -166,9 +238,9 @@ public class AddProgramActivity extends Activity {
         /**
          * LISTENER SPINNER DESTINATARIO, IN TESTATA
          */
-       final OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
+        final OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                setTypicalSpinner(outputTypicalSpinner, nodiArray[pos]);
+                setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[pos]);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -179,7 +251,7 @@ public class AddProgramActivity extends Activity {
         final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // if (pos > 0) {
-                SoulissNode mynode = nodiArray[(int) outputNodeSpinner.getSelectedItemId()];
+                SoulissNode mynode = nodiArrayWithExtra[(int) outputNodeSpinner.getSelectedItemId()];
                 if (mynode.getId() > Constants.COMMAND_FAKE_SCENE) {
                     //le scene non hanno comandi
                     List<SoulissTypical> re = mynode
@@ -187,7 +259,7 @@ public class AddProgramActivity extends Activity {
 
                     fillCommandSpinner(outputCommandSpinner, re.get(pos));
                 } else {
-                    fillFakeCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
+                    fillSceneCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
                 }
             }
 
@@ -210,10 +282,10 @@ public class AddProgramActivity extends Activity {
             @Override
             public void onClick(View v) {
                 radioPositional.setChecked(false);
-                radioSensorial.setChecked(false);
+                radioTrigger.setChecked(false);
                 checkboxRecursive.setEnabled(true);
-                tp.setEnabled(true);
-                spinnerInterval.setEnabled(checkboxRecursive.isChecked());
+                commandTimePicker.setEnabled(true);
+                commandSpinnerInterval.setEnabled(checkboxRecursive.isChecked());
                 togglehomeaway.setEnabled(false);
                 triggeredTypicalSpinner.setEnabled(false);
                 triggeredNodeSpinner.setEnabled(false);
@@ -230,10 +302,10 @@ public class AddProgramActivity extends Activity {
             @Override
             public void onClick(View v) {
                 radioTimed.setChecked(false);
-                radioSensorial.setChecked(false);
+                radioTrigger.setChecked(false);
                 checkboxRecursive.setEnabled(false);
-                tp.setEnabled(false);
-                spinnerInterval.setEnabled(false);
+                commandTimePicker.setEnabled(false);
+                commandSpinnerInterval.setEnabled(false);
                 togglehomeaway.setEnabled(true);
                 triggeredTypicalSpinner.setEnabled(false);
                 triggeredNodeSpinner.setEnabled(false);
@@ -252,8 +324,8 @@ public class AddProgramActivity extends Activity {
                 radioTimed.setChecked(false);
                 radioPositional.setChecked(false);
                 checkboxRecursive.setEnabled(false);
-                tp.setEnabled(false);
-                spinnerInterval.setEnabled(false);
+                commandTimePicker.setEnabled(false);
+                commandSpinnerInterval.setEnabled(false);
                 togglehomeaway.setEnabled(false);
                 triggeredTypicalSpinner.setEnabled(true);
                 triggeredNodeSpinner.setEnabled(true);
@@ -264,12 +336,12 @@ public class AddProgramActivity extends Activity {
                 textviewTriggered.setEnabled(true);
             }
         };
-        radioSensorial.setOnClickListener(rw_radio_listener);
+        radioTrigger.setOnClickListener(rw_radio_listener);
         // Check box ricorsivo, Interlock
         checkboxRecursive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                spinnerInterval.setEnabled(isChecked);
+                commandSpinnerInterval.setEnabled(isChecked);
             }
         });
         /**
@@ -277,7 +349,7 @@ public class AddProgramActivity extends Activity {
          */
         OnItemSelectedListener lityp = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                setTypicalSpinner(triggeredTypicalSpinner, nodiArray[pos]);
+                setTypicalSpinner(triggeredTypicalSpinner, nodiArrayWithExtra[pos]);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -314,6 +386,8 @@ public class AddProgramActivity extends Activity {
                 } else if (IToSave instanceof SoulissCommand) {
                     programToSave = (SoulissCommand) IToSave;
                     //   programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
+                    programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
+                    programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
                 }
                 //sceneId solo per i comandi che appartengono a una scena
                 programToSave.getCommandDTO().setSceneId(null);
@@ -329,22 +403,20 @@ public class AddProgramActivity extends Activity {
                     Calendar baseNow = Calendar.getInstance();
 
                     // se l'ora e` gia passata, fai domani
-                    if (tp.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) < 0
-                            || (tp.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) == 0 && tp
+                    if (commandTimePicker.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) < 0
+                            || (commandTimePicker.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) == 0 && commandTimePicker
                             .getCurrentMinute().compareTo(baseNow.get(Calendar.MINUTE)) < 0)) {
                         baseNow.add(Calendar.DAY_OF_YEAR, 1);
                         Log.i(Constants.TAG, "Timed program delayed by one day");
                     }
-                    baseNow.set(Calendar.HOUR_OF_DAY, tp.getCurrentHour());
-                    baseNow.set(Calendar.MINUTE, tp.getCurrentMinute());
-                    // FIXME se scelgo un'ora precedente a quella attuale,
-                    // aggiungere un giorno
+                    baseNow.set(Calendar.HOUR_OF_DAY, commandTimePicker.getCurrentHour());
+                    baseNow.set(Calendar.MINUTE, commandTimePicker.getCurrentMinute());
                     programToSave.getCommandDTO().setType(Constants.COMMAND_TIMED);
                     programToSave.getCommandDTO().setScheduledTime(baseNow);
                     if (checkboxRecursive.isChecked()) {
-                        final int[] spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
+
                         programToSave.getCommandDTO().setInterval(
-                                spinnerArrVal[spinnerInterval.getSelectedItemPosition()]);
+                                spinnerArrVal[commandSpinnerInterval.getSelectedItemPosition()]);
                     }
                     // inserimento nuovo
                     intent.putExtra("returnedData", Constants.COMMAND_TIMED);
@@ -359,22 +431,23 @@ public class AddProgramActivity extends Activity {
                     // inserimento nuovo
 
 
-                } else if (radioSensorial.isChecked()) {// TRIGGER
+                } else if (radioTrigger.isChecked()) {// TRIGGER
                     SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
                     if (trig == null || trig.getTypicalDTO() == null || et.getText() == null
                             || "".compareTo(et.getText().toString()) == 0) {
-                        Toast.makeText(AddProgramActivity.this, "You must select an input trigger and threshold value",
+                        Toast.makeText(AddProgramActivity.this, getString(R.string.programs_warn_trigger_notset),
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
                     intent.putExtra("returnedData", Constants.COMMAND_TRIGGERED);
                     programToSave.getCommandDTO().setType(Constants.COMMAND_TRIGGERED);
                 }
-                // inserimento nuovo
+                // MERGE
                 if (collected != null)
                     programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
                 programToSave.getCommandDTO().persistCommand(datasource);
-                if (radioSensorial.isChecked()) {// TRIGGER
+
+                if (radioTrigger.isChecked()) {// TRIGGER
                     SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
                     // campi trigger
                     SoulissTriggerDTO trigger = new SoulissTriggerDTO();
@@ -439,9 +512,20 @@ public class AddProgramActivity extends Activity {
      *
      * @param tgt
      */
+    private void fillNodeSpinnerWithExtra(Spinner tgt) {
+        // spinner popolato in base nodeArray
+        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<SoulissNode>(this, android.R.layout.simple_spinner_item,
+                nodiArrayWithExtra);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        tgt.setAdapter(adapter);
+    }
+
+    /**
+     * Fills a spinner with nodes
+     *
+     * @param tgt
+     */
     private void fillNodeSpinner(Spinner tgt) {
-
-
         // spinner popolato in base nodeArray
         ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<SoulissNode>(this, android.R.layout.simple_spinner_item,
                 nodiArray);
@@ -506,7 +590,7 @@ public class AddProgramActivity extends Activity {
      * @param tgt Spinner da riempire
      * @param ref tipico da cui ottenere i comandi
      */
-    private void fillFakeCommandSpinner(Spinner tgt, SoulissScene ref) {
+    private void fillSceneCommandSpinner(Spinner tgt, SoulissScene ref) {
         tgt.setVisibility(View.INVISIBLE);
         tvcommand.setVisibility(View.INVISIBLE);
         ISoulissExecutable[] strArray = new SoulissScene[1];

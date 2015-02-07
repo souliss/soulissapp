@@ -269,5 +269,6 @@
     <string name="eula_title">Licença de Uso</string>
     <string name="eula_accept">Concordo</string>
     <string name="eula_refuse">Discordar</string>
+    <string name="programs_warn_trigger_notset">You must select an input trigger and threshold value</string>
 
 </resources>

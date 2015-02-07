@@ -231,16 +231,14 @@ public class SoulissCommand implements Serializable , ISoulissExecutable{
     public void execute() {
         SoulissCommandDTO dto = getCommandDTO();
         Context ctx = SoulissClient.getAppContext();
+        Calendar now = Calendar.getInstance();
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
             int sceneId = dto.getSlot();
             SoulissDBHelper db = new SoulissDBHelper(ctx);
             SoulissScene casino = db.getScenes(ctx,sceneId);
             casino.execute();
             return;
-        }
-
-        Calendar now = Calendar.getInstance();
-        if (dto.getType() == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
+        }else if (dto.getNodeId()  == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
             String intero = Long.toHexString(dto.getCommand());
             String[] laCosa =  ScenesDialogHelper.splitStringEvery(intero, 2);
             for (int i = 0; i < laCosa.length; i++) {
@@ -262,6 +260,11 @@ public class SoulissCommand implements Serializable , ISoulissExecutable{
             UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
             getCommandDTO().setExecutedTime(now);
             getCommandDTO().setSceneId(null);
+        }else if (getType() == it.angelic.soulissclient.Constants.COMMAND_GOAWAY_CODE) {
+            Log.w(Constants.TAG, "issuing GOAWAY command: " + toString());
+            UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
+            getCommandDTO().setExecutedTime(now);
+            getCommandDTO().setSceneId(null);
         } else {// COMANDO SINGOLO
             String start = Long.toHexString(dto.getCommand());
             String[] laCosa = ScenesDialogHelper.splitStringEvery(start, 2);
@@ -275,5 +278,18 @@ public class SoulissCommand implements Serializable , ISoulissExecutable{
                     // pura magia della decode
                     laCosa);
         }
+    }
+
+    public short getNodeId() {
+        return  commandDTO.getNodeId();
+    }
+
+
+    public short getSlot() {
+        return commandDTO.getSlot();
+    }
+
+    public long getCommand() {
+        return commandDTO.getCommand();
     }
 }

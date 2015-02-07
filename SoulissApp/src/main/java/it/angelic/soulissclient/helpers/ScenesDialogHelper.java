@@ -164,7 +164,7 @@ public class ScenesDialogHelper {
 		for (SoulissNode object : goer) {
 			nodiArray[q++] = object;
 		}
-		SoulissNode fake = new SoulissNode((short) -1);// MASSIVO
+		SoulissNode fake = new SoulissNode((short) Constants.MASSIVE_NODE_ID);// MASSIVO
 		fake.setName(context.getString(R.string.allnodes));
 		fake.setTypicals(datasource.getUniqueTypicals(fake));
 		nodiArray[q] = fake;
@@ -228,7 +228,7 @@ public class ScenesDialogHelper {
 						// collega il comando alla scena
 						tull.getCommandDTO().setSceneId(targetScene.getId());
 
-						if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getId() == -1) {// MASSIVE
+						if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getId() == Constants.MASSIVE_NODE_ID) {// MASSIVE
 							SoulissTypical model = (SoulissTypical) outputTypicalSpinner.getSelectedItem();
 							if (model == null) {
 								Toast.makeText(context, "Typical not selected", Toast.LENGTH_SHORT).show();

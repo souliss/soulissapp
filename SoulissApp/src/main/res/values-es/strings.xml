@@ -269,5 +269,6 @@
     <string name="eula_title">Licencia de uso</string>
     <string name="eula_accept">Aceptar</string>
     <string name="eula_refuse">Rechazar</string>
+    <string name="programs_warn_trigger_notset">You must select an input trigger and threshold value</string>
 
 </resources>

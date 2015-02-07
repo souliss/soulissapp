@@ -14,6 +14,7 @@ import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -238,7 +239,7 @@ public class UDPSoulissDecoder {
                 }
             }
             for (SoulissTrigger soulissTrigger : triggers) {
-                SoulissCommandDTO command = soulissTrigger.getCommandDto();
+                SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto());
                 SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
                 SoulissTypical source = refreshedNodes.get(src.getInputNodeId()).getTypical(src.getInputSlotlot());
                 // SoulissTypical target =
@@ -256,25 +257,22 @@ public class UDPSoulissDecoder {
                     if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > src.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
-                        UDPHelper.issueSoulissCommand("" + command.getNodeId(), "" + command.getSlot(),
-                                SoulissClient.getOpzioni(), command.getType(), "" + command.getCommand());
-                        command.setExecutedTime(now);
+                        command.execute();
+                        command.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < src.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
-                        UDPHelper.issueSoulissCommand("" + command.getNodeId(), "" + command.getSlot(),
-                                SoulissClient.getOpzioni(), command.getType(), "" + command.getCommand());
+                        command.execute();
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == src.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
-                        UDPHelper.issueSoulissCommand("" + command.getNodeId(), "" + command.getSlot(),
-                                SoulissClient.getOpzioni(), command.getType(), "" + command.getCommand());
+                        command.execute();
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
