@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -71,11 +72,13 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.main_programs);
 		setTitle(getString(R.string.app_name) + " - " + getString(R.string.programs_title));
 		tt = (TextView) findViewById(R.id.TextViewTypicals);

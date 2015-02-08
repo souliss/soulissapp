@@ -336,7 +336,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 				par2 = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
 
 				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-						+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, par1, par2);
+						+ collected.getTypicalDTO().getSlot(), opzioni,  par1, par2);
 			}
 		};
 

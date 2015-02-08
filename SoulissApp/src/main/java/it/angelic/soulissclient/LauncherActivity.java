@@ -25,6 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.animation.AnimatorSet;
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -52,12 +53,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -195,6 +199,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
         else

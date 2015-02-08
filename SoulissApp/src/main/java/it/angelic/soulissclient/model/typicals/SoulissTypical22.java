@@ -112,7 +112,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T2n_CloseCmd));
 					}
 				};
@@ -126,7 +126,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T2n_OpenCmd));
 					}
 				};
@@ -140,7 +140,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T2n_StopCmd));
 					}
 				};

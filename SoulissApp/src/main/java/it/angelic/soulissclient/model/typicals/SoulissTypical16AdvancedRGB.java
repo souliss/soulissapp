@@ -132,7 +132,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE, String.valueOf(Constants.Souliss_T1n_OnCmd));
+									prefs, String.valueOf(Constants.Souliss_T1n_OnCmd));
 					}
 				};
 
@@ -149,7 +149,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE, String.valueOf(Constants.Souliss_T1n_OffCmd));
+									prefs, String.valueOf(Constants.Souliss_T1n_OffCmd));
 					}
 				};
 
@@ -196,7 +196,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 							+ g, "" + b);
 				else
 				UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
-						+ getTypicalDTO().getSlot(), prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE, "" + val, "" + r, ""
+						+ getTypicalDTO().getSlot(), prefs,  "" + val, "" + r, ""
 						+ g, "" + b);
 			}
 		};

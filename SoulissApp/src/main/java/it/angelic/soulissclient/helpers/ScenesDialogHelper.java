@@ -235,7 +235,7 @@ public class ScenesDialogHelper {
 								return;
 							}
 							tull.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
-							tull.getCommandDTO().setType(Constants.COMMAND_MASSIVE);
+							//tull.getCommandDTO().setType(Constants.COMMAND_MASSIVE);
 							tull.getCommandDTO().setSlot(model.getTypicalDTO().getTypical());
 						} else
 							tull.getCommandDTO().setType(Constants.COMMAND_SINGLE);

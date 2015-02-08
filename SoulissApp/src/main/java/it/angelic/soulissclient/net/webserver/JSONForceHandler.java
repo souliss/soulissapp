@@ -61,7 +61,7 @@ public class JSONForceHandler implements HttpRequestHandler {
 				public void writeTo(final OutputStream outstream) throws IOException {
 					OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
 					//Log.v(it.angelic.soulissclient.Constants.TAG,writeJSON(target));
-					writer.write(UDPHelper.issueSoulissCommand(message, slot, SoulissClient.getOpzioni(), it.angelic.soulissclient.Constants.COMMAND_SINGLE, parsed));
+					writer.write(UDPHelper.issueSoulissCommand(message, slot, SoulissClient.getOpzioni(), parsed));
 					writer.flush();
 				}
 			});

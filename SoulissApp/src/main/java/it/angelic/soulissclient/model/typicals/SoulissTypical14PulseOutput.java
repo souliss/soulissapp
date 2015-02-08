@@ -81,8 +81,7 @@ public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoul
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
-								String.valueOf(Constants.Souliss_T1n_OnCmd));
+								prefs, String.valueOf(Constants.Souliss_T1n_OnCmd));
 
 					}
 				};

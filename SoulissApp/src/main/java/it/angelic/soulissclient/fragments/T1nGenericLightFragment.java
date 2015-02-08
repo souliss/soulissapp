@@ -198,7 +198,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 						else
 							UDPHelper.issueSoulissCommand("" + collected.getTypicalDTO().getNodeId(), ""
 									+ collected.getTypicalDTO().getSlot(), opzioni,
-									it.angelic.soulissclient.Constants.COMMAND_SINGLE,
 									String.valueOf(Souliss_T1n_AutoCmd));
 					}
 				};
@@ -276,7 +275,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 							+ (Souliss_T1n_OffCmd));
 				else
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
+							+ collected.getTypicalDTO().getSlot(), opzioni,""
 							+ (Souliss_T1n_OffCmd));
 
 			}
@@ -299,7 +298,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 							+ (Souliss_T1n_OnCmd + i));
 				else
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-							+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, ""
+							+ collected.getTypicalDTO().getSlot(), opzioni, ""
 							+ (Souliss_T1n_OnCmd + i));
 
 			}

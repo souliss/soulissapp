@@ -39,7 +39,7 @@ public class UDPHelper {
 	 * @param cmd
 	 * @return TODO output string
 	 */
-	public static String issueSoulissCommand(String id, String slot, SoulissPreferenceHelper prefs, int type,
+	public static String issueSoulissCommand(String id, String slot, SoulissPreferenceHelper prefs,
 			String... cmd) {
 		InetAddress serverAddr;
 		DatagramSocket sender = null;
@@ -50,7 +50,7 @@ public class UDPHelper {
 
 			sender = getSenderSocket(serverAddr);
 			ArrayList<Byte> buf;
-			if (type == it.angelic.soulissclient.Constants.COMMAND_MASSIVE) {
+			if (id.equals(""+it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) ){
 				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, slot, cmd),
 						prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
 			} else {
@@ -87,7 +87,7 @@ public class UDPHelper {
 		SoulissCommandDTO dto = in.getCommandDTO();
 
 		String ret = issueSoulissCommand(String.valueOf(dto.getNodeId()), String.valueOf(dto.getSlot()), prefs,
-				dto.getType(), String.valueOf(dto.getCommand()));
+				 String.valueOf(dto.getCommand()));
 		return ret;
 
 	}

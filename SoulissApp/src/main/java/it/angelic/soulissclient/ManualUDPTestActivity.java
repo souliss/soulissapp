@@ -235,7 +235,7 @@ public class ManualUDPTestActivity extends Activity {
 					public void run() {
 						// ISSUE SOULISS UDP command
 						final String cmdOutput = UDPHelper.issueSoulissCommand(idspinner.getSelectedItem().toString(),
-								slotspinner.getSelectedItem().toString(), opzioni, Constants.COMMAND_SINGLE, editCmd
+								slotspinner.getSelectedItem().toString(), opzioni,  editCmd
 										.getText().toString());
 						//final LinearLayout OutputLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutOutput);
 

@@ -125,7 +125,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T1n_OnCmd));
 					}
 				};
@@ -142,7 +142,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T1n_OffCmd));
 					}
 				};
@@ -162,7 +162,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T1n_ToogleCmd));
 						// cmd.setText("Souliss command sent");
 					}

@@ -16,9 +16,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,7 +78,6 @@ public class AddProgramActivity extends Activity {
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_addprogram);
-
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(this);
         }
@@ -98,7 +100,7 @@ public class AddProgramActivity extends Activity {
         nodiArray = new SoulissNode[goer.size()];
         nodiArray = goer.toArray(nodiArray);
         //Aggiungo massivo
-        SoulissNode massive = new SoulissNode((short) Constants.COMMAND_MASSIVE);// MASSIVO
+        SoulissNode massive = new SoulissNode((short) Constants.MASSIVE_NODE_ID);// MASSIVO
         massive.setName(getString(R.string.allnodes));
         massive.setTypicals(datasource.getUniqueTypicals(massive));
         goer.add(massive);
@@ -112,6 +114,7 @@ public class AddProgramActivity extends Activity {
         SoulissClient.setBackground((ScrollView) findViewById(R.id.ScrollView01), getWindowManager());
 
     }
+
 
     /**
      * Carica gli spinner ed i widget ai valori salvati in precedenza
@@ -386,8 +389,8 @@ public class AddProgramActivity extends Activity {
                 } else if (IToSave instanceof SoulissCommand) {
                     programToSave = (SoulissCommand) IToSave;
                     //   programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
-                    programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
-                    programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
+                    //programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
+                    //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
                 }
                 //sceneId solo per i comandi che appartengono a una scena
                 programToSave.getCommandDTO().setSceneId(null);
@@ -537,7 +540,7 @@ public class AddProgramActivity extends Activity {
      * popola spinner tipici in base al nodo
      */
     private void setTypicalSpinner(Spinner tgt, SoulissNode ref) {
-        if (ref.getId() > Constants.MASSIVE_NODE_ID) {//no fake
+        if (ref.getId() > Constants.COMMAND_FAKE_SCENE) {
             try {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
                 ref.getActiveTypicals(this).toArray(strArray);
@@ -560,6 +563,8 @@ public class AddProgramActivity extends Activity {
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             tgt.setAdapter(adapter);
+        } else{
+            Log.e(Constants.TAG,"UNPREDICTED");
         }
     }
 

@@ -22,164 +22,164 @@ import android.widget.TextView;
 
 public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements ISoulissTypical {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4292781263370980816L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4292781263370980816L;
 
-	public SoulissTypical12DigitalOutputAuto(SoulissPreferenceHelper fg) {
-		super(fg);
+    public SoulissTypical12DigitalOutputAuto(SoulissPreferenceHelper fg) {
+        super(fg);
 
-	}
+    }
 
-	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
-		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+    @Override
+    public ArrayList<SoulissCommand> getCommands(Context ctx) {
+        // ritorna le bozze dei comandi, da riempire con la schermata addProgram
+        ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
 
-		SoulissCommand t = new SoulissCommand( this);
-		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
-		t.getCommandDTO().setSlot(typicalDTO.getSlot());
-		t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
-		ret.add(t);
+        SoulissCommand t = new SoulissCommand(this);
+        t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
+        t.getCommandDTO().setSlot(typicalDTO.getSlot());
+        t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        ret.add(t);
 
-		SoulissCommand tr = new SoulissCommand( this);
-		tr.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
-		tr.getCommandDTO().setSlot(typicalDTO.getSlot());
-		tr.getCommandDTO().setNodeId(typicalDTO.getNodeId());
-		ret.add(tr);
-		
-		SoulissCommand tj = new SoulissCommand( this);
-		tj.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
-		tj.getCommandDTO().setSlot(typicalDTO.getSlot());
-		tj.getCommandDTO().setNodeId(typicalDTO.getNodeId());
-		ret.add(tj);
+        SoulissCommand tr = new SoulissCommand(this);
+        tr.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
+        tr.getCommandDTO().setSlot(typicalDTO.getSlot());
+        tr.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        ret.add(tr);
 
-		SoulissCommand td = new SoulissCommand( this);
-		td.getCommandDTO().setCommand(Constants.Souliss_T1n_AutoCmd);
-		td.getCommandDTO().setSlot(typicalDTO.getSlot());
-		td.getCommandDTO().setNodeId(typicalDTO.getNodeId());
-		ret.add(td);
+        SoulissCommand tj = new SoulissCommand(this);
+        tj.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
+        tj.getCommandDTO().setSlot(typicalDTO.getSlot());
+        tj.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        ret.add(tj);
 
-		return ret;
-	}
+        SoulissCommand td = new SoulissCommand(this);
+        td.getCommandDTO().setCommand(Constants.Souliss_T1n_AutoCmd);
+        td.getCommandDTO().setSlot(typicalDTO.getSlot());
+        td.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        ret.add(td);
 
-	@Override
-	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
-			return ctx.getString(R.string.ON);
-		else if	(typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto)
-			return ctx.getString(R.string.ON)+" (AUTO)";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
-			return ctx.getString(R.string.OFF);
-		else if( typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto)
-			return "OFF (AUTO)";
-		else
-			return "UNKNOWN";
-	}
-	@Override
-	public void setOutputDescView(TextView textStatusVal) {
-		textStatusVal.setText(getOutputDesc());
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto) {
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
-		} else {
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
-			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
-		}
-	}
+        return ret;
+    }
 
-	/**
-	 * Ottiene il layout del pannello comandi
-	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
-	 */
-	@Override
-	public void getActionsLayout(final TypicalsListAdapter ble, Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent) {
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
-		cont.removeAllViews();
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
+    @Override
+    public String getOutputDesc() {
+        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
+            return ctx.getString(R.string.ON);
+        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto)
+            return ctx.getString(R.string.ON) + " (AUTO)";
+        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
+            return ctx.getString(R.string.OFF);
+        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto)
+            return "OFF (AUTO)";
+        else
+            return "UNKNOWN";
+    }
 
-		cont.addView(getQuickActionTitle());
-		// cmd.setVisibility(View.GONE);
+    @Override
+    public void setOutputDescView(TextView textStatusVal) {
+        textStatusVal.setText(getOutputDesc());
+        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto) {
+            textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
+            textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
+        } else {
+            textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
+            textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
+        }
+    }
 
-		final ListButton turnOnButton = new ListButton(ctx);
-		turnOnButton.setText(ctx.getString(R.string.ON));
-		cont.addView(turnOnButton);
+    /**
+     * Ottiene il layout del pannello comandi
+     *
+     * @param ble
+     * @param ctx
+     * @param parentIntent
+     * @param convertView
+     * @param parent
+     */
+    @Override
+    public void getActionsLayout(final TypicalsListAdapter ble, Context ctx, final Intent parentIntent,
+                                 View convertView, final ViewGroup parent) {
+        LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+        cont.removeAllViews();
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-		final ListButton turnOffButton = new ListButton(ctx);
-		turnOffButton.setText(ctx.getString(R.string.OFF));
-		cont.addView(turnOffButton);
-		// disabilitazioni interlock
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || 
-				typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto) {
-			turnOnButton.setEnabled(false);
-		} else {
-			turnOffButton.setEnabled(false);
-		}
+        cont.addView(getQuickActionTitle());
+        // cmd.setVisibility(View.GONE);
 
-		final ListButton tog = new ListButton(ctx);
-		// final int tpos = position;
-		//tog.setLayoutParams(lp);
-		tog.setText("Auto");
-		cont.addView(tog);
+        final ListButton turnOnButton = new ListButton(ctx);
+        turnOnButton.setText(ctx.getString(R.string.ON));
+        cont.addView(turnOnButton);
 
-		turnOnButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Thread t = new Thread() {
-					public void run() {
+        final ListButton turnOffButton = new ListButton(ctx);
+        turnOffButton.setText(ctx.getString(R.string.OFF));
+        cont.addView(turnOffButton);
+        // disabilitazioni interlock
+        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil ||
+                typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto) {
+            turnOnButton.setEnabled(false);
+        } else {
+            turnOffButton.setEnabled(false);
+        }
 
-						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
-								String.valueOf(Constants.Souliss_T1n_OnCmd));
+        final ListButton tog = new ListButton(ctx);
+        // final int tpos = position;
+        //tog.setLayoutParams(lp);
+        tog.setText("Auto");
+        cont.addView(tog);
 
-					}
-				};
-				t.start();
-			}
+        turnOnButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Thread t = new Thread() {
+                    public void run() {
 
-		});
+                        UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
+                                prefs,
+                                String.valueOf(Constants.Souliss_T1n_OnCmd));
 
-		turnOffButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Thread t = new Thread() {
-					public void run() {
-						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
-								String.valueOf(Constants.Souliss_T1n_OffCmd));
+                    }
+                };
+                t.start();
+            }
 
-					}
+        });
 
-				};
+        turnOffButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Thread t = new Thread() {
+                    public void run() {
+                        UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
+                                prefs,
+                                String.valueOf(Constants.Souliss_T1n_OffCmd));
 
-				t.start();
+                    }
 
-			}
+                };
 
-		});
+                t.start();
 
-		tog.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Thread t = new Thread() {
-					public void run() {
-						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
-								String.valueOf(Constants.Souliss_T1n_AutoCmd));
-						// cmd.setText("Souliss command sent");
-					}
-				};
+            }
 
-				t.start();
-			}
+        });
 
-		});
-	}
+        tog.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Thread t = new Thread() {
+                    public void run() {
+                        UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
+                                prefs, String.valueOf(Constants.Souliss_T1n_AutoCmd));
+                        // cmd.setText("Souliss command sent");
+                    }
+                };
+
+                t.start();
+            }
+
+        });
+    }
 
 
 }

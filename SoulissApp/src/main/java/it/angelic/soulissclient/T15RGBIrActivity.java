@@ -239,7 +239,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 				Looper.prepare();
 
 				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-						+ collected.getTypicalDTO().getSlot(), opzioni, Constants.COMMAND_SINGLE, "" + val);
+						+ collected.getTypicalDTO().getSlot(), opzioni,  "" + val);
 			}
 		};
 

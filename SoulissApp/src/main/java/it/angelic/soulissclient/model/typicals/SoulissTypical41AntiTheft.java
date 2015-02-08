@@ -126,7 +126,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T4n_Armed));
 					}
 				};
@@ -142,7 +142,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE,
+								prefs,
 								String.valueOf(Constants.Souliss_T4n_NotArmed));
 					}
 				};

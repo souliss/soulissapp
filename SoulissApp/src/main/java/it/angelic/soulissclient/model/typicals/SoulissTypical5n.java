@@ -98,7 +98,7 @@ public class SoulissTypical5n extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, it.angelic.soulissclient.Constants.COMMAND_SINGLE, "" + transientVal);
+								prefs, "" + transientVal);
 					}
 				};
 				t.start();

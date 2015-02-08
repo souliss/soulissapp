@@ -121,7 +121,7 @@ public class ProgramListAdapter extends BaseAdapter {
             don.setBackgroundResource(R.drawable.list_rect_blue);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
             holder.image.setImageResource(R.drawable.exit);
-            holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
+           // holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
             // se gia eseguito, dico quando
             if (holder.data.getCommandDTO().getExecutedTime() != null) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)

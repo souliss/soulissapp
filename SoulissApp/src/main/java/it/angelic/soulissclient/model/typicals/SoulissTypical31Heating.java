@@ -170,7 +170,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 				if (temp == null) {
 					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf((float) function));
 					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-							SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, "" + function);
+							SoulissClient.getOpzioni(), "" + function);
 				
 				} else {
 					int re = HalfFloatUtils.fromFloat(temp);
@@ -180,7 +180,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 					String[] cmd = { String.valueOf(function), "0", "0", first, second };
 					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 "+first+" "+second);
 					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-							SoulissClient.getOpzioni(), Constants.COMMAND_SINGLE, cmd);
+							SoulissClient.getOpzioni(),  cmd);
 				}
 			}
 		};
