@@ -3,6 +3,7 @@ package it.angelic.soulissclient.db;
 import static it.angelic.soulissclient.Constants.MASSIVE_NODE_ID;
 import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -239,6 +240,11 @@ public class SoulissDBHelper {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
             newTyp.setParentNode(parent);
+            if (parent.getId() == Constants.MASSIVE_NODE_ID) {
+                //hack dto ID, could be different if parent is massive
+                newTyp.getTypicalDTO().setNodeId(parent.getId());
+                newTyp.getTypicalDTO().setSlot(dto.getTypical());
+            }
             // if (newTyp.getTypical() !=
             // Constants.Souliss_T_CurrentSensor_slave)
             if (!pool.contains(dto.getTypical())) {
@@ -261,7 +267,8 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
-
+            //hack dto ID, could be different if parent is massive
+            newTyp.getTypicalDTO().setNodeId(parent.getId());
             newTyp.setParentNode(parent);
             // if (newTyp.getTypical() !=
             // Constants.Souliss_T_CurrentSensor_slave)
@@ -714,6 +721,22 @@ public class SoulissDBHelper {
         return ret;
     }
 
+    public SoulissTriggerDTO getTriggerByCommandId(Context context, long triggerId) {
+
+        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TRIGGERS + " a " + "INNER JOIN "
+                + SoulissDB.TABLE_COMMANDS + " b ON a." + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = b."
+                + SoulissDB.COLUMN_COMMAND_ID + " WHERE " + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = " + triggerId;
+        Cursor cursor = database.rawQuery(MY_QUERY, null);
+        cursor.moveToFirst();
+        assert (cursor.getColumnCount() == 1);
+        SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
+
+       // cols.setTriggerDto(comment);
+        // Make sure to close the cursor
+        cursor.close();
+        return comment;
+    }
+
     /**
      * Ritorna mappa di tutti i comandi, indicizzati per ID
      *
@@ -760,9 +783,22 @@ public class SoulissDBHelper {
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
                 adding = new SoulissCommand(comment, tgt);
+            } else if (node > Constants.COMMAND_FAKE_SCENE) {
+                // List massivi = getUniqueTypicals(node);
+                SoulissNode minchia = new SoulissNode(Constants.MASSIVE_NODE_ID);
+                List<SoulissTypical> massivi = getUniqueTypicals(minchia);
+                Log.d(Constants.TAG, "Massive command found, Typical:" + slot);
+                for (SoulissTypical cazzuto : massivi) {
+                    if (slot == cazzuto.getTypicalDTO().getTypical()) {
+                        adding = new SoulissCommand(comment, cazzuto);
+                    }
+                }
+
             } else {
+                //scena, ovvero id scena da eseguire = slot
                 adding = new SoulissCommand(comment);
             }
+            assertNotNull(adding);
             ret.add(adding);
         }
         cursor.close();

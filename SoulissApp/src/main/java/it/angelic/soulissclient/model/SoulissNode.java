@@ -84,9 +84,10 @@ public class SoulissNode implements Serializable, ISoulissObject {
     public String getNiceName() {
         if (name != null && "".compareToIgnoreCase(name) != 0)
             return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
-        else
+        else if (id > Constants.MASSIVE_NODE_ID)
             return SoulissClient.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getId());
-
+        else
+            return SoulissClient.getAppContext().getString(R.string.allnodes);
     }
 
     public Calendar getRefreshedAt() {

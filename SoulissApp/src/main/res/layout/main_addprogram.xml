@@ -102,7 +102,7 @@
                 android:layout_below="@id/RadioButtonTime"
                 android:layout_marginTop="-5dip"
                 android:text="@string/addprogram_timed_desc"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                style="@style/CodeFontSmall" />
 
             <TimePicker
                 android:layout_centerHorizontal="true"
@@ -126,6 +126,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/timePicker"
+                android:layout_margin="10dp"
                 android:layout_toRightOf="@id/checkBoxRecursive"
                 android:entries="@array/scheduleInterval"
                 android:entryValues="@array/scheduleIntervalValues" />
@@ -170,8 +171,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textViewInfoPos"
-                android:layout_marginLeft="30dip"
-                android:layout_marginRight="30dip"
+                android:layout_margin="30dip"
                 android:text="@string/addprogram_positional_goout"
                 android:textOff="@string/addprogram_positional_goout"
                 android:textOn="@string/addprogram_positional_comeback" />
@@ -221,6 +221,7 @@
                 android:id="@+id/Spinner05"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strutt"
                 android:layout_below="@id/textViewInfoTrig" />
@@ -230,6 +231,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/strutt"
+                android:padding="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textViewInfoTrig"
                 android:layout_toRightOf="@id/Spinner05" />

@@ -81,7 +81,7 @@ public class SoulissTriggerDTO implements Serializable {
         this.inputNodeId = inputNodeId;
     }
 
-    public short getInputSlotlot() {
+    public short getInputSlot() {
         return inputSlotlot;
     }
 
@@ -119,7 +119,7 @@ public class SoulissTriggerDTO implements Serializable {
         ContentValues values = new ContentValues();
         //assertTrue(getSlot() != -1);
         values.put(SoulissDB.COLUMN_TRIGGER_COMMAND_ID, getCommandId());
-        values.put(SoulissDB.COLUMN_TRIGGER_SLOT, getInputSlotlot());
+        values.put(SoulissDB.COLUMN_TRIGGER_SLOT, getInputSlot());
         values.put(SoulissDB.COLUMN_TRIGGER_NODE_ID, getInputNodeId());
         values.put(SoulissDB.COLUMN_TRIGGER_OP, getOp());
         values.put(SoulissDB.COLUMN_TRIGGER_THRESHVAL, getThreshVal());

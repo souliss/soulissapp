@@ -120,11 +120,7 @@ public class SoulissCommand implements Serializable , ISoulissExecutable{
 		short typical;
         if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
             return "Scene execution";
-        }
-		if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
-			// comando massivo
-			typical = commandDTO.getSlot();
-		} else
+        } else
 			typical = parentTypical.getTypicalDTO().getTypical();
 		long command = commandDTO.getCommand();
 		int resId;
@@ -226,6 +222,9 @@ public class SoulissCommand implements Serializable , ISoulissExecutable{
 		return parentTypical;
 	}
 
+    public void setParentTypical(SoulissTypical parentTypical) {
+        this.parentTypical = parentTypical;
+    }
 
     @Override
     public void execute() {

@@ -9,7 +9,6 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.SoulissWidget;
 import it.angelic.soulissclient.T4nFragWrapper;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
@@ -241,7 +240,7 @@ public class UDPSoulissDecoder {
             for (SoulissTrigger soulissTrigger : triggers) {
                 SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto());
                 SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
-                SoulissTypical source = refreshedNodes.get(src.getInputNodeId()).getTypical(src.getInputSlotlot());
+                SoulissTypical source = refreshedNodes.get(src.getInputNodeId()).getTypical(src.getInputSlot());
                 // SoulissTypical target =
                 // refreshedNodes.get(command.getNodeId()).getTypical(command.getSlot());
                 Calendar now = Calendar.getInstance();

@@ -11,17 +11,15 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTypical;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.transition.Transition;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,6 +63,11 @@ public class AddProgramActivity extends Activity {
     private CheckBox checkboxRecursive;
     private int[] spinnerArrVal;
     private Spinner commandSpinnerInterval;
+    private Spinner triggeredNodeSpinner;
+    private Button threshButton;
+    private Spinner triggeredTypicalSpinner;
+    private EditText threshValEditText;
+    private SoulissTriggerDTO inputTrigger;
 
 
     @Override
@@ -87,13 +90,13 @@ public class AddProgramActivity extends Activity {
         spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
         ImageView nodeic = (ImageView) findViewById(R.id.timed_icon);
         tvcommand = (TextView) findViewById(R.id.textViewCommand);
-        nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
+        // nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
-        ImageView nodeic2 = (ImageView) findViewById(R.id.position_icon);
-        nodeic2.setColorFilter(getResources().getColor(R.color.aa_blue), android.graphics.PorterDuff.Mode.SRC_ATOP);
+        //ImageView nodeic2 = (ImageView) findViewById(R.id.position_icon);
+        //nodeic2.setColorFilter(getResources().getColor(R.color.aa_blue), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
-        ImageView nodeic3 = (ImageView) findViewById(R.id.triggered_icon);
-        nodeic3.setColorFilter(getResources().getColor(R.color.aa_red), android.graphics.PorterDuff.Mode.SRC_ATOP);
+        // ImageView nodeic3 = (ImageView) findViewById(R.id.triggered_icon);
+        // nodeic3.setColorFilter(getResources().getColor(R.color.aa_red), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();
@@ -140,13 +143,25 @@ public class AddProgramActivity extends Activity {
             }
             tvcommand.setVisibility(View.INVISIBLE);
             //   outputTypicalSpinner.setSelection(sceneid);
-        } else if (collected.getCommandDTO().getNodeId() == Constants.MASSIVE_NODE_ID) {
+            // } else if (collected.getCommandDTO().getNodeId() == Constants.MASSIVE_NODE_ID) {
             //get last but one
-            outputNodeSpinner.setSelection(outputNodeSpinner.getAdapter().getCount() - 2);
+            //    outputNodeSpinner.setSelection(outputNodeSpinner.getAdapter().getCount() - 2);
             //TODO selezione comando
         } else {//reload nodo, tipico e comando
-            outputNodeSpinner.setSelection(collected.getCommandDTO().getNodeId());
-            setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[collected.getCommandDTO().getNodeId()]);
+            int nodeId = collected.getCommandDTO().getNodeId();
+            Log.i(Constants.TAG, "SELECTED NODEID:" + nodeId);
+            int toti = outputNodeSpinner.getCount();
+            int selIdx = 0;
+            for (selIdx = 0; selIdx < toti; selIdx++) {
+                SoulissNode now = (SoulissNode) outputNodeSpinner.getItemAtPosition(selIdx);
+
+                if (nodeId == now.getId()) {
+                    Log.i(Constants.TAG, "SELECTED NODEID:" + nodeId);
+                    outputNodeSpinner.setSelection(selIdx);
+                    break;//selIdx ok
+                }
+            }
+            setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[selIdx]);
             int tot = outputTypicalSpinner.getCount();
             for (int i = 0; i < tot; i++) {
                 SoulissTypical now = (SoulissTypical) outputTypicalSpinner.getItemAtPosition(i);
@@ -185,24 +200,25 @@ public class AddProgramActivity extends Activity {
                 }
                 checkboxRecursive.setChecked(true);
             }
-
         } else if (collected.getType() == Constants.COMMAND_COMEBACK_CODE || collected.getType() == Constants.COMMAND_GOAWAY_CODE) {
             radioPositional.performClick();
             togglehomeaway.setChecked(collected.getType() == Constants.COMMAND_COMEBACK_CODE);
         } else if (collected.getType() == Constants.COMMAND_TRIGGERED) {
             radioTrigger.performClick();
-            //TODO carica trigger
-            /*SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
-                    // campi trigger
-                    SoulissTriggerDTO trigger = new SoulissTriggerDTO();
-                    trigger.setInputNodeId(trig.getTypicalDTO().getNodeId());
 
-                    trigger.setInputSlot(trig.getTypicalDTO().getSlot());
-                    trigger.setOp(buttComparator.getText().toString());
-                    trigger.setCommandId(programToSave.getCommandDTO().getCommandId());
-                    trigger.setThreshVal(Integer.parseInt(et.getText().toString()));
+            inputTrigger = datasource.getTriggerByCommandId(this, collected.getCommandDTO().getCommandId());
 
-                    trigger.persist(datasource);*/
+            triggeredNodeSpinner.setSelection(inputTrigger.getInputNodeId());
+            Log.d(Constants.TAG, "Setting trigger nodeid:" + inputTrigger.getInputNodeId() + " slot:" + inputTrigger.getInputSlot());
+            setTypicalSpinner(triggeredTypicalSpinner, nodiArray[inputTrigger.getInputNodeId()]);
+            for (int u = 0;u<triggeredTypicalSpinner.getCount();u++){
+                if( inputTrigger.getInputSlot() == ((SoulissTypical)triggeredTypicalSpinner.getItemAtPosition(u)).getTypicalDTO().getSlot())
+                    triggeredTypicalSpinner.setSelection(u);
+            }
+
+            threshValEditText.setText(String.valueOf(inputTrigger.getThreshVal()));
+
+            threshButton.setText(inputTrigger.getOp().toString());
         }
     }
 
@@ -229,11 +245,11 @@ public class AddProgramActivity extends Activity {
         togglehomeaway = (ToggleButton) findViewById(R.id.toggleButtonPosition);
         // data based
         final TextView textviewTriggered = (TextView) findViewById(R.id.textViewInfoTrig);
-        final Spinner triggeredNodeSpinner = (Spinner) findViewById(R.id.Spinner05);
-        final Spinner triggeredTypicalSpinner = (Spinner) findViewById(R.id.Spinner06);
+        triggeredNodeSpinner = (Spinner) findViewById(R.id.Spinner05);
+        triggeredTypicalSpinner = (Spinner) findViewById(R.id.Spinner06);
         fillNodeSpinner(triggeredNodeSpinner);
-        final Button buttComparator = (Button) findViewById(R.id.buttonComparator);
-        final EditText et = (EditText) findViewById(R.id.editTextThreshold);
+        threshButton = (Button) findViewById(R.id.buttonComparator);
+        threshValEditText = (EditText) findViewById(R.id.editTextThreshold);
         final Button btCancel = (Button) findViewById(R.id.buttonInsertProgram);
         final Button btSave = (Button) findViewById(R.id.buttonCancelProgram);
 
@@ -241,7 +257,7 @@ public class AddProgramActivity extends Activity {
         /**
          * LISTENER SPINNER DESTINATARIO, IN TESTATA
          */
-        final OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
+        final OnItemSelectedListener nodeSelectionListener = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[pos]);
             }
@@ -251,15 +267,16 @@ public class AddProgramActivity extends Activity {
         };
 
 
-        final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
+        final OnItemSelectedListener typSelectedListener = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // if (pos > 0) {
                 SoulissNode mynode = nodiArrayWithExtra[(int) outputNodeSpinner.getSelectedItemId()];
+                Log.d(Constants.TAG, "mynode nodeId:" + mynode.getId());
                 if (mynode.getId() > Constants.COMMAND_FAKE_SCENE) {
                     //le scene non hanno comandi
                     List<SoulissTypical> re = mynode
                             .getActiveTypicals(AddProgramActivity.this);
-
+                    Log.d(Constants.TAG, "hack nodeId:" + re.get(pos).getTypicalDTO().getNodeId());
                     fillCommandSpinner(outputCommandSpinner, re.get(pos));
                 } else {
                     fillSceneCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
@@ -269,14 +286,18 @@ public class AddProgramActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
-
-        // avoid auto call upon Creation with runnable
-        outputTypicalSpinner.post(new Runnable() {
-            public void run() {
-                outputTypicalSpinner.setOnItemSelectedListener(lib);
-                outputNodeSpinner.setOnItemSelectedListener(lit);
+        /**
+         * LISTENER SPINNER INPUT TRIGGER
+         */
+        final OnItemSelectedListener triggeredNodeSpinnerListener = new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                setTypicalSpinner(triggeredTypicalSpinner, nodiArray[pos]);
             }
-        });
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+
 
         /**
          * INTERLOCK della GUI
@@ -292,8 +313,8 @@ public class AddProgramActivity extends Activity {
                 togglehomeaway.setEnabled(false);
                 triggeredTypicalSpinner.setEnabled(false);
                 triggeredNodeSpinner.setEnabled(false);
-                buttComparator.setEnabled(false);
-                et.setEnabled(false);
+                threshButton.setEnabled(false);
+                threshValEditText.setEnabled(false);
                 textviewPositional.setEnabled(false);
                 textviewTimed.setEnabled(true);
                 textviewTriggered.setEnabled(false);
@@ -312,8 +333,8 @@ public class AddProgramActivity extends Activity {
                 togglehomeaway.setEnabled(true);
                 triggeredTypicalSpinner.setEnabled(false);
                 triggeredNodeSpinner.setEnabled(false);
-                buttComparator.setEnabled(false);
-                et.setEnabled(false);
+                threshButton.setEnabled(false);
+                threshValEditText.setEnabled(false);
                 textviewPositional.setEnabled(true);
                 textviewTimed.setEnabled(false);
                 textviewTriggered.setEnabled(false);
@@ -332,8 +353,8 @@ public class AddProgramActivity extends Activity {
                 togglehomeaway.setEnabled(false);
                 triggeredTypicalSpinner.setEnabled(true);
                 triggeredNodeSpinner.setEnabled(true);
-                buttComparator.setEnabled(true);
-                et.setEnabled(true);
+                threshButton.setEnabled(true);
+                threshValEditText.setEnabled(true);
                 textviewPositional.setEnabled(false);
                 textviewTimed.setEnabled(false);
                 textviewTriggered.setEnabled(true);
@@ -347,36 +368,23 @@ public class AddProgramActivity extends Activity {
                 commandSpinnerInterval.setEnabled(isChecked);
             }
         });
-        /**
-         * LISTENER SPINNER INPUT
-         */
-        OnItemSelectedListener lityp = new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                setTypicalSpinner(triggeredTypicalSpinner, nodiArrayWithExtra[pos]);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        };
-        triggeredNodeSpinner.setOnItemSelectedListener(lityp);
 
         OnClickListener simplebttttt = new OnClickListener() {
             public void onClick(View v) {
-                String old = buttComparator.getText().toString();
+                String old = threshButton.getText().toString();
                 if (">".compareTo(old) == 0) {
-                    buttComparator.setText("=");
+                    threshButton.setText("=");
                 } else if ("<".compareTo(old) == 0) {
-                    buttComparator.setText(">");
+                    threshButton.setText(">");
                 } else {
-                    buttComparator.setText("<");
+                    threshButton.setText("<");
                 }
             }
         };
-        buttComparator.setOnClickListener(simplebttttt);
+        threshButton.setOnClickListener(simplebttttt);
 
         OnClickListener saveProgramButtonListener = new OnClickListener() {
             public void onClick(View v) {
-
                 ISoulissExecutable IToSave = (ISoulissExecutable) outputCommandSpinner.getSelectedItem();
                 SoulissCommand programToSave = null;
                 if (IToSave instanceof SoulissScene) {
@@ -384,11 +392,11 @@ public class AddProgramActivity extends Activity {
                     SoulissCommandDTO dto = new SoulissCommandDTO();
                     dto.setNodeId(Constants.COMMAND_FAKE_SCENE);
                     dto.setSlot((short) toExec.getId());
-
                     programToSave = new SoulissCommand(dto);
                 } else if (IToSave instanceof SoulissCommand) {
                     programToSave = (SoulissCommand) IToSave;
-                    //   programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
+                    Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getCommandDTO().getNodeId());
+                    //programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
                     //programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
                     //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
                 }
@@ -399,7 +407,6 @@ public class AddProgramActivity extends Activity {
                     Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
                     return;
                 }
-                programToSave.getCommandDTO().setSceneId(null);
                 Intent intent = AddProgramActivity.this.getIntent();
                 datasource.open();
                 if (radioTimed.isChecked()) {// temporal schedule
@@ -432,12 +439,10 @@ public class AddProgramActivity extends Activity {
                         intent.putExtra("returnedData", Constants.COMMAND_GOAWAY_CODE);
                     }
                     // inserimento nuovo
-
-
                 } else if (radioTrigger.isChecked()) {// TRIGGER
                     SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
-                    if (trig == null || trig.getTypicalDTO() == null || et.getText() == null
-                            || "".compareTo(et.getText().toString()) == 0) {
+                    if (trig == null || trig.getTypicalDTO() == null || threshValEditText.getText() == null
+                            || "".compareTo(threshValEditText.getText().toString()) == 0) {
                         Toast.makeText(AddProgramActivity.this, getString(R.string.programs_warn_trigger_notset),
                                 Toast.LENGTH_SHORT).show();
                         return;
@@ -452,23 +457,23 @@ public class AddProgramActivity extends Activity {
 
                 if (radioTrigger.isChecked()) {// TRIGGER
                     SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
-                    // campi trigger
                     SoulissTriggerDTO trigger = new SoulissTriggerDTO();
+                    //MERGE
+                    if (inputTrigger != null)
+                        trigger.setTriggerId(inputTrigger.getTriggerId());
                     trigger.setInputNodeId(trig.getTypicalDTO().getNodeId());
 
                     trigger.setInputSlot(trig.getTypicalDTO().getSlot());
-                    trigger.setOp(buttComparator.getText().toString());
+                    trigger.setOp(threshButton.getText().toString());
                     trigger.setCommandId(programToSave.getCommandDTO().getCommandId());
-                    trigger.setThreshVal(Integer.parseInt(et.getText().toString()));
+                    trigger.setThreshVal(Integer.parseInt(threshValEditText.getText().toString()));
 
                     trigger.persist(datasource);
                 }
                 // datasource.close();
                 AddProgramActivity.this.setResult(RESULT_OK, intent);
-
                 AddProgramActivity.this.finish();
 
-                return;
             }
 
         };
@@ -489,9 +494,28 @@ public class AddProgramActivity extends Activity {
         if (extras != null && extras.get("PROG") != null) {
             collected = (SoulissCommand) extras.get("PROG");
             Log.i(Constants.TAG, "Found a SAVED PROGRAM");
+
+            // avoid auto call upon Creation with runnable
+            outputTypicalSpinner.post(new Runnable() {
+                public void run() {
+                    outputTypicalSpinner.setOnItemSelectedListener(typSelectedListener);
+                    outputNodeSpinner.setOnItemSelectedListener(nodeSelectionListener);
+                }
+            });
+            triggeredNodeSpinner.post(  new Runnable() {
+                        public void run() {
+                            triggeredNodeSpinner.setOnItemSelectedListener(triggeredNodeSpinnerListener);
+                        }
+                    }
+            );
             setFields();
+        } else {
+            //explicitly riempi gli spinner
+            outputTypicalSpinner.setOnItemSelectedListener(typSelectedListener);
+            outputNodeSpinner.setOnItemSelectedListener(nodeSelectionListener);
+            triggeredNodeSpinner.setOnItemSelectedListener(triggeredNodeSpinnerListener);
         }
-    }
+    }//onStart
 
 
     @Override
@@ -563,8 +587,8 @@ public class AddProgramActivity extends Activity {
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             tgt.setAdapter(adapter);
-        } else{
-            Log.e(Constants.TAG,"UNPREDICTED");
+        } else {
+            Log.e(Constants.TAG, "UNPREDICTED");
         }
     }
 
@@ -576,11 +600,16 @@ public class AddProgramActivity extends Activity {
      * @param ref tipico da cui ottenere i comandi
      */
     private void fillCommandSpinner(Spinner tgt, SoulissTypical ref) {
+        ArrayList<SoulissCommand> cmds = ref.getCommands(this);
+        //hack x nodo massivo
+        // for (SoulissCommand c:cmds){
+        //      c.setParentTypical(ref);
+        // }
         tvcommand.setVisibility(View.VISIBLE);
         tgt.setVisibility(View.VISIBLE);
-        SoulissCommand[] strArray = new SoulissCommand[ref.getCommands(this).size()];
-        ref.getCommands(this).toArray(strArray);
-
+        SoulissCommand[] strArray = new SoulissCommand[cmds.size()];
+        cmds.toArray(strArray);
+        Log.d(Constants.TAG, "Filled commandspinner, nodeId :" + strArray[0].getCommandDTO().getNodeId());
         ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<SoulissCommand>(this,
                 android.R.layout.simple_spinner_item, strArray);
 

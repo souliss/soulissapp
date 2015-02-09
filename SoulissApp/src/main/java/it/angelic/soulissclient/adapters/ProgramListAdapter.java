@@ -83,13 +83,12 @@ public class ProgramListAdapter extends BaseAdapter {
         if (holder.data.getParentTypical() != null) {
             SoulissTypical appo = holder.data.getParentTypical();
             // Descrizione programma
-            info.append(" slot " + dto.getSlot());
             if ("".compareTo(appo.getNiceName()) != 0)
-                info.append(" (" + appo.getNiceName() + ")");
+                info.append(" " + appo.getNiceName());
             if ("".compareTo(appo.getParentNode().getNiceName()) != 0)
-                info.append(" on " + appo.getParentNode().getNiceName());
+                info.append(" - " + appo.getParentNode().getNiceName()+ " slot " + dto.getSlot());
         }else{
-
+            //FIXME
         }
         holder.textCmd.setText(info.toString());
         /* programma temporale */
@@ -149,7 +148,7 @@ public class ProgramListAdapter extends BaseAdapter {
 
 			/* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
-            holder.textCmdInfo.setText(context.getString(R.string.programs_when) + " " + intrig.getInputSlotlot()
+            holder.textCmdInfo.setText(context.getString(R.string.programs_when) + " " + intrig.getInputSlot()
                     + " on Node " + intrig.getInputNodeId() + " " + context.getString(R.string.is) + " " + intrig.getOp()
                     + " " + intrig.getThreshVal());
             if (holder.data.getCommandDTO().getExecutedTime() != null)

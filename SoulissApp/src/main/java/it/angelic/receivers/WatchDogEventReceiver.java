@@ -12,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.Date;
+
 /**
  * Receive per controllo esecuzione servizio. Viene invocato dopo il boot, e
  * all'USER_PRESENT
@@ -31,8 +33,7 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 			if (!isMyServiceRunning(ctx, manager)) {
 				ctx.startService(eventService);
 				Log.w(Constants.TAG + ":WatchDog", "Service restarted");
-			} else
-				Log.d(Constants.TAG + ":WatchDog", "Service already running");
+			}
 		}
 		if (opzioni.isWebserverEnabled()) {
 			Intent eventService = new Intent(ctx, HTTPService.class);
@@ -48,8 +49,10 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 	private boolean isMyServiceRunning(final Context ctx, ActivityManager manager) {
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			if (SoulissDataService.class.getName().equals(service.service.getClassName())) {
-				return true;
+                Log.d(Constants.TAG + ":WatchDog", "Service already running since:"+ new Date(service.activeSince).toString());
+                return true;
 			}
+
 		}
 		return false;
 	}

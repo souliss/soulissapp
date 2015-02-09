@@ -170,13 +170,14 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private CardView cardViewServiceInfo;
 
     void doBindService() {
-        Log.d(TAG, "doBindService(), BIND_NOT_FOREGROUND.");
+        Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
         bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
     }
 
     void doBindWebService() {
+        //FIXME check flags, add BIND_NOT_FOREGROUND
         Log.d(TAG, "doBindWebService(), BIND_NOT_FOREGROUND.");
-        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_NOT_FOREGROUND);
+        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_AUTO_CREATE);
     }
 
     void doUnbindService() {
@@ -205,7 +206,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        doBindService();
         Eula.show(this);
 
         setContentView(R.layout.main_launcher);
@@ -714,8 +714,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-
                 String adString = "";
                 String loc = null;
                 try {
@@ -754,8 +752,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 // Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
                 Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
                 if (opzioni.getHomeLatitude() != 0) {
-
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -771,11 +767,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                     + (int) res[0] + unit
                                     + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
                             posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_green));
-
                         }
                     });
-
-
                 } else {
                     runOnUiThread(new Runnable() {
                         @Override
