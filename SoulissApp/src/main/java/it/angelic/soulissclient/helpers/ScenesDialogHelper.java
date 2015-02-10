@@ -177,7 +177,7 @@ public class ScenesDialogHelper {
 
 		alert2.setView(dialoglayout);
 		final Spinner outputNodeSpinner = (Spinner) dialoglayout.findViewById(R.id.spinner2);
-		ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<SoulissNode>(context,
+		ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<>(context,
 				android.R.layout.simple_spinner_item, nodiArray);
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -205,7 +205,7 @@ public class ScenesDialogHelper {
 					fillCommandSpinner(outputCommandSpinner, re.get(pos), context);
 				} else {
 					SoulissCommand[] strArray = new SoulissCommand[0];
-					ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<SoulissCommand>(context,
+					ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(context,
 							android.R.layout.simple_spinner_item, strArray);
 					outputCommandSpinner.setAdapter(adapter);
 				}
@@ -287,7 +287,7 @@ public class ScenesDialogHelper {
 				strArray[0] = fake;
 			}
 
-			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(ctx,
+			ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<>(ctx,
 					android.R.layout.simple_spinner_item, strArray);
 
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -313,7 +313,7 @@ public class ScenesDialogHelper {
 		ref.getCommands(ctx).toArray(strArray);
 		// SoulissCommand[] etichette = new SoulissCommand[strArray.length];
 
-		ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<SoulissCommand>(ctx,
+		ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(ctx,
 				android.R.layout.simple_spinner_item, strArray);
 
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -383,7 +383,7 @@ public class ScenesDialogHelper {
 	}
 
 	private static List<String> getParts(String string, int partitionSize) {
-        List<String> parts = new ArrayList<String>();
+        List<String> parts = new ArrayList<>();
         int len = string.length();
         for (int i=0; i<len; i+=partitionSize)
         {

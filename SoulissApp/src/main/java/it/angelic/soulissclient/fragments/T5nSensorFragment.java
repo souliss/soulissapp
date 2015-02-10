@@ -96,8 +96,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			TextView nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
 			upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
 			assertTrue("TIPICO NULLO", collected != null);
-			collected.setCtx(getActivity());
-			
+
 			//Setta STATUS BAR
 			super.setCollected(collected);
 			super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
@@ -119,7 +118,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			LinearLayout layout = (LinearLayout) ret.findViewById(R.id.trendchart);
 			if (collected.isSensor()) {
 				TextView tinfo = (TextView) ret.findViewById(R.id.TextViewGraphName);
-				SparseArray<SoulissGraphData> logs = new SparseArray<SoulissGraphData>();
+				SparseArray<SoulissGraphData> logs = new SparseArray<>();
 				logs = datasource.getGroupedTypicalLogs(collected, "%H", 0);
 				tinfo.setText("Daily temperature range");
 

@@ -4,6 +4,7 @@ import it.angelic.soulissclient.R;
 /**
  * Not used anymore, showed an input slider to control analogue Input
  */
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -43,7 +44,7 @@ public class SoulissTypical5n extends SoulissTypical implements ISoulissTypical 
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+		ArrayList<SoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
@@ -80,7 +81,7 @@ public class SoulissTypical5n extends SoulissTypical implements ISoulissTypical 
 
 		// cont.addView(getQuickActionTitle());
 
-		bar = new SeekBar(getCtx());
+		bar = new SeekBar(ctx);
 		bar.setMax(255);
 		cont.addView(bar);
 		bar.setLayoutParams(p2);

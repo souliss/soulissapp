@@ -85,7 +85,7 @@ public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 		setActionBarInfo(collected.getNiceName());
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
-			T5nSensorFragment details = T5nSensorFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+			T5nSensorFragment details = T5nSensorFragment.newInstance(collected.getSlot(), collected);
 			details.setArguments(getIntent().getExtras());
 			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
 		}

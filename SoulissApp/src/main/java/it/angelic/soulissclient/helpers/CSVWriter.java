@@ -113,7 +113,7 @@ public class CSVWriter {
        if (nextLine == null)
                return;
 
-       StringBuffer sb = new StringBuffer();
+       StringBuilder sb = new StringBuilder();
        for (int i = 0; i < nextLine.length; i++) {
 
            if (i != 0) {

@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     @Override
     public ArrayList<SoulissCommand> getCommands(Context ctx) {
         // ritorna le bozze dei comandi, da riempire con la schermata addProgram
-        ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+        ArrayList<SoulissCommand> ret = new ArrayList<>();
 
         SoulissCommand t = new SoulissCommand(this);
         t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
@@ -67,11 +69,11 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     @Override
     public String getOutputDesc() {
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
-            return ctx.getString(R.string.ON);
+            return SoulissClient.getAppContext().getString(R.string.ON);
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto)
-            return ctx.getString(R.string.ON) + " (AUTO)";
+            return SoulissClient.getAppContext().getString(R.string.ON) + " (AUTO)";
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
-            return ctx.getString(R.string.OFF);
+            return SoulissClient.getAppContext().getString(R.string.OFF);
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto)
             return "OFF (AUTO)";
         else
@@ -79,13 +81,13 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     }
 
     @Override
-    public void setOutputDescView(TextView textStatusVal) {
+    public void setOutputDescView(@NonNull TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto) {
-            textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
-            textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }

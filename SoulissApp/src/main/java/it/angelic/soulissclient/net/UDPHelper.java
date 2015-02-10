@@ -125,12 +125,10 @@ public class UDPHelper {
 			debugByteArray(buf);
 		//	Log.d(Constants.TAG, "***BYTES: " + buf.toString());
 			
-		} catch (UnknownHostException ed) {
+		} catch (UnknownHostException | SocketException ed) {
 			ed.printStackTrace();
-		} catch (SocketException et) {
-			et.printStackTrace();
 		} catch (Exception e) {
-			Log.d(Constants.TAG, "***Fail", e);
+			Log.e(Constants.TAG, "***Fail", e);
 		} finally {
 			if (sender != null && !sender.isClosed())
 				sender.close();
@@ -219,7 +217,7 @@ public class UDPHelper {
 			// hole punch
 			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
 
-			List<Byte> macaco = new ArrayList<Byte>();
+			List<Byte> macaco = new ArrayList<>();
 			macaco = Arrays.asList(Constants.PING_PAYLOAD);
 			// qui inserisco broadcast
 			byte whoami = 0xB;// PRIVATE by default
@@ -264,7 +262,7 @@ public class UDPHelper {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
 			sender = getSenderSocket(serverAddr);
 
-			List<Byte> macaco = new ArrayList<Byte>();
+			List<Byte> macaco = new ArrayList<>();
 			macaco = Arrays.asList(Constants.DBSTRUCT_PAYLOAD);
 			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
 					prefs.getNodeIndex());
@@ -313,7 +311,7 @@ public class UDPHelper {
 			Log.w(Constants.TAG, "Staterequest, numberof=" + numberOf);
 			sender = getSenderSocket(serverAddr);
 
-			List<Byte> macaco = new ArrayList<Byte>();
+			List<Byte> macaco = new ArrayList<>();
 			macaco.add(Constants.Souliss_UDP_function_subscribe);
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add((byte) 0x0);// PUTIN
@@ -361,7 +359,7 @@ public class UDPHelper {
 			Log.w(TAG, "Poll request, numberof=" + numberOf);
 			sender = getSenderSocket(serverAddr);
 
-			List<Byte> macaco = new ArrayList<Byte>();
+			List<Byte> macaco = new ArrayList<>();
 			macaco.add(Constants.Souliss_UDP_function_poll);
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add((byte) 0x0);// PUTIN
@@ -405,7 +403,7 @@ public class UDPHelper {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
 			sender = getSenderSocket(serverAddr);
 
-			List<Byte> macaco = new ArrayList<Byte>();
+			List<Byte> macaco = new ArrayList<>();
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add(Constants.Souliss_UDP_function_typreq);
 			macaco.add((byte) 0x0);// PUTIN
@@ -448,7 +446,7 @@ public class UDPHelper {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
 			sender = getSenderSocket(serverAddr);
 
-			List<Byte> macaco = new ArrayList<Byte>();
+			List<Byte> macaco = new ArrayList<>();
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add(Constants.Souliss_UDP_function_healthReq);
 			macaco.add((byte) 0x0);// PUTIN
@@ -530,7 +528,7 @@ public class UDPHelper {
 		assertEquals(true, useridx < it.angelic.soulissclient.Constants.MAX_USER_IDX);
 		assertEquals(true, nodeidx < it.angelic.soulissclient.Constants.MAX_NODE_IDX);
 
-		ArrayList<Byte> frame = new ArrayList<Byte>();
+		ArrayList<Byte> frame = new ArrayList<>();
 		InetAddress ip;
 		try {
 			ip = InetAddress.getByName(ipd);
@@ -590,7 +588,7 @@ public class UDPHelper {
 	 */
 	private static ArrayList<Byte> buildMaCaCoForce(byte functional, String nodeId, String slot, String... cmd) {
 		assertEquals(true, functional < Byte.MAX_VALUE);
-		ArrayList<Byte> frame = new ArrayList<Byte>();
+		ArrayList<Byte> frame = new ArrayList<>();
 
 		frame.add((byte) functional);// functional code
 
@@ -625,7 +623,7 @@ public class UDPHelper {
 
 	private static ArrayList<Byte> buildMaCaCoMassive(byte functional, String typical, String... cmd) {
 		assertEquals(true, functional < Byte.MAX_VALUE);
-		ArrayList<Byte> frame = new ArrayList<Byte>();
+		ArrayList<Byte> frame = new ArrayList<>();
 
 		frame.add(Byte.valueOf(functional));// functional code
 

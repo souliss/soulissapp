@@ -1,14 +1,5 @@
 package it.angelic.soulissclient.adapters;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissTypical;
-
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.util.SparseArray;
@@ -23,11 +14,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.db.SoulissCommandDTO;
+import it.angelic.soulissclient.db.SoulissTriggerDTO;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+
 public class ProgramListAdapter extends BaseAdapter {
-    private LayoutInflater mInflater;
-    private Context context;
     SoulissCommand[] programmi;
     SparseArray<SoulissTriggerDTO> triggers;
+    private LayoutInflater mInflater;
+    private Context context;
     private SoulissPreferenceHelper opzioni;
 
     public ProgramListAdapter(Context context, SoulissCommand[] versio, SparseArray<SoulissTriggerDTO> trigs,
@@ -80,17 +79,14 @@ public class ProgramListAdapter extends BaseAdapter {
         }
         SoulissCommandDTO dto = holder.data.getCommandDTO();
         StringBuilder info = new StringBuilder(holder.data.toString());
-        if (holder.data.getParentTypical() != null) {
-            SoulissTypical appo = holder.data.getParentTypical();
-            // Descrizione programma
-            if ("".compareTo(appo.getNiceName()) != 0)
-                info.append(" " + appo.getNiceName());
-            if ("".compareTo(appo.getParentNode().getNiceName()) != 0)
-                info.append(" - " + appo.getParentNode().getNiceName()+ " slot " + dto.getSlot());
-        }else{
-            //FIXME
+
+        if (holder.data.getNodeId() > Constants.COMMAND_FAKE_SCENE) {
+            holder.textCmd.setText(holder.data.getNiceName());
+        } else {
+            holder.textCmd.setText(context.getResources().getString(R.string.execute)
+                    + " " + context.getResources().getString(R.string.scene)
+                    + " " + holder.data.getSlot());
         }
-        holder.textCmd.setText(info.toString());
         /* programma temporale */
         if (holder.data.getType() == Constants.COMMAND_TIMED) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
@@ -110,7 +106,7 @@ public class ProgramListAdapter extends BaseAdapter {
 
                 holder.textCmdInfo.setText(context.getString(R.string.programs_recursive));
             }
-			/* Dimensioni del testo settate dalle opzioni */
+            /* Dimensioni del testo settate dalle opzioni */
             // holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP,
             // opzioni.getListDimensTesto());
 
@@ -120,7 +116,7 @@ public class ProgramListAdapter extends BaseAdapter {
             don.setBackgroundResource(R.drawable.list_rect_blue);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
             holder.image.setImageResource(R.drawable.exit);
-           // holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
+            // holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
             // se gia eseguito, dico quando
             if (holder.data.getCommandDTO().getExecutedTime() != null) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
@@ -171,11 +167,11 @@ public class ProgramListAdapter extends BaseAdapter {
     }
 
     public static class CommandViewHolder {
+        public SoulissCommand data;
         //public View evidenza;
         TextView textCmd;
         TextView textCmdWhen;
         TextView textCmdInfo;
         ImageView image;
-        public SoulissCommand data;
     }
 }

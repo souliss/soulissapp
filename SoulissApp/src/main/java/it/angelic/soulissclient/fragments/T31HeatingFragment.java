@@ -121,8 +121,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		}
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
 		collected.setPrefs(opzioni);
-		collected.setCtx(getActivity());
-		
+
 		super.setCollected(collected);
 		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load

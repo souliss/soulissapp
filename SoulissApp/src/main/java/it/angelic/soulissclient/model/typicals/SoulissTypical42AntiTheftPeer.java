@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -40,7 +41,7 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+		ArrayList<SoulissCommand> ret = new ArrayList<>();
 
 		//NO COMMANDS
 
@@ -69,11 +70,11 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm ||
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3))) {
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
+			textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+			textStatusVal.setBackgroundDrawable(SoulissClient.getAppContext().getResources().getDrawable(R.drawable.borderedbackoff));
 		} else {
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
-			textStatusVal.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.borderedbackon));
+			textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
+			textStatusVal.setBackgroundDrawable(SoulissClient.getAppContext().getResources().getDrawable(R.drawable.borderedbackon));
 		}
 	}
 	@Override

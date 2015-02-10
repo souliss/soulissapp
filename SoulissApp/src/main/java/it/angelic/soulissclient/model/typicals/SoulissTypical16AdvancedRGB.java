@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -41,7 +42,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+		ArrayList<SoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand( this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
@@ -165,7 +166,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
+			textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 			textStatusVal.setTextColor(getColor());

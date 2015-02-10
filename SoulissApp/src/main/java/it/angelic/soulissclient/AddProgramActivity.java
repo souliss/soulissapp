@@ -160,7 +160,7 @@ public class AddProgramActivity extends Activity {
             int tot = outputTypicalSpinner.getCount();
             for (int i = 0; i < tot; i++) {
                 SoulissTypical now = (SoulissTypical) outputTypicalSpinner.getItemAtPosition(i);
-                if (now.getTypicalDTO().getSlot() == collected.getCommandDTO().getSlot()) {
+                if (now.getSlot() == collected.getCommandDTO().getSlot()) {
                     //seleziono la scena da eseguire
                     outputTypicalSpinner.setSelection(i);
                     Log.i(Constants.TAG, "SELECTED TYP:" + i);
@@ -206,7 +206,7 @@ public class AddProgramActivity extends Activity {
             Log.d(Constants.TAG, "Setting trigger nodeid:" + inputTrigger.getInputNodeId() + " slot:" + inputTrigger.getInputSlot());
             setTypicalSpinner(triggeredTypicalSpinner, nodiArray[inputTrigger.getInputNodeId()]);
             for (int u = 0;u<triggeredTypicalSpinner.getCount();u++){
-                if( inputTrigger.getInputSlot() == ((SoulissTypical)triggeredTypicalSpinner.getItemAtPosition(u)).getTypicalDTO().getSlot())
+                if( inputTrigger.getInputSlot() == ((SoulissTypical)triggeredTypicalSpinner.getItemAtPosition(u)).getSlot())
                     triggeredTypicalSpinner.setSelection(u);
             }
             threshValEditText.setText(String.valueOf(inputTrigger.getThreshVal()));
@@ -268,7 +268,7 @@ public class AddProgramActivity extends Activity {
                     //le scene non hanno comandi
                     List<SoulissTypical> re = mynode
                             .getActiveTypicals(AddProgramActivity.this);
-                    Log.d(Constants.TAG, "hack nodeId:" + re.get(pos).getTypicalDTO().getNodeId());
+                    Log.d(Constants.TAG, "hack nodeId:" + re.get(pos).getNodeId());
                     fillCommandSpinner(outputCommandSpinner, re.get(pos));
                 } else {
                     fillSceneCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
@@ -453,9 +453,9 @@ public class AddProgramActivity extends Activity {
                     //MERGE
                     if (inputTrigger != null)
                         trigger.setTriggerId(inputTrigger.getTriggerId());
-                    trigger.setInputNodeId(trig.getTypicalDTO().getNodeId());
+                    trigger.setInputNodeId(trig.getNodeId());
 
-                    trigger.setInputSlot(trig.getTypicalDTO().getSlot());
+                    trigger.setInputSlot(trig.getSlot());
                     trigger.setOp(threshButton.getText().toString());
                     trigger.setCommandId(programToSave.getCommandDTO().getCommandId());
                     trigger.setThreshVal(Integer.parseInt(threshValEditText.getText().toString()));
@@ -533,7 +533,7 @@ public class AddProgramActivity extends Activity {
      */
     private void fillNodeSpinnerWithExtra(Spinner tgt) {
         // spinner popolato in base nodeArray
-        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<SoulissNode>(this, android.R.layout.simple_spinner_item,
+        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 nodiArrayWithExtra);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tgt.setAdapter(adapter);
@@ -546,7 +546,7 @@ public class AddProgramActivity extends Activity {
      */
     private void fillNodeSpinner(Spinner tgt) {
         // spinner popolato in base nodeArray
-        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<SoulissNode>(this, android.R.layout.simple_spinner_item,
+        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 nodiArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tgt.setAdapter(adapter);
@@ -561,7 +561,7 @@ public class AddProgramActivity extends Activity {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
                 ref.getActiveTypicals(this).toArray(strArray);
 
-                ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(this,
+                ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<>(this,
                         android.R.layout.simple_spinner_item, strArray);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -574,7 +574,7 @@ public class AddProgramActivity extends Activity {
 
             SoulissScene[] strArray = new SoulissScene[scenes.size()];
             strArray = scenes.toArray(strArray);
-            ArrayAdapter<SoulissScene> adapter = new ArrayAdapter<SoulissScene>(this,
+            ArrayAdapter<SoulissScene> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, strArray);
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -602,7 +602,7 @@ public class AddProgramActivity extends Activity {
         SoulissCommand[] strArray = new SoulissCommand[cmds.size()];
         cmds.toArray(strArray);
         Log.d(Constants.TAG, "Filled commandspinner, nodeId :" + strArray[0].getCommandDTO().getNodeId());
-        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<SoulissCommand>(this,
+        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, strArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -622,7 +622,7 @@ public class AddProgramActivity extends Activity {
         ISoulissExecutable[] strArray = new SoulissScene[1];
         strArray[0] = ref;
 
-        ArrayAdapter<ISoulissExecutable> adapter = new ArrayAdapter<ISoulissExecutable>(this,
+        ArrayAdapter<ISoulissExecutable> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, strArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

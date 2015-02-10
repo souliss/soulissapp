@@ -145,7 +145,7 @@ public class SoulissWidgetConfig extends Activity {
                 editor.putInt(mAppWidgetId + "_SLOT", toExec.getId());
             } else if (IToSave instanceof SoulissCommand) {
                 ccm = (SoulissCommand) IToSave;
-                editor.putInt(mAppWidgetId + "_SLOT", (ccm).getParentTypical().getTypicalDTO().getSlot());
+                editor.putInt(mAppWidgetId + "_SLOT", (ccm).getParentTypical().getSlot());
                 editor.putLong(mAppWidgetId + "_CMD", (ccm).getCommandDTO().getCommand());
             } else if (IToSave == null) {
                 Toast.makeText(context, getString(R.string.widget_cantsave), Toast.LENGTH_LONG).show();
@@ -188,7 +188,7 @@ public class SoulissWidgetConfig extends Activity {
      */
     private void fillNodeSpinner(Spinner tgt) {
         // spinner popolato in base nodeArray
-        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<SoulissNode>(this, android.R.layout.simple_spinner_item,
+        ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 nodiArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tgt.setAdapter(adapter);
@@ -206,7 +206,7 @@ public class SoulissWidgetConfig extends Activity {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
                 ref.getActiveTypicals(this).toArray(strArray);
 
-                ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<SoulissTypical>(this,
+                ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<>(this,
                         android.R.layout.simple_spinner_item, strArray);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -216,7 +216,7 @@ public class SoulissWidgetConfig extends Activity {
 
                 SoulissScene[] strArray = new SoulissScene[scenes.size()];
                 strArray = scenes.toArray(strArray);
-                ArrayAdapter<SoulissScene> adapter = new ArrayAdapter<SoulissScene>(this,
+                ArrayAdapter<SoulissScene> adapter = new ArrayAdapter<>(this,
                         android.R.layout.simple_spinner_item, strArray);
 
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -243,7 +243,7 @@ public class SoulissWidgetConfig extends Activity {
         ref.getCommands(this).toArray(strArray);
         // SoulissCommand[] etichette = new SoulissCommand[strArray.length];
 
-        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<SoulissCommand>(this,
+        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, strArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -263,7 +263,7 @@ public class SoulissWidgetConfig extends Activity {
         ISoulissExecutable[] strArray = new SoulissScene[1];
         strArray[0] = ref;
 
-        ArrayAdapter<ISoulissExecutable> adapter = new ArrayAdapter<ISoulissExecutable>(this,
+        ArrayAdapter<ISoulissExecutable> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, strArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -143,7 +143,6 @@ public class T4nFragment extends Fragment {
 		}
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
 		collected.setPrefs(opzioni);
-		collected.setCtx(getActivity());
 		if (Constants.versionNumber >= 11) {
 			ActionBar actionBar = getActivity().getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);

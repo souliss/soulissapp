@@ -60,8 +60,6 @@ public class SoulissWidget extends AppWidgetProvider {
             db.open();
             if (node > Constants.MASSIVE_NODE_ID) {
                 final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
-                tgt.setCtx(context);
-
                 if (!name.equals(""))
                     updateViews.setTextViewText(R.id.button1, name);
                 else
@@ -154,8 +152,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     db.open();
                     if (node > Constants.MASSIVE_NODE_ID) {
                         final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
-                        tgt.setCtx(context);
-                        UDPHelper.pollRequest(opzioni, 1, tgt.getTypicalDTO().getNodeId());
+                        UDPHelper.pollRequest(opzioni, 1, tgt.getNodeId());
                         final SoulissCommand cmdd = new SoulissCommand(tgt);
                         cmdd.getCommandDTO().setCommand(cmd);
                         // se comando non vuoto
@@ -164,6 +161,7 @@ public class SoulissWidget extends AppWidgetProvider {
                         }
                     } else if (node == Constants.MASSIVE_NODE_ID) {
                         SoulissCommandDTO dto = new SoulissCommandDTO();
+                        UDPHelper.pollRequest(opzioni, db.countNodes(), 0);
                         dto.setNodeId(node);
                         dto.setSlot(slot);
                         if (cmd != -3) {
@@ -174,6 +172,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     } else if (node == Constants.COMMAND_FAKE_SCENE) {
                         SoulissScene targrt = db.getScenes(context, slot);
                         targrt.execute();
+                        UDPHelper.pollRequest(opzioni, db.countNodes(), 0);
                     }
 
 

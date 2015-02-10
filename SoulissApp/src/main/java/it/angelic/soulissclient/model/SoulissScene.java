@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.model;
 
+import android.support.annotation.DrawableRes;
 import android.util.Log;
 
 import it.angelic.soulissclient.Constants;
@@ -27,11 +28,6 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
 		//this.parentTypical = parentTypical;
 	}
 
-	public int getType() {
-		// typ o normal ?? rivedere politica comandi multipli
-		return 666;
-	}
-
 	@Override
 	public String toString() {
 		return getNiceName();
@@ -45,13 +41,18 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
 		this.name = name;
 	}
 
-	public int getId() {
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
 		return Id;
 	}
-	public int getDefaultIconResourceId() {
+	public @DrawableRes int getDefaultIconResourceId() {
 		return iconId;
 	}
-	public void setIconResourceId(int itemResId) {
+	public void setIconResourceId(@DrawableRes int itemResId) {
 		iconId = itemResId;
 	}
 	public ArrayList<SoulissCommand> getCommandArray() {

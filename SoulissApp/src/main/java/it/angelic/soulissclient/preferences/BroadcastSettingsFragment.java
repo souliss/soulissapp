@@ -86,7 +86,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
 		sndBcast.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
 
-				final List<Byte> bcastPayload = new ArrayList<Byte>();
+				final List<Byte> bcastPayload = new ArrayList<>();
 				bcastPayload.add(Constants.Souliss_UDP_function_broadcast_configure);
 
 				try {

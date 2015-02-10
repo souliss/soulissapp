@@ -358,13 +358,11 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 	            }
 	            prefEdit.commit();
 	        res = true;         
-	    } catch (FileNotFoundException e) {
+	    } catch (FileNotFoundException | ClassNotFoundException e) {
 	        e.printStackTrace();
 	    } catch (IOException e) {
 	        e.printStackTrace();
-	    } catch (ClassNotFoundException e) {
-	        e.printStackTrace();
-	    }finally {
+	    } finally {
 	        try {
 	            if (input != null) {
 	                input.close();

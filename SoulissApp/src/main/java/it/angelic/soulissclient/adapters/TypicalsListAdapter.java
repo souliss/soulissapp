@@ -36,10 +36,10 @@ public class TypicalsListAdapter extends BaseAdapter {
 		this.context = context;
 		this.tipici = versio;
 		
-		for (int i = 0; i < versio.length; i++) {
+		/*for (int i = 0; i < versio.length; i++) {
 			if (versio[i].getCtx() == null)
 				throw new RuntimeException("Non dovrebbe essere nullo, controlla il giro");
-		}
+		}*/
 		
 		opzioni = op;
 		parentIntent = forExtra;

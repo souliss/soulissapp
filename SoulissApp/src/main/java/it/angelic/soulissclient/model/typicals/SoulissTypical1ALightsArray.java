@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.model.typicals;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.ColorRes;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -48,7 +50,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// NO COMMANDS
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+		ArrayList<SoulissCommand> ret = new ArrayList<>();
 
 		return ret;
 
@@ -80,11 +82,11 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		return ((getTypicalDTO().getOutput() & (1L << bitNum)) != 0);
 	}
 
-	public int bitColor(int bitNum) {
+	public @ColorRes int bitColor(int bitNum) {
 		if (isnThOn(bitNum))
-			return getCtx().getResources().getColor(R.color.std_green);
+			return SoulissClient.getAppContext().getResources().getColor(R.color.std_green);
 		else
-			return getCtx().getResources().getColor(R.color.std_red);
+			return SoulissClient.getAppContext().getResources().getColor(R.color.std_red);
 	}
 
 	@Override
@@ -125,7 +127,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		textStatusVal.setGravity(Gravity.TOP);
 		textStatusVal.setBackgroundResource(0);
 		textStatusVal.setText(str, BufferType.SPANNABLE);
-		textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_PX,getCtx().getResources().getDimensionPixelSize(R.dimen.text_size_vbig) );
+		textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_PX,SoulissClient.getAppContext().getResources().getDimensionPixelSize(R.dimen.text_size_vbig) );
 		//textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 	}
 
@@ -133,10 +135,10 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil
 				|| typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback)
-			return ctx.getString(R.string.ON);
+			return SoulissClient.getAppContext().getString(R.string.ON);
 		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil
 				|| typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback)
-			return ctx.getString(R.string.OFF);
+			return SoulissClient.getAppContext().getString(R.string.OFF);
 		else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
 			return "" + typicalDTO.getOutput();
 		// return ctx.getString(R.string.Souliss_TRGB_sleep);

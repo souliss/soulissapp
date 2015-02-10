@@ -231,8 +231,8 @@ public class SoulissDBHelper {
      * @return
      */
     public List<SoulissTypical> getUniqueTypicals(SoulissNode parent) {
-        ArrayList<SoulissTypical> comments = new ArrayList<SoulissTypical>();
-        HashSet<Short> pool = new HashSet<Short>();
+        ArrayList<SoulissTypical> comments = new ArrayList<>();
+        HashSet<Short> pool = new HashSet<>();
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, null, null, null, null,
                 null);
         cursor.moveToFirst();
@@ -260,7 +260,7 @@ public class SoulissDBHelper {
 
     public List<SoulissTypical> getNodeTypicals(SoulissNode parent) {
 
-        List<SoulissTypical> comments = new ArrayList<SoulissTypical>();
+        List<SoulissTypical> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getId(), null, null, null, null);
         cursor.moveToFirst();
@@ -281,10 +281,10 @@ public class SoulissDBHelper {
     }
 
     public ArrayList<SoulissLogDTO> getTypicalLogs(SoulissTypical tgt) {
-        ArrayList<SoulissLogDTO> comments = new ArrayList<SoulissLogDTO>();
+        ArrayList<SoulissLogDTO> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_LOGS, SoulissDB.ALLCOLUMNS_LOGS, SoulissDB.COLUMN_LOG_NODE_ID
-                + " = " + tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                + tgt.getTypicalDTO().getSlot(), null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
+                + " = " + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+                + tgt.getSlot(), null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissLogDTO dto = new SoulissLogDTO(cursor);
@@ -303,7 +303,7 @@ public class SoulissDBHelper {
      * @return
      */
     public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(SoulissTypical tgt, int range) {
-        HashMap<Date, SoulissHistoryGraphData> comments = new HashMap<Date, SoulissHistoryGraphData>();
+        HashMap<Date, SoulissHistoryGraphData> comments = new HashMap<>();
 
         Date dff;
         String limitCause = "";
@@ -382,7 +382,7 @@ public class SoulissDBHelper {
      * @return
      */
     public LinkedHashMap<Date, Short> getHistoryTypicalHashMap(SoulissTypical tgt, TimeRangeEnum range) {
-        LinkedHashMap<Date, Short> comments = new LinkedHashMap<Date, Short>();
+        LinkedHashMap<Date, Short> comments = new LinkedHashMap<>();
 
         Date dff;
         Short how;
@@ -447,7 +447,7 @@ public class SoulissDBHelper {
      * @return
      */
     public SparseArray<SoulissGraphData> getGroupedTypicalLogs(SoulissTypical tgt, String groupBy, int range) {
-        SparseArray<SoulissGraphData> comments = new SparseArray<SoulissGraphData>();
+        SparseArray<SoulissGraphData> comments = new SparseArray<>();
         String limitCause = "";
         Calendar now = Calendar.getInstance();
         switch (range) {
@@ -515,9 +515,9 @@ public class SoulissDBHelper {
 
                 SoulissDB.COLUMN_LOG_NODE_ID
                         + " = "// selection
-                        + tgt.getTypicalDTO().getNodeId() + " AND " +
+                        + tgt.getNodeId() + " AND " +
                         SoulissDB.COLUMN_LOG_SLOT + " = "
-                        + tgt.getTypicalDTO().getSlot() + limitCause + " ",
+                        + tgt.getSlot() + limitCause + " ",
 
                 null,// String[] selectionArgs
 
@@ -564,7 +564,7 @@ public class SoulissDBHelper {
     }
 
     public List<SoulissTypical> getAntiTheftSensors() {
-        List<SoulissTypical> comments = new ArrayList<SoulissTypical>();
+        List<SoulissTypical> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL + " = "
                         + it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null,
@@ -661,7 +661,7 @@ public class SoulissDBHelper {
     }
 
     public List<SoulissNode> getAllNodes() {
-        List<SoulissNode> comments = new ArrayList<SoulissNode>();
+        List<SoulissNode> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, null, null, null, null,
                 SoulissDB.COLUMN_NODE_ID);
         cursor.moveToFirst();
@@ -692,8 +692,16 @@ public class SoulissDBHelper {
         return count;
     }
 
+    public int countNodes() {
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_NODES, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
     public List<SoulissTrigger> getAllTriggers(Context context) {
-        List<SoulissTrigger> ret = new ArrayList<SoulissTrigger>();
+        List<SoulissTrigger> ret = new ArrayList<>();
         // Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS,
         // SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,null);
         // String MY_QUERY =
@@ -744,7 +752,7 @@ public class SoulissDBHelper {
      * @return
      */
     public SparseArray<SoulissTriggerDTO> getTriggerMap(Context ct) {
-        SparseArray<SoulissTriggerDTO> ret = new SparseArray<SoulissTriggerDTO>();
+        SparseArray<SoulissTriggerDTO> ret = new SparseArray<>();
 
         Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,
                 null);
@@ -762,7 +770,7 @@ public class SoulissDBHelper {
     }
 
     public LinkedList<SoulissCommand> getUnexecutedCommands(Context context) {
-        LinkedList<SoulissCommand> ret = new LinkedList<SoulissCommand>();
+        LinkedList<SoulissCommand> ret = new LinkedList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, " ("
                         + SoulissDB.COLUMN_COMMAND_EXECTIME + " is null OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
                         + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
@@ -779,7 +787,7 @@ public class SoulissDBHelper {
             SoulissCommand adding = null;
             if (node > Constants.MASSIVE_NODE_ID) {
                 SoulissTypical tgt = getSoulissTypical(node, slot);
-                tgt.setCtx(context);
+                //hack nodeId, Massive
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
                 adding = new SoulissCommand(comment, tgt);
@@ -806,7 +814,7 @@ public class SoulissDBHelper {
     }
 
     public ArrayList<SoulissCommand> getSceneCommands(Context context, int sceneId) {
-        ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+        ArrayList<SoulissCommand> ret = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS,
                 SoulissDB.COLUMN_COMMAND_SCENEID + " =" + sceneId, null, null, null,
                 SoulissDB.COLUMN_COMMAND_SCHEDTIME_INTERVAL);
@@ -822,14 +830,12 @@ public class SoulissDBHelper {
             SoulissCommand adding;
             if (node > Constants.MASSIVE_NODE_ID) {
                 SoulissTypical tgt = getSoulissTypical(node, slot);
-                tgt.setCtx(context);
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
                 adding = new SoulissCommand(comment, tgt);
                 // comando massivo
             } else {
                 SoulissTypical tgt = new SoulissTypical(opts);
-                tgt.setCtx(context);
                 assertEquals(true, (node == Constants.MASSIVE_NODE_ID));
                 // in caso di comando massivo, SLOT = TYPICAL
                 tgt.getTypicalDTO().setTypical(slot);
@@ -843,7 +849,7 @@ public class SoulissDBHelper {
     }
 
     public LinkedList<SoulissScene> getScenes(Context context) {
-        LinkedList<SoulissScene> ret = new LinkedList<SoulissScene>();
+        LinkedList<SoulissScene> ret = new LinkedList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, null, null, null, null,
                 SoulissDB.COLUMN_SCENE_ID);
         cursor.moveToFirst();
@@ -878,7 +884,7 @@ public class SoulissDBHelper {
     }
 
     public LinkedList<SoulissCommand> getPositionalPrograms(Context soulissDataService) {
-        LinkedList<SoulissCommand> ret = new LinkedList<SoulissCommand>();
+        LinkedList<SoulissCommand> ret = new LinkedList<>();
         Cursor cursor = database
                 .query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, SoulissDB.COLUMN_COMMAND_TYPE + " = "
                         + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " = "

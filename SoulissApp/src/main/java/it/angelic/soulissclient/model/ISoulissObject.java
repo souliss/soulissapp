@@ -13,7 +13,7 @@ public interface ISoulissObject {
 	public int getDefaultIconResourceId();
 	
 	public void setName(String newName);
-	
+    public String getName();
 	
 	public String getNiceName();
 }

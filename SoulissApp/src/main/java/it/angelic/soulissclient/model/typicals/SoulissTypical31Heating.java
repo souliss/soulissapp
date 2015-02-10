@@ -67,7 +67,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+		ArrayList<SoulissCommand> ret = new ArrayList<>();
 
 		return ret;
 	}
@@ -92,11 +92,11 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		textStatusVal.setText(getOutputDesc());
 		if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
 				|| "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_red));
+			textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 
-			textStatusVal.setTextColor(ctx.getResources().getColor(R.color.std_green));
+			textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 		}
 	}

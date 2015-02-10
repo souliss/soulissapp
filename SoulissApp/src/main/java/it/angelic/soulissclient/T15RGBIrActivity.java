@@ -139,7 +139,6 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		collected = (SoulissTypical15) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical15);
 
-		collected.setCtx(this);
 
 		// upcast
 		// Integer status =
@@ -276,7 +275,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 					List<SoulissTypical> tips = temrp.getTypicals();
 
 					for (SoulissTypical soulissTypical : tips) {
-						if (soulissTypical.getTypicalDTO().getSlot() == collected.getTypicalDTO().getSlot()) {
+						if (soulissTypical.getSlot() == collected.getSlot()) {
 							collected = soulissTypical;
 							// collected.getTypicalDTO().setOutput(soulissTypical.getTypicalDTO().getOutput());
 							// collected.getTypicalDTO().setRefreshedAt(soulissTypical.getTypicalDTO().getRefreshedAt());

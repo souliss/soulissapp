@@ -294,7 +294,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                 Thread.sleep(3000);
                                 db.open();
 
-                                Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
+                                Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
 
                                 List<SoulissNode> ref = db.getAllNodes();
                                 for (SoulissNode soulissNode : ref) {

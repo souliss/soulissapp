@@ -137,7 +137,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		}
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
 		collected.setPrefs(opzioni);
-		collected.setCtx(getActivity());
 
 		super.setCollected(collected);
 		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
@@ -164,7 +163,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
 		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
-		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
+		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
 		if (opzioni.isLogHistoryEnabled()) {
             refreshHistoryInfo();
 		}
@@ -175,9 +174,9 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
 				Short cmd = (Short) v.getTag();
-				if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil) {
+				if (collected.getOutput() == Souliss_T1n_OnCoil) {
 					shutoff();
-				} else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil) {
+				} else if (collected.getOutput() == Souliss_T1n_OffCoil) {
 					turnOn(0);
 				} else {
 					Log.e(Constants.TAG, "OUTPUT Error");
@@ -193,11 +192,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 				Thread t = new Thread() {
 					public void run() {
 						if (togMassive.isChecked())
-							UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni,
+							UDPHelper.issueMassiveCommand("" + collected.getTypical(), opzioni,
 									String.valueOf(Souliss_T1n_AutoCmd));
 						else
-							UDPHelper.issueSoulissCommand("" + collected.getTypicalDTO().getNodeId(), ""
-									+ collected.getTypicalDTO().getSlot(), opzioni,
+							UDPHelper.issueSoulissCommand("" + collected.getNodeId(), ""
+									+ collected.getSlot(), opzioni,
 									String.valueOf(Souliss_T1n_AutoCmd));
 					}
 				};
@@ -233,11 +232,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 			autoInfo.setVisibility(View.GONE);
 		}
 		// sfondo bottone
-		if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil
-				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil_Auto)
+		if (collected.getOutput() == Souliss_T1n_OnCoil
+				|| collected.getOutput() == Souliss_T1n_OnCoil_Auto)
 			buttPlus.setBackgroundResource(R.drawable.bulb_on);
-		else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil
-				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil_Auto)
+		else if (collected.getOutput() == Souliss_T1n_OffCoil
+				|| collected.getOutput() == Souliss_T1n_OffCoil_Auto)
 			buttPlus.setBackgroundResource(R.drawable.bulb_off);
 
 		return ret;
@@ -271,11 +270,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 			public void run() {
 				Looper.prepare();
 				if (togMassive.isChecked())
-					UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni, ""
+					UDPHelper.issueMassiveCommand("" + collected.getTypical(), opzioni, ""
 							+ (Souliss_T1n_OffCmd));
 				else
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-							+ collected.getTypicalDTO().getSlot(), opzioni,""
+							+ collected.getSlot(), opzioni,""
 							+ (Souliss_T1n_OffCmd));
 
 			}
@@ -294,11 +293,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 				Looper.prepare();
 
 				if (togMassive.isChecked())
-					UDPHelper.issueMassiveCommand("" + collected.getTypicalDTO().getTypical(), opzioni, ""
+					UDPHelper.issueMassiveCommand("" + collected.getTypical(), opzioni, ""
 							+ (Souliss_T1n_OnCmd + i));
 				else
 					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
-							+ collected.getTypicalDTO().getSlot(), opzioni, ""
+							+ collected.getSlot(), opzioni, ""
 							+ (Souliss_T1n_OnCmd + i));
 
 			}
@@ -329,7 +328,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-				NodeDetailFragment details = NodeDetailFragment.newInstance(collected.getTypicalDTO().getNodeId(),
+				NodeDetailFragment details = NodeDetailFragment.newInstance(collected.getNodeId(),
 						collected.getParentNode());
 				// Execute a transaction, replacing any existing fragment
 				// with this one inside the frame.
@@ -381,16 +380,16 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 			try {
 				Log.i(Constants.TAG, "Broadcast received, intent" + intent.toString());
 				datasource.open();
-				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
-				collected = coll.getTypical(collected.getTypicalDTO().getSlot());
-				if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil)
+				SoulissNode coll = datasource.getSoulissNode(collected.getNodeId());
+				collected = coll.getTypical(collected.getSlot());
+				if (collected.getOutput() == Souliss_T1n_OnCoil)
 					buttPlus.setBackgroundResource(R.drawable.bulb_on);
-				else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil)
+				else if (collected.getOutput() == Souliss_T1n_OffCoil)
 					buttPlus.setBackgroundResource(R.drawable.bulb_off);
-				else if (collected.getTypicalDTO().getOutput() >= Souliss_T1n_Timed) {
-					timer.setProgress(collected.getTypicalDTO().getOutput());
+				else if (collected.getOutput() >= Souliss_T1n_Timed) {
+					timer.setProgress(collected.getOutput().intValue());
 					buttPlus.setBackgroundResource(R.drawable.bulb_on);
-					timerInfo.setText("Cycles to shutoff: " + collected.getTypicalDTO().getOutput());
+					timerInfo.setText("Cycles to shutoff: " + collected.getOutput());
 				} else {
 					Log.w(Constants.TAG, "Unknown status");
 				}

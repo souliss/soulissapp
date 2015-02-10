@@ -145,7 +145,7 @@ public class CSVReader {
             return null;
         }
 
-        List<String> tokensOnThisLine = new ArrayList<String>();
+        List<String> tokensOnThisLine = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
         boolean inQuotes = false;
         do {

@@ -83,7 +83,7 @@ public class JSONStatusHandler implements HttpRequestHandler {
 		if (target < 0)
 			nodes = db.getAllNodes();
 		else {
-			nodes = new ArrayList<SoulissNode>();
+			nodes = new ArrayList<>();
 			nodes.add(db.getSoulissNode(target));
 		}
 		JSONArray nodesArr = new JSONArray();

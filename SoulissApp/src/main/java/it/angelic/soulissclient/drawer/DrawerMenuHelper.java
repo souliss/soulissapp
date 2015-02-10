@@ -24,7 +24,7 @@ public class DrawerMenuHelper {
 	public static final int SETTINGS_UDPTEST=-8;
 
 	private INavDrawerItem[] getNodes() {
-		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();
+		ArrayList<INavDrawerItem> tmp = new ArrayList<>();
 
 		SoulissDBHelper db = new SoulissDBHelper(ctx);
 		db.open();
@@ -46,7 +46,7 @@ public class DrawerMenuHelper {
 	}
 	public INavDrawerItem[] getStuff(){
 		
-		ArrayList<INavDrawerItem> tmp = new ArrayList<INavDrawerItem>();	
+		ArrayList<INavDrawerItem> tmp = new ArrayList<>();
 		
 		NavMenuSection it = NavMenuSection.create(-9, "FUNZIONI");
 		tmp.add(it);

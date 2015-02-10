@@ -96,7 +96,6 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onStart() {
 		database = new SoulissDBHelper(this);
-		// TODO Auto-generated method stub
 		super.onStart();
 			ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

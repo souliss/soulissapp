@@ -83,7 +83,7 @@ public class VisualizerView extends View {
 																// fades
 		// mFadePaint.setXfermode(new PorterDuffXfermode(Mode.MULTIPLY));
 
-		mRenderers = new HashSet<Renderer>();
+		mRenderers = new HashSet<>();
 		mVisualizer = new Visualizer(0);
 		mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
 		// mVisualizer.

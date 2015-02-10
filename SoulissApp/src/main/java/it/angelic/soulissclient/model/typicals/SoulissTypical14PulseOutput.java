@@ -39,7 +39,7 @@ public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoul
 	@Override
 	public ArrayList<SoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<SoulissCommand>();
+		ArrayList<SoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand( this);
 		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);

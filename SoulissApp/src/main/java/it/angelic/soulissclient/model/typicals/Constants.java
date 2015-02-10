@@ -1,5 +1,7 @@
 package it.angelic.soulissclient.model.typicals;
 
+import android.util.Log;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -21,13 +23,9 @@ public class Constants {
 					ret.append(consts[i].getName() );
                     ret.append(" = ");
                     ret.append( consts[i].get(null) + "<br/>");
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} catch (Exception e) {
+                    Log.e(it.angelic.soulissclient.Constants.TAG, "Can't build parameter's list"+ e);
+                }
 			}
 		}
 		return ret.toString();

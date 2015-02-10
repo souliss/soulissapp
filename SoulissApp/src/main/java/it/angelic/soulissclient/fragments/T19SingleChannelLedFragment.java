@@ -196,7 +196,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical19AnalogChannel);
 		collected.setPrefs(opzioni);
-		collected.setCtx(getActivity());
 
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
@@ -394,8 +393,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// SoulissNode coll = datasource.getSoulissNode();
-			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
-					.getNodeId(), collected.getTypicalDTO().getSlot());
+			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected
+					.getNodeId(), collected.getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");
 			intensityReal = collected.getIntensity();

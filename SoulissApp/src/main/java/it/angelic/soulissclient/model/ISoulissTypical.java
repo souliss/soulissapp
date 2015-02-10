@@ -10,8 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public interface ISoulissTypical extends ISoulissObject {
+
+
+    public SoulissNode getParentNode();
+
+    public void setParentNode(SoulissNode parentNode);
+
 	/**
-	 * Has to be overridden in child typicals
+	 * Has to be overridden in child typicals to draw action buttons
 	 * 
 	 * @param ble
 	 * @param ctx

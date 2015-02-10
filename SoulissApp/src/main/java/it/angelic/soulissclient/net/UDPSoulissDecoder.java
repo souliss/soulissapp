@@ -83,7 +83,7 @@ public class UDPSoulissDecoder {
     public void decodeVNetDatagram(DatagramPacket packet) {
         int checklen = packet.getLength();
         // Log.d(Constants.TAG, "** Packet received");
-        ArrayList<Short> mac = new ArrayList<Short>();
+        ArrayList<Short> mac = new ArrayList<>();
         for (int ig = 7; ig < checklen; ig++) {
             mac.add((short) (packet.getData()[ig] & 0xFF));
         }
@@ -220,7 +220,7 @@ public class UDPSoulissDecoder {
             Log.i(Constants.TAG, "checked triggers: " + triggers.size());
             // logThings(refreshedNodes);
 
-            Map<Short, SoulissNode> refreshedNodes = new HashMap<Short, SoulissNode>();
+            Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
 
 			/* Check antifurto */
             for (SoulissNode soulissNode : ref) {
@@ -521,7 +521,7 @@ public class UDPSoulissDecoder {
         int tgtnode = mac.get(3);
         int numberOf = mac.get(4);
 
-        ArrayList<Short> healths = new ArrayList<Short>();
+        ArrayList<Short> healths = new ArrayList<>();
         // build an array containing healths
         for (int i = 5; i < 5 + numberOf; i++) {
             healths.add(Short.valueOf(mac.get(i)));

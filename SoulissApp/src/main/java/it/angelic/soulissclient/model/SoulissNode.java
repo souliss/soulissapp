@@ -1,8 +1,8 @@
 package it.angelic.soulissclient.model;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import android.content.Context;
+import android.content.res.Resources.NotFoundException;
+import android.database.Cursor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,12 +10,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import android.content.Context;
-import android.content.res.Resources.NotFoundException;
-import android.database.Cursor;
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
 
 /**
- * POJO used to represent a souliss node with its typicals
+ * Souliss Unit, the node
+ *
+ * It has a List of @SoulissTypical , and represents an actual arduino-like board
  *
  * @author Ale
  */
@@ -37,7 +39,12 @@ public class SoulissNode implements Serializable, ISoulissObject {
     public SoulissNode(short id) {
         super();
         this.id = id;
-        soulissTypicals = new ArrayList<SoulissTypical>();
+        soulissTypicals = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return getNiceName();
     }
 
     /**
@@ -69,6 +76,10 @@ public class SoulissNode implements Serializable, ISoulissObject {
         return health;
     }
 
+    public void setHealth(short health) {
+        this.health = health;
+    }
+
     public int getDefaultIconResourceId() {
         return iconId;
     }
@@ -79,6 +90,10 @@ public class SoulissNode implements Serializable, ISoulissObject {
 
     public short getId() {
         return id;
+    }
+
+    public void setId(short id) {
+        this.id = id;
     }
 
     public String getNiceName() {
@@ -94,15 +109,23 @@ public class SoulissNode implements Serializable, ISoulissObject {
         return refreshedAt;
     }
 
+    public void setRefreshedAt(Calendar refreshedAt) {
+        this.refreshedAt = refreshedAt;
+    }
+
     public List<SoulissTypical> getTypicals() {
         return soulissTypicals;
     }
 
+    public void setTypicals(List<SoulissTypical> soulissTypicals) {
+        this.soulissTypicals = soulissTypicals;
+    }
+
     public List<SoulissTypical> getActiveTypicals(Context context) {
-        ArrayList<SoulissTypical> copy = new ArrayList<SoulissTypical>();
+        ArrayList<SoulissTypical> copy = new ArrayList<>();
 
         for (SoulissTypical soulissTypical : soulissTypicals) {
-            soulissTypical.setCtx(context);
+            //soulissTypical.setCtx(context);
             if (!soulissTypical.isRelated() && !soulissTypical.isEmpty())
                 copy.add(soulissTypical);
         }
@@ -117,26 +140,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
         return getActiveTypicals(null);
     }
 
-    public void setHealth(short health) {
-        this.health = health;
-    }
-
-    public void setId(short id) {
-        this.id = id;
-    }
-
-    public void setName(String namer) {
-        name = namer;
-    }
-
-    public void setRefreshedAt(Calendar refreshedAt) {
-        this.refreshedAt = refreshedAt;
-    }
-
-    public void setTypicals(List<SoulissTypical> soulissTypicals) {
-        this.soulissTypicals = soulissTypicals;
-    }
-
     public SoulissTypical getTypical(short slot) throws NotFoundException {
         for (SoulissTypical soulissTypical : soulissTypicals) {
             if (soulissTypical.getTypicalDTO().getSlot() == slot)
@@ -146,13 +149,12 @@ public class SoulissNode implements Serializable, ISoulissObject {
 
     }
 
-    @Override
-    public String toString() {
-        return getNiceName();
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String namer) {
+        name = namer;
     }
 
 
