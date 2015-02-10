@@ -8,8 +8,8 @@
     </style>
 
     <style name="DarkThemeSelector" parent="Theme.AppCompat">
-        <item name="android:windowSharedElementEnterTransition">@transition/shared_element_enter</item>
-
+        <item name="android:windowSharedElementEnterTransition">@android:transition/slide_bottom</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="android:windowActivityTransitions">true</item>
     </style>
 

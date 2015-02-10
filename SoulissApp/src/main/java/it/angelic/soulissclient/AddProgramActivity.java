@@ -142,11 +142,6 @@ public class AddProgramActivity extends Activity {
                 }
             }
             tvcommand.setVisibility(View.INVISIBLE);
-            //   outputTypicalSpinner.setSelection(sceneid);
-            // } else if (collected.getCommandDTO().getNodeId() == Constants.MASSIVE_NODE_ID) {
-            //get last but one
-            //    outputNodeSpinner.setSelection(outputNodeSpinner.getAdapter().getCount() - 2);
-            //TODO selezione comando
         } else {//reload nodo, tipico e comando
             int nodeId = collected.getCommandDTO().getNodeId();
             Log.i(Constants.TAG, "SELECTED NODEID:" + nodeId);
@@ -183,7 +178,6 @@ public class AddProgramActivity extends Activity {
                     break;
                 }
             }
-
         }
         //SETTA TYPE
         if (collected.getType() == Constants.COMMAND_TIMED) {
@@ -215,9 +209,7 @@ public class AddProgramActivity extends Activity {
                 if( inputTrigger.getInputSlot() == ((SoulissTypical)triggeredTypicalSpinner.getItemAtPosition(u)).getTypicalDTO().getSlot())
                     triggeredTypicalSpinner.setSelection(u);
             }
-
             threshValEditText.setText(String.valueOf(inputTrigger.getThreshVal()));
-
             threshButton.setText(inputTrigger.getOp().toString());
         }
     }
@@ -502,7 +494,7 @@ public class AddProgramActivity extends Activity {
                     outputNodeSpinner.setOnItemSelectedListener(nodeSelectionListener);
                 }
             });
-            triggeredNodeSpinner.post(  new Runnable() {
+            triggeredNodeSpinner.post(new Runnable() {
                         public void run() {
                             triggeredNodeSpinner.setOnItemSelectedListener(triggeredNodeSpinnerListener);
                         }
