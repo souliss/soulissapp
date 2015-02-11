@@ -131,7 +131,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		holder.textslot.setText(tipici[position].getNiceName());
 		holder.textUpdated.setText(context.getString(R.string.update) + " "
 				+ Constants.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
-				+ context.getString(R.string.manual_slot) + ": " + tipici[position].getTypicalDTO().getSlot());
+				+ context.getString(R.string.manual_slot) + ": " + tipici[position].getSlot());
 		holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
 				+ ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
 				+ context.getResources().getString(R.string.status));

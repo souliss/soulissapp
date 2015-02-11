@@ -366,7 +366,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		datasource.open();
 		if (collected != null) {
 			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
-					.getNodeId(), collected.getTypicalDTO().getSlot());
+					.getNodeId(), collected.getSlot());
 			collected.issueRefresh();
 		}
 		IntentFilter filtere = new IntentFilter();

@@ -88,6 +88,7 @@
                 android:text="@string/addprogram_timed" />
 
             <ImageView
+                android:alpha="0.5"
                 android:id="@+id/timed_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,6 +152,7 @@
                 android:text="@string/addprogram_positional" />
 
             <ImageView
+                android:alpha="0.5"
                 android:id="@+id/position_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,6 +204,7 @@
                 android:text="@string/addprogram_sensorial_desc"
                 style="@style/CodeFontSmall" />
             <ImageView
+                android:alpha="0.5"
                 android:id="@+id/triggered_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

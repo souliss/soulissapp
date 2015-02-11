@@ -73,7 +73,7 @@ public class SoulissDataService extends Service implements LocationListener {
         crit.setPowerRequirement(Criteria.POWER_LOW);
         // riporta exec precedenti, non usare ora attuale
         lastupd.setTimeInMillis(opts.getServiceLastrun());
-        provider = locationManager.getBestProvider(crit, false);
+        provider = locationManager.getBestProvider(crit, true);
         db = new SoulissDBHelper(this);
 
 
@@ -452,7 +452,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             cmd.execute();
                             cmd.getCommandDTO().persistCommand(db);
                             sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
-                                    cmd.toString() + " " + cmd.getParentTypical().toString(), R.drawable.exit);
+                                    cmd.getNiceName() , R.drawable.exit);
                         }
 
                 }

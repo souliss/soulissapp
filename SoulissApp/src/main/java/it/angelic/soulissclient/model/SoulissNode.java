@@ -142,7 +142,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
 
     public SoulissTypical getTypical(short slot) throws NotFoundException {
         for (SoulissTypical soulissTypical : soulissTypicals) {
-            if (soulissTypical.getTypicalDTO().getSlot() == slot)
+            if (soulissTypical.getSlot() == slot)
                 return soulissTypical;
         }
         throw new NotFoundException("Slot " + slot + " not found on node " + getId());

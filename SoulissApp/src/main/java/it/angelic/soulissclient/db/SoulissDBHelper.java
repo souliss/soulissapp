@@ -329,8 +329,8 @@ public class SoulissDBHelper {
                         "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
                         "AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
                         "MAX(CAST(flologval AS FLOAT)) AS MAX"}, SoulissDB.COLUMN_LOG_NODE_ID + " = "
-                        + tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                        + tgt.getTypicalDTO().getSlot() + limitCause + " ", null,
+                        + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+                        + tgt.getSlot() + limitCause + " ", null,
                 "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))", null, "IDX ASC");
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -417,8 +417,8 @@ public class SoulissDBHelper {
                 //"MAX(CAST(flologval AS FLOAT)) AS MAX"
         }
                 , SoulissDB.COLUMN_LOG_NODE_ID + " = "
-                + tgt.getTypicalDTO().getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                + tgt.getTypicalDTO().getSlot() + limitCause + " ", null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
+                + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+                + tgt.getSlot() + limitCause + " ", null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {

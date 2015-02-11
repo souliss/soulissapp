@@ -2,6 +2,7 @@ package it.angelic.soulissclient.model;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -60,9 +61,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     }
 
     // FIXME ritorna alla cazzo, rivedere le icone dei comandi
-    public
-    @DrawableRes
-    int getIconResId() {
+    public @DrawableRes int getIconResId() {
         if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
             // comando massivo
             return R.drawable.arrowmove;
@@ -218,9 +217,9 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     }
 
     @Override
-    public String getName() {
+    public @StringRes String getName() {
         short typical;
-        if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
+        if (it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE == commandDTO.getNodeId()) {
             return "Scene execution";
         } else
             typical = parentTypical.getTypicalDTO().getTypical();

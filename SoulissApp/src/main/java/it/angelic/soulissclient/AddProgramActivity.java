@@ -90,13 +90,13 @@ public class AddProgramActivity extends Activity {
         spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
         ImageView nodeic = (ImageView) findViewById(R.id.timed_icon);
         tvcommand = (TextView) findViewById(R.id.textViewCommand);
-        // nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
+        nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
-        //ImageView nodeic2 = (ImageView) findViewById(R.id.position_icon);
-        //nodeic2.setColorFilter(getResources().getColor(R.color.aa_blue), android.graphics.PorterDuff.Mode.SRC_ATOP);
+        ImageView nodeic2 = (ImageView) findViewById(R.id.position_icon);
+        nodeic2.setColorFilter(getResources().getColor(R.color.aa_blue), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
-        // ImageView nodeic3 = (ImageView) findViewById(R.id.triggered_icon);
-        // nodeic3.setColorFilter(getResources().getColor(R.color.aa_red), android.graphics.PorterDuff.Mode.SRC_ATOP);
+         ImageView nodeic3 = (ImageView) findViewById(R.id.triggered_icon);
+         nodeic3.setColorFilter(getResources().getColor(R.color.aa_red), android.graphics.PorterDuff.Mode.SRC_ATOP);
 
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();

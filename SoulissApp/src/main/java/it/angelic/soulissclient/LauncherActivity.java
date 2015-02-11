@@ -144,9 +144,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundWebService = ((HTTPService.LocalBinder) service).getService();
             Log.i(TAG, "WEBSERVER connected");
-
-            setWebServiceInfo();
             mIsWebBound = true;
+            setWebServiceInfo();
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -177,7 +176,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     void doBindWebService() {
         //FIXME check flags, add BIND_NOT_FOREGROUND
         Log.d(TAG, "doBindWebService(), BIND_NOT_FOREGROUND.");
-        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_AUTO_CREATE);
+        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_NOT_FOREGROUND);
     }
 
     void doUnbindService() {
@@ -237,7 +236,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // Define the criteria how to select the locatioin provider
         criteria = new Criteria();
         criteria.setPowerRequirement(Criteria.POWER_LOW);
-
         // DRAWER
         dmh = new DrawerMenuHelper();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -552,9 +550,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
 		/* SERVICE MANAGEMENT */
         if (!opzioni.isWebserverEnabled()) {
-            if (mIsWebBound && mBoundWebService != null)
+            if (mIsWebBound && mBoundWebService != null) {
                 // in esecuzione? strano
                 mBoundWebService.stopSelf();
+            }
             webserviceInfo.setVisibility(View.GONE);
         } else {
             webserviceInfo.setVisibility(View.VISIBLE);
@@ -800,7 +799,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(criteria, true);
+        provider = locationManager.getBestProvider(criteria, false);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
         if (enabled) {
             coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
