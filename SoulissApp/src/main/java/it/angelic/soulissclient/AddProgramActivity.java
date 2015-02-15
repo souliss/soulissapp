@@ -458,7 +458,12 @@ public class AddProgramActivity extends Activity {
                     trigger.setInputSlot(trig.getSlot());
                     trigger.setOp(threshButton.getText().toString());
                     trigger.setCommandId(programToSave.getCommandDTO().getCommandId());
-                    trigger.setThreshVal(Integer.parseInt(threshValEditText.getText().toString()));
+                    try {
+                        trigger.setThreshVal(Float.parseFloat(threshValEditText.getText().toString()));
+                    } catch (Exception e){
+                        Log.e(Constants.TAG, "Can't parse threshold "+e.getMessage());
+                    }
+
 
                     trigger.persist(datasource);
                 }

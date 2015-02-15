@@ -1,19 +1,5 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.UDPHelper;
-import it.angelic.soulissclient.net.UDPRunnable;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -31,8 +17,23 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.net.UDPRunnable;
 
 public class SoulissDataService extends Service implements LocationListener {
     // LOGGA a parte
@@ -41,19 +42,188 @@ public class SoulissDataService extends Service implements LocationListener {
     // This is the object that receives interactions from clients. See
     // RemoteService for a more complete example.
     private final IBinder mBinder = new LocalBinder();
+    NotificationManager nm;
     private LocationManager locationManager;
     private Calendar lastupd = Calendar.getInstance();
     private Handler mHandler = new Handler();
-
     // private Timer timer = new Timer();
     private SoulissPreferenceHelper opts;
     // private long uir;
     private SoulissDBHelper db;
     private String provider;
     private float homeDist = 0;
-    NotificationManager nm;
     private String cached;
+    private Runnable mUpdateSoulissRunnable = new Runnable() {
+
+        public void run() {
+            // locationManager.requestSingleUpdate(provider, null);
+            Log.v(TAG,
+                    "Service run " + SoulissDataService.this.hashCode() + " backedoffInterval="
+                            + opts.getBackedOffServiceInterval());
+            opts = SoulissClient.getOpzioni();
+            if (!opts.isDbConfigured()) {
+                Log.w(TAG, "Database empty, closing service");
+                // mHandler.removeCallbacks(mUpdateSoulissRunnable);
+                reschedule(false);
+                // SoulissDataService.this.stopSelf();
+                return;
+            }
+            if (!opts.getCustomPref().contains("numNodi")) {
+                Log.w(TAG, "Souliss didn't answer yet, rescheduling");
+                // mHandler.removeCallbacks(mUpdateSoulissRunnable);
+                reschedule(false);
+                return;
+            }
+
+			/*
+             * if (uir != opts.getDataServiceInterval()) { uir =
+			 * opts.getDataServiceInterval(); Log.w(TAG, "pace changed: " +
+			 * opts.getDataServiceInterval()); }
+			 */
+            cached = opts.getAndSetCachedAddress();
+
+            final byte nodesNum = (byte) opts.getCustomPref().getInt("numNodi", 0);
+
+            if (opts.getCustomPref().contains("connection") && cached != null) {
+                if (cached.compareTo("") == 0
+                        || cached.compareTo(SoulissDataService.this.getResources().getString(R.string.unavailable)) == 0) {
+                    Log.e(TAG, "Souliss Unavailable, rescheduling");
+                    reschedule(false);
+                    // SoulissDataService.this.stopSelf();
+                    return;
+                }
+                // db.open();
+                float homeDistPrev = opts.getPrevDistance();
+                Log.i(TAG, "Previous distance " + homeDistPrev + " current: " + homeDist);
+                // PROGRAMMI POSIZIONALI /
+                if (homeDist != homeDistPrev) {
+                    processPositionalPrograms(homeDistPrev);
+                }
+
+                // Timed commands
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        db.open();
+                        LinkedList<SoulissCommand> unexecuted = db.getUnexecutedCommands(SoulissDataService.this);
+                        Log.i(TAG, "checked unexecuted commands: " + unexecuted.size());
+                        for (SoulissCommand unexnex : unexecuted) {
+                            Calendar now = Calendar.getInstance();
+                            if (unexnex.getType() == Constants.COMMAND_TIMED
+                                    && now.after(unexnex.getCommandDTO().getScheduledTime())) {
+                                // esegui comando
+                                Log.w(TAG, "issuing command: " + unexnex.toString());
+                                unexnex.execute();
+                                unexnex.getCommandDTO().persistCommand(db);
+                                // Se ricorsivo, ricrea
+                                if (unexnex.getCommandDTO().getInterval() > 0) {
+
+                                    SoulissCommand nc = new SoulissCommand(
+                                            unexnex.getParentTypical());
+                                    nc.getCommandDTO().setNodeId(unexnex.getCommandDTO().getNodeId());
+                                    nc.getCommandDTO().setSlot(unexnex.getCommandDTO().getSlot());
+                                    nc.getCommandDTO().setCommand(unexnex.getCommandDTO().getCommand());
+                                    nc.getCommandDTO().setInterval(unexnex.getCommandDTO().getInterval());
+                                    Calendar cop = Calendar.getInstance();
+                                    cop.add(Calendar.SECOND, unexnex.getCommandDTO().getInterval());
+                                    nc.getCommandDTO().setScheduledTime(cop);
+                                    nc.getCommandDTO().persistCommand(db);
+                                    Log.w(TAG, "recreate recursive command");
+                                }
+                                sendNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
+                                        unexnex.toString() + " " + unexnex.getParentTypical().toString(),
+                                        R.drawable.clock, unexnex);
+                            }
+                        }
+                        // db.close();
+                    }
+                }).start();
+
+				/* SENSORS REFRESH THREAD */
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+						/*
+						 * finally { db.close(); }
+						 */
+
+                        // spostato per consentire comandi manuali
+                        if (!opts.isDataServiceEnabled()) {
+                            Log.w(TAG, "Service disabled, is not going to be re-scheduled");
+                            mHandler.removeCallbacks(mUpdateSoulissRunnable);
+                            // SoulissDataService.this.stopSelf();
+                            return;
+                        } else {
+                            // refresh della subscription
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.i(TAG, "issuing subscribe, numnodes=" + nodesNum);
+                                    UDPHelper.stateRequest(opts, nodesNum, 0);
+                                }
+                            }).start();
+
+                            try {
+                                // ritarda il logging
+                                Thread.sleep(3000);
+                                db.open();
+
+                                Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
+
+                                List<SoulissNode> ref = db.getAllNodes();
+                                for (SoulissNode soulissNode : ref) {
+                                    refreshedNodes.put(soulissNode.getId(), soulissNode);
+                                }
+                                Log.v(TAG, "logging nodes:" + nodesNum);
+                                // issueRefreshSensors(ref, refreshedNodes);
+                                logThings(refreshedNodes);
+
+                                // try a local reach, just in case ..
+                                UDPHelper.checkSoulissUdp(2000, opts, opts.getPrefIPAddress());
+
+                            } catch (Exception e) {
+                                Log.e(TAG, "Service error, scheduling again ", e);
+                            }
+
+                            Log.i(TAG, "Service end run" + SoulissDataService.this.hashCode());
+                            setLastupd(Calendar.getInstance());
+                            reschedule(false);
+                        }
+
+                    }
+
+                }).start();
+
+            } else {// NO CONNECTION, NO NODES!!
+                Intent i = new Intent();
+                i.setAction(Constants.CUSTOM_INTENT);
+                setLastupd(Calendar.getInstance());
+                getApplicationContext().sendBroadcast(i);
+                reschedule(false);
+            }
+        }
+
+    };
     private Thread udpThread;
+
+    public static void sendNotification(Context ctx, String desc, String longdesc, int icon, @Nullable SoulissCommand ppr) {
+
+
+        Intent notificationIntent = new Intent(ctx, AddProgramActivity.class);
+        if (ppr != null)
+            notificationIntent.putExtra("PROG", ppr);
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
+        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Resources res = ctx.getResources();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+
+        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
+                .setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker("Souliss program activated")
+                .setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
+        Notification n = builder.build();
+        nm.notify(665, n);
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -162,175 +332,12 @@ public class SoulissDataService extends Service implements LocationListener {
         opts.setLastServiceRun(lastupd);
     }
 
-    /**
-     * Class for clients to access. Because we know this service always runs in
-     * the same process as its clients, we don't need to deal with IPC.
-     */
-    public class LocalBinder extends Binder {
-        public SoulissDataService getService() {
-            return SoulissDataService.this;
-        }
-    }
-
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         Log.w(TAG, "Low memory, schedule a reserve task");
         mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec() + 1000000);
     }
-
-    private Runnable mUpdateSoulissRunnable = new Runnable() {
-
-        public void run() {
-            // locationManager.requestSingleUpdate(provider, null);
-            Log.v(TAG,
-                    "Service run " + SoulissDataService.this.hashCode() + " backedoffInterval="
-                            + opts.getBackedOffServiceInterval());
-            opts = SoulissClient.getOpzioni();
-            if (!opts.isDbConfigured()) {
-                Log.w(TAG, "Database empty, closing service");
-                // mHandler.removeCallbacks(mUpdateSoulissRunnable);
-                reschedule(false);
-                // SoulissDataService.this.stopSelf();
-                return;
-            }
-            if (!opts.getCustomPref().contains("numNodi")) {
-                Log.w(TAG, "Souliss didn't answer yet, rescheduling");
-                // mHandler.removeCallbacks(mUpdateSoulissRunnable);
-                reschedule(false);
-                return;
-            }
-
-			/*
-			 * if (uir != opts.getDataServiceInterval()) { uir =
-			 * opts.getDataServiceInterval(); Log.w(TAG, "pace changed: " +
-			 * opts.getDataServiceInterval()); }
-			 */
-            cached = opts.getAndSetCachedAddress();
-
-            final byte nodesNum = (byte) opts.getCustomPref().getInt("numNodi", 0);
-
-            if (opts.getCustomPref().contains("connection") && cached != null) {
-                if (cached.compareTo("") == 0
-                        || cached.compareTo(SoulissDataService.this.getResources().getString(R.string.unavailable)) == 0) {
-                    Log.e(TAG, "Souliss Unavailable, rescheduling");
-                    reschedule(false);
-                    // SoulissDataService.this.stopSelf();
-                    return;
-                }
-                // db.open();
-                float homeDistPrev = opts.getPrevDistance();
-                Log.i(TAG, "Previous distance " + homeDistPrev + " current: " + homeDist);
-                // PROGRAMMI POSIZIONALI /
-                if (homeDist != homeDistPrev) {
-                    processPositionalPrograms(homeDistPrev);
-                }
-
-                // Timed commands
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        db.open();
-                        LinkedList<SoulissCommand> unexecuted = db.getUnexecutedCommands(SoulissDataService.this);
-                        Log.i(TAG, "checked unexecuted commands: " + unexecuted.size());
-                        for (SoulissCommand unexnex : unexecuted) {
-                            Calendar now = Calendar.getInstance();
-                            if (unexnex.getType() == Constants.COMMAND_TIMED
-                                    && now.after(unexnex.getCommandDTO().getScheduledTime())) {
-                                // esegui comando
-                                Log.w(TAG, "issuing command: " + unexnex.toString());
-                                unexnex.execute();
-                                unexnex.getCommandDTO().persistCommand(db);
-                                // Se ricorsivo, ricrea
-                                if (unexnex.getCommandDTO().getInterval() > 0) {
-
-                                    SoulissCommand nc = new SoulissCommand(
-                                            unexnex.getParentTypical());
-                                    nc.getCommandDTO().setNodeId(unexnex.getCommandDTO().getNodeId());
-                                    nc.getCommandDTO().setSlot(unexnex.getCommandDTO().getSlot());
-                                    nc.getCommandDTO().setCommand(unexnex.getCommandDTO().getCommand());
-                                    nc.getCommandDTO().setInterval(unexnex.getCommandDTO().getInterval());
-                                    Calendar cop = Calendar.getInstance();
-                                    cop.add(Calendar.SECOND, unexnex.getCommandDTO().getInterval());
-                                    nc.getCommandDTO().setScheduledTime(cop);
-                                    nc.getCommandDTO().persistCommand(db);
-                                    Log.w(TAG, "recreate recursive command");
-                                }
-                                sendNotification(SoulissDataService.this, "Souliss Timed Program Executed",
-                                        unexnex.toString() + " " + unexnex.getParentTypical().toString(),
-                                        R.drawable.clock);
-                            }
-                        }
-                        // db.close();
-                    }
-                }).start();
-
-				/* SENSORS REFRESH THREAD */
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-						/*
-						 * finally { db.close(); }
-						 */
-
-                        // spostato per consentire comandi manuali
-                        if (!opts.isDataServiceEnabled()) {
-                            Log.w(TAG, "Service disabled, is not going to be re-scheduled");
-                            mHandler.removeCallbacks(mUpdateSoulissRunnable);
-                            // SoulissDataService.this.stopSelf();
-                            return;
-                        } else {
-                            // refresh della subscription
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Log.i(TAG, "issuing subscribe, numnodes=" + nodesNum);
-                                    UDPHelper.stateRequest(opts, nodesNum, 0);
-                                }
-                            }).start();
-
-                            try {
-                                // ritarda il logging
-                                Thread.sleep(3000);
-                                db.open();
-
-                                Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
-
-                                List<SoulissNode> ref = db.getAllNodes();
-                                for (SoulissNode soulissNode : ref) {
-                                    refreshedNodes.put(soulissNode.getId(), soulissNode);
-                                }
-                                Log.v(TAG, "logging nodes:" + nodesNum);
-                                // issueRefreshSensors(ref, refreshedNodes);
-                                logThings(refreshedNodes);
-
-                                // try a local reach, just in case ..
-                                UDPHelper.checkSoulissUdp(2000, opts, opts.getPrefIPAddress());
-
-                            } catch (Exception e) {
-                                Log.e(TAG, "Service error, scheduling again ", e);
-                            }
-
-                            Log.i(TAG, "Service end run" + SoulissDataService.this.hashCode());
-                            setLastupd(Calendar.getInstance());
-                            reschedule(false);
-                        }
-
-                    }
-
-                }).start();
-
-            } else {// NO CONNECTION, NO NODES!!
-                Intent i = new Intent();
-                i.setAction(Constants.CUSTOM_INTENT);
-                setLastupd(Calendar.getInstance());
-                getApplicationContext().sendBroadcast(i);
-                reschedule(false);
-            }
-        }
-
-    };
-
 
     private void logThings(Map<Short, SoulissNode> refreshedNodes) {
         Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
@@ -343,22 +350,6 @@ public class SoulissDataService extends Service implements LocationListener {
                 }
             }
         }
-    }
-
-    public static void sendNotification(Context ctx, String desc, String longdesc, int icon) {
-
-        Intent notificationIntent = new Intent(ctx, ProgramListActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
-        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Resources res = ctx.getResources();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
-
-        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
-                .setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker("Souliss program activated")
-                .setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
-        Notification n = builder.build();
-        nm.notify(665, n);
     }
 
     @Override
@@ -418,7 +409,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 && homeDist < (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance() / 10)) {
             db.open();
             final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
-            Log.i(TAG, "activating positional programs: " + unexecuted.size());
+            Log.i(TAG, "processing positional programs: " + unexecuted.size());
             // tornato a casa
             new Thread(new Runnable() {
                 @Override
@@ -428,8 +419,8 @@ public class SoulissDataService extends Service implements LocationListener {
                             Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
                             soulissCommand.execute();
                             soulissCommand.getCommandDTO().persistCommand(db);
-                            sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
-                                    soulissCommand.toString() + " " + soulissCommand.getParentTypical().toString(), R.drawable.exit);
+                            sendNotification(SoulissDataService.this, getString(R.string.positional_executed),
+                                    soulissCommand.toString() + " " + soulissCommand.getParentTypical().getNiceName(), R.drawable.exit, soulissCommand);
                         }
                     }
                 }
@@ -444,19 +435,19 @@ public class SoulissDataService extends Service implements LocationListener {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-            for (SoulissCommand soulissCommand : unexecuted) {
-                final SoulissCommand cmd = soulissCommand;
-                if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
-                    Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString());
+                    for (SoulissCommand soulissCommand : unexecuted) {
+                        final SoulissCommand cmd = soulissCommand;
+                        if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
+                            Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString() );
 
                             cmd.execute();
                             cmd.getCommandDTO().persistCommand(db);
-                            sendNotification(SoulissDataService.this, "Souliss Positional Program Executed",
-                                    cmd.getNiceName() , R.drawable.exit);
+                            sendNotification(SoulissDataService.this, getString(R.string.positional_executed),
+                                    cmd.getNiceName(), R.drawable.exit, soulissCommand);
                         }
-
+                    }
                 }
-            }}).start();
+            }).start();
         } else {// gestione BACKOFF sse e` cambiata la fascia
             if ((homeDist > 25000 && distPrevCache <= 25000) || (homeDist < 25000 && homeDist > 5000 && distPrevCache >= 25000)) {
                 Log.w(TAG, "FASCIA 25 " + homeDist);
@@ -495,6 +486,16 @@ public class SoulissDataService extends Service implements LocationListener {
             }
         } catch (Exception e) {
             Log.e(TAG, "location manager updates request FAIL", e);
+        }
+    }
+
+    /**
+     * Class for clients to access. Because we know this service always runs in
+     * the same process as its clients, we don't need to deal with IPC.
+     */
+    public class LocalBinder extends Binder {
+        public SoulissDataService getService() {
+            return SoulissDataService.this;
         }
     }
 }

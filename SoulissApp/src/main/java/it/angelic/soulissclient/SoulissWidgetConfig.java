@@ -112,7 +112,9 @@ public class SoulissWidgetConfig extends Activity {
                     List<SoulissTypical> rer = re.getActiveTypicals(SoulissWidgetConfig.this);
                     fillCommandSpinner(outputCommandSpinner, rer.get(pos));
                 } else {
-                    fillSceneCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
+                    SoulissScene questa = (SoulissScene) outputTypicalSpinner.getSelectedItem();
+                    fillSceneCommandSpinner(outputCommandSpinner, questa);
+                    widgetLabel.setText(questa.getNiceName());
                 }
             }
 

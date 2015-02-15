@@ -28,6 +28,10 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
 		//this.parentTypical = parentTypical;
 	}
 
+    /**
+     * Needed for Spinner arrays
+     * @return
+     */
 	@Override
 	public String toString() {
 		return getNiceName();

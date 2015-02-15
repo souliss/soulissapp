@@ -80,13 +80,7 @@ public class ProgramListAdapter extends BaseAdapter {
         SoulissCommandDTO dto = holder.data.getCommandDTO();
         StringBuilder info = new StringBuilder(holder.data.toString());
 
-        if (holder.data.getNodeId() > Constants.COMMAND_FAKE_SCENE) {
-            holder.textCmd.setText(holder.data.getNiceName());
-        } else {
-            holder.textCmd.setText(context.getResources().getString(R.string.execute)
-                    + " " + context.getResources().getString(R.string.scene)
-                    + " " + holder.data.getSlot());
-        }
+        holder.textCmd.setText(holder.data.getNiceName());
         /* programma temporale */
         if (holder.data.getType() == Constants.COMMAND_TIMED) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);

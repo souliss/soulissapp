@@ -83,15 +83,23 @@ public class SoulissWidget extends AppWidgetProvider {
 
                 updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
             } else if (node == Constants.MASSIVE_NODE_ID) {
+               //final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
                 updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.allnodes));
-                updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
+                updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.typical) + " " + slot);
                 updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.scene_cmd_massive));
                 updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
+                updateViews.setTextViewText(R.id.button1, name);
             } else if (node == Constants.COMMAND_FAKE_SCENE) {
+                final SoulissScene tgt = db.getScene(context, (short) slot);
                 updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.scene));
-                updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
-                updateViews.setTextViewText(R.id.wid_info, "Execute Scene " + slot);
+                updateViews.setTextViewText(R.id.wid_typical, "");
+                updateViews.setTextViewText(R.id.wid_info,  context.getString(R.string.execute));
                 updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_scene);
+                if (!name.equals(""))
+                    updateViews.setTextViewText(R.id.button1, name);
+                else
+                updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
+                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getDefaultIconResourceId());
             }
             // UPDATE SINCRONO
             Intent intent = new Intent(context, SoulissWidget.class);
@@ -170,7 +178,7 @@ public class SoulissWidget extends AppWidgetProvider {
                             cmdd.execute();
                         }
                     } else if (node == Constants.COMMAND_FAKE_SCENE) {
-                        SoulissScene targrt = db.getScenes(context, slot);
+                        SoulissScene targrt = db.getScene(context, slot);
                         targrt.execute();
                         UDPHelper.pollRequest(opzioni, db.countNodes(), 0);
                     }

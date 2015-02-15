@@ -271,7 +271,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
 
         doBindService();
-        doBindWebService();
+        if (opzioni.isWebserverEnabled())
+            doBindWebService();
 
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
         // Log.w(TAG, "WARNTEST");
@@ -719,6 +720,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
                     List<Address> list;
                     list = geocoder.getFromLocation(lat, lng, 1);
+
                     if (list != null && list.size() > 0) {
                         Address address = list.get(0);
                         loc = address.getLocality();

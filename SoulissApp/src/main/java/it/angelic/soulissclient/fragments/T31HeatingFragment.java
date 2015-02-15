@@ -129,12 +129,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
 		refreshStatusIcon();
 		
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(collected.getNiceName());
-		}
-
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
 		

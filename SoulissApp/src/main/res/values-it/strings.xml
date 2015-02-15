@@ -270,5 +270,7 @@
     <string name="eula_accept">Accetto</string>
     <string name="eula_refuse">Rifiuto</string>
     <string name="programs_warn_trigger_notset">You must select an input trigger and threshold value</string>
+    <string name="positional_executed">Programma di posizione eseguito</string>
+    <string name="timed_program_executed">Programma temporale eseguito</string>
 
 </resources>

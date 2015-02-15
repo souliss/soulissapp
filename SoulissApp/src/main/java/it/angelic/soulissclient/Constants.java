@@ -19,8 +19,8 @@ public class Constants {
 	public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
 	//public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
-	public static final long POSITION_UPDATE_INTERVAL = 5 * 1000;//5 seconds
-	public static final long POSITION_UPDATE_MIN_DIST = 15;
+	public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
+	public static final long POSITION_UPDATE_MIN_DIST = 25;
 	public static final int GUI_UPDATE_INTERVAL = 5000;
 
 	//public static final int   CHECK_STATUS_PAUSE_MSEC = 250;

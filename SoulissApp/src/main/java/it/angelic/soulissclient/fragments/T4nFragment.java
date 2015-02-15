@@ -143,11 +143,7 @@ public class T4nFragment extends Fragment {
 		}
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
 		collected.setPrefs(opzioni);
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = getActivity().getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(collected.getNiceName());
-		}
+
 
 		toggleButton = (ToggleButton) ret.findViewById(R.id.buttonPlus);
 		resetButton = (Button) ret.findViewById(R.id.resetButton);

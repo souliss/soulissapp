@@ -260,7 +260,7 @@ public class UDPSoulissDecoder {
                         command.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse);
+                                R.drawable.lighthouse,command);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < src.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
@@ -268,7 +268,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse);
+                                R.drawable.lighthouse,command);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == src.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
                         command.execute();
@@ -276,7 +276,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context,SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse);
+                                R.drawable.lighthouse,command);
                     }
                 }
                 // vedi se bisogna disattivare

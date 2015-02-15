@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 
 public class SoulissCommandDTO implements Serializable {
 
@@ -133,7 +134,7 @@ public class SoulissCommandDTO implements Serializable {
         return sceneId;
     }
 
-    public void setSceneId(Integer sceneId) {
+    public void setSceneId(@Nullable Integer sceneId) {
         this.sceneId = sceneId;
     }
 

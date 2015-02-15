@@ -77,7 +77,7 @@ public class SceneListAdapter extends BaseAdapter {
 		// SoulissCommandDTO dto = holder.data.getCommandDTO();
 		// if (name == null || "".compareTo(name) == 0)
 		// name = context.getString(appoggio.getAliasNameResId());
-		holder.textCmd.setText(scene[position].toString());
+		holder.textCmd.setText(scene[position].getNiceName());
 		
 		
 		String strMeatFormat = context.getString(R.string.scene_subtitle);

@@ -20,7 +20,7 @@ public class SoulissTriggerDTO implements Serializable {
     private short inputSlotlot = -1;//INPUT SLOT
     private int activated;
     private long commandId;
-    private int threshVal;
+    private float threshVal;
 
     public SoulissTriggerDTO(Cursor cursor) {
 
@@ -29,7 +29,7 @@ public class SoulissTriggerDTO implements Serializable {
         setInputNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_NODE_ID)));
         setInputSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_SLOT)));
         setOp(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_OP)));
-        setThreshVal(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_THRESHVAL)));
+        setThreshVal(cursor.getFloat(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_THRESHVAL)));
         setActive(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_ACTIVE)));
     }
 
@@ -97,11 +97,11 @@ public class SoulissTriggerDTO implements Serializable {
         this.commandId = commandId;
     }
 
-    public int getThreshVal() {
+    public float getThreshVal() {
         return threshVal;
     }
 
-    public void setThreshVal(int threshVal) {
+    public void setThreshVal(float threshVal) {
         this.threshVal = threshVal;
     }
 

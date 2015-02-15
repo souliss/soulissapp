@@ -97,12 +97,6 @@ public class SoulissDBHelper {
         return (int) upd;
     }
 
-    /*public int refreshAllTypicalsTime() {
-        ContentValues values = new ContentValues();
-        // wrap values from object
-        values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
-        return database.update(SoulissDB.TABLE_TYPICALS, values, null, null);
-    }*/
     public void clean() {
         if (database != null && database.isOpen()) {
             database.execSQL("VACUUM");
@@ -187,29 +181,6 @@ public class SoulissDBHelper {
 
     }
 
-
-    /**
-     * Decide come interpretare gli out e logga
-     */
-    /*public void logTypical(SoulissTypical soulissTypical) {
-        ContentValues values = new ContentValues();
-		// wrap values from object
-		values.put(SoulissDB.COLUMN_LOG_NODE_ID, soulissTypical.getTypicalDTO().getNodeId());
-		values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
-		values.put(SoulissDB.COLUMN_LOG_SLOT, soulissTypical.getTypicalDTO().getSlot());
-		if (soulissTypical instanceof ISoulissTypicalSensor) {
-			values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) soulissTypical).getOutputFloat());
-		} else {
-			values.put(SoulissDB.COLUMN_LOG_VAL, soulissTypical.getTypicalDTO().getOutput());
-		}
-		try {
-			database.insert(SoulissDB.TABLE_LOGS, null, values);
-		} catch (SQLiteConstraintException e) {
-			// sensori NaN violano il constraint
-			Log.e(Constants.TAG, "error saving log: " + e);
-		}
-
-	}*/
     public SoulissNode getSoulissNode(int nodeIN) {
         Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID
                 + " = " + nodeIN, null, null, null, null);
@@ -778,7 +749,7 @@ public class SoulissDBHelper {
                         + Constants.COMMAND_TRIGGERED + ") AND " + SoulissDB.COLUMN_COMMAND_SCENEID + " IS NULL", null, null,
                 null, SoulissDB.COLUMN_COMMAND_SCHEDTIME);
         cursor.moveToFirst();
-
+        Log.d(Constants.TAG, "Found unexecuted commands:" + cursor.getCount());
         while (!cursor.isAfterLast()) {
             SoulissCommandDTO comment = new SoulissCommandDTO(cursor);
             cursor.moveToNext();
@@ -868,7 +839,7 @@ public class SoulissDBHelper {
         return ret;
     }
 
-    public SoulissScene getScenes(Context context, int sceneId) {
+    public SoulissScene getScene(Context context, int sceneId) {
         Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
                 SoulissDB.COLUMN_SCENE_ID);
         cursor.moveToFirst();
@@ -902,8 +873,10 @@ public class SoulissDBHelper {
             if (node > MASSIVE_NODE_ID) {
                 SoulissTypical parentTypical = getSoulissTypical(node, slot);
                 adding = new SoulissCommand(comment, parentTypical);
-            } else
+            } else {
                 adding = new SoulissCommand(comment);
+            }
+            adding.getCommandDTO().setSceneId(null);
             ret.add(adding);
         }
         cursor.close();
