@@ -15,7 +15,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/brightness"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false"/>
 
         <View
             android:id="@+id/strut"

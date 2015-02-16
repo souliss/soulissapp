@@ -91,6 +91,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
 			holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
 			holder.image = (ImageView) convertView.findViewById(R.id.node_icon);
+            holder.imageFav = (ImageView) convertView.findViewById(R.id.imageButtonFav);
 			
 			holder.linearActionsLayout = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 			// linButton.removeAllViews();
@@ -139,6 +140,8 @@ public class TypicalsListAdapter extends BaseAdapter {
 		if (tipici[position].getDefaultIconResourceId() != 0){
 			holder.image.setImageResource(tipici[position].getDefaultIconResourceId());
 			}
+        if (tipici[position].getTypicalDTO().getFavourite() > 0)
+            holder.imageFav.setVisibility(View.VISIBLE);
 		// nascondi gli slot slave
 		//if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
 			// holder.textStatusVal.setText(tipici[position].getOutputDesc());
@@ -204,6 +207,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		TextView textUpdated;
 		LinearLayout linearActionsLayout;
 		ImageView image;
+        ImageView imageFav;
 		public SoulissTypical data;
 	}
 

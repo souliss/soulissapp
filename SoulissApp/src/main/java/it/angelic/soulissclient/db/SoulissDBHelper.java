@@ -49,7 +49,7 @@ public class SoulissDBHelper {
 
     // Database fields
     protected static SQLiteDatabase database;
-    protected SoulissDB soulissDatabase;
+    protected static SoulissDB soulissDatabase;
     protected SoulissPreferenceHelper opts;
 
     public static synchronized SQLiteDatabase getDatabase() {
@@ -65,7 +65,7 @@ public class SoulissDBHelper {
         opts = SoulissClient.getOpzioni();
     }
 
-    public synchronized void open() throws SQLException {
+    public static synchronized void open() throws SQLException {
         if (database == null || !database.isOpen())
             database = soulissDatabase.getWritableDatabase();
     }
@@ -806,8 +806,10 @@ public class SoulissDBHelper {
                 adding = new SoulissCommand(comment, tgt);
                 // comando massivo
             } else {
+                SoulissNode fake = new SoulissNode(Constants.MASSIVE_NODE_ID);
                 SoulissTypical tgt = new SoulissTypical(opts);
-                assertEquals(true, (node == Constants.MASSIVE_NODE_ID));
+                tgt.setParentNode(fake);
+                tgt.getTypicalDTO().setNodeId(Constants.MASSIVE_NODE_ID);
                 // in caso di comando massivo, SLOT = TYPICAL
                 tgt.getTypicalDTO().setTypical(slot);
                 adding = new SoulissCommand(comment, tgt);

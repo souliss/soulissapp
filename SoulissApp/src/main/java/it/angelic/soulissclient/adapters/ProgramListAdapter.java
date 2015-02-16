@@ -51,7 +51,7 @@ public class ProgramListAdapter extends BaseAdapter {
         return position;
     }
 
-    public SoulissCommand[] getNodes() {
+    public SoulissCommand[] getCommands() {
         return programmi;
     }
 
@@ -91,7 +91,7 @@ public class ProgramListAdapter extends BaseAdapter {
                     android.graphics.PorterDuff.Mode.SRC_ATOP);
 
             holder.textCmdWhen
-                    .setText("Execution at: " + Constants.hourFormat.format(dto.getScheduledTime().getTime()));
+                    .setText(context.getString(R.string.execute_at)+" " + Constants.hourFormat.format(dto.getScheduledTime().getTime()));
             if (holder.data.getCommandDTO().getInterval() > 0) {
                 String strMeatFormat = context.getString(R.string.programs_every);
                 holder.textCmdInfo.setText(String.format(strMeatFormat, dto.getInterval()));

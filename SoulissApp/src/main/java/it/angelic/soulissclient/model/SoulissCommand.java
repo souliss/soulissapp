@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertEquals;
  * poi e` stato esteso ai massivi
  * poi agli scenari. Un programma puo` infatti voler
  * eseguire uno scenario, e persisterlo
- *
+ * <p/>
  * nel caso scenario, nodeId = -2
  * nel caso massivo, -1
  */
@@ -31,16 +31,48 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     private static final long serialVersionUID = -918392561828980547L;
     private SoulissCommandDTO commandDTO;
     private SoulissTypical parentTypical;
+    private SoulissScene targetScene;
+
+    public SoulissCommand(SoulissTypical parentTypical) {
+        super();
+        this.commandDTO = new SoulissCommandDTO();
+        commandDTO.setSlot(parentTypical.getTypicalDTO().getSlot());
+        commandDTO.setNodeId(parentTypical.getParentNode().getId());
+        this.parentTypical = parentTypical;
+        if (parentTypical.getParentNode() != null)
+            assertEquals(commandDTO.getNodeId(), parentTypical.getParentNode().getId());
+    }
+
+    public SoulissCommand(SoulissCommandDTO dto, SoulissTypical parentTypical) {
+        this(dto);
+        this.parentTypical = parentTypical;
+        if (parentTypical.getParentNode() != null)
+            assertEquals(dto.getNodeId(), parentTypical.getParentNode().getId());
+
+    }
+
+    public SoulissCommand(SoulissCommandDTO dto) {
+        super();
+        this.commandDTO = dto;
+        // falso se trigger assertEquals(true, dto.getSceneId() != 0);
+        if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
+            SoulissDBHelper db = new SoulissDBHelper(SoulissClient.getAppContext());
+            targetScene = db.getScene(SoulissClient.getAppContext(), dto.getSlot());
+            commandDTO.setSceneId(null);
+        }
+    }
 
     /**
      * puo capitare che parentScene non sia nulla e nel DTO invece scene_ID sia null
      * infatti se nel DB SECENEID e` diverso da null, si tratta di comandi che definiscono uno
      * scenario. qui invece ParentScene
+     *
      * @return
      */
     public SoulissScene getTargetScene() {
         return targetScene;
     }
+
     public void setTargetScene(SoulissScene parentScene) {
         this.targetScene = parentScene;
 
@@ -60,51 +92,17 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         return commandDTO.getType();
     }
 
-    private SoulissScene targetScene;
-
     public SoulissCommandDTO getCommandDTO() {
         return commandDTO;
     }
 
-    public SoulissCommand(SoulissTypical parentTypical) {
-        super();
-        this.commandDTO = new SoulissCommandDTO();
-        commandDTO.setSlot(parentTypical.getTypicalDTO().getSlot());
-        commandDTO.setNodeId(parentTypical.getParentNode().getId());
-        this.parentTypical = parentTypical;
-        if (parentTypical.getParentNode() != null)
-            assertEquals(commandDTO.getNodeId(), parentTypical.getParentNode().getId());
-    }
-
-    public SoulissCommand(SoulissCommandDTO dto, SoulissTypical parentTypical) {
-        super();
-        this.commandDTO = dto;
-        this.parentTypical = parentTypical;
-        if (parentTypical.getParentNode() != null)
-            assertEquals(dto.getNodeId(), parentTypical.getParentNode().getId());
-        if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
-            SoulissDBHelper db = new SoulissDBHelper(SoulissClient.getAppContext());
-            targetScene = db.getScene(SoulissClient.getAppContext(), dto.getSlot());
-            commandDTO.setSceneId(null);
-        }
-    }
-
-    public SoulissCommand(SoulissCommandDTO dto) {
-        super();
-        this.commandDTO = dto;
-        // falso se trigger assertEquals(true, dto.getSceneId() != 0);
-        if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE){
-            SoulissDBHelper db = new SoulissDBHelper(SoulissClient.getAppContext());
-            targetScene = db.getScene(SoulissClient.getAppContext(), dto.getSlot());
-            commandDTO.setSceneId(null);
-        }
-    }
-
     // FIXME ritorna alla cazzo, rivedere le icone dei comandi
-    public @DrawableRes int getIconResId() {
-        if(targetScene != null){
+    public
+    @DrawableRes
+    int getIconResId() {
+        if (targetScene != null) {
             return targetScene.getDefaultIconResourceId();
-        }else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
+        } else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
             // comando massivo
             return R.drawable.arrowmove;
         }
@@ -159,7 +157,6 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
 
         return resId;
     }
-
 
 
     @Override
@@ -228,18 +225,14 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     }
 
     @Override
-    public void setIconResourceId(int resId) {
-
+    public void setIconResourceId(@DrawableRes int resId) {
     }
 
     @Override
-    public int getDefaultIconResourceId() {
-        return 0;
-    }
-
-    @Override
-    public void setName(String newName) {
-        throw new Error("Commands can't be named");
+    public
+    @DrawableRes
+    int getDefaultIconResourceId() {
+        return getIconResId();
     }
 
     @Override
@@ -353,18 +346,42 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     }
 
     @Override
+    public void setName(String newName) {
+        throw new Error("Commands don't support custom names");
+    }
+
+    @Override
     public String getNiceName() {
-        StringBuilder info =  new StringBuilder();
+        StringBuilder info = new StringBuilder();
+        Context ctx = SoulissClient.getAppContext();
+        info.append(ctx.getString(R.string.scene_send_command));
+        info.append(" ");
+        info.append(getName()).append(" ");
         if (getParentTypical() != null) {
             SoulissTypical appo = getParentTypical();
-            // Descrizione programma
-            if ("".compareTo(appo.getNiceName()) != 0)
-                info.append(" ").append(appo.getNiceName());
-            if ("".compareTo(appo.getParentNode().getNiceName()) != 0)
-                info.append(" - ").append(appo.getParentNode().getNiceName()).append(" slot ").append(getSlot());
-        }else{
+            if (appo.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
+                info.append(ctx.getString(R.string.to_all)).append(" ");
+                info.append(ctx.getString(R.string.compatible)).append(" (");
+                info.append(appo.getNiceName()).append(" )");
+            } else {
+                info.append(ctx.getString(R.string.to)).append(" ");
+                // Descrizione programma
+                if ("".compareTo(appo.getNiceName()) != 0)
+                    info.append(" ").append(appo.getNiceName());
+                if ("".compareTo(appo.getParentNode().getNiceName()) != 0)
+                    info.append(" (").append(appo.getParentNode().getNiceName()).append(")");
+            }
+        } else {
             return getName();
         }
         return info.toString();
     }
+
+    /*
+    holder.textCmd.setText(context.getResources().getString(R.string.scene_send_command) + " \""
+					+ holder.data.toString() + "\" " + context.getResources()
+					+ context.getResources().getString(R.string.compatible) + " ("
+					+ holder.data.getParentTypical().getNiceName() + ")");
+		*/
+
 }

@@ -144,12 +144,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
 		refreshStatusIcon();
+        super.actionBar.setTitle(collected.getNiceName());
 
-		if (Constants.versionNumber >= 11) {
-			ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setTitle(collected.getNiceName());
-		}
 
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttAuto = (Button) ret.findViewById(R.id.buttonAuto);

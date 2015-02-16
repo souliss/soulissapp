@@ -18,9 +18,7 @@ import android.util.Log;
 
 /**
  * Apre una porta sul 23000 e si mette in ascolto per le risposte.
- * 
- * Come farlo "a due teste"? Ne vale la pena?
- * 
+ * usa un thread pool executor, anche se active count in realta non va mai a superare uno
  * @author Ale
  * 
  */
@@ -46,6 +44,8 @@ public class UDPRunnable implements Runnable {
 				TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(maxThreads, true),
 				new ThreadPoolExecutor.CallerRunsPolicy());
 	}
+
+
 
 	public void run() {
 		// Souliss listens on port 23000
@@ -83,7 +83,8 @@ public class UDPRunnable implements Runnable {
 						UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
 						Log.d("UDP", "***Created decoder:" + decoder.toString());
 						decoder.decodeVNetDatagram(packet);
-					}
+
+                    }
 				});
 				Log.d(TAG, "***ThreadPool, active=" + tpe.getActiveCount()+", completed:"+tpe.getCompletedTaskCount()+", poolsize:"+tpe.getPoolSize());
 				
@@ -106,4 +107,6 @@ public class UDPRunnable implements Runnable {
 			}
 		}
 	}
+
+
 }

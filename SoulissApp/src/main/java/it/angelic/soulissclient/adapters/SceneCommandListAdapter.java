@@ -95,20 +95,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
 			SoulissTypical appoggio = holder.data.getParentTypical();
 			SoulissCommandDTO dto = holder.data.getCommandDTO();
-			StringBuilder info = new StringBuilder(context.getString(R.string.scene_send_command) + "\""
-					+ holder.data.toString());
-			info.append("\" "+context.getString(R.string.to));
-			// if (appoggio.getNiceName() != null &&
-			// "".compareTo(appoggio.getNiceName())!= 0)
-			info.append(" " + appoggio.getNiceName() +" (" + context.getResources().getString(R.string.slot) + " " + dto.getSlot());
-			info.append(" - ");
-			if (appoggio.getParentNode().getNiceName() != null
-					&& "".compareTo(appoggio.getParentNode().getNiceName()) != 0)
-				info.append(appoggio.getParentNode().getNiceName());
-			else
-				info.append(dto.getNodeId());
-			info.append(")");
-			holder.textCmd.setText(info.toString());
+
+			holder.textCmd.setText(holder.data.getNiceName());
 			holder.textCmdWhen.setText(context.getResources().getString(R.string.scene_cmd_order) + dto.getInterval());
 			/* comando massivo */
 		} else {
@@ -118,10 +106,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
 			holder.image.setColorFilter(context.getResources().getColor(R.color.aa_violet),
 					android.graphics.PorterDuff.Mode.SRC_ATOP);
 			SoulissCommandDTO dto = holder.data.getCommandDTO();
-			holder.textCmd.setText(context.getResources().getString(R.string.scene_send_command) + " \""
-					+ holder.data.toString() + "\" " + context.getResources().getString(R.string.to_all) + " "
-					+ context.getResources().getString(R.string.compatible) + " ("
-					+ holder.data.getParentTypical().getNiceName() + ")");
+            holder.textCmd.setText(holder.data.getNiceName());
+
 			holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order)+" " + dto.getInterval() +
 					" - "+context.getString(R.string.scene_cmd_massive));
 		}

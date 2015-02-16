@@ -238,60 +238,61 @@ public class UDPSoulissDecoder {
                 }
             }
             for (SoulissTrigger soulissTrigger : triggers) {
-                SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto());
-                SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
-                SoulissTypical source = refreshedNodes.get(src.getInputNodeId()).getTypical(src.getInputSlot());
+                SoulissTypical source = refreshedNodes.get(soulissTrigger.getInputNodeId()).getTypical(soulissTrigger.getInputSlot());
+                //SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto(),source);
+               // SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
+
                 // SoulissTypical target =
                 // refreshedNodes.get(command.getNodeId()).getTypical(command.getSlot());
                 Calendar now = Calendar.getInstance();
                 if (!soulissTrigger.getTriggerDto().isActivated()) {
                     // Descrizione programma
                     StringBuilder info = new StringBuilder(soulissTrigger.toString());
-                    info.append(" slot " + command.getSlot());
+                    info.append(" slot " + soulissTrigger.getSlot());
                     if ("".compareTo(source.getNiceName()) != 0)
                         info.append(" (" + source.getNiceName() + ")");
                     info.append(" on " + source.getParentNode().getNiceName());
 
-                    String op = src.getOp();
-                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > src.getThreshVal()) {
-                        Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
+                    String op = soulissTrigger.getOp();
+                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
-                        command.execute();
-                        command.getCommandDTO().setExecutedTime(now);
+                        soulissTrigger.execute();
+                        soulissTrigger.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse,command);
-                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < src.getThreshVal()) {
-                        Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
+                                R.drawable.lighthouse,soulissTrigger);
+                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
-                        command.execute();
+                        soulissTrigger.execute();
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse,command);
-                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == src.getThreshVal()) {
-                        Log.w(Constants.TAG, "TRIGGERING COMMAND " + command.toString());
-                        command.execute();
+                                R.drawable.lighthouse,soulissTrigger);
+                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
+                        soulissTrigger.execute();
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendNotification(context,SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse,command);
+                                R.drawable.lighthouse,soulissTrigger);
                     }
                 }
                 // vedi se bisogna disattivare
                 else {
-                    String op = src.getOp();
-                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() <= src.getThreshVal()) {
-                        Log.w(Constants.TAG, "DEACTIVATE TRIGGER " + command.toString());
+                    String op = soulissTrigger.getOp();
+                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() <= soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(false);
                         soulissTrigger.persist(database);
-                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() >= src.getThreshVal()) {
-                        Log.w(Constants.TAG, "DEACTIVATE TRIGGER " + command.toString());
+                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() >= soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(false);
                         soulissTrigger.persist(database);
-                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() != src.getThreshVal()) {
-                        Log.w(Constants.TAG, "DEACTIVATE TRIGGER " + command.toString());
+                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() != soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(false);
                         soulissTrigger.persist(database);
                     }

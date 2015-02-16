@@ -501,6 +501,11 @@ public class NodeDetailFragment extends ListFragment {
 					datasource, todoItem);
 			alert2.show();
 			break;
+        case R.id.addFav:
+            todoItem.getTypicalDTO().setFavourite(1);
+            todoItem.getTypicalDTO().persist();
+            Toast.makeText(getActivity(),getString(R.string.menu_addFav), Toast.LENGTH_SHORT).show();
+                break;
 		default:
 			return super.onContextItemSelected(item);
 		}

@@ -98,6 +98,7 @@
     <string name="menu_options">Options</string>
     <string name="menu_test">Test Low-level UDP connectivity</string>
     <string name="menu_test_udp">Test UDP</string>
+    <string name="menu_addFav">Add to Favourites</string>
     <string name="menu_rename">Rename Node</string>
     <string name="menu_changenodeicon">Change Node Icon</string>
     <string name="menu_changetypicon">Change typical Icon</string>
@@ -278,5 +279,6 @@
     <string name="programs_warn_trigger_notset">You must select an input trigger and threshold value</string>
     <string name="positional_executed">Souliss Positional Program Executed</string>
     <string name="timed_program_executed">Souliss Timed Program Executed</string>
+    <string name="execute_at">Execution at:</string>
 
 </resources>

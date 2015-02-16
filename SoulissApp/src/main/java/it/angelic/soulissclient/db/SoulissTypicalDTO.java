@@ -1,21 +1,22 @@
 package it.angelic.soulissclient.db;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import static junit.framework.Assert.assertTrue;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
-import android.util.Log;
+import static it.angelic.soulissclient.Constants.TAG;
+import static junit.framework.Assert.assertTrue;
 
 public class SoulissTypicalDTO implements Serializable {
     /**
@@ -28,11 +29,35 @@ public class SoulissTypicalDTO implements Serializable {
     private short typical;
     private short output;
     private int iconId;
+    private int isFavourite;
     private short inputCommand;
     private Calendar refreshedAt;
 
     public SoulissTypicalDTO() {
         // niente di fatto
+    }
+
+    public SoulissTypicalDTO(Cursor cursor) {
+        // byte typ = (byte) cursor.getShort(1);
+        setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NODE_ID)));
+        setTypical(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL)));
+        setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_SLOT)));
+        setInput((byte) cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_INPUT)));
+        setOutput(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_VALUE)));
+        setIconId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ICON)));
+        setFavourite(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ISFAV)));
+        setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NAME)));
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_LASTMOD))));
+        setRefreshedAt(now);
+    }
+
+    public int getFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(int isFavourite) {
+        this.isFavourite = isFavourite;
     }
 
     @Override
@@ -50,26 +75,15 @@ public class SoulissTypicalDTO implements Serializable {
         return getNodeId();
     }
 
-    public SoulissTypicalDTO(Cursor cursor) {
-        // byte typ = (byte) cursor.getShort(1);
-        setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NODE_ID)));
-        setTypical(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL)));
-        setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_SLOT)));
-        setInput((byte) cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_INPUT)));
-        setOutput(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_VALUE)));
-        setIconId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ICON)));
-        setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NAME)));
-        Calendar now = Calendar.getInstance();
-        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_LASTMOD))));
-        setRefreshedAt(now);
-    }
-
     /**
      * Aggiorna un tipico, pensato per JSON TYP, SLO e VAL
      *
      * @return
      */
     public int persist() {
+        SoulissDBHelper.open();
+        SQLiteDatabase db = SoulissDBHelper.getDatabase();
+
         ContentValues values = new ContentValues();
         assertTrue(getSlot() != -1);
         values.put(SoulissDB.COLUMN_TYPICAL_NODE_ID, getNodeId());
@@ -78,6 +92,7 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_NAME, getName());
         values.put(SoulissDB.COLUMN_TYPICAL_ICON, getIconId());
         values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
                 SoulissDB.TABLE_TYPICALS,
@@ -85,7 +100,7 @@ public class SoulissTypicalDTO implements Serializable {
                 SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
                         + " = " + getSlot(), null);
         if (upd == 0) {
-            upd = (int) SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_TYPICALS, null, values);
+            upd = (int) db.insert(SoulissDB.TABLE_TYPICALS, null, values);
         }
         return upd;
     }
@@ -193,6 +208,7 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_SLOT, getSlot());
         values.put(SoulissDB.COLUMN_TYPICAL_INPUT, getInput());
         values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
                 SoulissDB.TABLE_TYPICALS,
@@ -209,48 +225,44 @@ public class SoulissTypicalDTO implements Serializable {
         return name;
     }
 
-    public short getNodeId() {
-        return nodeId;
-    }
-
-    public short getOutput() {
-        return output;
-    }
-
-    public Calendar getRefreshedAt() {
-        return refreshedAt;
-    }
-
-    public short getSlot() {
-        return slot;
-    }
-
-    public short getTypical() {
-        return typical;
-    }
-
-    public void setInput(byte input) {
-        this.inputCommand = input;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public short getNodeId() {
+        return nodeId;
     }
 
     public void setNodeId(short nodeId) {
         this.nodeId = nodeId;
     }
 
+    public short getOutput() {
+        return output;
+    }
+
     public void setOutput(short output) {
         this.output = output;
+    }
+
+    public Calendar getRefreshedAt() {
+        return refreshedAt;
     }
 
     public void setRefreshedAt(Calendar refreshedAt) {
         this.refreshedAt = refreshedAt;
     }
 
+    public short getSlot() {
+        return slot;
+    }
+
     public void setSlot(short j) {
         slot = j;
+    }
+
+    public short getTypical() {
+        return typical;
     }
 
     public void setTypical(short typical) {
@@ -260,6 +272,10 @@ public class SoulissTypicalDTO implements Serializable {
     public short getInput() {
         // TODO Auto-generated method stub
         return inputCommand;
+    }
+
+    public void setInput(byte input) {
+        this.inputCommand = input;
     }
 
     public int getIconId() {

@@ -63,19 +63,24 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_TYPICAL_ICON = "inttypico";
     public static final String COLUMN_TYPICAL_NAME = "strtypname";
     public static final String COLUMN_TYPICAL_LASTMOD = "cldtypmod";
+    public static final String COLUMN_TYPICAL_ISFAV = "flgtypisfav";
     private static final String DATABASE_CREATE_TYPICALS = "create table "
             + TABLE_TYPICALS
             + "( "
-            +
-            // COLUMN DEF
-            COLUMN_TYPICAL_NODE_ID + " integer not null, " + COLUMN_TYPICAL + " integer not null, "
-            + COLUMN_TYPICAL_SLOT + " integer not null, " + COLUMN_TYPICAL_INPUT + " integer, " + COLUMN_TYPICAL_VALUE
-            + " integer not null, " + COLUMN_TYPICAL_ICON + " integer, " + COLUMN_TYPICAL_NAME + " textslot, "
-            + COLUMN_TYPICAL_LASTMOD + " integer not null," + " FOREIGN KEY( " + COLUMN_TYPICAL_NODE_ID
+            + COLUMN_TYPICAL_NODE_ID + " integer not null, "
+            + COLUMN_TYPICAL + " integer not null, "
+            + COLUMN_TYPICAL_SLOT + " integer not null, "
+            + COLUMN_TYPICAL_INPUT + " integer, "
+            + COLUMN_TYPICAL_VALUE + " integer not null, "
+            + COLUMN_TYPICAL_ICON + " integer, "
+            + COLUMN_TYPICAL_ISFAV + " integer, "
+            + COLUMN_TYPICAL_NAME + " textslot, "
+            + COLUMN_TYPICAL_LASTMOD + " integer not null,"
+            + " FOREIGN KEY( " + COLUMN_TYPICAL_NODE_ID
             + ") REFERENCES " + TABLE_NODES + " (" + COLUMN_TYPICAL_NODE_ID + "), "
             + "CONSTRAINT typ_keys PRIMARY KEY(" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ")" + ");";
     public static final String[] ALLCOLUMNS_TYPICALS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
-            COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_NAME,
+            COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON,COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
             COLUMN_TYPICAL_LASTMOD};
     /*
      * TABELLA COMANDI
