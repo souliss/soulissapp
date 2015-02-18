@@ -19,6 +19,7 @@ import android.os.Looper;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -95,17 +96,10 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	/**
 	 * Ottiene il layout del pannello comandi
 	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
 	 */
 	@Override
-	public void getActionsLayout(final TypicalsListAdapter ble, final Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent) {
+	public void getActionsLayout(final Context ctx, LinearLayout cont) {
 
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
 		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT);

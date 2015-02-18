@@ -79,10 +79,10 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
      * @param parent
      */
     @Override
-    public void getActionsLayout(final TypicalsListAdapter ble, final Context ctx, final Intent parentIntent,
-                                 View convertView, final ViewGroup parent) {
+    public void getActionsLayout(final Context ctx,
+                                 LinearLayout convertView) {
 
-        LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+        LinearLayout cont = (LinearLayout) convertView;
         cont.removeAllViews();
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);

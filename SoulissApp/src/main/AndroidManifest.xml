@@ -126,6 +126,13 @@
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
+            android:parentActivityName=".LauncherActivity"
+            android:name=".FavActivity"
+            android:icon="@drawable/home"
+            android:label="@string/app_name"
+            android:uiOptions="splitActionBarWhenNarrow" >
+        </activity>
+        <activity
             android:name="AddProgramActivity"
             android:icon="@drawable/remote"
             android:label="@string/app_addprog" >

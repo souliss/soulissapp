@@ -273,5 +273,6 @@
     <string name="positional_executed">Souliss Positional Program Executed</string>
     <string name="timed_program_executed">Souliss Timed Program Executed</string>
     <string name="execute_at">Execution at:</string>
+    <string name="favourites" />
 
 </resources>

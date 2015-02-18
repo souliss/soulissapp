@@ -58,16 +58,9 @@ public class SoulissTypical5n extends SoulissTypical implements ISoulissTypical 
 	/**
 	 * Ottiene il layout del pannello comandi
 	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
 	 */
 	@Override
-	public void getActionsLayout(final TypicalsListAdapter ble, Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent) {
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+	public void getActionsLayout(Context ctx, final LinearLayout cont) {
 		cont.removeAllViews();
 
 		LinearLayout.LayoutParams p1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,

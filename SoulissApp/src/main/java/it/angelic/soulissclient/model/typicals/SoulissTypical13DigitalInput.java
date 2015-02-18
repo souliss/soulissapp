@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -50,16 +51,9 @@ public class SoulissTypical13DigitalInput extends SoulissTypical implements ISou
 	/**
 	 * Ottiene il layout del pannello comandi
 	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
 	 */
 	@Override
-	public void getActionsLayout(final TypicalsListAdapter ble, Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent) {
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+	public void getActionsLayout(Context ctx, LinearLayout cont) {
 		cont.removeAllViews();
 		//RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
 			//	RelativeLayout.LayoutParams.WRAP_CONTENT);

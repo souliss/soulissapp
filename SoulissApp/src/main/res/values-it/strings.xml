@@ -273,5 +273,6 @@
     <string name="positional_executed">Programma di posizione eseguito</string>
     <string name="timed_program_executed">Programma temporale eseguito</string>
     <string name="execute_at">Esegui alle:</string>
+    <string name="favourites" >Preferiti</string>
 
 </resources>

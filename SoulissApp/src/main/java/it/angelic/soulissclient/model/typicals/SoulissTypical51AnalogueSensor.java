@@ -74,11 +74,9 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 
 	}
 	@Override
-	public void getActionsLayout(TypicalsListAdapter ble, Context ctx, Intent parentIntent, View convertView,
-			ViewGroup parent) {
+	public void getActionsLayout(Context ctx, final LinearLayout cont) {
 		WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputFloat() ));

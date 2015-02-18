@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -275,11 +277,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     @Override
-    public void getActionsLayout(TypicalsListAdapter ble, Context ctx, Intent parentIntent, View convertView,
-                                 ViewGroup parent) {
-        //Log.e(Constants.TAG,"Should be implemented elsewhere or not called at all");
-
-    }
+    public void getActionsLayout (final Context ctx, LinearLayout convertView){}
 
     protected TextView getQuickActionTitle() {
         // Infotext nascosto all'inizio

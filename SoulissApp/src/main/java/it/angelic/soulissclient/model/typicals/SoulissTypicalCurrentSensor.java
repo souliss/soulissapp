@@ -63,9 +63,7 @@ public class SoulissTypicalCurrentSensor extends SoulissTypical {
 	}
 
 	@Override
-	public void getActionsLayout(TypicalsListAdapter ble, Context ctx, Intent parentIntent, View convertView,
-			ViewGroup parent) {
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+	public void getActionsLayout( Context ctx, LinearLayout cont) {
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 		
@@ -82,7 +80,7 @@ public class SoulissTypicalCurrentSensor extends SoulissTypical {
 		ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
 		// ProgressBar sfumata
 		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, convertView.getWidth() / 2, 0, ctx.getResources().getColor(
+		final LinearGradient gradient = new LinearGradient(0, 0, cont.getWidth() / 2, 0, ctx.getResources().getColor(
 				color.aa_green), ctx.getResources().getColor(color.aa_red), android.graphics.Shader.TileMode.CLAMP);
 		pgDrawable.getPaint().setStrokeWidth(3);
 		pgDrawable.getPaint().setDither(true);

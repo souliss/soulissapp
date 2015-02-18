@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTypical {
@@ -81,15 +82,9 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 	/**
 	 * Ottiene il layout del pannello comandi
 	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
 	 */
 	@Override
-	public void getActionsLayout(final TypicalsListAdapter ble, final Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent) {
+	public void getActionsLayout(final Context ctx, final LinearLayout parent) {
 
 		/*LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();

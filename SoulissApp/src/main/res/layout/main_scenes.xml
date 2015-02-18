@@ -31,7 +31,7 @@
                 android:layout_marginTop="4dip"
                 android:alpha="0.5"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/lamp" />
+                android:src="@drawable/filmmaker" />
 
             <TextView
                 android:id="@+id/TextViewScenesDesc"

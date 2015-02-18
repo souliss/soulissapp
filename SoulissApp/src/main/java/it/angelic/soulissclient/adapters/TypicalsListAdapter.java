@@ -177,7 +177,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		holder.linearActionsLayout.removeAllViews();
 		if (opzioni.isSoulissReachable()) {
 			// richiama l'overloaded del tipico relativo
-			tipici[position].getActionsLayout(this, context, parentIntent, convertView, parent);
+			tipici[position].getActionsLayout(context,holder.linearActionsLayout);
 		} else {
 			TextView na = new TextView(context);
 			na.setText(context.getString(R.string.souliss_unavailable));

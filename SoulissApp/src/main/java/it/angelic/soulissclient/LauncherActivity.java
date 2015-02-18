@@ -167,6 +167,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private CardView cardViewBasicInfo;
     private CardView cardViewPositionInfo;
     private CardView cardViewServiceInfo;
+    private CardView cardViewFav;
 
     void doBindService() {
         Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
@@ -229,6 +230,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         cardViewBasicInfo = (CardView) findViewById(R.id.BasicInfoCard);
         cardViewPositionInfo = (CardView) findViewById(R.id.dbAndPositionCard);
         cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
+        cardViewFav = (CardView) findViewById(R.id.FavCard);
+
         // gestore timeout dei comandi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         timeoutHandler = new Handler();
@@ -280,6 +283,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             cardViewBasicInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
             cardViewPositionInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
             cardViewServiceInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
+            cardViewFav.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
         }
         Animation animation = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
         cardViewBasicInfo.startAnimation(animation);
@@ -333,20 +337,30 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
 
         initLocationProvider();
+        /*FAVS*/
+        OnClickListener ssc = new OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LauncherActivity.this, FavActivity.class);
+
+                LauncherActivity.this.startActivity(myIntent);
+                return;
+            }
+        };
+        cardViewFav.setOnClickListener(ssc);
         /* SCENES */
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
                // myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                ActivityOptionsCompat options =
+              /*  ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 soulissSceneBtn,   // The view which starts the transition
                                 "helloScenes"    // The transitionName of the view we’re transitioning to
                         );
                 ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+*/
 
-
-               // LauncherActivity.this.startActivity(myIntent);
+                LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -467,7 +481,12 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         } else {
             basinfo.setText(getString(R.string.contact_progress));
         }
-
+        int favCount=db.countFavourites();
+        if (favCount > 0){
+            TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
+            cardViewFav.setVisibility(View.VISIBLE);
+            textViewFav.setText(getString(R.string.typical)+" Marked as Favourites:"+favCount);
+        }
     }
 
     private void setDbInfo() {

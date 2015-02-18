@@ -34,7 +34,7 @@
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableTop="@drawable/lamp"
+                        android:drawableTop="@drawable/filmmaker"
                         android:drawingCacheQuality="high"
                         android:elevation="2dp"
                         android:freezesText="false"
@@ -66,12 +66,68 @@
 
             </TableLayout>
 
+            <android.support.v7.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/FavCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/containervermegame"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:elevation="2dp"
+                card_view:cardCornerRadius="2dp"
+                card_view:cardBackgroundColor="@color/background_floating_material_dark">
+                <!-- Your card content -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/card_favthumbnail_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawingCacheQuality="high"
+                        android:padding="10dp"
+                        android:src="@drawable/lightning" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_toRightOf="@id/card_favthumbnail_image"
+                        android:padding="8dp">
+
+
+                        <TextView
+                            android:id="@+id/textViewFavTit"
+                            style="@style/CodeFontTitle"
+                            android:layout_marginLeft="5dip"
+                            android:text="@string/favourites" />
+                        <View
+                            android:id="@+id/FavLine"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@color/std_yellow" />
+
+                        <TextView
+                            android:id="@+id/textViewFav"
+                            style="@style/CodeFontMain"
+                            android:layout_below="@id/textViewFavTit"
+                            android:layout_marginLeft="5dp"
+                            android:textIsSelectable="false" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
 
             <android.support.v7.widget.CardView
                 android:id="@+id/BasicInfoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/containervermegame"
+                android:layout_below="@id/FavCard"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="4dp"

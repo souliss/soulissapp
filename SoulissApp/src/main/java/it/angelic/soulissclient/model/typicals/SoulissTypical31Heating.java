@@ -72,20 +72,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		return ret;
 	}
 
-	/**
-	 * Ottiene il layout del pannello comandi
-	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
-	 */
-	@Override
-	public void getActionsLayout(final TypicalsListAdapter ble, final Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent) {
 
-	}
 
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {

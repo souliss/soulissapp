@@ -77,14 +77,12 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical im
 	}
 
 	@Override
-	public void getActionsLayout(TypicalsListAdapter ble, Context ctx, Intent parentIntent, View convertView,
-			ViewGroup parent) {
+	public void getActionsLayout( Context ctx,LinearLayout cont) {
 		
 				
 		
 		WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
-		LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 //************************************************************

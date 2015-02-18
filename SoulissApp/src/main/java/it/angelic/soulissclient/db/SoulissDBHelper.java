@@ -251,6 +251,29 @@ public class SoulissDBHelper {
         return comments;
     }
 
+    public List<SoulissTypical> getFavouriteTypicals() {
+
+        List<SoulissTypical> comments = new ArrayList<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+                SoulissDB.COLUMN_TYPICAL_ISFAV + " > " +0,null, null, null, SoulissDB.COLUMN_TYPICAL_ISFAV);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissNode parent = getSoulissNode(dto.getNodeId());
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
+            //hack dto ID, could be different if parent is massive
+            newTyp.getTypicalDTO().setNodeId(parent.getId());
+            newTyp.setParentNode(parent);
+            // if (newTyp.getTypical() !=
+            // Constants.Souliss_T_CurrentSensor_slave)
+            comments.add(newTyp);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
     public ArrayList<SoulissLogDTO> getTypicalLogs(SoulissTypical tgt) {
         ArrayList<SoulissLogDTO> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_LOGS, SoulissDB.ALLCOLUMNS_LOGS, SoulissDB.COLUMN_LOG_NODE_ID
@@ -657,6 +680,15 @@ public class SoulissDBHelper {
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
                 + SoulissDB.COLUMN_TYPICAL + " <> "
                 + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    public int countFavourites() {
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
+                + SoulissDB.COLUMN_TYPICAL_ISFAV + " > 0 ", null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

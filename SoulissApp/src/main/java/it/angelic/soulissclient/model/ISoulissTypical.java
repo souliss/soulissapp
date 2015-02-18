@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.LinearLayout;
 
 public interface ISoulissTypical extends ISoulissObject {
 
@@ -16,21 +18,13 @@ public interface ISoulissTypical extends ISoulissObject {
 
     public void setParentNode(SoulissNode parentNode);
 
-	/**
-	 * Has to be overridden in child typicals to draw action buttons
-	 * 
-	 * @param ble
-	 * @param ctx
-	 * @param parentIntent
-	 * @param convertView
-	 * @param parent
-	 */
-	public void getActionsLayout(final TypicalsListAdapter ble, Context ctx, final Intent parentIntent,
-			View convertView, final ViewGroup parent);
 	
 	public ArrayList<SoulissCommand> getCommands(Context ctx) ;
-	
-	public String getOutputDesc();
+
+    void getActionsLayout (Context ctx,
+                           LinearLayout convertView);
+
+    public String getOutputDesc();
 	
 	//every typical should have one ..
 	public int getDefaultIconResourceId();
