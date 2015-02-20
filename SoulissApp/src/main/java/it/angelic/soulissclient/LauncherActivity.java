@@ -24,8 +24,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.animation.AnimatorSet;
-import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -53,8 +51,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
-import android.transition.Fade;
-import android.transition.Transition;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,6 +62,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -157,11 +154,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         }
     };
     private View webServiceInfoLine;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    // private CharSequence mTitle;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private DrawerMenuHelper dmh;
+
     private ArrayAdapter<INavDrawerItem> mAdapter;
     private Criteria criteria;
     private CardView cardViewBasicInfo;
@@ -200,7 +193,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
         else
@@ -240,6 +233,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         criteria = new Criteria();
         criteria.setPowerRequirement(Criteria.POWER_LOW);
         // DRAWER
+       final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
+       final TextView info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
         dmh = new DrawerMenuHelper();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
@@ -251,22 +246,25 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
+                //TODO settext
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
+                info2.setText(getString(R.string.app_name)+" "+(opzioni.isSoulissReachable()?getString(R.string.Online):getString(R.string.offline)));
+                info1.setText("Souliss can control "+opzioni
+                        .getCustomPref().getInt("numTipici", 0)+" Things");
             }
         };
-
-
+        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
         mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -99);
         mDrawerList.setAdapter(mAdapter);
@@ -313,7 +311,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content
         // view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerLinear);
         // menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         for (int i = 0; i < menu.size(); i++) {
             menu.getItem(i).setVisible(!drawerOpen);
@@ -406,7 +404,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         db = new SoulissDBHelper(this);
         // refresh testo
         setHeadInfo();
-        setDbInfo();
+        setDbAndFavouritesInfo();
         setServiceInfo();
         setWebServiceInfo();
         setAntiTheftInfo();
@@ -425,10 +423,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-                mDrawerLayout.closeDrawer(mDrawerList);
+            if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
+                mDrawerLayout.closeDrawer(mDrawerLinear);
             } else {
-                mDrawerLayout.openDrawer(mDrawerList);
+                mDrawerLayout.openDrawer(mDrawerLinear);
             }
             return true;//cliccato sul drawer, non far altro
         }
@@ -481,15 +479,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         } else {
             basinfo.setText(getString(R.string.contact_progress));
         }
-        int favCount=db.countFavourites();
-        if (favCount > 0){
-            TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
-            cardViewFav.setVisibility(View.VISIBLE);
-            textViewFav.setText(getString(R.string.typical)+" Marked as Favourites:"+favCount);
-        }
+
     }
 
-    private void setDbInfo() {
+    private void setDbAndFavouritesInfo() {
 
 		/* DB Warning */
         if (!opzioni.isDbConfigured()) {
@@ -511,6 +504,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             dbwarn.setText(getString(R.string.db_size) + ": " + db.getSize() + "B");
             dbwarn.setVisibility(View.VISIBLE);
             dbwarnline.setVisibility(View.GONE);
+            //FAVOURITES
+            int favCount = db.countFavourites();
+            if (favCount > 0){
+                TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
+                cardViewFav.setVisibility(View.VISIBLE);
+                textViewFav.setText(getString(R.string.typical)+" Marked as Favourites:"+favCount);
+            }
         }
     }
 
@@ -678,7 +678,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 runOnUiThread(new Runnable() {
                     public void run() {
                         setHeadInfo();
-                        setDbInfo();
+                        setDbAndFavouritesInfo();
                         setServiceInfo();
                         setWebServiceInfo();
                         setAntiTheftInfo();

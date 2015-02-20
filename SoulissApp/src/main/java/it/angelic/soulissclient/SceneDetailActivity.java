@@ -142,7 +142,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		upda.setText(collected.toString());
 		String strMeatFormat = getString(R.string.scene_subtitle);
 		health.setText(String.format(strMeatFormat, collected.getCommandArray().size()));
-		
+        if(getSupportActionBar()!=null)getSupportActionBar().setDisplayShowHomeEnabled(true);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package it.angelic.soulissclient.fragments;
 
 import static it.angelic.soulissclient.Constants.TAG;
+
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.R;
@@ -31,6 +33,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -74,6 +77,7 @@ public class NodesListFragment extends ListFragment {
 	private ImageButton online;
 	private TextView statusOnline;
     private SwipeRefreshLayout swipeLayout;
+    private Toolbar actionBar;
 
     @Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -262,6 +266,8 @@ public class NodesListFragment extends ListFragment {
 		getListView().setAdapter(nodesAdapter);
 		getListView().invalidateViews();
 
+        actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+        ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
 	}
 
 	// Aggiorna il feedback
@@ -394,29 +400,29 @@ public class NodesListFragment extends ListFragment {
 		// doUnbindService();
 		//datasource.close();
 	}
+
     private void refreshStatusIcon() {
         try {
-            ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-            //actionBar.setTitle(getString(R.string.manual_title));
-            View ds = actionBar.getCustomView();
-            online = (ImageButton) ds.findViewById(R.id.action_starred);
-            statusOnline = (TextView) ds.findViewById(R.id.online_status);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-            actionTitle.setText(getString(R.string.manual_title));
+            //actionBar = getSupportActionBar();
+            View ds = actionBar.getRootView();
+            TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfo1);
+            TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
+            ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+            TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+            TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+            actionTitle.setText("Manual");
             if (!opzioni.isSoulissReachable()) {
                 online.setBackgroundResource(R.drawable.red);
                 statusOnline.setTextColor(getResources().getColor(R.color.std_red));
                 statusOnline.setText(R.string.offline);
+
             } else {
                 online.setBackgroundResource(R.drawable.green);
                 statusOnline.setTextColor(getResources().getColor(R.color.std_green));
                 statusOnline.setText(R.string.Online);
             }
-            statusOnline.invalidate();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(Constants.TAG, "null bar? " + e.getMessage());
         }
     }
 }

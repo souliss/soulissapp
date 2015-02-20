@@ -75,6 +75,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+       // setContentView(R.layout.main_frags);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
@@ -95,10 +96,9 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 	}
 	@Override
 	protected void onStart() {
+        setActionBarInfo(collected==null?getString(R.string.scenes_title):collected.getNiceName());
 		database = new SoulissDBHelper(this);
 		super.onStart();
-			ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
     /**
 	 * chiamato dal layout

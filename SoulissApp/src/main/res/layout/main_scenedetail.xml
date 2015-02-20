@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/custom_actionbar" />
 
     <RelativeLayout
         android:id="@+id/RelativeLayoutNodeDetail"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_awesome_toolbar">
 
         <ImageView
             android:id="@+id/scene_icon"
@@ -25,7 +33,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
             android:ellipsize="end"
-            android:text="@string/update"/>
+            android:text="@string/update" />
 
         <TextView
             android:id="@+id/TextViewHealth"
@@ -33,7 +41,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/TextViewNodeUpdate"
             android:layout_marginLeft="4dp"
-            android:text="@string/health"/>
+            android:text="@string/health" />
 
         <TextView
             android:id="@+id/TextViewTypicals"
@@ -42,7 +50,7 @@
             android:layout_below="@id/TextViewHealth"
             android:layout_marginLeft="2dp"
             android:ellipsize="end"
-            android:text="@string/scene_commands"/>
+            android:text="@string/scene_commands" />
 
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:fab="http://schemas.android.com/apk/res-auto"
@@ -70,8 +78,7 @@
                 android:divider="@android:color/transparent"
                 android:fadeScrollbars="true"
                 android:fadingEdge="vertical"
-                android:requiresFadingEdge="vertical"/>
+                android:requiresFadingEdge="vertical" />
         </FrameLayout>
     </RelativeLayout>
-
-</merge>
+</RelativeLayout>

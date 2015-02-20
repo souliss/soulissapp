@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/TypCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="4dp"
+    android:elevation="2dp"
+    card_view:cardBackgroundColor="@color/background_floating_material_dark"
+    card_view:cardCornerRadius="2dp">
+
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/card_thumbnail_image2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawingCacheQuality="high"
+            android:padding="8dp"
+            android:src="@drawable/home" />
+
+        <RelativeLayout
+            android:id="@+id/relCont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/card_thumbnail_image2"
+            android:padding="8dp">
+
+            <View
+                android:id="@+id/PositionWarnLine"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/std_green" />
+
+            <TextView
+                android:id="@+id/TextViewTypicalsTitle"
+                style="@style/CodeFontTitle"
+                android:layout_marginLeft="5dip"
+                android:text="@string/position" />
+
+            <TextView
+                android:id="@+id/TextViewInfo1"
+                style="@style/CodeFontMain"
+                android:layout_below="@id/TextViewTypicalsTitle"
+                android:textIsSelectable="false"
+                tools:text="Info String, not so long" />
+
+            <TextView
+                android:id="@+id/TextViewInfo2"
+                style="@style/CodeFontMain"
+                android:layout_below="@id/TextViewInfo1"
+                android:textIsSelectable="false"
+
+                tools:text="Info String, not so long" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayoutButtons"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relCont"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DONE" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

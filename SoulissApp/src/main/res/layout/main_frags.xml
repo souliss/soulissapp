@@ -3,25 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/custom_actionbar" />
 
         <fragment
             android:id="@+id/listFragment"
             class="it.angelic.soulissclient.fragments.NodesListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/my_awesome_toolbar"
             tools:layout="@layout/frag_nodelist" />
+    </RelativeLayout>
 
-    <ListView
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#111"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp" />
+    <include layout="@layout/custom_leftdrawer" />
 </android.support.v4.widget.DrawerLayout><!--
 
 

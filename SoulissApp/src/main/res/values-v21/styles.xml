@@ -3,14 +3,22 @@
 
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowSharedElementEnterTransition">@transition/shared_element_enter</item>
-
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <!-- Toolbar styles -->
+        <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
     </style>
 
-    <style name="DarkThemeSelector" parent="Theme.AppCompat">
+    <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowSharedElementEnterTransition">@android:transition/slide_bottom</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowActionBar">false</item>
+        <!-- Toolbar styles -->
+        <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
     </style>
 
      <style name="CodeFontSmall" parent="@android:style/TextAppearance.Small">

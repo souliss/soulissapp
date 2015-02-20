@@ -53,7 +53,9 @@ public class FavActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
-
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setActionBarInfo(getString(R.string.favourites));
+    }
 }
