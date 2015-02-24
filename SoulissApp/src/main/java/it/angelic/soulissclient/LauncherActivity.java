@@ -207,7 +207,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         soulissManualBtn = (Button) findViewById(R.id.ButtonManual);
         programsActivity = (Button) findViewById(R.id.Button06);
         basinfo = (TextView) findViewById(R.id.textViewBasicInfo);
-        basinfoLine = (View) findViewById(R.id.textViewBasicInfoLine);
+       // basinfoLine = (View) findViewById(R.id.textViewBasicInfoLine);
         serviceinfoLine = (View) findViewById(R.id.TextViewServiceLine);
         dbwarn = (TextView) findViewById(R.id.textViewDBWarn);
         dbwarnline = (View) findViewById(R.id.textViewDBWarnLine);

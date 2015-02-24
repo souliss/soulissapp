@@ -139,10 +139,10 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		collected.setPrefs(opzioni);
 
 		super.setCollected(collected);
-		super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+		/*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-		super.actionBar.setDisplayHomeAsUpEnabled(true);
+		super.actionBar.setDisplayHomeAsUpEnabled(true);*/
 		refreshStatusIcon();
         super.actionBar.setTitle(collected.getNiceName());
 

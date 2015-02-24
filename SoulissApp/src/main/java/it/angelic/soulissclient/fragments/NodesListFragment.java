@@ -252,7 +252,7 @@ public class NodesListFragment extends ListFragment {
 		opzioni.initializePrefs();
 		// doBindService();
 		datasource.open();
-		refreshStatusIcon();
+
 		// prendo tipici dal DB
 		final List<SoulissNode> goer = datasource.getAllNodes();
 		nodiArray = new SoulissNode[goer.size()];
@@ -268,6 +268,7 @@ public class NodesListFragment extends ListFragment {
 
         actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
         ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
+        refreshStatusIcon();
 	}
 
 	// Aggiorna il feedback

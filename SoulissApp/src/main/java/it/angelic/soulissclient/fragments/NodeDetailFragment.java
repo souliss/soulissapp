@@ -8,6 +8,8 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Anti
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer;
 import static junit.framework.Assert.assertTrue;
+
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -66,6 +68,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -99,11 +102,12 @@ public class NodeDetailFragment extends ListFragment {
 	private ImageView nodeic;
 	private Handler timeoutHandler;
 	private boolean mDualPane;
-	private ActionBar actionBar;
+	//private ActionBar actionBar;
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
     private SwipeRefreshLayout swipeLayout;
+    private Toolbar actionBar;
 
     protected int getShownIndex() {
 		if (getArguments() != null)
@@ -175,10 +179,13 @@ public class NodeDetailFragment extends ListFragment {
 			getActivity().setTheme(R.style.LightThemeSelector);
 		else
 			getActivity().setTheme(R.style.DarkThemeSelector);
-		actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+        ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
+        ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		/*actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);*/
 		super.onActivityCreated(savedInstanceState);
 		timeoutHandler = new Handler();
 		setHasOptionsMenu(true);
@@ -410,7 +417,7 @@ public class NodeDetailFragment extends ListFragment {
 
 	private void refreshStatusIcon() {
 		try {
-			View ds = actionBar.getCustomView();
+			View ds = actionBar.getRootView();
 			if (ds != null) {
 				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);

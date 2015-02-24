@@ -46,6 +46,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
     @Override
 	protected void onStart() {
          actionBar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        //if (actionBar != null)
         setSupportActionBar(actionBar);
 		//actionBar = getSupportActionBar();
 		//actionBar.setCustomView(R.layout.custom_actionbar); // load your layout

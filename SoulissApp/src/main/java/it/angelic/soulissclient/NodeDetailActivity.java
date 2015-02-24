@@ -16,6 +16,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,7 +76,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
-       // setContentView(R.layout.main_frags);
+        setContentView(R.layout.main_nodedetail);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
@@ -83,15 +84,16 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 			finish();
 			return;
 		}
-		
+        //super.onCreate(savedInstanceState);
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null && extras.get("NODO") != null)
 			collected = (SoulissNode) extras.get("NODO");
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
-			NodeDetailFragment details = new NodeDetailFragment();
-			details.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+			//NodeDetailFragment details = new NodeDetailFragment();
+			//details.setArguments(getIntent().getExtras());
+           // getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
         }
 	}
 	@Override
