@@ -19,6 +19,7 @@ public class T19SingleChannelFragWrapper extends AbstractStatusedFragmentActivit
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_detailwrapper);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
@@ -36,7 +37,7 @@ public class T19SingleChannelFragWrapper extends AbstractStatusedFragmentActivit
 			T19SingleChannelLedFragment details = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.detailPane, details).commit();
 		}
 	}
 

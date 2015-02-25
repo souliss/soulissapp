@@ -19,19 +19,22 @@ import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class DrawerItemClickListener implements ListView.OnItemClickListener {
 
 	Activity mActivity;
 	private ListView mDrawerList;
+    protected LinearLayout mDrawerLinear;
 	private DrawerLayout mDrawerLayout;
 
-	public DrawerItemClickListener(Activity mActivity, ListView mDrawerList, DrawerLayout mDrawerLayout) {
+	public DrawerItemClickListener(Activity mActivity, ListView mDrawerList, DrawerLayout mDrawerLayout, LinearLayout mDrawerLinear) {
 		super();
 		this.mActivity = mActivity;
 		this.mDrawerList = mDrawerList;
 		this.mDrawerLayout = mDrawerLayout;
+        this.mDrawerLinear = mDrawerLinear;
 	}
 
 	@Override
@@ -66,7 +69,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.SCENES:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent = new Intent(mActivity, SceneListActivity.class);
 				myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent);
@@ -74,7 +77,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.PROGRAMS:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent2 = new Intent(mActivity, ProgramListActivity.class);
 				myIntent2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent2);
@@ -82,7 +85,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.MANUAL:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent3 = new Intent(mActivity, NodesListActivity.class);
 				myIntent3.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent3);
@@ -90,7 +93,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.SETTINGS_NET:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent4 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -101,7 +104,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.SETTINGS_DB:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent5 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -112,7 +115,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.SETTINGS_SERVICE:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent6 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent6.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -123,7 +126,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.SETTINGS_VISUAL:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent7 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent7.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -134,7 +137,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			case DrawerMenuHelper.SETTINGS_UDPTEST:
 				mDrawerList.setItemChecked(position, true);
 				// setTitle(mPlanetTitles[position]);
-				mDrawerLayout.closeDrawer(mDrawerList);
+				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent8 = new Intent(mActivity, ManualUDPTestActivity.class);
 				myIntent8.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				mActivity.startActivity(myIntent8);

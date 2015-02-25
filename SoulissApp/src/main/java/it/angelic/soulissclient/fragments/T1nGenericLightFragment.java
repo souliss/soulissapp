@@ -9,6 +9,8 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCo
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil_Auto;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Timed;
 import static junit.framework.Assert.assertTrue;
+
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -34,6 +36,7 @@ import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -143,9 +146,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);*/
-		refreshStatusIcon();
-        super.actionBar.setTitle(collected.getNiceName());
 
+
+
+
+        //super.actionBar.setTitle(collected.getNiceName());
 
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttAuto = (Button) ret.findViewById(R.id.buttonAuto);

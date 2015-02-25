@@ -1,7 +1,6 @@
 package it.angelic.soulissclient;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -11,28 +10,15 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 
 public class NodesListActivity extends AbstractStatusedFragmentActivity {
 	private SoulissDBHelper datasource;
 	List<SoulissNode> goer;
-    private DrawerMenuHelper dmh;
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
-    private NavDrawerAdapter mAdapter;
+
 
     // private FragmentTabHost mTabHost;
 
@@ -50,37 +36,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 		// use fragmented panel/ separate /land
 		setContentView(R.layout.main_frags);
 
-        // DRAWER
-        dmh = new DrawerMenuHelper();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-                mDrawerLayout, /* DrawerLayout object */
-                R.string.warn_wifi, /* "open drawer" description */
-                R.string.warn_wifi /* "close drawer" description */
-        ) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                ActivityCompat.invalidateOptionsMenu(NodesListActivity.this);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                ActivityCompat.invalidateOptionsMenu(NodesListActivity.this);
-            }
-        };
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        mAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
-        mDrawerList.setAdapter(mAdapter);
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
+        super.initDrawer(NodesListActivity.this, DrawerMenuHelper.MANUAL);
 	}
 
 	@Override
@@ -111,8 +67,9 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 			}
 		}).start();
 
-        mAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
-        mDrawerList.setAdapter(mAdapter);
+        mDrawermAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
+        mDrawerList.setAdapter(mDrawermAdapter);
+        mDrawerToggle.syncState();
 	}
 
 	@Override

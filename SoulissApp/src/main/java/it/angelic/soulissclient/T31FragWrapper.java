@@ -17,6 +17,7 @@ public class T31FragWrapper extends AbstractStatusedFragmentActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_detailwrapper);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
@@ -37,7 +38,7 @@ public class T31FragWrapper extends AbstractStatusedFragmentActivity {
 			T31HeatingFragment details = T31HeatingFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.detailPane, details).commit();
 		}
 	}
 

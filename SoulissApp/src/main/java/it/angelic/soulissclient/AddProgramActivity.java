@@ -42,7 +42,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
-public class AddProgramActivity extends Activity {
+public class AddProgramActivity extends AbstractStatusedFragmentActivity {
     //arrays per spinner
     private SoulissNode[] nodiArray;
     private SoulissNode[] nodiArrayWithExtra;
@@ -218,6 +218,8 @@ public class AddProgramActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        setActionBarInfo(getString(R.string.app_addprog));
+
         scenes = datasource.getScenes(this);
         outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
         fillNodeSpinnerWithExtra(outputNodeSpinner);
@@ -245,7 +247,7 @@ public class AddProgramActivity extends Activity {
         final Button btCancel = (Button) findViewById(R.id.buttonInsertProgram);
         final Button btSave = (Button) findViewById(R.id.buttonCancelProgram);
 
-
+        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /**
          * LISTENER SPINNER DESTINATARIO, IN TESTATA
          */

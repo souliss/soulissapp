@@ -99,10 +99,10 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
 			//Setta STATUS BAR
 			super.setCollected(collected);
-			super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+			/*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 			super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 			super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-			super.actionBar.setDisplayHomeAsUpEnabled(true);
+			super.actionBar.setDisplayHomeAsUpEnabled(true);*/
 			refreshStatusIcon();
 			
 			datasource = new SoulissDBHelper(getActivity());

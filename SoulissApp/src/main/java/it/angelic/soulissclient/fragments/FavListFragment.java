@@ -66,11 +66,11 @@ public class FavListFragment extends AbstractTypicalFragment {
             getActivity().setTheme(R.style.LightThemeSelector);
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
-        actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+       /* actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.favourites));
+        actionBar.setTitle(getString(R.string.favourites));*/
         initDataset();
         super.onCreate(savedInstanceState);
     }

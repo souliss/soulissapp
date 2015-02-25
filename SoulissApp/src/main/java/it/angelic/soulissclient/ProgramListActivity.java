@@ -3,9 +3,7 @@ package it.angelic.soulissclient;
 import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -20,9 +18,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -34,7 +29,6 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -62,12 +56,6 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	private ProgramListAdapter progsAdapter;
 	private TextView tt;
 
-	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerList;
-	// private CharSequence mTitle;
-	private ActionBarDrawerToggle mDrawerToggle;
-	private DrawerMenuHelper dmh;
-	private ArrayAdapter<INavDrawerItem> drawerAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -93,37 +81,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		}
 		datasource = new SoulissDBHelper(this);
 
-		// DRAWER
-		dmh = new DrawerMenuHelper();
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-		mDrawerLayout, /* DrawerLayout object */
-		R.string.warn_wifi, /* "open drawer" description */
-		R.string.warn_wifi /* "close drawer" description */
-		) {
-			/** Called when a drawer has settled in a completely closed state. */
-			public void onDrawerClosed(View view) {
-				super.onDrawerClosed(view);
-				ActivityCompat.invalidateOptionsMenu(ProgramListActivity.this);
-			}
-
-			/** Called when a drawer has settled in a completely open state. */
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				ActivityCompat.invalidateOptionsMenu(ProgramListActivity.this);
-			}
-		};
-		//getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-		//getSupportActionBar().setHomeButtonEnabled(true);
-        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-		// Set the drawer toggle as the DrawerListener
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		drawerAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.PROGRAMS);
-		mDrawerList.setAdapter(drawerAdapter);
-		// Set the list's click listener
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
+		super.initDrawer(this, DrawerMenuHelper.PROGRAMS);
 
 		listaProgrammiView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -168,8 +126,8 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		listaProgrammiView.setAdapter(progsAdapter);
 		listaProgrammiView.invalidateViews();
 		// forza refresh drawer
-		drawerAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.PROGRAMS);
-		mDrawerList.setAdapter(drawerAdapter);
+		mDrawermAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.PROGRAMS);
+		mDrawerList.setAdapter(mDrawermAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaProgrammiView);

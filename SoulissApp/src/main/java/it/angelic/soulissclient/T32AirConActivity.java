@@ -231,6 +231,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 			}
 		};
 		btOff.setOnClickListener(simplecan);
+        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 

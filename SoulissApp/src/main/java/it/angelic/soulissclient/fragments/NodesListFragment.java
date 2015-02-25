@@ -94,11 +94,11 @@ public class NodesListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		opzioni = SoulissClient.getOpzioni();
-		ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+		/*ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+*/
 
 		setHasOptionsMenu(true);
 		//opzioni.reload();
@@ -268,6 +268,8 @@ public class NodesListFragment extends ListFragment {
 
         actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
         ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
+        ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         refreshStatusIcon();
 	}
 

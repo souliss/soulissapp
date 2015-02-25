@@ -120,34 +120,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		// datasource.open();
 
 		// DRAWER
-		dmh = new DrawerMenuHelper();
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-		mDrawerLayout, /* DrawerLayout object */
-		R.string.warn_wifi, /* "open drawer" description */
-		R.string.warn_wifi /* "close drawer" description */
-		) {
-			/** Called when a drawer has settled in a completely closed state. */
-			public void onDrawerClosed(View view) {
-				super.onDrawerClosed(view);
-				ActivityCompat.invalidateOptionsMenu(SceneListActivity.this);
-			}
-
-			/** Called when a drawer has settled in a completely open state. */
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				ActivityCompat.invalidateOptionsMenu(SceneListActivity.this);
-			}
-		};
-        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-		// Set the drawer toggle as the DrawerListener
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
-		mDrawerList.setAdapter(mAdapter);
-		// Set the list's click listener
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
+		super.initDrawer(this, DrawerMenuHelper.SCENES);
 
 		listaScenesView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {

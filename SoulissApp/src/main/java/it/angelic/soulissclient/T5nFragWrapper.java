@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
+public class T5nFragWrapper extends AbstractStatusedFragmentActivity {
 	private TypicalsListAdapter ta;
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -49,7 +49,7 @@ public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 
 	void doBindService() {
 		if (!mIsBound) {
-			bindService(new Intent(SensorDetailActivity.this, SoulissDataService.class), mConnection,
+			bindService(new Intent(T5nFragWrapper.this, SoulissDataService.class), mConnection,
 					Context.BIND_AUTO_CREATE);
 			mIsBound = true;
 		}
@@ -69,7 +69,10 @@ public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
-		// recuper nodo da extra
+
+		// setto il fragment fakeout
+        setContentView(R.layout.main_detailwrapper);
+
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
 			// dialog in-line with the list so we don't need this activity.
@@ -87,7 +90,7 @@ public class SensorDetailActivity extends AbstractStatusedFragmentActivity {
 			// During initial setup, plug in the details fragment.
 			T5nSensorFragment details = T5nSensorFragment.newInstance(collected.getSlot(), collected);
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.detailPane, details).commit();
 		}
 	}
 

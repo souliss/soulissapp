@@ -6,15 +6,13 @@ import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class T16RGBAdvancedActivity extends ActionBarActivity {
+public class T16RGBAdvancedActivity extends AbstractStatusedFragmentActivity {
 	private SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;
 
@@ -26,6 +24,7 @@ public class T16RGBAdvancedActivity extends ActionBarActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_detailwrapper);
 		// recuper nodo da extra
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
@@ -38,11 +37,12 @@ public class T16RGBAdvancedActivity extends ActionBarActivity {
 		if (extras != null && extras.get("TIPICO") != null)
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
+        setActionBarInfo(collected.getNiceName());
 		if (savedInstanceState == null) {
 			T16RGBAdvancedFragment details = T16RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.detailPane, details).commit();
 		}
 	}
 

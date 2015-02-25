@@ -12,13 +12,12 @@
 
         <include layout="@layout/custom_actionbar" />
 
-        <fragment
-            android:id="@+id/details"
-            class="it.angelic.soulissclient.fragments.NodeDetailFragment"
+        <FrameLayout
+            android:id="@+id/detailPane"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/my_awesome_toolbar"
-            tools:layout="@layout/frag_nodelist" />
+            tools:layout="@layout/frag_nodedetail" />
     </RelativeLayout>
 
     <include layout="@layout/custom_leftdrawer" />

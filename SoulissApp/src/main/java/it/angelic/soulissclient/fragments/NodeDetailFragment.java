@@ -13,7 +13,7 @@ import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SensorDetailActivity;
+import it.angelic.soulissclient.T5nFragWrapper;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.T15RGBIrActivity;
@@ -66,8 +66,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -191,7 +189,7 @@ public class NodeDetailFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		datasource = new SoulissDBHelper(getActivity());
 		View detailsFrame = getActivity().findViewById(R.id.details);
-		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 		// nodoInfo.removeAllViews();
 		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicalsTitle);
 		// health = (TextView) findViewById(R.id.TextViewHealth);
@@ -320,6 +318,7 @@ public class NodeDetailFragment extends ListFragment {
 	public void onConfigurationChanged(Configuration newConfig) {
 		View detailsFrame = getActivity().findViewById(R.id.details);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+        Log.i(Constants.TAG,"DUALPANE:"+mDualPane);
 		super.onConfigurationChanged(newConfig);
 	}
 
@@ -341,25 +340,27 @@ public class NodeDetailFragment extends ListFragment {
 			li.setItemChecked(index, true);
 			// Check what fragment is currently shown, replace if needed.
 			Fragment details = getFragmentManager().findFragmentById(R.id.details);
+            Fragment NewFrag = null;
 			// Istanzia e ci mette l'indice
 			if (target.isSensor())
-				details = T5nSensorFragment.newInstance(index, target);
+                NewFrag = T5nSensorFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical16AdvancedRGB)
-				details = T16RGBAdvancedFragment.newInstance(index, target);
+                NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
-				details = T19SingleChannelLedFragment.newInstance(index, target);
+                NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical31Heating)
-				details = T31HeatingFragment.newInstance(index, target);
+                NewFrag = T31HeatingFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
-				details = T1nGenericLightFragment.newInstance(index, target);
+                NewFrag = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer|| target instanceof SoulissTypical43AntiTheftLocalPeer)
-				details = T4nFragment.newInstance(index, target);
+                NewFrag = T4nFragment.newInstance(index, target);
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
-			if (opzioni.isAnimationsEnabled())
+            if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-			ft.replace(R.id.details, details);
+			ft.replace(R.id.details, NewFrag);
 			// ft.addToBackStack(null);
-
+           // ft.remove(details);
+            //ft.add(NewFrag,"BOH");
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 			ft.commit();
 
@@ -368,7 +369,7 @@ public class NodeDetailFragment extends ListFragment {
 			if (target.isSensor()) {
 				Log.d(Constants.TAG, getResources().getString(R.string.manual_showing_typ) + index);
 				// Activity Dettaglio nodo
-				nodeDatail = new Intent(getActivity(), SensorDetailActivity.class);
+				nodeDatail = new Intent(getActivity(), T5nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
 				nodeDatail = new Intent(getActivity(), T32AirConActivity.class);

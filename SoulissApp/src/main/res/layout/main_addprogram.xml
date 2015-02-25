@@ -1,301 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:id="@+id/Cont01"
-        android:padding="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <include layout="@layout/custom_actionbar" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ScrollView01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/my_awesome_toolbar">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout3"
+            android:id="@+id/Cont01"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" >
+            android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textView1"
-                style="@style/CodeFontTitle"
-                android:text="@string/programs_target"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/CodeFontTitle"
+                    android:text="@string/programs_target"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <View
+                    android:id="@+id/strut"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true" />
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    style="@style/CodeFontMain"
+                    android:layout_width="0dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignRight="@id/strut"
+                    android:layout_below="@id/textView1" />
+
+                <Spinner
+                    android:id="@+id/spinner3"
+                    style="@style/CodeFontMain"
+                    android:layout_width="0dip"
+                    android:layout_alignLeft="@id/strut"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/textView1"
+                    android:layout_toRightOf="@id/spinner2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout43"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relativeLayout3"
+                android:layout_marginTop="4dip"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textViewCommand"
+                    style="@style/CodeFontTitle"
+                    android:text="@string/addprogram_choosecommand"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <Spinner
+                    android:id="@+id/spinnerCommand"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewCommand" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relativeLayout43">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dip"
+                    android:background="#FFCCCCCC" />
+
+                <RadioButton
+                    android:id="@+id/RadioButtonTime"
+                    style="@style/CodeFontTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/addprogram_timed" />
+
+                <ImageView
+                    android:id="@+id/timed_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:alpha="0.5"
+                    android:contentDescription="@string/addprogram_timed"
+                    android:src="@drawable/clock" />
+
+                <TextView
+                    android:id="@+id/textviewtimed"
+                    style="@style/CodeFontSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/RadioButtonTime"
+                    android:layout_marginTop="-5dip"
+                    android:text="@string/addprogram_timed_desc" />
+
+                <TimePicker
+                    android:id="@+id/timePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textviewtimed"
+                    android:layout_centerHorizontal="true" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxRecursive"
+                    style="@style/CodeFontMain"
+                    android:layout_alignParentTop="false"
+                    android:layout_below="@id/timePicker"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/addprogram_scheduleevery" />
+
+                <Spinner
+                    android:id="@+id/spinnerRepeatEvery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/timePicker"
+                    android:layout_margin="10dp"
+                    android:layout_toRightOf="@id/checkBoxRecursive"
+                    android:entries="@array/scheduleInterval"
+                    android:entryValues="@array/scheduleIntervalValues" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relativeLayout1">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="#FFCCCCCC" />
+
+                <RadioButton
+                    android:id="@+id/RadioButtonPosition"
+                    style="@style/CodeFontTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addprogram_positional" />
+
+                <ImageView
+                    android:id="@+id/position_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:alpha="0.5"
+                    android:contentDescription="@string/addprogram_positional"
+                    android:src="@drawable/exit" />
+
+                <TextView
+                    android:id="@+id/textViewInfoPos"
+                    style="@style/CodeFontSmall"
+                    android:layout_below="@id/RadioButtonPosition"
+                    android:layout_marginTop="-5dip"
+                    android:text="@string/addprogram_positional_desc"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <ToggleButton
+                    android:id="@+id/toggleButtonPosition"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewInfoPos"
+                    android:layout_margin="30dip"
+                    android:text="@string/addprogram_positional_goout"
+                    android:textOff="@string/addprogram_positional_goout"
+                    android:textOn="@string/addprogram_positional_comeback" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@id/relativeLayout2">
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:background="#FFCCCCCC" />
+
+                <RadioButton
+                    android:id="@+id/RadioButtonTriggered"
+                    style="@style/CodeFontTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/addprogram_sensorial" />
+
+                <TextView
+                    android:id="@+id/textViewInfoTrig"
+                    style="@style/CodeFontSmall"
+                    android:layout_below="@id/RadioButtonTriggered"
+                    android:layout_marginTop="-5dip"
+                    android:text="@string/addprogram_sensorial_desc" />
+
+                <ImageView
+                    android:id="@+id/triggered_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:alpha="0.5"
+                    android:contentDescription="@string/addprogram_sensorial"
+                    android:src="@drawable/lighthouse" />
+
+
+                <View
+                    android:id="@+id/strutt"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true" />
+
+                <Spinner
+                    android:id="@+id/Spinner05"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignRight="@id/strutt"
+                    android:layout_below="@id/textViewInfoTrig"
+                    android:padding="10dp" />
+
+                <Spinner
+                    android:id="@+id/Spinner06"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/strutt"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/textViewInfoTrig"
+                    android:layout_toRightOf="@id/Spinner05"
+                    android:padding="10dp" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/Spinner05"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:weightSum="1.0">
+
+                    <Button
+                        android:id="@+id/buttonComparator"
+                        style="@style/CodeFontMain"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".70" />
+
+                    <EditText
+                        android:id="@+id/editTextThreshold"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".30"
+                        android:hint="@string/addprogram_threshold"
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <View
-                android:id="@+id/strut"
+                android:id="@+id/strut2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_centerHorizontal="true" />
-
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="0dip"
-                style="@style/CodeFontMain"
-                android:layout_alignParentLeft="true"
-                android:layout_alignRight="@id/strut"
-                android:layout_below="@id/textView1" />
-
-            <Spinner
-                android:id="@+id/spinner3"
-                android:layout_width="0dip"
-               style="@style/CodeFontMain"
-                android:layout_alignLeft="@id/strut"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/textView1"
-                android:layout_toRightOf="@id/spinner2" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout43"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dip"
-            android:layout_below="@id/relativeLayout3"
-            android:gravity="center" >
-
-            <TextView
-                android:id="@+id/textViewCommand"
-                style="@style/CodeFontTitle"
-                android:text="@string/addprogram_choosecommand"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Spinner
-                android:id="@+id/spinnerCommand"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewCommand" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/relativeLayout43" >
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
                 android:background="#FFCCCCCC" />
 
-            <RadioButton
-                android:id="@+id/RadioButtonTime"
-                android:layout_width="fill_parent"
-                style="@style/CodeFontTitle"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="@string/addprogram_timed" />
-
-            <ImageView
-                android:alpha="0.5"
-                android:id="@+id/timed_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/addprogram_timed"
-                android:src="@drawable/clock" />
-
-            <TextView
-                android:id="@+id/textviewtimed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/RadioButtonTime"
-                android:layout_marginTop="-5dip"
-                android:text="@string/addprogram_timed_desc"
-                style="@style/CodeFontSmall" />
-
-            <TimePicker
-                android:layout_centerHorizontal="true"
-                android:id="@+id/timePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textviewtimed" />
-
-            <CheckBox
-                android:id="@+id/checkBoxRecursive"
-                style="@style/CodeFontMain"
-                android:layout_alignParentTop="false"
-                android:layout_below="@id/timePicker"
-                android:layout_marginTop="16dp"
-                android:text="@string/addprogram_scheduleevery" />
-
-            <Spinner
-                android:id="@+id/spinnerRepeatEvery"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/buttonInsertProgram"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/timePicker"
-                android:layout_margin="10dp"
-                android:layout_toRightOf="@id/checkBoxRecursive"
-                android:entries="@array/scheduleInterval"
-                android:entryValues="@array/scheduleIntervalValues" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/relativeLayout1" >
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="#FFCCCCCC" />
-
-            <RadioButton
-                android:id="@+id/RadioButtonPosition"
-                android:layout_width="fill_parent"
-                style="@style/CodeFontTitle"
-                android:layout_height="wrap_content"
-                android:text="@string/addprogram_positional" />
-
-            <ImageView
-                android:alpha="0.5"
-                android:id="@+id/position_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/addprogram_positional"
-                android:src="@drawable/exit" />
-
-            <TextView
-                android:id="@+id/textViewInfoPos"
-                style="@style/CodeFontSmall"
-                android:layout_below="@id/RadioButtonPosition"
-                android:layout_marginTop="-5dip"
-                android:text="@string/addprogram_positional_desc"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <ToggleButton
-                android:id="@+id/toggleButtonPosition"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textViewInfoPos"
-                android:layout_margin="30dip"
-                android:text="@string/addprogram_positional_goout"
-                android:textOff="@string/addprogram_positional_goout"
-                android:textOn="@string/addprogram_positional_comeback" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_below="@id/relativeLayout2" >
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:background="#FFCCCCCC" />
-
-            <RadioButton
-                android:id="@+id/RadioButtonTriggered"
-                android:layout_width="fill_parent"
-                style="@style/CodeFontTitle"
-                android:layout_height="wrap_content"
-                android:text="@string/addprogram_sensorial" />
-            <TextView
-                android:id="@+id/textViewInfoTrig"
-                android:layout_below="@id/RadioButtonTriggered"
-                android:layout_marginTop="-5dip"
-                android:text="@string/addprogram_sensorial_desc"
-                style="@style/CodeFontSmall" />
-            <ImageView
-                android:alpha="0.5"
-                android:id="@+id/triggered_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/addprogram_sensorial"
-                android:src="@drawable/lighthouse" />
-
-
-
-            <View
-                android:id="@+id/strutt"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
-
-            <Spinner
-                android:id="@+id/Spinner05"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignRight="@id/strutt"
-                android:layout_below="@id/textViewInfoTrig" />
+                android:layout_alignRight="@id/strut2"
+                android:layout_below="@id/relativeLayout4"
+                android:layout_marginBottom="25dp"
+                android:width="0dip"
+                android:text="@android:string/cancel" />
 
-            <Spinner
-                android:id="@+id/Spinner06"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/buttonCancelProgram"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/strutt"
-                android:padding="10dp"
+                android:layout_alignLeft="@id/strut2"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/textViewInfoTrig"
-                android:layout_toRightOf="@id/Spinner05" />
-
-            <LinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/Spinner05"
-                android:weightSum="1.0" >
-
-                <Button
-                    android:id="@+id/buttonComparator"
-                    android:layout_width="fill_parent"
-                    style="@style/CodeFontMain"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".70"/>
-
-                <EditText
-                    android:id="@+id/editTextThreshold"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".30"
-                    android:hint="@string/addprogram_threshold"
-                    android:inputType="numberDecimal" />
-            </LinearLayout>
+                android:layout_below="@id/relativeLayout4"
+                android:text="@string/save" />
         </RelativeLayout>
 
-        <View
-            android:id="@+id/strut2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#FFCCCCCC" />
-
-        <Button
-            android:id="@+id/buttonInsertProgram"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@id/strut2"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/relativeLayout4"
-            android:layout_marginBottom="25dp"
-            android:text="@android:string/cancel"
-            android:width="0dip" />
-
-        <Button
-            android:id="@+id/buttonCancelProgram"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/strut2"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/relativeLayout4"
-            android:text="@string/save" />
-    </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

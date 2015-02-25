@@ -97,7 +97,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="SensorDetailActivity"
+            android:name=".T5nFragWrapper"
             android:exported="false"
             android:label="@string/app_name" >
             <intent-filter>

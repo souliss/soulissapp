@@ -1,5 +1,7 @@
 package it.angelic.soulissclient.fragments;
 
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -7,12 +9,14 @@ import it.angelic.soulissclient.model.SoulissTypical;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AbstractTypicalFragment extends Fragment {
-	protected ActionBar actionBar;
+	protected Toolbar actionBar;
 	protected SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;
 	public AbstractTypicalFragment() {
@@ -20,10 +24,23 @@ public class AbstractTypicalFragment extends Fragment {
 		opzioni = SoulissClient.getOpzioni();
 		
 	}
-	protected  void refreshStatusIcon() {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+        ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
+        ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        refreshStatusIcon();
+    }
+
+
+    protected  void refreshStatusIcon() {
 		try {
-			View ds = actionBar.getCustomView();
+			View ds = actionBar.getRootView();
 			if (ds != null) {
+                TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfo1);
+                TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
 				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 				TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);

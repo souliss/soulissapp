@@ -18,6 +18,7 @@ public class T1nFragWrapper extends AbstractStatusedFragmentActivity {
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		// recuper nodo da extra
+        setContentView(R.layout.main_detailwrapper);
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			// If the screen is now in landscape mode, we can show the
 			// dialog in-line with the list so we don't need this activity.
@@ -31,17 +32,23 @@ public class T1nFragWrapper extends AbstractStatusedFragmentActivity {
 		if (extras != null && extras.get("TIPICO") != null)
 			collected = (SoulissTypical) extras.get("TIPICO");
 		assertTrue("TIPICO NULLO", collected != null);
-		setActionBarInfo(collected.getNiceName());
-		if (savedInstanceState == null) {
+
+        if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
 			T1nGenericLightFragment details = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(),
 					collected);
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().replace(android.R.id.content, details).commit();
+			getSupportFragmentManager().beginTransaction().replace(R.id.detailPane, details).commit();
 		}
 	}
 
-	// meccanismo per timeout detection
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setActionBarInfo(collected==null?getString(R.string.scenes_title):collected.getNiceName());
+    }
+
+    // meccanismo per timeout detection
 	/*
 	 * private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
 	 * 

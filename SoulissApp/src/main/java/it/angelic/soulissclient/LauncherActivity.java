@@ -155,7 +155,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     };
     private View webServiceInfoLine;
 
-    private ArrayAdapter<INavDrawerItem> mAdapter;
     private Criteria criteria;
     private CardView cardViewBasicInfo;
     private CardView cardViewPositionInfo;
@@ -232,44 +231,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // Define the criteria how to select the locatioin provider
         criteria = new Criteria();
         criteria.setPowerRequirement(Criteria.POWER_LOW);
+
+
         // DRAWER
-       final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
-       final TextView info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
-        dmh = new DrawerMenuHelper();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
-                mDrawerLayout, /* DrawerLayout object */
-                R.string.warn_wifi, /* "open drawer" description */
-                R.string.warn_wifi /* "close drawer" description */
-        ) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
-                //TODO settext
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                ActivityCompat.invalidateOptionsMenu(LauncherActivity.this);
-                info2.setText(getString(R.string.app_name)+" "+(opzioni.isSoulissReachable()?getString(R.string.Online):getString(R.string.offline)));
-                info1.setText("Souliss can control "+opzioni
-                        .getCustomPref().getInt("numTipici", 0)+" Things");
-            }
-        };
-        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-
-        mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -99);
-        mDrawerList.setAdapter(mAdapter);
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout));
+        initDrawer(this, DrawerMenuHelper.MANUAL);
 
         doBindService();
         if (opzioni.isWebserverEnabled())
@@ -398,8 +363,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         };
         soulissManualBtn.setOnClickListener(simpleOnClickListener);
         // forza refresh drawer
-        mAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -99);
-        mDrawerList.setAdapter(mAdapter);
+        //mDrawerAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -99);
+        //mDrawerList.setAdapter(mDrawerAdapter);
 
         db = new SoulissDBHelper(this);
         // refresh testo

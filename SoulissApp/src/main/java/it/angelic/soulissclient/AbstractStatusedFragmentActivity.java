@@ -1,11 +1,13 @@
 package it.angelic.soulissclient;
 
+import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
-import android.support.annotation.Nullable;
+import android.app.Activity;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -28,12 +30,17 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 	protected SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 	protected Toolbar actionBar;
 
-    protected DrawerLayout mDrawerLayout;
-    protected ListView mDrawerList;
+    //IL drawer ci piace qui
     protected LinearLayout mDrawerLinear;
     // private CharSequence mTitle;
-    protected ActionBarDrawerToggle mDrawerToggle;
+
+    protected TextView info1;
+    protected TextView info2;
     protected DrawerMenuHelper dmh;
+    protected DrawerLayout mDrawerLayout;
+    protected ActionBarDrawerToggle mDrawerToggle;
+    protected ListView mDrawerList;
+    protected NavDrawerAdapter mDrawermAdapter;
 	/**
 	 * chiamato dal layout xml
 	 */
@@ -59,8 +66,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 		try {
 			//actionBar = getSupportActionBar();
 			View ds = actionBar.getRootView();
-            TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfo1);
-            TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
+
             ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
@@ -79,4 +85,43 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 			Log.e(Constants.TAG, "null bar? " + e.getMessage());
 		}
 	}
+
+    protected void initDrawer(final Activity parentActivity,int activeSection){
+        // DRAWER
+        dmh = new DrawerMenuHelper();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
+        info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
+        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+                mDrawerLayout, /* DrawerLayout object */
+                R.string.warn_wifi, /* "open drawer" description */
+                R.string.warn_wifi /* "close drawer" description */
+        ) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                ActivityCompat.invalidateOptionsMenu(parentActivity);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ActivityCompat.invalidateOptionsMenu(parentActivity);
+                info2.setText(getString(R.string.app_name)+" "+(opzioni.isSoulissReachable()?getString(R.string.Online):getString(R.string.offline)));
+                info1.setText("Souliss is controlling "+opzioni
+                        .getCustomPref().getInt("numTipici", 0)+" Things");
+            }
+        };
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //getSupportActionBar().setHomeButtonEnabled(true);
+        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        mDrawermAdapter = new NavDrawerAdapter(parentActivity, R.layout.drawer_list_item, dmh.getStuff(), activeSection);
+        mDrawerList.setAdapter(mDrawermAdapter);
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout,mDrawerLinear));
+    }
 }

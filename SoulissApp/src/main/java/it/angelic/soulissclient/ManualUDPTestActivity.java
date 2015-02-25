@@ -2,6 +2,10 @@ package it.angelic.soulissclient;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerItemClickListener;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.INavDrawerItem;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.UDPHelper;
@@ -17,6 +21,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -25,14 +32,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ManualUDPTestActivity extends Activity {
+public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 	private SoulissPreferenceHelper opzioni;
 	private SoulissDBHelper datasource;
 	private Button refreshButton;
@@ -42,6 +51,7 @@ public class ManualUDPTestActivity extends Activity {
 	private Button GoButt;
 	private Handler timeoutHandler;
 	private TextView errorText;
+    private ArrayAdapter<INavDrawerItem> mAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +63,6 @@ public class ManualUDPTestActivity extends Activity {
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_manualudptest);
-		setTitle(getString(R.string.app_name) + " - " + getString(R.string.menu_test));
 
 		// DB
 		datasource = new SoulissDBHelper(this);
@@ -74,6 +83,43 @@ public class ManualUDPTestActivity extends Activity {
 
 		SoulissClient.setBackground((LinearLayout) findViewById(R.id.container), getWindowManager());
 
+        // DRAWER
+        final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
+        final TextView info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
+        dmh = new DrawerMenuHelper();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+                mDrawerLayout, /* DrawerLayout object */
+                R.string.warn_wifi, /* "open drawer" description */
+                R.string.warn_wifi /* "close drawer" description */
+        ) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                ActivityCompat.invalidateOptionsMenu(ManualUDPTestActivity.this);
+                //TODO settext
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ActivityCompat.invalidateOptionsMenu(ManualUDPTestActivity.this);
+                info2.setText(getString(R.string.app_name)+" "+(opzioni.isSoulissReachable()?getString(R.string.Online):getString(R.string.offline)));
+                info1.setText("Souliss can control "+opzioni
+                        .getCustomPref().getInt("numTipici", 0)+" Things");
+            }
+        };
+        mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
+
+        mAdapter = new NavDrawerAdapter(ManualUDPTestActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SETTINGS_UDPTEST);
+        mDrawerList.setAdapter(mAdapter);
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout, mDrawerLinear));
 		/**
 		 * Aggiorna le tabelle dei tipici
 		 */
@@ -264,6 +310,9 @@ public class ManualUDPTestActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+        setActionBarInfo(getString(R.string.menu_test_udp));
+
 		opzioni = SoulissClient.getOpzioni();
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
@@ -285,7 +334,18 @@ public class ManualUDPTestActivity extends Activity {
 		}
 
 	}
-
+    /* Called whenever we call invalidateOptionsMenu() */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // If the nav drawer is open, hide action items related to the content
+        // view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerLinear);
+        // menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setVisible(!drawerOpen);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -295,6 +355,14 @@ public class ManualUDPTestActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
+                mDrawerLayout.closeDrawer(mDrawerLinear);
+            } else {
+                mDrawerLayout.openDrawer(mDrawerLinear);
+            }
+            return true;//cliccato sul drawer, non far altro
+        }
 		switch (item.getItemId()) {
 
 		case R.id.Opzioni:

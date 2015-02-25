@@ -66,7 +66,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		else
 			setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_irrgb);
+		setContentView(R.layout.main_t15_irrgb);
 
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
@@ -188,7 +188,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		btBlu3.setOnClickListener(plus);
 		btBlu4.setOnClickListener(plus);
 		btBlu5.setOnClickListener(plus);
-
+        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
