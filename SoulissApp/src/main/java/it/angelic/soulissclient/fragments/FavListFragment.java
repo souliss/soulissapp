@@ -16,10 +16,8 @@
 
 package it.angelic.soulissclient.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -110,7 +108,8 @@ public class FavListFragment extends AbstractTypicalFragment {
         // elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
 
-        mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+        mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
+                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
         if (savedInstanceState != null) {
             // Restore saved layout manager type.
@@ -124,8 +123,8 @@ public class FavListFragment extends AbstractTypicalFragment {
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
 
-        mLinearLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.linear_layout_rb);
-        mLinearLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
+        //  mLinearLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.linear_layout_rb);
+       /* mLinearLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER);
@@ -138,7 +137,7 @@ public class FavListFragment extends AbstractTypicalFragment {
             public void onClick(View v) {
                 setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER);
             }
-        });
+        });*/
 
         return rootView;
     }
@@ -147,7 +146,11 @@ public class FavListFragment extends AbstractTypicalFragment {
     public void onStart() {
         super.onStart();
         refreshStatusIcon();
+        mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
+                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
     }
+
 
     /**
      * Set RecyclerView's LayoutManager to the one given.
@@ -158,10 +161,10 @@ public class FavListFragment extends AbstractTypicalFragment {
         int scrollPosition = 0;
 
         // If a layout manager has already been set, get current scroll position.
-        if (mRecyclerView.getLayoutManager() != null) {
+       /* if (mRecyclerView.getLayoutManager() != null) {
             scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
                     .findFirstCompletelyVisibleItemPosition();
-        }
+        }*/
 
         switch (layoutManagerType) {
             case GRID_LAYOUT_MANAGER:

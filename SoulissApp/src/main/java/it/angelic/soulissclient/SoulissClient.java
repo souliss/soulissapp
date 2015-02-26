@@ -23,18 +23,18 @@ public class SoulissClient extends Application implements Serializable{
 	private static final long serialVersionUID = 962480567399715745L;
 	private static volatile Context context;
 	private static DisplayMetrics metrics = new DisplayMetrics();
-	private static int displayWidth;
-	private static int displayHeight;
+	private static float displayWidth;
+	private static float displayHeight;
 	private static SoulissPreferenceHelper opzioni;
 	
 	public static Context getAppContext() {
         return SoulissClient.context;
     }
-    public static int getDisplayHeight() {
+    public static float getDisplayHeight() {
 		return displayHeight;
 	}
 
-    public static int getDisplayWidth() {
+    public static float getDisplayWidth() {
 		return displayWidth;
 	}
     /**
@@ -49,8 +49,8 @@ public class SoulissClient extends Application implements Serializable{
 			//StateListDrawable gras = (StateListDrawable) target.getRootView().getBackground();
 			GradientDrawable gra = (GradientDrawable) target.getRootView().getBackground();
 			gra.setGradientRadius(metrics.widthPixels / 2f);
-			displayWidth = metrics.widthPixels;
-			displayHeight = metrics.heightPixels;
+			//displayWidth = metrics.widthPixels;
+			//displayHeight = metrics.heightPixels;
 			gra.setDither(true);
 		} catch (Exception e) {
 			Log.w(Constants.TAG,"Couldn't set background:"+e.getMessage());
@@ -58,9 +58,13 @@ public class SoulissClient extends Application implements Serializable{
     }
     public void onCreate(){
         super.onCreate();
-        if (SoulissClient.context == null)
-        	SoulissClient.context = getApplicationContext();
-		setOpzioni(new SoulissPreferenceHelper(SoulissClient.context));
+ context = getApplicationContext();
+		setOpzioni(new SoulissPreferenceHelper(context));
+
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+
+        displayWidth = displayMetrics.heightPixels / displayMetrics.density;
+        displayHeight = displayMetrics.widthPixels / displayMetrics.density;
     }
 	public static SoulissPreferenceHelper getOpzioni() {
 		return opzioni;

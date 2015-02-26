@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="LightThemeSelector" parent="Theme.AppCompat.Light">
+    <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/radialbacklight</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
@@ -15,7 +15,7 @@
         <item name="android:textSize">@dimen/text_size_big</item>
     </style>
 
-    <style name="DarkThemeSelector" parent="Theme.AppCompat">
+    <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/radialback</item>
         <item name="android:actionBarStyle">@style/MyActionBarDark</item>
     </style>

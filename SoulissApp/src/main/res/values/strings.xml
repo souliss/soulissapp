@@ -4,7 +4,7 @@
     <!-- MANUAL_SECTION -->
     <string name="app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Options</string>
-    <string name="app_addprog">SoulissApp - Add Program</string>
+    <string name="app_addprog">Add Program</string>
     <string name="opt_network">Network Options</string>
     <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
     <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>

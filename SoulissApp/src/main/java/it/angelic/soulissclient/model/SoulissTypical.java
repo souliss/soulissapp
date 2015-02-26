@@ -285,7 +285,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
 
         final TextView cmd = new TextView(SoulissClient.getAppContext());
-        cmd.setText(SoulissClient.getAppContext().getString(R.string.actions));
+        cmd.setText(/*SoulissClient.getAppContext().getString(R.string.actions)*/"");
         // cmd.setTextSize(ctx.getResources().getDimension(R.dimen.text_size));
         if (prefs != null && prefs.isLightThemeSelected())
             cmd.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.black));

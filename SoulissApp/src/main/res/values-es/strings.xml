@@ -4,7 +4,7 @@
     <!-- MANUAL_SECTION -->
     <string name="app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Opciones</string>
-    <string name="app_addprog">SoulissApp - Agregar programa</string>
+    <string name="app_addprog">Agregar programa</string>
     <string name="opt_network">Opciones de red</string>
     <string name="last_update">Última actualización:</string>
     <string name="last_exec">Última ejecución:</string>

@@ -116,6 +116,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 				// TODO exec single command ?
 			}
 		});
+        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**

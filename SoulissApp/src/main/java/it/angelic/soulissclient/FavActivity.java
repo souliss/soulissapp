@@ -43,12 +43,12 @@ public class FavActivity extends AbstractStatusedFragmentActivity {
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_favourites);
+        setContentView(R.layout.main_detailwrapper);
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             FavListFragment fragment = new FavListFragment();
-            transaction.replace(R.id.sample_content_fragment, fragment);
+            transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
     }
