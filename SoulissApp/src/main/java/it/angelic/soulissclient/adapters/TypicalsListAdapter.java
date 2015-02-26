@@ -142,6 +142,8 @@ public class TypicalsListAdapter extends BaseAdapter {
 			}
         if (tipici[position].getTypicalDTO().getFavourite() > 0)
             holder.imageFav.setVisibility(View.VISIBLE);
+        else
+            holder.imageFav.setVisibility(View.INVISIBLE);
 		// nascondi gli slot slave
 		//if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
 			// holder.textStatusVal.setText(tipici[position].getOutputDesc());
