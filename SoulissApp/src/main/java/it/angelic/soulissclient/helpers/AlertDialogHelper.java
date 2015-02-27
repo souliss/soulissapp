@@ -8,21 +8,25 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
+import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,6 +35,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,12 +45,16 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -475,20 +484,6 @@ public class AlertDialogHelper {
 		gallery.setAdapter(new SoulissIconAdapter(context));
 		alert2.setView(gallery);
 
-		/*
-		 * gallery.setOnItemClickListener(new OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(EcoGalleryAdapterView<?> parent,
-		 * View view, int position, long id) { SoulissIconAdapter ad =
-		 * (SoulissIconAdapter) gallery.getAdapter();
-		 * toRename.setIconResourceId(ad.getItemResId(position)); } });
-		 * /*gallery.setOnItemClickListener(new OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> arg0, View arg1, int
-		 * position, long arg3) { SoulissIconAdapter ad = (SoulissIconAdapter)
-		 * gallery.getAdapter();
-		 * toRename.setIconResourceId(ad.getItemResId(position)); } });
-		 */
 
 		alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
 				new DialogInterface.OnClickListener() {
@@ -669,5 +664,101 @@ public class AlertDialogHelper {
 		return alert;
 
 	}
+
+
+    /**
+     * Sceglie nuova icona
+     *
+     *            puo essere nodo o Scenario
+     * @return
+     */
+    public static AlertDialog.Builder addTagCommandDialog(final Context context,
+                                                            final SoulissDBTagHelper datasource) {
+        // prendo tipici dal DB
+        List<SoulissTag> goer = datasource.getTags(context);
+        final SoulissTag[] nodiArray = new SoulissTag[goer.size()];
+        int q = 0;
+        for (SoulissTag object : goer) {
+            nodiArray[q++] = object;
+        }
+
+        final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
+
+        View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);
+        alert2.setView(dialoglayout);
+
+        alert2.setTitle(context.getString(R.string.scene_add_to) );
+        alert2.setIcon(android.R.drawable.ic_dialog_map);
+
+
+
+        final RadioButton prefRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonFav);
+        final RadioButton tagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonTag);
+        final RadioButton newTagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonNewTag);
+        final EditText editNewTag = (EditText)dialoglayout.findViewById(R.id.editTextNewTag);
+
+        final Spinner outputNodeSpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerTags);
+        ArrayAdapter<SoulissTag> adapter = new ArrayAdapter<>(context,
+                android.R.layout.simple_spinner_item, nodiArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        outputNodeSpinner.setAdapter(adapter);
+
+        /* INTERLOCK */
+
+
+        View.OnClickListener se_radio_listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                outputNodeSpinner.setEnabled(true);
+                editNewTag.setEnabled(false);
+                newTagRadio.setChecked(false);
+            }
+        };
+        tagRadio.setOnClickListener(se_radio_listener);
+
+        View.OnClickListener te_radio_listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                outputNodeSpinner.setEnabled(false);
+                editNewTag.setEnabled(true);
+                tagRadio.setChecked(false);
+            }
+        };
+        newTagRadio.setOnClickListener(te_radio_listener);
+
+
+		/* Cambiando nodo, cambia i tipici */
+        AdapterView.OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                //setTypicalSpinner(outputTypicalSpinner, nodiArray[pos], context);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        outputNodeSpinner.setOnItemSelectedListener(lit);
+
+
+        alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Aggiungi comando
+                       if (prefRadio.isChecked()){
+
+                       }
+
+                    }
+                });
+
+        alert2.setNegativeButton(context.getResources().getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+
+        return alert2;
+    }
 
 }

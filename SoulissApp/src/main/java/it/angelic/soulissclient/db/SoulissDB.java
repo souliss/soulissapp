@@ -30,6 +30,8 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String TABLE_LOGS = "logs";
     public static final String TABLE_COMMANDS = "commands";
     public static final String TABLE_SCENES = "scenes";
+    public static final String TABLE_TAGS = "tags";
+    public static final String TABLE_TAGS_TYPICALS = "tags_typicals";
     /*
      * NODES TABLE
      */
@@ -106,13 +108,12 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_COMMAND_TYPE + " integer not null, "
             + COLUMN_COMMAND_INPUT + " integer not null, "
             + COLUMN_COMMAND_SCHEDTIME + " integer, "
-            + COLUMN_COMMAND_EXECTIME
-            + " integer, "
-            +
+            + COLUMN_COMMAND_EXECTIME+ " integer, "
             // Se il comando appartiene a scenario, rappresenta l'ordine di
             // esecuzione
-            COLUMN_COMMAND_SCHEDTIME_INTERVAL + " integer, " + COLUMN_COMMAND_SCENEID + " integer," + " FOREIGN KEY( "
-            + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
+            + COLUMN_COMMAND_SCHEDTIME_INTERVAL + " integer, "
+            + COLUMN_COMMAND_SCENEID + " integer,"
+            + " FOREIGN KEY( "+ COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
             + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
     public static final String[] ALLCOLUMNS_COMMANDS = {COLUMN_COMMAND_ID, COLUMN_COMMAND_NODE_ID,
             COLUMN_COMMAND_SLOT, COLUMN_COMMAND_TYPE, COLUMN_COMMAND_INPUT, COLUMN_COMMAND_SCHEDTIME,
@@ -151,9 +152,8 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_LOG_DATE = "cldlogwhen";
     private static final String DATABASE_CREATE_LOGS = "create table " + TABLE_LOGS
             + "( "
-            +
             // COLUMN DEF
-            COLUMN_LOG_ID + " integer primary key autoincrement, "
+            + COLUMN_LOG_ID + " integer primary key autoincrement, "
             + COLUMN_LOG_NODE_ID + " integer not null, "
             + // command to trig
             COLUMN_LOG_SLOT + " integer not null, "
@@ -176,9 +176,56 @@ public class SoulissDB extends SQLiteOpenHelper {
 
             ");";
     public static final String[] ALLCOLUMNS_SCENES = {COLUMN_SCENE_ID, COLUMN_SCENE_NAME, COLUMN_SCENE_ICON};
-    private static final int DATABASE_VERSION = 29;
-    private Context context;
 
+    /*
+    * TABELLA TAGS
+    */
+    public static final String COLUMN_TAG_ID = "inttagid";
+    public static final String COLUMN_TAG_NAME = "strtagname";
+    public static final String COLUMN_TAG_ICONID = "inttagico";
+    public static final String COLUMN_TAG_IMGPTH = "strtagpat";
+
+    private static final String DATABASE_CREATE_TAGS = "create table "
+            + TABLE_TAGS
+            + "( "
+            + COLUMN_TAG_ID + " integer primary key autoincrement, "
+            + COLUMN_TAG_NAME + " textslot, "
+            + COLUMN_TAG_ICONID + " integer not null, "
+            + COLUMN_TAG_IMGPTH + " textslot "
+            + ");";
+         //   + " FOREIGN KEY( "+ COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
+         //   + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
+    public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
+                 COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH };
+
+    /*
+        * TABELLA TAGS'TYP
+        */
+    public static final String COLUMN_TAG_TYP_ID = "inttagtypid";
+    public static final String COLUMN_TAG_TYP_SLOT = "inttagtypslo";
+    public static final String COLUMN_TAG_TYP_NODE_ID = "inttagtypnodeid";
+    public static final String COLUMN_TAG_TYP_TAG_ID = "inttagtagid";
+    public static final String COLUMN_TAG_TYP_PRIORITY = "inttagtyppriority";
+
+    private static final String DATABASE_CREATE_TAG_TYPICAL = "create table "
+            + TABLE_TAGS_TYPICALS
+            + "( "
+            + COLUMN_TAG_TYP_ID + " integer primary key autoincrement, "
+            + COLUMN_TAG_TYP_SLOT + " integer not null, "
+            + COLUMN_TAG_TYP_NODE_ID + " integer not null, "
+            + COLUMN_TAG_TYP_TAG_ID + " integer not null, "
+            + COLUMN_TAG_TYP_PRIORITY + " integer not null DEFAULT 0 , "
+            + " FOREIGN KEY( "+ COLUMN_TAG_TYP_TAG_ID + ") "
+            + " REFERENCES " + TABLE_TAGS + " (" + COLUMN_TYPICAL_NODE_ID + "), "
+            + " FOREIGN KEY( "+ COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
+            + " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") "
+            + ");";
+    public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_ID, COLUMN_TAG_TYP_SLOT,
+            COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY };
+
+
+    private static final int DATABASE_VERSION = 30;
+    private Context context;
 
     /**
      * super wrapper createDB
@@ -198,6 +245,12 @@ public class SoulissDB extends SQLiteOpenHelper {
         database.execSQL(DATABASE_CREATE_TRIGGERS);
         database.execSQL(DATABASE_CREATE_LOGS);
         database.execSQL(DATABASE_CREATE_SCENES);
+        database.execSQL(DATABASE_CREATE_TAGS);
+        database.execSQL(DATABASE_CREATE_TAG_TYPICAL);
+        /* DEFAULT TAG */
+        database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_NAME + "," + COLUMN_TAG_ICONID
+                + ") VALUES ('" + context.getResources().getString(R.string.favourites) + "',"
+                + R.drawable.tv + ")");
         /* DEFAULT SCENES */
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
                 + ") VALUES ('" + context.getResources().getString(R.string.scene_turnoff_lights) + "',"
@@ -240,16 +293,21 @@ public class SoulissDB extends SQLiteOpenHelper {
 
     }
 
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(SoulissDB.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion
                 + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPICALS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NODES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIGGERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCENES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPICALS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NODES);
+
 
         onCreate(db);
 

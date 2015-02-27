@@ -281,5 +281,7 @@
     <string name="timed_program_executed">Souliss Timed Program Executed</string>
     <string name="execute_at">Execution at:</string>
     <string name="favourites" >Favourites</string>
+    <string name="tag">Tag</string>
+    <string name="scene_add_to" >Add to...</string>
 
 </resources>

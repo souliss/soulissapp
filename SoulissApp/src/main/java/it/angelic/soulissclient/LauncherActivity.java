@@ -313,7 +313,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         /* SCENES */
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
+                Intent myIntent = new Intent(LauncherActivity.this, TagListActivity.class);
                // myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
               /*  ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,

@@ -274,5 +274,7 @@
     <string name="timed_program_executed">Programma temporale eseguito</string>
     <string name="execute_at">Esegui alle:</string>
     <string name="favourites" >Preferiti</string>
+    <string name="tag" />
+    <string name="scene_add_to" />
 
 </resources>

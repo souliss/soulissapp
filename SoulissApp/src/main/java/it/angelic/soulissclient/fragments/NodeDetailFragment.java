@@ -26,6 +26,7 @@ import it.angelic.soulissclient.T4nFragWrapper;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -510,9 +511,12 @@ public class NodeDetailFragment extends ListFragment {
 			alert2.show();
 			break;
         case R.id.addFav:
-            todoItem.getTypicalDTO().setFavourite(1);
+            SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
+            AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt);
+            alert4.show();
+           /* todoItem.getTypicalDTO().setFavourite(1);
             todoItem.getTypicalDTO().persist();
-            Toast.makeText(getActivity(),getString(R.string.menu_addFav), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),getString(R.string.menu_addFav), Toast.LENGTH_SHORT).show();*/
                 break;
 		default:
 			return super.onContextItemSelected(item);
