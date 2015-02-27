@@ -1,0 +1,19 @@
+int attr animationDuration 0x7f010004
+int attr customAbsSpinnerStyle 0x7f010000
+int attr ecoGalleryStyle 0x7f010001
+int attr entries 0x7f010002
+int attr gravity 0x7f010003
+int attr spacing 0x7f010006
+int attr unselectedAlpha 0x7f010005
+int string app_name 0x7f020000
+int string hello_world 0x7f020001
+int string menu_settings 0x7f020002
+int string title_activity_main 0x7f020003
+int style AppTheme 0x7f030000
+int[] styleable CustomAbsSpinner { 0x7f010002 }
+int styleable CustomAbsSpinner_entries 0
+int[] styleable EcoGallery { 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006 }
+int styleable EcoGallery_animationDuration 1
+int styleable EcoGallery_gravity 0
+int styleable EcoGallery_spacing 3
+int styleable EcoGallery_unselectedAlpha 2
