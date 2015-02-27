@@ -676,10 +676,10 @@ public class AlertDialogHelper {
                                                             final SoulissDBTagHelper datasource) {
         // prendo tipici dal DB
         List<SoulissTag> goer = datasource.getTags(context);
-        final SoulissTag[] nodiArray = new SoulissTag[goer.size()];
+        final SoulissTag[] tagArray = new SoulissTag[goer.size()];
         int q = 0;
         for (SoulissTag object : goer) {
-            nodiArray[q++] = object;
+            tagArray[q++] = object;
         }
 
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
@@ -692,14 +692,13 @@ public class AlertDialogHelper {
 
 
 
-        final RadioButton prefRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonFav);
         final RadioButton tagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonTag);
         final RadioButton newTagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonNewTag);
         final EditText editNewTag = (EditText)dialoglayout.findViewById(R.id.editTextNewTag);
 
         final Spinner outputNodeSpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerTags);
         ArrayAdapter<SoulissTag> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, nodiArray);
+                android.R.layout.simple_spinner_item, tagArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         outputNodeSpinner.setAdapter(adapter);
@@ -743,9 +742,13 @@ public class AlertDialogHelper {
         alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Aggiungi comando
-                       if (prefRadio.isChecked()){
+                        //TODO Aggiungi Tag e inseriscici il tipico
+                       if (tagRadio.isChecked()){
 
+                       }else if (newTagRadio.isChecked()){
+                          /* SoulissTag newt = new SoulissTag();
+                           newt.setName(editNewTag.getText());
+                           datasource.createOrUpdateTag(newt);*/
                        }
 
                     }
