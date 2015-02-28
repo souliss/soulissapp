@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Ale/androidstudioworksp/SoulissClient/ecoGallery/src/main/res/values/attrs.xml -->
+    <eat-comment/>
+    <attr format="reference" name="customAbsSpinnerStyle"/>
+    <attr format="reference" name="ecoGalleryStyle"/>
+    <declare-styleable name="CustomAbsSpinner"><attr format="reference" name="entries"/></declare-styleable>
+    <declare-styleable name="EcoGallery"><attr format="integer" name="gravity"/><attr format="integer" name="animationDuration"/><attr format="float" name="unselectedAlpha"/><attr format="dimension" name="spacing"/></declare-styleable>
+    <!-- From: file:/C:/Users/Ale/androidstudioworksp/SoulissClient/ecoGallery/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">EcoGallery</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- From: file:/C:/Users/Ale/androidstudioworksp/SoulissClient/ecoGallery/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="android:Theme.Light"/>
+</resources>
