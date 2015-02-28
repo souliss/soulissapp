@@ -13,6 +13,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.SoulissTypicalFactory;
@@ -237,29 +238,6 @@ public class SoulissDBHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
-            //hack dto ID, could be different if parent is massive
-            newTyp.getTypicalDTO().setNodeId(parent.getId());
-            newTyp.setParentNode(parent);
-            // if (newTyp.getTypical() !=
-            // Constants.Souliss_T_CurrentSensor_slave)
-            comments.add(newTyp);
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-        return comments;
-    }
-
-    public List<SoulissTypical> getFavouriteTypicals() {
-
-        List<SoulissTypical> comments = new ArrayList<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL_ISFAV + " > " +0,null, null, null, SoulissDB.COLUMN_TYPICAL_ISFAV);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissNode parent = getSoulissNode(dto.getNodeId());
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
             //hack dto ID, could be different if parent is massive
             newTyp.getTypicalDTO().setNodeId(parent.getId());
@@ -652,6 +630,12 @@ public class SoulissDBHelper {
     public int deleteScene(SoulissScene toRename) {
         database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_SCENEID + " = " + toRename.getId(), null);
         return database.delete(SoulissDB.TABLE_SCENES, SoulissDB.COLUMN_SCENE_ID + " = " + toRename.getId(), null);
+    }
+
+    public int deleteTag(SoulissTag toRename) {
+        //CASCADE sulle associazioni
+        database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toRename.getTagId(), null);
+        return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
     }
 
     public List<SoulissNode> getAllNodes() {

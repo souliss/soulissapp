@@ -28,7 +28,6 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 
-import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
@@ -51,8 +50,8 @@ import static it.angelic.soulissclient.Constants.TAG;
  * 
  */
 public class TagListActivity extends AbstractStatusedFragmentActivity {
-	private SoulissTag[] scenesArray;
-	private ListView listaScenesView;
+	private SoulissTag[] tags;
+	private ListView listaTagsView;
 	private SoulissDBTagHelper datasource;
 	private TagListAdapter tagAdapter;
 	private TextView tt;
@@ -81,9 +80,9 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
 		 * tt.setTypeface(font, Typeface.NORMAL); }
 		 */
 
-		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
+		listaTagsView = (ListView) findViewById(R.id.ListViewListaScenes);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToListView(listaScenesView);
+        fab.attachToListView(listaTagsView);
 		SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
@@ -93,15 +92,15 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
                 List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
-                //scenesArray = new SoulissScene[goer.size()];
-                scenesArray = goer.toArray(scenesArray);
-                tagAdapter = new TagListAdapter(TagListActivity.this, scenesArray, opzioni);
+                //tags = new SoulissScene[goer.size()];
+                tags = goer.toArray(tags);
+                tagAdapter = new TagListAdapter(TagListActivity.this, tags, opzioni);
                 // Adapter della lista
-                //SceneListAdapter t = listaScenesView.getAdapter();
-                tagAdapter.setScenes(scenesArray);
+                //SceneListAdapter t = listaTagsView.getAdapter();
+                tagAdapter.setScenes(tags);
                 tagAdapter.notifyDataSetChanged();
-                listaScenesView.setAdapter(tagAdapter);
-                listaScenesView.invalidateViews();
+                listaTagsView.setAdapter(tagAdapter);
+                listaTagsView.invalidateViews();
                 Toast.makeText(TagListActivity.this,
                         getString(R.string.tag) + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
             }
@@ -120,24 +119,26 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
 		// DRAWER
 		super.initDrawer(this, DrawerMenuHelper.SCENES);
 
-		listaScenesView.setOnItemClickListener(new OnItemClickListener() {
+		listaTagsView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Log.w(TAG, "Activating TAG " + arg2);
                 Intent nodeDatail = new Intent(TagListActivity.this, FavActivity.class);
+
                 TagListAdapter.TagViewHolder holder = (TagListAdapter.TagViewHolder) arg1.getTag();
+                nodeDatail.putExtra("TAG", holder.data.getTagId());
                 TagListActivity.this.startActivity(nodeDatail);
                 if (opzioni.isAnimationsEnabled())
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-		registerForContextMenu(listaScenesView);
+		registerForContextMenu(listaTagsView);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		setActionBarInfo(getString(R.string.scenes_title));
+		setActionBarInfo(getString(R.string.tag));
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
@@ -146,12 +147,12 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
 
 		// prendo comandi dal DB, setto adapter
 		List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
-		scenesArray = new SoulissTag[goer.size()];
-		scenesArray = goer.toArray(scenesArray);
-		tagAdapter = new TagListAdapter(this, scenesArray, opzioni);
+        tags = new SoulissTag[goer.size()];
+		tags = goer.toArray(tags);
+		tagAdapter = new TagListAdapter(this, tags, opzioni);
 		// Adapter della lista
-		listaScenesView.setAdapter(tagAdapter);
-		listaScenesView.invalidateViews();
+		listaTagsView.setAdapter(tagAdapter);
+		listaTagsView.invalidateViews();
 		// ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
 		// nodeic.setAlpha(150);
 		mAdapter = new NavDrawerAdapter(TagListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
@@ -171,26 +172,26 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		SceneListAdapter ada = (SceneListAdapter) listaScenesView.getAdapter();
+		TagListAdapter ada = (TagListAdapter) listaTagsView.getAdapter();
 
 		long arrayAdapterPosition = info.position;
-		final SoulissScene todoItem = (SoulissScene) ada.getItem((int) arrayAdapterPosition);
+		final SoulissTag todoItem = (SoulissTag) ada.getItem((int) arrayAdapterPosition);
 
 		switch (item.getItemId()) {
 
 		case R.id.eliminaTag:
-			ScenesDialogHelper.removeSceneDialog(this, listaScenesView, datasource, todoItem, opzioni);
+			ScenesDialogHelper.removeTagDialog(this, listaTagsView, datasource, todoItem, opzioni);
 			return true;
 		case R.id.rinominaTag:
-			AlertDialog.Builder alert3 = AlertDialogHelper.renameSoulissObjectDialog(this, null, listaScenesView,
+			AlertDialog.Builder alert3 = AlertDialogHelper.renameSoulissObjectDialog(this, null, listaTagsView,
 					datasource, todoItem);
 			alert3.show();
 			return true;
 		case R.id.scegliconaTag:
-			SoulissTag convertView = (SoulissTag) listaScenesView.getItemAtPosition(item.getOrder());
+			SoulissTag convertView = (SoulissTag) listaTagsView.getItemAtPosition(item.getOrder());
 			ImageView at = new ImageView(getApplicationContext());
 			at.setImageResource(convertView.getIconResourceId());
-			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, at, listaScenesView, datasource,
+			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, at, listaTagsView, datasource,
 					todoItem);
 			alert2.show();
 			// nodesAdapter.notifyDataSetChanged();
@@ -206,16 +207,16 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			List<SoulissTag> goer = datasource.getTags(TagListActivity.this.getApplicationContext());
-			scenesArray = new SoulissTag[goer.size()];
+			tags = new SoulissTag[goer.size()];
 			int q = 0;
 			for (SoulissTag object : goer) {
-				scenesArray[q++] = object;
+				tags[q++] = object;
 			}
 
-			tagAdapter = new TagListAdapter(TagListActivity.this.getApplicationContext(), scenesArray, opzioni);
+			tagAdapter = new TagListAdapter(TagListActivity.this.getApplicationContext(), tags, opzioni);
 			// Adapter della lista
-			listaScenesView.setAdapter(tagAdapter);
-			listaScenesView.invalidateViews();
+			listaTagsView.setAdapter(tagAdapter);
+			listaTagsView.invalidateViews();
 		}
 	};
 

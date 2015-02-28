@@ -4,14 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.SoulissTypicalFactory;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -38,22 +42,26 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissTag dto = new SoulissTag();
-            dto.setTagId(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID));
+            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
             dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            Log.i(Constants.TAG, "filling TAG:"+ dto.getTagId());
             //TODO fill list of typs
 
-            // if (newTyp.getTypical() !=
-            // Constants.Souliss_T_CurrentSensor_slave)
             comments.add(dto);
             cursor.moveToNext();
         }
-        // Make sure to close the cursor
         cursor.close();
         return comments;
     }
 
+    public List<SoulissTypical> getFavouriteTypicals() {
+
+       SoulissTag fake = new SoulissTag();
+        fake.setTagId(0);
+        return getTagTypicals(fake);
+    }
     /**
      * Crea un nuovo scenario vuoto
      *
@@ -71,8 +79,11 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             if (nodeIN.getTagId() != null) {
                 ret = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + nodeIN.getTagId(),
                         null);
+                Log.i(Constants.TAG,"UPD TAG "+nodeIN.getTagId());
             } else {
                 ret = database.insert(SoulissDB.TABLE_TAGS, null, values);
+                Log.i(Constants.TAG,"INSERTED TAG "+nodeIN.getTagId());
+                return ret;
             }
             List<SoulissTypical> typs = nodeIN.getAssignedTypicals();
             for (SoulissTypical nowT : typs) {
@@ -114,4 +125,32 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return upd;
     }
 
+
+    public List<SoulissTypical> getTagTypicals(SoulissTag parent) {
+
+        List<SoulissTypical> comments = new ArrayList<>();
+        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS + " a "
+                + " INNER JOIN "+ SoulissDB.TABLE_TYPICALS + " b "
+                + " ON a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = b."+ SoulissDB.COLUMN_TYPICAL_NODE_ID
+                + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " = b."+ SoulissDB.COLUMN_TYPICAL_SLOT
+                + " WHERE a."+SoulissDB.COLUMN_TAG_TYP_TAG_ID+" = "+ parent.getTagId();
+        Cursor cursor = database.rawQuery(MY_QUERY, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissNode par = getSoulissNode(dto.getNodeId());
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), par, dto, opts);
+            //hack dto ID, could be different if parent is massive
+            newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
+            newTyp.setParentNode(par);
+            // if (newTyp.getTypical() !=
+            // Constants.Souliss_T_CurrentSensor_slave)
+            comments.add(newTyp);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
 }

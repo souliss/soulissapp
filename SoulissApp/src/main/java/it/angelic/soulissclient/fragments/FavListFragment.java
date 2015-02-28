@@ -18,6 +18,7 @@ package it.angelic.soulissclient.fragments;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,8 +33,11 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.FavouriteTypicalAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
@@ -53,8 +57,9 @@ public class FavListFragment extends AbstractTypicalFragment {
     protected FavouriteTypicalAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected SoulissTypical[] mDataset;
-    private SoulissDBHelper datasource;
+    private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
+    private int tagId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,10 +83,11 @@ public class FavListFragment extends AbstractTypicalFragment {
      * from a local content provider or remote server.
      */
     private void initDataset() {
-        datasource = new SoulissDBHelper(getActivity());
+        datasource = new SoulissDBTagHelper(getActivity());
         datasource.open();
-
-        List<SoulissTypical> favs = datasource.getFavouriteTypicals();
+        SoulissTag fake = new SoulissTag();
+        fake.setTagId(0);
+        List<SoulissTypical> favs = datasource.getTagTypicals(fake);
         if (!opzioni.isDbConfigured())
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         else {
@@ -151,6 +157,14 @@ public class FavListFragment extends AbstractTypicalFragment {
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Bundle extras = getActivity().getIntent().getExtras();
+        // recuper nodo da extra
+        if (extras != null && extras.get("TAG") != null)
+            tagId = (int) extras.get("TAG");
+    }
 
     /**
      * Set RecyclerView's LayoutManager to the one given.

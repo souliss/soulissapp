@@ -34,10 +34,12 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.TagListActivity;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
+import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -327,7 +329,7 @@ public class AlertDialogHelper {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
-                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical);
+                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical|| toRename instanceof SoulissTag);
         alert.setIcon(android.R.drawable.ic_dialog_dialer);
         alert.setTitle(cont.getString(R.string.rename) + " " + toRename.getNiceName());
 
@@ -362,6 +364,27 @@ public class AlertDialogHelper {
                                 scenesArray = goer.toArray(scenesArray);
                                 try {
                                     SceneListAdapter sa = (SceneListAdapter) listV.getAdapter();
+                                    // SceneListAdapter progsAdapter = new
+                                    // SceneListAdapter(cont, scenesArray,
+                                    // opzioni);
+                                    // Adapter della lista
+                                    sa.setScenes(scenesArray);
+                                    sa.notifyDataSetChanged();
+                                    // listV.setAdapter(sa);
+                                    listV.invalidateViews();
+                                } catch (Exception e) {
+                                    Log.w(Constants.TAG, "rename didn't find proper view to refresh");
+                                }
+                            }
+                        } else if (toRename instanceof SoulissTag) {
+                            SoulissDBTagHelper dbt=new SoulissDBTagHelper(cont);
+                            dbt.createOrUpdateTag((SoulissTag) toRename);
+                            if (listV != null) {
+                                List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                SoulissTag[] scenesArray = new SoulissTag[goer.size()];
+                                scenesArray = goer.toArray(scenesArray);
+                                try {
+                                    TagListAdapter sa = (TagListAdapter) listV.getAdapter();
                                     // SceneListAdapter progsAdapter = new
                                     // SceneListAdapter(cont, scenesArray,
                                     // opzioni);
@@ -462,7 +485,7 @@ public class AlertDialogHelper {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
-                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical);
+                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical|| toRename instanceof SoulissTag);
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         alert2.setTitle(context.getString(R.string.dialog_choose_icon) + " " + toRename.getNiceName());
@@ -502,6 +525,18 @@ public class AlertDialogHelper {
                                 SoulissScene[] scenesArray = new SoulissScene[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 SceneListAdapter progsAdapter = new SceneListAdapter(context, scenesArray, opzioni);
+                                // Adapter della lista
+                                list.setAdapter(progsAdapter);
+                                list.invalidateViews();
+                            }
+                        } else if (toRename instanceof SoulissTag) {
+                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissClient.getAppContext());
+                            dbt.createOrUpdateTag((SoulissTag) toRename);
+                            if (list != null) {
+                                List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                SoulissTag[] scenesArray = new SoulissTag[goer.size()];
+                                scenesArray = goer.toArray(scenesArray);
+                                TagListAdapter progsAdapter = new TagListAdapter(context, scenesArray, opzioni);
                                 // Adapter della lista
                                 list.setAdapter(progsAdapter);
                                 list.invalidateViews();

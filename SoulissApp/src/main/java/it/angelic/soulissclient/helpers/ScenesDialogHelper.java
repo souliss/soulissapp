@@ -5,11 +5,14 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
+import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 
@@ -144,6 +147,56 @@ public class ScenesDialogHelper {
 				});
 		alert.show();
 	}
+
+    /**
+     * Remove a Scene
+     *
+     * @param ctx
+     *            used to invalidate views
+     * @param datasource
+     *            to store new value
+     * @param toRename
+     * @return //TODO rivedere parametri
+     */
+    public static void removeTagDialog(final Context cont, final ListView ctx, final SoulissDBHelper datasource,
+                                         final SoulissTag toRename, final SoulissPreferenceHelper opts) {
+Log.w(Constants.TAG,"Removing TAG:" + toRename.getNiceName()+" ID:"+toRename.getTagId());
+        if (toRename.getTagId() < 2) {
+            Toast.makeText(cont, "Can't remove default Favourite Tag", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        alert.setTitle("Remove Tag");
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        alert.setMessage("Are you sure you want to delete this tag ?");
+        alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        datasource.deleteTag(toRename);
+                        if (ctx != null) {
+                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
+                            // prendo comandi dal DB
+                            List<SoulissTag> goer = dbt.getTags(cont);
+                            SoulissTag[] programsArray = new SoulissTag[goer.size()];
+                            programsArray = goer.toArray(programsArray);
+                            // targetScene.setCommandArray(goer);
+                            TagListAdapter progsAdapter = new TagListAdapter(cont, programsArray, opts);
+                            // Adapter della lista
+                            ctx.setAdapter(progsAdapter);
+                            ctx.invalidateViews();
+                        }
+                    }
+                });
+
+        alert.setNegativeButton(cont.getResources().getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+        alert.show();
+    }
 
 	/**
 	 * Sceglie nuova icona

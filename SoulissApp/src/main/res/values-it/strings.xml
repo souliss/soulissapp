@@ -280,7 +280,7 @@
     <string name="new_tag">Nuovo Tag</string>
     <string name="or">o</string>
     <string name="input_tag_name">Inserisci il nome del nuovo TAG</string>
-    <string name="tag_rename" >Rinmina TAG</string>
+    <string name="tag_rename" >Rinomina TAG</string>
     <string name="tag_delete" >Elimina TAG</string>
 
 </resources>
