@@ -101,7 +101,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     @DrawableRes
     int getIconResId() {
         if (targetScene != null) {
-            return targetScene.getDefaultIconResourceId();
+            return targetScene.getIconResourceId();
         } else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
             // comando massivo
             return R.drawable.arrowmove;
@@ -231,7 +231,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     @Override
     public
     @DrawableRes
-    int getDefaultIconResourceId() {
+    int getIconResourceId() {
         return getIconResId();
     }
 

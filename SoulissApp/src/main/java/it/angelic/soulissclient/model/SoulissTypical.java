@@ -157,7 +157,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     @Override
-    public int getDefaultIconResourceId() {
+    public int getIconResourceId() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 

@@ -80,7 +80,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
         this.health = health;
     }
 
-    public int getDefaultIconResourceId() {
+    public int getIconResourceId() {
         return iconId;
     }
 

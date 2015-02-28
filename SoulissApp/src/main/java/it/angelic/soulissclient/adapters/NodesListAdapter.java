@@ -77,7 +77,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.hlt.setProgress(0);
 			holder.hlt.setMax((int) Constants.MAX_HEALTH);
 			holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
-			holder.imageRes = nodi[position].getDefaultIconResourceId();
+			holder.imageRes = nodi[position].getIconResourceId();
 			// pgDrawable.getPaint().setStrokeWidth(3);
 			pgDrawable.getPaint().setDither(true);
 			pgDrawable.getPaint().setShader(gradient);

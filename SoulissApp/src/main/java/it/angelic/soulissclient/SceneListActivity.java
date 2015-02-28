@@ -4,7 +4,6 @@ import static it.angelic.soulissclient.Constants.TAG;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter.SceneViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
@@ -22,9 +21,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -194,7 +190,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		case R.id.scegliconaScena:
 			SoulissScene convertView = (SoulissScene) listaScenesView.getItemAtPosition(item.getOrder());
 			ImageView at = new ImageView(getApplicationContext());
-			at.setImageResource(convertView.getDefaultIconResourceId());
+			at.setImageResource(convertView.getIconResourceId());
 			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, at, listaScenesView, datasource,
 					todoItem);
 			alert2.show();

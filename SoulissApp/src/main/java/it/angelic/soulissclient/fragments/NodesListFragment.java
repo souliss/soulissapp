@@ -31,8 +31,6 @@ import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -327,7 +325,7 @@ public class NodesListFragment extends ListFragment {
 		case R.id.changenodeicon:
 			SoulissNode convertView = (SoulissNode) getListView().getItemAtPosition(item.getOrder());
 			ImageView at = new ImageView(getActivity().getApplicationContext());
-			at.setImageResource(convertView.getDefaultIconResourceId());
+			at.setImageResource(convertView.getIconResourceId());
 			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(getActivity(), at, getListView(),
 					datasource, todoItem);
 			alert2.show();

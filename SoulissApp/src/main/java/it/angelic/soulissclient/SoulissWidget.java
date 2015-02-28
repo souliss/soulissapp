@@ -64,7 +64,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     updateViews.setTextViewText(R.id.button1, name);
                 else
                     updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getDefaultIconResourceId());
+                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
                 updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
                 updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
 
@@ -99,7 +99,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     updateViews.setTextViewText(R.id.button1, name);
                 else
                 updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getDefaultIconResourceId());
+                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
             }
             // UPDATE SINCRONO
             Intent intent = new Intent(context, SoulissWidget.class);

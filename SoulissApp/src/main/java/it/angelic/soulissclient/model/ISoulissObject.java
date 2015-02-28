@@ -10,7 +10,7 @@ package it.angelic.soulissclient.model;
 public interface ISoulissObject {
 
 	public void setIconResourceId(int resId);
-	public int getDefaultIconResourceId();
+	public int getIconResourceId();
 	
 	public void setName(String newName);
     public String getName();

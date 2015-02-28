@@ -32,8 +32,6 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -180,7 +178,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		upda.setText(getResources().getString(R.string.update) + " "
 				+ Constants.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
 
-		icon.setImageResource(collected.getDefaultIconResourceId());
+		icon.setImageResource(collected.getIconResourceId());
 		/**
 		 * LISTENER TIPO GRAFICO
 		 */

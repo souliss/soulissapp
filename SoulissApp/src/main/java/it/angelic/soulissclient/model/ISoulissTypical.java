@@ -27,7 +27,7 @@ public interface ISoulissTypical extends ISoulissObject {
     public String getOutputDesc();
 	
 	//every typical should have one ..
-	public int getDefaultIconResourceId();
+	public int getIconResourceId();
 	
 	
 }

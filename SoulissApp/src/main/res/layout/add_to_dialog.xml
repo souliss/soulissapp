@@ -4,36 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp" >
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Add selected device to..."
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <View
-            android:id="@+id/strut"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
-
+    android:padding="16dp" >
 
 
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tag"
+        android:text="@string/existing_tag"
         android:id="@+id/radioButtonTag" />
 
     <Spinner
@@ -46,7 +23,7 @@
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Tag"
+        android:text="@string/new_tag"
         android:id="@+id/radioButtonNewTag" />
 
     <EditText
@@ -54,6 +31,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextNewTag"
         android:enabled="false"
-        android:paddingLeft="24dp" />
+        android:paddingLeft="24dp"
+        android:hint="@string/input_tag_name"/>
 
 </LinearLayout>

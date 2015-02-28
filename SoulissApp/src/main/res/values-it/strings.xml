@@ -274,7 +274,13 @@
     <string name="timed_program_executed">Programma temporale eseguito</string>
     <string name="execute_at">Esegui alle:</string>
     <string name="favourites" >Preferiti</string>
-    <string name="tag" />
-    <string name="scene_add_to" />
+    <string name="tag">TAG</string>
+    <string name="scene_add_to">Aggiungi a...</string>
+    <string name="existing_tag" >Tag esistente</string>
+    <string name="new_tag">Nuovo Tag</string>
+    <string name="or">o</string>
+    <string name="input_tag_name">Inserisci il nome del nuovo TAG</string>
+    <string name="tag_rename" >Rinmina TAG</string>
+    <string name="tag_delete" >Elimina TAG</string>
 
 </resources>

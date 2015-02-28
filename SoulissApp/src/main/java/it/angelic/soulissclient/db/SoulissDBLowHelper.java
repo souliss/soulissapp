@@ -63,7 +63,7 @@ public class SoulissDBLowHelper extends SoulissDBHelper {
             values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
             values.put(SoulissDB.COLUMN_NODE_ID, i);
             values.put(SoulissDB.COLUMN_NODE_HEALTH, 0);
-            //values.put(SoulissDB.COLUMN_NODE_ICON, nodeIN.getDefaultIconResourceId());
+            //values.put(SoulissDB.COLUMN_NODE_ICON, nodeIN.getIconResourceId());
             int upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + i,
                     null);
             if (upd == 0) {

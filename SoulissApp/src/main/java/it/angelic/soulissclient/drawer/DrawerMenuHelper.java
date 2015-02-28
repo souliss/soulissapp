@@ -35,7 +35,7 @@ public class DrawerMenuHelper {
 			NavMenuItem item2 = new NavMenuItem();
 			item2.setId(object.getId());
 			item2.setLabel(object.getNiceName());
-			item2.setIcon(object.getDefaultIconResourceId());
+			item2.setIcon(object.getIconResourceId());
 			item2.setUpdateActionBarTitle(false);
 			tmp.add(item2);
 		}
@@ -75,7 +75,7 @@ public class DrawerMenuHelper {
 			NavMenuItem item2 = new NavMenuItem();
 			item2.setId(object.getId());
 	        item2.setLabel(object.getNiceName());
-	        item2.setIcon(object.getDefaultIconResourceId());
+	        item2.setIcon(object.getIconResourceId());
 	        item2.setUpdateActionBarTitle(false);
 			tmp.add(item2);
 		}

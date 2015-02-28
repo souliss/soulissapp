@@ -143,7 +143,7 @@ public class SoulissDBHelper {
         values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
         values.put(SoulissDB.COLUMN_NODE_ID, nodeIN.getId());
         values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
-        values.put(SoulissDB.COLUMN_NODE_ICON, nodeIN.getDefaultIconResourceId());
+        values.put(SoulissDB.COLUMN_NODE_ICON, nodeIN.getIconResourceId());
         int upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getId(),
                 null);
         if (upd == 0) {
@@ -165,7 +165,7 @@ public class SoulissDBHelper {
         if (nodeIN != null) {
             // wrap values from object
             values.put(SoulissDB.COLUMN_SCENE_ID, nodeIN.getId());
-            values.put(SoulissDB.COLUMN_SCENE_ICON, nodeIN.getDefaultIconResourceId());
+            values.put(SoulissDB.COLUMN_SCENE_ICON, nodeIN.getIconResourceId());
             values.put(SoulissDB.COLUMN_SCENE_NAME, nodeIN.toString());
             return database.update(SoulissDB.TABLE_SCENES, values, SoulissDB.COLUMN_SCENE_ID + " = " + nodeIN.getId(),
                     null);

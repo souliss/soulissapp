@@ -228,7 +228,7 @@ public class NodeDetailFragment extends ListFragment {
 		nodeic = (ImageView) getActivity().findViewById(R.id.node_icon);
 		// Icona, puo esser nullo dopo rotazione schermo
 		if (nodeic != null) {
-			nodeic.setImageResource(collected.getDefaultIconResourceId());
+			nodeic.setImageResource(collected.getIconResourceId());
 			createHeader();
 			registerForContextMenu(listaTypicalsView);
 		} else
@@ -447,8 +447,8 @@ public class NodeDetailFragment extends ListFragment {
 	 */
 	private void createHeader() {
 
-		if (collected.getDefaultIconResourceId() != 0)
-			nodeic.setImageResource(collected.getDefaultIconResourceId());
+		if (collected.getIconResourceId() != 0)
+			nodeic.setImageResource(collected.getIconResourceId());
 
 		// Animazione icona nodo
 		/*
@@ -505,14 +505,14 @@ public class NodeDetailFragment extends ListFragment {
 		case R.id.sceglicona:
 			SoulissTypical convertView = (SoulissTypical) listaTypicalsView.getItemAtPosition(item.getOrder());
 			ImageView at = new ImageView(getActivity());
-			at.setImageResource(convertView.getDefaultIconResourceId());
+			at.setImageResource(convertView.getIconResourceId());
 			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(getActivity(), at, listaTypicalsView,
 					datasource, todoItem);
 			alert2.show();
 			break;
         case R.id.addFav:
             SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
-            AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt);
+            AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, todoItem);
             alert4.show();
            /* todoItem.getTypicalDTO().setFavourite(1);
             todoItem.getTypicalDTO().persist();

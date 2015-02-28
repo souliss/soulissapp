@@ -82,7 +82,7 @@ public class SoulissDB extends SQLiteOpenHelper {
             + ") REFERENCES " + TABLE_NODES + " (" + COLUMN_TYPICAL_NODE_ID + "), "
             + "CONSTRAINT typ_keys PRIMARY KEY(" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ")" + ");";
     public static final String[] ALLCOLUMNS_TYPICALS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
-            COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON,COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
+            COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
             COLUMN_TYPICAL_LASTMOD};
     /*
      * TABELLA COMANDI
@@ -108,12 +108,12 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_COMMAND_TYPE + " integer not null, "
             + COLUMN_COMMAND_INPUT + " integer not null, "
             + COLUMN_COMMAND_SCHEDTIME + " integer, "
-            + COLUMN_COMMAND_EXECTIME+ " integer, "
+            + COLUMN_COMMAND_EXECTIME + " integer, "
             // Se il comando appartiene a scenario, rappresenta l'ordine di
             // esecuzione
             + COLUMN_COMMAND_SCHEDTIME_INTERVAL + " integer, "
             + COLUMN_COMMAND_SCENEID + " integer,"
-            + " FOREIGN KEY( "+ COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
+            + " FOREIGN KEY( " + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
             + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
     public static final String[] ALLCOLUMNS_COMMANDS = {COLUMN_COMMAND_ID, COLUMN_COMMAND_NODE_ID,
             COLUMN_COMMAND_SLOT, COLUMN_COMMAND_TYPE, COLUMN_COMMAND_INPUT, COLUMN_COMMAND_SCHEDTIME,
@@ -193,15 +193,15 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_TAG_ICONID + " integer not null, "
             + COLUMN_TAG_IMGPTH + " textslot "
             + ");";
-         //   + " FOREIGN KEY( "+ COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
-         //   + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
+    //   + " FOREIGN KEY( "+ COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
+    //   + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
     public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
-                 COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH };
+            COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH};
 
-    /*
-        * TABELLA TAGS'TYP
-        */
-    public static final String COLUMN_TAG_TYP_ID = "inttagtypid";
+     /*
+      * TABELLA TAGS'TYP
+      * tabella di relazione n a m per TAG <-> typical
+      */
     public static final String COLUMN_TAG_TYP_SLOT = "inttagtypslo";
     public static final String COLUMN_TAG_TYP_NODE_ID = "inttagtypnodeid";
     public static final String COLUMN_TAG_TYP_TAG_ID = "inttagtagid";
@@ -210,18 +210,18 @@ public class SoulissDB extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE_TAG_TYPICAL = "create table "
             + TABLE_TAGS_TYPICALS
             + "( "
-            + COLUMN_TAG_TYP_ID + " integer primary key autoincrement, "
             + COLUMN_TAG_TYP_SLOT + " integer not null, "
             + COLUMN_TAG_TYP_NODE_ID + " integer not null, "
             + COLUMN_TAG_TYP_TAG_ID + " integer not null, "
             + COLUMN_TAG_TYP_PRIORITY + " integer not null DEFAULT 0 , "
-            + " FOREIGN KEY( "+ COLUMN_TAG_TYP_TAG_ID + ") "
+            + " PRIMARY KEY (" + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + "," + COLUMN_TAG_TYP_TAG_ID + ") "
+            + " FOREIGN KEY( " + COLUMN_TAG_TYP_TAG_ID + ") "
             + " REFERENCES " + TABLE_TAGS + " (" + COLUMN_TYPICAL_NODE_ID + "), "
-            + " FOREIGN KEY( "+ COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
+            + " FOREIGN KEY( " + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
             + " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") "
             + ");";
-    public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_ID, COLUMN_TAG_TYP_SLOT,
-            COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY };
+    public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
+            COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
 
 
     private static final int DATABASE_VERSION = 30;

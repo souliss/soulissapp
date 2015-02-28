@@ -9,7 +9,6 @@ import it.angelic.soulissclient.model.SoulissScene;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,7 +69,7 @@ public class SceneListAdapter extends BaseAdapter {
 			holder.textCmd.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textCmdInfo.setTextColor(context.getResources().getColor(R.color.black));
 		}
-		holder.image.setImageResource(scene[position].getDefaultIconResourceId());
+		holder.image.setImageResource(scene[position].getIconResourceId());
 		holder.image.setColorFilter(context.getResources().getColor(color.aa_yellow),
 				android.graphics.PorterDuff.Mode.SRC_ATOP);
 		ArrayList<SoulissCommand> appoggio = holder.data.getCommandArray();

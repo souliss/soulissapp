@@ -137,8 +137,8 @@ public class TypicalsListAdapter extends BaseAdapter {
 				+ ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
 				+ context.getResources().getString(R.string.status));
 		/* Icona del nodo */
-		if (tipici[position].getDefaultIconResourceId() != 0){
-			holder.image.setImageResource(tipici[position].getDefaultIconResourceId());
+		if (tipici[position].getIconResourceId() != 0){
+			holder.image.setImageResource(tipici[position].getIconResourceId());
 			}
         if (tipici[position].getTypicalDTO().getFavourite() > 0)
             holder.imageFav.setVisibility(View.VISIBLE);

@@ -76,7 +76,7 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
                 + Constants.getTimeAgo(mDataSet[position].getTypicalDTO().getRefreshedAt()) + "\n"
                 + context.getString(R.string.node) + ": " + mDataSet[position].getNodeId()
                 + context.getString(R.string.slot) + ": " + mDataSet[position].getSlot());
-        viewHolder.getImageView().setImageResource(mDataSet[position].getDefaultIconResourceId());
+        viewHolder.getImageView().setImageResource(mDataSet[position].getIconResourceId());
         LinearLayout sghembo = viewHolder.getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()){

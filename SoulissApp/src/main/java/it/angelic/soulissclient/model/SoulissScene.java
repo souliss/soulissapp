@@ -53,7 +53,7 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
     public int getId() {
 		return Id;
 	}
-	public @DrawableRes int getDefaultIconResourceId() {
+	public @DrawableRes int getIconResourceId() {
 		return iconId;
 	}
 	public void setIconResourceId(@DrawableRes int itemResId) {

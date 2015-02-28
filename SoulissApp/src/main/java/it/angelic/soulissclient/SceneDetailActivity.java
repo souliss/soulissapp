@@ -81,7 +81,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
 		ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
 
-		nodeic.setImageResource(collected.getDefaultIconResourceId());
+		nodeic.setImageResource(collected.getIconResourceId());
 		nodeic.setColorFilter(getResources().getColor(color.aa_yellow), PorterDuff.Mode.SRC_ATOP);
 		datasource = new SoulissDBHelper(this);
 		// datasource.open();
@@ -132,7 +132,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		ImageView icon = (ImageView) findViewById(R.id.scene_icon);
 		// titolo.setText(getString(R.string.scene) + " " +
 		// Constants.int2roman(collected.getId()));
-		icon.setImageResource(collected.getDefaultIconResourceId());
+		icon.setImageResource(collected.getIconResourceId());
 		// Animazione icona nodo
 		if (opzioni.getTextFx()) {
 			Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalerotale);

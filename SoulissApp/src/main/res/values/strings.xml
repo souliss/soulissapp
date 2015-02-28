@@ -283,5 +283,10 @@
     <string name="favourites" >Favourites</string>
     <string name="tag">Tag</string>
     <string name="scene_add_to" >Add to...</string>
-
+    <string name="existing_tag" >Existing Tag</string>
+    <string name="new_tag">New Tag</string>
+    <string name="or">or</string>
+    <string name="input_tag_name">Input new Tag\'s name</string>
+    <string name="tag_rename" >Rename TAG</string>
+    <string name="tag_delete" >Delete TAG</string>
 </resources>
