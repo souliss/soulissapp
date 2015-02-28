@@ -1,16 +1,13 @@
 package it.angelic.soulissclient.fragments;
 
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
-import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,7 +36,7 @@ public class AbstractTypicalFragment extends Fragment {
 		try {
 			View ds = actionBar.getRootView();
 			if (ds != null) {
-                TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfo1);
+                TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
                 TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
 				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);

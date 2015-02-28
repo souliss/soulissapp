@@ -250,7 +250,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         /* DEFAULT TAG */
         database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_NAME + "," + COLUMN_TAG_ICONID
                 + ") VALUES ('" + context.getResources().getString(R.string.favourites) + "',"
-                + R.drawable.tv + ")");
+                + R.drawable.lightning + ")");
         /* DEFAULT SCENES */
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
                 + ") VALUES ('" + context.getResources().getString(R.string.scene_turnoff_lights) + "',"

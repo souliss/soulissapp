@@ -22,6 +22,7 @@ public class DrawerMenuHelper {
 	public static final int SETTINGS_SERVICE=-6;
 	public static final int SETTINGS_VISUAL=-7;
 	public static final int SETTINGS_UDPTEST=-8;
+    public static final int TAGS=-10;
 
 	private INavDrawerItem[] getNodes() {
 		ArrayList<INavDrawerItem> tmp = new ArrayList<>();
@@ -61,6 +62,10 @@ public class DrawerMenuHelper {
 		NavMenuItem pro = new NavMenuItem(PROGRAMS, ctx.getString(R.string.programs_title), R.drawable.remote,
 				false, ctx);
 		tmp.add(pro);
+
+        NavMenuItem prore = new NavMenuItem(TAGS, ctx.getString(R.string.tag), R.drawable.tv,
+                false, ctx);
+        tmp.add(prore);
 	//	}
 		NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), R.drawable.hand,
 				false, ctx);
@@ -101,6 +106,6 @@ public class DrawerMenuHelper {
 		tmp.toArray(tmpa);
 		return tmpa;
 	}
-	
-	
+
+
 }

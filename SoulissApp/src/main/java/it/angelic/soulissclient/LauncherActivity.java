@@ -3,11 +3,8 @@ package it.angelic.soulissclient;
 import static it.angelic.soulissclient.Constants.TAG;
 
 import it.angelic.receivers.NetworkStateReceiver;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.INavDrawerItem;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
@@ -45,9 +42,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -57,13 +52,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,7 +98,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private Timer autoUpdate;
     private Geocoder geocoder;
 
-    private SoulissDBHelper db;
+    private SoulissDBTagHelper db;
 
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -201,6 +192,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         Eula.show(this);
 
         setContentView(R.layout.main_launcher);
+
+        db = new SoulissDBTagHelper(this);
+
+
         geocoder = new Geocoder(this, Locale.getDefault());
         soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
         soulissManualBtn = (Button) findViewById(R.id.ButtonManual);
@@ -303,8 +298,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         /*FAVS*/
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, FavActivity.class);
-
+                Intent myIntent = new Intent(LauncherActivity.this, TagDetailActivity.class);
+                myIntent.putExtra("TAG", 1);
                 LauncherActivity.this.startActivity(myIntent);
                 return;
             }
@@ -366,7 +361,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         //mDrawerAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -99);
         //mDrawerList.setAdapter(mDrawerAdapter);
 
-        db = new SoulissDBHelper(this);
         // refresh testo
         setHeadInfo();
         setDbAndFavouritesInfo();

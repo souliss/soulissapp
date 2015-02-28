@@ -1,11 +1,15 @@
 package it.angelic.soulissclient;
 
+import it.angelic.soulissclient.adapters.SceneListAdapter;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissScene;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -18,6 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
+
+import java.util.LinkedList;
 
 
 /**
@@ -41,7 +49,9 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
     protected ActionBarDrawerToggle mDrawerToggle;
     protected ListView mDrawerList;
     protected NavDrawerAdapter mDrawermAdapter;
-	/**
+    private FloatingActionButton mDrawerFloatButt;
+
+    /**
 	 * chiamato dal layout xml
 	 */
 	public void startOptions(View v) {
@@ -55,10 +65,6 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
          actionBar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
         //if (actionBar != null)
         setSupportActionBar(actionBar);
-		//actionBar = getSupportActionBar();
-		//actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		//actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-		//actionBar.setDisplayHomeAsUpEnabled(true);
 		super.onStart();
 	}
 
@@ -87,6 +93,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 	}
 
     protected void initDrawer(final Activity parentActivity,int activeSection){
+
         // DRAWER
         dmh = new DrawerMenuHelper();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,6 +122,31 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
         //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         //getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
+        mDrawerFloatButt  = (FloatingActionButton) findViewById(R.id.fabSmall);
+        SoulissDBTagHelper db = new SoulissDBTagHelper(parentActivity);
+        db.open();
+        if (db.countFavourites() > 0) {
+            mDrawerFloatButt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDrawerList.setItemChecked(DrawerMenuHelper.TAGS, true);
+                    // setTitle(mPlanetTitles[position]);
+                    mDrawerLayout.closeDrawer(mDrawerLinear);
+                    Intent myIntent = new Intent(AbstractStatusedFragmentActivity.this, TagDetailActivity.class);
+                    //I preferiti son sempre quelli
+                    myIntent.putExtra("TAG", 1);
+
+                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    AbstractStatusedFragmentActivity.this.startActivity(myIntent);
+
+                }
+            });
+        }else{
+            mDrawerFloatButt.setVisibility(View.INVISIBLE);
+        }
+
+
+
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -123,5 +155,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
         mDrawerList.setAdapter(mDrawermAdapter);
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout,mDrawerLinear));
+
+
     }
 }

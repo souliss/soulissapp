@@ -46,16 +46,18 @@
                 android:text="@string/position" />
 
             <TextView
-                android:id="@+id/TextViewInfo1"
+                android:id="@+id/TextViewInfoStatus"
                 style="@style/CodeFontMain"
                 android:layout_below="@id/TextViewTypicalsTitle"
                 android:textIsSelectable="false"
-                tools:text="Info String, not so long" />
+                tools:text="ON" />
 
             <TextView
                 android:id="@+id/TextViewInfo2"
                 style="@style/CodeFontMain"
-                android:layout_below="@id/TextViewInfo1"
+                android:layout_marginLeft="2dp"
+                android:layout_below="@id/TextViewTypicalsTitle"
+                android:layout_toRightOf="@id/TextViewInfoStatus"
                 android:textIsSelectable="false"
 
                 tools:text="Info String, not so long" />

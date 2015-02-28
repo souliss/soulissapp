@@ -406,7 +406,7 @@ public class NodesListFragment extends ListFragment {
         try {
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
-            TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfo1);
+            TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
             TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
             ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
             TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);

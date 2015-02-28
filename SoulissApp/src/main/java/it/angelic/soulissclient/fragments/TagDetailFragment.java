@@ -17,26 +17,28 @@
 package it.angelic.soulissclient.fragments;
 
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 
 import java.util.List;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.FavouriteTypicalAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -44,12 +46,11 @@ import it.angelic.soulissclient.model.SoulissTypical;
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
  * {@link android.support.v7.widget.GridLayoutManager}.
  */
-public class FavListFragment extends AbstractTypicalFragment {
+public class TagDetailFragment extends AbstractTypicalFragment {
 
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
-    private static final int DATASET_COUNT = 60;
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RadioButton mLinearLayoutRadioButton;
     protected RadioButton mGridLayoutRadioButton;
@@ -60,6 +61,8 @@ public class FavListFragment extends AbstractTypicalFragment {
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private int tagId;
+    private ImageView mLogoImg;
+    private SoulissTag fake;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,13 +72,13 @@ public class FavListFragment extends AbstractTypicalFragment {
             getActivity().setTheme(R.style.LightThemeSelector);
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
-       /* actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-        actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(getString(R.string.favourites));*/
-        initDataset();
         super.onCreate(savedInstanceState);
+        Bundle extras = getActivity().getIntent().getExtras();
+        // recuper nodo da extra
+        if (extras != null && extras.get("TAG") != null)
+            tagId = (int) extras.get("TAG");
+
+        initDataset();
     }
 
     /**
@@ -85,9 +88,10 @@ public class FavListFragment extends AbstractTypicalFragment {
     private void initDataset() {
         datasource = new SoulissDBTagHelper(getActivity());
         datasource.open();
-        SoulissTag fake = new SoulissTag();
-        fake.setTagId(0);
+        fake = datasource.getTag(getActivity(), tagId);
+        Log.i(Constants.TAG, "SHOW TAG" + tagId);
         List<SoulissTypical> favs = datasource.getTagTypicals(fake);
+        Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
         if (!opzioni.isDbConfigured())
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         else {
@@ -105,10 +109,16 @@ public class FavListFragment extends AbstractTypicalFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
-
+        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.length);
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
+        //TODO sistemare 'sta roba
 
+        if (fake != null && fake.getImagePath() != null){
+            mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
+            Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
+        }
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
@@ -129,21 +139,6 @@ public class FavListFragment extends AbstractTypicalFragment {
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
 
-        //  mLinearLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.linear_layout_rb);
-       /* mLinearLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER);
-            }
-        });
-
-        mGridLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.grid_layout_rb);
-        mGridLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER);
-            }
-        });*/
 
         return rootView;
     }
@@ -157,14 +152,6 @@ public class FavListFragment extends AbstractTypicalFragment {
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Bundle extras = getActivity().getIntent().getExtras();
-        // recuper nodo da extra
-        if (extras != null && extras.get("TAG") != null)
-            tagId = (int) extras.get("TAG");
-    }
 
     /**
      * Set RecyclerView's LayoutManager to the one given.

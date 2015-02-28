@@ -11,4 +11,8 @@
         android:id="@+id/scegliconaTag"
         android:title="@string/icon_select"/>
 
+    <item
+        android:id="@+id/scegliImmagineTag"
+        android:title="@string/img_select"/>
+
 </menu>

@@ -17,10 +17,11 @@
 package it.angelic.soulissclient;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
-import it.angelic.soulissclient.fragments.FavListFragment;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.fragments.TagDetailFragment;
+import it.angelic.soulissclient.model.SoulissTag;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -29,25 +30,35 @@ import it.angelic.soulissclient.fragments.FavListFragment;
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
  */
-public class FavActivity extends AbstractStatusedFragmentActivity {
+public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
 
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
+    private int tagId;
+    private SoulissDBTagHelper db;
+    private SoulissTag collected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
+        db= new SoulissDBTagHelper(this);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_detailwrapper);
+        setContentView(R.layout.main_tagswrapper);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.get("TAG") != null)
+            tagId = (int) extras.get("TAG");
+
+        collected = db.getTag(SoulissClient.getAppContext(),tagId);
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            FavListFragment fragment = new FavListFragment();
+            TagDetailFragment fragment = new TagDetailFragment();
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
@@ -56,6 +67,6 @@ public class FavActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setActionBarInfo(getString(R.string.favourites));
+        setActionBarInfo(collected.getNiceName());
     }
 }

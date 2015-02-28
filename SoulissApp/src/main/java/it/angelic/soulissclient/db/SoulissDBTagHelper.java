@@ -47,13 +47,40 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
             Log.i(Constants.TAG, "filling TAG:"+ dto.getTagId());
-            //TODO fill list of typs
-
+            dto.setAssignedTypicals(getTagTypicals(dto));
             comments.add(dto);
             cursor.moveToNext();
         }
         cursor.close();
         return comments;
+    }
+
+    public SoulissTag getTag(Context context, int tagId) {
+        SoulissTag dto = new SoulissTag();
+        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
+                SoulissDB.COLUMN_TAG_ID+" = "+tagId, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+
+            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
+            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
+            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
+            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            Log.i(Constants.TAG, "filling TAG:"+ dto.getTagId());
+            dto.setAssignedTypicals(getTagTypicals(dto));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return dto;
+    }
+
+    public int countFavourites() {
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
+                + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = 1 ", null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
     }
 
     public List<SoulissTypical> getFavouriteTypicals() {
@@ -72,7 +99,6 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         ContentValues values = new ContentValues();
         long ret = -1;
         if (nodeIN != null) {
-            // wrap values from object
             values.put(SoulissDB.COLUMN_TAG_NAME, nodeIN.getName());
             values.put(SoulissDB.COLUMN_TAG_ICONID, nodeIN.getIconResourceId());
             values.put(SoulissDB.COLUMN_TAG_IMGPTH, nodeIN.getImagePath());
@@ -88,9 +114,10 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             List<SoulissTypical> typs = nodeIN.getAssignedTypicals();
             for (SoulissTypical nowT : typs) {
                 createOrUpdateTagTypicalNode(nowT, nodeIN, 0);
+                Log.i(Constants.TAG,"INSERTED TAG->TYP"+nowT.getNiceName()+" TO "+nodeIN.getNiceName());
             }
             return ret;
-        } else {
+        } else {//brand new
             values.put(SoulissDB.COLUMN_TAG_ICONID, R.drawable.tv);
             // Inserisco e risetto il nome
             ret = (int) database.insert(SoulissDB.TABLE_TAGS, null, values);
@@ -133,7 +160,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
                 + " INNER JOIN "+ SoulissDB.TABLE_TYPICALS + " b "
                 + " ON a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = b."+ SoulissDB.COLUMN_TYPICAL_NODE_ID
                 + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " = b."+ SoulissDB.COLUMN_TYPICAL_SLOT
-                + " WHERE a."+SoulissDB.COLUMN_TAG_TYP_TAG_ID+" = "+ parent.getTagId();
+                + " WHERE a."+SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = "+ parent.getTagId();
         Cursor cursor = database.rawQuery(MY_QUERY, null);
 
         cursor.moveToFirst();
@@ -143,7 +170,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), par, dto, opts);
             //hack dto ID, could be different if parent is massive
             newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
-            newTyp.setParentNode(par);
+            //newTyp.setParentNode(par);
             // if (newTyp.getTypical() !=
             // Constants.Souliss_T_CurrentSensor_slave)
             comments.add(newTyp);

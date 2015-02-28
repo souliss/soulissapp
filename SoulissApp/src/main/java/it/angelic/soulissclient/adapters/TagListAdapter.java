@@ -70,7 +70,7 @@ public class TagListAdapter extends BaseAdapter {
 			holder.textCmdInfo.setTextColor(context.getResources().getColor(color.black));
 		}
 		holder.image.setImageResource(soulissTags[position].getIconResourceId());
-		holder.image.setColorFilter(context.getResources().getColor(color.aa_yellow),
+		holder.image.setColorFilter(context.getResources().getColor(color.aa_green),
 				android.graphics.PorterDuff.Mode.SRC_ATOP);
 		List<SoulissTypical> appoggio = holder.data.getAssignedTypicals();
 		// SoulissCommandDTO dto = holder.data.getCommandDTO();

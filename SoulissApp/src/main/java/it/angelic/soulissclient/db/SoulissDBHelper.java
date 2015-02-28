@@ -670,15 +670,6 @@ public class SoulissDBHelper {
         return count;
     }
 
-    public int countFavourites() {
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
-                + SoulissDB.COLUMN_TYPICAL_ISFAV + " > 0 ", null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
-
     public int countNodes() {
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_NODES, null);
         mCount.moveToFirst();

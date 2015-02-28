@@ -289,4 +289,6 @@
     <string name="input_tag_name">Input new Tag\'s name</string>
     <string name="tag_rename" >Rename TAG</string>
     <string name="tag_delete" >Delete TAG</string>
+    <string name="tag_desc" >Tags group devices. You can create Tags to re-organize your devices as desired. There is one pre-defined group called Favourites</string>
+    <string name="img_select" >Select Photo (NYIMPL)</string>
 </resources>

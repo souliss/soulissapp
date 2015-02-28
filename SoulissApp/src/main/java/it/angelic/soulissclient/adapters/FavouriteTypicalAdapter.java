@@ -48,10 +48,6 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         opzioni = opz;
         mDataSet = dataSet;
     }
-// BEGIN_INCLUDE(recyclerViewSampleViewHolder)
-
-    // BEGIN_INCLUDE(recyclerViewOnCreateViewHolder)
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view.
@@ -73,9 +69,7 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         viewHolder.getTextView().setText((CharSequence) mDataSet[position].getNiceName());
         mDataSet[position].setOutputDescView(viewHolder.getTextViewInfo1());
         viewHolder.getTextViewInfo2().setText(context.getString(R.string.update) + " "
-                + Constants.getTimeAgo(mDataSet[position].getTypicalDTO().getRefreshedAt()) + "\n"
-                + context.getString(R.string.node) + ": " + mDataSet[position].getNodeId()
-                + context.getString(R.string.slot) + ": " + mDataSet[position].getSlot());
+                + Constants.getTimeAgo(mDataSet[position].getTypicalDTO().getRefreshedAt()) );
         viewHolder.getImageView().setImageResource(mDataSet[position].getIconResourceId());
         LinearLayout sghembo = viewHolder.getLinearActionsLayout();
         sghembo.removeAllViews();
@@ -139,7 +133,7 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
             textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
             imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
             linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
-            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfo1);
+            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
             textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
             cardView = (CardView) v.findViewById(R.id.TypCard);
         }

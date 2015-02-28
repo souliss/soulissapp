@@ -799,6 +799,7 @@ public class AlertDialogHelper {
                     }
                 });
 
+        tagRadio.performClick();
         return alert2;
     }
 

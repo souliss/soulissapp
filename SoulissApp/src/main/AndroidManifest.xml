@@ -133,8 +133,8 @@
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
         <activity
-            android:parentActivityName=".LauncherActivity"
-            android:name=".FavActivity"
+            android:parentActivityName=".TagListActivity"
+            android:name=".TagDetailActivity"
             android:icon="@drawable/home"
             android:label="@string/app_name"
             android:uiOptions="splitActionBarWhenNarrow" >
