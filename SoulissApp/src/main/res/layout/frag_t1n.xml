@@ -138,6 +138,56 @@
                     android:layout_marginLeft="5dip"
                     android:layout_weight="3"/>
             </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:weightSum="4" >
+
+                <ImageView
+                    android:id="@+id/imageButtonFav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@android:drawable/star_off" />
+
+                <TextView
+                    android:id="@+id/textviewHistoryIsFav"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="This Device is among favourites"
+                    android:layout_weight="3" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRow7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:weightSum="4" >
+
+                <ImageView
+                    android:id="@+id/imageButtonTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@id/imageButtonFav"
+                    android:src="@android:drawable/ic_input_get" />
+                <TextView
+                    android:id="@+id/textviewHistoryTags"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="This Device has been Tagged"
+                    android:layout_weight="3" />
+            </TableRow>
             
              
         </TableLayout>

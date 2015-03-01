@@ -16,12 +16,33 @@
 
 package it.angelic.soulissclient;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.widget.ListView;
+
+import java.util.List;
 
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
+import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
+import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
+import it.angelic.soulissclient.fragments.T31HeatingFragment;
+import it.angelic.soulissclient.fragments.T4nFragment;
+import it.angelic.soulissclient.fragments.T5nSensorFragment;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.model.SoulissTag;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
+import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
@@ -35,7 +56,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
-    private int tagId;
+    private long tagId;
     private SoulissDBTagHelper db;
     private SoulissTag collected;
 
@@ -52,9 +73,9 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("TAG") != null)
-            tagId = (int) extras.get("TAG");
+            tagId = (long) extras.get("TAG");
 
-        collected = db.getTag(SoulissClient.getAppContext(),tagId);
+        collected = db.getTag(SoulissClient.getAppContext(),(int) tagId);
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -62,6 +83,41 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
+    }
+
+    public void ReturntoActivity(int pos) {
+        // TODO Auto-generated method stub
+        Log.i(".............", "" + pos);
+        Bundle bundle = new Bundle();
+        bundle.putInt("key",pos );
+        List <SoulissTypical> st = collected.getAssignedTypicals();
+        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        // Check what fragment is currently shown, replace if needed.
+        Fragment details = manager.findFragmentById(R.id.detailPane);
+        Fragment NewFrag = null;
+        // Istanzia e ci mette l'indice
+        if (st.get(pos).isSensor())
+            NewFrag = T5nSensorFragment.newInstance(pos, st.get(pos));
+        else if (st.get(pos) instanceof SoulissTypical16AdvancedRGB)
+            NewFrag = T16RGBAdvancedFragment.newInstance(pos, st.get(pos));
+        else if (st.get(pos) instanceof SoulissTypical19AnalogChannel)
+            NewFrag = T19SingleChannelLedFragment.newInstance(pos, st.get(pos));
+        else if (st.get(pos) instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(pos, st.get(pos));
+        else if (st.get(pos) instanceof SoulissTypical11DigitalOutput || st.get(pos) instanceof SoulissTypical12DigitalOutputAuto)
+            NewFrag = T1nGenericLightFragment.newInstance(pos, st.get(pos));
+        else if (st.get(pos) instanceof SoulissTypical41AntiTheft || st.get(pos) instanceof SoulissTypical42AntiTheftPeer || st.get(pos) instanceof SoulissTypical43AntiTheftLocalPeer)
+            NewFrag = T4nFragment.newInstance(pos, st.get(pos));
+        FragmentTransaction ft = manager.beginTransaction();
+        if (opzioni.isAnimationsEnabled())
+            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+        ft.replace(R.id.detailPane, NewFrag);
+        // ft.addToBackStack(null);
+        // ft.remove(details);
+        //ft.add(NewFrag,"BOH");
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        ft.commit();
+
     }
 
     @Override

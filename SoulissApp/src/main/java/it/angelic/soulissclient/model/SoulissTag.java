@@ -8,18 +8,18 @@ import java.util.List;
  * Created by Ale on 27/02/2015.
  */
 public class SoulissTag implements Serializable, ISoulissObject {
-    private int tagId;
+    private long tagId;
     private String name;
     private int iconId;
     private String imagePath;
     private List<SoulissTypical> assignedTypicals = new ArrayList<>();
 
 
-    public Integer getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
-    public void setTagId(Integer tagId) {
+    public void setTagId(long tagId) {
         this.tagId = tagId;
     }
 

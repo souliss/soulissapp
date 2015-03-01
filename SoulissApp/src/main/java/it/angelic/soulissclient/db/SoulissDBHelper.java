@@ -233,12 +233,23 @@ public class SoulissDBHelper {
     public List<SoulissTypical> getNodeTypicals(SoulissNode parent) {
 
         List<SoulissTypical> comments = new ArrayList<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS +" t " +
+                        " LEFT JOIN "+SoulissDB.TABLE_TAGS_TYPICALS+" tt ON t."+SoulissDB.COLUMN_TYPICAL_SLOT+ " = "+SoulissDB.COLUMN_TAG_TYP_SLOT
+                        +" AND t."+SoulissDB.COLUMN_TYPICAL_NODE_ID+" = "+SoulissDB.COLUMN_TAG_TYP_NODE_ID, SoulissDB.ALLCOLUMNS_TYPICALS_TAGS ,
                 SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getId(), null, null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
+
+            if (cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)))
+                {//niente
+                 }
+            else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) == 0){
+                dto.setFavourite(true);}
+            else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) > 0)
+                dto.setTagged(true);
+
             //hack dto ID, could be different if parent is massive
             newTyp.getTypicalDTO().setNodeId(parent.getId());
             newTyp.setParentNode(parent);
