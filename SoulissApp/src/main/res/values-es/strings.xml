@@ -284,5 +284,6 @@
     <string name="tag_delete" />
     <string name="tag_desc" />
     <string name="img_select" >Seleziona Foto (NYIMPL)</string>
+    <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
 
 </resources>

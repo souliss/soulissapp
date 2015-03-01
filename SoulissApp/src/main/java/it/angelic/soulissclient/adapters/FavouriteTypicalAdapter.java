@@ -16,8 +16,11 @@
 
 package it.angelic.soulissclient.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,20 +33,35 @@ import android.widget.TextView;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
+import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
+import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
+import it.angelic.soulissclient.fragments.T31HeatingFragment;
+import it.angelic.soulissclient.fragments.T4nFragment;
+import it.angelic.soulissclient.fragments.T5nSensorFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
+import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 
 /**
  * Provide views to RecyclerView with data from mDataSet.
  */
-public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypicalAdapter.ViewHolder> {
+public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypicalAdapter.ViewHolder> implements View.OnClickListener{
     private static final String TAG = "CustomAdapter";
-    private Context context;
+    private TagDetailActivity context;
     private SoulissPreferenceHelper opzioni;
 
     private SoulissTypical[] mDataSet;
 
-    public FavouriteTypicalAdapter(Context context, @NonNull SoulissTypical[] dataSet, SoulissPreferenceHelper opz) {
+    public FavouriteTypicalAdapter(TagDetailActivity context, @NonNull SoulissTypical[] dataSet, SoulissPreferenceHelper opz) {
         this.context = context;
         opzioni = opz;
         mDataSet = dataSet;
@@ -54,8 +72,10 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
 
+
         return new ViewHolder(v);
     }
+
     // END_INCLUDE(recyclerViewSampleViewHolder)
 
     // BEGIN_INCLUDE(recyclerViewOnBindViewHolder)
@@ -63,10 +83,12 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
         Log.d(TAG, "Element " + position + " set.");
-
+viewHolder.getImageView().setOnClickListener(this);
+        viewHolder.getImageView().setTag(position);
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         viewHolder.getTextView().setText((CharSequence) mDataSet[position].getNiceName());
+        viewHolder.getTextView().setTag(position);
         mDataSet[position].setOutputDescView(viewHolder.getTextViewInfo1());
         viewHolder.getTextViewInfo2().setText(context.getString(R.string.update) + " "
                 + Constants.getTimeAgo(mDataSet[position].getTypicalDTO().getRefreshedAt()) );
@@ -76,7 +98,7 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         if (opzioni.isLightThemeSelected()){
             viewHolder.getCardView().setCardBackgroundColor(context.getResources().getColor(R.color.background_floating_material_light));
         }
-
+        //viewHolder.getTextView().setOnClickListener(this);
         if (opzioni.isSoulissReachable()) {
             // richiama l'overloaded del tipico relativo
             mDataSet[position].getActionsLayout(context, sghembo);
@@ -95,6 +117,12 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
      * Return the size of your dataset (invoked by the layout manager)
      * chissa perche ogni tanto nullo
      */
+    @Override
+    public void onClick(View v) {
+        int pos = (Integer) v.getTag();
+        Log.d(TAG, "Element clicked:"+pos);
+        context.ReturntoActivity(pos);
+    }
 
     @Override
     public int getItemCount() {
@@ -103,6 +131,8 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         else
             return 0;
     }
+
+
     // END_INCLUDE(recyclerViewOnBindViewHolder)
 
     /**
@@ -112,24 +142,25 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         private final TextView textView;
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
+        private final CardView cardView;
 
         public CardView getCardView() {
             return cardView;
         }
 
-        private final CardView cardView;
         LinearLayout linearActionsLayout;
         private ImageView imageView;
 
         public ViewHolder(View v) {
             super(v);
             // Define click listener for the ViewHolder's View.
-            v.setOnClickListener(new View.OnClickListener() {
+            /*v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "Element " + getPosition() + " clicked.");
+                   // context.ReturntoActivity(getPosition());
                 }
-            });
+            });*/
             textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
             imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
             linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
@@ -156,5 +187,8 @@ public class FavouriteTypicalAdapter extends RecyclerView.Adapter<FavouriteTypic
         public TextView getTextViewInfo2() {
             return textViewInfo2;
         }
+
     }
+
+
 }

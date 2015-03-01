@@ -20,7 +20,7 @@
             android:layout_below="@id/my_awesome_toolbar"
             android:baselineAligned="false"
             android:orientation="vertical"
-            android:transitionName="helloScenes"
+
             android:weightSum="3">
 
             <RelativeLayout
@@ -59,6 +59,7 @@
                     android:text="@string/scenes_title" />
 
                 <ListView
+                    android:transitionName="helloScenes"
                     android:id="@+id/ListViewListaScenes"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -67,7 +68,8 @@
                     android:cacheColorHint="@color/trans_black"
                     android:divider="@android:color/transparent"
                     android:fadingEdge="vertical"
-                    android:requiresFadingEdge="vertical" />
+                    android:requiresFadingEdge="vertical"
+                    />
 
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"

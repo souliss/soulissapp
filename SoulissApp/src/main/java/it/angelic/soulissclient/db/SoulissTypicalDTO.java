@@ -29,7 +29,25 @@ public class SoulissTypicalDTO implements Serializable {
     private short typical;
     private short output;
     private int iconId;
-    private int isFavourite;
+    private boolean isFavourite;
+
+    public boolean isTagged() {
+        return isTagged;
+    }
+
+    public void setTagged(boolean isTagged) {
+        this.isTagged = isTagged;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
+    }
+
+    private boolean isTagged;
     private short inputCommand;
     private Calendar refreshedAt;
 
@@ -45,19 +63,11 @@ public class SoulissTypicalDTO implements Serializable {
         setInput((byte) cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_INPUT)));
         setOutput(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_VALUE)));
         setIconId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ICON)));
-        setFavourite(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ISFAV)));
+        //setFavourite(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ISFAV)));
         setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NAME)));
         Calendar now = Calendar.getInstance();
         now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_LASTMOD))));
         setRefreshedAt(now);
-    }
-
-    public int getFavourite() {
-        return isFavourite;
-    }
-
-    public void setFavourite(int isFavourite) {
-        this.isFavourite = isFavourite;
     }
 
     @Override
@@ -92,7 +102,7 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_NAME, getName());
         values.put(SoulissDB.COLUMN_TYPICAL_ICON, getIconId());
         values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
-        values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
+        //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
                 SoulissDB.TABLE_TYPICALS,
@@ -208,7 +218,7 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_SLOT, getSlot());
         values.put(SoulissDB.COLUMN_TYPICAL_INPUT, getInput());
         values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
-        values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
+        //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
                 SoulissDB.TABLE_TYPICALS,

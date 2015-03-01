@@ -84,6 +84,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String[] ALLCOLUMNS_TYPICALS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
             COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
             COLUMN_TYPICAL_LASTMOD};
+
     /*
      * TABELLA COMANDI
      */
@@ -198,6 +199,8 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
             COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH};
 
+
+
      /*
       * TABELLA TAGS'TYP
       * tabella di relazione n a m per TAG <-> typical
@@ -222,7 +225,9 @@ public class SoulissDB extends SQLiteOpenHelper {
             + ");";
     public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
             COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
-
+    public static final String[] ALLCOLUMNS_TYPICALS_TAGS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
+            COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
+            COLUMN_TYPICAL_LASTMOD, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
 
     private static final int DATABASE_VERSION = 30;
     private Context context;

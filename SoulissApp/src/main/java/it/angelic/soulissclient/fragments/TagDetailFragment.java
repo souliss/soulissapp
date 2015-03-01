@@ -19,6 +19,8 @@ package it.angelic.soulissclient.fragments;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -35,12 +38,23 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.TagListActivity;
 import it.angelic.soulissclient.adapters.FavouriteTypicalAdapter;
+import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
+import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -60,7 +74,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected SoulissTypical[] mDataset;
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
-    private int tagId;
+    private long tagId;
     private ImageView mLogoImg;
     private SoulissTag fake;
 
@@ -76,7 +90,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         Bundle extras = getActivity().getIntent().getExtras();
         // recuper nodo da extra
         if (extras != null && extras.get("TAG") != null)
-            tagId = (int) extras.get("TAG");
+            tagId = (long) extras.get("TAG");
 
         initDataset();
     }
@@ -134,7 +148,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new FavouriteTypicalAdapter(getActivity(), mDataset, opzioni);
+        mAdapter = new FavouriteTypicalAdapter((TagDetailActivity)getActivity(), mDataset, opzioni);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
@@ -150,6 +164,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+
     }
 
 

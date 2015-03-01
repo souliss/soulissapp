@@ -47,6 +47,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -72,6 +73,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 	private TextView infoTyp;
 	private ToggleButton togMassive;
 	private TextView infoHistory;
+    private TableRow infoTags;
+    private TableRow infoFavs;
 
 	public static T1nGenericLightFragment newInstance(int index, SoulissTypical content) {
 		T1nGenericLightFragment f = new T1nGenericLightFragment();
@@ -159,6 +162,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
 		btSleep = (Button) ret.findViewById(R.id.sleep);
 		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
+        infoFavs = (TableRow) ret.findViewById(R.id.tableRow6);
+        infoTags = (TableRow) ret.findViewById(R.id.tableRow7);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
 		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
@@ -261,6 +266,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
             String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn));
             str.append(strMeatMsg);
             infoHistory.setText(str.toString());
+            if (collected.getTypicalDTO().isFavourite()) {
+                infoFavs.setVisibility(View.VISIBLE);
+            }else if (collected.getTypicalDTO().isTagged()){
+                infoTags.setVisibility(View.VISIBLE);
+            }
         }catch (Exception ie){
             Log.e(Constants.TAG,"cant refresh history:"+ie.getMessage());
         }

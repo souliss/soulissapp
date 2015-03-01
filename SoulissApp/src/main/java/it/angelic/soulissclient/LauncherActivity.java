@@ -1,26 +1,5 @@
 package it.angelic.soulissclient;
 
-import static it.angelic.soulissclient.Constants.TAG;
-
-import it.angelic.receivers.NetworkStateReceiver;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.helpers.Eula;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.net.NetUtils;
-import it.angelic.soulissclient.net.webserver.HTTPService;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -41,8 +20,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -55,8 +34,32 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import it.angelic.receivers.NetworkStateReceiver;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.helpers.Eula;
+import it.angelic.soulissclient.helpers.ListButton;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissTag;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.net.NetUtils;
+import it.angelic.soulissclient.net.webserver.HTTPService;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 
 /**
@@ -66,10 +69,59 @@ import android.widget.Toast;
  */
 public class LauncherActivity extends AbstractStatusedFragmentActivity implements LocationListener {
 
-    private LocationManager locationManager;
-    private String provider;
+    protected PendingIntent netListenerPendingIntent;
     ConnectivityManager mConnectivity;
     TelephonyManager mTelephony;
+    Runnable timeExpired = new Runnable() {
+        @Override
+        public void run() {
+            Log.e(TAG, "TIMEOUT!!!");
+            serviceInfoFoot.setText(Html.fromHtml(getString(R.string.timeout_expired)));
+            opzioni.getAndSetCachedAddress();
+        }
+    };
+    // meccanismo per network detection
+    private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle extras = intent.getExtras();
+            int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
+            timeoutHandler.postDelayed(timeExpired, delay);
+        }
+    };
+    // invoked when RAW data is received
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // opzioni.initializePrefs();
+            // rimuove timeout
+            timeoutHandler.removeCallbacks(timeExpired);
+            Bundle extras = intent.getExtras();
+
+            if (extras != null) {
+                Log.i(TAG, "Broadcast receive, refresh from DB");
+                @SuppressWarnings("unchecked")
+                ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
+                // Log.d(TAG, "RAW DATA: " + vers);
+
+                StringBuilder tmp = new StringBuilder("<b>" + getString(R.string.last_update) + "</b> "
+                        + Constants.hourFormat.format(new Date()));
+                tmp.append(" - " + vers.size() + " " + context.getString(R.string.bytes_received));
+
+                setHeadInfo();
+                setServiceInfo();
+                setWebServiceInfo();
+                setAntiTheftInfo();
+                serviceInfoFoot.setText(Html.fromHtml(tmp.toString()));
+                // questo sovrascrive nodesinf
+
+            } else {
+                Log.e(TAG, "EMPTY response!!");
+            }
+        }
+    };
+    private LocationManager locationManager;
+    private String provider;
     private TextView coordinfo;
     private TextView homedist;
     private TextView basinfo;
@@ -85,21 +137,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private Button soulissManualBtn;
     private TextView serviceInfoAntiTheft;
     private Button programsActivity;
-
-    protected PendingIntent netListenerPendingIntent;
     private SoulissPreferenceHelper opzioni;
-
     private SoulissDataService mBoundService;
     private HTTPService mBoundWebService;
     private TextView webserviceInfo;
-
     private boolean mIsBound;
-    private boolean mIsWebBound;
-    private Timer autoUpdate;
-    private Geocoder geocoder;
-
-    private SoulissDBTagHelper db;
-
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -127,7 +169,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             mIsBound = false;
         }
     };
-
+    private boolean mIsWebBound;
     private ServiceConnection mWebConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundWebService = ((HTTPService.LocalBinder) service).getService();
@@ -144,13 +186,16 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             mIsWebBound = false;
         }
     };
+    private Timer autoUpdate;
+    private Geocoder geocoder;
+    private SoulissDBTagHelper db;
     private View webServiceInfoLine;
-
     private Criteria criteria;
     private CardView cardViewBasicInfo;
     private CardView cardViewPositionInfo;
     private CardView cardViewServiceInfo;
     private CardView cardViewFav;
+    private List<SoulissTag> tags;
 
     void doBindService() {
         Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
@@ -201,7 +246,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         soulissManualBtn = (Button) findViewById(R.id.ButtonManual);
         programsActivity = (Button) findViewById(R.id.Button06);
         basinfo = (TextView) findViewById(R.id.textViewBasicInfo);
-       // basinfoLine = (View) findViewById(R.id.textViewBasicInfoLine);
+        // basinfoLine = (View) findViewById(R.id.textViewBasicInfoLine);
         serviceinfoLine = (View) findViewById(R.id.TextViewServiceLine);
         dbwarn = (TextView) findViewById(R.id.textViewDBWarn);
         dbwarnline = (View) findViewById(R.id.textViewDBWarnLine);
@@ -217,7 +262,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         cardViewBasicInfo = (CardView) findViewById(R.id.BasicInfoCard);
         cardViewPositionInfo = (CardView) findViewById(R.id.dbAndPositionCard);
         cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
-        cardViewFav = (CardView) findViewById(R.id.FavCard);
+        cardViewFav = (CardView) findViewById(R.id.TagsCard);
+        // previously invisible view
+
 
         // gestore timeout dei comandi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -243,15 +290,23 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             cardViewServiceInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
             cardViewFav.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
         }
+        Animation animatio = AnimationUtils.loadAnimation(cardViewFav.getContext(), (R.anim.slide_in_left));
+        cardViewFav.startAnimation(animatio);
         Animation animation = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
+        animation.setStartOffset(500);
         cardViewBasicInfo.startAnimation(animation);
         Animation animation2 = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
-        animation2.setStartOffset(500);
+        animation2.setStartOffset(1000);
         cardViewPositionInfo.startAnimation(animation2);
         Animation animation3 = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
-        animation3.setStartOffset(1000);
+        animation3.setStartOffset(1500);
         cardViewServiceInfo.startAnimation(animation3);
     }
+
+	/*
+     * @Override public void setTitle(CharSequence title) { mTitle = title;
+	 * getActionBar().setTitle(mTitle); }
+	 */
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -279,11 +334,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         return super.onPrepareOptionsMenu(menu);
     }
 
-	/*
-     * @Override public void setTitle(CharSequence title) { mTitle = title;
-	 * getActionBar().setTitle(mTitle); }
-	 */
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -295,11 +345,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
 
         initLocationProvider();
-        /*FAVS*/
+        /*TAGS*/
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, TagDetailActivity.class);
-                myIntent.putExtra("TAG", 1);
+                Intent myIntent = new Intent(LauncherActivity.this, TagListActivity.class);
+               // myIntent.putExtra("TAG", ()1);
                 LauncherActivity.this.startActivity(myIntent);
                 return;
             }
@@ -308,21 +358,21 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         /* SCENES */
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, TagListActivity.class);
-               // myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-              /*  ActivityOptionsCompat options =
+                Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
+                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 soulissSceneBtn,   // The view which starts the transition
                                 "helloScenes"    // The transitionName of the view we’re transitioning to
                         );
                 ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
-*/
 
-                LauncherActivity.this.startActivity(myIntent);
+
+               // LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
-       soulissSceneBtn.setOnClickListener(simpleOnClickListener2);
+        soulissSceneBtn.setOnClickListener(simpleOnClickListener2);
 
 		/* PROGRAMS */
         OnClickListener simpleOnClickListenerProgr = new OnClickListener() {
@@ -465,11 +515,57 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             dbwarnline.setVisibility(View.GONE);
             //FAVOURITES
             int favCount = db.countFavourites();
-            if (favCount > 0){
-                TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
-                cardViewFav.setVisibility(View.VISIBLE);
-                textViewFav.setText(getString(R.string.typical)+" Marked as Favourites:"+favCount);
-            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
+                    final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
+                    final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);
+                    try {
+                        Thread.sleep(1500);
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                cardViewFav.setVisibility(View.VISIBLE);
+                                tagCont.removeAllViews();
+                                String strMeatFormat = LauncherActivity.this.getString(R.string.tag_info_format);
+                                textViewFav.setText(String.format(strMeatFormat, db.countTypicalTags(), db.countTags()));
+                                textViewFav2.setText(getString(R.string.typical) + " Marked as Favourites:" + db.countFavourites());
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    tags = db.getTags(LauncherActivity.this);
+                    if (tags.size() > 0) {
+                        for (final SoulissTag tag : tags) {
+                            final ListButton turnOffButton = new ListButton(LauncherActivity.this);
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    turnOffButton.setText(tag.getName());
+                                    OnClickListener ssc = new OnClickListener() {
+                                        public void onClick(View v) {
+                                            Intent myIntent = new Intent(LauncherActivity.this, TagDetailActivity.class);
+                                            myIntent.putExtra("TAG", (long) tag.getTagId());
+                                            LauncherActivity.this.startActivity(myIntent);
+                                            return;
+                                        }
+                                    };
+                                    turnOffButton.setOnClickListener(ssc);
+                                    tagCont.addView(turnOffButton);
+                                }});
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                }
+            }).start();
         }
     }
 
@@ -491,7 +587,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private void setServiceInfo() {
         StringBuilder sb = new StringBuilder();
         serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
-		/* SERVICE MANAGEMENT */
+        /* SERVICE MANAGEMENT */
         if (!opzioni.isDataServiceEnabled()) {
             if (mIsBound && mBoundService != null) {// in esecuzione? strano
                 sb.append("<br/><b>" + getResources().getString(R.string.service_disabled) + "!</b> ");
@@ -527,7 +623,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private void setWebServiceInfo() {
         StringBuilder sb = new StringBuilder();
         // webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
-		/* SERVICE MANAGEMENT */
+        /* SERVICE MANAGEMENT */
         if (!opzioni.isWebserverEnabled()) {
             if (mIsWebBound && mBoundWebService != null) {
                 // in esecuzione? strano
@@ -551,56 +647,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         }
         webserviceInfo.setText(Html.fromHtml(sb.toString()));
     }
-
-    Runnable timeExpired = new Runnable() {
-        @Override
-        public void run() {
-            Log.e(TAG, "TIMEOUT!!!");
-            serviceInfoFoot.setText(Html.fromHtml(getString(R.string.timeout_expired)));
-            opzioni.getAndSetCachedAddress();
-        }
-    };
-    // meccanismo per network detection
-    private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle extras = intent.getExtras();
-            int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-            timeoutHandler.postDelayed(timeExpired, delay);
-        }
-    };
-
-    // invoked when RAW data is received
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // opzioni.initializePrefs();
-            // rimuove timeout
-            timeoutHandler.removeCallbacks(timeExpired);
-            Bundle extras = intent.getExtras();
-
-            if (extras != null) {
-                Log.i(TAG, "Broadcast receive, refresh from DB");
-                @SuppressWarnings("unchecked")
-                ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
-                // Log.d(TAG, "RAW DATA: " + vers);
-
-                StringBuilder tmp = new StringBuilder("<b>" + getString(R.string.last_update) + "</b> "
-                        + Constants.hourFormat.format(new Date()));
-                tmp.append(" - " + vers.size() + " " + context.getString(R.string.bytes_received));
-
-                setHeadInfo();
-                setServiceInfo();
-                setWebServiceInfo();
-                setAntiTheftInfo();
-                serviceInfoFoot.setText(Html.fromHtml(tmp.toString()));
-                // questo sovrascrive nodesinf
-
-            } else {
-                Log.e(TAG, "EMPTY response!!");
-            }
-        }
-    };
 
     /**
      * Request updates at startup
@@ -637,7 +683,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 runOnUiThread(new Runnable() {
                     public void run() {
                         setHeadInfo();
-                        setDbAndFavouritesInfo();
+                        //setDbAndFavouritesInfo();
                         setServiceInfo();
                         setWebServiceInfo();
                         setAntiTheftInfo();
@@ -664,25 +710,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         timeoutHandler.removeCallbacks(timeExpired);
     }
 
-    @Override
-    protected void onDestroy() {
-        doUnbindService();
-        doUnbindWebService();
-        // Muovo i log su file
-        Log.w(TAG, "Closing app, moving logs");
-        try {
-            File filename = new File(Environment.getExternalStorageDirectory() + "/souliss.log");
-            filename.createNewFile();
-            // String cmd = "logcat -d -v time  -f " +
-            // filename.getAbsolutePath()
-            String cmd = "logcat -d -v time  -f " + filename.getAbsolutePath()
-                    + " SoulissApp:W SoulissDataService:D *:S ";
-            Runtime.getRuntime().exec(cmd);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        super.onDestroy();
-    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -754,7 +781,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                         public void run() {
                             homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
                             posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
-                        }});
+                        }
+                    });
                 }
             }
         }).start();
@@ -801,5 +829,25 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
             posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        doUnbindService();
+        doUnbindWebService();
+        // Muovo i log su file
+        Log.w(TAG, "Closing app, moving logs");
+        try {
+            File filename = new File(Environment.getExternalStorageDirectory() + "/souliss.log");
+            filename.createNewFile();
+            // String cmd = "logcat -d -v time  -f " +
+            // filename.getAbsolutePath()
+            String cmd = "logcat -d -v time  -f " + filename.getAbsolutePath()
+                    + " SoulissApp:W SoulissDataService:D *:S ";
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
     }
 }

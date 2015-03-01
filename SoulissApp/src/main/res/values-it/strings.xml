@@ -284,5 +284,6 @@
     <string name="tag_delete" >Elimina TAG</string>
     <string name="tag_desc" >I tag sono gruppi di dispositivi definiti dall\'utente. C\'e` un tag predefinito chiamato Preferiti</string>
     <string name="img_select" >Seleziona Foto (NYIMPL)</string>
+    <string name="tag_info_format">Ci sono %1$d dispositivi etichettati con %2$d Tag</string>
 
 </resources>
