@@ -59,7 +59,6 @@
                 android:layout_below="@id/TextViewTypicalsTitle"
                 android:layout_toRightOf="@id/TextViewInfoStatus"
                 android:textIsSelectable="false"
-
                 tools:text="Info String, not so long" />
 
 
@@ -68,6 +67,7 @@
         <LinearLayout
             android:id="@+id/linearLayoutButtons"
             android:layout_width="fill_parent"
+            android:padding="8dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/relCont"
             android:gravity="right"

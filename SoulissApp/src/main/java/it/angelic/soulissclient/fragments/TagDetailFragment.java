@@ -16,6 +16,10 @@
 
 package it.angelic.soulissclient.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +49,7 @@ import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -55,6 +60,8 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -117,7 +124,19 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }*/
         }
     }
-
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "Broadcast received, refresh from DB");
+            datasource.open();
+            initDataset();
+            mAdapter = new FavouriteTypicalAdapter((TagDetailActivity)getActivity(), mDataset, opzioni);
+            // Set CustomAdapter as the adapter for RecyclerView.
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.invalidate();
+        }
+    };
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -168,6 +187,20 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filtere = new IntentFilter();
+        filtere.addAction("it.angelic.soulissclient.GOT_DATA");
+        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        getActivity().registerReceiver(datareceiver, filtere);
+    }
 
     /**
      * Set RecyclerView's LayoutManager to the one given.

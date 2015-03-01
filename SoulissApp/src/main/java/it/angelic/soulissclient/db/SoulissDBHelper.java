@@ -230,6 +230,35 @@ public class SoulissDBHelper {
         return comments;
     }
 
+    /**
+     * DB typical factory
+     *
+     * @param node
+     * @param slot
+     * @return produced Typical
+     */
+    public SoulissTypical getSoulissTypical(int node, short slot) {
+        // query with primary key
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS +" t " +
+                        " LEFT JOIN "+SoulissDB.TABLE_TAGS_TYPICALS+" tt ON t."+SoulissDB.COLUMN_TYPICAL_SLOT+ " = "+SoulissDB.COLUMN_TAG_TYP_SLOT
+                        +" AND t."+SoulissDB.COLUMN_TYPICAL_NODE_ID+" = "+SoulissDB.COLUMN_TAG_TYP_NODE_ID, SoulissDB.ALLCOLUMNS_TYPICALS_TAGS,
+                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + node + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
+                        + slot, null, null, null, null);
+        cursor.moveToFirst();
+        SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+        if (cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)))
+        {//niente
+        }
+        else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) == 0){
+            dto.setFavourite(true);}
+        else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) > 0) {
+            dto.setTagged(true);
+        }
+        SoulissTypical ret = SoulissTypicalFactory.getTypical(dto.getTypical(), getSoulissNode(node), dto, opts);
+        cursor.close();
+        return ret;
+    }
+
     public List<SoulissTypical> getNodeTypicals(SoulissNode parent) {
 
         List<SoulissTypical> comments = new ArrayList<>();
@@ -245,11 +274,11 @@ public class SoulissDBHelper {
             if (cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)))
                 {//niente
                  }
-            else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) == 0){
+            else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) == SoulissDB.FAVOURITES_TAG_ID){
                 dto.setFavourite(true);}
-            else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) > 0)
+            else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) > 0) {
                 dto.setTagged(true);
-
+            }
             //hack dto ID, could be different if parent is massive
             newTyp.getTypicalDTO().setNodeId(parent.getId());
             newTyp.setParentNode(parent);
@@ -459,35 +488,6 @@ public class SoulissDBHelper {
             comments.put(i, new SoulissGraphData());
         }
         Log.d(Constants.TAG, "QUERY GROUPED:");
-        // database.queryWithFactory(cursorFactory, distinct, table, columns,
-        // selection, selectionArgs, groupBy, having, orderBy, limit,
-        // cancellationSignal)
-        // Cursor cursorLogged = new SQLiteCursor(database, masterQuery,
-        // editTable, query);
-        //SQLiteCursorFactory cf = new SQLiteCursorFactory();
-
-//		Cursor cursor = database.queryWithFactory(cf, false, // DISTINCT
-//
-//				SoulissDB.TABLE_LOGS,
-//
-//				new String[] {
-//						"strftime('" + groupBy + "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
-//						"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
-//						"MAX(CAST(flologval AS FLOAT)) AS MAX" },
-//
-//				SoulissDB.COLUMN_LOG_NODE_ID + " = " + tgt.getTypicalDTO().getNodeId() + " AND "
-//						+ SoulissDB.COLUMN_LOG_SLOT + " = " + tgt.getTypicalDTO().getSlot() + limitCause + " ",
-//
-//				null,// String[] selectionArgs
-//				
-//				//GROUPBY
-//				"strftime('" + groupBy + "', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))",
-//
-//				null,//HAVING
-//
-//				"IDX ASC",//ORDER BY
-//
-//				null);//LIMIT
 
         Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[]{
                         "strftime('" + groupBy +
@@ -587,24 +587,6 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    /**
-     * DB typical factory
-     *
-     * @param node
-     * @param slot
-     * @return produced Typical
-     */
-    public SoulissTypical getSoulissTypical(int node, short slot) {
-        // query with primary key
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + node + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
-                        + slot, null, null, null, null);
-        cursor.moveToFirst();
-        SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-        SoulissTypical ret = SoulissTypicalFactory.getTypical(dto.getTypical(), getSoulissNode(node), dto, opts);
-        cursor.close();
-        return ret;
-    }
 
     public SoulissTriggerDTO getSoulissTrigger(long insertId) {
         Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS,

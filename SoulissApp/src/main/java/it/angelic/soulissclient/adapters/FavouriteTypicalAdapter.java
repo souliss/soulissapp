@@ -16,11 +16,7 @@
 
 package it.angelic.soulissclient.adapters;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,22 +30,8 @@ import android.widget.TextView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
-import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
-import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
-import it.angelic.soulissclient.fragments.T31HeatingFragment;
-import it.angelic.soulissclient.fragments.T4nFragment;
-import it.angelic.soulissclient.fragments.T5nSensorFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
-import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
-import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
-import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
-import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 
 /**
  * Provide views to RecyclerView with data from mDataSet.
@@ -121,7 +103,7 @@ viewHolder.getImageView().setOnClickListener(this);
     public void onClick(View v) {
         int pos = (Integer) v.getTag();
         Log.d(TAG, "Element clicked:"+pos);
-        context.ReturntoActivity(pos);
+        context.showDetails(pos);
     }
 
     @Override
@@ -158,7 +140,7 @@ viewHolder.getImageView().setOnClickListener(this);
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "Element " + getPosition() + " clicked.");
-                   // context.ReturntoActivity(getPosition());
+                   // context.showDetails(getPosition());
                 }
             });*/
             textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);

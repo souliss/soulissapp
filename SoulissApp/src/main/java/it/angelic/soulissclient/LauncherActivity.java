@@ -349,7 +349,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, TagListActivity.class);
-               // myIntent.putExtra("TAG", ()1);
+                // myIntent.putExtra("TAG", ()1);
                 LauncherActivity.this.startActivity(myIntent);
                 return;
             }
@@ -359,7 +359,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
-                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 soulissSceneBtn,   // The view which starts the transition
@@ -368,7 +368,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
 
 
-               // LauncherActivity.this.startActivity(myIntent);
+                // LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -522,24 +522,25 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     final TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
                     final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
                     final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);
-                    try {
-                        Thread.sleep(1500);
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                cardViewFav.setVisibility(View.VISIBLE);
-                                tagCont.removeAllViews();
-                                String strMeatFormat = LauncherActivity.this.getString(R.string.tag_info_format);
-                                textViewFav.setText(String.format(strMeatFormat, db.countTypicalTags(), db.countTags()));
-                                textViewFav2.setText(getString(R.string.typical) + " Marked as Favourites:" + db.countFavourites());
-                            }
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
                     tags = db.getTags(LauncherActivity.this);
-                    if (tags.size() > 0) {
+                    if (tags.size() > 1) {//1 di sicuro
+
+                        try {
+                            Thread.sleep(1500);
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    cardViewFav.setVisibility(View.VISIBLE);
+                                    tagCont.removeAllViews();
+                                    String strMeatFormat = LauncherActivity.this.getString(R.string.tag_info_format);
+                                    textViewFav.setText(String.format(strMeatFormat, db.countTypicalTags(), db.countTags()));
+                                    textViewFav2.setText(getString(R.string.typical) + " Marked as Favourites:" + db.countFavourites());
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+
                         for (final SoulissTag tag : tags) {
                             final ListButton turnOffButton = new ListButton(LauncherActivity.this);
                             runOnUiThread(new Runnable() {
@@ -555,7 +556,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                     };
                                     turnOffButton.setOnClickListener(ssc);
                                     tagCont.addView(turnOffButton);
-                                }});
+                                }
+                            });
                             try {
                                 Thread.sleep(500);
                             } catch (InterruptedException e) {

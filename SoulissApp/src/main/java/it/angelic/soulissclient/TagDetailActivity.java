@@ -85,9 +85,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
-    public void ReturntoActivity(int pos) {
-        // TODO Auto-generated method stub
-        Log.i(".............", "" + pos);
+    public void showDetails(int pos) {
         Bundle bundle = new Bundle();
         bundle.putInt("key",pos );
         List <SoulissTypical> st = collected.getAssignedTypicals();
