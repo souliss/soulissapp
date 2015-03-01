@@ -138,14 +138,11 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     AbstractStatusedFragmentActivity.this.startActivity(myIntent);
-
                 }
             });
         }else{
             mDrawerFloatButt.setVisibility(View.INVISIBLE);
         }
-
-
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         // Set the drawer toggle as the DrawerListener
@@ -155,7 +152,6 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
         mDrawerList.setAdapter(mDrawermAdapter);
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout,mDrawerLinear));
-
 
     }
 }

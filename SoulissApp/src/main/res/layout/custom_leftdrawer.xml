@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/left_drawer_linear"
-    android:layout_width="260dp"
+    android:layout_width="280dp"
     android:layout_height="match_parent"
     android:layout_gravity="left|start"
     android:fitsSystemWindows="true"
@@ -17,7 +17,7 @@
             android:id="@+id/static_candy"
             android:layout_width="fill_parent"
             android:scaleType="centerCrop"
-            android:layout_height="130dp"
+            android:layout_height="140dp"
             android:background="@drawable/home_automation"
             android:backgroundTint="@color/std_blue_shadow"
             android:backgroundTintMode="multiply" />
@@ -63,7 +63,7 @@
 
     <ListView
         android:id="@+id/left_drawer"
-        android:layout_width="260dp"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#111"

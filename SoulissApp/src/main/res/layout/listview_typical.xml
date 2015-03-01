@@ -61,6 +61,7 @@
         <TextView
             android:id="@+id/textViewStatus"
             style="@style/CodeFontMain"
+            android:padding="4dp"
             android:layout_below="@id/TextViewUpdated"
             android:layout_toRightOf="@id/node_icon"
             android:text="@string/status" />
@@ -68,6 +69,7 @@
         <TextView
             android:id="@+id/textViewStatusVal"
             style="@style/CodeFontMain"
+            android:padding="4dp"
             android:layout_below="@id/TextViewUpdated"
             android:layout_marginLeft="4dp"
             android:layout_toRightOf="@id/textViewStatus"
@@ -77,9 +79,11 @@
         <LinearLayout
             android:id="@+id/linearLayoutButtons"
             android:layout_width="fill_parent"
+            android:padding="4dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewStatus"
-            android:layout_toRightOf="@id/node_icon"
+            android:layout_alignParentRight="true"
+            android:gravity="end"
             android:orientation="horizontal" >
         </LinearLayout>
     </RelativeLayout>

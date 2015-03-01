@@ -102,15 +102,11 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             values.put(SoulissDB.COLUMN_TAG_NAME, nodeIN.getName());
             values.put(SoulissDB.COLUMN_TAG_ICONID, nodeIN.getIconResourceId());
             values.put(SoulissDB.COLUMN_TAG_IMGPTH, nodeIN.getImagePath());
-            if (nodeIN.getTagId() != null) {
+
                 ret = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + nodeIN.getTagId(),
                         null);
                 Log.i(Constants.TAG,"UPD TAG "+nodeIN.getTagId());
-            } else {
-                ret = database.insert(SoulissDB.TABLE_TAGS, null, values);
-                Log.i(Constants.TAG,"INSERTED TAG "+nodeIN.getTagId());
-                return ret;
-            }
+
             List<SoulissTypical> typs = nodeIN.getAssignedTypicals();
             for (SoulissTypical nowT : typs) {
                 createOrUpdateTagTypicalNode(nowT, nodeIN, 0);

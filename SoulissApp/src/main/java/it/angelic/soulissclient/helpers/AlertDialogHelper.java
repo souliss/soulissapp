@@ -14,6 +14,8 @@ import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -778,10 +780,14 @@ public class AlertDialogHelper {
                                 return;
                             }
                             SoulissTag it = (SoulissTag) new SoulissTag();
+                           long newId =  datasource.createOrUpdateTag(null);
+                            it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
                             datasource.createOrUpdateTag(it);
+                            Toast.makeText(context, "NewTag Added" +": "+it.getNiceName(), Toast.LENGTH_SHORT).show();
+                            return;
                         } else {
 
                             Toast.makeText(context, "Select " + context.getString(R.string.existing_tag) + " " + context.getString(R.string.or)
@@ -800,6 +806,11 @@ public class AlertDialogHelper {
                 });
 
         tagRadio.performClick();
+
+        editNewTag.requestFocus();
+
+//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+  //      imm.toggleSoftInput(InputMethodManager.HI, 0);
         return alert2;
     }
 

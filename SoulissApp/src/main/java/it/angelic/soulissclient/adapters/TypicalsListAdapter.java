@@ -117,6 +117,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 			holder.textUpdated.setTextColor(context.getResources().getColor(R.color.black));
 			holder.textStatus.setTextColor(context.getResources().getColor(R.color.black));
 			holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha));
+            holder.expand.setColorFilter(R.color.black);
 		}
 		/* Nodo vuota */
 		if (tipici.length == 0) {

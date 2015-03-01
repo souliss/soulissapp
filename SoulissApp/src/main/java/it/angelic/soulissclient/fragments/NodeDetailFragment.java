@@ -77,6 +77,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -513,11 +515,13 @@ public class NodeDetailFragment extends ListFragment {
         case R.id.addFav:
             SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
             AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, todoItem);
-            alert4.show();
-           /* todoItem.getTypicalDTO().setFavourite(1);
-            todoItem.getTypicalDTO().persist();
-            Toast.makeText(getActivity(),getString(R.string.menu_addFav), Toast.LENGTH_SHORT).show();*/
-                break;
+            AlertDialog built =  alert4.create();
+            built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            built.show();
+
+            //InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            break;
 		default:
 			return super.onContextItemSelected(item);
 		}
