@@ -172,7 +172,7 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         listaTagsView.invalidateViews();
         // ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
         // nodeic.setAlpha(150);
-        mAdapter = new NavDrawerAdapter(TagListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
+        mAdapter = new NavDrawerAdapter(TagListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(mAdapter);
     }
 
