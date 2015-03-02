@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/main_tagswrapper">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:transitionName="photo_hero" />
+
+    <TextView
+        android:textColor="@color/white_bitaplha"
+        android:shadowColor="@color/white"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="12"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="Title Big Swallow"/>
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:alpha="0.0"
+        android:contentDescription="bottone"
+
+        android:onClick="showInformation"
+        android:src="@android:drawable/ic_dialog_info" />
+
+    <ImageButton
+        android:id="@+id/star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="bottom|start"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+
+        android:alpha="0.0"
+
+        android:elevation="4dp"
+
+        android:onClick="showStar"
+
+        android:src="@android:drawable/star_big_on" />
+</RelativeLayout>

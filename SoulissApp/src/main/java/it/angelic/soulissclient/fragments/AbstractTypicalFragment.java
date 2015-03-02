@@ -10,13 +10,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class AbstractTypicalFragment extends Fragment {
 	protected Toolbar actionBar;
 	protected SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;
-	public AbstractTypicalFragment() {
+
+    public AbstractTypicalFragment() {
 		super();
 		opzioni = SoulissClient.getOpzioni();
 		
@@ -26,6 +28,7 @@ public class AbstractTypicalFragment extends Fragment {
     public void onStart() {
         super.onStart();
         actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+
         ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
         ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         refreshStatusIcon();
@@ -34,12 +37,13 @@ public class AbstractTypicalFragment extends Fragment {
 
     protected  void refreshStatusIcon() {
 		try {
-			View ds = actionBar.getRootView();
+            View ds = actionBar.getRootView();
 			if (ds != null) {
                 TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
                 TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
 				ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 				TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+
 				TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
                 if (collected != null) {
                     actionTitle.setText(collected.getNiceName());

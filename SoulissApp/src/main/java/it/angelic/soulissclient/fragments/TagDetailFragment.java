@@ -16,15 +16,20 @@
 
 package it.angelic.soulissclient.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,8 +39,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
+
+import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
+import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
 
 import java.util.List;
 
@@ -44,7 +54,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.TagListActivity;
-import it.angelic.soulissclient.adapters.FavouriteTypicalAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -76,9 +85,9 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RadioButton mLinearLayoutRadioButton;
     protected RadioButton mGridLayoutRadioButton;
     protected RecyclerView mRecyclerView;
-    protected FavouriteTypicalAdapter mAdapter;
+    protected ParallaxRecyclerAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected SoulissTypical[] mDataset;
+    protected List<SoulissTypical> mDataset;
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -116,14 +125,15 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         if (!opzioni.isDbConfigured())
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         else {
-            mDataset = new SoulissTypical[favs.size()];
-            mDataset = favs.toArray(mDataset);
+            //mDataset = new SoulissTypical[favs.size()];
+            mDataset = favs;
        /* mDataset = new String[DATASET_COUNT];
         for (int i = 0; i < DATASET_COUNT; i++) {
             mDataset[i] = "This is element #" + i;
         }*/
         }
     }
+
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -131,27 +141,22 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             Log.i(TAG, "Broadcast received, refresh from DB");
             datasource.open();
             initDataset();
-            mAdapter = new FavouriteTypicalAdapter((TagDetailActivity)getActivity(), mDataset, opzioni);
+            // mAdapter = new ParallaxRecyclerAdapter(mDataset);
             // Set CustomAdapter as the adapter for RecyclerView.
-            mRecyclerView.setAdapter(mAdapter);
-            mRecyclerView.invalidate();
+            //    mRecyclerView.setAdapter(mAdapter);
+            //  mRecyclerView.invalidate();
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
-        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.length);
+        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
-        //TODO sistemare 'sta roba
 
-        if (fake != null && fake.getImagePath() != null){
-            mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
-            Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
-        }
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
@@ -167,11 +172,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new FavouriteTypicalAdapter((TagDetailActivity)getActivity(), mDataset, opzioni);
-        // Set CustomAdapter as the adapter for RecyclerView.
-        mRecyclerView.setAdapter(mAdapter);
-        // END_INCLUDE(initializeRecyclerView)
-
 
         return rootView;
     }
@@ -184,8 +184,127 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
+        mAdapter = new ParallaxRecyclerAdapter(mDataset);
+        HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
+        mRecyclerView.setLayoutManager(layoutManagerFixed);
+        View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, mRecyclerView, false);
+        layoutManagerFixed.setHeaderIncrementFixer(header);
+        mLogoImg = (ImageView) header.findViewById(R.id.photo);
+
+        Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
+        if (fake != null && fake.getImagePath() != null) {
+            mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
+
+        }
+        mAdapter.setShouldClipView(true);
+        mAdapter.setParallaxHeader(header, mRecyclerView);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mAdapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
+                @SuppressLint("NewApi")
+                @Override
+                public void onParallaxScroll(float v, float v2, View view) {
+                   // actionBar.setBackgroundColor(getActivity().getResources().getColor(R.color.black));
+                    Drawable c = actionBar.getBackground();
+
+                    if (c!=null) {
+                        Log.d(TAG, "FOUND BACKG:" + c.toString());
+                        c.setAlpha(Math.round(v * 255));
+                       TagDetailFragment.this.actionBar.setBackground(c);
+                    }
+                }
+            });
+        }
+
+        mAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
+            @Override
+            public void onClick(View view, int i) {
+
+                int pos = (Integer) view.getTag();
+                Log.d(TAG, "Element clicked:" + pos);
+                ((TagDetailActivity) getActivity()).showDetails(pos);
+
+
+            }
+        });
+
+        mAdapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+                // Create a new view.
+                View v = LayoutInflater.from(viewGroup.getContext())
+                        .inflate(R.layout.cardview_typical, viewGroup, false);
+
+
+                return new ViewHolder(v);
+            }
+
+
+            // END_INCLUDE(recyclerViewSampleViewHolder)
+
+            // BEGIN_INCLUDE(recyclerViewOnBindViewHolder)
+            // Replace the contents of a view (invoked by the layout manager)
+            @Override
+            public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+                Log.d(TAG, "Element " + position + " set.");
+                //((FavouriteTypicalAdapter.ViewHolder) viewHolder).getImageView().setOnClickListener(getActivity());
+                ((ViewHolder) viewHolder).getImageView().setTag(position);
+                // Get element from your dataset at this position and replace the contents of the view
+                // with that element
+                ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(position).getNiceName());
+                ((ViewHolder) viewHolder).getTextView().setTag(position);
+                mDataset.get(position).setOutputDescView(((ViewHolder) viewHolder).getTextViewInfo1());
+                ((ViewHolder) viewHolder).getTextViewInfo2().setText(getString(R.string.update) + " "
+                        + Constants.getTimeAgo(mDataset.get(position).getTypicalDTO().getRefreshedAt()));
+                ((ViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(position).getIconResourceId());
+                LinearLayout sghembo = ((ViewHolder) viewHolder).getLinearActionsLayout();
+                sghembo.removeAllViews();
+                if (opzioni.isLightThemeSelected()) {
+                    ((ViewHolder) viewHolder).getCardView().setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
+                }
+                //viewHolder.getTextView().setOnClickListener(this);
+                if (opzioni.isSoulissReachable()) {
+                    // richiama l'overloaded del tipico relativo
+                    mDataset.get(position).getActionsLayout(getActivity(), sghembo);
+                } else {
+                    TextView na = new TextView(getActivity());
+                    na.setText(getActivity().getString(R.string.souliss_unavailable));
+                    if (opzioni.isLightThemeSelected()) {
+                        na.setTextColor(getActivity().getResources().getColor(R.color.black));
+                    }
+                    sghembo.addView(na);
+                }
+            }
+            // END_INCLUDE(recyclerViewOnCreateViewHolder)
+
+            /**
+             * Return the size of your dataset (invoked by the layout manager)
+             * chissa perche ogni tanto nullo
+             */
+           /* @Override
+            public void onClick(View v) {
+                int pos = (Integer) v.getTag();
+                Log.d(TAG, "Element clicked:"+pos);
+              //  context.showDetails(pos);
+            }-*/
+            @Override
+            public int getItemCount() {
+                if (mDataset != null)
+                    return mDataset.size();
+                else
+                    return 0;
+            }
+
+        });
+
+
+        // mAdapter = new FavouriteTypicalAdapter((TagDetailActivity)getActivity(), mDataset, opzioni);
+        // Set CustomAdapter as the adapter for RecyclerView.
+        mRecyclerView.setAdapter(mAdapter);
+        // END_INCLUDE(initializeRecyclerView)
 
     }
+
 
     @Override
     public void onPause() {
@@ -246,5 +365,60 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         LINEAR_LAYOUT_MANAGER
     }
 
+    /**
+     * Provide a reference to the type of views that you are using (custom ViewHolder)
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView textView;
+        private final TextView textViewInfo1;
+        private final TextView textViewInfo2;
+        private final CardView cardView;
+
+        public CardView getCardView() {
+            return cardView;
+        }
+
+        LinearLayout linearActionsLayout;
+        private ImageView imageView;
+
+        public ViewHolder(View v) {
+            super(v);
+            // Define click listener for the ViewHolder's View.
+            /*v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "Element " + getPosition() + " clicked.");
+                   // context.showDetails(getPosition());
+                }
+            });*/
+            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
+            imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
+            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
+            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
+            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
+            cardView = (CardView) v.findViewById(R.id.TypCard);
+        }
+
+        public TextView getTextView() {
+            return textView;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public LinearLayout getLinearActionsLayout() {
+            return linearActionsLayout;
+        }
+
+        public TextView getTextViewInfo1() {
+            return textViewInfo1;
+        }
+
+        public TextView getTextViewInfo2() {
+            return textViewInfo2;
+        }
+
+    }
 
 }

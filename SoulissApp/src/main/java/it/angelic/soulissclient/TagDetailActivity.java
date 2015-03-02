@@ -16,15 +16,19 @@
 
 package it.angelic.soulissclient;
 
+import android.animation.ObjectAnimator;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Transition;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.List;
 
+import it.angelic.soulissclient.adapters.TransitionAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
@@ -77,6 +81,18 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         collected = db.getTag(SoulissClient.getAppContext(),(int) tagId);
 
+        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                ImageView hero = (ImageView) findViewById(R.id.photo);
+                //ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
+                  //      getResources().getColor(R.color.photo_tint), 0);
+               // color.start();
+                findViewById(R.id.info).animate().alpha(1.0f);
+                findViewById(R.id.star).animate().alpha(1.0f);
+                getWindow().getEnterTransition().removeListener(this);
+            }
+        });
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             TagDetailFragment fragment = new TagDetailFragment();

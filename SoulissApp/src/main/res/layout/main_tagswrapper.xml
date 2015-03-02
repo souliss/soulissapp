@@ -10,63 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/custom_actionbar" />
+        <include layout="@layout/custom_actionbar"
+            />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_below="@id/my_awesome_toolbar"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/photo"
-                android:transitionName="photo_hero"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                />
-
-            <ImageButton
-                android:id="@+id/info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="bottom|end"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="16dp"
-
-                android:alpha="0.0"
-
-                android:src="@android:drawable/ic_dialog_info"
-
-
-                android:onClick="showInformation"
-
-                android:contentDescription="bottone" />
-
-            <ImageButton
-                android:id="@+id/star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_gravity="bottom|start"
-                android:layout_marginLeft="16dp"
-                android:layout_marginBottom="16dp"
-
-                android:alpha="0.0"
-
-                android:src="@android:drawable/star_big_on"
-
-                android:elevation="4dp"
-
-                android:onClick="showStar"
-                />
 
             <FrameLayout
                 android:id="@+id/detailPane"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/my_awesome_toolbar"
                 tools:layout="@layout/frag_nodedetail" />
 
 
