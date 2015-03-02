@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Looper;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -712,12 +713,12 @@ public class AlertDialogHelper {
         for (SoulissTag object : goer) {
             tagArray[q++] = object;
         }
-
-        final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissClient.getOpzioni().isLightThemeSelected()?R.style.LightThemeSelector:R.style.DarkThemeSelector);
+        final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
 
         View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);
         alert2.setView(dialoglayout);
-
+       // alert2.setInverseBackgroundForced( true );
         alert2.setTitle(context.getString(R.string.scene_add_to));
         //alert2.setIcon(android.R.drawable.ic_dialog_map);
 

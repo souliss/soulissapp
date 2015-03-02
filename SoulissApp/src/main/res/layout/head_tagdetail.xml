@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/photo"
         android:layout_width="match_parent"
-        tools:src="@drawable/side1"
+        android:src="@drawable/home_automation"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
          />

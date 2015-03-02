@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/my_awesome_toolbar"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
+    android:background="@android:color/transparent"
     android:elevation="2dp"
     android:layout_height="wrap_content">
 

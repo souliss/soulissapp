@@ -29,6 +29,7 @@ import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.os.Looper;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -222,7 +223,8 @@ Log.w(Constants.TAG,"Removing TAG:" + toRename.getNiceName()+" ID:"+toRename.get
 		fake.setTypicals(datasource.getUniqueTypicals(fake));
 		nodiArray[q] = fake;
 
-		final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissClient.getOpzioni().isLightThemeSelected()?R.style.LightThemeSelector:R.style.DarkThemeSelector);
+        final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
 
 		View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_command_dialog, null);
 		alert2.setTitle(context.getString(R.string.scene_add_command_to) + " " +targetScene.toString());
