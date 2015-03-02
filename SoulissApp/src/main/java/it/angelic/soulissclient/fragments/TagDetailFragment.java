@@ -208,8 +208,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                     Drawable c = actionBar.getBackground();
 
                     if (c!=null) {
-                        Log.d(TAG, "FOUND BACKG:" + c.toString());
-                        c.setAlpha(Math.round(v * 255));
+                       Log.d(TAG, "FOUND BACKG:" + c.toString());
+                       c.setAlpha(Math.round(v * 255));
                        TagDetailFragment.this.actionBar.setBackground(c);
                     }
                 }
@@ -220,9 +220,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             @Override
             public void onClick(View view, int i) {
 
-                int pos = (Integer) view.getTag();
-                Log.d(TAG, "Element clicked:" + pos);
-                ((TagDetailActivity) getActivity()).showDetails(pos);
+                Log.d(TAG, "Element clicked:" + i);
+                ((TagDetailActivity) getActivity()).showDetails(i);
 
 
             }
@@ -240,15 +239,11 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             }
 
 
-            // END_INCLUDE(recyclerViewSampleViewHolder)
 
-            // BEGIN_INCLUDE(recyclerViewOnBindViewHolder)
-            // Replace the contents of a view (invoked by the layout manager)
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
                 Log.d(TAG, "Element " + position + " set.");
-                //((FavouriteTypicalAdapter.ViewHolder) viewHolder).getImageView().setOnClickListener(getActivity());
-                ((ViewHolder) viewHolder).getImageView().setTag(position);
+
                 // Get element from your dataset at this position and replace the contents of the view
                 // with that element
                 ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(position).getNiceName());

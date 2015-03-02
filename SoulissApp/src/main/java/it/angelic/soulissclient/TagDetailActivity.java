@@ -17,7 +17,9 @@
 package it.angelic.soulissclient;
 
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.FragmentManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +27,7 @@ import android.transition.Transition;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -64,6 +67,24 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBTagHelper db;
     private SoulissTag collected;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void faiFigate(){
+        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                ImageView hero = (ImageView) findViewById(R.id.photo);
+                hero.animate().scaleX(1.0f);
+                /*ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
+                        getResources().getColor(R.color.white), 0);
+                color.start();*/
+                findViewById(R.id.fabTag).animate().alpha(1.0f);
+                findViewById(R.id.star).animate().alpha(1.0f);
+                TextView bro =(TextView) findViewById(R.id.tagTextView);
+                bro.setText(collected.getNiceName());
+                getWindow().getEnterTransition().removeListener(this);
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
@@ -81,18 +102,9 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         collected = db.getTag(SoulissClient.getAppContext(),(int) tagId);
 
-        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                ImageView hero = (ImageView) findViewById(R.id.photo);
-                //ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
-                  //      getResources().getColor(R.color.photo_tint), 0);
-               // color.start();
-                findViewById(R.id.info).animate().alpha(1.0f);
-                findViewById(R.id.star).animate().alpha(1.0f);
-                getWindow().getEnterTransition().removeListener(this);
-            }
-        });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            faiFigate();
+
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             TagDetailFragment fragment = new TagDetailFragment();
