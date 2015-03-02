@@ -13,8 +13,8 @@
         <include layout="@layout/custom_actionbar" />
 
         <FrameLayout
-            android:transitionName="photo_hero"
             android:layout_width="match_parent"
+            android:layout_below="@id/my_awesome_toolbar"
             android:layout_height="wrap_content">
 
             <FrameLayout

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,48 +31,48 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/scene_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="4dip"
-                    android:layout_marginTop="4dip"
-                    android:alpha="0.5"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/filmmaker" />
+                <!--   <ImageView
+                     android:id="@+id/scene_icon"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignParentRight="true"
+                     android:layout_alignParentTop="true"
+                     android:layout_marginRight="4dip"
+                     android:layout_marginTop="4dip"
+                     android:alpha="0.5"
+                     android:contentDescription="@string/app_name"
+                     android:src="@drawable/filmmaker" />
 
-                <TextView
-                    android:id="@+id/TextViewScenesDesc"
-                    style="@style/CodeFontSmall"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/scenes_desc" />
+                 <TextView
+                     android:id="@+id/TextViewScenesDesc"
+                     style="@style/CodeFontSmall"
+                     android:layout_marginLeft="4dp"
+                     android:layout_marginTop="2dp"
+                     android:text="@string/scenes_desc" />
 
-                <TextView
-                    android:id="@+id/TextViewScenes"
-                    style="@style/CodeFontTitleBig"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/TextViewScenesDesc"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"
-                    android:ellipsize="end"
-                    android:text="@string/scenes_title" />
-
-                <ListView
-                    android:transitionName="helloScenes"
+                 <ListView
+                       android:transitionName="helloScenes"
+                       android:id="@+id/ListViewListaScenes"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_below="@id/TextViewScenes"
+                       android:background="@drawable/item_selector"
+                       android:cacheColorHint="@color/trans_black"
+                       android:divider="@android:color/transparent"
+                       android:fadingEdge="vertical"
+                       android:requiresFadingEdge="vertical"
+                       /> -->
+                <com.nirhart.parallaxscroll.views.ParallaxListView
                     android:id="@+id/ListViewListaScenes"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewScenes"
-                    android:background="@drawable/item_selector"
-                    android:cacheColorHint="@color/trans_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
                     android:divider="@android:color/transparent"
+                    android:background="@drawable/item_selector"
+                    android:fillViewport="true"
+                    app:parallax_factor="1.9"
+                    app:parallax_views_num="3"
                     android:fadingEdge="vertical"
-                    android:requiresFadingEdge="vertical"
-                    />
-
+                    android:requiresFadingEdge="vertical"/>
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"

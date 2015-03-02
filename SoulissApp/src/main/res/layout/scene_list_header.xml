@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headWrapper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+
+    <ImageView
+        android:id="@+id/scene_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="4dip"
+        android:layout_marginTop="4dip"
+        android:alpha="0.5"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/lamp" />
+
+    <TextView
+        android:id="@+id/TextViewScenesDesc"
+        style="@style/CodeFontSmall"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/scenes_desc" />
+
+</RelativeLayout>

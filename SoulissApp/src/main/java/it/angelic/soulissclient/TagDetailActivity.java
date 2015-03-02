@@ -16,15 +16,19 @@
 
 package it.angelic.soulissclient;
 
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.Transition;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,6 +44,7 @@ import it.angelic.soulissclient.fragments.T31HeatingFragment;
 import it.angelic.soulissclient.fragments.T4nFragment;
 import it.angelic.soulissclient.fragments.T5nSensorFragment;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -66,6 +71,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     private long tagId;
     private SoulissDBTagHelper db;
     private SoulissTag collected;
+    private ImageView mLogoImg;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void faiFigate(){
@@ -145,10 +151,58 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         ft.commit();
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tagdetail_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ImageView icon = (ImageView) findViewById(R.id.node_icon);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // nothing to do here...
+                } else {
+                    finish();
+                    if (opzioni.isAnimationsEnabled())
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                    return true;
+                }
+                return true;
+            case R.id.Opzioni:
+                Intent settingsActivity = new Intent(this, PreferencesActivity.class);
+                startActivity(settingsActivity);
+                final Intent preferencesActivity = new Intent(this.getBaseContext(), PreferencesActivity.class);
+                // evita doppie aperture per via delle sotto-schermate
+                preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(preferencesActivity);
+                return true;
+            case R.id.scegliconaTag:
+                AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, db, collected);
+                alert2.show();
+                return true;
+            case R.id.rinominaTag:
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitle, null, db,
+                        collected);
+                alert.show();
+                return true;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onStart() {
         super.onStart();
         setActionBarInfo(collected.getNiceName());
+
+        mLogoImg = (ImageView) findViewById(R.id.photo);
+        //TODO sistemare 'sta roba
+
+        if (collected != null && collected.getImagePath() != null){
+            mLogoImg.setImageURI(Uri.parse(collected.getImagePath()));
+            Log.i(Constants.TAG, "setting logo" + collected.getImagePath());
+        }
     }
 }

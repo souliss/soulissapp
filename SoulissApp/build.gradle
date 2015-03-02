@@ -29,5 +29,6 @@ dependencies {
     compile 'com.melnykov:floatingactionbutton:1.1.0'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.2'
+    compile 'com.github.nirhart:parallaxscroll:1.0'
     compile files('libs/achartengine-1.1.0.jar')
 }

@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -145,18 +144,18 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
                 Log.w(TAG, "Activating TAG " + arg2);
                 Intent nodeDatail = new Intent(TagListActivity.this, TagDetailActivity.class);
                 TagListAdapter.TagViewHolder holder = (TagListAdapter.TagViewHolder) arg1.getTag();
+                nodeDatail.putExtra("TAG", holder.data.getTagId());
 
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(TagListActivity.this,
                                 arg1,   // The view which starts the transition
                                 "photo_hero"    // The transitionName of the view we’re transitioning to
                         );
-                nodeDatail.putExtra("TAG", holder.data.getTagId());
                 ActivityCompat.startActivity(TagListActivity.this, nodeDatail, options.toBundle());
-
                 //TagListActivity.this.startActivity(nodeDatail);
-                if (opzioni.isAnimationsEnabled())
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //if (opzioni.isAnimationsEnabled())
+                 //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
 
@@ -250,9 +249,10 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         Log.i(Constants.TAG, "SAVING IMG RESULT:" + resultCode);
 
+
         if (resultCode == RESULT_OK) {
             Uri selectedImage = imageReturnedIntent.getData();
-
+            Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
             tags[requestCode].setImagePath(selectedImage.toString());
             //String[] filePathColumn = {MediaStore.Images.Media.DATA};
 

@@ -50,6 +50,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
     protected ListView mDrawerList;
     protected NavDrawerAdapter mDrawermAdapter;
     private FloatingActionButton mDrawerFloatButt;
+    protected TextView actionTitle;
 
     /**
 	 * chiamato dal layout xml
@@ -75,7 +76,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 
             ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
 			TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-			TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+			actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
 			actionTitle.setText(title);
 			if (!opzioni.isSoulissReachable()) {
 				online.setBackgroundResource(R.drawable.red);

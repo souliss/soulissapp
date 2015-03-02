@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,10 +36,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
+import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 
 /**
@@ -51,7 +55,7 @@ import com.melnykov.fab.FloatingActionButton;
  */
 public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	private SoulissScene[] scenesArray;
-	private ListView listaScenesView;
+	private ParallaxListView listaScenesView;
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
 	private TextView tt;
@@ -73,14 +77,24 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		setContentView(R.layout.main_scenes);
 		// final Button buttAddProgram = (Button)
 		// findViewById(R.id.buttonAddScene);
-		tt = (TextView) findViewById(R.id.TextViewScenes);
+		//tt = (TextView) findViewById(R.id.TextViewScenes);
 		/*
 		 * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
 		 * font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
 		 * tt.setTypeface(font, Typeface.NORMAL); }
 		 */
+       // ParallaxListView listView2 = (ParallaxListView) findViewById(R.id.paraList);
 
-		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
+		listaScenesView = (ParallaxListView) findViewById(R.id.ListViewListaScenes);
+        View header = View.inflate(this, R.layout.scene_list_header, null);
+       /* TextView v = new TextView(this);
+        v.setText("PARALLAXED");
+        v.setGravity(Gravity.CENTER);
+        v.setTextSize(40);
+        v.setHeight(200);
+        v.setBackgroundResource(R.drawable.item_selector);*/
+        listaScenesView.addParallaxedHeaderView(header);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaScenesView);
 		SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
