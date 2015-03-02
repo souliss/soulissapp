@@ -137,6 +137,9 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             mRecyclerView.invalidate();
         }
     };
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -145,13 +148,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.length);
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
-        //TODO sistemare 'sta roba
 
-        if (fake != null && fake.getImagePath() != null){
-            mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
-            Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
-        }
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.

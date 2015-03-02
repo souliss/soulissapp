@@ -48,26 +48,16 @@
                     android:layout_marginTop="2dp"
                     android:text="@string/tag_desc" />
 
-                <TextView
-                    android:id="@+id/TextViewScenes"
-                    style="@style/CodeFontTitleBig"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/TextViewScenesDesc"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"
-                    android:ellipsize="end"
-                    android:text="@string/tag" />
-
                 <ListView
                     android:id="@+id/ListViewListaScenes"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewScenes"
                     android:background="@drawable/item_selector"
                     android:cacheColorHint="@color/trans_black"
                     android:divider="@android:color/transparent"
                     android:fadingEdge="vertical"
-                    android:requiresFadingEdge="vertical" />
+                    android:requiresFadingEdge="vertical"
+                    android:layout_below="@id/TextViewScenesDesc" />
 
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"

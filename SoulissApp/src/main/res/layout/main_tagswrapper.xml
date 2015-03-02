@@ -13,6 +13,8 @@
         <include layout="@layout/custom_actionbar" />
 
         <FrameLayout
+            android:id="@+id/photo_frame"
+
             android:layout_width="match_parent"
             android:layout_below="@id/my_awesome_toolbar"
             android:layout_height="wrap_content">
@@ -20,10 +22,10 @@
             <ImageView
                 android:id="@+id/photo"
                 android:transitionName="photo_hero"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
+                android:src="@drawable/side1"
                 />
 
             <ImageButton
@@ -38,8 +40,6 @@
                 android:alpha="0.0"
 
                 android:src="@android:drawable/ic_dialog_info"
-
-
                 android:onClick="showInformation"
 
                 android:contentDescription="bottone" />
@@ -59,19 +59,14 @@
 
                 android:elevation="4dp"
 
-                android:onClick="showStar"
-                />
-
-            <FrameLayout
-                android:id="@+id/detailPane"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/my_awesome_toolbar"
-                tools:layout="@layout/frag_nodedetail" />
-
-
-
+                android:onClick="showStar" />
         </FrameLayout>
+        <FrameLayout
+            android:id="@+id/detailPane"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/photo_frame"
+            tools:layout="@layout/frag_nodedetail" />
     </RelativeLayout>
 
     <include layout="@layout/custom_leftdrawer" />

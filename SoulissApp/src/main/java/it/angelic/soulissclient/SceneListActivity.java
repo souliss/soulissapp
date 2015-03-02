@@ -77,7 +77,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		setContentView(R.layout.main_scenes);
 		// final Button buttAddProgram = (Button)
 		// findViewById(R.id.buttonAddScene);
-		tt = (TextView) findViewById(R.id.TextViewScenes);
+		//tt = (TextView) findViewById(R.id.TextViewScenes);
 		/*
 		 * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
 		 * font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());

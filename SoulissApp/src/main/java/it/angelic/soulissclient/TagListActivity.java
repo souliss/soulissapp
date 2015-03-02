@@ -12,6 +12,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.TagListAdapter;
@@ -89,14 +92,6 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_tags);
-        // final Button buttAddProgram = (Button)
-        // findViewById(R.id.buttonAddScene);
-        tt = (TextView) findViewById(R.id.TextViewScenes);
-        /*
-		 * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
-		 * font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
-		 * tt.setTypeface(font, Typeface.NORMAL); }
-		 */
 
         listaTagsView = (ListView) findViewById(R.id.ListViewListaScenes);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -143,9 +138,17 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
                 Intent nodeDatail = new Intent(TagListActivity.this, TagDetailActivity.class);
                 TagListAdapter.TagViewHolder holder = (TagListAdapter.TagViewHolder) arg1.getTag();
                 nodeDatail.putExtra("TAG", holder.data.getTagId());
-                TagListActivity.this.startActivity(nodeDatail);
-                if (opzioni.isAnimationsEnabled())
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(TagListActivity.this,
+                                arg1,   // The view which starts the transition
+                                "photo_hero"    // The transitionName of the view we’re transitioning to
+                        );
+                ActivityCompat.startActivity(TagListActivity.this, nodeDatail, options.toBundle());
+                //TagListActivity.this.startActivity(nodeDatail);
+                //if (opzioni.isAnimationsEnabled())
+                 //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
             }
         });
 
@@ -222,15 +225,22 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                 String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
-                Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+                /*Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
                 chooserIntent.putExtra
                         (
                                 Intent.EXTRA_INITIAL_INTENTS,
                                 new Intent[]{takePhotoIntent}
                         );
                 //uso come reqId il TagId cosi da riconoscere cosa avevo richiesto
-                startActivityForResult(chooserIntent, (int) arrayAdapterPosition);
+                startActivityForResult(chooserIntent, (int) arrayAdapterPosition);*/
+
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, (int) arrayAdapterPosition);
                 return true;
+
+
+
+
             default:
                 return super.onContextItemSelected(item);
         }
@@ -243,20 +253,19 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
 
         if (resultCode == RESULT_OK) {
             Uri selectedImage = imageReturnedIntent.getData();
-            Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
+            Log.i(Constants.TAG, "SAVED IMG URI:" + selectedImage.toString());
             tags[requestCode].setImagePath(selectedImage.toString());
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getContentResolver().query(
-                    selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String filePath = cursor.getString(columnIndex);
-            cursor.close();
 
 
-            Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+            datasource.createOrUpdateTag(tags[requestCode]);
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                Log.i(Constants.TAG, "SAVED IMG SIZE:" + bitmap.getByteCount());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
     }

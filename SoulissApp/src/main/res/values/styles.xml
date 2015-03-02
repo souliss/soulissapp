@@ -3,7 +3,6 @@
 
 
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/radialbacklight</item>
         <item name="android:listViewStyle">@style/lightListView</item>
     </style>
 
@@ -16,17 +15,14 @@
     </style>
 
     <style name="lightListView">
-        <item name="android:windowBackground">@drawable/radialbacklight</item>
         <item name="android:background">#00ffffff</item>
     </style>
 
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/radialback</item>
         <item name="android:listViewStyle">@style/darkListView</item>
     </style>
 
     <style name="darkListView">
-        <item name="android:windowBackground">@drawable/radialback</item>
         <item name="android:background">#00000000</item>
     </style>
 

@@ -461,29 +461,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
     }
 
-    @Deprecated
-    private void hackBackGroundLights() {
 
-        PreferenceScreen b = (PreferenceScreen) findPreference("network_setup");
-        PreferenceScreen c = (PreferenceScreen) findPreference("db_setup");
-        PreferenceScreen d = (PreferenceScreen) findPreference("service_setup");
-        PreferenceScreen e = (PreferenceScreen) findPreference("visual_PrefScreen");
-        OnPreferenceClickListener ber = new OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                PreferenceScreen a = (PreferenceScreen) preference;
-                if (opzioni.isLightThemeSelected())
-                    a.getDialog().getWindow().setBackgroundDrawableResource(R.drawable.radialbacklight);
-                else
-                    a.getDialog().getWindow().setBackgroundDrawableResource(R.drawable.radialback);
-                return false;
-            }
-        };
-
-        b.setOnPreferenceClickListener(ber);
-        c.setOnPreferenceClickListener(ber);
-        d.setOnPreferenceClickListener(ber);
-        e.setOnPreferenceClickListener(ber);
-    }
 
 }
