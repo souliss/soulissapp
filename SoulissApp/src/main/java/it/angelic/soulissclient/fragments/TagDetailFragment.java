@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,8 +39,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
@@ -51,7 +54,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.TagListActivity;
-import it.angelic.soulissclient.adapters.FavouriteTypicalAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -150,16 +152,16 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
-        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.length);
+        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
         //TODO sistemare 'sta roba
 
-        if (fake != null && fake.getImagePath() != null){
+        /*if (fake != null && fake.getImagePath() != null){
             mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
             Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
-        }
+        }*/
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
         // elements are laid out.
@@ -233,9 +235,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             @Override
             public void onClick(View view, int i) {
 
-                Log.d(TAG, "Element clicked:" + i);
-                ((TagDetailActivity) getActivity()).showDetails(i);
-
+                if (i > 0) {//puo essere -1
+                    Log.d(TAG, "Element clicked:" + i);
+                    ((TagDetailActivity) getActivity()).showDetails(i);
+                }
 
             }
         });
@@ -369,5 +372,60 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         LINEAR_LAYOUT_MANAGER
     }
 
+    /**
+     * Provide a reference to the type of views that you are using (custom ViewHolder)
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView textView;
+        private final TextView textViewInfo1;
+        private final TextView textViewInfo2;
+        private final CardView cardView;
+
+        public CardView getCardView() {
+            return cardView;
+        }
+
+        LinearLayout linearActionsLayout;
+        private ImageView imageView;
+
+        public ViewHolder(View v) {
+            super(v);
+            // Define click listener for the ViewHolder's View.
+            /*v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "Element " + getPosition() + " clicked.");
+                   // context.showDetails(getPosition());
+                }
+            });*/
+            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
+            imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
+            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
+            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
+            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
+            cardView = (CardView) v.findViewById(R.id.TypCard);
+        }
+
+        public TextView getTextView() {
+            return textView;
+        }
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public LinearLayout getLinearActionsLayout() {
+            return linearActionsLayout;
+        }
+
+        public TextView getTextViewInfo1() {
+            return textViewInfo1;
+        }
+
+        public TextView getTextViewInfo2() {
+            return textViewInfo2;
+        }
+
+    }
 
 }

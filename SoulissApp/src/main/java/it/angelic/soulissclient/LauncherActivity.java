@@ -240,7 +240,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         db = new SoulissDBTagHelper(this);
 
-
         geocoder = new Geocoder(this, Locale.getDefault());
         soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
         soulissManualBtn = (Button) findViewById(R.id.ButtonManual);
@@ -349,8 +348,15 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, TagListActivity.class);
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
+                                cardViewFav,   // The view which starts the transition
+                                "helloTags"    // The transitionName of the view we’re transitioning to
+                        );
+
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+
                 // myIntent.putExtra("TAG", ()1);
-                LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -559,7 +565,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                 }
                             });
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(100);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }

@@ -82,6 +82,7 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
+        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
         // Remove title bar
         // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (opzioni.isLightThemeSelected())
@@ -93,7 +94,7 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         setContentView(R.layout.main_tags);
         // final Button buttAddProgram = (Button)
         // findViewById(R.id.buttonAddScene);
-        tt = (TextView) findViewById(R.id.TextViewScenes);
+       // tt = (TextView) findViewById(R.id.TextViewScenes);
         /*
 		 * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
 		 * font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
@@ -244,6 +245,7 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);

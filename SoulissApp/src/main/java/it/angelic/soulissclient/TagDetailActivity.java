@@ -20,6 +20,8 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -84,7 +86,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                         getResources().getColor(R.color.white), 0);
                 color.start();*/
                 findViewById(R.id.fabTag).animate().alpha(1.0f);
-                findViewById(R.id.star).animate().alpha(1.0f);
+                //findViewById(R.id.star).animate().alpha(1.0f);
                 TextView bro =(TextView) findViewById(R.id.tagTextView);
                 bro.setText(collected.getNiceName());
                 getWindow().getEnterTransition().removeListener(this);
@@ -198,11 +200,15 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         setActionBarInfo(collected.getNiceName());
 
         mLogoImg = (ImageView) findViewById(R.id.photo);
-        //TODO sistemare 'sta roba
 
         if (collected != null && collected.getImagePath() != null){
-            mLogoImg.setImageURI(Uri.parse(collected.getImagePath()));
-            Log.i(Constants.TAG, "setting logo" + collected.getImagePath());
+            try {mLogoImg.setImageURI(Uri.parse(collected.getImagePath()));
+                Log.i(Constants.TAG, "setting logo" + collected.getImagePath());
+
+            }catch (Exception laQualunque){
+                Log.e(Constants.TAG,"facevo cazzate:"+laQualunque.getMessage());
+            }
+
         }
     }
 }

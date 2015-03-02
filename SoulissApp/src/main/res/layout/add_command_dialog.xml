@@ -30,6 +30,7 @@
             android:id="@+id/spinner2"
             android:layout_width="0dip"
             android:layout_height="36dp"
+            android:spinnerMode="dialog"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/strut"
             android:layout_below="@id/textView1" />
@@ -38,6 +39,7 @@
             android:id="@+id/spinner3"
             android:layout_width="0dip"
             android:layout_height="36dp"
+            android:spinnerMode="dialog"
             android:layout_alignLeft="@id/strut"
             android:layout_alignParentRight="true"
             android:layout_below="@id/textView1"

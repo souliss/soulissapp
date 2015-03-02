@@ -20,7 +20,7 @@
             android:layout_below="@id/my_awesome_toolbar"
             android:baselineAligned="false"
             android:orientation="vertical"
-            android:transitionName="helloScenes"
+            android:transitionName="helloTags"
             android:weightSum="3">
 
             <RelativeLayout

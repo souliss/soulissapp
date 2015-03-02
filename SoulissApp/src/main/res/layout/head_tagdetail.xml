@@ -15,29 +15,17 @@
 
     <TextView
         android:textColor="@color/white_bitaplha"
-        android:shadowColor="@color/white"
+        android:shadowColor="@color/black"
         android:shadowDx="0"
         android:shadowDy="0"
         android:id="@+id/tagTextView"
-        android:shadowRadius="12"
+        android:shadowRadius="18"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:textSize="32dp"
         android:text="Title Big Swallow"/>
-
-    <ImageView
-        android:id="@+id/star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:alpha="1.0"
-        android:layout_gravity="bottom|start"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:alpha="0.0"
-        android:elevation="4dp"
-        android:src="@android:drawable/star_big_on" />
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fabTag"
