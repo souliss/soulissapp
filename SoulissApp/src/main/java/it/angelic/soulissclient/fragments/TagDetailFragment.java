@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -34,6 +35,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,11 +208,21 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 public void onParallaxScroll(float v, float v2, View view) {
                    // actionBar.setBackgroundColor(getActivity().getResources().getColor(R.color.black));
                     Drawable c = actionBar.getBackground();
+                    TypedValue a = new TypedValue();
+                    getActivity().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+                    if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+                        // windowBackground is a color
+                        int color = a.data;
+                        //c.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+                        Log.d(TAG, "SET BACKG ALPHA" + c.getAlpha());
+                        c.setAlpha(Math.round(v * 255));
+                        TagDetailFragment.this.actionBar.setBackground(c);
+                       // view.setBackground(c);
+                    } else {
+                        // windowBackground is not a color, probably a drawable
+                        Log.e(TAG, "WTF:" + a.toString());
+                        Drawable d = getActivity().getResources().getDrawable(a.resourceId);
 
-                    if (c!=null) {
-                       Log.d(TAG, "FOUND BACKG:" + c.toString());
-                       c.setAlpha(Math.round(v * 255));
-                       TagDetailFragment.this.actionBar.setBackground(c);
                     }
                 }
             });
@@ -238,12 +250,9 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 return new ViewHolder(v);
             }
 
-
-
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
                 Log.d(TAG, "Element " + position + " set.");
-
                 // Get element from your dataset at this position and replace the contents of the view
                 // with that element
                 ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(position).getNiceName());

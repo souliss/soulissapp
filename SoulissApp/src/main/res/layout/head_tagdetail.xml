@@ -11,7 +11,7 @@
         tools:src="@drawable/side1"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:transitionName="photo_hero" />
+         />
 
     <TextView
         android:textColor="@color/white_bitaplha"
