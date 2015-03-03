@@ -23,10 +23,10 @@
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/slide_top</item>
-
-        <item name="android:windowAllowReturnTransitionOverlap">false</item>
-
         <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowActionBar">false</item>

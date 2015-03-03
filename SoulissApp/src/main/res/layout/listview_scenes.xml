@@ -14,7 +14,6 @@
         android:focusable="false" >
 
         <ImageView
-            android:transitionName="photo_hero"
             android:id="@+id/command_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

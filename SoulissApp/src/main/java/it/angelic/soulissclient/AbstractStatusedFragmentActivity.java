@@ -1,6 +1,7 @@
 package it.angelic.soulissclient;
 
 import it.angelic.soulissclient.adapters.SceneListAdapter;
+import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
@@ -135,7 +136,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
                     mDrawerLayout.closeDrawer(mDrawerLinear);
                     Intent myIntent = new Intent(AbstractStatusedFragmentActivity.this, TagDetailActivity.class);
                     //I preferiti son sempre quelli
-                    myIntent.putExtra("TAG", 1);
+                    myIntent.putExtra("TAG", (long) SoulissDB.FAVOURITES_TAG_ID);
 
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     AbstractStatusedFragmentActivity.this.startActivity(myIntent);

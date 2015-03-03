@@ -230,7 +230,7 @@ public class SoulissDB extends SQLiteOpenHelper {
             COLUMN_TYPICAL_LASTMOD, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
 
     private static final int DATABASE_VERSION = 30;
-    public static short FAVOURITES_TAG_ID = 0;
+    public static long FAVOURITES_TAG_ID = 0;
     private Context context;
 
     /**

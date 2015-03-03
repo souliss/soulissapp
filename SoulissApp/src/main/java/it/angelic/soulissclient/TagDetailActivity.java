@@ -18,7 +18,6 @@ package it.angelic.soulissclient;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -32,8 +31,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -61,7 +60,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPee
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
  * {@link android.support.v4.app.Fragment} which can display a view.
- * <p>
+ * <p/>
  * For devices with displays with a width of 720dp or greater, the sample log is always visible,
  * on other devices it's visibility is controlled by an item on the Action Bar.
  */
@@ -76,7 +75,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     private ImageView mLogoImg;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void faiFigate(){
+    private void faiFigate() {
         getWindow().getEnterTransition().addListener(new TransitionAdapter() {
             @Override
             public void onTransitionEnd(Transition transition) {
@@ -87,16 +86,17 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 color.start();*/
                 findViewById(R.id.fabTag).animate().alpha(1.0f);
                 //findViewById(R.id.star).animate().alpha(1.0f);
-                TextView bro =(TextView) findViewById(R.id.tagTextView);
+                TextView bro = (TextView) findViewById(R.id.tagTextView);
                 bro.setText(collected.getNiceName());
                 getWindow().getEnterTransition().removeListener(this);
             }
         });
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
-        db= new SoulissDBTagHelper(this);
+        db = new SoulissDBTagHelper(this);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
         else
@@ -108,7 +108,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
 
-        collected = db.getTag(SoulissClient.getAppContext(),(int) tagId);
+        collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             faiFigate();
@@ -123,9 +123,9 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     public void showDetails(int pos) {
         Bundle bundle = new Bundle();
-        bundle.putInt("key",pos );
-        List <SoulissTypical> st = collected.getAssignedTypicals();
-        android.support.v4.app.FragmentManager manager=getSupportFragmentManager();
+        bundle.putInt("key", pos);
+        List<SoulissTypical> st = collected.getAssignedTypicals();
+        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         // Check what fragment is currently shown, replace if needed.
         Fragment details = manager.findFragmentById(R.id.detailPane);
         Fragment NewFrag = null;
@@ -143,22 +143,29 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         else if (st.get(pos) instanceof SoulissTypical41AntiTheft || st.get(pos) instanceof SoulissTypical42AntiTheftPeer || st.get(pos) instanceof SoulissTypical43AntiTheftLocalPeer)
             NewFrag = T4nFragment.newInstance(pos, st.get(pos));
         FragmentTransaction ft = manager.beginTransaction();
-        if (opzioni.isAnimationsEnabled())
-            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-        ft.replace(R.id.detailPane, NewFrag);
-        // ft.addToBackStack(null);
-        // ft.remove(details);
-        //ft.add(NewFrag,"BOH");
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-        ft.commit();
+
+        if (NewFrag != null) {
+            if (opzioni.isAnimationsEnabled())
+                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+            ft.replace(R.id.detailPane, NewFrag);
+            // ft.addToBackStack(null);
+            // ft.remove(details);
+            //ft.add(NewFrag,"BOH");
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            ft.commit();
+        } else {
+            Toast.makeText(getApplicationContext(), "No detail to show", Toast.LENGTH_SHORT).show();
+        }
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.tagdetail_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ImageView icon = (ImageView) findViewById(R.id.node_icon);
@@ -194,6 +201,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -201,12 +209,13 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         mLogoImg = (ImageView) findViewById(R.id.photo);
 
-        if (collected != null && collected.getImagePath() != null){
-            try {mLogoImg.setImageURI(Uri.parse(collected.getImagePath()));
+        if (collected != null && collected.getImagePath() != null) {
+            try {
+                mLogoImg.setImageURI(Uri.parse(collected.getImagePath()));
                 Log.i(Constants.TAG, "setting logo" + collected.getImagePath());
 
-            }catch (Exception laQualunque){
-                Log.e(Constants.TAG,"facevo cazzate:"+laQualunque.getMessage());
+            } catch (Exception laQualunque) {
+                Log.e(Constants.TAG, "facevo cazzate:" + laQualunque.getMessage());
             }
 
         }

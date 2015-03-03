@@ -235,7 +235,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             @Override
             public void onClick(View view, int i) {
 
-                if (i > 0) {//puo essere -1
+                if (i >= 0) {//puo essere -1
                     Log.d(TAG, "Element clicked:" + i);
                     ((TagDetailActivity) getActivity()).showDetails(i);
                 }

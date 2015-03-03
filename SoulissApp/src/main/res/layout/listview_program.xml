@@ -7,8 +7,8 @@
         android:id="@+id/LinearLayout01"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
         android:layout_marginTop="4dp"
         android:background="@drawable/list_rect_yellow" >
       
@@ -19,6 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="8dip"
             android:layout_marginTop="2dip"
+            android:padding="2dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/clock" />
 

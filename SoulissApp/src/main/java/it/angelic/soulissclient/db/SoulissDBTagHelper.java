@@ -82,7 +82,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         if (!database.isOpen())
             open();
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
-                + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = 1 ", null);
+                + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " =  "+ SoulissDB.FAVOURITES_TAG_ID, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

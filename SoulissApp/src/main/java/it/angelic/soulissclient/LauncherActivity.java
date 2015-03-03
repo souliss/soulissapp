@@ -564,11 +564,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                     tagCont.addView(turnOffButton);
                                 }
                             });
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+
                         }
 
                     }
