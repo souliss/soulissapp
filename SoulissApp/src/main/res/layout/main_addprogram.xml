@@ -39,6 +39,7 @@
                 <Spinner
                     android:id="@+id/spinner2"
                     style="@style/CodeFontMain"
+                    android:paddingTop="8dp"
                     android:layout_width="0dip"
                     android:layout_alignParentLeft="true"
                     android:layout_alignRight="@id/strut"
@@ -48,6 +49,7 @@
                     android:id="@+id/spinner3"
                     style="@style/CodeFontMain"
                     android:layout_width="0dip"
+                    android:paddingTop="8dp"
                     android:layout_alignLeft="@id/strut"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/textView1"
@@ -70,6 +72,7 @@
 
                 <Spinner
                     android:id="@+id/spinnerCommand"
+                    android:paddingTop="8dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewCommand" />
@@ -87,6 +90,7 @@
                     android:background="#FFCCCCCC" />
 
                 <RadioButton
+                    android:paddingTop="2dp"
                     android:id="@+id/RadioButtonTime"
                     style="@style/CodeFontTitle"
                     android:layout_width="fill_parent"
@@ -152,6 +156,7 @@
                     android:background="#FFCCCCCC" />
 
                 <RadioButton
+                    android:paddingTop="2dp"
                     android:id="@+id/RadioButtonPosition"
                     style="@style/CodeFontTitle"
                     android:layout_width="fill_parent"
@@ -199,6 +204,7 @@
                     android:background="#FFCCCCCC" />
 
                 <RadioButton
+                    android:paddingTop="2dp"
                     android:id="@+id/RadioButtonTriggered"
                     style="@style/CodeFontTitle"
                     android:layout_width="fill_parent"

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ServiceInfoCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:elevation="2dp"
+    card_view:cardBackgroundColor="@color/background_floating_material_dark"
+    card_view:cardCornerRadius="2dp"
+    tools:showIn="@layout/main_launcher">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/card_thumbnail_image3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawingCacheQuality="high"
+            android:src="@drawable/side3" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/card_thumbnail_image3"
+            android:padding="8dp">
+
+            <View
+                android:id="@+id/TextViewServiceLine"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="@color/std_green" />
+
+            <TextView
+                android:id="@+id/textViewServiceInfoTit"
+                style="@style/CodeFontTitle"
+                android:layout_marginLeft="5dip"
+                android:text="@string/opt_service" />
+
+            <TextView
+                android:id="@+id/TextViewServiceActions"
+                style="@style/CodeFontMain"
+                android:layout_below="@id/textViewServiceInfoTit"
+                android:layout_marginLeft="5dip"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/textViewDBWarn"
+                style="@style/CodeFontMain"
+                android:layout_below="@id/TextViewServiceActions"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/textViewDBWarnLine"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_below="@id/textViewDBWarn"
+                android:background="@color/std_yellow"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/TextViewWebService"
+                style="@style/CodeFontMain"
+                android:layout_marginLeft="5dip"
+                android:textIsSelectable="false" />
+
+            <View
+                android:id="@+id/TextViewWebServiceLine"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:layout_above="@id/TextViewWebService"
+                android:background="@color/std_green" />
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

@@ -289,7 +289,37 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             cardViewServiceInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
             cardViewFav.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
         }
-        Animation animatio = AnimationUtils.loadAnimation(cardViewFav.getContext(), (R.anim.slide_in_left));
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    Thread.sleep(150);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            cardViewServiceInfo.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    Thread.sleep(500);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            cardViewPositionInfo.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    Thread.sleep(500);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            cardViewBasicInfo.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }}).start();
+       /* Animation animatio = AnimationUtils.loadAnimation(cardViewFav.getContext(), (R.anim.slide_in_left));
         cardViewFav.startAnimation(animatio);
         Animation animation = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
         animation.setStartOffset(500);
@@ -300,6 +330,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         Animation animation3 = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
         animation3.setStartOffset(1500);
         cardViewServiceInfo.startAnimation(animation3);
+        */
     }
 
 	/*
@@ -584,7 +615,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             } catch (Exception e) {
                 Log.e(TAG, "cant set ANTITHEFT info: " + e.getMessage());
             }
-
         }
     }
 

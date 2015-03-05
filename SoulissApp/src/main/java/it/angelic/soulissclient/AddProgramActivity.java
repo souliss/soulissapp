@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -263,18 +265,19 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
 
         final OnItemSelectedListener typSelectedListener = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // if (pos > 0) {
-                SoulissNode mynode = nodiArrayWithExtra[(int) outputNodeSpinner.getSelectedItemId()];
-                Log.d(Constants.TAG, "mynode nodeId:" + mynode.getId());
-                if (mynode.getId() > Constants.COMMAND_FAKE_SCENE) {
-                    //le scene non hanno comandi
-                    List<SoulissTypical> re = mynode
+                    // if (pos > 0) {
+                    SoulissNode mynode = nodiArrayWithExtra[(int) outputNodeSpinner.getSelectedItemId()];
+                    Log.d(Constants.TAG, "mynode nodeId:" + mynode.getId());
+                    if (mynode.getId() > Constants.COMMAND_FAKE_SCENE) {
+                        //le scene non hanno comandi
+                    /*List<SoulissTypical> re = mynode
                             .getActiveTypicals(AddProgramActivity.this);
-                    Log.d(Constants.TAG, "hack nodeId:" + re.get(pos).getNodeId());
-                    fillCommandSpinner(outputCommandSpinner, re.get(pos));
-                } else {
-                    fillSceneCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
-                }
+                    Log.d(Constants.TAG, "hack nodeId:" + re.get(pos).getNodeId());*/
+                        fillCommandSpinner(outputCommandSpinner, (SoulissTypical) outputTypicalSpinner.getSelectedItem());
+                    } else {
+                        fillSceneCommandSpinner(outputCommandSpinner, (SoulissScene) outputTypicalSpinner.getSelectedItem());
+                    }
+
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -597,13 +600,10 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
      * @param tgt Spinner da riempire
      * @param ref tipico da cui ottenere i comandi
      */
-    private void fillCommandSpinner(Spinner tgt, SoulissTypical ref) {
+    private void fillCommandSpinner(@NonNull Spinner tgt, SoulissTypical ref) {
         ArrayList<SoulissCommand> cmds = ref.getCommands(this);
-        //hack x nodo massivo
-        // for (SoulissCommand c:cmds){
-        //      c.setParentTypical(ref);
-        // }
-        if (cmds.size() > 0) {
+        //maledetto bastardo
+        if (cmds!=null&&cmds.size() > 0) {
             tvcommand.setVisibility(View.VISIBLE);
             tgt.setVisibility(View.VISIBLE);
             SoulissCommand[] strArray = new SoulissCommand[cmds.size()];
@@ -615,7 +615,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             tgt.setAdapter(adapter);
         }else{
-            tgt.setAdapter(null);
+            tgt.setVisibility(View.INVISIBLE);
         }
     }
 
