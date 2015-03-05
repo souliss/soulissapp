@@ -285,5 +285,6 @@
     <string name="tag_desc" >I tag sono gruppi di dispositivi definiti dall\'utente. C\'e` un tag predefinito chiamato Preferiti</string>
     <string name="img_select" >Seleziona Foto</string>
     <string name="tag_info_format">Ci sono %1$d dispositivi etichettati con %2$d Tag</string>
+    <string name="err_command_not_sel">Command not selected</string>
 
 </resources>

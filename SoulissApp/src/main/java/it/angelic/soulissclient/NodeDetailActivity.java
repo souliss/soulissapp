@@ -109,11 +109,11 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
     }
     /**
 	 * chiamato dal layout
-	 */
+
 	public void startOptions(View v){
 		opzioni.setBestAddress();
 		Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-	}
+	}*/
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();

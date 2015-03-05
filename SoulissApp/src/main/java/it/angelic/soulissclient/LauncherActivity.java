@@ -811,7 +811,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(criteria, false);
+        provider = locationManager.getBestProvider(criteria, true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
         if (enabled) {
             coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider

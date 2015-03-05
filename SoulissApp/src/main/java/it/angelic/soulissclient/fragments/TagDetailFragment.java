@@ -17,6 +17,7 @@
 package it.angelic.soulissclient.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,21 +27,23 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -53,24 +56,12 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.TagListActivity;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
-import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
-import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
-import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
-import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
-
-import static it.angelic.soulissclient.Constants.TAG;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -92,7 +83,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private SoulissPreferenceHelper opzioni;
     private long tagId;
     private ImageView mLogoImg;
-    private SoulissTag fake;
+    private TextView bro;
+    private SoulissTag collectedTag;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,9 +110,9 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private void initDataset() {
         datasource = new SoulissDBTagHelper(getActivity());
         datasource.open();
-        fake = datasource.getTag(getActivity(), tagId);
+        collectedTag = datasource.getTag(getActivity(), tagId);
         Log.i(Constants.TAG, "SHOW TAG" + tagId);
-        List<SoulissTypical> favs = datasource.getTagTypicals(fake);
+        List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
         Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
         if (!opzioni.isDbConfigured())
             AlertDialogHelper.dbNotInitedDialog(getActivity());
@@ -140,7 +132,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             Log.i(TAG, "Broadcast received, refresh from DB");
             datasource.open();
             initDataset();
-            
+            mAdapter.notifyDataSetChanged();
             // mAdapter = new ParallaxRecyclerAdapter(mDataset);
             // Set CustomAdapter as the adapter for RecyclerView.
             //    mRecyclerView.setAdapter(mAdapter);
@@ -156,11 +148,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
+
         //TODO sistemare 'sta roba
 
-        /*if (fake != null && fake.getImagePath() != null){
-            mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
-            Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
+        /*if (collectedTag != null && collectedTag.getImagePath() != null){
+            mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
+            Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
         }*/
         // LinearLayoutManager is used here, this will layout the elements in a similar fashion
         // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
@@ -181,6 +174,29 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         return rootView;
     }
 
+
+
+    public boolean onContextItemSelected(MenuItem item) {
+        Log.d(TAG,"TODOCVC:"+item.getItemId());
+       /* int position = -1;
+        try {
+            position = ((BackupRestoreListAdapter) getAdapter()).getPosition();
+        } catch (Exception e) {
+            Log.d(TAG, e.getLocalizedMessage(), e);
+            return super.onContextItemSelected(item);
+        }
+        switch (item.getItemId()) {
+            case R.id.ctx_menu_remove_backup:
+                // do your stuff
+                break;
+            case R.id.ctx_menu_restore_backup:
+                // do your stuff
+                break;
+        }
+        return super.onContextItemSelected(item);*/
+        return true;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -195,10 +211,14 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, mRecyclerView, false);
         layoutManagerFixed.setHeaderIncrementFixer(header);
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
+        bro = (TextView) header.findViewById(R.id.tagTextView);
 
-        Log.i(Constants.TAG, "setting logo" + fake.getImagePath());
-        if (fake != null && fake.getImagePath() != null) {
-            mLogoImg.setImageURI(Uri.parse(fake.getImagePath()));
+if (bro != null)
+        bro.setText(collectedTag.getNiceName());
+
+        Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
+        if (collectedTag != null && collectedTag.getImagePath() != null) {
+            mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
 
         }
         mAdapter.setShouldClipView(true);
@@ -253,9 +273,17 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
                 return new ViewHolder(v);
             }
+            private int position;
 
+            public int getPosition() {
+                return position;
+            }
+
+            public void setPosition(int position) {
+                this.position = position;
+            }
             @Override
-            public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+            public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
                 Log.d(TAG, "Element " + position + " set.");
                 // Get element from your dataset at this position and replace the contents of the view
                 // with that element
@@ -282,6 +310,13 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                     }
                     sghembo.addView(na);
                 }
+                ((ViewHolder) viewHolder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        setPosition(viewHolder.getPosition());
+                        return false;
+                    }
+                });
             }
             // END_INCLUDE(recyclerViewOnCreateViewHolder)
 
@@ -375,7 +410,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         private final TextView textView;
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
@@ -404,6 +439,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
             textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
             cardView = (CardView) v.findViewById(R.id.TypCard);
+            v.setOnCreateContextMenuListener(this);
         }
 
         public TextView getTextView() {
@@ -424,6 +460,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         public TextView getTextViewInfo2() {
             return textViewInfo2;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(Menu.NONE, R.id.eliminaTag, Menu.NONE, R.string.tag_delete);
+
         }
 
     }

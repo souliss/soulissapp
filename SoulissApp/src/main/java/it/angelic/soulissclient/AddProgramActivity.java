@@ -393,14 +393,13 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     //programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
                     //programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
                     //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
+                }else{
+                    Toast.makeText(AddProgramActivity.this, getString(R.string.err_command_not_sel), Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 //sceneId solo per i comandi che appartengono a una scena
                 programToSave.getCommandDTO().setSceneId(null);
 
-                if (programToSave == null) {
-                    Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
-                    return;
-                }
                 Intent intent = AddProgramActivity.this.getIntent();
                 datasource.open();
                 if (radioTimed.isChecked()) {// temporal schedule
@@ -604,16 +603,20 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         // for (SoulissCommand c:cmds){
         //      c.setParentTypical(ref);
         // }
-        tvcommand.setVisibility(View.VISIBLE);
-        tgt.setVisibility(View.VISIBLE);
-        SoulissCommand[] strArray = new SoulissCommand[cmds.size()];
-        cmds.toArray(strArray);
-        Log.d(Constants.TAG, "Filled commandspinner, nodeId :" + strArray[0].getCommandDTO().getNodeId());
-        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, strArray);
+        if (cmds.size() > 0) {
+            tvcommand.setVisibility(View.VISIBLE);
+            tgt.setVisibility(View.VISIBLE);
+            SoulissCommand[] strArray = new SoulissCommand[cmds.size()];
+            cmds.toArray(strArray);
+            Log.d(Constants.TAG, "Filled commandspinner, nodeId :" + strArray[0].getCommandDTO().getNodeId());
+            ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_spinner_item, strArray);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tgt.setAdapter(adapter);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            tgt.setAdapter(adapter);
+        }else{
+            tgt.setAdapter(null);
+        }
     }
 
     /**

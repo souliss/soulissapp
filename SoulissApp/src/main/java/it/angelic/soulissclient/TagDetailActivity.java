@@ -34,6 +34,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.TransitionAdapter;
@@ -72,22 +74,23 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     private long tagId;
     private SoulissDBTagHelper db;
     private SoulissTag collected;
-    private ImageView mLogoImg;
+    private FloatingActionButton fab;
+
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void faiFigate() {
         getWindow().getEnterTransition().addListener(new TransitionAdapter() {
             @Override
             public void onTransitionEnd(Transition transition) {
-                ImageView hero = (ImageView) findViewById(R.id.photo);
-                hero.animate().scaleX(1.0f);
+                ImageView mLogoImg = (ImageView) findViewById(R.id.photo);
+                mLogoImg.animate().scaleX(1.0f);
+                ImageView heroAlpha= (ImageView) findViewById(R.id.infoAlpha);
+                heroAlpha.animate().scaleX(1.0f);
                 /*ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
                         getResources().getColor(R.color.white), 0);
                 color.start();*/
-                findViewById(R.id.fabTag).animate().alpha(1.0f);
+                //findViewById(R.id.fabTag).animate().alpha(1.0f);
                 //findViewById(R.id.star).animate().alpha(1.0f);
-                TextView bro = (TextView) findViewById(R.id.tagTextView);
-                bro.setText(collected.getNiceName());
                 getWindow().getEnterTransition().removeListener(this);
             }
         });
@@ -109,6 +112,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             tagId = (long) extras.get("TAG");
 
         collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
+        fab = (FloatingActionButton) findViewById(R.id.fabTag);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             faiFigate();
@@ -197,9 +201,45 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                         collected);
                 alert.show();
                 return true;
+            case R.id.scegliImmagineTag:
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, collected.getTagId().intValue());
+               /* Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
+                Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+                chooserIntent.putExtra
+                        (
+                                Intent.EXTRA_INITIAL_INTENTS,
+                                new Intent[]{takePhotoIntent}
+                        );
+                //uso come reqId il TagId cosi da riconoscere cosa avevo richiesto
+                startActivityForResult(chooserIntent, (int) arrayAdapterPosition);*/
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        Log.i(Constants.TAG, "SAVING IMG RESULT:" + resultCode);
+
+        if (resultCode == RESULT_OK) {
+            Uri selectedImage = imageReturnedIntent.getData();
+            Log.i(Constants.TAG, "RESULT_OK PATH:" + selectedImage.toString());
+            collected.setImagePath(selectedImage.toString());
+            //String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            db.createOrUpdateTag(collected);
+            //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+            Log.i(Constants.TAG, "SAVED IMG PATH:" + collected.getImagePath());
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        TagDetailFragment fragment = new TagDetailFragment();
+        transaction.replace(R.id.detailPane, fragment);
+        transaction.commit();
     }
 
     @Override
@@ -207,17 +247,6 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         super.onStart();
         setActionBarInfo(collected.getNiceName());
 
-        mLogoImg = (ImageView) findViewById(R.id.photo);
 
-        if (collected != null && collected.getImagePath() != null) {
-            try {
-                mLogoImg.setImageURI(Uri.parse(collected.getImagePath()));
-                Log.i(Constants.TAG, "setting logo" + collected.getImagePath());
-
-            } catch (Exception laQualunque) {
-                Log.e(Constants.TAG, "facevo cazzate:" + laQualunque.getMessage());
-            }
-
-        }
     }
 }

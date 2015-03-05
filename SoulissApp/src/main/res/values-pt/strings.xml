@@ -285,5 +285,6 @@
     <string name="tag_desc" />
     <string name="img_select" >Seleziona Foto</string>
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
+    <string name="err_command_not_sel">Command not selected</string>
 
 </resources>

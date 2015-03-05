@@ -280,7 +280,6 @@ public class SoulissTypicalDTO implements Serializable {
     }
 
     public short getInput() {
-        // TODO Auto-generated method stub
         return inputCommand;
     }
 

@@ -38,8 +38,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="4sp"
             android:layout_toLeftOf="@id/online_status"
-            android:contentDescription="Online status Icon"
-            android:onClick="startOptions" />
+            android:contentDescription="Online status Icon" />
 
     </RelativeLayout>
 </android.support.v7.widget.Toolbar>

@@ -13,14 +13,17 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
          />
-
+    <ImageView
+        android:id="@+id/infoAlpha"
+        android:background="@color/black"
+        android:alpha="0.3"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        />
     <TextView
-        android:textColor="@color/white_bitaplha"
-        android:shadowColor="@color/black"
-        android:shadowDx="0"
-        android:shadowDy="0"
         android:id="@+id/tagTextView"
-        android:shadowRadius="18"
+        android:textColor="@color/white_bitaplha"
         android:layout_gravity="bottom|left"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="12dp"
@@ -34,8 +37,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_type="mini"
-        android:alpha="0.0"
-        tools:alpha="1.0"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"

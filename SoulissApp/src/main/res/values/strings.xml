@@ -292,4 +292,5 @@
     <string name="tag_desc" >Tags group devices. You can create Tags to re-organize your devices as desired. There is one pre-defined group called Favourites</string>
     <string name="img_select" >Select Photo</string>
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
+    <string name="err_command_not_sel">Command not selected</string>
 </resources>
