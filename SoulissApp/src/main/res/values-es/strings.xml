@@ -273,16 +273,16 @@
     <string name="positional_executed">Souliss Positional Program Executed</string>
     <string name="timed_program_executed">Souliss Timed Program Executed</string>
     <string name="execute_at">Execution at:</string>
-    <string name="favourites" />
-    <string name="tag" />
-    <string name="scene_add_to" />
-    <string name="existing_tag" />
+    <string name="favourites" ></string>
+    <string name="tag"></string>
+    <string name="scene_add_to" ></string>
+    <string name="existing_tag" ></string>
     <string name="new_tag">New Tag</string>
-    <string name="or" />
+    <string name="or"></string>
     <string name="input_tag_name">Input new Tag\'s name</string>
-    <string name="tag_rename" />
-    <string name="tag_delete" />
-    <string name="tag_desc" />
+    <string name="tag_rename"></string>
+    <string name="tag_delete"></string>
+    <string name="tag_desc"></string>
     <string name="img_select" >Seleziona Foto</string>
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
 
