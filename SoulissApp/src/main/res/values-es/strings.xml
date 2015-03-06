@@ -8,11 +8,11 @@
     <string name="opt_network">Opciones de red</string>
     <string name="last_update">Última actualización:</string>
     <string name="last_exec">Última ejecución:</string>
-    <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
-    <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>
-    <string name="bridge_gateway">Gateway for Souliss bridge node, most likely your router\'s address</string>
-    <string name="bridge_ssid">Name of your wireless network, to be used by Souliss bridge</string>
-    <string name="bridge_wifipass">Password of wireless network indicated above</string>
+    <string name="bridge_IP">IP que será asignada dinamicamente al Nodo Puente de Souliss</string>
+    <string name="bridge_subnet">Máscara de Subred que será asignada al Nodo Puente de Souliss</string>
+    <string name="bridge_gateway">Puerta de Acceso para el Nodo Puente de Souliss, normalmente la IP de su Router</string>
+    <string name="bridge_ssid">Nombre de la red Wifi, para ser utilizada por el Nodo Puente de Souliss</string>
+    <string name="bridge_wifipass">Contraseña de la Red Inalambrica indicada anteriormente</string>
     <string name="waiting">Esperando actualización&#8230;</string>
     <string name="historyof">Historia de</string>
     <string name="daily">Promedio diario</string>
@@ -53,8 +53,8 @@
     <string name="programs_notyet">El comando no ha sido ejecutado aún</string>
     <string name="command_sent">Comando enviado</string>
     <string name="command_send">Enviar comando</string>
-    <string name="command_inserted">New Program has been saved</string>
-    <string name="command_inserted_fail">Error saving new Program </string>
+    <string name="command_inserted">Nuevo Comando Guardado</string>
+    <string name="command_inserted_fail">Error guardando nuevo Comando</string>
     <string name="compatible">compatible con dispositivos</string>
     <string name="to_all">a todos</string>
     <string name="to">a</string>
@@ -88,7 +88,7 @@
     <string name="addprogram_positional_goout">Activar cuando me voy</string>
     <string name="addprogram_positional_comeback">Activar cuando regreso</string>
     <string name="addprogram_positional_desc">El comando siguiente se activará cuando el usuario cambie su posición</string>
-    <string name="addprogram_sensorial">Actvación basada en sensor</string>
+    <string name="addprogram_sensorial">Activación basada en sensor</string>
     <string name="addprogram_sensorial_desc">El comando siguiente se activará en función del valor de un slot. Seleccione el sensor y el valor umbral</string>
     <string name="addprogram_threshold">Valor umbral</string>
     <!-- MENU -->
@@ -113,9 +113,9 @@
     <string name="manual_slot">SLOT</string>
     <string name="manual_typicals">Dispositivos</string>
     <string name="inserire_almeno">Elija el ID del Nodo, slot e introduzca un comando</string>
-     <string name="db_notempty">DB not empty. Drop DB first</string>
-    <string name="manual_litfrom">Turned on %1$s ago</string>
-    <string name="manual_tyinf">This device has been turned on for %1$s in the last month</string>
+     <string name="db_notempty">BD no está vacia, Borra la BD primero</string>
+    <string name="manual_litfrom">Encendido hace %1$s </string>
+    <string name="manual_tyinf">Este dispositivo ha estado encendido durante %1$s en el último més</string>
     <string name="manual_id_prompt">Elija el ID de un Nodo</string>
     <string name="manual_slot_prompt">Elija un SLOT</string>
     <string name="icon_select">Seleccione un icono</string>
@@ -127,10 +127,10 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Servicio de Datos <b>desactivado</b></string>
     <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
-    <string name="db_size">DB size</string>
-    <string name="service_warnbound">Service <b>enabled</b> but <b>not bound</b>, restarting</string>
+    <string name="db_size">Tamaño de la BD</string>
+    <string name="service_warnbound">Servicio <b>activado</b> pero <b>no enlazado</b>, reiniciando</string>
     <string name="webservice_enabled">Zozzariello <b>habilitado</b> escuchando </string>
-    <string name="timeout_expired">Command timeout <![CDATA[<b><font color=\"#FF4444\">expirado</font></b>]]>.Souliss podría no estar disponible</string>
+    <string name="timeout_expired">Commando expirado <![CDATA[<b><font color=\"#FF4444\">expirado</font></b>]]>.Souliss podría no estar disponible</string>
 
     <!-- STATUS -->
     <string name="status_souliss">Estado Souliss</string>
@@ -148,12 +148,12 @@
     <string name="opt_nodeindex">Índice de Nodo</string>
     <string name="opt_nodeindex_desc">El índice de Nodo identifica este dispositio en las placas Souliss. El valor actual es%1$d. Pulse para cambiarlo</string>
     <string name="opt_title_broadcast">Broadcast Discovery</string>
-    <string name="opt_summary_broadcast">On local LANs Souliss can discover bridge node automatically</string>
+    <string name="opt_summary_broadcast">En redes locales LAN Souliss puede detectar el Nodo Puente Automaticamente</string>
     <string name="opt_networkdesc">Ajuste de red local y remoto</string>
     <string name="opt_dbexp">Exportar Base de Datos</string>
-    <string name="opt_dbexp_desc">Escribe un fichero .csv en la sdcard conteniendo la actual Base de Datos</string>
+    <string name="opt_dbexp_desc">Escribe un fichero .csv en la tarjeta SD conteniendo la actual Base de Datos</string>
     <string name="opt_setHtmlRoot">Página Principal Zozzariello</string>
-    <string name="opt_setHtmlRoot_desc">Escoja un archivo .html en la tarjeta sd para usar como root</string>
+    <string name="opt_setHtmlRoot_desc">Escoja un archivo .html en la tarjeta SD para usar como root</string>
     <string name="opt_dbimp">Importar Base de datos</string>
     <string name="opt_dbimp_desc">Importar un archivo .csv. ¡Atención! ¡Se va a sobreescribir la Base de Datos Souliss!</string>
     <string name="opt_db">Base de Datos Souliss</string>
@@ -163,7 +163,7 @@
     <string name="opt_dbinfo">Estado de la Base de Datos</string>
     <string name="opt_dbinfo_desc">%1$d Nodos Souliss están guardados en la Base de Datos, total %2$d dispositivos presentes.</string>
     <string name="opt_invalidAddress">¡¡Dirección no válida!!</string>
-    <string name="title_edittext_IP">Dirección local de Souliss (mandatory)</string>
+    <string name="title_edittext_IP">Dirección local de Souliss (obligatorio)</string>
     <string name="summary_edittext_IP">Inserte la dirección IP del Nodo puente Souliss cuando use la red local</string>
     <string name="dialog_title_edittext_IP">Dirección IP</string>
     <string name="summary_edittext_IP_pubb">Insertar dirección pública Souliss, para acceder desde fuera de casa. Puede usar DNS dinámica (DDNS) y redireccionamiento de puerto para acceder a casa fácilmente</string>
@@ -175,7 +175,7 @@
     <string name="opt_animfx">Animaciones</string>
     <string name="opt_animfx_desc">Habilitar pantalla deslizante y fundidos</string>
     <string name="opt_lighttheme">Tema color de luz</string>
-    <string name="opt_lighttheme_desc">-Usar colores de luz (necesario reiniciar la aplicación)</string>
+    <string name="opt_lighttheme_desc">-Usar colores de luz (es necesario reiniciar la aplicación)</string>
     <string name="opt_restore">Restaurar advertencias</string>
     <string name="opt_restore_desc">Muestra de nuevo las advertencias suprimidas</string>
     <string name="opt_visual">Opciones visuales</string>
@@ -195,7 +195,7 @@
     <string name="opt_WebServerUser_desc">Si no está vacío, Zozzariello preguntará por usuario y contraseña</string>
     <string name="opt_WebServerPass">Contraseña</string>
     <string name="opt_WebServerPass_desc">Contraseña webserver Souliss</string>
-    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
+    <string name="opt_WebServerPass_err">Zozzaziello error</string>
     <string name="opt_servicehomepos">Establecer localización Casa</string>
     <string name="opt_servicehomepos_desc">establecer posición actual como referencia para Programas de posicionamiento</string>
     <string name="opt_Thold_desc">Distancia dentro de la cual se considera "en casa"</string>
@@ -256,7 +256,7 @@
     <string name="Souliss_TRGB_sleep">Dormir</string>
     <string name="Souliss_TRGB_flash">Intermitente</string>
     <string name="Souliss_TRGB_white">Blanco</string>
-    <string name="Souliss_TRGB_eq"> Bassi: %1$s Medi: %2$s Alti: %3$s</string>
+    <string name="Souliss_TRGB_eq"> Bajo: %1$s Medios: %2$s Agudos: %3$s</string>
     <string name="Souliss_emptycmd_desc">Comando no seleccionado</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Modo: Auto - 20°</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Modo: Auto - 24°</string>
@@ -269,22 +269,21 @@
     <string name="eula_title">Licencia de uso</string>
     <string name="eula_accept">Aceptar</string>
     <string name="eula_refuse">Rechazar</string>
-    <string name="programs_warn_trigger_notset">You must select an input trigger and threshold value</string>
-    <string name="positional_executed">Souliss Positional Program Executed</string>
-    <string name="timed_program_executed">Souliss Timed Program Executed</string>
-    <string name="execute_at">Execution at:</string>
-    <string name="favourites" />
-    <string name="tag" />
-    <string name="scene_add_to" />
-    <string name="existing_tag" />
-    <string name="new_tag">New Tag</string>
-    <string name="or" />
+    <string name="programs_warn_trigger_notset">Debes seleccionar un disparador de entrada y un valor de umbral</string>
+    <string name="positional_executed">Programa Souliss basado en Posición ejecutado</string>
+    <string name="timed_program_executed">Programa Souliss basado en Tiempo Ejecutado</string>
+    <string name="execute_at">Ejecutar a las:</string>
+    <string name="favourites" >Favoritos</string>
+    <string name="tag">Etiquetas</string>
+    <string name="scene_add_to" >Añadir a...</string>
+    <string name="existing_tag" >Etiqueta ya Existe</string>
+    <string name="new_tag">Nueva etiqueta</string>
+    <string name="or">o</string>
     <string name="input_tag_name">Input new Tag\'s name</string>
-    <string name="tag_rename" />
-    <string name="tag_delete" />
-    <string name="tag_desc" />
-    <string name="img_select" >Seleziona Foto</string>
-    <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
-    <string name="err_command_not_sel">Command not selected</string>
+    <string name="tag_rename">Renombrar</string>
+    <string name="tag_delete">Borrar</string>
+    <string name="tag_desc">Descripcion</string>
+    <string name="img_select" >Seleciona Imagen</string>
+    <string name="tag_info_format">Hay %1$d dispositivos en %2$d Etiquetas</string>
 
 </resources>
