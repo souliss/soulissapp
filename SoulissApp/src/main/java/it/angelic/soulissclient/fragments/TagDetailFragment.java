@@ -46,20 +46,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -212,14 +217,27 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         layoutManagerFixed.setHeaderIncrementFixer(header);
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
+        FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
+        //EDIT TAG
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(getActivity(),bro, null, datasource,
+                        collectedTag);
+                alert.show();
+            }
+        });
 
 if (bro != null)
         bro.setText(collectedTag.getNiceName());
 
         Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
         if (collectedTag != null && collectedTag.getImagePath() != null) {
-            mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
-
+            try {
+                mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
+            }catch (Exception e){
+                Log.d(TAG, "can't set logo",e);
+            }
         }
         mAdapter.setShouldClipView(true);
         mAdapter.setParallaxHeader(header, mRecyclerView);
@@ -262,6 +280,7 @@ if (bro != null)
 
             }
         });
+
 
         mAdapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
             @Override

@@ -41,8 +41,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
-import com.nirhart.parallaxscroll.views.ParallaxExpandableListView;
-import com.nirhart.parallaxscroll.views.ParallaxListView;
 
 
 /**
@@ -55,7 +53,7 @@ import com.nirhart.parallaxscroll.views.ParallaxListView;
  */
 public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	private SoulissScene[] scenesArray;
-	private ParallaxListView listaScenesView;
+	private ListView listaScenesView;
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
 	private TextView tt;
@@ -85,15 +83,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		 */
        // ParallaxListView listView2 = (ParallaxListView) findViewById(R.id.paraList);
 
-		listaScenesView = (ParallaxListView) findViewById(R.id.ListViewListaScenes);
-        View header = View.inflate(this, R.layout.scene_list_header, null);
-       /* TextView v = new TextView(this);
-        v.setText("PARALLAXED");
-        v.setGravity(Gravity.CENTER);
-        v.setTextSize(40);
-        v.setHeight(200);
-        v.setBackgroundResource(R.drawable.item_selector);*/
-        listaScenesView.addParallaxedHeaderView(header);
+		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaScenesView);

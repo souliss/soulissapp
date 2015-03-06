@@ -32,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <!--   <ImageView
+                  <ImageView
                      android:id="@+id/scene_icon"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -56,24 +56,24 @@
                        android:id="@+id/ListViewListaScenes"
                        android:layout_width="fill_parent"
                        android:layout_height="wrap_content"
-                       android:layout_below="@id/TextViewScenes"
+                       android:layout_below="@id/TextViewScenesDesc"
                        android:background="@drawable/item_selector"
                        android:cacheColorHint="@color/trans_black"
                        android:divider="@android:color/transparent"
                        android:fadingEdge="vertical"
                        android:requiresFadingEdge="vertical"
-                       /> -->
-                <com.nirhart.parallaxscroll.views.ParallaxListView
-                    android:id="@+id/ListViewListaScenes"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
-                    android:divider="@android:color/transparent"
-                    android:background="@drawable/item_selector"
-                    android:fillViewport="true"
-                    app:parallax_factor="1.9"
-                    app:parallax_views_num="3"
-                    android:fadingEdge="vertical"
-                    android:requiresFadingEdge="vertical"/>
+                       />
+                <!--  <com.nirhart.parallaxscroll.views.ParallaxListView
+                     android:id="@+id/ListViewListaScenes"
+                     android:layout_width="match_parent"
+                     android:layout_height="fill_parent"
+                     android:divider="@android:color/transparent"
+                     android:background="@drawable/item_selector"
+                     android:fillViewport="true"
+                     app:parallax_factor="1.9"
+                     app:parallax_views_num="3"
+                     android:fadingEdge="vertical"
+                     android:requiresFadingEdge="vertical"/>-->
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"

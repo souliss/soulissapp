@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.angelic.soulissclient"
     android:installLocation="auto"
-    android:versionCode="137"
-    android:versionName="1.5.1" >
+    android:versionCode="138"
+    android:versionName="1.5.0b" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
