@@ -125,7 +125,7 @@ public class SoulissDBHelper {
         List<SoulissTypical> tips = nodeIN.getTypicals();
         for (SoulissTypical x : tips) {
             if (!x.isEmpty())
-                x.getTypicalDTO().refresh();
+                x.refresh();
         }
 
         return (int) upd;

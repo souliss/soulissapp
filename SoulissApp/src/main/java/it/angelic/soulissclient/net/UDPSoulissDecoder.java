@@ -486,13 +486,13 @@ public class UDPSoulissDecoder {
                 // typXnodo) + tgtnode)+" SLOT:"+(j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
-                    it.getTypical((short) (j % typXnodo));
+                    SoulissTypical temp = it.getTypical((short) (j % typXnodo));
                     dto.setOutput(mac.get(5 + j));
                     dto.setSlot(((short) (j % typXnodo)));
                     dto.setNodeId((short) (j / typXnodo + tgtnode));
                     // sufficiente una refresh
                     //Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
-                    dto.refresh();
+                    dto.refresh(temp);
                 } catch (NotFoundException e) {
                     // skipping unexistent typical");
 

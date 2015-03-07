@@ -124,6 +124,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 
     }
 
+    public void refresh(){
+        typicalDTO.refresh(this);
+    }
+
     public @StringRes String getDefaultName() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
