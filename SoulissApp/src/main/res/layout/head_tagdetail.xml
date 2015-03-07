@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:transitionName="photo_hero"
+
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:src="@drawable/home_automation"

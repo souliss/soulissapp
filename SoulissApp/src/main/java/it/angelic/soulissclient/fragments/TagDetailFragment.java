@@ -36,35 +36,27 @@ import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.adapters.SceneListAdapter;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -75,6 +67,20 @@ import it.angelic.soulissclient.model.SoulissTypical;
 public class TagDetailFragment extends AbstractTypicalFragment {
 
     private static final String TAG = "RecyclerViewFragment";
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "Broadcast received, refresh from DB");
+            datasource.open();
+            initDataset();
+            mAdapter.notifyDataSetChanged();
+            // mAdapter = new ParallaxRecyclerAdapter(mDataset);
+            // Set CustomAdapter as the adapter for RecyclerView.
+            //    mRecyclerView.setAdapter(mAdapter);
+            //  mRecyclerView.invalidate();
+        }
+    };
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
@@ -130,20 +136,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }*/
         }
     }
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i(TAG, "Broadcast received, refresh from DB");
-            datasource.open();
-            initDataset();
-            mAdapter.notifyDataSetChanged();
-            // mAdapter = new ParallaxRecyclerAdapter(mDataset);
-            // Set CustomAdapter as the adapter for RecyclerView.
-            //    mRecyclerView.setAdapter(mAdapter);
-            //  mRecyclerView.invalidate();
-        }
-    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,17 +145,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
         mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
-
-        //TODO sistemare 'sta roba
-
-        /*if (collectedTag != null && collectedTag.getImagePath() != null){
-            mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
-            Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
-        }*/
-        // LinearLayoutManager is used here, this will layout the elements in a similar fashion
-        // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
-        // elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
@@ -175,14 +159,49 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
+        mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
+                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
+        mAdapter = new ParallaxRecyclerAdapter(mDataset);
+        HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
+        mRecyclerView.setLayoutManager(layoutManagerFixed);
+        View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
+        layoutManagerFixed.setHeaderIncrementFixer(header);
+        mLogoImg = (ImageView) header.findViewById(R.id.photo);
+        bro = (TextView) header.findViewById(R.id.tagTextView);
+        FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
+        //EDIT TAG
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(getActivity(), bro, null, datasource,
+                        collectedTag);
+                alert.show();
+            }
+        });
+
+        if (bro != null)
+            bro.setText(collectedTag.getNiceName());
+
+        Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
+        if (collectedTag != null && collectedTag.getImagePath() != null) {
+            try {
+                mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
+            } catch (Exception e) {
+                Log.d(TAG, "can't set logo", e);
+            }
+        }
+        mAdapter.setShouldClipView(true);
+        mAdapter.setParallaxHeader(header, mRecyclerView);
+
 
         return rootView;
     }
 
 
-
     public boolean onContextItemSelected(MenuItem item) {
-        Log.d(TAG,"TODOCVC:"+item.getItemId());
+        Log.d(TAG, "TODOCVC:" + item.getItemId());
        /* int position = -1;
         try {
             position = ((BackupRestoreListAdapter) getAdapter()).getPosition();
@@ -194,12 +213,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
         switch (item.getItemId()) {
             case R.id.eliminaTag:
-               // mDataset.get(info.position);
+                // mDataset.get(info.position);
                 //Log.i(Constants.TAG, "DELETE TAGID:"+info.position);
                 break;
-           default:
-               Log.i(Constants.TAG, "not doing shit");
-               break;
+            default:
+                Log.i(Constants.TAG, "not doing shit");
+                break;
         }
         return super.onContextItemSelected(item);
     }
@@ -208,48 +227,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     public void onStart() {
         super.onStart();
         refreshStatusIcon();
-        mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
-                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
-
-        mAdapter = new ParallaxRecyclerAdapter(mDataset);
-        HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
-        mRecyclerView.setLayoutManager(layoutManagerFixed);
-        View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, mRecyclerView, false);
-        layoutManagerFixed.setHeaderIncrementFixer(header);
-        mLogoImg = (ImageView) header.findViewById(R.id.photo);
-        bro = (TextView) header.findViewById(R.id.tagTextView);
-        FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
-        //EDIT TAG
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(getActivity(),bro, null, datasource,
-                        collectedTag);
-                alert.show();
-            }
-        });
-
-if (bro != null)
-        bro.setText(collectedTag.getNiceName());
-
-        Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
-        if (collectedTag != null && collectedTag.getImagePath() != null) {
-            try {
-                mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
-            }catch (Exception e){
-                Log.d(TAG, "can't set logo",e);
-            }
-        }
-        mAdapter.setShouldClipView(true);
-        mAdapter.setParallaxHeader(header, mRecyclerView);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mAdapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
                 @SuppressLint("NewApi")
                 @Override
                 public void onParallaxScroll(float v, float v2, View view) {
-                   // actionBar.setBackgroundColor(getActivity().getResources().getColor(R.color.black));
+                    // actionBar.setBackgroundColor(getActivity().getResources().getColor(R.color.black));
                     Drawable c = actionBar.getBackground();
                     TypedValue a = new TypedValue();
                     getActivity().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
@@ -260,7 +243,7 @@ if (bro != null)
                         Log.d(TAG, "SET BACKG ALPHA" + c.getAlpha());
                         c.setAlpha(Math.round(v * 255));
                         TagDetailFragment.this.actionBar.setBackground(c);
-                       // view.setBackground(c);
+                        // view.setBackground(c);
                     } else {
                         // windowBackground is not a color, probably a drawable
                         Log.e(TAG, "WTF:" + a.toString());
@@ -285,6 +268,8 @@ if (bro != null)
 
 
         mAdapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
+            private int position;
+
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
                 // Create a new view.
@@ -294,7 +279,6 @@ if (bro != null)
 
                 return new ViewHolder(v);
             }
-            private int position;
 
             public int getPosition() {
                 return position;
@@ -303,6 +287,7 @@ if (bro != null)
             public void setPosition(int position) {
                 this.position = position;
             }
+
             @Override
             public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
                 Log.d(TAG, "Element " + position + " set.");
@@ -436,13 +421,8 @@ if (bro != null)
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
-        private int tagId;
-
-        public CardView getCardView() {
-            return cardView;
-        }
-
         LinearLayout linearActionsLayout;
+        private int tagId;
         private ImageView imageView;
 
         public ViewHolder(View v) {
@@ -462,6 +442,10 @@ if (bro != null)
             textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
             cardView = (CardView) v.findViewById(R.id.TypCard);
             v.setOnCreateContextMenuListener(this);
+        }
+
+        public CardView getCardView() {
+            return cardView;
         }
 
         public TextView getTextView() {
