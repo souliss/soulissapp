@@ -190,16 +190,18 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             Log.d(TAG, e.getLocalizedMessage(), e);
             return super.onContextItemSelected(item);
         }
+        ContextMenuRecyclerView.RecyclerContextMenuInfo info =
+                (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
         switch (item.getItemId()) {
-            case R.id.ctx_menu_remove_backup:
-                // do your stuff
+            case R.id.eliminaTag:
+               // mDataset.get(info.position);
+                //Log.i(Constants.TAG, "DELETE TAGID:"+info.position);
                 break;
-            case R.id.ctx_menu_restore_backup:
-                // do your stuff
-                break;
+           default:
+               Log.i(Constants.TAG, "not doing shit");
+               break;
         }
-        return super.onContextItemSelected(item);*/
-        return true;
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -434,6 +436,7 @@ if (bro != null)
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
+        private int tagId;
 
         public CardView getCardView() {
             return cardView;

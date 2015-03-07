@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -115,29 +116,7 @@ public class SoulissTypicalDTO implements Serializable {
         return upd;
     }
 
-    /**
-     * Decide come interpretare gli out e logga
-     */
-    public void logTypical() {
-        ContentValues values = new ContentValues();
 
-        // wrap values from object
-        values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
-        values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
-        values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
-        if (this instanceof ISoulissTypicalSensor) {
-            values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
-        } else {
-            values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
-        }
-        try {
-            SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);
-        } catch (SQLiteConstraintException e) {
-            // sensori NaN violano il constraint
-            Log.e(Constants.TAG, "error saving log: " + e);
-        }
-
-    }
 
     public Date getLastStatusChange() {
         Cursor cursor = SoulissDBHelper.getDatabase().query(
@@ -173,7 +152,7 @@ public class SoulissTypicalDTO implements Serializable {
      *
      * @return
      */
-    public int refresh() {
+    public int refresh(@Nullable SoulissTypical parent) {
         if (SoulissClient.getOpzioni().isLogHistoryEnabled() && !(this instanceof ISoulissTypicalSensor)) {
             // se e` un sensore viene loggato altrove
             Cursor cursor = SoulissDBHelper.getDatabase().query(
@@ -184,7 +163,7 @@ public class SoulissTypicalDTO implements Serializable {
             cursor.moveToFirst();
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             if (dto.getOutput() != getOutput()) {
-                logTypical();// logga il nuovo
+                parent.logTypical();// logga il nuovo
                 Log.i(Constants.TAG, "logging new state from: " + dto.getOutput() + " to " + getOutput());
             }
             cursor.close();

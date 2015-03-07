@@ -1,8 +1,13 @@
 package it.angelic.soulissclient.model;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -12,10 +17,13 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
+import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.Constants;
@@ -92,7 +100,31 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         throw new RuntimeException("Can't call setRelated on a single generic typical");
     }
 
-    public String getDefaultName() {
+    /**
+     * Decide come interpretare gli out e logga
+     */
+    public void logTypical() {
+        ContentValues values = new ContentValues();
+
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
+        values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
+        if (isSensor()) {
+            values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
+        } else {
+            values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
+        }
+        try {
+            SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);
+        } catch (SQLiteConstraintException e) {
+            // sensori NaN violano il constraint
+            Log.e(it.angelic.soulissclient.Constants.TAG, "error saving log: " + e);
+        }
+
+    }
+
+    public @StringRes String getDefaultName() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 
@@ -157,7 +189,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     @Override
-    public int getIconResourceId() {
+    public @DrawableRes int getIconResourceId() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 
