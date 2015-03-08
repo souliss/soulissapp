@@ -631,6 +631,13 @@ public class SoulissDBHelper {
         return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
     }
 
+    public int deleteTagTypical(int tagId, int nodeid, int slot) {
+        //elimino associazione
+        return database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + tagId
+                +" AND "+SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " +nodeid
+                +" AND "+SoulissDB.COLUMN_TAG_TYP_SLOT+ " = " +slot, null);
+    }
+
     public List<SoulissNode> getAllNodes() {
         List<SoulissNode> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, null, null, null, null,

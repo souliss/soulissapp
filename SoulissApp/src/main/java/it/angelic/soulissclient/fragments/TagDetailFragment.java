@@ -43,6 +43,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
@@ -54,8 +55,10 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.RecyclerItemClickListener;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -87,7 +90,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RadioButton mLinearLayoutRadioButton;
     protected RadioButton mGridLayoutRadioButton;
     protected RecyclerView mRecyclerView;
-    protected ParallaxRecyclerAdapter mAdapter;
+    protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     protected List<SoulissTypical> mDataset;
     private SoulissDBTagHelper datasource;
@@ -163,7 +166,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new ParallaxRecyclerAdapter(mDataset);
+        mAdapter = new ParallaxExenderAdapter(mDataset);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         mRecyclerView.setLayoutManager(layoutManagerFixed);
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
@@ -196,25 +199,42 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mAdapter.setParallaxHeader(header, mRecyclerView);
 
 
+
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+        registerForContextMenu(mRecyclerView);
+
         return rootView;
     }
 
 
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "TODOCVC:" + item.getItemId());
-       /* int position = -1;
+        int position = -1;
         try {
-            position = ((BackupRestoreListAdapter) getAdapter()).getPosition();
+            position = ((ParallaxExenderAdapter) mAdapter).getPosition();
         } catch (Exception e) {
             Log.d(TAG, e.getLocalizedMessage(), e);
             return super.onContextItemSelected(item);
         }
-        ContextMenuRecyclerView.RecyclerContextMenuInfo info =
+        /*ContextMenuRecyclerView.RecyclerContextMenuInfo info =
                 (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
         switch (item.getItemId()) {
             case R.id.eliminaTag:
-                // mDataset.get(info.position);
-                //Log.i(Constants.TAG, "DELETE TAGID:"+info.position);
+                SoulissTypical soulissTypical = mDataset.get(position-1);
+                Log.i(Constants.TAG, "DELETE TAGID:"+position);
+                datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
+                mDataset.remove(position-1);
+                mAdapter.setData(mDataset);
+                mAdapter.notifyDataSetChanged();
+                Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
+                mRecyclerView.invalidate();
+
                 break;
             default:
                 Log.i(Constants.TAG, "not doing shit");
@@ -267,8 +287,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         });
 
 
-        mAdapter.implementRecyclerAdapterMethods(new ParallaxRecyclerAdapter.RecyclerAdapterMethods() {
-            private int position;
+        mAdapter.implementRecyclerAdapterMethods(new ParallaxExenderAdapter.RecyclerAdapterMethods() {
+
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -280,13 +300,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 return new ViewHolder(v);
             }
 
-            public int getPosition() {
-                return position;
-            }
 
-            public void setPosition(int position) {
-                this.position = position;
-            }
 
             @Override
             public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
@@ -319,10 +333,11 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 ((ViewHolder) viewHolder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
-                        setPosition(viewHolder.getPosition());
+                        mAdapter.setPosition(viewHolder.getPosition());
                         return false;
                     }
                 });
+
             }
             // END_INCLUDE(recyclerViewOnCreateViewHolder)
 
@@ -359,6 +374,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
     }
+
+
 
     @Override
     public void onResume() {
