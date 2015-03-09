@@ -23,6 +23,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -49,6 +52,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
 
+import java.io.File;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -58,7 +62,6 @@ import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.RecyclerItemClickListener;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -78,17 +81,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             datasource.open();
             initDataset();
             mAdapter.notifyDataSetChanged();
-            // mAdapter = new ParallaxRecyclerAdapter(mDataset);
-            // Set CustomAdapter as the adapter for RecyclerView.
-            //    mRecyclerView.setAdapter(mAdapter);
-            //  mRecyclerView.invalidate();
+            mRecyclerView.invalidate();
         }
     };
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
-    protected RadioButton mLinearLayoutRadioButton;
-    protected RadioButton mGridLayoutRadioButton;
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -125,7 +123,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         datasource = new SoulissDBTagHelper(getActivity());
         datasource.open();
         collectedTag = datasource.getTag(getActivity(), tagId);
-        Log.i(Constants.TAG, "SHOW TAG" + tagId);
+        Log.i(Constants.TAG, "initDataset tagId" + tagId);
         List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
         Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
         if (!opzioni.isDbConfigured())
@@ -150,7 +148,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
         mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        //mLayoutManager = new LinearLayoutManager(getActivity());
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
@@ -171,7 +169,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mRecyclerView.setLayoutManager(layoutManagerFixed);
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
         layoutManagerFixed.setHeaderIncrementFixer(header);
-        mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
         FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
         //EDIT TAG
@@ -189,24 +186,26 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
         if (collectedTag != null && collectedTag.getImagePath() != null) {
-            try {
+
+
+            File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+            if (picture.exists()) {
+                //ImageView imageView = (ImageView)findViewById(R.id.imageView);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+                mLogoImg.setImageBitmap(myBitmap);
+            }
+           /* try {
                 mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
+
             } catch (Exception e) {
                 Log.d(TAG, "can't set logo", e);
-            }
+            }*/
         }
         mAdapter.setShouldClipView(true);
         mAdapter.setParallaxHeader(header, mRecyclerView);
 
-
-
-        mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-                        // do whatever
-                    }
-                })
-        );
         registerForContextMenu(mRecyclerView);
 
         return rootView;
@@ -214,7 +213,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
 
     public boolean onContextItemSelected(MenuItem item) {
-        Log.d(TAG, "TODOCVC:" + item.getItemId());
+        Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
         int position = -1;
         try {
             position = ((ParallaxExenderAdapter) mAdapter).getPosition();
@@ -229,13 +228,14 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 SoulissTypical soulissTypical = mDataset.get(position-1);
                 Log.i(Constants.TAG, "DELETE TAGID:"+position);
                 datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
-                mDataset.remove(position-1);
+                mDataset.remove(position - 1);
                 mAdapter.setData(mDataset);
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
                 mRecyclerView.invalidate();
 
                 break;
+            //TODO increase/dec priority
             default:
                 Log.i(Constants.TAG, "not doing shit");
                 break;
@@ -296,10 +296,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 View v = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.cardview_typical, viewGroup, false);
 
-
                 return new ViewHolder(v);
             }
-
 
 
             @Override
@@ -339,18 +337,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 });
 
             }
-            // END_INCLUDE(recyclerViewOnCreateViewHolder)
 
-            /**
-             * Return the size of your dataset (invoked by the layout manager)
-             * chissa perche ogni tanto nullo
-             */
-           /* @Override
-            public void onClick(View v) {
-                int pos = (Integer) v.getTag();
-                Log.d(TAG, "Element clicked:"+pos);
-              //  context.showDetails(pos);
-            }-*/
             @Override
             public int getItemCount() {
                 if (mDataset != null)
@@ -360,13 +347,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             }
 
         });
+        Log.i(Constants.TAG, "mCurrentLayoutManagerType: " + mCurrentLayoutManagerType);
 
-
-        // mAdapter = new FavouriteTypicalAdapter((TagDetailActivity)getActivity(), mDataset, opzioni);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
-        // END_INCLUDE(initializeRecyclerView)
-
     }
 
     @Override
@@ -374,8 +358,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
     }
-
-
 
     @Override
     public void onResume() {
@@ -438,20 +420,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
-        LinearLayout linearActionsLayout;
+        private LinearLayout linearActionsLayout;
         private int tagId;
         private ImageView imageView;
 
         public ViewHolder(View v) {
             super(v);
-            // Define click listener for the ViewHolder's View.
-            /*v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "Element " + getPosition() + " clicked.");
-                   // context.showDetails(getPosition());
-                }
-            });*/
             textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
             imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
             linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
