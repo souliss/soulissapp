@@ -1,23 +1,6 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissExecutable;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissScene;
-import it.angelic.soulissclient.model.SoulissTypical;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,11 +20,26 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
+
+import it.angelic.soulissclient.db.SoulissCommandDTO;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissTriggerDTO;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissExecutable;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 
 public class AddProgramActivity extends AbstractStatusedFragmentActivity {
@@ -50,7 +48,6 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
     private SoulissNode[] nodiArrayWithExtra;
 
     private SoulissDBHelper datasource = new SoulissDBHelper(this);
-    private SoulissPreferenceHelper opzioni;
     private TextView tvcommand;
     private SoulissCommand collected;
     private Spinner outputNodeSpinner;
@@ -75,7 +72,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
+        SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(this.getApplicationContext());
         // tema
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
@@ -212,7 +209,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     triggeredTypicalSpinner.setSelection(u);
             }
             threshValEditText.setText(String.valueOf(inputTrigger.getThreshVal()));
-            threshButton.setText(inputTrigger.getOp().toString());
+            threshButton.setText(inputTrigger.getOp());
         }
     }
 
@@ -396,13 +393,14 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     //programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
                     //programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
                     //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
-                }else{
-                    Toast.makeText(AddProgramActivity.this, getString(R.string.err_command_not_sel), Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 //sceneId solo per i comandi che appartengono a una scena
                 programToSave.getCommandDTO().setSceneId(null);
 
+                if (programToSave == null) {
+                    Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
+                    return;
+                }
                 Intent intent = AddProgramActivity.this.getIntent();
                 datasource.open();
                 if (radioTimed.isChecked()) {// temporal schedule

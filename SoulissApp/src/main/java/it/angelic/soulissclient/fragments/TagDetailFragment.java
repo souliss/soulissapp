@@ -23,9 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -87,6 +84,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
+    protected RadioButton mLinearLayoutRadioButton;
+    protected RadioButton mGridLayoutRadioButton;
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -169,6 +168,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mRecyclerView.setLayoutManager(layoutManagerFixed);
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
         layoutManagerFixed.setHeaderIncrementFixer(header);
+        mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
         FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
         //EDIT TAG
@@ -295,6 +295,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 // Create a new view.
                 View v = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.cardview_typical, viewGroup, false);
+
 
                 return new ViewHolder(v);
             }

@@ -1,11 +1,7 @@
 package it.angelic.soulissclient.net;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import static junit.framework.Assert.assertEquals;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
+import android.content.Intent;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -19,8 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import android.content.Intent;
-import android.util.Log;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.db.SoulissCommandDTO;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+
+import static it.angelic.soulissclient.Constants.TAG;
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Static methods to build requests' frames
@@ -275,11 +276,8 @@ public class UDPHelper {
 			sender.send(packet);
 			Log.w(Constants.TAG, "DB struct sent. bytes:" + packet.getLength());
 			return;
-		} catch (UnknownHostException ed) {
+		} catch (UnknownHostException | SocketException ed) {
 			Log.d(Constants.TAG, "***requestDBStruct Fail", ed);
-			return;
-		} catch (SocketException et) {
-			Log.d(Constants.TAG, "***requestDBStruct Fail", et);
 			return;
 		} catch (Exception e) {
 			Log.d(Constants.TAG, "***requestDBStruct Fail", e);

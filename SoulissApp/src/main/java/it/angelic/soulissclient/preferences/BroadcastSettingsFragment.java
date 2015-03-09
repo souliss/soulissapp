@@ -1,22 +1,22 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.Constants;
-import it.angelic.soulissclient.net.NetUtils;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
+
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
+
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.net.Constants;
+import it.angelic.soulissclient.net.NetUtils;
+import it.angelic.soulissclient.net.UDPHelper;
 
 /**
  * Per funzionare dovresti aggiungere in SoulissApp un menù di configurazione
@@ -146,10 +146,9 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
 					bcastPayload.add(b);// lunghezza
 				}
 
-				for (int i = 0; i < pass.length; i++) {
-					byte b = pass[i];
-					bcastPayload.add(b);// lunghezza
-				}
+                for (byte b : pass) {
+                    bcastPayload.add(b);// lunghezza
+                }
 
 				new Thread(new Runnable() {
 					@Override

@@ -1,16 +1,5 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.model.ISoulissExecutable;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissScene;
-import it.angelic.soulissclient.model.SoulissTypical;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -24,12 +13,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.RemoteViews;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.ISoulissExecutable;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 public class SoulissWidgetConfig extends Activity {
     private SoulissNode[] nodiArray;

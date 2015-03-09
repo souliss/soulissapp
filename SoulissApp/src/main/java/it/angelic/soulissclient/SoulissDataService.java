@@ -208,7 +208,6 @@ public class SoulissDataService extends Service implements LocationListener {
 
     public static void sendNotification(Context ctx, String desc, String longdesc, int icon, @Nullable SoulissCommand ppr) {
 
-
         Intent notificationIntent = new Intent(ctx, AddProgramActivity.class);
         if (ppr != null)
             notificationIntent.putExtra("PROG", ppr);
@@ -219,8 +218,11 @@ public class SoulissDataService extends Service implements LocationListener {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
         builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
-                .setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker("Souliss program activated")
-                .setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
+                .setLargeIcon(BitmapFactory.decodeResource(res, icon))
+                .setTicker("Souliss program activated")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true).setContentTitle(desc)
+                .setContentText(longdesc);
         Notification n = builder.build();
         nm.notify(665, n);
     }
@@ -438,14 +440,13 @@ public class SoulissDataService extends Service implements LocationListener {
                 @Override
                 public void run() {
                     for (SoulissCommand soulissCommand : unexecuted) {
-                        final SoulissCommand cmd = soulissCommand;
                         if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
                             Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString() );
 
-                            cmd.execute();
-                            cmd.getCommandDTO().persistCommand(db);
+                            soulissCommand.execute();
+                            soulissCommand.getCommandDTO().persistCommand(db);
                             sendNotification(SoulissDataService.this, getString(R.string.positional_executed),
-                                    cmd.getNiceName(), R.drawable.exit, soulissCommand);
+                                    soulissCommand.getNiceName(), R.drawable.exit, soulissCommand);
                         }
                     }
                 }

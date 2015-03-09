@@ -23,7 +23,7 @@
         android:layout_marginLeft="2dp"
         android:layout_marginTop="2dip"
         android:ellipsize="end"
-        android:text="@string/update"></TextView>
+        android:text="@string/update"/>
 
     <TextView
         android:id="@+id/TextViewHealth"
@@ -31,7 +31,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@id/TextViewNodeUpdate"
         android:layout_marginLeft="2dp"
-        android:text="@string/health"></TextView>
+        android:text="@string/health"/>
 
     <ProgressBar
         android:id="@+id/progressBarNodo"

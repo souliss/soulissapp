@@ -1,17 +1,16 @@
 package it.angelic.soulissclient.fragments;
 
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
-
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class AbstractTypicalFragment extends Fragment {
 	protected Toolbar actionBar;

@@ -1,15 +1,14 @@
 package it.angelic.soulissclient.drawer;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import android.content.Context;
 
 public class DrawerMenuHelper {
 	private static Context ctx = SoulissClient.getAppContext();
@@ -31,15 +30,14 @@ public class DrawerMenuHelper {
 		db.open();
 		List<SoulissNode> nodes = db.getAllNodes();
 		// Aggiungi nodi
-		for (Iterator<SoulissNode> iterator = nodes.iterator(); iterator.hasNext();) {
-			SoulissNode object = (SoulissNode) iterator.next();
-			NavMenuItem item2 = new NavMenuItem();
-			item2.setId(object.getId());
-			item2.setLabel(object.getNiceName());
-			item2.setIcon(object.getIconResourceId());
-			item2.setUpdateActionBarTitle(false);
-			tmp.add(item2);
-		}
+        for (SoulissNode object : nodes) {
+            NavMenuItem item2 = new NavMenuItem();
+            item2.setId(object.getId());
+            item2.setLabel(object.getNiceName());
+            item2.setIcon(object.getIconResourceId());
+            item2.setUpdateActionBarTitle(false);
+            tmp.add(item2);
+        }
 
 		INavDrawerItem[] tmpa = new INavDrawerItem[tmp.size()];
 		tmp.toArray(tmpa);
@@ -75,15 +73,14 @@ public class DrawerMenuHelper {
 		db.open();
 		List<SoulissNode> nodes = db.getAllNodes();
 		//Aggiungi nodi
-		for (Iterator<SoulissNode>  iterator = nodes.iterator(); iterator.hasNext();) {
-			SoulissNode object = (SoulissNode) iterator.next();
-			NavMenuItem item2 = new NavMenuItem();
-			item2.setId(object.getId());
-	        item2.setLabel(object.getNiceName());
-	        item2.setIcon(object.getIconResourceId());
-	        item2.setUpdateActionBarTitle(false);
-			tmp.add(item2);
-		}
+        for (SoulissNode object : nodes) {
+            NavMenuItem item2 = new NavMenuItem();
+            item2.setId(object.getId());
+            item2.setLabel(object.getNiceName());
+            item2.setIcon(object.getIconResourceId());
+            item2.setUpdateActionBarTitle(false);
+            tmp.add(item2);
+        }
 		NavMenuSection it2 = NavMenuSection.create(-10, "OPZIONI");
 		tmp.add(it2);
 		NavMenuItem op2 = new NavMenuItem(SETTINGS_NET, ctx.getString(R.string.opt_net_home),android.R.drawable.ic_menu_mylocation,

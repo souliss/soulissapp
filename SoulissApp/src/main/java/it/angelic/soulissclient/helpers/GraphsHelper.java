@@ -1,23 +1,23 @@
 package it.angelic.soulissclient.helpers;
 
 
-import it.angelic.soulissclient.R;
-
-import java.text.DecimalFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import org.achartengine.chart.PointStyle;
-import org.achartengine.renderer.SimpleSeriesRenderer;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+
+import org.achartengine.chart.PointStyle;
+import org.achartengine.renderer.SimpleSeriesRenderer;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
+import it.angelic.soulissclient.R;
 
 public class GraphsHelper {
 
@@ -237,11 +237,11 @@ public class GraphsHelper {
 		renderer.setLegendTextSize(16);
 
 		int length = colors.length;
-		for (int i = 0; i < length; i++) {
-			SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-			r.setColor(colors[i]);
-			renderer.addSeriesRenderer(r);
-		}
+        for (int color : colors) {
+            SimpleSeriesRenderer r = new SimpleSeriesRenderer();
+            r.setColor(color);
+            renderer.addSeriesRenderer(r);
+        }
 		return renderer;
 	}
 

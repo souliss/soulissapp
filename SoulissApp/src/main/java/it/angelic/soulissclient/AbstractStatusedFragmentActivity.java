@@ -1,14 +1,5 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.adapters.SceneListAdapter;
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissScene;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
@@ -22,11 +13,15 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import java.util.LinkedList;
+import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.drawer.DrawerItemClickListener;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 
 /**

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Un tag è un insieme di tipici definiti dall'utente
+ *
  * Created by Ale on 27/02/2015.
  */
 public class SoulissTag implements Serializable, ISoulissObject {

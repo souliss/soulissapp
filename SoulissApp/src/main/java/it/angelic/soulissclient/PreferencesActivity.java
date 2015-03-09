@@ -19,15 +19,11 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -68,7 +63,6 @@ public class PreferencesActivity extends PreferenceActivity {
     protected ListView mDrawerList;
     protected NavDrawerAdapter mDrawermAdapter;
     SoulissPreferenceHelper opzioni;
-    private PackageInfo packageInfo;
     // private String strVersionCode;
     private String strVersionName;
     private String currentScreen;
@@ -414,7 +408,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
             try {
-                packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                 // strVersionCode = "Version Code: "
                 // + String.valueOf(packageInfo.versionCode);
                 strVersionName = packageInfo.versionName;

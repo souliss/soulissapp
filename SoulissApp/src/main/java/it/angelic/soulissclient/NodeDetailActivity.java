@@ -1,14 +1,5 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.fragments.NodeDetailFragment;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-
 import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,14 +11,21 @@ import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import it.angelic.soulissclient.adapters.TypicalsListAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.fragments.NodeDetailFragment;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+
 
 public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
-	private SoulissPreferenceHelper opzioni;
-	private TypicalsListAdapter ta;
+    private TypicalsListAdapter ta;
 	private SoulissDBHelper database;
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -70,7 +68,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+        SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else

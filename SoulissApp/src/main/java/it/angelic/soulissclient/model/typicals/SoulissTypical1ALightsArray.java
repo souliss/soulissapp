@@ -1,28 +1,24 @@
 package it.angelic.soulissclient.model.typicals;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypical;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissTypical;
-
-import java.util.ArrayList;
-
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.ColorRes;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
+
+import java.util.ArrayList;
+
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
  * Handle one digital output based on hardware and software commands, output can

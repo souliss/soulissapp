@@ -1,5 +1,37 @@
 package it.angelic.soulissclient.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil_Auto;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil;
@@ -14,38 +46,6 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Heat
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_IncSetPoint;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_ShutOff;
 import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 
 public class T31HeatingFragment extends AbstractTypicalFragment {

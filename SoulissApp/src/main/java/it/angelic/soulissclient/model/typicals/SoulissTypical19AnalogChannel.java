@@ -1,25 +1,22 @@
 package it.angelic.soulissclient.model.typicals;
 
+import android.content.Context;
+import android.os.Looper;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.Intent;
-import android.os.Looper;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISoulissTypical {
 
@@ -72,11 +69,8 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     /**
      * Ottiene il layout del pannello comandi
      *
-     * @param ble
-     * @param ctx
-     * @param parentIntent
-     * @param convertView
-     * @param parent
+     * @param ctx contesto
+     * @param convertView la View da popolare
      */
     @Override
     public void getActionsLayout(final Context ctx,

@@ -1,34 +1,5 @@
 package it.angelic.soulissclient.net;
 
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_InAlarm;
-import static junit.framework.Assert.assertEquals;
-
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.SoulissWidget;
-import it.angelic.soulissclient.T4nFragWrapper;
-import it.angelic.soulissclient.db.SoulissDBLowHelper;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
-import it.angelic.soulissclient.db.SoulissTypicalDTO;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTrigger;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -46,6 +17,33 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissDataService;
+import it.angelic.soulissclient.SoulissWidget;
+import it.angelic.soulissclient.T4nFragWrapper;
+import it.angelic.soulissclient.db.SoulissDBLowHelper;
+import it.angelic.soulissclient.db.SoulissTypicalDTO;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTrigger;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_InAlarm;
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Classe per il decode dei pacchetti nativi souliss

@@ -1,20 +1,5 @@
 package it.angelic.soulissclient.helpers;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -25,6 +10,20 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 
 public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
@@ -161,8 +160,6 @@ private int exportedNodes;
 	        output.writeObject(pref.getAll());
 
 	        res = true;
-	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }finally {

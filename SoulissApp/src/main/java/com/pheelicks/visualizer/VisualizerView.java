@@ -6,13 +6,6 @@
  */
 package com.pheelicks.visualizer;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.fragments.AbstractMusicVisualizerFragment;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -30,6 +23,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.pheelicks.visualizer.renderer.Renderer;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.fragments.AbstractMusicVisualizerFragment;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 /**
  * A class that draws visualizations of data received from a
@@ -114,9 +114,7 @@ public class VisualizerView extends View {
 			@Override
 			public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
 				byte[] copy = new byte[bytes.length / 2];
-				for (int i = 0; i < copy.length; i++) {
-					copy[i] = bytes[i];
-				}
+                System.arraycopy(bytes, 0, copy, 0, copy.length);
 				updateVisualizerFFT(copy);
 				sendSoulissDario(copy,multicast);
 			}

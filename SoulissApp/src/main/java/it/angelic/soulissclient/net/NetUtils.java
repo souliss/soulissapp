@@ -1,7 +1,15 @@
 package it.angelic.soulissclient.net;
 
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.net.DhcpInfo;
+import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.util.Log;
+
+import org.apache.http.conn.util.InetAddressUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -16,16 +24,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-import org.apache.http.conn.util.InetAddressUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.content.ContentResolver;
-import android.content.Context;
-import android.net.DhcpInfo;
-import android.net.Uri;
-import android.net.wifi.WifiManager;
-import android.util.Log;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
 
 public class NetUtils {
 
@@ -50,10 +50,9 @@ public class NetUtils {
 	public static String getLocalIpAddress() {
 		try {
 
-			String ip = getInetLocalIpAddress().getHostAddress();
+			return getInetLocalIpAddress().getHostAddress();
 			//System.out.println("ip---::" + ip);
 			// return inetAddress.getHostAddress().toString();
-			return ip;
 
 		} catch (Exception ex) {
 			Log.e("IP Address", ex.toString());

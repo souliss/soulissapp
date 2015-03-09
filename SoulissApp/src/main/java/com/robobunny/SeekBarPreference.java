@@ -1,6 +1,5 @@
 package com.robobunny;
 
-import it.angelic.soulissclient.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.Preference;
@@ -14,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import it.angelic.soulissclient.R;
 
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
    
@@ -188,9 +189,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     @Override
     protected Object onGetDefaultValue(TypedArray ta, int index){
        
-        int defaultValue = ta.getInt(index, DEFAULT_VALUE);
-        return defaultValue;
-       
+       return ta.getInt(index, DEFAULT_VALUE);
+
     }
 
     @Override
