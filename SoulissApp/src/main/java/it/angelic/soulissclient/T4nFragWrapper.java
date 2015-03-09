@@ -1,16 +1,14 @@
 package it.angelic.soulissclient;
 
-import static junit.framework.Assert.assertTrue;
-
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import it.angelic.soulissclient.fragments.T4nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+
+import static junit.framework.Assert.assertTrue;
 
 public class T4nFragWrapper extends ActionBarActivity {
 	private SoulissPreferenceHelper opzioni;

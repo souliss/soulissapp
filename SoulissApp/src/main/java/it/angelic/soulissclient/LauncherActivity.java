@@ -104,15 +104,12 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 // Log.d(TAG, "RAW DATA: " + vers);
 
-                StringBuilder tmp = new StringBuilder("<b>" + getString(R.string.last_update) + "</b> "
-                        + Constants.hourFormat.format(new Date()));
-                tmp.append(" - " + vers.size() + " " + context.getString(R.string.bytes_received));
-
                 setHeadInfo();
                 setServiceInfo();
                 setWebServiceInfo();
                 setAntiTheftInfo();
-                serviceInfoFoot.setText(Html.fromHtml(tmp.toString()));
+                serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.last_update) + "</b> "
+                        + Constants.hourFormat.format(new Date()) + " - " + vers.size() + " " + context.getString(R.string.bytes_received)));
                 // questo sovrascrive nodesinf
 
             } else {
@@ -624,7 +621,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         /* SERVICE MANAGEMENT */
         if (!opzioni.isDataServiceEnabled()) {
             if (mIsBound && mBoundService != null) {// in esecuzione? strano
-                sb.append("<br/><b>" + getResources().getString(R.string.service_disabled) + "!</b> ");
+                sb.append("<br/><b>").append(getResources().getString(R.string.service_disabled)).append("!</b> ");
                 serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
                 if (opzioni.getTextFx()) {
                     Animation a2 = AnimationUtils.loadAnimation(this, R.anim.alpha_out);
@@ -639,8 +636,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         } else {
             if (mIsBound && mBoundService != null) {
-                sb.append("<b>" + getString(R.string.service_lastexec) + "</b> "
-                        + Constants.getTimeAgo(mBoundService.getLastupd()) + "<br/><b>");
+                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(Constants.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
                 sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
                         + Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
             } else {
@@ -668,7 +664,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             webserviceInfo.setVisibility(View.VISIBLE);
             if (mIsWebBound && mBoundWebService != null) {
                 sb.append(getString(R.string.webservice_enabled));
-                sb.append(NetUtils.getLocalIpAddress() + ":");
+                sb.append(NetUtils.getLocalIpAddress()).append(":");
                 sb.append(mBoundWebService.getPort());
                 webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
             } else {

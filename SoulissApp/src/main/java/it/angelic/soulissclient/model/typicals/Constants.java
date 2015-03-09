@@ -17,17 +17,17 @@ public class Constants {
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		Field[] consts = getClass().getDeclaredFields();
-		for (int i = 0; i < consts.length; i++) {
-			if ((consts[i].getModifiers() & (Modifier.FINAL | Modifier.STATIC)) != 0) {
-				try {
-					ret.append(consts[i].getName() );
+        for (Field aConst : consts) {
+            if ((aConst.getModifiers() & (Modifier.FINAL | Modifier.STATIC)) != 0) {
+                try {
+                    ret.append(aConst.getName());
                     ret.append(" = ");
-                    ret.append( consts[i].get(null) + "<br/>");
-				} catch (Exception e) {
-                    Log.e(it.angelic.soulissclient.Constants.TAG, "Can't build parameter's list"+ e);
+                    ret.append(aConst.get(null) + "<br/>");
+                } catch (Exception e) {
+                    Log.e(it.angelic.soulissclient.Constants.TAG, "Can't build parameter's list" + e);
                 }
-			}
-		}
+            }
+        }
 		return ret.toString();
 	}
 

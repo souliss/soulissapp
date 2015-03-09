@@ -1,18 +1,6 @@
 package it.angelic.soulissclient.model.typicals;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
-import it.angelic.soulissclient.helpers.HalfFloatUtils;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypicalSensor;
-import it.angelic.soulissclient.model.SoulissTypical;
-
-import java.util.Calendar;
-
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -20,13 +8,21 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Calendar;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.helpers.HalfFloatUtils;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
  * Occupa DUE slot, quindi l'output viene dal suo e dal suo fratello destro (66)

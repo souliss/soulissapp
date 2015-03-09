@@ -1,30 +1,5 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_AutoCmd;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil_Auto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil_Auto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Timed;
-import static junit.framework.Assert.assertTrue;
-
-import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
-import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.Date;
-
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,9 +9,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,6 +25,30 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.pheelicks.visualizer.VisualizerView;
+
+import java.util.Date;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
+import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
+import it.angelic.soulissclient.net.UDPHelper;
+
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_AutoCmd;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil_Auto;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil_Auto;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Timed;
+import static junit.framework.Assert.assertTrue;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());

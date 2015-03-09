@@ -1,23 +1,20 @@
 package it.angelic.soulissclient.model.typicals;
 
-import it.angelic.soulissclient.R;
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+
 import it.angelic.soulissclient.T15RGBIrActivity;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical {
 

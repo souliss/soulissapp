@@ -1,27 +1,23 @@
 package it.angelic.soulissclient.model.typicals;
 
-import it.angelic.soulissclient.R;
 /**
  * Not used anymore, showed an input slider to control analogue Input
  */
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
+
+import android.content.Context;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+
+import java.util.ArrayList;
+
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.ArrayList;
-
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 @Deprecated
 public class SoulissTypical5n extends SoulissTypical implements ISoulissTypical {
 

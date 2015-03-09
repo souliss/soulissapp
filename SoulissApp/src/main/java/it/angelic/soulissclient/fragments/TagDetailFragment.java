@@ -159,10 +159,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
-                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
-
         mAdapter = new ParallaxRecyclerAdapter(mDataset);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         mRecyclerView.setLayoutManager(layoutManagerFixed);

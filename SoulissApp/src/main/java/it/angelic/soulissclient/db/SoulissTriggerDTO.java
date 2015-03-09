@@ -1,10 +1,9 @@
 package it.angelic.soulissclient.db;
 
-import java.io.Serializable;
-
-
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import java.io.Serializable;
 
 /**
  * Classe per la persistenza sulla tabella dei log
@@ -49,8 +48,7 @@ public class SoulissTriggerDTO implements Serializable {
     }
 
     public boolean isActivated() {
-        boolean it = activated == 1 ? true : false;
-        return it;
+        return activated == 1 ? true : false;
     }
 
     public SoulissTriggerDTO() {

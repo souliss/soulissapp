@@ -1,19 +1,5 @@
 package it.angelic.soulissclient;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerItemClickListener;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.INavDrawerItem;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.ArrayList;
-import java.util.Date;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -40,6 +26,20 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerItemClickListener;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.INavDrawerItem;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.net.UDPHelper;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 	private SoulissPreferenceHelper opzioni;
@@ -397,7 +397,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 				StringBuilder dump = new StringBuilder();
 				for (int ig = 0; ig < vers.size(); ig++) {
 					// 0xFF & buf[index]
-					dump.append("0x" + Long.toHexString(vers.get(ig)) + " ");
+					dump.append("0x").append(Long.toHexString(vers.get(ig))).append(" ");
 					// dump.append(":"+packet.getData()[ig]);
 				}
 				if (opzioni.isLightThemeSelected())

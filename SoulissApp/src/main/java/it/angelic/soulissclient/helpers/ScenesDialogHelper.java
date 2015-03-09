@@ -1,33 +1,11 @@
 package it.angelic.soulissclient.helpers;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
-import it.angelic.soulissclient.adapters.SceneListAdapter;
-import it.angelic.soulissclient.adapters.TagListAdapter;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissScene;
-import it.angelic.soulissclient.model.SoulissTag;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +14,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
+import it.angelic.soulissclient.adapters.SceneListAdapter;
+import it.angelic.soulissclient.adapters.TagListAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.SoulissTag;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
  * Classe helper per i dialoghi riciclabili

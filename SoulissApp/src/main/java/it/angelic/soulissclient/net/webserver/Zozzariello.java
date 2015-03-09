@@ -1,13 +1,10 @@
 package it.angelic.soulissclient.net.webserver;
 
-import it.angelic.soulissclient.helpers.Base64;
-import it.angelic.soulissclient.net.Constants;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
@@ -27,11 +24,14 @@ import org.apache.http.protocol.ResponseContent;
 import org.apache.http.protocol.ResponseDate;
 import org.apache.http.protocol.ResponseServer;
 
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import it.angelic.soulissclient.helpers.Base64;
+import it.angelic.soulissclient.net.Constants;
 
 public class Zozzariello extends Thread {
 	private static final String SERVER_NAME = "Zozzariello";
@@ -123,12 +123,10 @@ public class Zozzariello extends Thread {
 					httpService.handleRequest(serverConnection, httpContext);
 
 					serverConnection.shutdown();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (HttpException e) {
+				} catch (IOException | HttpException e) {
 					e.printStackTrace();
 				}
-			}
+            }
 
 			serverSocket.close();
 		} catch (IOException e) {

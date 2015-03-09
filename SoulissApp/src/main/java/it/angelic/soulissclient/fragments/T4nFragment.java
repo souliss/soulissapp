@@ -3,28 +3,8 @@ package it.angelic.soulissclient.fragments;
 /**
  * Antifurto, deve poter leggere lo stato di tutti i sensori. Il pannello e` unico
  */
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Group;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Alarm;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Antitheft;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Armed;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NoAntitheft;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NotArmed;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_ReArm;
-import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,6 +31,27 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.pheelicks.visualizer.VisualizerView;
+
+import java.util.List;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
+import it.angelic.soulissclient.net.UDPHelper;
+
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Group;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Alarm;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Antitheft;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Armed;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NoAntitheft;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NotArmed;
+import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_ReArm;
+import static junit.framework.Assert.assertTrue;
 
 public class T4nFragment extends Fragment {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());

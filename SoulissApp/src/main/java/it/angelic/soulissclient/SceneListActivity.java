@@ -1,19 +1,5 @@
 package it.angelic.soulissclient;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import it.angelic.soulissclient.adapters.SceneListAdapter;
-import it.angelic.soulissclient.adapters.SceneListAdapter.SceneViewHolder;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.INavDrawerItem;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.ScenesDialogHelper;
-import it.angelic.soulissclient.model.SoulissScene;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,11 +21,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import it.angelic.soulissclient.adapters.SceneListAdapter;
+import it.angelic.soulissclient.adapters.SceneListAdapter.SceneViewHolder;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.INavDrawerItem;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.ScenesDialogHelper;
+import it.angelic.soulissclient.model.SoulissScene;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 
 /**
