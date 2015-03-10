@@ -79,7 +79,7 @@ public class NetUtils {
 			address = InetAddress.getByAddress(bytes);
 			return address.getHostAddress();
 		} catch (UnknownHostException e) {
-			Log.e("getDeviceSubnetMaskString: ", e.toString());
+			Log.e(it.angelic.soulissclient.Constants.TAG, e.toString());
 			return null;
 		}
 		

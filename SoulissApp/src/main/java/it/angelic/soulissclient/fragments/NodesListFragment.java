@@ -152,7 +152,7 @@ public class NodesListFragment extends ListFragment {
             }} );
         swipeLayout.setColorSchemeResources (R.color.std_blue,
                 R.color.std_blue_shadow);
-		SoulissClient.setBackground((RelativeLayout) getActivity().findViewById(R.id.relativeLayout1),
+		SoulissClient.setBackground(getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());
 
 		// check se IP non settato
@@ -312,7 +312,7 @@ public class NodesListFragment extends ListFragment {
 			return super.onContextItemSelected(item);
 		}
 			
-		final SoulissNode todoItem = nodiArray[(int) info.position];
+		final SoulissNode todoItem = nodiArray[info.position];
 
 		switch (item.getItemId()) {
 		case R.id.rinominaNodo:

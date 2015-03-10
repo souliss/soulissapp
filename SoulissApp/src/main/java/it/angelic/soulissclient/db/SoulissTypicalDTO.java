@@ -136,6 +136,7 @@ public class SoulissTypicalDTO implements Serializable {
         while (!cursor.isAfterLast()) {
             try {
                 Date dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
+                cursor.close();
                 return dff;
             } catch (Exception e) {
                 Log.e(TAG, "getHistoryTypicalHashMap", e);

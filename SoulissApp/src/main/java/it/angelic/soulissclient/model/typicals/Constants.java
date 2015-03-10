@@ -22,7 +22,7 @@ public class Constants {
                 try {
                     ret.append(aConst.getName());
                     ret.append(" = ");
-                    ret.append(aConst.get(null) + "<br/>");
+                    ret.append(aConst.get(null)).append("<br/>");
                 } catch (Exception e) {
                     Log.e(it.angelic.soulissclient.Constants.TAG, "Can't build parameter's list" + e);
                 }

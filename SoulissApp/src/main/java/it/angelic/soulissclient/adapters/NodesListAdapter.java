@@ -107,11 +107,8 @@ public class NodesListAdapter extends BaseAdapter {
 		// + opzioni.getListDimensTesto());
 		// holder.textTyp.setTextAppearance(context, R.style.CodeFontMain);
 
-		StringBuilder txtTypInfo = new StringBuilder(nodi[position].getActiveTypicals().size() + " "
-				+ context.getString(R.string.manual_typicals));
-		txtTypInfo.append(" - " + context.getString(R.string.update) + " "
-				+ Constants.getTimeAgo(nodi[position].getRefreshedAt()));
-		holder.textTyp.setText(txtTypInfo.toString());
+        holder.textTyp.setText(nodi[position].getActiveTypicals().size() + " "
+                + context.getString(R.string.manual_typicals) + " - " + context.getString(R.string.update) + " " + Constants.getTimeAgo(nodi[position].getRefreshedAt()));
 
 		if (opzioni.isLightThemeSelected()) {
 			holder.textTyp.setTextColor(context.getResources().getColor(R.color.black));

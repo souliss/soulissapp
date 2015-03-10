@@ -92,7 +92,7 @@ public class UDPSoulissDecoder {
             StringBuilder dump = new StringBuilder();
             for (int ig = 0; ig < checklen; ig++) {
                 // 0xFF & buf[index]
-                dump.append("0x" + Long.toHexString(0xFF & packet.getData()[ig]) + " ");
+                dump.append("0x").append(Long.toHexString(0xFF & packet.getData()[ig])).append(" ");
                 // dump.append(":"+packet.getData()[ig]);
             }
             Log.e(Constants.TAG, "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
@@ -248,7 +248,9 @@ public class UDPSoulissDecoder {
                     StringBuilder info = new StringBuilder(soulissTrigger.toString());
                     info.append(" slot " + soulissTrigger.getSlot());
                     if ("".compareTo(source.getNiceName()) != 0)
-                        info.append(" (" + source.getNiceName() + ")");
+                        info.append(" (")
+                                .append(source.getNiceName())
+                                .append(")");
                     info.append(" on " + source.getParentNode().getNiceName());
 
                     String op = soulissTrigger.getOp();
@@ -523,7 +525,7 @@ public class UDPSoulissDecoder {
         ArrayList<Short> healths = new ArrayList<>();
         // build an array containing healths
         for (int i = 5; i < 5 + numberOf; i++) {
-            healths.add(Short.valueOf(mac.get(i)));
+            healths.add(mac.get(i));
         }
 
         try {
@@ -537,7 +539,7 @@ public class UDPSoulissDecoder {
     }
 
     /**
-     * Should be moved. Produces Android notification
+     * TODO Should be moved. Produces Android notification
      *
      * @param ctx
      * @param desc

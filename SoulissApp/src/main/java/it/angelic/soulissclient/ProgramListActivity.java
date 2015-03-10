@@ -72,7 +72,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
 
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
-		SoulissClient.setBackground((RelativeLayout) findViewById(R.id.containerlistaProgrammi), getWindowManager());
+		SoulissClient.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {

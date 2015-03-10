@@ -88,8 +88,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
-    protected RadioButton mLinearLayoutRadioButton;
-    protected RadioButton mGridLayoutRadioButton;
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -97,7 +95,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
-    private ImageView mLogoImg;
     private TextView bro;
     private SoulissTag collectedTag;
 
@@ -140,17 +137,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }*/
         }
     }
-    private String getRealPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){;
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -160,7 +147,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
-        mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
+        ImageView mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
         //mLayoutManager = new LinearLayoutManager(getActivity());
 
 
@@ -232,7 +219,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
         int position = -1;
         try {
-            position = ((ParallaxExenderAdapter) mAdapter).getPosition();
+            position =  mAdapter.getPosition();
         } catch (Exception e) {
             Log.d(TAG, e.getLocalizedMessage(), e);
             return super.onContextItemSelected(item);
@@ -249,7 +236,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
                 mRecyclerView.invalidate();
-
                 break;
             //TODO increase/dec priority
             default:
@@ -283,7 +269,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                     } else {
                         // windowBackground is not a color, probably a drawable
                         Log.e(TAG, "WTF:" + a.toString());
-                        Drawable d = getActivity().getResources().getDrawable(a.resourceId);
+                       // Drawable d = getActivity().getResources().getDrawable(a.resourceId);
 
                     }
                 }
@@ -420,6 +406,18 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    private String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
         LINEAR_LAYOUT_MANAGER
@@ -434,7 +432,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         private final TextView textViewInfo2;
         private final CardView cardView;
         private LinearLayout linearActionsLayout;
-        private int tagId;
         private ImageView imageView;
 
         public ViewHolder(View v) {

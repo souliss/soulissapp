@@ -218,16 +218,13 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_TAG_TYP_TAG_ID + " integer not null, "
             + COLUMN_TAG_TYP_PRIORITY + " integer not null DEFAULT 0 , "
             + " PRIMARY KEY (" + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + "," + COLUMN_TAG_TYP_TAG_ID + ") "
-            + " FOREIGN KEY( " + COLUMN_TAG_TYP_TAG_ID + ") "
+            + " FOREIGN KEY ( " + COLUMN_TAG_TYP_TAG_ID + ") "
             + " REFERENCES " + TABLE_TAGS + " (" + COLUMN_TYPICAL_NODE_ID + "), "
-            + " FOREIGN KEY( " + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
+            + " FOREIGN KEY ( " + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
             + " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") "
             + ");";
     public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
             COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
-    public static final String[] ALLCOLUMNS_TYPICALS_TAGS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
-            COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
-            COLUMN_TYPICAL_LASTMOD, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
 
     private static final int DATABASE_VERSION = 30;
     public static long FAVOURITES_TAG_ID = 0;

@@ -5,6 +5,7 @@ import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
+import it.angelic.soulissclient.BuildConfig;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -239,21 +240,26 @@ public class SoulissDBHelper {
      */
     public SoulissTypical getSoulissTypical(int node, short slot) {
         // query with primary key
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS +" t " +
-                        " LEFT JOIN "+SoulissDB.TABLE_TAGS_TYPICALS+" tt ON t."+SoulissDB.COLUMN_TYPICAL_SLOT+ " = "+SoulissDB.COLUMN_TAG_TYP_SLOT
-                        +" AND t."+SoulissDB.COLUMN_TYPICAL_NODE_ID+" = "+SoulissDB.COLUMN_TAG_TYP_NODE_ID, SoulissDB.ALLCOLUMNS_TYPICALS_TAGS,
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + node + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
                         + slot, null, null, null, null);
         cursor.moveToFirst();
         SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-        if (cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)))
-        {//niente
+        //TAGS? no join, perche 1 a n
+        Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
+                SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
+                        + " AND "+SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
+                null, null, null, null);
+        typTags.moveToFirst();
+        while (!typTags.isAfterLast()) {
+            int tagId = typTags.getInt(typTags.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
+            if (tagId == SoulissDB.FAVOURITES_TAG_ID)
+                dto.setFavourite(true);
+            else
+                dto.setTagged(true);
+            typTags.moveToNext();
         }
-        else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) == 0){
-            dto.setFavourite(true);}
-        else if (cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID)) > 0) {
-            dto.setTagged(true);
-        }
+        typTags.close();
         SoulissTypical ret = SoulissTypicalFactory.getTypical(dto.getTypical(), getSoulissNode(node), dto, opts);
         cursor.close();
         return ret;
@@ -266,8 +272,6 @@ public class SoulissDBHelper {
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getId(), null, null, null, null);
         cursor.moveToFirst();
-
-
 
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
@@ -722,7 +726,8 @@ public class SoulissDBHelper {
                 + SoulissDB.COLUMN_COMMAND_ID + " WHERE " + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = " + triggerId;
         Cursor cursor = database.rawQuery(MY_QUERY, null);
         cursor.moveToFirst();
-        assert (cursor.getColumnCount() == 1);
+        if(BuildConfig.DEBUG && !(cursor.getColumnCount() == 1))
+            throw new RuntimeException("cursor.getColumnCount() != 1");
         SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
 
        // cols.setTriggerDto(comment);
