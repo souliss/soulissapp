@@ -23,10 +23,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -136,7 +140,17 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }*/
         }
     }
-
+    private String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor.moveToFirst()){;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -149,15 +163,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
         //mLayoutManager = new LinearLayoutManager(getActivity());
 
-        mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
-                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
 
         if (savedInstanceState != null) {
             // Restore saved layout manager type.
             mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
                     .getSerializable(KEY_LAYOUT_MANAGER);
         }
-        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
@@ -165,9 +176,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         mAdapter = new ParallaxExenderAdapter(mDataset);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
-        mRecyclerView.setLayoutManager(layoutManagerFixed);
+        //mRecyclerView.setLayoutManager(layoutManagerFixed);
+
+
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
         layoutManagerFixed.setHeaderIncrementFixer(header);
+
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
         FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
@@ -184,16 +198,18 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         if (bro != null)
             bro.setText(collectedTag.getNiceName());
 
-        Log.i(Constants.TAG, "setting logo" + collectedTag.getImagePath());
+
         if (collectedTag != null && collectedTag.getImagePath() != null) {
 
+            File picture = new File(getRealPathFromURI(Uri.parse(collectedTag.getImagePath())));
 
-            File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
-            if (picture.exists()) {
+           // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+           if (picture.exists()) {
                 //ImageView imageView = (ImageView)findViewById(R.id.imageView);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                 mLogoImg.setImageBitmap(myBitmap);
             }
            /* try {
@@ -289,17 +305,13 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         mAdapter.implementRecyclerAdapterMethods(new ParallaxExenderAdapter.RecyclerAdapterMethods() {
 
-
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
                 // Create a new view.
                 View v = LayoutInflater.from(viewGroup.getContext())
                         .inflate(R.layout.cardview_typical, viewGroup, false);
-
-
                 return new ViewHolder(v);
             }
-
 
             @Override
             public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {

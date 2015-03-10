@@ -142,12 +142,13 @@ public class TypicalsListAdapter extends BaseAdapter {
         if (tipici[position].getIconResourceId() != 0) {
             holder.image.setImageResource(tipici[position].getIconResourceId());
         }
+        //Preferito, TagId == 0
         if (tipici[position].getTypicalDTO().isFavourite()) {
             holder.imageFav.setVisibility(View.VISIBLE);
         }else{
             holder.imageFav.setVisibility(View.GONE);
         }
-
+        //puo essere ANCHE tagged
         if (tipici[position].getTypicalDTO().isTagged()) {
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
@@ -159,32 +160,6 @@ public class TypicalsListAdapter extends BaseAdapter {
         // TODO remove following
         //holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
         tipici[position].setOutputDescView(holder.textStatusVal);
-		/*	convertView.setVisibility(View.VISIBLE);
-			holder.image.setVisibility(View.VISIBLE);
-			holder.textslot.setVisibility(View.VISIBLE);
-			holder.textUpdated.setVisibility(View.VISIBLE);
-			holder.textStatus.setVisibility(View.VISIBLE);
-			holder.textStatusVal.setVisibility(View.VISIBLE);
-			holder.expand.setVisibility(View.VISIBLE);
-		/*} else if (tipici[position].isRelated()) {
-			convertView.setVisibility(View.GONE);
-			
-			holder.image.setVisibility(View.GONE);
-			//holder.shader.setVisibility(View.GONE);
-			holder.textslot.setVisibility(View.GONE);
-			holder.textUpdated.setVisibility(View.GONE);
-			holder.textStatus.setVisibility(View.GONE);
-			holder.textStatusVal.setVisibility(View.GONE);
-			holder.expand.setVisibility(View.GONE);
-			return convertView;
-		} else {
-			// lascia slot vuoti
-			return convertView;
-
-		}*/
-		/* Aggiunta dei comandi */
-        // LinearLayout cont = (LinearLayout)
-        // convertView.findViewById(R.id.linearLayoutButtons);
         holder.linearActionsLayout.removeAllViews();
         if (opzioni.isSoulissReachable()) {
             // richiama l'overloaded del tipico relativo
