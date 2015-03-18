@@ -21,6 +21,7 @@ build/
 
 #IDE
 .idea/
+soulissapp/.idea/
 
 # Local configuration file (sdk path, etc)
 local.properties
