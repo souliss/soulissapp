@@ -20,6 +20,7 @@ build/
 /*/build/
 
 #IDE
+.idea
 .idea/
 soulissapp/.idea/
 
@@ -31,5 +32,6 @@ proguard/
 
 # Log Files
 *.log
+
 
 
