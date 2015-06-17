@@ -5,8 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/SoulissApp/SoulissApp.iml" filepath="$PROJECT_DIR$/SoulissApp/SoulissApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/SoulissClient.iml" filepath="$PROJECT_DIR$/SoulissClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/ecoGallery/ecoGallery.iml" filepath="$PROJECT_DIR$/ecoGallery/ecoGallery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/soulissapp.iml" filepath="$PROJECT_DIR$/soulissapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/soulisswear/soulisswear.iml" filepath="$PROJECT_DIR$/soulisswear/soulisswear.iml" />
     </modules>
   </component>
 </project>
-
