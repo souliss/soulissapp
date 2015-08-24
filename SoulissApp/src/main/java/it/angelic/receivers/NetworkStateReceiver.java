@@ -14,8 +14,6 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 	private static final String TAG = "Souliss:Network Monitor";
 	private SoulissPreferenceHelper opzioni;
 
-	
-	
 	public void onReceive(Context context, Intent intent) {
 		// super.onReceive(context, intent);
 		// final SharedPreferences customSharedPreference = context
