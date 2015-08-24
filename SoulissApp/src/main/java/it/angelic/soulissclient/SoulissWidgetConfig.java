@@ -107,7 +107,7 @@ public class SoulissWidgetConfig extends Activity {
 
                 if (re.getId() > Constants.COMMAND_FAKE_SCENE) {
                     //le scene non hanno comandi
-                    List<SoulissTypical> rer = re.getActiveTypicals(SoulissWidgetConfig.this);
+                    List<SoulissTypical> rer = re.getActiveTypicals();
                     fillCommandSpinner(outputCommandSpinner, rer.get(pos));
                 } else {
                     SoulissScene questa = (SoulissScene) outputTypicalSpinner.getSelectedItem();
@@ -204,7 +204,7 @@ public class SoulissWidgetConfig extends Activity {
         try {
             if (ref.getId() > Constants.COMMAND_FAKE_SCENE) {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
-                ref.getActiveTypicals(this).toArray(strArray);
+                ref.getActiveTypicals().toArray(strArray);
 
                 ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<>(this,
                         android.R.layout.simple_spinner_item, strArray);

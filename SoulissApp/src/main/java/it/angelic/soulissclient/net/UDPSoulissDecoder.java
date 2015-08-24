@@ -260,24 +260,24 @@ public class UDPSoulissDecoder {
                         soulissTrigger.execute();
                         soulissTrigger.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse,soulissTrigger);
+                        SoulissDataService.sendProgramNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                                R.drawable.lighthouse, soulissTrigger);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.execute();
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse,soulissTrigger);
+                        SoulissDataService.sendProgramNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                                R.drawable.lighthouse, soulissTrigger);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.execute();
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendNotification(context,SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse,soulissTrigger);
+                        SoulissDataService.sendProgramNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                                R.drawable.lighthouse, soulissTrigger);
                     }
                 }
                 // vedi se bisogna disattivare
@@ -551,7 +551,7 @@ public class UDPSoulissDecoder {
 
         Intent notificationIntent = new Intent(ctx, T4nFragWrapper.class);
         notificationIntent.putExtra("TIPICO", (SoulissTypical41AntiTheft) ty);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Resources res = ctx.getResources();

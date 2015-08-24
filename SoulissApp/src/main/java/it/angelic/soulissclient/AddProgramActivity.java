@@ -566,7 +566,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         if (ref.getId() > Constants.COMMAND_FAKE_SCENE) {
             try {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
-                ref.getActiveTypicals(this).toArray(strArray);
+                ref.getActiveTypicals().toArray(strArray);
 
                 ArrayAdapter<SoulissTypical> adapter = new ArrayAdapter<>(this,
                         android.R.layout.simple_spinner_item, strArray);

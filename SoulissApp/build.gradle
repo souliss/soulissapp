@@ -10,7 +10,7 @@ android {
     buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "it.angelic.soulissclient"
-        minSdkVersion 8
+        minSdkVersion 11
         targetSdkVersion 21
     }
     buildTypes {

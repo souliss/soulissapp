@@ -26,7 +26,6 @@ public class T1nFragWrapper extends AbstractStatusedFragmentActivity {
 			return;
 		}
 		Bundle extras = getIntent().getExtras();
-
 		// collected.setCtx(getActivity());
 
 		if (extras != null && extras.get("TIPICO") != null)

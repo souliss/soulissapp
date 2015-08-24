@@ -17,11 +17,13 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -130,7 +132,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                     nc.getCommandDTO().persistCommand(db);
                                     Log.w(TAG, "recreate recursive command");
                                 }
-                                sendNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
+                                sendProgramNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
                                         unexnex.toString() + " " + unexnex.getParentTypical().toString(),
                                         R.drawable.clock, unexnex);
                             }
@@ -139,11 +141,41 @@ public class SoulissDataService extends Service implements LocationListener {
                     }
                 }).start();
 
+                // Check for too long ON status
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "Checking warning for long turned-on typicals");
+                        db.open();
+                        int checkd = 0;
+                        List<SoulissNode> nodes = db.getAllNodes();
+                        Calendar now = Calendar.getInstance();
+                        for (SoulissNode piter : nodes) {
+                            List<SoulissTypical> slots = piter.getActiveTypicals();
+                            for (SoulissTypical tipico : slots) {
+                                Date when = tipico.getTypicalDTO().getLastStatusChange();
+                                if (tipico.getOutput() != it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil
+                                        && tipico.getTypicalDTO().getWarnDelayMsec() > 0 &&
+                                        now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
+
+                                    Log.w(TAG, String.format(getString(R.string.hasbeenturnedontoolong),tipico.getNiceName()));
+                                    sendTooLongWarnNotification(SoulissDataService.this, getString(R.string.timed_warning),
+                                            String.format(getString(R.string.hasbeenturnedontoolong),tipico.getNiceName()), tipico);
+                                    checkd++;
+                                }
+
+                            }
+                        }
+                        Log.i(TAG, "checked timed on  warnings: " + checkd);
+                        // db.close();
+                    }
+                }).start();
+
 				/* SENSORS REFRESH THREAD */
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-						/*
+                        /*
 						 * finally { db.close(); }
 						 */
 
@@ -206,12 +238,32 @@ public class SoulissDataService extends Service implements LocationListener {
     };
     private Thread udpThread;
 
-    public static void sendNotification(Context ctx, String desc, String longdesc, int icon, @Nullable SoulissCommand ppr) {
+    public static void sendTooLongWarnNotification(Context ctx, String desc, String longdesc, @NonNull SoulissTypical ppr) {
+        Intent notificationIntent = new Intent(ctx, T1nFragWrapper.class);
+        notificationIntent.putExtra("TIPICO", ppr);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT );
+        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Resources res = ctx.getResources();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+
+        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
+                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.bell))
+                .setTicker("Turned on warning")
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true).setContentTitle(desc)
+                .setContentText(longdesc);
+        Notification n = builder.build();
+        nm.notify(664, n);
+    }
+
+    public static void sendProgramNotification(Context ctx, String desc, String longdesc, int icon, @Nullable SoulissCommand ppr) {
 
         Intent notificationIntent = new Intent(ctx, AddProgramActivity.class);
         if (ppr != null)
             notificationIntent.putExtra("PROG", ppr);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Resources res = ctx.getResources();
@@ -260,7 +312,7 @@ public class SoulissDataService extends Service implements LocationListener {
         mHandler.removeCallbacks(mUpdateSoulissRunnable);
         db.close();
         locationManager.removeUpdates(SoulissDataService.this);
-        if (udpThread != null && udpThread.isAlive()){
+        if (udpThread != null && udpThread.isAlive()) {
             udpThread.interrupt();
             Log.w(TAG, "UDP Interrupt");
         }
@@ -423,7 +475,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
                             soulissCommand.execute();
                             soulissCommand.getCommandDTO().persistCommand(db);
-                            sendNotification(SoulissDataService.this, getString(R.string.positional_executed),
+                            sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
                                     soulissCommand.toString() + " " + soulissCommand.getParentTypical().getNiceName(), R.drawable.exit, soulissCommand);
                         }
                     }
@@ -441,11 +493,11 @@ public class SoulissDataService extends Service implements LocationListener {
                 public void run() {
                     for (SoulissCommand soulissCommand : unexecuted) {
                         if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
-                            Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString() );
+                            Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString());
 
                             soulissCommand.execute();
                             soulissCommand.getCommandDTO().persistCommand(db);
-                            sendNotification(SoulissDataService.this, getString(R.string.positional_executed),
+                            sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
                                     soulissCommand.getNiceName(), R.drawable.exit, soulissCommand);
                         }
                     }

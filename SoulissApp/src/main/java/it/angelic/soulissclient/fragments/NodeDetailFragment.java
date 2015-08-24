@@ -294,7 +294,7 @@ public class NodeDetailFragment extends ListFragment {
 
 			createHeader();
 			// tipici dal DB
-			List<SoulissTypical> goer = collected.getActiveTypicals(getActivity());
+			List<SoulissTypical> goer = collected.getActiveTypicals();
 			
 			SoulissTypical[] typs = new SoulissTypical[goer.size()];
 			typs = goer.toArray(typs);
@@ -597,7 +597,7 @@ public class NodeDetailFragment extends ListFragment {
 				collected = datasource.getSoulissNode(collected.getId());
 				refreshHeader();
 
-				List<SoulissTypical> goer = collected.getActiveTypicals(context);
+				List<SoulissTypical> goer = collected.getActiveTypicals();
 				SoulissTypical[] typs = new SoulissTypical[goer.size()];
 				typs = goer.toArray(typs);
 				

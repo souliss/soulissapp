@@ -29,6 +29,7 @@ public class SoulissTypicalDTO implements Serializable {
     private short typical;
     private short output;
     private int iconId;
+    private int warnDelayMsec;
     private boolean isFavourite;
 
     public boolean isTagged() {
@@ -63,6 +64,7 @@ public class SoulissTypicalDTO implements Serializable {
         setInput((byte) cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_INPUT)));
         setOutput(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_VALUE)));
         setIconId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ICON)));
+        setWarnDelayMsec(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_WARNTIMER)));
         //setFavourite(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ISFAV)));
         setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NAME)));
         Calendar now = Calendar.getInstance();
@@ -102,6 +104,7 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_NAME, getName());
         values.put(SoulissDB.COLUMN_TYPICAL_ICON, getIconId());
         values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDB.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
         //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
@@ -197,6 +200,7 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_SLOT, getSlot());
         values.put(SoulissDB.COLUMN_TYPICAL_INPUT, getInput());
         values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDB.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
         //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
@@ -278,4 +282,11 @@ public class SoulissTypicalDTO implements Serializable {
         return Integer.toHexString(typical);
     }
 
+    public int getWarnDelayMsec() {
+        return warnDelayMsec;
+    }
+
+    public void setWarnDelayMsec(int warnDelayMsec) {
+        this.warnDelayMsec = warnDelayMsec;
+    }
 }

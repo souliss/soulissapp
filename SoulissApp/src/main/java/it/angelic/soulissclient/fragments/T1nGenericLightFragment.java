@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.NumberPicker;
 import android.widget.SeekBar;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -50,12 +52,13 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCo
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Timed;
 import static junit.framework.Assert.assertTrue;
 
-public class T1nGenericLightFragment extends AbstractTypicalFragment {
+public class T1nGenericLightFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
 	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
 	private Button buttPlus;
-
+	private  NumberPicker warner;
+	private CheckBox warnerCheck;
 	private SoulissTypical collected;
 	// private SoulissTypical related;
 	private SeekBar timer;
@@ -150,7 +153,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 
 
         //super.actionBar.setTitle(collected.getNiceName());
-
+		warnerCheck = (CheckBox) ret.findViewById(R.id.checkBoxWarn);
+		warner = (NumberPicker) ret.findViewById(R.id.warnTimer);
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttAuto = (Button) ret.findViewById(R.id.buttonAuto);
 		timer = (SeekBar) ret.findViewById(R.id.sleepBar);
@@ -170,6 +174,29 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
             refreshHistoryInfo();
 		}
 		// datasource.getHistoryTypicalHashMap(collected, 0);
+		warner.setMinValue(5);
+		warner.setMaxValue(120);
+
+        warner.setOnValueChangedListener(this);
+		warnerCheck.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				if(warnerCheck.isChecked()){
+					System.out.println("Checked");
+
+					collected.getTypicalDTO().setWarnDelayMsec(warner.getValue()* Constants.MSEC_IN_A_SEC * Constants.SEC_IN_A_MIN);
+					collected.getTypicalDTO().persist();
+				}else{
+					System.out.println("Un-Checked");
+					collected.getTypicalDTO().setWarnDelayMsec(0);
+					collected.getTypicalDTO().persist();
+                    // salvo il warn
+
+				}
+                Log.d(Constants.TAG, "SAVED warn timer: " + collected.getTypicalDTO().getWarnDelayMsec());
+			}
+		});
 
 		btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
 		// Listener generico
@@ -356,7 +383,24 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment {
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        //disabilita la checkbox cosi da forzare il refresh
+        warnerCheck.setChecked(false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d(Constants.TAG, "Injecting warn timer: " + collected.getTypicalDTO().getWarnDelayMsec());
+        warner.setValue(collected.getTypicalDTO().getWarnDelayMsec()/ (Constants.MSEC_IN_A_SEC *Constants.SEC_IN_A_MIN));
+        if (collected.getTypicalDTO().getWarnDelayMsec() > 0){
+            warnerCheck.setChecked(true);
+            Log.d(Constants.TAG, "Injecting warn timer: "+ collected.getTypicalDTO().getWarnDelayMsec());
+        }
+
+    }
+
+    @Override
 	public void onResume() {
 		super.onResume();
 		datasource.open();

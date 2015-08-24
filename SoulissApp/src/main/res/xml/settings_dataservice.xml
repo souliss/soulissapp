@@ -21,7 +21,7 @@
             android:title="@string/opt_serviceinterval"
             robobunny:min="1"
             robobunny:unitsLeft=""
-            robobunny:unitsRight="minutes" />
+            robobunny:unitsRight="min" />
     </PreferenceCategory>
      <PreferenceCategory android:title="@string/position" >
         <Preference

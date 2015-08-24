@@ -121,11 +121,10 @@ public class SoulissNode implements Serializable, ISoulissObject {
         this.soulissTypicals = soulissTypicals;
     }
 
-    public List<SoulissTypical> getActiveTypicals(Context context) {
+    public List<SoulissTypical> getActiveTypicals() {
         ArrayList<SoulissTypical> copy = new ArrayList<>();
 
         for (SoulissTypical soulissTypical : soulissTypicals) {
-            //soulissTypical.setCtx(context);
             if (!soulissTypical.isRelated() && !soulissTypical.isEmpty())
                 copy.add(soulissTypical);
         }
@@ -133,12 +132,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
         return copy;
     }
 
-    /**
-     * @return solo i tipici MASTER
-     */
-    public List<SoulissTypical> getActiveTypicals() {
-        return getActiveTypicals(null);
-    }
 
     public SoulissTypical getTypical(short slot) throws NotFoundException {
         for (SoulissTypical soulissTypical : soulissTypicals) {

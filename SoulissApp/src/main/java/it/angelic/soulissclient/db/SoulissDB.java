@@ -61,6 +61,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_TYPICAL = "inttyp";
     public static final String COLUMN_TYPICAL_SLOT = "inttypslo";
     public static final String COLUMN_TYPICAL_VALUE = "inttypval";
+    public static final String COLUMN_TYPICAL_WARNTIMER = "inttypwarn";
     public static final String COLUMN_TYPICAL_INPUT = "inttypcmd";
     public static final String COLUMN_TYPICAL_ICON = "inttypico";
     public static final String COLUMN_TYPICAL_NAME = "strtypname";
@@ -78,12 +79,13 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_TYPICAL_ISFAV + " integer, "
             + COLUMN_TYPICAL_NAME + " textslot, "
             + COLUMN_TYPICAL_LASTMOD + " integer not null,"
+            + COLUMN_TYPICAL_WARNTIMER + " integer, "
             + " FOREIGN KEY( " + COLUMN_TYPICAL_NODE_ID
             + ") REFERENCES " + TABLE_NODES + " (" + COLUMN_TYPICAL_NODE_ID + "), "
             + "CONSTRAINT typ_keys PRIMARY KEY(" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ")" + ");";
     public static final String[] ALLCOLUMNS_TYPICALS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
             COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
-            COLUMN_TYPICAL_LASTMOD};
+            COLUMN_TYPICAL_LASTMOD,COLUMN_TYPICAL_WARNTIMER};
 
     /*
      * TABELLA COMANDI
@@ -226,7 +228,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
             COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
 
-    private static final int DATABASE_VERSION = 30;
+    private static final int DATABASE_VERSION = 31;
     public static long FAVOURITES_TAG_ID = 0;
     private Context context;
 
@@ -299,9 +301,27 @@ public class SoulissDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(SoulissDB.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion
-                + ", which will destroy all old data");
+        Log.w(SoulissDB.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion);
 
+        if (oldVersion==30 && newVersion == DATABASE_VERSION){
+            //added warn TIMER
+            try {
+                String upgradeQuery = "ALTER TABLE "+ TABLE_TYPICALS+ " ADD COLUMN "+COLUMN_TYPICAL_WARNTIMER+" INTEGER";
+                db.execSQL(upgradeQuery);
+            }catch (Exception cazzo){
+                //somehow already existing, just log
+                Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:"+ cazzo.getMessage());
+            }
+
+        }else {
+            dropCreate(db);
+        }
+
+
+
+    }
+
+    private void dropCreate(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIGGERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGS);
@@ -310,10 +330,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPICALS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NODES);
-
-
         onCreate(db);
-
     }
 
 
