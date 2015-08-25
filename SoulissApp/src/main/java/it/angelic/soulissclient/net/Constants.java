@@ -12,8 +12,8 @@ public class Constants {
 	public static final String TAG = "SoulissApp";
 	public static final String CUSTOM_INTENT_SOULISS_RAWDATA = "it.angelic.soulissclient.RAW_MACACO_DATA";
 	public static final String CUSTOM_INTENT_SOULISS_TIMEOUT = "it.angelic.soulissclient.RAW_TIMEOUT";
-	
-	public static final int SOULISSPORT = 230;
+
+	public static final int DEFAULT_SOULISS_PORT = 230;
 	public static final int SERVERPORT = 23000;
     public static final int WEB_SERVER_PORT = 8080;
 	

@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.net;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class UDPHelper {
 			for (int i = 0; i < buf.size(); i++) {
 				merd[i] = (byte) buf.get(i);
 			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
 			sender.send(packet);
 			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
@@ -119,7 +120,7 @@ public class UDPHelper {
 			for (int i = 0; i < buf.size(); i++) {
 				merd[i] = (byte) buf.get(i);
 			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			//sender.send(packet);
 			//Log.d(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
@@ -162,7 +163,7 @@ public class UDPHelper {
 			for (int i = 0; i < buf.size(); i++) {
 				merd[i] = (byte) buf.get(i);
 			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			sender.send(packet);
 			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
@@ -201,7 +202,7 @@ public class UDPHelper {
 	 * @throws Exception
 	 *             catch not implemented by design
 	 */
-	public static InetAddress ping(String ip, String ipubbl, int userix, int nodeix) throws Exception {
+	public static InetAddress ping(String ip, String ipubbl, int userix, int nodeix, @Nullable SoulissPreferenceHelper pref) throws Exception {
 
 		InetAddress serverAddr;
 		DatagramSocket sender = null;
@@ -238,7 +239,7 @@ public class UDPHelper {
 				merd[i] = (byte) buf.get(i);
 			}
 			sender.bind(sa);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr,  pref.getUDPPort());
 			sender.send(packet);
 			Log.d(Constants.TAG, "Ping sent to: " + serverAddr);
 			return serverAddr;
@@ -272,7 +273,7 @@ public class UDPHelper {
 			for (int i = 0; i < buf.size(); i++) {
 				merd[i] = (byte) buf.get(i);
 			}
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
 			Log.w(Constants.TAG, "DB struct sent. bytes:" + packet.getLength());
 			return;
@@ -322,7 +323,7 @@ public class UDPHelper {
 					prefs.getNodeIndex());
 
 			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
 			Log.w(Constants.TAG, "Subscribe sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
@@ -372,7 +373,7 @@ public class UDPHelper {
 			// pessimo
 			// http://stackoverflow.com/questions/6860055/convert-arraylistbyte-into-a-byte
 			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.TAG, "***stateRequest Fail", ed);
@@ -413,7 +414,7 @@ public class UDPHelper {
 					prefs.getNodeIndex());
 
 			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
 			Log.w(Constants.TAG, "typRequest sent to " + serverAddr.getHostAddress());
 		} catch (UnknownHostException ed) {
@@ -456,7 +457,7 @@ public class UDPHelper {
 					prefs.getNodeIndex());
 
 			byte[] merd = toByteArray(buf);
-			packet = new DatagramPacket(merd, merd.length, serverAddr, Constants.SOULISSPORT);
+			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
 			Log.w(Constants.TAG, "healthRequest sent to " + serverAddr.getHostAddress());
 		} catch (UnknownHostException ed) {
@@ -493,7 +494,7 @@ public class UDPHelper {
 		// ip.equals(prefs.getPrefIPAddress()));
 
 		try {
-			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex()).getHostAddress();
+			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex(),prefs).getHostAddress();
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.TAG, "***UnknownHostFail", ed);
 			return ed.getMessage();

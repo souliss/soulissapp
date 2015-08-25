@@ -138,7 +138,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 									.getPrefIPAddress();
 						}
 						try {
-							ret.append(UDPHelper.ping(opzioni.getPrefIPAddress(), cached, opzioni.getUserIndex(), opzioni.getNodeIndex()).getHostAddress());
+							ret.append(UDPHelper.ping(opzioni.getPrefIPAddress(), cached, opzioni.getUserIndex(), opzioni.getNodeIndex(), opzioni).getHostAddress());
 						} catch (Exception e) {
 							Log.e(Constants.TAG, "UDP test error:"+e.getMessage(),e);
 						}

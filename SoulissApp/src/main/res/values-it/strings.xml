@@ -290,5 +290,7 @@
     <string name="warnmeifon">Avvisami se accesa per piu di</string>
     <string name="timed_warning" >Allerta consumi</string>
     <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
+    <string name="opt_udpport" >Porta UDP</string>
+
 
 </resources>

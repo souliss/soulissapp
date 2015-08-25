@@ -22,6 +22,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 
 	private SoulissPreferenceHelper opzioni;
 	private Preference userIndex;
+	private Preference udpport;
 	private Preference nodeIndex;
 
 	@Override
@@ -86,8 +87,29 @@ public class NetSettingsFragment extends PreferenceFragment {
 		 * ATTENZIONE CODICE DUPLICATO NELLA PREF ACTIVITY
 		 */
 		userIndex =  findPreference("userindexIC");
+        udpport =  findPreference("udpport");
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
 		userIndex.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
+        udpport.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Log.w(it.angelic.soulissclient.net.Constants.TAG, "CHANGING UDP PORT:" + newValue);
+                try {
+                    String ics = (String) newValue;
+                    Integer rete = Integer.parseInt(ics);
+                    // enforce 0 < x < 0xfe
+                    if (rete >= 65535 || rete < 1)
+                        throw new IllegalArgumentException();
+                    opzioni.setUDPPort(rete);
+                    String stdrMeatFormat = getString(R.string.opt_udpport);
+                    udpport.setSummary(String.format(stdrMeatFormat, opzioni.getUDPPort()));
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), getString(R.string.udphint), Toast.LENGTH_SHORT)
+                            .show();
+				}
+				return true;
+			}
+		});
 		userIndex.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 			@Override

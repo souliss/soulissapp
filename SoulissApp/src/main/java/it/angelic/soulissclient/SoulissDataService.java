@@ -59,7 +59,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
         public void run() {
             // locationManager.requestSingleUpdate(provider, null);
-            Log.v(TAG,
+            Log.d(TAG,
                     "Service run " + SoulissDataService.this.hashCode() + " backedoffInterval="
                             + opts.getBackedOffServiceInterval());
             opts = SoulissClient.getOpzioni();
@@ -108,7 +108,7 @@ public class SoulissDataService extends Service implements LocationListener {
                     public void run() {
                         db.open();
                         LinkedList<SoulissCommand> unexecuted = db.getUnexecutedCommands(SoulissDataService.this);
-                        Log.i(TAG, "checked unexecuted commands: " + unexecuted.size());
+                        Log.i(TAG, String.format("checking %d unexecuted TIMED commands " , unexecuted.size()));
                         for (SoulissCommand unexnex : unexecuted) {
                             Calendar now = Calendar.getInstance();
                             if (unexnex.getType() == Constants.COMMAND_TIMED
@@ -129,12 +129,16 @@ public class SoulissDataService extends Service implements LocationListener {
                                     Calendar cop = Calendar.getInstance();
                                     cop.add(Calendar.SECOND, unexnex.getCommandDTO().getInterval());
                                     nc.getCommandDTO().setScheduledTime(cop);
+                                    nc.getCommandDTO().setType(Constants.COMMAND_TIMED);
                                     nc.getCommandDTO().persistCommand(db);
                                     Log.w(TAG, "recreate recursive command");
                                 }
                                 sendProgramNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
                                         unexnex.toString() + " " + unexnex.getParentTypical().toString(),
                                         R.drawable.clock, unexnex);
+                            }else  if (unexnex.getType() != Constants.COMMAND_TIMED){
+                                //this is only a check
+                                Log.e(TAG, "WTF? nt TIMED?? " + unexnex.getType());
                             }
                         }
                         // db.close();
@@ -227,6 +231,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 }).start();
 
             } else {// NO CONNECTION, NO NODES!!
+                Log.w(TAG, "Service end but NOTHING DONE");
                 Intent i = new Intent();
                 i.setAction(Constants.CUSTOM_INTENT);
                 setLastupd(Calendar.getInstance());
@@ -277,6 +282,14 @@ public class SoulissDataService extends Service implements LocationListener {
                 .setContentText(longdesc);
         Notification n = builder.build();
         nm.notify(665, n);
+    }
+    public Calendar getLastupd() {
+        return lastupd;
+    }
+
+    public void setLastupd(Calendar lastupd) {
+        this.lastupd = lastupd;
+        opts.setLastServiceRun(lastupd);
     }
 
     @Override
@@ -358,8 +371,10 @@ public class SoulissDataService extends Service implements LocationListener {
         mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
         // the others
         // reschedule self
+        Calendar calendar = Calendar.getInstance();
         if (immediate) {
             Log.i(TAG, "Reschedule immediate");
+            opts.setNextServiceRun(calendar.getTimeInMillis());
             mHandler.post(mUpdateSoulissRunnable);
         } else {
             Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
@@ -369,7 +384,7 @@ public class SoulissDataService extends Service implements LocationListener {
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             PendingIntent secureShot = PendingIntent.getService(this, 0, new Intent(this, SoulissDataService.class),
                     PendingIntent.FLAG_UPDATE_CURRENT);
-            Calendar calendar = Calendar.getInstance();
+
             calendar.setTimeInMillis(System.currentTimeMillis());
             calendar.add(Calendar.MILLISECOND, opts.getDataServiceIntervalMsec());
             opts.setNextServiceRun(calendar.getTimeInMillis());
@@ -379,14 +394,7 @@ public class SoulissDataService extends Service implements LocationListener {
         startUDPListener();
     }
 
-    public Calendar getLastupd() {
-        return lastupd;
-    }
 
-    public void setLastupd(Calendar lastupd) {
-        this.lastupd = lastupd;
-        opts.setLastServiceRun(lastupd);
-    }
 
     @Override
     public void onLowMemory() {

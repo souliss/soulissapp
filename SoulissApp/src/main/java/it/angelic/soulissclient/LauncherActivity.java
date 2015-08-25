@@ -144,15 +144,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((SoulissDataService.LocalBinder) service).getService();
             Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceInterval());
-
-            Calendar shouldHaveDoneAt = Calendar.getInstance();
-            shouldHaveDoneAt.add(Calendar.MILLISECOND, (int) -(opzioni.getBackedOffServiceInterval()));
-            if (mBoundService.getLastupd().before(shouldHaveDoneAt)) {
+            SoulissPreferenceHelper pref = SoulissClient.getOpzioni();
+            if (pref.isDataServiceEnabled()) {
                 mBoundService.reschedule(true);
-                Toast.makeText(LauncherActivity.this, "Dataservice restarted", Toast.LENGTH_SHORT).show();
-                Log.w(TAG, "Dataservice RETARDED, scheduling Souliss Update");
+                //Toast.makeText(LauncherActivity.this, "Dataservice restarted", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Dataservice RESTART");
             } else {
-                Log.i(TAG, "Dataservice ON TIME");
+                Log.i(TAG, "Dataservice DISABLED");
             }
             setServiceInfo();
             mIsBound = true;

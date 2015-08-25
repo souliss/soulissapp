@@ -66,6 +66,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private String chosenHtmlRootfile;
 	private boolean rgbSendAllDefault;
 	private boolean logHistoryEnabled;
+	private Integer UDPPort;
 
 	public SoulissPreferenceHelper(Context contx) {
 		super();
@@ -131,12 +132,15 @@ public class SoulissPreferenceHelper implements Serializable {
 		webserverEnabled = prefs.getBoolean("webserverEnabled", false);
 		userIndex = prefs.getInt("userIndex", -1);
 		nodeIndex = prefs.getInt("nodeIndex", -1);
+		UDPPort = prefs.getInt("udpport", it.angelic.soulissclient.net.Constants.DEFAULT_SOULISS_PORT);
+
 		animations = prefs.getBoolean("checkboxAnimazione", true);
 		antitheftPresent = prefs.getBoolean("antitheft", false);
 		antitheftNotify = prefs.getBoolean("antitheftNotify", false);
 		broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
 		rgbSendAllDefault = prefs.getBoolean("rgbSendAllDefault", true);
 		logHistoryEnabled = prefs.getBoolean("checkboxLogHistory", true);
+
 		eqLow = prefs.getFloat("eqLow", 1f);
 		eqMed = prefs.getFloat("eqMed", 1f);
 		eqHigh = prefs.getFloat("eqHigh", 1f);
@@ -544,6 +548,17 @@ public class SoulissPreferenceHelper implements Serializable {
 
 	public boolean isLogHistoryEnabled() {
 		return logHistoryEnabled;
+	}
+
+	public void setUDPPort(Integer UDPPort) {
+		this.UDPPort = UDPPort;
+        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        pesta.putInt("udpport", this.UDPPort);
+        pesta.commit();
+	}
+
+	public Integer getUDPPort() {
+		return UDPPort;
 	}
 
 	/*public void setLogHistoryEnabled(boolean logHistoryEnabled) {

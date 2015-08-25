@@ -244,6 +244,7 @@ public class PreferencesActivity extends PreferenceActivity {
             privateIP.setOnPreferenceChangeListener(ipChanger);
             publicIP.setOnPreferenceChangeListener(ipChanger);
             final Preference userIdx = (Preference) findPreference("userindexIC");
+            final Preference udpport = (Preference) findPreference("udpport");
             final Preference nodeIndex = (Preference) findPreference("nodeindexIC");
             final Preference bCast = (Preference) findPreference("advbroadcastKey");
             bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(this));
@@ -252,8 +253,26 @@ public class PreferencesActivity extends PreferenceActivity {
             nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 
             String stdrMeatFormat = getString(R.string.opt_userindex_desc);
-            userIdx.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
-
+            //udpport.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
+            udpport.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    Log.w(Constants.TAG, "CHANGING UDP PORT:" + newValue);
+                    try {
+                        String ics = (String) newValue;
+                        Integer rete = Integer.parseInt(ics);
+                        // enforce 0 < x < 0xfe
+                        if (rete >= 65535 || rete < 1)
+                            throw new IllegalArgumentException();
+                        opzioni.setUDPPort(rete);
+                        udpport.setSummary(getString(R.string.opt_udpport));
+                    } catch (Exception e) {
+                        Toast.makeText(PreferencesActivity.this, getString(R.string.udphint), Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                    return true;
+                }
+            });
             userIdx.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
