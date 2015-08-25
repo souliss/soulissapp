@@ -22,6 +22,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
@@ -30,7 +31,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
  * @author Ale
  * 
  */
-public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical  implements ISoulissTypicalSensor {
 	private final DecimalFormat df = new DecimalFormat("###.##");
 	
 	short typ;
