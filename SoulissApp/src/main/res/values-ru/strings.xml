@@ -294,4 +294,6 @@
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
     <string name="err_command_not_sel">Command not selected</string>
     <string name="udphint" />
+    <string name="amongFav">This Device is among favourites</string>
+    <string name="amongTags">This Device has been Tagged</string>
 </resources>

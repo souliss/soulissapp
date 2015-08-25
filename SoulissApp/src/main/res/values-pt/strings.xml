@@ -292,5 +292,7 @@
     <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
     <string name="opt_udpport" />
     <string name="udphint" />
+    <string name="amongFav">This Device is among favourites</string>
+    <string name="amongTags">This Device has been Tagged</string>
 
 </resources>

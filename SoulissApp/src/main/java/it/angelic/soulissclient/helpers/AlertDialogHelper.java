@@ -103,7 +103,7 @@ public class AlertDialogHelper {
         return alert;
     }
 
-    public static void dbNotInitedDialog(final Activity source) {
+    public static void dbNotInitedDialog(final Context source) {
         final SoulissPreferenceHelper opts = new SoulissPreferenceHelper(source);
         AlertDialog.Builder alert = new AlertDialog.Builder(source);
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_db))) {
@@ -129,7 +129,7 @@ public class AlertDialogHelper {
                                 opts.setDontShowAgain(source.getResources().getString(R.string.dialog_disabled_db),
                                         true);
                             }
-                            final Intent preferencesActivity = new Intent(source.getBaseContext(),
+                            final Intent preferencesActivity = new Intent(source,
                                     PreferencesActivity.class);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                                 setExtra(preferencesActivity, DbSettingsFragment.class.getName());
