@@ -289,5 +289,7 @@
     <string name="warnmeifon">Avvisami se accesa per piu di</string>
     <string name="timed_warning" />
     <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
+    <string name="amongFav">This Device is among favourites</string>
+    <string name="amongTags">This Device has been Tagged</string>
 
 </resources>

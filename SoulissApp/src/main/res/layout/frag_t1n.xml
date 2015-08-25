@@ -1,228 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Cont01"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/Cont01"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="5dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView1nInfo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="false"
-            tools:text="Nodo 2 Slot 3" />
 
-        <Button
-            android:id="@+id/buttonPlus"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:descendantFocusability="beforeDescendants"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="15dip"
-            android:layout_marginRight="15dip"
-            android:gravity="center_horizontal" />
+            android:gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView1nInfo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false"
+                tools:text="Nodo 2 Slot 3" />
+
+            <Button
+                android:id="@+id/buttonPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="15dp"
+                android:gravity="center_horizontal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayout1"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/textviewTimerInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/timer"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TableLayout
+                android:id="@+id/containervermegame"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/textviewColours">
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginRight="5dip"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+                    <SeekBar
+                        android:id="@+id/sleepBar"
+                        android:layout_weight="3"
+                        android:layout_margin="15dp"
+                        android:max="255" />
+
+                    <Button
+                        android:id="@+id/sleep"
+                        style="@style/ButtonText"
+                        android:layout_weight="1"
+                        android:text="@string/Souliss_TRGB_sleep" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+                    <Button
+                        android:id="@+id/buttonAuto"
+                        style="@style/ButtonText"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:text="@string/Souliss_AutoCmd_desc" />
+
+                    <TextView
+                        android:id="@+id/textviewAutoInfo"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="2"
+                        android:text="@string/Souliss_Auto_mode" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+                    <ToggleButton
+                        android:id="@+id/buttonMassive"
+                        style="@style/ButtonText"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:textOff="@string/multicast"
+                        android:textOn="@string/multicast" />
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="2"
+                        android:text="@string/multicast_desc" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+
+                    <CheckBox
+                        android:id="@+id/checkBoxWarn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/warnmeifon" />
+
+                    <NumberPicker
+                        android:id="@+id/warnTimer"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+                    <TextView
+                        android:id="@+id/textviewHistoryInfo"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:weightSum="4">
+
+                    <ImageView
+                        android:id="@+id/imageButtonFav"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_weight="1"
+                        android:src="@android:drawable/star_off" />
+
+                    <TextView
+                        android:id="@+id/textviewHistoryIsFav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="3"
+                        android:text="@string/amongFav" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tableRow7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:weightSum="4">
+
+                    <ImageView
+                        android:id="@+id/imageButtonTag"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_weight="1"
+                        android:src="@android:drawable/ic_input_get" />
+
+                    <TextView
+                        android:id="@+id/textviewHistoryTags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="3"
+                        android:text="@string/amongTags" />
+                </TableRow>
+
+
+            </TableLayout>
+        </RelativeLayout>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayout1"
-        android:weightSum="4">
-
-        <TextView
-            android:id="@+id/textviewTimerInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="@string/timer"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TableLayout
-            android:id="@+id/containervermegame"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/textviewColours">
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:weightSum="4">
-
-                <SeekBar
-                    android:id="@+id/sleepBar"
-                    android:layout_weight="3"
-                    android:max="255" />
-
-                <Button
-                    android:id="@+id/sleep"
-                    style="@style/ButtonText"
-                    android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:text="@string/Souliss_TRGB_sleep" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:weightSum="4">
-
-                <Button
-                    android:id="@+id/buttonAuto"
-                    style="@style/ButtonText"
-                    android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:text="@string/Souliss_AutoCmd_desc" />
-
-                <TextView
-                    android:id="@+id/textviewAutoInfo"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:layout_weight="2"
-                    android:text="@string/Souliss_Auto_mode" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:weightSum="4">
-
-                <ToggleButton
-                    android:id="@+id/buttonMassive"
-                    style="@style/ButtonText"
-                    android:layout_width="0dip"
-                    android:layout_weight="1"
-                    android:textOff="@string/multicast"
-                    android:textOn="@string/multicast" />
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:layout_weight="2"
-                    android:text="@string/multicast_desc" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow43"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:weightSum="4">
-
-
-                <CheckBox
-                    android:id="@+id/checkBoxWarn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/warnmeifon" />
-
-                <NumberPicker
-                    android:id="@+id/warnTimer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:layout_weight="2"
-                    android:text="@string/hours" />
-
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:weightSum="4">
-
-                <TextView
-                    android:id="@+id/textviewHistoryInfo"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:layout_weight="3" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:weightSum="4">
-
-                <ImageView
-                    android:id="@+id/imageButtonFav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true"
-                    android:src="@android:drawable/star_off" />
-
-                <TextView
-                    android:id="@+id/textviewHistoryIsFav"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:layout_weight="3"
-                    android:text="This Device is among favourites" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:visibility="gone"
-                android:weightSum="4">
-
-                <ImageView
-                    android:id="@+id/imageButtonTag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@id/imageButtonFav"
-                    android:src="@android:drawable/ic_input_get" />
-
-                <TextView
-                    android:id="@+id/textviewHistoryTags"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
-                    android:layout_weight="3"
-                    android:text="This Device has been Tagged" />
-            </TableRow>
-
-
-        </TableLayout>
-    </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>
