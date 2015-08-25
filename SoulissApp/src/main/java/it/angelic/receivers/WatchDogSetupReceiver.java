@@ -25,7 +25,7 @@ public class WatchDogSetupReceiver extends BroadcastReceiver {
 		boolean dataServiceEnabled = opts.isDataServiceEnabled();
 		
 		if (dataServiceEnabled) {
-			Log.d(Constants.TAG+":WatchDogSetup", "LifeCheckerSetupReceiver.onReceive() called. Checking every msec."+opts.getBackedOffServiceInterval()/2);
+			Log.d(Constants.TAG+":WDSetup", "LifeCheckerSetupReceiver.onReceive() called. Checking every msec."+opts.getBackedOffServiceInterval()/2);
 			AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
 			Intent i = new Intent(ctx, WatchDogEventReceiver.class); // explicit
 																		// intent
