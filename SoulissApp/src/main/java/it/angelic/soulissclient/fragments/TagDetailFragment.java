@@ -81,7 +81,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Broadcast received, refresh from DB");
             datasource.open();
-            //initDataset();
+            initDataset(getActivity());
             mAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
         }
@@ -113,7 +113,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         // recuper nodo da extra
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
-
+        initDataset(getActivity());
 
     }
 
@@ -163,11 +163,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             }
         });
 
-        if (bro != null)
-            bro.setText(collectedTag.getNiceName());
+
 
 
         if (collectedTag != null && collectedTag.getImagePath() != null) {
+            if (bro != null)
+                bro.setText(collectedTag.getNiceName());
 
             File picture = new File(getRealPathFromURI(Uri.parse(collectedTag.getImagePath())));
 

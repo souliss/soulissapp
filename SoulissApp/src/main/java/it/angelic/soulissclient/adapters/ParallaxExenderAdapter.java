@@ -35,6 +35,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     protected List<SoulissTypical> mDataset;
     private long tagId;
     private SoulissPreferenceHelper opzioni;
+
     @Override
     public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
         Log.d(Constants.TAG, "Element " + position + " set.");
@@ -70,7 +71,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
-
+        opzioni = new SoulissPreferenceHelper(v.getContext());
         return new ViewHolder(v);
     }
 
@@ -88,6 +89,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         mDataset = data;
         this.tagId = tagId;
     }
+
     public int getPosition() {
         return position;
     }
