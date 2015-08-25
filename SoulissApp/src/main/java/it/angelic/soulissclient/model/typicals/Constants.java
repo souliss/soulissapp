@@ -45,7 +45,7 @@ public class Constants {
 	public static final short Souliss_T12 = 0x12;
 	public static final short Souliss_T13 = 0x13;
 	public static final short Souliss_T14 = 0x14;
-	public static final short Souliss_T1n_RGB = 0x15;// RGB Light
+	public static final short Souliss_T15_RGB = 0x15;// RGB Light
 	public static final short Souliss_T16 = 0x16;
 	public static final short Souliss_T18 = 0x18;
 	public static final short Souliss_T19 = 0x19;

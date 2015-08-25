@@ -332,7 +332,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 resId = R.string.TurnOFF;
             else
                 resId = R.string.Souliss_emptycmd_desc;
-        } else if (typical == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB) {
+        } else if (typical == it.angelic.soulissclient.model.typicals.Constants.Souliss_T15_RGB) {
             if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_OnCmd)
                 resId = R.string.TurnON;
             else if (command == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_OffCmd)

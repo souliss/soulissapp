@@ -158,7 +158,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             id = R.string.Souliss_THumidity_desc;
         else if (typical == Constants.Souliss_T32_IrCom_AirCon)
             id = R.string.Souliss_TAircon_desc;
-        else if (typical == Constants.Souliss_T1n_RGB)
+        else if (typical == Constants.Souliss_T15_RGB)
             id = R.string.Souliss_TRGB_desc;
         else if (typical == Constants.Souliss_T41_Antitheft_Main)
             id = R.string.Souliss_T41_desc;
@@ -228,7 +228,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return R.drawable.raindrop;
         else if (typical == Constants.Souliss_T32_IrCom_AirCon)
             return R.drawable.snow;
-        else if (typical == Constants.Souliss_T1n_RGB)
+        else if (typical == Constants.Souliss_T15_RGB)
             return R.drawable.remote;
         else if (typical == Constants.Souliss_T51)
             return R.drawable.analog;

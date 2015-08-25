@@ -293,5 +293,6 @@
     <string name="opt_udpport" >Porta UDP</string>
     <string name="amongFav">Questo dispositivo è tra i preferiti</string>
     <string name="amongTags">Questo dispositivo è stato taggato</string>
+    <string name="status_souliss_nodetail">Nessun dettaglio disponibile</string>
 
 </resources>

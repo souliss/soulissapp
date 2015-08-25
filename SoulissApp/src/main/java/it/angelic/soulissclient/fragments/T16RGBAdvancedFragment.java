@@ -352,13 +352,9 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     seekChannelBlue.setProgress(Color.blue(collected.getColor()));
                     tableRowChannel.invalidate();
                 } else {// music
-                    if (Constants.versionNumber >= 9) {
-                        mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
-                        mVisualizerView.link(togMulticast.isChecked());
-                        addBarGraphRenderers();
-                    } else {
-                        // TODO scrivere che non esiste
-                    }
+                    mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
+                    mVisualizerView.link(togMulticast.isChecked());
+                    addBarGraphRenderers();
                     mVisualizerView.setVisibility(View.VISIBLE);
                     tableRowVis.setVisibility(View.VISIBLE);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);

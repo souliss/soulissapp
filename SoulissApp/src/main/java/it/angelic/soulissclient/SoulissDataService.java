@@ -253,12 +253,14 @@ public class SoulissDataService extends Service implements LocationListener {
         Resources res = ctx.getResources();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
-        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
+        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.bell))
                 .setTicker("Turned on warning")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true).setContentTitle(desc)
                 .setContentText(longdesc);
+                //TODO add action
+
         Notification n = builder.build();
         nm.notify(664, n);
     }

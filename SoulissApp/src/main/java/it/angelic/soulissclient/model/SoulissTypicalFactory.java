@@ -53,7 +53,7 @@ public class SoulissTypicalFactory {
 		case Constants.Souliss_T14:
 			rest = new SoulissTypical14PulseOutput(opts);
 			break;
-		case Constants.Souliss_T1n_RGB:
+		case Constants.Souliss_T15_RGB:
 			rest = new SoulissTypical15(opts);
 			break;
 		case Constants.Souliss_T16:

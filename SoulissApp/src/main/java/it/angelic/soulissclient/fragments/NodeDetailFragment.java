@@ -69,6 +69,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
+import it.angelic.soulissclient.model.typicals.SoulissTypical14PulseOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
@@ -357,6 +358,14 @@ public class NodeDetailFragment extends ListFragment {
                 NewFrag = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer|| target instanceof SoulissTypical43AntiTheftLocalPeer)
                 NewFrag = T4nFragment.newInstance(index, target);
+			else if (target instanceof SoulissTypical14PulseOutput)
+			{
+				//no detail, notice user and return
+				Toast.makeText(getActivity(),
+						getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)
+						.show();
+				return;
+			}
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
             if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -378,7 +387,7 @@ public class NodeDetailFragment extends ListFragment {
 				nodeDatail = new Intent(getActivity(), T32AirConActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical32AirCon) target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getSlot() + 1)));
-			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB) {
+			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T15_RGB) {
 				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical15) target);
 			} else if (target.getTypical() == Souliss_T16) {
@@ -399,7 +408,6 @@ public class NodeDetailFragment extends ListFragment {
 					|| target.getTypical() == Souliss_T43_Antitheft_LocalPeer) {
 				nodeDatail = new Intent(getActivity(), T4nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
-
 			}
 
 			if (nodeDatail != null) {// se ho fatto uno degli if precedente
