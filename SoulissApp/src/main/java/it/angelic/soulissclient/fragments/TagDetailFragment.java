@@ -50,8 +50,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
-import com.poliveira.parallaxrecycleradapter.HeaderLayoutManagerFixed;
-import com.poliveira.parallaxrecycleradapter.ParallaxRecyclerAdapter;
+
+import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
+import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
 import java.io.File;
 import java.util.List;
@@ -80,7 +81,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Broadcast received, refresh from DB");
             datasource.open();
-            initDataset();
+            //initDataset();
             mAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
         }
@@ -91,12 +92,13 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected List<SoulissTypical> mDataset;
+
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
     private TextView bro;
     private SoulissTag collectedTag;
+    private List<SoulissTypical> mDataset;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,38 +114,17 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
 
-        initDataset();
+
     }
 
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
-    private void initDataset() {
-        datasource = new SoulissDBTagHelper(getActivity());
-        datasource.open();
-        collectedTag = datasource.getTag(getActivity(), tagId);
-        Log.i(Constants.TAG, "initDataset tagId" + tagId);
-        List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
-        Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
-        if (!opzioni.isDbConfigured())
-            AlertDialogHelper.dbNotInitedDialog(getActivity());
-        else {
-            //mDataset = new SoulissTypical[favs.size()];
-            mDataset = favs;
-       /* mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }*/
-        }
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
-        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
+       // Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
@@ -161,7 +142,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new ParallaxExenderAdapter(mDataset);
+        mAdapter = new ParallaxExenderAdapter(mDataset,tagId);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         //mRecyclerView.setLayoutManager(layoutManagerFixed);
 
@@ -213,7 +194,28 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         return rootView;
     }
-
+    /**
+     * Generates Strings for RecyclerView's adapter. This data would usually come
+     * from a local content provider or remote server.
+     */
+    private void initDataset(Context ctx) {
+        datasource = new SoulissDBTagHelper(ctx);
+        datasource.open();
+        collectedTag = datasource.getTag(ctx, tagId);
+        Log.i(Constants.TAG, "initDataset tagId" + tagId);
+        List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
+        Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
+        if (!opzioni.isDbConfigured())
+            AlertDialogHelper.dbNotInitedDialog(ctx);
+        else {
+            //mDataset = new SoulissTypical[favs.size()];
+            mDataset = favs;
+       /* mDataset = new String[DATASET_COUNT];
+        for (int i = 0; i < DATASET_COUNT; i++) {
+            mDataset[i] = "This is element #" + i;
+        }*/
+        }
+    }
 
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
@@ -288,64 +290,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             }
         });
 
-
-        mAdapter.implementRecyclerAdapterMethods(new ParallaxExenderAdapter.RecyclerAdapterMethods() {
-
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-                // Create a new view.
-                View v = LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.cardview_typical, viewGroup, false);
-                return new ViewHolder(v);
-            }
-
-            @Override
-            public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
-                Log.d(TAG, "Element " + position + " set.");
-                // Get element from your dataset at this position and replace the contents of the view
-                // with that element
-                ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(position).getNiceName());
-                ((ViewHolder) viewHolder).getTextView().setTag(position);
-                mDataset.get(position).setOutputDescView(((ViewHolder) viewHolder).getTextViewInfo1());
-                ((ViewHolder) viewHolder).getTextViewInfo2().setText(getString(R.string.update) + " "
-                        + Constants.getTimeAgo(mDataset.get(position).getTypicalDTO().getRefreshedAt()));
-                ((ViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(position).getIconResourceId());
-                LinearLayout sghembo = ((ViewHolder) viewHolder).getLinearActionsLayout();
-                sghembo.removeAllViews();
-                if (opzioni.isLightThemeSelected()) {
-                    ((ViewHolder) viewHolder).getCardView().setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
-                }
-                //viewHolder.getTextView().setOnClickListener(this);
-                if (opzioni.isSoulissReachable()) {
-                    // richiama l'overloaded del tipico relativo
-                    mDataset.get(position).getActionsLayout(getActivity(), sghembo);
-                } else {
-                    TextView na = new TextView(getActivity());
-                    na.setText(getActivity().getString(R.string.souliss_unavailable));
-                    if (opzioni.isLightThemeSelected()) {
-                        na.setTextColor(getActivity().getResources().getColor(R.color.black));
-                    }
-                    sghembo.addView(na);
-                }
-                ((ViewHolder) viewHolder).itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        mAdapter.setPosition(viewHolder.getPosition());
-                        return false;
-                    }
-                });
-
-            }
-
-            @Override
-            public int getItemCount() {
-                if (mDataset != null)
-                    return mDataset.size();
-                else
-                    return 0;
-            }
-
-        });
         Log.i(Constants.TAG, "mCurrentLayoutManagerType: " + mCurrentLayoutManagerType);
 
         // Set CustomAdapter as the adapter for RecyclerView.
