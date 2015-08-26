@@ -545,7 +545,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             dbwarn.setVisibility(View.VISIBLE);
             dbwarnline.setVisibility(View.GONE);
             //FAVOURITES
-            int favCount = db.countFavourites();
+            final int favCount = db.countFavourites();
 
             new Thread(new Runnable() {
                 @Override
@@ -554,7 +554,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
                     final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);
                     tags = db.getTags(LauncherActivity.this);
-                    if (tags.size() > 1) {//1 di sicuro
+                    if (tags.size() > 1 || favCount > 0) {//1 di sicuro
 
                         try {
                             Thread.sleep(1500);

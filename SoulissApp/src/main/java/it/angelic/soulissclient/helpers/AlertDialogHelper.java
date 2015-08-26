@@ -360,6 +360,10 @@ public class AlertDialogHelper {
                                 }
                             }
                         } else if (toRename instanceof SoulissTag) {
+                            if (((SoulissTag)toRename).getTagId() < 2) {
+                                Toast.makeText(cont, "Can't remove default Favourite Tag", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             SoulissDBTagHelper dbt=new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (listV != null) {
