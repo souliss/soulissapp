@@ -315,7 +315,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 					"Imported successfully " + totNodes + " and " + tottyp + " typicals", Toast.LENGTH_SHORT).show();
 			final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
 
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 				AlertDialogHelper.setExtra(preferencesActivity, DbSettingsFragment.class.getName()); //
 			// preferencesActivity.putExtra
 			// (PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);

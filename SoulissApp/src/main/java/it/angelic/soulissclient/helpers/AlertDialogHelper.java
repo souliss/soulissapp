@@ -110,8 +110,6 @@ public class AlertDialogHelper {
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_db))) {
             final CheckBox checkBox = new CheckBox(source);
             checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-                checkBox.setTextColor(source.getResources().getColor(R.color.white_bitaplha));
             LinearLayout linearLayout = new LinearLayout(source);
             linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.FILL_PARENT));
@@ -132,7 +130,7 @@ public class AlertDialogHelper {
                             }
                             final Intent preferencesActivity = new Intent(source,
                                     PreferencesActivity.class);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                                 setExtra(preferencesActivity, DbSettingsFragment.class.getName());
                             preferencesActivity.setAction("db_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -161,7 +159,7 @@ public class AlertDialogHelper {
         final CheckBox checkBox = new CheckBox(source);
         TextView textView = new TextView(source);
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_service))) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+            //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
                 checkBox.setTextColor(source.getResources().getColor(R.color.white_bitaplha));
             checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
             alert.setMessage(source.getResources().getString(R.string.dialog_notinited_service));
@@ -186,7 +184,7 @@ public class AlertDialogHelper {
                             }
                             final Intent preferencesActivity = new Intent(source.getBaseContext(),
                                     PreferencesActivity.class);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                           // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                                 setExtra(preferencesActivity, ServiceSettingsFragment.class.getName());
                             preferencesActivity.setAction("service_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -236,13 +234,8 @@ public class AlertDialogHelper {
                             // source.finish();
                             final Intent preferencesActivity = new Intent(source.getBaseContext(),
                                     PreferencesActivity.class);
-                            // com.putString("opt_screen", "db_setup");
-                            // preferencesActivity.putExtra("opt_screen",com);
-                            // preferencesActivity.putExtra("opt_screen",
-                            // "db_setup");
-                            // preferencesActivity.putExtra(PreferenceActivity.EXTRA_NO_HEADERS,
-                            // true);
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+
+                           // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
                                 setExtra(preferencesActivity, DbSettingsFragment.class.getName());
                             // preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
                             preferencesActivity.setAction("db_setup");

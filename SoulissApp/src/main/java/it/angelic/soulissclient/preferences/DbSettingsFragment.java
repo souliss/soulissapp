@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-@TargetApi(11)
 public class DbSettingsFragment extends PreferenceFragment {
 
     @Override
@@ -41,6 +40,7 @@ public class DbSettingsFragment extends PreferenceFragment {
 				strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
 				opzioni.getCustomPref().getInt("numTipici", 0));
 		dbinfopref.setSummary(strMeatMsg);
+
 
 	}
 	

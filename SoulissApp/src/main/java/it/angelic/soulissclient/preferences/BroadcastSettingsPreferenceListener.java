@@ -40,7 +40,7 @@ public class BroadcastSettingsPreferenceListener implements OnPreferenceClickLis
 		inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 		parent.finish();
 		parent.overridePendingTransition(0, 0);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, BroadcastSettingsFragment.class.getName());
 		inten.setAction("bcast_setup");
 		parent.startActivity(inten);
