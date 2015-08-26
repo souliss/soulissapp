@@ -75,9 +75,6 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical  i
 
 	@Override
 	public void getActionsLayout( Context ctx,LinearLayout cont) {
-		
-				
-		
 		WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
 		cont.removeAllViews();

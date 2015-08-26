@@ -297,4 +297,5 @@
     <string name="amongFav">This Device is among favourites</string>
     <string name="amongTags">This Device has been Tagged</string>
     <string name="status_souliss_nodetail" />
+    <string name="bridge_isgateway" />
 </resources>

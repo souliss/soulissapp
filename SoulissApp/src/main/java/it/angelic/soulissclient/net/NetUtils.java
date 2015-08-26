@@ -72,10 +72,31 @@ public class NetUtils {
 		 */
 		return d.netmask;
 	}
+
+
+	public static void reverse(byte[] array) {
+		if (array == null) {
+			return;
+		}
+		int i = 0;
+		int j = array.length - 1;
+		byte tmp;
+		while (j > i) {
+			tmp = array[j];
+			array[j] = array[i];
+			array[i] = tmp;
+			j--;
+			i++;
+		}
+	}
+
+
 	public static String getDeviceSubnetMaskString(Context ctx) {
 		byte[] bytes = BigInteger.valueOf(getDeviceSubnetMask(ctx)).toByteArray();
+		NetUtils.reverse(bytes);
 		InetAddress address;
 		try {
+
 			address = InetAddress.getByAddress(bytes);
 			return address.getHostAddress();
 		} catch (UnknownHostException e) {
@@ -94,6 +115,7 @@ public class NetUtils {
 	
 	public static String getDeviceGatewayString(Context ctx) {
 		byte[] bytes = BigInteger.valueOf(getDeviceGateway(ctx)).toByteArray();
+		NetUtils.reverse(bytes);
 		InetAddress address;
 		try {
 			address = InetAddress.getByAddress(bytes);

@@ -21,6 +21,7 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -90,6 +91,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         mDataset = data;
         this.tagId = tagId;
     }
+
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */

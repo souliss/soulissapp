@@ -23,6 +23,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Static methods to build requests' frames
@@ -94,23 +95,34 @@ public class UDPHelper {
 
 	}
 
-	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, List<Byte> bcastPayload) {
+	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, int functional, List<Byte> bcastPayload,@Nullable Boolean isGw) {
 		InetAddress serverAddr;
 		DatagramSocket sender = null;
 		DatagramPacket packet;
 		try {
-			// Log.d(TAG, "Issuing command " + cmd[0]);
+
 			String ip = Constants.BROADCASTADDR;
 			serverAddr = InetAddress.getByName(ip);
 			sender = getSenderSocket(serverAddr);
 			
 			//bcastPayload = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
-			
+			ArrayList<Byte> macacoPay = new ArrayList<>();
 			sender.setBroadcast(true);
-			
+
+			switch (functional){
+				case Constants.Souliss_UDP_function_broadcast_configure:
+					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigure(isGw, bcastPayload);
+					break;
+				case Constants.Souliss_UDP_function_broadcast_configure_wifissid:
+					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigureWifiSsid(bcastPayload);
+					break;
+				case Constants.Souliss_UDP_function_broadcast_configure_wifipass:
+					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigureWifiPass(bcastPayload);
+					break;
+			}
 			//bcastPayload.set(1, whoami);
-			
-			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(bcastPayload, ip,prefs.getUserIndex(),
+
+			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macacoPay, ip,prefs.getUserIndex(),
 					prefs.getNodeIndex());
 			/* indirizzo ip
 			  (4 byte) | subnetmask (4 byte) | gateway ip (4 byte) | lunghezza SSID (1
@@ -123,9 +135,8 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			//sender.send(packet);
-			//Log.d(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
-			debugByteArray(buf);
-		//	Log.d(Constants.TAG, "***BYTES: " + buf.toString());
+			Log.w(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
+			//	Log.d(Constants.TAG, "***BYTES: " + buf.toString());
 			
 		} catch (UnknownHostException | SocketException ed) {
 			ed.printStackTrace();
@@ -638,6 +649,69 @@ public class UDPHelper {
 			if (merdata > 255)
 				Log.w(Constants.TAG, "Overflow with command " + cmd);
 			frame.add((byte) merdata);
+		}
+
+		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
+		return frame;
+
+	}
+
+	private static ArrayList<Byte> buildMaCaCoBroadCastConfigure(boolean isGateway, List<Byte> payLoad) {
+		ArrayList<Byte> frame = new ArrayList<>();
+
+		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure));// functional code
+
+		frame.add(Byte.valueOf("0"));// PUTIN
+		frame.add(Byte.valueOf("0"));
+		assertTrue(payLoad.size() == 0XC);
+		frame.add((byte) (isGateway?0x1:0x0)); // STARTOFFSET
+		frame.add((byte) payLoad.size()); // NUMBEROF
+
+		for (Byte number : payLoad) {
+			// che schifo
+			frame.add((byte) number);
+		}
+
+		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
+		return frame;
+
+	}
+
+	private static ArrayList<Byte> buildMaCaCoBroadCastConfigureWifiSsid(List<Byte> payLoad) {
+		ArrayList<Byte> frame = new ArrayList<>();
+
+		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure_wifissid));// functional code
+
+		frame.add(Byte.valueOf("0"));// PUTIN
+		frame.add(Byte.valueOf("0"));
+
+		frame.add((byte) 0x0); // STARTOFFSET
+		frame.add((byte) payLoad.size()); // NUMBEROF
+
+		for (Byte number : payLoad) {
+			// che schifo
+			frame.add((byte) number);
+		}
+
+		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
+		return frame;
+
+	}
+
+	private static ArrayList<Byte> buildMaCaCoBroadCastConfigureWifiPass(List<Byte> payLoad) {
+		ArrayList<Byte> frame = new ArrayList<>();
+
+		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure_wifipass));// functional code
+
+		frame.add(Byte.valueOf("0"));// PUTIN
+		frame.add(Byte.valueOf("0"));
+
+		frame.add((byte) 0x0); // STARTOFFSET
+		frame.add((byte) payLoad.size()); // NUMBEROF
+
+		for (Byte number : payLoad) {
+			// che schifo
+			frame.add((byte) number);
 		}
 
 		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());

@@ -55,20 +55,4 @@ public class BroadcastSettingsPreferenceListener implements OnPreferenceClickLis
 
 	}
 
-
-	
-
-	private boolean createDbRequest() {
-		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
-			//mostro anche con IP privato non configurato MA souliss raggiungibile
-			AlertDialog.Builder alert = AlertDialogHelper.sysNotInitedDialog(parent);
-			alert.show();
-			return true;
-		}
-		// mostra dialogo creazione DB
-		AlertDialog.Builder alert = AlertDialogHelper
-				.updateSoulissDBDialog(parent, opzioni.getCachedAddress(), opzioni);
-		alert.show();
-		return true;
-	}
 }

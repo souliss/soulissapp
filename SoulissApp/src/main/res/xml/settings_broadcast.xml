@@ -20,6 +20,11 @@
         android:key="bcast_gateway"
         android:summary="@string/bridge_gateway"
         android:title="Bridge Gateway" />
+    <CheckBoxPreference
+        android:dialogTitle="@string/bridge_isgateway"
+        android:key="bcast_isgateway"
+        android:summary="@string/bridge_isgateway"
+        android:title="Gateway/Peer" />
     <EditTextPreference
         android:dialogTitle="Wi-fi SSID"
         android:key="bcast_ssid"

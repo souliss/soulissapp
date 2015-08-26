@@ -274,6 +274,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             });
         }
 
+
         mAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
             @Override
             public void onClick(View view, int i) {
@@ -284,6 +285,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 }
 
             }
+
         });
 
         Log.i(Constants.TAG, "mCurrentLayoutManagerType: " + mCurrentLayoutManagerType);
