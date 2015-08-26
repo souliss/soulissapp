@@ -108,6 +108,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	public void onActivityCreated(Bundle savedInstanceState) {
 
 		opzioni = SoulissClient.getOpzioni();
+		opzioni.reload();
 		// tema
 		if (opzioni.isLightThemeSelected())
 			getActivity().setTheme(R.style.LightThemeSelector);
@@ -127,6 +128,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		if (container == null)
 			return null;
 		opzioni = SoulissClient.getOpzioni();
+		opzioni.reload();
+
 		View ret = inflater.inflate(R.layout.frag_t1n, container, false);
 		datasource = new SoulissDBHelper(getActivity());
 		datasource.open();
@@ -183,7 +186,9 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			public void onClick(View v) {
 
 				if(warnerCheck.isChecked()){
-					System.out.println("Checked");
+					if (!opzioni.isDataServiceEnabled()) {
+						AlertDialogHelper.serviceNotActiveDialog(getActivity());
+					}
 
 					collected.getTypicalDTO().setWarnDelayMsec(warner.getValue()* Constants.MSEC_IN_A_SEC * Constants.SEC_IN_A_MIN);
 					collected.getTypicalDTO().persist();

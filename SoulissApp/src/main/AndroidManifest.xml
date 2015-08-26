@@ -3,7 +3,7 @@
     package="it.angelic.soulissclient"
     android:installLocation="auto"
     android:versionCode="141"
-    android:versionName="1.5.2" >
+    android:versionName="1.5.2">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -17,7 +17,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-feature android:name="android.software.app_widgets" android:required="false"/>
+
+    <uses-feature
+        android:name="android.software.app_widgets"
+        android:required="false" />
 
     <application
         android:name="it.angelic.soulissclient.SoulissClient"
@@ -25,11 +28,11 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/soulisslogo"
         android:label="@string/app_name"
-        android:process=":souliss_process" >
+        android:process=":souliss_process">
         <activity
             android:name=".LauncherActivity"
             android:label="@string/app_name"
-            android:process=":souliss_process" >
+            android:process=":souliss_process">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,7 +49,7 @@
             android:name="ManualUDPTestActivity"
             android:exported="false"
             android:icon="@drawable/knife"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
             </intent-filter>
@@ -57,14 +60,14 @@
 
         <receiver
             android:name="it.angelic.receivers.NetworkStateReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
         <receiver
             android:name="it.angelic.receivers.WatchDogSetupReceiver"
-            android:process=":souliss_process" >
+            android:process=":souliss_process">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -79,7 +82,7 @@
             android:exported="false"
             android:icon="@drawable/hand"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
                 <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
@@ -90,7 +93,7 @@
             android:exported="false"
             android:icon="@drawable/square"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -101,45 +104,41 @@
         <activity
             android:name=".T5nFragWrapper"
             android:exported="false"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
         </activity>
         <activity
-            android:parentActivityName=".LauncherActivity"
             android:name="ProgramListActivity"
             android:icon="@drawable/remote"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
-        </activity>
-        <activity
             android:parentActivityName=".LauncherActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
+        <activity
             android:name="SceneListActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
-        </activity>
+            android:parentActivityName=".LauncherActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
         <activity
-            android:parentActivityName=".SceneListActivity"
             android:name="SceneDetailActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
-        </activity>
+            android:parentActivityName=".SceneListActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
         <activity
-            android:parentActivityName=".LauncherActivity"
             android:name="TagListActivity"
             android:icon="@drawable/warn"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
-        </activity>
+            android:parentActivityName=".LauncherActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
         <activity
-            android:parentActivityName=".TagListActivity"
             android:name=".TagDetailActivity"
             android:icon="@drawable/home"
             android:label="@string/app_name"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:parentActivityName=".TagListActivity"
+            android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -147,13 +146,12 @@
         <activity
             android:name="AddProgramActivity"
             android:icon="@drawable/remote"
-            android:label="@string/app_addprog" >
-        </activity>
+            android:label="@string/app_addprog"></activity>
         <activity
             android:name="T32AirConActivity"
             android:exported="false"
             android:icon="@drawable/remote"
-            android:label="@string/Souliss_TAircon_desc" >
+            android:label="@string/Souliss_TAircon_desc">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -162,7 +160,7 @@
             android:name="T15RGBIrActivity"
             android:exported="false"
             android:icon="@drawable/remote"
-            android:label="@string/Souliss_TRGB_desc" >
+            android:label="@string/Souliss_TRGB_desc">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -171,7 +169,7 @@
             android:name=".T16RGBFragWrapper"
             android:exported="false"
             android:icon="@drawable/remote"
-            android:label="@string/Souliss_TRGB_desc" >
+            android:label="@string/Souliss_TRGB_desc">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -180,7 +178,7 @@
             android:name="T19SingleChannelFragWrapper"
             android:exported="false"
             android:icon="@drawable/candle"
-            android:label="@string/Souliss_T19_desc" >
+            android:label="@string/Souliss_T19_desc">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -189,7 +187,7 @@
             android:name="T1nFragWrapper"
             android:exported="false"
             android:icon="@drawable/light_off"
-            android:label="@string/typical" >
+            android:label="@string/typical">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -198,7 +196,7 @@
             android:name="T4nFragWrapper"
             android:exported="false"
             android:icon="@drawable/light_off"
-            android:label="@string/typical" >
+            android:label="@string/typical">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -207,7 +205,7 @@
             android:name="T31FragWrapper"
             android:exported="false"
             android:icon="@drawable/light_off"
-            android:label="@string/typical" >
+            android:label="@string/typical">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
@@ -215,7 +213,7 @@
         <activity
             android:name="it.angelic.soulissclient.PreferencesActivity"
             android:exported="false"
-            android:label="@string/app_opt" >
+            android:label="@string/app_opt">
             <intent-filter>
                 <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
             </intent-filter>
@@ -229,14 +227,15 @@
         <service
             android:name="it.angelic.soulissclient.SoulissDataService"
             android:enabled="true"
-            android:process=":souliss_process" />
-        
+            android:process=":souliss_process">
+        </service>
+
         <service
             android:name="it.angelic.soulissclient.net.webserver.HTTPService"
             android:enabled="true"
             android:process=":souliss_process" />
 
-        <receiver android:name="it.angelic.soulissclient.SoulissWidget" >
+        <receiver android:name="it.angelic.soulissclient.SoulissWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="it.angelic.SoulissClient.SoulissWidget.ACTION_WIDGET_RECEIVER" />
@@ -249,7 +248,7 @@
 
         <activity
             android:name="it.angelic.soulissclient.SoulissWidgetConfig"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

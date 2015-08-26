@@ -49,6 +49,7 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 	private boolean isMyServiceRunning(final Context ctx, ActivityManager manager) {
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			if (SoulissDataService.class.getName().equals(service.service.getClassName())) {
+
                 Log.d(Constants.TAG + ":WatchDog", "Service already running since:"+ new Date(service.activeSince).toString());
                 return true;
 			}

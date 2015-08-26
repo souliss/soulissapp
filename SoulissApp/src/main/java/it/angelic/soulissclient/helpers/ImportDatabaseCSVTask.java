@@ -9,6 +9,7 @@ import it.angelic.soulissclient.db.SoulissLogDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
+import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -31,6 +32,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -315,8 +317,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 					"Imported successfully " + totNodes + " and " + tottyp + " typicals", Toast.LENGTH_SHORT).show();
 			final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
 
-			//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-				AlertDialogHelper.setExtra(preferencesActivity, DbSettingsFragment.class.getName()); //
+			preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
 			// preferencesActivity.putExtra
 			// (PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
 			preferencesActivity.setAction("db_setup");

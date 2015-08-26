@@ -84,8 +84,7 @@ public class AlertDialogHelper {
                         final Intent preferencesActivity = new Intent(source.getBaseContext(),
                                 PreferencesActivity.class);
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                            setExtra(preferencesActivity, NetSettingsFragment.class.getName());
+                        preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
                         // preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
                         preferencesActivity.setAction("network_setup");
                         preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -130,8 +129,7 @@ public class AlertDialogHelper {
                             }
                             final Intent preferencesActivity = new Intent(source,
                                     PreferencesActivity.class);
-                            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                                setExtra(preferencesActivity, DbSettingsFragment.class.getName());
+                            preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
                             preferencesActivity.setAction("db_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -159,8 +157,6 @@ public class AlertDialogHelper {
         final CheckBox checkBox = new CheckBox(source);
         TextView textView = new TextView(source);
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_service))) {
-            //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-                checkBox.setTextColor(source.getResources().getColor(R.color.white_bitaplha));
             checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
             alert.setMessage(source.getResources().getString(R.string.dialog_notinited_service));
 
@@ -184,8 +180,7 @@ public class AlertDialogHelper {
                             }
                             final Intent preferencesActivity = new Intent(source.getBaseContext(),
                                     PreferencesActivity.class);
-                           // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                                setExtra(preferencesActivity, ServiceSettingsFragment.class.getName());
+                            preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, ServiceSettingsFragment.class.getName());
                             preferencesActivity.setAction("service_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -235,8 +230,7 @@ public class AlertDialogHelper {
                             final Intent preferencesActivity = new Intent(source.getBaseContext(),
                                     PreferencesActivity.class);
 
-                           // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                                setExtra(preferencesActivity, DbSettingsFragment.class.getName());
+                            preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
                             // preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
                             preferencesActivity.setAction("db_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -257,11 +251,6 @@ public class AlertDialogHelper {
                 });
 
         return alert;
-    }
-
-    @TargetApi(11)
-    public static void setExtra(Intent preferencesActivity, String name) {
-        preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, name);
     }
 
     /**

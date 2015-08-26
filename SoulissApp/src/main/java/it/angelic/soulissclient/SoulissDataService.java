@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -253,13 +254,13 @@ public class SoulissDataService extends Service implements LocationListener {
         Resources res = ctx.getResources();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
+
         builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
                 .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.bell))
                 .setTicker("Turned on warning")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true).setContentTitle(desc)
-                .setContentText(longdesc);
-                //TODO add action
+                .setContentText(longdesc) ;
 
         Notification n = builder.build();
         nm.notify(664, n);
@@ -299,6 +300,7 @@ public class SoulissDataService extends Service implements LocationListener {
         return mBinder;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -314,10 +316,7 @@ public class SoulissDataService extends Service implements LocationListener {
         lastupd.setTimeInMillis(opts.getServiceLastrun());
         provider = locationManager.getBestProvider(crit, true);
         db = new SoulissDBHelper(this);
-
-
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
     }
 
     @Override
@@ -338,7 +337,6 @@ public class SoulissDataService extends Service implements LocationListener {
         opts = SoulissClient.getOpzioni();
         Calendar now = Calendar.getInstance();
         Calendar next = Calendar.getInstance();
-        next.setTimeInMillis(opts.getNextServiceRun());
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();
         Log.i(TAG, "Service onStartCommand()");
@@ -348,6 +346,7 @@ public class SoulissDataService extends Service implements LocationListener {
             reschedule(true);
         }
         startUDPListener();
+
         return START_STICKY;
     }
 
@@ -376,7 +375,6 @@ public class SoulissDataService extends Service implements LocationListener {
         Calendar calendar = Calendar.getInstance();
         if (immediate) {
             Log.i(TAG, "Reschedule immediate");
-            opts.setNextServiceRun(calendar.getTimeInMillis());
             mHandler.post(mUpdateSoulissRunnable);
         } else {
             Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
@@ -389,7 +387,6 @@ public class SoulissDataService extends Service implements LocationListener {
 
             calendar.setTimeInMillis(System.currentTimeMillis());
             calendar.add(Calendar.MILLISECOND, opts.getDataServiceIntervalMsec());
-            opts.setNextServiceRun(calendar.getTimeInMillis());
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
 
         }

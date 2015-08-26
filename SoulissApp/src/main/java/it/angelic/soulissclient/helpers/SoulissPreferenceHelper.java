@@ -476,17 +476,6 @@ public class SoulissPreferenceHelper implements Serializable {
 		return serviceLastrun;
 	}
 
-	public void setNextServiceRun(long schedTime) {
-		nextServiceRun = schedTime;
-		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
-		pesta.putLong("nextServiceRun", nextServiceRun);
-		pesta.commit();
-
-	}
-
-	public long getNextServiceRun() {
-		return nextServiceRun;
-	}
 
 	public float getEqLow() {
 		return eqLow;

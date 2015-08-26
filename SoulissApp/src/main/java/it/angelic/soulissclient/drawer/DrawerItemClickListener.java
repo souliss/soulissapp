@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.preference.PreferenceActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -106,7 +107,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				Intent myIntent4 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-					AlertDialogHelper.setExtra(myIntent4, NetSettingsFragment.class.getName());
+				myIntent4.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
 				myIntent4.setAction("network_setup");
 				mActivity.startActivity(myIntent4);
 				break;
@@ -117,7 +118,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				Intent myIntent5 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-					AlertDialogHelper.setExtra(myIntent5, DbSettingsFragment.class.getName());
+				myIntent5.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
 				myIntent5.setAction("db_setup");
 				mActivity.startActivity(myIntent5);
 				break;
@@ -127,8 +128,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent6 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent6.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-					AlertDialogHelper.setExtra(myIntent6, ServiceSettingsFragment.class.getName());
+				myIntent6.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, ServiceSettingsFragment.class.getName());
 				myIntent6.setAction("service_setup");
 				mActivity.startActivity(myIntent6);
 				break;
@@ -138,8 +138,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent7 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent7.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-					AlertDialogHelper.setExtra(myIntent7, VisualSettingsFragment.class.getName());
+				myIntent7.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, VisualSettingsFragment.class.getName());
 				myIntent7.setAction("visual_setup");
 				mActivity.startActivity(myIntent7);
 				break;

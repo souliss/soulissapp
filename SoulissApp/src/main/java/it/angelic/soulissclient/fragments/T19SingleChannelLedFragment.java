@@ -238,13 +238,9 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 					// TODO questi non vanno
 					seekChannelIntensity.setProgress(intensity);
 				} else {// music
-					if (Constants.versionNumber >= 9) {
 						mVisualizerView.setFrag(T19SingleChannelLedFragment.this);
 						mVisualizerView.link(togMulticast.isChecked());
 						addBarGraphRenderers();
-					} else {
-						// TODO scrivere che non esiste
-					}
 					tableRowLamp.setVisibility(View.GONE);
 					mVisualizerView.setVisibility(View.VISIBLE);
 					tableRowVis.setVisibility(View.VISIBLE);
