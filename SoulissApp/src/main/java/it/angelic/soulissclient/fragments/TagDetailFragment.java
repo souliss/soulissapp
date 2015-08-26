@@ -117,14 +117,35 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     }
 
-
+    /**
+     * Generates Strings for RecyclerView's adapter. This data would usually come
+     * from a local content provider or remote server.
+     */
+    private void initDataset(Context ctx) {
+        datasource = new SoulissDBTagHelper(ctx);
+        datasource.open();
+        collectedTag = datasource.getTag(ctx, tagId);
+        Log.i(Constants.TAG, "initDataset tagId" + tagId);
+        List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
+        Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
+        if (!opzioni.isDbConfigured())
+            AlertDialogHelper.dbNotInitedDialog(ctx);
+        else {
+            //mDataset = new SoulissTypical[favs.size()];
+            mDataset = favs;
+       /* mDataset = new String[DATASET_COUNT];
+        for (int i = 0; i < DATASET_COUNT; i++) {
+            mDataset[i] = "This is element #" + i;
+        }*/
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
-       // Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
+        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
@@ -164,11 +185,11 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         });
 
 
+        if (bro != null && collectedTag != null)
+            bro.setText(collectedTag.getNiceName());
 
 
         if (collectedTag != null && collectedTag.getImagePath() != null) {
-            if (bro != null)
-                bro.setText(collectedTag.getNiceName());
 
             File picture = new File(getRealPathFromURI(Uri.parse(collectedTag.getImagePath())));
 
@@ -195,28 +216,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         return rootView;
     }
-    /**
-     * Generates Strings for RecyclerView's adapter. This data would usually come
-     * from a local content provider or remote server.
-     */
-    private void initDataset(Context ctx) {
-        datasource = new SoulissDBTagHelper(ctx);
-        datasource.open();
-        collectedTag = datasource.getTag(ctx, tagId);
-        Log.i(Constants.TAG, "initDataset tagId" + tagId);
-        List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
-        Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
-        if (!opzioni.isDbConfigured())
-            AlertDialogHelper.dbNotInitedDialog(ctx);
-        else {
-            //mDataset = new SoulissTypical[favs.size()];
-            mDataset = favs;
-       /* mDataset = new String[DATASET_COUNT];
-        for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
-        }*/
-        }
-    }
+
 
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "onContextItemSelected id:" + item.getItemId());

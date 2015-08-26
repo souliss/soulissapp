@@ -71,7 +71,8 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
-        opzioni = new SoulissPreferenceHelper(v.getContext());
+        opzioni = SoulissClient.getOpzioni();
+        opzioni.reload();
         return new ViewHolder(v);
     }
 
