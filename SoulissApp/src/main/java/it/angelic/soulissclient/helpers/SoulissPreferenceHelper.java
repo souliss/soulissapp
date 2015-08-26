@@ -109,7 +109,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		}
 		// reset cachedAddress to shared prefs one
 		clearCachedAddress();
-		resetBackOff();
+		//resetBackOff();
 		getAndSetCachedAddress();
 	}
 
@@ -407,7 +407,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		return userIndex;
 	}
 
-	public Long getBackedOffServiceInterval() {
+	public Long getBackedOffServiceIntervalMsec() {
 		return (long) (getDataServiceIntervalMsec() * backoff);
 	}
 

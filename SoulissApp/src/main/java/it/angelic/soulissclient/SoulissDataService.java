@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -56,13 +55,15 @@ public class SoulissDataService extends Service implements LocationListener {
     private String provider;
     private float homeDist = 0;
     private String cached;
+
+
     private Runnable mUpdateSoulissRunnable = new Runnable() {
 
         public void run() {
             // locationManager.requestSingleUpdate(provider, null);
             Log.d(TAG,
                     "Service run " + SoulissDataService.this.hashCode() + " backedoffInterval="
-                            + opts.getBackedOffServiceInterval());
+                            + opts.getBackedOffServiceIntervalMsec());
             opts = SoulissClient.getOpzioni();
             if (!opts.isDbConfigured()) {
                 Log.w(TAG, "Database empty, closing service");
@@ -109,7 +110,7 @@ public class SoulissDataService extends Service implements LocationListener {
                     public void run() {
                         db.open();
                         LinkedList<SoulissCommand> unexecuted = db.getUnexecutedCommands(SoulissDataService.this);
-                        Log.i(TAG, String.format("checking %d unexecuted TIMED commands " , unexecuted.size()));
+                        Log.i(TAG, String.format("checking %d unexecuted TIMED commands ", unexecuted.size()));
                         for (SoulissCommand unexnex : unexecuted) {
                             Calendar now = Calendar.getInstance();
                             if (unexnex.getType() == Constants.COMMAND_TIMED
@@ -137,7 +138,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                 sendProgramNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
                                         unexnex.toString() + " " + unexnex.getParentTypical().toString(),
                                         R.drawable.clock, unexnex);
-                            }else  if (unexnex.getType() != Constants.COMMAND_TIMED){
+                            } else if (unexnex.getType() != Constants.COMMAND_TIMED) {
                                 //this is only a check
                                 Log.e(TAG, "WTF? nt TIMED?? " + unexnex.getType());
                             }
@@ -163,9 +164,9 @@ public class SoulissDataService extends Service implements LocationListener {
                                         && tipico.getTypicalDTO().getWarnDelayMsec() > 0 &&
                                         now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
 
-                                    Log.w(TAG, String.format(getString(R.string.hasbeenturnedontoolong),tipico.getNiceName()));
+                                    Log.w(TAG, String.format(getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()));
                                     sendTooLongWarnNotification(SoulissDataService.this, getString(R.string.timed_warning),
-                                            String.format(getString(R.string.hasbeenturnedontoolong),tipico.getNiceName()), tipico);
+                                            String.format(getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()), tipico);
                                     checkd++;
                                 }
 
@@ -181,7 +182,7 @@ public class SoulissDataService extends Service implements LocationListener {
                     @Override
                     public void run() {
                         /*
-						 * finally { db.close(); }
+                         * finally { db.close(); }
 						 */
 
                         // spostato per consentire comandi manuali
@@ -243,12 +244,13 @@ public class SoulissDataService extends Service implements LocationListener {
 
     };
     private Thread udpThread;
+    private Intent cIntent;
 
     public static void sendTooLongWarnNotification(Context ctx, String desc, String longdesc, @NonNull SoulissTypical ppr) {
         Intent notificationIntent = new Intent(ctx, T1nFragWrapper.class);
         notificationIntent.putExtra("TIPICO", ppr);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT );
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Resources res = ctx.getResources();
@@ -260,7 +262,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 .setTicker("Turned on warning")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true).setContentTitle(desc)
-                .setContentText(longdesc) ;
+                .setContentText(longdesc);
 
         Notification n = builder.build();
         nm.notify(664, n);
@@ -286,6 +288,7 @@ public class SoulissDataService extends Service implements LocationListener {
         Notification n = builder.build();
         nm.notify(665, n);
     }
+
     public Calendar getLastupd() {
         return lastupd;
     }
@@ -317,12 +320,14 @@ public class SoulissDataService extends Service implements LocationListener {
         provider = locationManager.getBestProvider(crit, true);
         db = new SoulissDBHelper(this);
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        cIntent = new Intent(this, SoulissDataService.class);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.w(TAG, "Service Destroy!! " + opts.getBackedOffServiceInterval());
+        Log.w(TAG, "Service Destroy!! " + opts.getBackedOffServiceIntervalMsec());
         mHandler.removeCallbacks(mUpdateSoulissRunnable);
         db.close();
         locationManager.removeUpdates(SoulissDataService.this);
@@ -335,16 +340,14 @@ public class SoulissDataService extends Service implements LocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         opts = SoulissClient.getOpzioni();
-        Calendar now = Calendar.getInstance();
-        Calendar next = Calendar.getInstance();
+
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();
         Log.i(TAG, "Service onStartCommand()");
         // delle opzioni
-        if (!next.before(now)) {
-            Log.w(TAG, "Service next sched outdated, sched NOW");
-            reschedule(true);
-        }
+
+        reschedule(false);
+
         startUDPListener();
 
         return START_STICKY;
@@ -359,7 +362,7 @@ public class SoulissDataService extends Service implements LocationListener {
             udpThread = new Thread(runnable);
             // Start the udpThread
             udpThread.start();
-            Log.i(TAG, "UDP thread started" + opts.getBackedOffServiceInterval());
+            Log.i(TAG, "UDP thread started" + opts.getBackedOffServiceIntervalMsec());
         }
     }
 
@@ -369,30 +372,40 @@ public class SoulissDataService extends Service implements LocationListener {
     public void reschedule(boolean immediate) {
 
         opts.initializePrefs();// reload interval
-        mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
+
         // the others
         // reschedule self
         Calendar calendar = Calendar.getInstance();
         if (immediate) {
+            mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
             Log.i(TAG, "Reschedule immediate");
             mHandler.post(mUpdateSoulissRunnable);
         } else {
             Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
+
+            if (getLastupd().getTime().getTime() + opts.getBackedOffServiceIntervalMsec() < Calendar.getInstance().getTime().getTime()) {
+                Log.i(TAG, "DETECTED LATE SERVICE, LAST RUN: " + getLastupd().getTime());
+
+                reschedule(true);
+                return;
+            }
             // mHandler.postDelayed(mUpdateSoulissRunnable,
             // opts.getDataServiceIntervalMsec());
             /* One of the two should get it */
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            PendingIntent secureShot = PendingIntent.getService(this, 0, new Intent(this, SoulissDataService.class),
+
+            PendingIntent secureShot = PendingIntent.getService(this, 0, cIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.add(Calendar.MILLISECOND, opts.getDataServiceIntervalMsec());
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
+                calendar.setTimeInMillis(getLastupd().getTime().getTime());
+                calendar.add(Calendar.MILLISECOND, opts.getBackedOffServiceIntervalMsec().intValue());
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
+                //will call onStart(), detect late and schedule immediate
+                Log.i(TAG, "DATASERVICE SCHEDULED ON: " + calendar.getTime());
 
         }
         startUDPListener();
     }
-
 
 
     @Override

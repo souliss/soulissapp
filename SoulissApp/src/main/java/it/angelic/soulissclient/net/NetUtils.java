@@ -34,7 +34,7 @@ public class NetUtils {
 			NetworkInterface intf = en.nextElement();
 			for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
 				InetAddress inetAddress = enumIpAddr.nextElement();
-				Log.d(Constants.TAG, "ip1--:" + inetAddress);
+				//Log.d(Constants.TAG, "ip1--:" + inetAddress);
 				//System.out.println("ip2--:" + inetAddress.getHostAddress());
 
 				// for getting IPV4 format

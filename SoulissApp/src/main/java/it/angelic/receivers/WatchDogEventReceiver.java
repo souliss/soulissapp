@@ -30,10 +30,11 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 		ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
 		if (opzioni.isDataServiceEnabled()) {
 			Intent eventService = new Intent(ctx, SoulissDataService.class);
-			if (!isMyServiceRunning(ctx, manager)) {
-				ctx.startService(eventService);
-				Log.w(Constants.TAG + ":WatchDog", "Service restarted");
-			}
+            ctx.startService(eventService);//sempre, ci pensa poi lui
+			//if (!isMyServiceRunning(ctx, manager)) {
+			//	ctx.startService(eventService);
+			//	Log.w(Constants.TAG + ":WatchDog", "Service restarted");
+			//}
 		}
 		if (opzioni.isWebserverEnabled()) {
 			Intent eventService = new Intent(ctx, HTTPService.class);
@@ -49,7 +50,6 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 	private boolean isMyServiceRunning(final Context ctx, ActivityManager manager) {
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			if (SoulissDataService.class.getName().equals(service.service.getClassName())) {
-
                 Log.d(Constants.TAG + ":WatchDog", "Service already running since:"+ new Date(service.activeSince).toString());
                 return true;
 			}

@@ -41,7 +41,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -136,19 +135,19 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private Button programsActivity;
     private SoulissPreferenceHelper opzioni;
     private SoulissDataService mBoundService;
+    private boolean mIsBound;
     private HTTPService mBoundWebService;
     private TextView webserviceInfo;
-    private boolean mIsBound;
+
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-            Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceInterval());
+            Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceIntervalMsec());
             SoulissPreferenceHelper pref = SoulissClient.getOpzioni();
             if (pref.isDataServiceEnabled()) {
-                mBoundService.reschedule(true);
-                //Toast.makeText(LauncherActivity.this, "Dataservice restarted", Toast.LENGTH_SHORT).show();
-                Log.i(TAG, "Dataservice RESTART");
+                //will detect if late
+                mBoundService.reschedule(false);
             } else {
                 Log.i(TAG, "Dataservice DISABLED");
             }
@@ -511,7 +510,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             return;
         }
         String base = opzioni.getAndSetCachedAddress();
-        Log.d(TAG, "cached Address: " + base);
+        Log.d(TAG, "cached Address: " + base+ " backoff: "+ opzioni.getBackoff());
         if (base != null && "".compareTo(base) != 0) {
             basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
                     + "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
