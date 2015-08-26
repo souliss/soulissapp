@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,17 +13,22 @@ import android.graphics.RectF;
 import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -36,7 +42,9 @@ import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -53,35 +61,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
     private Button btOff;
     private Button btOn;
-    private SoulissTypical16AdvancedRGB collected;
-    // private SoulissTypical related;
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // SoulissNode coll = datasource.getSoulissNode();
-            try {
-                collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected
-                        .getNodeId(), collected.getSlot());
-                // Bundle extras = intent.getExtras();
-                // Bundle vers = (Bundle) extras.get("NODES");
-                // color = collected.getColor();
-                if (collected.getOutput() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil) {
-                    cpv.setCenterColor(getResources().getColor(R.color.black));
-                } else {
-                    Log.d(Constants.TAG, "RGB Out (slot 0):" + collected.getOutput());
-                    Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor())
-                            + " G" + Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
-                    cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
-                            Color.green(collected.getColor()), Color.blue(collected.getColor())));
-                }
-                cpv.invalidate();
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Errore broadcast Receive!", e);
-            }
-            refreshStatusIcon();
-        }
-    };
     private Button btWhite;
     private Button btFlash;
     private Button btSleep;
@@ -106,8 +85,38 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private TextView eqText;
     private TextView blueChanabel;
     private TextView greenChanabel;
-    private Button btEqualizer;
+
+    private SoulissTypical16AdvancedRGB collected;
+    // private SoulissTypical related;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // SoulissNode coll = datasource.getSoulissNode();
+            try {
+                collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected
+                        .getNodeId(), collected.getSlot());
+                // Bundle extras = intent.getExtras();
+                // Bundle vers = (Bundle) extras.get("NODES");
+                // color = collected.getColor();
+                if (collected.getOutput() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil) {
+                    cpv.setCenterColor(getResources().getColor(R.color.black));
+                } else {
+                    Log.d(Constants.TAG, "RGB Out:" + collected.getOutput());
+                    Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor())
+                            + " G" + Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
+                    cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
+                            Color.green(collected.getColor()), Color.blue(collected.getColor())));
+                }
+                cpv.invalidate();
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Errore broadcast Receive!", e);
+            }
+            refreshStatusIcon();
+        }
+    };
     private TableRow tableRowEq;
+
 
     public static T16RGBAdvancedFragment newInstance(int index, SoulissTypical content) {
         T16RGBAdvancedFragment f = new T16RGBAdvancedFragment();
@@ -248,11 +257,10 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         }
-
+        setHasOptionsMenu(true);
     }
 
     @SuppressLint("NewApi")
@@ -291,7 +299,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         // checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
         tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
-
         btWhite = (Button) ret.findViewById(R.id.white);
         btFlash = (Button) ret.findViewById(R.id.flash);
         btSleep = (Button) ret.findViewById(R.id.sleep);
@@ -299,7 +306,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
         mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
         mVisualizerView.setOpz(opzioni);
-        btEqualizer = (Button) ret.findViewById(R.id.buttonEqualizer);
         colorSwitchRelativeLayout = (RelativeLayout) ret.findViewById(R.id.colorSwitch);
 
         seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
@@ -309,7 +315,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
         blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
         greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
-        eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
         btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
         btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
@@ -317,6 +322,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         buttMinus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown);
         btFlash.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Flash);
         btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
+
+        eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
         // CHANNEL Listeners
         seekChannelRed.setOnSeekBarChangeListener(new channelInputListener());
@@ -340,7 +347,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     mVisualizerView.setEnabled(false);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.GONE);
-                    // TODO questi non vanno
+                    // ok android 5
                     seekChannelRed.setProgress(0);
                     seekChannelRed.invalidate();
                     seekChannelGreen.setProgress(0);
@@ -399,13 +406,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         };
 
-        // Listener generico
-        OnClickListener plusEq = new OnClickListener() {
-            public void onClick(View v) {
-                AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
-            }
-
-        };
 
         togMulticast.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -461,7 +461,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         buttMinus.setOnTouchListener(decListener);
         btOff.setOnClickListener(plus);
         btOn.setOnClickListener(plus);
-        btEqualizer.setOnClickListener(plusEq);
         btFlash.setOnClickListener(plus);
         btSleep.setOnClickListener(plus);
 
@@ -538,6 +537,30 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         // datasource.close();
         if (mVisualizerView != null)
             mVisualizerView.release();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.t16_ctx_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        long arrayAdapterPosition = info.position;
+
+        switch (item.getItemId()) {
+            case R.id.equalizer:
+                AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
+                break;
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+        return true;
     }
 
     /**

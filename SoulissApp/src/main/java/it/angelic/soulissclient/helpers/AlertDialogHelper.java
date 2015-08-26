@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Looper;
 import android.preference.PreferenceActivity;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -424,7 +425,7 @@ public class AlertDialogHelper {
         return alert;
     }
 
-    public static AlertDialog equalizerDialog(final Context context, final TextView toUpdate) {
+    public static AlertDialog equalizerDialog(final Context context,@Nullable final TextView toUpdate) {
         final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
@@ -452,6 +453,7 @@ public class AlertDialogHelper {
                                 Constants.twoDecimalFormat.format(opzioni.getEqLow()),
                                 Constants.twoDecimalFormat.format(opzioni.getEqMed()),
                                 Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
+                        if (toUpdate != null)
                         toUpdate.setText(strDisease2Msg);
                     }
                 });

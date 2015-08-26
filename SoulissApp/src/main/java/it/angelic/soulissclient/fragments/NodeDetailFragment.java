@@ -52,7 +52,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.T15RGBIrActivity;
-import it.angelic.soulissclient.T16RGBAdvancedActivity;
+import it.angelic.soulissclient.T16RGBFragWrapper;
 import it.angelic.soulissclient.T19SingleChannelFragWrapper;
 import it.angelic.soulissclient.T1nFragWrapper;
 import it.angelic.soulissclient.T31FragWrapper;
@@ -391,7 +391,7 @@ public class NodeDetailFragment extends ListFragment {
 				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical15) target);
 			} else if (target.getTypical() == Souliss_T16) {
-				nodeDatail = new Intent(getActivity(), T16RGBAdvancedActivity.class);
+				nodeDatail = new Intent(getActivity(), T16RGBFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", (SoulissTypical16AdvancedRGB) target);
 			} else if (target.getTypical() == Souliss_T19) {
 				nodeDatail = new Intent(getActivity(), T19SingleChannelFragWrapper.class);
@@ -567,16 +567,6 @@ public class NodeDetailFragment extends ListFragment {
 		}, 100, Constants.GUI_UPDATE_INTERVAL); // updates GUI each 40 secs
 	}
 
-	/*
-	 * @Override FIXME public boolean onOptionsItemSelected(MenuItem item) {
-	 * switch (item.getItemId()) { case android.R.id.home: if
-	 * (getResources().getConfiguration().orientation ==
-	 * Configuration.ORIENTATION_LANDSCAPE) { // nothing to do here... } else {
-	 * getActivity().finish(); if (opzioni.isAnimationsEnabled())
-	 * getActivity().overridePendingTransition(R.anim.slide_in_left,
-	 * R.anim.slide_out_right); } return true; } return
-	 * super.onOptionsItemSelected(item); }
-	 */
 
 	@Override
 	public void onPause() {

@@ -168,7 +168,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="T16RGBAdvancedActivity"
+            android:name=".T16RGBFragWrapper"
             android:exported="false"
             android:icon="@drawable/remote"
             android:label="@string/Souliss_TRGB_desc" >
