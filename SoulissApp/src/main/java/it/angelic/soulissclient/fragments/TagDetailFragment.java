@@ -220,21 +220,16 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
-        int position = -1;
-        try {
-            position =  mAdapter.getPosition();
-        } catch (Exception e) {
-            Log.d(TAG, e.getLocalizedMessage(), e);
-            return super.onContextItemSelected(item);
-        }
+        int position = item.getOrder();
+
         /*ContextMenuRecyclerView.RecyclerContextMenuInfo info =
                 (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
         switch (item.getItemId()) {
             case R.id.eliminaTag:
-                SoulissTypical soulissTypical = mDataset.get(position-1);
+                SoulissTypical soulissTypical = mDataset.get(position);
                 Log.i(Constants.TAG, "DELETE TAGID:"+position);
                 datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
-                mDataset.remove(position - 1);
+                mDataset.remove(position);
                 mAdapter.setData(mDataset);
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();

@@ -31,22 +31,23 @@ import it.angelic.soulissclient.model.SoulissTypical;
  * Created by Ale on 08/03/2015.
  */
 public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
-    private int position;
     protected List<SoulissTypical> mDataset;
     private long tagId;
     private SoulissPreferenceHelper opzioni;
 
+
+
     @Override
     public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
-        Log.d(Constants.TAG, "Element " + position + " set.");
+        Log.d(Constants.TAG, "Element " + i + " set.");
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(position).getNiceName());
-        ((ViewHolder) viewHolder).getTextView().setTag(position);
-        mDataset.get(position).setOutputDescView(((ViewHolder) viewHolder).getTextViewInfo1());
+        ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(i).getNiceName());
+        ((ViewHolder) viewHolder).getTextView().setTag(i);
+        mDataset.get(i).setOutputDescView(((ViewHolder) viewHolder).getTextViewInfo1());
         ((ViewHolder) viewHolder).getTextViewInfo2().setText(SoulissClient.getAppContext().getString(R.string.update) + " "
-                + Constants.getTimeAgo(mDataset.get(position).getTypicalDTO().getRefreshedAt()));
-        ((ViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(position).getIconResourceId());
+                + Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
+        ((ViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
         LinearLayout sghembo = ((ViewHolder) viewHolder).getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()) {
@@ -55,7 +56,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         //viewHolder.getTextView().setOnClickListener(this);
         if (opzioni.isSoulissReachable()) {
             // richiama l'overloaded del tipico relativo
-            mDataset.get(position).getActionsLayout(SoulissClient.getAppContext(), sghembo);
+            mDataset.get(i).getActionsLayout(SoulissClient.getAppContext(), sghembo);
         } else {
             TextView na = new TextView(SoulissClient.getAppContext());
             na.setText(SoulissClient.getAppContext().getString(R.string.souliss_unavailable));
@@ -72,7 +73,6 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
         opzioni = SoulissClient.getOpzioni();
-        opzioni.reload();
         return new ViewHolder(v);
     }
 
@@ -90,15 +90,6 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         mDataset = data;
         this.tagId = tagId;
     }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */

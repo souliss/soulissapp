@@ -14,10 +14,6 @@ public class DbSettingsFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
         SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 		//String settings;
-		if (opzioni.isLightThemeSelected()) {
-			getActivity().setTheme(R.style.LightThemeSelector);
-		} else
-			getActivity().setTheme(R.style.DarkThemeSelector);
 		super.onCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.settings_db);
