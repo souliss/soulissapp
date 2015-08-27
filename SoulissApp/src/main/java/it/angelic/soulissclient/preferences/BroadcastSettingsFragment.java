@@ -79,10 +79,10 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
         final EditTextPreference bcast_passwd = (EditTextPreference) findPreference("bcast_passwd");
         final Preference sndBcast = findPreference("sndBcast");
 
-        if (bcast_subnet.getText()==null || bcast_subnet.getText().length() == 0)
+        if (bcast_subnet.getText() == null || bcast_subnet.getText().length() == 0)
             bcast_subnet.setText(NetUtils.getDeviceSubnetMaskString(getActivity()));
         bcast_subnet.setSummary(getString(R.string.bridge_subnet) + ": " + bcast_subnet.getText());
-        if (bcast_gateway.getText()==null ||bcast_gateway.getText().length() == 0)
+        if (bcast_gateway.getText() == null || bcast_gateway.getText().length() == 0)
             bcast_gateway.setText(NetUtils.getDeviceGatewayString(getActivity()));
         bcast_gateway.setSummary(getString(R.string.bridge_gateway) + ": " + bcast_gateway.getText());
 
@@ -142,7 +142,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                         ssidPayload.add(b);// lunghezza
                     }
                 } catch (Exception e) {
-                    Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_ssid parameter:" + bcast_ssid.getText()+e.getMessage());
+                    Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_ssid parameter:" + bcast_ssid.getText() + e.getMessage());
 
                 }
                 byte[] pass = {0x0};
@@ -153,16 +153,18 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                         passPayload.add(b);// lunghezza
                     }
                 } catch (Exception e) {
-                    Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_passwd parameter:" + bcast_passwd.getText() +e.getMessage());
+                    Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_passwd parameter:" + bcast_passwd.getText() + e.getMessage());
                     bcastPayload.add((byte) 1);// lunghezza
                 }
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        UDPHelper.issueBroadcastConfigure(opzioni,Constants.Souliss_UDP_function_broadcast_configure, bcastPayload,bcast_isGateway.isChecked());
-                        UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifissid, ssidPayload,null);
-                        UDPHelper.issueBroadcastConfigure(opzioni,Constants.Souliss_UDP_function_broadcast_configure_wifipass, passPayload,null);
+                        UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure, bcastPayload, bcast_isGateway.isChecked());
+                        if (ssidPayload.size() > 0)
+                            UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifissid, ssidPayload, null);
+                        if (passPayload.size() > 0)
+                            UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null);
                     }
                 }).start();
 
