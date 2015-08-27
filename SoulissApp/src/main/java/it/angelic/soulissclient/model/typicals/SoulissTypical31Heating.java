@@ -55,6 +55,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 	private SoulissTypical TemperatureSetpointValue2;
 
 	private float TemperatureMeasuredVal;
+	private float TemperatureSetpointVal;
 
 	public SoulissTypical31Heating(SoulissPreferenceHelper pp) {
 		super(pp);
@@ -118,7 +119,12 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		// Serve solo per dare comandi, da togliere
 		TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
 		TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
+		short TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3)).getTypicalDTO().getOutput();
+		short TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4)).getTypicalDTO().getOutput();
+		// ora ho i due bytes, li converto
+		int shifteds = TemperatureSetpointValue2 << 8;
 
+		TemperatureSetpointVal = HalfFloatUtils.toFloat(shifteds + TemperatureSetpointValue);
 		/*
 		 * Log.d(Constants.TAG, "AirCon State: 0x" +
 		 * Integer.toHexString(typicalDTO.getOutput()) + " " +
@@ -127,23 +133,24 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		 */
 		StringBuilder strout = new StringBuilder();
 		// int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
-		Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(typicalDTO.getOutput()));
+		Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(statusByte));
 
-		if (typicalDTO.getOutput() >> 6 == 1)
+		if (statusByte >> 6 == 1)
 			strout.append("HEAT");
-		else if (typicalDTO.getOutput() >> 5 == 1)
+		else if (statusByte >> 5 == 1)
 			strout.append("COOL");
 		else 
 			strout.append("OFF");
 
-		if (typicalDTO.getOutput() >> 4 == 1)
+		if (statusByte >> 4 == 1)
 			strout.append(" - FAN LOw");
-		else if (typicalDTO.getOutput() >> 3 == 1)
+		else if (statusByte >> 3 == 1)
 			strout.append(" - FAN MED");
-		else if (typicalDTO.getOutput() >> 2 == 1)
+		else if (statusByte >> 2 == 1)
 			strout.append(" - FAN HIG");
 
-		strout.append(" ").append(TemperatureMeasuredVal).append("°");
+		strout.append(" ").append(TemperatureMeasuredVal).append("°")
+				.append(" (").append(TemperatureSetpointVal).append("°)");
 		return strout.toString();
 	}
 
@@ -161,7 +168,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 					String first = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
 					String second = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
 					String[] cmd = { String.valueOf(function), "0", "0", first, second };
-					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 "+first+" "+second);
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + first+" "+second);
 					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
 							SoulissClient.getOpzioni(),  cmd);
 				}

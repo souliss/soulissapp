@@ -22,9 +22,9 @@ android {
 
 dependencies {
     compile project(':ecoGallery')
-    compile 'com.android.support:support-annotations:23.0.0'
-    compile 'com.android.support:support-v4:23.0.0'
-    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:support-annotations:22.2.1'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.4'

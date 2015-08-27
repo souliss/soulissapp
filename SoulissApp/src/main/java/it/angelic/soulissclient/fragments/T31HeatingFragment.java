@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.Constants;
@@ -32,19 +33,8 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil_Auto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil_Auto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Cooling;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_DecSetPoint;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanAuto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanHigh;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanLow;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanMed;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Heating;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_IncSetPoint;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_ShutOff;
+import static it.angelic.soulissclient.model.typicals.Constants.*;
+
 import static junit.framework.Assert.assertTrue;
 
 
@@ -63,10 +53,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 	private TextView textviewStatus;
 	private Button buttOn;
 	private Button buttOff;
-	
-	
-	
-	public static T31HeatingFragment newInstance(int index, SoulissTypical content) {
+    private TableRow infoFavs;
+    private TableRow infoTags;
+
+
+    public static T31HeatingFragment newInstance(int index, SoulissTypical content) {
 		T31HeatingFragment f = new T31HeatingFragment();
 
 		// Supply index input as an argument.
@@ -135,7 +126,8 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		
 		functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
 		fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
-		
+        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
+        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		
 		final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
 
@@ -185,7 +177,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 				int act = Integer.parseInt(textviewTemperature.getText().toString());
 				if (act < 35)
 					textviewTemperature.setText("" + (act + 1));
-				collected.issueCommand(Souliss_T3n_IncSetPoint, Float.valueOf(textviewTemperature.getText().toString()));
+				collected.issueCommand(Souliss_T3n_Set, Float.valueOf(textviewTemperature.getText().toString()));
 				return;
 			}
 		
@@ -197,7 +189,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 				int act = Integer.parseInt(textviewTemperature.getText().toString());
 				if (act > 16)
 					textviewTemperature.setText("" + (act - 1));
-				collected.issueCommand(Souliss_T3n_DecSetPoint, Float.valueOf(textviewTemperature.getText().toString()));
+				collected.issueCommand(Souliss_T3n_Set, Float.valueOf(textviewTemperature.getText().toString()));
 			}
 		});
 		
@@ -220,13 +212,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		});
 
 
-		// sfondo bottone
-		if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil
-				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OnCoil_Auto)
-			buttPlus.setBackgroundResource(R.drawable.bulb_on);
-		else if (collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil
-				|| collected.getTypicalDTO().getOutput() == Souliss_T1n_OffCoil_Auto)
-			buttPlus.setBackgroundResource(R.drawable.bulb_off);
 		return ret;
 	}
 
@@ -271,6 +256,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
+        if (collected.getTypicalDTO().isFavourite()) {
+            infoFavs.setVisibility(View.VISIBLE);
+        }else if (collected.getTypicalDTO().isTagged()){
+            infoTags.setVisibility(View.VISIBLE);
+        }
 	}
 
 	@Override
@@ -295,6 +285,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
 				collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
 				refreshStatusIcon();
+                if (collected.getTypicalDTO().isFavourite()) {
+                    infoFavs.setVisibility(View.VISIBLE);
+                }else if (collected.getTypicalDTO().isTagged()){
+                    infoTags.setVisibility(View.VISIBLE);
+                }
 				textviewStatus.setText(collected.getOutputDesc());
 				// datasource.close();
 			} catch (Exception e) {

@@ -103,6 +103,22 @@
             android:layout_marginLeft="15dip"/>
     </RelativeLayout>
 
+
+    <TableLayout
+        android:id="@+id/containervermegame"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutStats">
+
+        <include layout="@layout/tablerow_favinfo">
+
+        </include>
+
+        <include layout="@layout/tablerow_taginfo">
+
+        </include>
+    </TableLayout>
+
     <View
         android:id="@+id/strut2"
         android:layout_width="0dp"
