@@ -134,7 +134,7 @@ public class UDPHelper {
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
-			//sender.send(packet);
+			sender.send(packet);
 			Log.w(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
 			//	Log.d(Constants.TAG, "***BYTES: " + buf.toString());
 			
