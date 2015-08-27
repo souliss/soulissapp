@@ -65,6 +65,9 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private Button btWhite;
     private Button btFlash;
     private Button btSleep;
+
+    private TableRow infoTags;
+    private TableRow infoFavs;
     private int color = 0;
     // Color change listener.
     private OnColorChangedListener dialogColorChangedListener = null;
@@ -290,6 +293,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         buttMinus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown);
         btFlash.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Flash);
         btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
+        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
+        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 
         eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
@@ -297,6 +302,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         seekChannelRed.setOnSeekBarChangeListener(new channelInputListener());
         seekChannelGreen.setOnSeekBarChangeListener(new channelInputListener());
         seekChannelBlue.setOnSeekBarChangeListener(new channelInputListener());
+
+        if (collected.getTypicalDTO().isFavourite()) {
+            infoFavs.setVisibility(View.VISIBLE);
+        }else if (collected.getTypicalDTO().isTagged()){
+            infoTags.setVisibility(View.VISIBLE);
+        }
 
         final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

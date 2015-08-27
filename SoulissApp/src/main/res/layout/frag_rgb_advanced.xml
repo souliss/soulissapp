@@ -233,6 +233,13 @@
                             android:layout_height="fill_parent"/>
                     </FrameLayout>
                 </TableRow>
+                <include layout="@layout/tablerow_favinfo">
+
+                </include>
+
+                <include layout="@layout/tablerow_taginfo">
+
+                </include>
 
                 <TableRow
                     android:id="@+id/tableRowEqualizer"
