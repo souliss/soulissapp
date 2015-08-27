@@ -168,58 +168,13 @@
                         android:layout_weight="3" />
                 </TableRow>
 
-                <TableRow
-                    android:id="@+id/tableRow6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:weightSum="4">
+                <include layout="@layout/tablerow_favinfo">
 
-                    <ImageView
-                        android:id="@+id/imageButtonFav"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:src="@android:drawable/star_off" />
+                </include>
 
-                    <TextView
-                        android:id="@+id/textviewHistoryIsFav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dip"
-                        android:layout_weight="3"
-                        android:text="@string/amongFav" />
-                </TableRow>
+                <include layout="@layout/tablerow_taginfo">
 
-                <TableRow
-                    android:id="@+id/tableRow7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:weightSum="4">
-
-                    <ImageView
-                        android:id="@+id/imageButtonTag"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_weight="1"
-                        android:src="@android:drawable/ic_input_get" />
-
-                    <TextView
-                        android:id="@+id/textviewHistoryTags"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dip"
-                        android:layout_weight="3"
-                        android:text="@string/amongTags" />
-                </TableRow>
+                </include>
 
 
             </TableLayout>

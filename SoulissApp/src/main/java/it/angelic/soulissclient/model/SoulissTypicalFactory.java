@@ -123,7 +123,6 @@ public class SoulissTypicalFactory {
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
 			rest.setSensor(true);
 			break;
-			
 		case Constants.Souliss_T58_PressureSensor:
 			rest = new SoulissTypical58PressureSensor(opts);
 			rest.setSensor(true);

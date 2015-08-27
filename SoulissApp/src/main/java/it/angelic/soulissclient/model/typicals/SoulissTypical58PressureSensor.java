@@ -20,6 +20,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
@@ -28,7 +29,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
  * @author Ale
  * 
  */
-public class SoulissTypical58PressureSensor extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical58PressureSensor extends SoulissTypical implements ISoulissTypicalSensor {
 
 	public SoulissTypical58PressureSensor(SoulissPreferenceHelper pre) {
 		super(pre);
@@ -92,5 +93,10 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
 
 		cont.addView(par);
 
+	}
+
+	@Override
+	public float getOutputFloat() {
+		return 0;
 	}
 }

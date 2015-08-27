@@ -28,6 +28,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -70,6 +71,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private RelativeLayout colorSwitchRelativeLayout;
     // private CheckBox checkMusic;
     private VisualizerView mVisualizerView;
+    private FrameLayout mVisualizerViewFrame;
     private boolean continueIncrementing;
     // private Runnable senderThread;
     private boolean continueDecrementing;
@@ -133,44 +135,9 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         return f;
     }
 
-    /**
-     * @param s
-     * @param d
-     * @param p
-     * @return
-     */
-    private static int ave(int s, int d, float p) {
-        return s + Math.round(p * (d - s));
-    }
 
-    /**
-     * @param colors
-     * @param unit
-     * @return
-     */
-    private static int interpColor(int colors[], float unit) {
-        if (unit <= 0) {
-            return colors[0];
-        }
 
-        if (unit >= 1) {
-            return colors[colors.length - 1];
-        }
 
-        float p = unit * (colors.length - 1);
-        int i = (int) p;
-        p -= i;
-
-        // now p is just the fractional part [0...1) and i is the index
-        int c0 = colors[i];
-        int c1 = colors[i + 1];
-        int a = ave(Color.alpha(c0), Color.alpha(c1), p);
-        int r = ave(Color.red(c0), Color.red(c1), p);
-        int g = ave(Color.green(c0), Color.green(c1), p);
-        int b = ave(Color.blue(c0), Color.blue(c1), p);
-
-        return Color.argb(a, r, g, b);
-    }
 
     /**
      * Serve per poter tenuto il bottone brightness
@@ -305,6 +272,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
         mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+        mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
         mVisualizerView.setOpz(opzioni);
         colorSwitchRelativeLayout = (RelativeLayout) ret.findViewById(R.id.colorSwitch);
 
@@ -335,18 +303,22 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 if (pos == 0) {// cerchio RGB
                     tableRowVis.setVisibility(View.GONE);
                     mVisualizerView.setVisibility(View.GONE);
+                    mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.GONE);
-                    tableRowEq.setVisibility(View.GONE);
+                    tableRowEq.setVisibility(View.INVISIBLE);
                     mVisualizerView.setEnabled(false);
                     colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
+                    eqText.setVisibility(View.INVISIBLE);
                 } else if (pos == 1) {// channels
                     Log.i(Constants.TAG, "channel mode, color=" + collected.getColor());
                     tableRowVis.setVisibility(View.GONE);
                     mVisualizerView.setVisibility(View.GONE);
+                    mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.VISIBLE);
                     mVisualizerView.setEnabled(false);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
-                    tableRowEq.setVisibility(View.GONE);
+                    tableRowEq.setVisibility(View.INVISIBLE);
+                    eqText.setVisibility(View.INVISIBLE);
                     // ok android 5
                     seekChannelRed.setProgress(0);
                     seekChannelRed.invalidate();
@@ -363,11 +335,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     mVisualizerView.link(togMulticast.isChecked());
                     addBarGraphRenderers();
                     mVisualizerView.setVisibility(View.VISIBLE);
+                    mVisualizerViewFrame.setVisibility(View.VISIBLE);
                     tableRowVis.setVisibility(View.VISIBLE);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     mVisualizerView.setEnabled(true);
                     mVisualizerView.link(togMulticast.isChecked());
-
+eqText.setVisibility(View.VISIBLE);
                     tableRowEq.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
                 }
@@ -489,7 +462,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                         Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
             }
         };
-        cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color);
+        cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color, colorSwitchRelativeLayout, collected);
 
         cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
                 Color.green(collected.getColor()), Color.blue(collected.getColor())));
@@ -618,115 +591,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
     }
 
-    /**
-     * Inner class representing the color chooser.
-     */
-    private class ColorPickerView extends View {
-        // dimensioni pannello colore
-        private static final int CENTER_RADIUS = 50;
-        private static final float STROKE_WIDTH = 48;
-        private final int[] colors = new int[]{0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00,
-                0xFFFFFF00, 0xFFFF0000};
-        private Paint paint = null;
-        private Paint centerPaint = null;
-        // private boolean trackingCenter = false;
-        private RectF swapRect = new RectF();
 
-        /**
-         * @param context
-         * @param listener
-         * @param color
-         */
-        ColorPickerView(Context context, OnColorChangedListener listener, int color) {
-            super(context);
-            paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            paint.setShader(new SweepGradient(0, 0, colors, null));
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(STROKE_WIDTH);
-
-            centerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            centerPaint.setColor(color);
-            centerPaint.setStrokeWidth(5);
-        }
-
-        public void setCenterColor(int colorIn) {
-            centerPaint.setColor(colorIn);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        protected void onDraw(Canvas canvas) {
-            int centerX = colorSwitchRelativeLayout.getWidth() / 2;
-            float r = (centerX - paint.getStrokeWidth()) / 2;
-
-            canvas.translate(centerX, r + STROKE_WIDTH);
-            swapRect.set(-r, -r, r, r);
-            canvas.drawOval(swapRect, paint);
-            canvas.drawCircle(0, 0, CENTER_RADIUS, centerPaint);
-
-        }
-
-        @SuppressLint("NewApi")
-        @Override
-        protected void onVisibilityChanged(View changedView, int visibility) {
-            super.onVisibilityChanged(changedView, visibility);
-            Log.d(Constants.TAG, "vis CHANGE");
-            cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),
-                    Color.blue(collected.getColor())));
-            cpv.invalidate();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            int width = getRootView().getWidth();
-            int h = getRootView().getHeight();
-
-            if (width == 0) {
-                width = colorSwitchRelativeLayout.getWidth();
-                h = colorSwitchRelativeLayout.getHeight();
-            }
-            if (width == 0) {
-                Log.e(Constants.TAG, "Couldn't measure View");
-            }
-
-            setMeasuredDimension(width, h);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean onTouchEvent(MotionEvent event) {
-            // remove offset
-            int centerX = colorSwitchRelativeLayout.getWidth() / 2;
-            float r = (centerX - paint.getStrokeWidth()) / 2;
-            float x = event.getX() - centerX;
-            float y = event.getY() - (r + STROKE_WIDTH);
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                case MotionEvent.ACTION_MOVE:
-                    float angle = (float) java.lang.Math.atan2(y, x);
-                    // need to turn angle [-PI ... PI] into unit [0....1]
-                    float unit = (float) (angle / (2 * Math.PI));
-
-                    if (unit < 0) {
-                        unit += 1;
-                    }
-                    // centerPaint.setColor(interpColor(colors, unit));
-                    // fa inviare il comando ir
-                    dialogColorChangedListener.colorChanged(interpColor(colors, unit));
-                    break;
-                case MotionEvent.ACTION_UP:
-                    collected.issueRefresh();// change center color
-                    // ColorDialogPreference.this.color = centerPaint.getColor();
-                    break;
-            }
-            invalidate();
-            return true;
-        }
-    }
 
 }

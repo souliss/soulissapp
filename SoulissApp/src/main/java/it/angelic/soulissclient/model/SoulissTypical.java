@@ -292,6 +292,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     public boolean isSensor() {
+        if (!(this instanceof ISoulissTypicalSensor)){
+            Log.w(Constants.TAG,"SoulissTypical "+getNiceName()+" NOT instanceof ISoulissTypicalSensor");
+        }
+        //TODO return (this instanceof ISoulissTypicalSensor)
         return isSensor;
     }
 

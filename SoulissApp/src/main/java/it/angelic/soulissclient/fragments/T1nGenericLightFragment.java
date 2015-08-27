@@ -165,8 +165,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
 		btSleep = (Button) ret.findViewById(R.id.sleep);
 		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRow6);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRow7);
+        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
+        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
 		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
