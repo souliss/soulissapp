@@ -6,6 +6,7 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
@@ -59,7 +61,7 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + (getTypicalDTO().getOutput()*3) + " hPa"));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputFloat() + " hPa"));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -89,7 +91,7 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
 		par.setProgress(20);
 		par.setProgress(0);
 		par.setMax(255);
-		par.setProgress((int) getTypicalDTO().getOutput());
+		par.setProgress((int) getOutputFloat());
 
 		cont.addView(par);
 
@@ -97,6 +99,15 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
 
 	@Override
 	public float getOutputFloat() {
-		return 0;
+		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
+				.getTypicalDTO().getOutput();
+		// ora ho i due bytes, li converto
+		int shifted = miofratello << 8;
+		Log.d(Constants.TAG,
+				"first:" + Long.toHexString((long) typicalDTO.getOutput()) + " second:"
+						+ Long.toHexString((long) miofratello) + " PRESSURE SENSOR Reading:"
+						+ Long.toHexString((long) shifted + typicalDTO.getOutput()));
+
+		return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 	}
 }

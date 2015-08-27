@@ -312,7 +312,7 @@ public class AlertDialogHelper {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
-                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical|| toRename instanceof SoulissTag);
+                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical || toRename instanceof SoulissTag);
         alert.setIcon(android.R.drawable.ic_dialog_dialer);
         alert.setTitle(cont.getString(R.string.rename) + " " + toRename.getNiceName());
 
@@ -360,11 +360,11 @@ public class AlertDialogHelper {
                                 }
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            if (((SoulissTag)toRename).getTagId() < 2) {
+                            if (((SoulissTag) toRename).getTagId() < 2) {
                                 Toast.makeText(cont, "Can't remove default Favourite Tag", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            SoulissDBTagHelper dbt=new SoulissDBTagHelper(cont);
+                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (listV != null) {
                                 List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
@@ -411,7 +411,7 @@ public class AlertDialogHelper {
         return alert;
     }
 
-    public static AlertDialog equalizerDialog(final Context context,@Nullable final TextView toUpdate) {
+    public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate) {
         final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
@@ -440,7 +440,7 @@ public class AlertDialogHelper {
                                 Constants.twoDecimalFormat.format(opzioni.getEqMed()),
                                 Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
                         if (toUpdate != null)
-                        toUpdate.setText(strDisease2Msg);
+                            toUpdate.setText(strDisease2Msg);
                     }
                 });
 
@@ -473,7 +473,7 @@ public class AlertDialogHelper {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
-                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical|| toRename instanceof SoulissTag);
+                || toRename instanceof SoulissScene || toRename instanceof SoulissTypical || toRename instanceof SoulissTag);
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         alert2.setTitle(context.getString(R.string.dialog_choose_icon) + " " + toRename.getNiceName());
@@ -555,82 +555,6 @@ public class AlertDialogHelper {
     }
 
     /**
-     * dialog per il check della rete non piu usata ma non mi va di toglierla
-     *
-     * @param preferencesActivity
-     * @param local_ip
-     *            dalle opzioni, forse null
-     * @param public_ip
-     *            dalle opzioni, forse null
-     * @param opzioni
-     * @return il dialogo da mostrare
-     */
-    /*
-	 * public static ProgressDialog checkConnectionResultDialog(final Activity
-	 * preferencesActivity, final String local_ip, final String public_ip, final
-	 * SoulissPreferenceHelper opzioni) { final ProgressDialog mProgressDialog =
-	 * new ProgressDialog(preferencesActivity);
-	 * mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
-	 * mProgressDialog
-	 * .setTitle(SoulissClient.getAppContext().getString(R.string.
-	 * dialog_net_test));
-	 * mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-	 * 
-	 * new Thread() { public void run() { preferencesActivity.runOnUiThread(new
-	 * Runnable() { public void run() {
-	 * mProgressDialog.setMessage(SoulissClient.
-	 * getAppContext().getString(R.string.dialog_local_test) + "\n"); } });
-	 * 
-	 * final StringBuilder memo = new StringBuilder(); try { Thread.sleep(400);
-	 * if (local_ip != null && "".compareTo(local_ip) != 0) { // IP LOCALE if
-	 * (JSONHelper.checkSoulissHttp(local_ip, opzioni.getRemoteTimeoutPref() *
-	 * 2)) {
-	 * memo.append(SoulissClient.getAppContext().getString(R.string.dialog_local_ok
-	 * ) + "\n"); // opzioni.setBestAddress(); } else {
-	 * memo.append(SoulissClient
-	 * .getAppContext().getString(R.string.dialog_warn_wifi) + "\n"); }
-	 * preferencesActivity.runOnUiThread(new Runnable() { public void run() {
-	 * mProgressDialog.setMessage(memo.toString()); } }); } if (public_ip !=
-	 * null && "".compareTo(public_ip) != 0) { // PUBLIC TEST, NON Else perche
-	 * non esclusivo memo.append("\n" +
-	 * SoulissClient.getAppContext().getString(R.string.dialog_remote_test));
-	 * preferencesActivity.runOnUiThread(new Runnable() { public void run() {
-	 * mProgressDialog.setMessage(memo.toString()); } }); Thread.sleep(500); //
-	 * TEST REMOTO if (JSONHelper.checkSoulissHttp(public_ip,
-	 * opzioni.getRemoteTimeoutPref() * 3)) { //
-	 * memo.delete(memo.indexOf("Executing remote test..."), // memo.length());
-	 * memo.append("\n" +
-	 * SoulissClient.getAppContext().getString(R.string.dialog_remote_ok) +
-	 * "\n"); // opzioni.setBestAddress(); } else { memo.delete(
-	 * memo.indexOf(SoulissClient
-	 * .getAppContext().getString(R.string.dialog_remote_test)), memo.length());
-	 * memo
-	 * .append(SoulissClient.getAppContext().getString(R.string.dialog_remote_notok
-	 * )); } preferencesActivity.runOnUiThread(new Runnable() { public void
-	 * run() { mProgressDialog.setMessage(memo.toString()); } }); } else if
-	 * (local_ip == null || "".compareTo(local_ip) == 0) {
-	 * memo.append(SoulissClient
-	 * .getAppContext().getString(R.string.dialog_notconf) + "\n");
-	 * preferencesActivity.runOnUiThread(new Runnable() { public void run() {
-	 * mProgressDialog.setMessage(memo.toString()); } }); }
-	 * 
-	 * // TODO togliere ?? mProgressDialog.getListView();
-	 * 
-	 * } catch (final Exception e) { preferencesActivity.runOnUiThread(new
-	 * Runnable() { public void run() {
-	 * mProgressDialog.setMessage("Test Failed: " + e.getLocalizedMessage()); }
-	 * }); Log.e(TAG, "Connection test FAILED", e); } } }.start();
-	 * 
-	 * mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "OK", new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int whichButton) { mProgressDialog.dismiss(); } });
-	 * 
-	 * return mProgressDialog;
-	 * 
-	 * }
-	 */
-
-    /**
      * Dialogo creazione DB
      *
      * @param preferencesActivity
@@ -690,7 +614,9 @@ public class AlertDialogHelper {
      * @return
      */
     public static AlertDialog.Builder addTagCommandDialog(final Context context,
-                                                          final SoulissDBTagHelper datasource, final SoulissTypical toadd) {
+                                                          final SoulissDBTagHelper datasource,
+                                                          final SoulissTypical toadd,
+                                                          @Nullable final ListView toReferesh) {
         // prendo tag dal DB
         List<SoulissTag> goer = datasource.getTags(context);
         final SoulissTag[] tagArray = new SoulissTag[goer.size()];
@@ -698,12 +624,12 @@ public class AlertDialogHelper {
         for (SoulissTag object : goer) {
             tagArray[q++] = object;
         }
-        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissClient.getOpzioni().isLightThemeSelected()?R.style.LightThemeSelector:R.style.DarkThemeSelector);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissClient.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
 
         View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);
         alert2.setView(dialoglayout);
-       // alert2.setInverseBackgroundForced( true );
+        // alert2.setInverseBackgroundForced( true );
         alert2.setTitle(context.getString(R.string.scene_add_to));
         //alert2.setIcon(android.R.drawable.ic_dialog_map);
 
@@ -755,8 +681,9 @@ public class AlertDialogHelper {
         alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        SoulissTag it;
                         if (tagRadio.isChecked()) {
-                            SoulissTag it = (SoulissTag) outputNodeSpinner.getSelectedItem();
+                            it = (SoulissTag) outputNodeSpinner.getSelectedItem();
                             if (!it.getAssignedTypicals().contains(toadd))
                                 it.getAssignedTypicals().add(toadd);
                             datasource.createOrUpdateTag(it);
@@ -765,14 +692,15 @@ public class AlertDialogHelper {
                                 Toast.makeText(context, context.getString(R.string.input_tag_name), Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            SoulissTag it = (SoulissTag) new SoulissTag();
-                           long newId =  datasource.createOrUpdateTag(null);
+                            it = (SoulissTag) new SoulissTag();
+                            long newId = datasource.createOrUpdateTag(null);
                             it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
                             datasource.createOrUpdateTag(it);
-                            Toast.makeText(context, "NewTag Added" +": "+it.getNiceName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "NewTag Added" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
+
                             return;
                         } else {
 
@@ -780,6 +708,7 @@ public class AlertDialogHelper {
                                     + " " + context.getString(R.string.new_tag), Toast.LENGTH_SHORT).show();
                             return;
                         }
+
 
                     }
                 });
@@ -796,7 +725,7 @@ public class AlertDialogHelper {
         editNewTag.requestFocus();
 
 //        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-  //      imm.toggleSoftInput(InputMethodManager.HI, 0);
+        //      imm.toggleSoftInput(InputMethodManager.HI, 0);
         return alert2;
     }
 
