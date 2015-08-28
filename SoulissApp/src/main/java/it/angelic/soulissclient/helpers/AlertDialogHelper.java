@@ -269,7 +269,7 @@ public class AlertDialogHelper {
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        datasource.open();
+                        SoulissDBHelper.open();
                         int res = datasource.deleteCommand(toRename);
                         Log.i(TAG, "SoulissCommand deletion returned: " + res);
                         if (ctx != null) {
@@ -324,7 +324,7 @@ public class AlertDialogHelper {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString();
                         toRename.setName(value);
-                        datasource.open();
+                        SoulissDBHelper.open();
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
                             if (listV != null) {
@@ -359,7 +359,7 @@ public class AlertDialogHelper {
                             }
                         } else if (toRename instanceof SoulissTag) {
                             if (((SoulissTag) toRename).getTagId() < 2) {
-                                Toast.makeText(cont, "Can't remove default Favourite Tag", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(cont, cont.getString(R.string.nodeleteFav), Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
@@ -697,7 +697,7 @@ public class AlertDialogHelper {
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
                             datasource.createOrUpdateTag(it);
-                            Toast.makeText(context, "NewTag Added" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
 
                             return;
                         } else {

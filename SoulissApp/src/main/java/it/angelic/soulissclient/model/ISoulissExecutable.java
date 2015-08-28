@@ -7,5 +7,5 @@ package it.angelic.soulissclient.model;
  */
 public interface ISoulissExecutable {
 
-    public void execute();
+    void execute();
 }

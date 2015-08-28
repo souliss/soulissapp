@@ -167,7 +167,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		opzioni = SoulissClient.getOpzioni();
 		View ret = inflater.inflate(R.layout.frag_t19_singlechannel, container, false);
 		datasource = new SoulissDBHelper(getActivity());
-		datasource.open();
+		SoulissDBHelper.open();
 
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null && extras.get("TIPICO") != null) {
@@ -359,7 +359,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 	@Override
 	public void onResume() {
 		super.onResume();
-		datasource.open();
+		SoulissDBHelper.open();
 		if (collected != null) {
 			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
 					.getNodeId(), collected.getSlot());

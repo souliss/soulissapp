@@ -77,7 +77,7 @@ public class JSONStructureHandler implements HttpRequestHandler {
 	 * @return
 	 */
 	private String writeJSON(int target) {
-		db.open();
+		SoulissDBHelper.open();
 		List<SoulissNode> nodes;
 		// Se target < 0, allora metto tutto
 		if (target < 0)

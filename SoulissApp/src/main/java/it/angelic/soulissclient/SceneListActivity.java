@@ -143,7 +143,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
 		}
-		datasource.open();
+		SoulissDBHelper.open();
 
 		// prendo comandi dal DB, setto adapter
 		LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());

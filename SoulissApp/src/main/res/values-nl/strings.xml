@@ -293,6 +293,10 @@
     <string name="img_select" >Select Photo</string>
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
     <string name="err_command_not_sel">Command not selected</string>
-    <string name="status_souliss_nodetail" />
+    <string name="status_souliss_nodetail" >No detail panel available</string>
     <string name="bridge_isgateway" />
+    <string name="nodeleteFav" />
+    <string name="timed_warning">Energy alert</string>
+    <string name="useridxhint">Please insert a number in range 1&#8211;100</string>
+    <string name="udphint">Please insert a number in range 1&#8211;65535</string>
 </resources>

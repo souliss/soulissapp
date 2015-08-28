@@ -275,7 +275,7 @@ public class NodeDetailFragment extends ListFragment {
 		refreshStatusIcon();
 
 		if (opzioni.isDbConfigured()) {
-			datasource.open();
+			SoulissDBHelper.open();
 			// per il refresh dal dettaglio
 			collected = datasource.getSoulissNode(collected.getId());
 			doBindService();
@@ -541,7 +541,7 @@ public class NodeDetailFragment extends ListFragment {
 	public void onResume() {
 		super.onResume();
 		// pezza
-		datasource.open();
+		SoulissDBHelper.open();
 		doBindService();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
@@ -590,7 +590,7 @@ public class NodeDetailFragment extends ListFragment {
 				if (listaTypicalsView == null) {
                     return;
                 }
-				datasource.open();
+				SoulissDBHelper.open();
 				
 				collected = datasource.getSoulissNode(collected.getId());
 				refreshHeader();

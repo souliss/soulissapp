@@ -48,6 +48,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import it.angelic.receivers.NetworkStateReceiver;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.helpers.Eula;
@@ -540,7 +541,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 dbwarnline.startAnimation(a3);
             }
         } else {
-            db.open();
+            SoulissDBHelper.open();
             dbwarn.setText(getString(R.string.db_size) + ": " + db.getSize() + "B");
             dbwarn.setVisibility(View.VISIBLE);
             dbwarnline.setVisibility(View.GONE);
@@ -601,7 +602,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private void setAntiTheftInfo() {
         if (opzioni.isAntitheftPresent()) {
             serviceInfoAntiTheft.setVisibility(View.VISIBLE);
-            db.open();
+            SoulissDBHelper.open();
             try {
                 SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();
                 serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "

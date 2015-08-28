@@ -233,7 +233,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         opzioni = SoulissClient.getOpzioni();
         View ret = inflater.inflate(R.layout.frag_rgb_advanced, container, false);
         datasource = new SoulissDBHelper(getActivity());
-        datasource.open();
+        SoulissDBHelper.open();
 
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null && extras.get("TIPICO") != null) {
@@ -495,7 +495,7 @@ eqText.setVisibility(View.VISIBLE);
     @Override
     public void onResume() {
         super.onResume();
-        datasource.open();
+        SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);

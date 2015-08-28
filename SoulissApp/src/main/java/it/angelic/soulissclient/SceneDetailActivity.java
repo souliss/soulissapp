@@ -101,7 +101,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		createHeader();
 
 		// tipici dal DB
-		datasource.open();
+		SoulissDBHelper.open();
 		ArrayList<SoulissCommand> gottardo = datasource.getSceneCommands(this, collected.getId());
 		SoulissCommand[] comandiArray = new SoulissCommand[gottardo.size()];
 		comandiArray = gottardo.toArray(comandiArray);
@@ -222,7 +222,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		// thru = opzioni.isSoulissReachable();
-		datasource.open();
+		SoulissDBHelper.open();
 		// IntentFilter filtere = new IntentFilter();
 		// filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 	}

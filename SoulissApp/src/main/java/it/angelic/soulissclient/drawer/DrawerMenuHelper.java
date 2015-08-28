@@ -27,7 +27,7 @@ public class DrawerMenuHelper {
 		ArrayList<INavDrawerItem> tmp = new ArrayList<>();
 
 		SoulissDBHelper db = new SoulissDBHelper(ctx);
-		db.open();
+		SoulissDBHelper.open();
 		List<SoulissNode> nodes = db.getAllNodes();
 		// Aggiungi nodi
         for (SoulissNode object : nodes) {
@@ -70,7 +70,7 @@ public class DrawerMenuHelper {
 		tmp.add(man);
 		
 		SoulissDBHelper db = new SoulissDBHelper(ctx);
-		db.open();
+		SoulissDBHelper.open();
 		List<SoulissNode> nodes = db.getAllNodes();
 		//Aggiungi nodi
         for (SoulissNode object : nodes) {

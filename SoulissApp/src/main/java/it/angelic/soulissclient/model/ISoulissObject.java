@@ -9,11 +9,11 @@ package it.angelic.soulissclient.model;
  */
 public interface ISoulissObject {
 
-	public void setIconResourceId(int resId);
-	public int getIconResourceId();
+	void setIconResourceId(int resId);
+	int getIconResourceId();
 	
-	public void setName(String newName);
-    public String getName();
+	void setName(String newName);
+    String getName();
 	
-	public String getNiceName();
+	String getNiceName();
 }

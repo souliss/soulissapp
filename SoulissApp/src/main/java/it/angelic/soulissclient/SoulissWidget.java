@@ -57,7 +57,7 @@ public class SoulissWidget extends AppWidgetProvider {
         }
             RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             db = new SoulissDBHelper(context);
-            db.open();
+            SoulissDBHelper.open();
             if (node > Constants.MASSIVE_NODE_ID) {
                 final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
                 if (!name.equals(""))
@@ -157,7 +157,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     Looper.prepare();
 
                     db = new SoulissDBHelper(context);
-                    db.open();
+                    SoulissDBHelper.open();
                     if (node > Constants.MASSIVE_NODE_ID) {
                         final SoulissTypical tgt = db.getSoulissTypical(node, slot);
                         UDPHelper.pollRequest(opzioni, 1, tgt.getNodeId());

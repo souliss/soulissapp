@@ -71,7 +71,7 @@ public class SoulissWidgetConfig extends Activity {
             finish();
         }
         datasource = new SoulissDBHelper(this);
-        datasource.open();
+        SoulissDBHelper.open();
 
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();

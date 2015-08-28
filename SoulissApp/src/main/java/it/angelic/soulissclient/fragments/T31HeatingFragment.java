@@ -99,7 +99,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		opzioni = SoulissClient.getOpzioni();
 		View ret = inflater.inflate(R.layout.frag_t31, container, false);
 		datasource = new SoulissDBHelper(getActivity());
-		datasource.open();
+		SoulissDBHelper.open();
 
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null && extras.get("TIPICO") != null) {
@@ -251,7 +251,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		datasource.open();
+		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
@@ -281,7 +281,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		public void onReceive(Context context, Intent intent) {
 			try {
 				Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
-				datasource.open();
+				SoulissDBHelper.open();
 				SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
 				collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
 				refreshStatusIcon();

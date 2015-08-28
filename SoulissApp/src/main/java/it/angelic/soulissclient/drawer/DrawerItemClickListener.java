@@ -47,7 +47,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position, int id) {
 		SoulissDBHelper db = new SoulissDBHelper(mActivity);
-		db.open();
+		SoulissDBHelper.open();
 		if (id >= 0) {// vai a dettaglio nodo
 			if (mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				// landscape

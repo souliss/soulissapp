@@ -105,7 +105,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	protected void onStart() {
 		super.onStart();
 		setActionBarInfo(getString(R.string.programs_title));
-		datasource.open();
+		SoulissDBHelper.open();
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
