@@ -49,7 +49,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 		//View ds = actionBar.getCustomView();
 		setActionBarInfo(getString(R.string.manual_title));
 		super.onStart();
-		datasource.open();
+		SoulissDBHelper.open();
 		// prendo tipici dal DB
 		goer = datasource.getAllNodes();
 

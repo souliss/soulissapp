@@ -61,6 +61,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -79,7 +80,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Broadcast received, refresh from DB");
-            datasource.open();
+            SoulissDBHelper.open();
             initDataset(getActivity());
             mAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
@@ -122,7 +123,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
      */
     private void initDataset(Context ctx) {
         datasource = new SoulissDBTagHelper(ctx);
-        datasource.open();
+        SoulissDBHelper.open();
         collectedTag = datasource.getTag(ctx, tagId);
         Log.i(Constants.TAG, "initDataset tagId" + tagId);
         List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);

@@ -104,7 +104,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			refreshStatusIcon();
 			
 			datasource = new SoulissDBHelper(getActivity());
-			datasource.open();
+			SoulissDBHelper.open();
 
 			/* SFONDO */
 			// SoulissClient.setBackground((RelativeLayout)
@@ -145,7 +145,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		super.onStart();
 		opzioni = SoulissClient.getOpzioni();
 		if (opzioni.isDbConfigured()) {
-			datasource.open();
+			SoulissDBHelper.open();
 			// per il refresh dal dettaglio
 			collected = datasource.getSoulissTypical(collected.getTypicalDTO().getNodeId(), collected.getTypicalDTO()
 					.getSlot());

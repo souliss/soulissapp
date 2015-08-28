@@ -65,7 +65,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 
         } else if ("dropdb".equals(arg0.getKey())) {
             AlertDialog.Builder alert = AlertDialogHelper.dropSoulissDBDialog(parent, datasource);
-            datasource.open();
+            SoulissDBHelper.open();
             alert.show();
             return true;
         }

@@ -133,7 +133,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		btBlu5.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_B5);
 
 		datasource = new SoulissDBHelper(this);
-		datasource.open();
+		SoulissDBHelper.open();
 
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissTypical15) extras.get("TIPICO");
@@ -213,7 +213,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		datasource.open();
+		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 		registerReceiver(datareceiver, filtere);

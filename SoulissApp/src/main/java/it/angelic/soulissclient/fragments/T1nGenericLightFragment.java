@@ -133,7 +133,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 		View ret = inflater.inflate(R.layout.frag_t1n, container, false);
 		datasource = new SoulissDBHelper(getActivity());
-		datasource.open();
+		SoulissDBHelper.open();
 
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null && extras.get("TIPICO") != null) {
@@ -416,7 +416,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
     @Override
 	public void onResume() {
 		super.onResume();
-		datasource.open();
+		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
@@ -443,7 +443,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		public void onReceive(Context context, Intent intent) {
 			try {
 				Log.i(Constants.TAG, "Broadcast received, intent" + intent.toString());
-				datasource.open();
+				SoulissDBHelper.open();
 				SoulissNode coll = datasource.getSoulissNode(collected.getNodeId());
 				collected = coll.getTypical(collected.getSlot());
 				if (collected.getOutput() == Souliss_T1n_OnCoil)

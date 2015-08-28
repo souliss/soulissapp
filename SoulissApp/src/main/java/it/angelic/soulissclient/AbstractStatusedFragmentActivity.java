@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 
 import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
@@ -122,7 +123,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         mDrawerLinear = (LinearLayout)findViewById(R.id.left_drawer_linear);
         mDrawerFloatButt  = (FloatingActionButton) findViewById(R.id.fabSmall);
         SoulissDBTagHelper db = new SoulissDBTagHelper(parentActivity);
-        db.open();
+        SoulissDBHelper.open();
         if (db.countFavourites() > 0) {
             mDrawerFloatButt.setOnClickListener(new View.OnClickListener() {
                 @Override

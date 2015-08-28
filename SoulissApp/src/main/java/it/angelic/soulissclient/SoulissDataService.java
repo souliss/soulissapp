@@ -108,7 +108,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        db.open();
+                        SoulissDBHelper.open();
                         LinkedList<SoulissCommand> unexecuted = db.getUnexecutedCommands(SoulissDataService.this);
                         Log.i(TAG, String.format("checking %d unexecuted TIMED commands ", unexecuted.size()));
                         for (SoulissCommand unexnex : unexecuted) {
@@ -152,7 +152,7 @@ public class SoulissDataService extends Service implements LocationListener {
                     @Override
                     public void run() {
                         Log.d(TAG, "Checking warning for long turned-on typicals");
-                        db.open();
+                        SoulissDBHelper.open();
                         int checkd = 0;
                         List<SoulissNode> nodes = db.getAllNodes();
                         Calendar now = Calendar.getInstance();
@@ -204,7 +204,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             try {
                                 // ritarda il logging
                                 Thread.sleep(3000);
-                                db.open();
+                                SoulissDBHelper.open();
 
                                 Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
 
@@ -483,7 +483,7 @@ public class SoulissDataService extends Service implements LocationListener {
         Log.d(TAG, "process positional programs, homedistanceprev=" + homeDistPrev + " homedist now is=" + homeDist);
         if (homeDistPrev > (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance() / 10)
                 && homeDist < (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance() / 10)) {
-            db.open();
+            SoulissDBHelper.open();
             final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
             Log.i(TAG, "processing positional programs: " + unexecuted.size());
             // tornato a casa
@@ -504,7 +504,7 @@ public class SoulissDataService extends Service implements LocationListener {
             opts.setPrevDistance(homeDist);
         } else if (homeDistPrev < (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance() / 10)
                 && homeDist > (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance() / 10)) {
-            db.open();
+            SoulissDBHelper.open();
             final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
             Log.i(TAG, "activating positional programs: " + unexecuted.size());
             // uscito di casa

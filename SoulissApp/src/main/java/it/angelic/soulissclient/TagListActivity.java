@@ -32,6 +32,7 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.TagListAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
@@ -167,7 +168,7 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(this);
         }
-        datasource.open();
+        SoulissDBHelper.open();
 
         // prendo comandi dal DB, setto adapter
         List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());

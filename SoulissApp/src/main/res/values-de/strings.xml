@@ -127,7 +127,7 @@
     <string name="node_empty">Node is Empty!</string>
     <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
     <!-- WIDGET -->
-    <string name="widget_cantsave">Device empty/not selected</string>
+    <string name="widget_cantsave">Command empty/not selected</string>
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
@@ -293,4 +293,11 @@
     <string name="img_select" >Select Photo</string>
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
     <string name="err_command_not_sel">Command not selected</string>
+    <string name="nodeleteFav" />
+    <string name="positionfrom">Positioning with</string>
+    <string name="status_souliss_nodetail">No detail panel available</string>
+    <string name="timed_warning">Energy alert</string>
+    <string name="warn_connection">Connection not available</string>
+    <string name="warn_wifi">Can\'t use local address without WI-FI connection!</string>
+    <string name="useridxhint">Please insert a number in range 1&#8211;100</string>
 </resources>

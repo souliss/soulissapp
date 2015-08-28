@@ -7,7 +7,7 @@ package it.angelic.soulissclient.model;
  */
 public interface ISoulissCommand extends ISoulissObject, ISoulissExecutable{
 
-    public int getType();
+    int getType();
 
-    public SoulissTypical getParentTypical();
+    SoulissTypical getParentTypical();
 }

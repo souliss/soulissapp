@@ -128,7 +128,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 		btOn = (Button) findViewById(R.id.buttonTurnOn);
 
 		datasource = new SoulissDBHelper(this);
-		datasource.open();
+		SoulissDBHelper.open();
 
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissTypical32AirCon) extras.get("TIPICO");
@@ -256,7 +256,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		datasource.open();
+		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 		registerReceiver(soulissDataReceiver, filtere);

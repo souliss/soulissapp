@@ -66,7 +66,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
 		// DB
 		datasource = new SoulissDBHelper(this);
-		datasource.open();
+		SoulissDBHelper.open();
 		timeoutHandler = new Handler();
 		// getWindow().setFormat(PixelFormat.RGBA_8888);
 		// getWindow().addFlags(WindowManager.LayoutParams.FLAG_DITHER);
@@ -459,7 +459,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 		filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		registerReceiver(timeoutReceiver, filtera);
 
-		datasource.open();
+		SoulissDBHelper.open();
 		super.onResume();
 	}
 

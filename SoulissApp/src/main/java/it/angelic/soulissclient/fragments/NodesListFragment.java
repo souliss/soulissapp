@@ -160,7 +160,7 @@ public class NodesListFragment extends ListFragment {
 			alert.show();
 		}
 		datasource = new SoulissDBHelper(getActivity());
-		datasource.open();
+		SoulissDBHelper.open();
 
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());
@@ -246,7 +246,7 @@ public class NodesListFragment extends ListFragment {
 		super.onStart();
 		opzioni.initializePrefs();
 		// doBindService();
-		datasource.open();
+		SoulissDBHelper.open();
 
 		// prendo tipici dal DB
 		final List<SoulissNode> goer = datasource.getAllNodes();
@@ -273,7 +273,7 @@ public class NodesListFragment extends ListFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Log.i(TAG, "Broadcast received, refresh from DB");
-			datasource.open();
+			SoulissDBHelper.open();
 			timeoutHandler.removeCallbacks(timeExpired);
 			// ferma la rotellina del refresh
             swipeLayout.setRefreshing(false);

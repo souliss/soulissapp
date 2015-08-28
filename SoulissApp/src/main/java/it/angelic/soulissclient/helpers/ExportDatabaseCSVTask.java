@@ -73,7 +73,7 @@ private int exportedNodes;
 			file.createNewFile();
 			CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 
-			DBob.open();
+			SoulissDBHelper.open();
 			SQLiteDatabase db = SoulissDBHelper.getDatabase();
 			// NODI
 			Cursor curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_NODES, null);
