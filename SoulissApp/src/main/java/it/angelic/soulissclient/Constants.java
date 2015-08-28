@@ -10,6 +10,7 @@ public class Constants {
 
 	public static final int SEC_IN_A_MIN = 60;
 	public static final int MSEC_IN_A_SEC = 1000;
+	public static final int MIN_IN_A_HOUR = 60;
 	public static final int MAX_USER_IDX = 0x64;
 	public static final int MAX_NODE_IDX = 0xFE;
 	public static final int MAX_HEALTH = 255;

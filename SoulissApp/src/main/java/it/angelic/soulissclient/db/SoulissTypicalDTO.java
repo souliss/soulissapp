@@ -97,7 +97,7 @@ public class SoulissTypicalDTO implements Serializable {
     public int persist() {
         SoulissDBHelper.open();
         SQLiteDatabase db = SoulissDBHelper.getDatabase();
-int upd;
+        int upd;
         ContentValues values = new ContentValues();
         assertTrue(getSlot() != -1);
         values.put(SoulissDB.COLUMN_TYPICAL_NODE_ID, getNodeId());
@@ -110,22 +110,31 @@ int upd;
         //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
 
-        try {
-            upd = (int) db.insert(SoulissDB.TABLE_TYPICALS, null, values);
-        } catch (SQLiteConstraintException sqe){
-            upd = SoulissDBHelper.getDatabase().update(
-                    SoulissDB.TABLE_TYPICALS,
-                    values,
-                    SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
-                            + " = " + getSlot(), null);
+        upd = SoulissDBHelper.getDatabase().update(
+                SoulissDB.TABLE_TYPICALS,
+                values,
+                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                        + " = " + getSlot(), null);
+        if (upd == 0) {//magari non esiste, prova insert
+            try {
+                upd = (int) db.insert(SoulissDB.TABLE_TYPICALS, null, values);
+            } catch (SQLiteConstraintException sqe) {
+                //esiste, magari il primo fail era sfiga. Riproviamo...
+                upd = SoulissDBHelper.getDatabase().update(
+                        SoulissDB.TABLE_TYPICALS,
+                        values,
+                        SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                                + " = " + getSlot(), null);
+            }
+
+
         }
         if (upd == 0) {
+            //Se ancora 0, qualcosa è storto di sicuro
             Log.w(TAG, "WARNING: UNPERSISTED TYPICAL! ");
         }
-
         return upd;
     }
-
 
 
     public Date getLastStatusChange() {

@@ -286,7 +286,7 @@
     <string name="img_select" >Seleziona Foto</string>
     <string name="tag_info_format">Ci sono %1$d dispositivi etichettati con %2$d Tag</string>
     <string name="err_command_not_sel">Command not selected</string>
-    <string name="hours" />
+    <string name="hours">Ore</string>
     <string name="warnmeifon">Avvisami se accesa per piu di</string>
     <string name="timed_warning" >Allerta consumi</string>
     <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
@@ -294,6 +294,6 @@
     <string name="amongFav">Questo dispositivo è tra i preferiti</string>
     <string name="amongTags">Questo dispositivo è stato taggato</string>
     <string name="status_souliss_nodetail">Nessun dettaglio disponibile</string>
-    <string name="bridge_isgateway" />
+    <string name="bridge_isgateway">GateWay</string>
 
 </resources>

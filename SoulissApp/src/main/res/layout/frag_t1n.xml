@@ -12,11 +12,11 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:descendantFocusability="beforeDescendants"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp">
 
@@ -71,8 +71,8 @@
 
                     <SeekBar
                         android:id="@+id/sleepBar"
-                        android:layout_weight="3"
                         android:layout_margin="15dp"
+                        android:layout_weight="3"
                         android:max="255" />
 
                     <Button
@@ -130,28 +130,7 @@
                         android:text="@string/multicast_desc" />
                 </TableRow>
 
-                <TableRow
-                    android:id="@+id/tableRow43"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:weightSum="4">
-
-
-                    <CheckBox
-                        android:id="@+id/checkBoxWarn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:text="@string/warnmeifon" />
-
-                    <NumberPicker
-                        android:id="@+id/warnTimer"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                </TableRow>
+                <include layout="@layout/tablerow_toolongwarn"></include>
 
                 <TableRow
                     android:id="@+id/tableRow3"

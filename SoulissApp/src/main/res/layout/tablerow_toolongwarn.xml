@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow43"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:gravity="center"
+    android:weightSum="4">
+
+
+    <CheckBox
+        android:id="@+id/checkBoxWarn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:text="@string/warnmeifon" />
+
+    <NumberPicker
+        android:id="@+id/warnTimer"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</TableRow>

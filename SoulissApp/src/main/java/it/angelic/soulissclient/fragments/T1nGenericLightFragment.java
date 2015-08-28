@@ -36,6 +36,7 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -177,10 +178,19 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
             refreshHistoryInfo();
 		}
 		// datasource.getHistoryTypicalHashMap(collected, 0);
-		warner.setMinValue(5);
-		warner.setMaxValue(120);
+		//warner.setMinValue(5);
+		//warner.setMaxValue(120);
 
-        warner.setOnValueChangedListener(this);
+		String nums[]= {getString(R.string.hours),"1/4","1/2","3/4","1","2","3","4","5","6","8","12","24"};
+
+
+		warner.setMaxValue(nums.length-1);
+		warner.setMinValue(0);
+		warner.setWrapSelectorWheel(false);
+		warner.setDisplayedValues(nums);
+		warner.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+		warner.setOnValueChangedListener(this);
 		warnerCheck.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -189,8 +199,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 					if (!opzioni.isDataServiceEnabled()) {
 						AlertDialogHelper.serviceNotActiveDialog(getActivity());
 					}
-
-					collected.getTypicalDTO().setWarnDelayMsec(warner.getValue()* Constants.MSEC_IN_A_SEC * Constants.SEC_IN_A_MIN);
+                    Log.d(Constants.TAG, "Spinner VAL: " + TimeHourSpinnerUtils.getTimeArrayValMsec(warner.getValue()));
+					collected.getTypicalDTO().setWarnDelayMsec(TimeHourSpinnerUtils.getTimeArrayValMsec(warner.getValue()));
 					collected.getTypicalDTO().persist();
 				}else{
 					System.out.println("Un-Checked");
@@ -393,13 +403,15 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(Constants.TAG, "Injecting warn timer: " + collected.getTypicalDTO().getWarnDelayMsec());
-        warner.setValue(collected.getTypicalDTO().getWarnDelayMsec()/ (Constants.MSEC_IN_A_SEC *Constants.SEC_IN_A_MIN));
+        warner.setValue(TimeHourSpinnerUtils.getTimeArrayPos(collected.getTypicalDTO().getWarnDelayMsec()));
         if (collected.getTypicalDTO().getWarnDelayMsec() > 0){
             warnerCheck.setChecked(true);
             Log.d(Constants.TAG, "Injecting warn timer: "+ collected.getTypicalDTO().getWarnDelayMsec());
         }
 
     }
+
+
 
     @Override
 	public void onResume() {
