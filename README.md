@@ -5,5 +5,7 @@ You can find it published on <a href="https://play.google.com/store/apps/details
 
 To work on the project, just clone it from Android Studio main menu, it should compile without issues as needed libraries are encapsulated or *very* common. 
 
-More informations are available on <a href="https://github.com/souliss/souliss/wiki/SoulissApp">wiki</a> page, feel free to contribute. If you find app errors, please just report them via android report. If you believe the error to be 'functional', use <a href="https://github.com/souliss/soulissapp/issues">SoulissApp tracker</a> to create a new issue.
+More informations are available on <a href="https://github.com/souliss/souliss/wiki/SoulissApp">wiki</a> page, feel free to contribute. If you find app errors, please just report them via android report and/or open a issue; if you believe the error is 'functional' or needs further dscussion use <a href="https://github.com/souliss/soulissapp/issues">SoulissApp tracker</a> to create a new issue.
+
+SoulissApp works on every Android devices from API 11 (HONEYCOMB) on.
 
