@@ -127,7 +127,7 @@
     <string name="node_empty">Node is Empty!</string>
     <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
     <!-- WIDGET -->
-    <string name="widget_cantsave">Device empty/not selected</string>
+    <string name="widget_cantsave">Command empty/not selected</string>
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
