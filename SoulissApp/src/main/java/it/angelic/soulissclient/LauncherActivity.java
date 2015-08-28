@@ -223,6 +223,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
+        opzioni.clearCachedAddress();
+        opzioni.reload();
+        Log.d(Constants.TAG, Constants.TAG + " onCreate() call start, cached address reset");
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);

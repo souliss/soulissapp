@@ -283,7 +283,7 @@ public class GraphsHelper {
 		renderer.setChartTitleTextSize(val);
 		renderer.setLabelsTextSize(val);
 		renderer.setLegendTextSize(val);
-		renderer.setChartValuesTextSize(val-2);
+		//renderer.setChartValuesTextSize(val-2);
 	}
 
 }

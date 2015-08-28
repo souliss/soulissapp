@@ -107,7 +107,7 @@ public class SoulissPreferenceHelper implements Serializable {
 			}
 		}
 		// reset cachedAddress to shared prefs one
-		clearCachedAddress();
+		//clearCachedAddress();
 		//resetBackOff();
 		getAndSetCachedAddress();
 	}
@@ -124,7 +124,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		IPPreferencePublic = prefs.getString("edittext_IP_pubb", "");
 		DimensTesto = prefs.getString("listPref", "0");
 		PrefFont = prefs.getString("fontPref", "Futura.ttf");
-		remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "10000"));
+		remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "6000"));
 		dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
 		homeThold = prefs.getInt("distanceThold", 150);
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
@@ -337,6 +337,9 @@ public class SoulissPreferenceHelper implements Serializable {
 
 	public void setRemoteTimeoutPref(int remoteTimeoutPref) {
 		this.remoteTimeoutPref = remoteTimeoutPref;
+		Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+		pesta.putInt("remoteTimeout", userIndex);
+		pesta.commit();
 	}
 
 	public int getDataServiceIntervalMsec() {

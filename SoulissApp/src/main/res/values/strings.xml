@@ -302,7 +302,7 @@
     <string name="amongTags">This Device has been Tagged</string>
     <string name="status_souliss_nodetail" >No detail panel available</string>
     <string name="bridge_isgateway" >Configure remote node as Gateway/Peer for the Souliss network</string>
-    <string name="nodeleteFav" >Can't remove default Favourite Tag</string>
+    <string name="nodeleteFav" >Can\'t remove default Favourite Tag</string>
 
 
     <!-- VARIOUS -->
