@@ -269,7 +269,7 @@
     <string name="eula_title">Licenza d\'Uso</string>
     <string name="eula_accept">Accetto</string>
     <string name="eula_refuse">Rifiuto</string>
-    <string name="programs_warn_trigger_notset">You must select an input trigger and threshold value</string>
+    <string name="programs_warn_trigger_notset">Devi selezionare un trigger ed un dispositivo di origine</string>
     <string name="positional_executed">Programma di posizione eseguito</string>
     <string name="timed_program_executed">Programma temporale eseguito</string>
     <string name="execute_at">Esegui alle:</string>
@@ -295,5 +295,11 @@
     <string name="amongTags">Questo dispositivo è stato taggato</string>
     <string name="status_souliss_nodetail">Nessun dettaglio disponibile</string>
     <string name="bridge_isgateway">GateWay</string>
+    <string name="Online">Online</string>
+    <string name="opt_dbopt">Ottimizza DB</string>
+    <string name="opt_dbopt_desc">Vacuum sul DB e rimozione log vetusti</string>
+    <string name="opt_loghist">Storico abilitato</string>
+    <string name="opt_loghist_desc">Salva ogni cambiamento di stato dei dispositivi</string>
+    <string name="programs_trigger_executed">Souliss Trigger eseguito</string>
 
 </resources>
