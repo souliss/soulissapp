@@ -21,6 +21,8 @@ gradlew.bat
 .gradle/
 build/
 /*/build/
+# PRESERVE PROXY
+gradle.properties
 
 #IDE
 .idea
