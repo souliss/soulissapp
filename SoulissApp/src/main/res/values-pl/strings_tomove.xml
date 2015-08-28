@@ -14,11 +14,11 @@
 
     <string name="dbstruct_req">Struktura bazy danych otrzymana</string>
     <string name="antitheft_status">Stan systemu antywłamaniowego:</string>
-    <string name="antitheft_notify_desc">Check for antitheft peers tapping on this notification</string>
+    <string name="antitheft_notify_desc">Sprawdź czujki antywłamaniowe pukając w tą notyfikację</string>
     <string name="antitheft_notify">Aktywowany ALARM Souliss!</string>
     <string name="bytes_received">Otrzymano bajtów</string>
-    <string name="antitheftNotify">Notify Alarm Condition</string>
-    <string name="antitheftReset">Uzbrój ponowej system antywłamaniowy</string>
+    <string name="antitheftNotify">Warunek notyfikacji alarmu</string>
+    <string name="antitheftReset">Uzbrój ponownie system antywłamaniowy</string>
 
     <string name="dialog_import_nofolder">Importowany katalog nie istnieje</string>
     <string name="dialog_import_nofile">Importowany plik nie istnieje</string>

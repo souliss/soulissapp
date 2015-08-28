@@ -4,7 +4,7 @@
         <item>Sceny</item>
         <item>Programy</item>
         <item>Ręczne</item>
-        <item>Impostazioni Rete</item>
+        <item>Ustawienia sieci</item>
         <item>@string/unknown_typical</item>
         <item>5</item>
         <item>6</item>
@@ -34,7 +34,7 @@
     </string-array>
     <string-array name="textsiz_array">
         <item>Bardzo małe</item>
-        <item>Małé</item>
+        <item>Małe</item>
         <item>Średnie</item>
         <item>Duże</item>
     </string-array>
