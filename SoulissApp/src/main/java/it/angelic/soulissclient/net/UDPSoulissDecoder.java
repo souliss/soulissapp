@@ -33,6 +33,7 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.SoulissWidget;
 import it.angelic.soulissclient.T4nFragWrapper;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -65,7 +66,7 @@ public class UDPSoulissDecoder {
         this.context = ctx;
         database = new SoulissDBLowHelper(ctx);
         soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
-        database.open();
+        SoulissDBHelper.open();
         try {
             localHost = NetUtils.getInetLocalIpAddress();
         } catch (SocketException e) {
@@ -398,7 +399,7 @@ public class UDPSoulissDecoder {
 
         Log.i(Constants.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
                 + maxrequests);
-        database.open();
+        SoulissDBHelper.open();
         database.createOrUpdateStructure(nodes, maxTypicalXnode);
         // Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
 

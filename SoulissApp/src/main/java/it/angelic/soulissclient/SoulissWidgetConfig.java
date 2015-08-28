@@ -71,7 +71,7 @@ public class SoulissWidgetConfig extends Activity {
             finish();
         }
         datasource = new SoulissDBHelper(this);
-        datasource.open();
+        SoulissDBHelper.open();
 
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();
@@ -129,6 +129,7 @@ public class SoulissWidgetConfig extends Activity {
 
         @Override
         public void onClick(View arg0) {
+
             final Context context = SoulissWidgetConfig.this;
             customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = customSharedPreference.edit();
@@ -145,17 +146,19 @@ public class SoulissWidgetConfig extends Activity {
                 editor.putInt(mAppWidgetId + "_SLOT", toExec.getId());
             } else if (IToSave instanceof SoulissCommand) {
                 ccm = (SoulissCommand) IToSave;
-                editor.putInt(mAppWidgetId + "_SLOT", (ccm).getParentTypical().getSlot());
+                editor.putInt(mAppWidgetId + "_SLOT", ((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getSlot());
                 editor.putLong(mAppWidgetId + "_CMD", (ccm).getCommandDTO().getCommand());
-            } else if (IToSave == null) {
+            } else if (IToSave == null) {//maybe a sensor
                 Toast.makeText(context, getString(R.string.widget_cantsave), Toast.LENGTH_LONG).show();
+                editor.putInt(mAppWidgetId + "_SLOT", ((SoulissTypical) outputTypicalSpinner.getSelectedItem()).getSlot());
             }
 
             editor.putString(mAppWidgetId + "_NAME", widgetLabel.getText().toString());
 
             //editor.putString("COMMAND", outputCommandSpinner.getSelectedItem());
             editor.commit();
-
+            Log.i(Constants.TAG, "Saving new Widget: NODE:"+((SoulissNode) outputNodeSpinner.getSelectedItem()).getId()
+            +" SLOT:"+ ((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getSlot() );
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             appWidgetManager.updateAppWidget(mAppWidgetId, views);
@@ -167,7 +170,7 @@ public class SoulissWidgetConfig extends Activity {
                     Uri.parse("W://widget/id/")
                     , String.valueOf(mAppWidgetId));
             resultValue.setData(data);
-
+            Log.i(Constants.TAG, "WIDGET URI:" + data.toString());
             setResult(RESULT_OK, resultValue);
             Log.i(Constants.TAG, "saving widget, id:"+mAppWidgetId);
             finish();

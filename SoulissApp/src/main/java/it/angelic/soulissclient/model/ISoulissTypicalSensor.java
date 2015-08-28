@@ -5,7 +5,7 @@ public interface ISoulissTypicalSensor extends ISoulissTypical {
 	/**
 	 * Lettura del sensore
 	 */
-	public float getOutputFloat() ;
+	float getOutputFloat() ;
 	
 	
 }

@@ -8,20 +8,20 @@ import java.util.ArrayList;
 public interface ISoulissTypical extends ISoulissObject {
 
 
-    public SoulissNode getParentNode();
+    SoulissNode getParentNode();
 
-    public void setParentNode(SoulissNode parentNode);
+    void setParentNode(SoulissNode parentNode);
 
 	
-	public ArrayList<SoulissCommand> getCommands(Context ctx) ;
+	ArrayList<SoulissCommand> getCommands(Context ctx) ;
 
     void getActionsLayout (Context ctx,
                            LinearLayout convertView);
 
-    public String getOutputDesc();
+    String getOutputDesc();
 	
 	//every typical should have one ..
-	public int getIconResourceId();
+    int getIconResourceId();
 	
 	
 }

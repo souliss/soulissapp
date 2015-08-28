@@ -127,7 +127,7 @@
     <string name="node_empty">Node is Empty!</string>
     <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
     <!-- WIDGET -->
-    <string name="widget_cantsave">Device empty/not selected</string>
+    <string name="widget_cantsave">Command empty/not selected</string>
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
@@ -294,7 +294,7 @@
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
     <string name="err_command_not_sel">Command not selected</string>
     <string name="hours" >hours</string>
-    <string name="warnmeifon">Avvisami se accesa per piu di</string>
+    <string name="warnmeifon">Warn me if turned on for more than (hours)</string>
     <string name="timed_warning" >Energy warning</string>
     <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
     <string name="opt_udpport" >UDP Port</string>
@@ -302,4 +302,30 @@
     <string name="amongTags">This Device has been Tagged</string>
     <string name="status_souliss_nodetail" >No detail panel available</string>
     <string name="bridge_isgateway" >Configure remote node as Gateway/Peer for the Souliss network</string>
+    <string name="nodeleteFav" >Can't remove default Favourite Tag</string>
+
+
+    <!-- VARIOUS -->
+    <string name="warn_wifi">Can\'t use local address without WI-FI connection!</string>
+    <string name="warn_connection">Connection not available</string>
+    <string name="contact_at">Contacting Souliss at </string>
+    <string name="contact_progress">Souliss server is being contacted&#8230;</string>
+    <string name="homedist"><b>Home distance:</b></string>
+    <string name="currentlyin">currently in</string>
+    <string name="positionfrom"><b>Position from </b></string>
+    <string name="homewarn"><b>Home position not set</b>, use background option to set your home location</string>
+    <string name="useridxhint">Please insert a number in range 1&#8211;100</string>
+    <string name="nodeidxhint">Please insert a number in range 1&#8211;254</string>
+    <string name="udphint">Please insert a number in range 1&#8211;65535</string>
+
+    <string name="dbstruct_req">DB Structure received</string>
+    <string name="antitheft_status">Antitheft Status:</string>
+    <string name="antitheft_notify_desc">Check for antitheft peers tapping on this notification</string>
+    <string name="antitheft_notify">Souliss ALARM Activated!</string>
+    <string name="bytes_received">Bytes received</string>
+    <string name="antitheftNotify">Notify Alarm Condition</string>
+    <string name="antitheftReset">Re-Arm Anti theft</string>
+
+    <string name="dialog_import_nofolder">Import folder doesn\'t exist</string>
+    <string name="dialog_import_nofile">Import file doesn\'t exist</string>
 </resources>

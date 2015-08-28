@@ -85,7 +85,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         }
 
         datasource = new SoulissDBHelper(this);
-        datasource.open();
+        SoulissDBHelper.open();
         spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
         ImageView nodeic = (ImageView) findViewById(R.id.timed_icon);
         tvcommand = (TextView) findViewById(R.id.textViewCommand);
@@ -404,7 +404,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
 
 
                 Intent intent = AddProgramActivity.this.getIntent();
-                datasource.open();
+                SoulissDBHelper.open();
                 if (radioTimed.isChecked()) {// temporal schedule
                     Calendar baseNow = Calendar.getInstance();
 

@@ -79,7 +79,7 @@ public class T4nFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             try {
                 Log.i(Constants.TAG, "Broadcast received, intent" + intent.toString());
-                datasource.open();
+                SoulissDBHelper.open();
                 senseiMaster = datasource.getAntiTheftMasterTypical();
                 alarmInfoTextView.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
                         + senseiMaster.getOutputDesc()));
@@ -131,7 +131,7 @@ public class T4nFragment extends Fragment {
         opzioni = SoulissClient.getOpzioni();
         View ret = inflater.inflate(R.layout.frag_t4n, container, false);
         datasource = new SoulissDBHelper(getActivity());
-        datasource.open();
+        SoulissDBHelper.open();
         // Il master sara` sempre lo stesso, anche se collected e` un peer
         if (opzioni.isAntitheftPresent()) {
             senseiMaster = datasource.getAntiTheftMasterTypical();
@@ -328,7 +328,7 @@ public class T4nFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        datasource.open();
+        SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
         filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);

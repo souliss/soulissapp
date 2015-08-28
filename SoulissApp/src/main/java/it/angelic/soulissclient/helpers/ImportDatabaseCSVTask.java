@@ -120,7 +120,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			file.createNewFile();
 			CSVReader csvReader = new CSVReader(new FileReader(file));
 			String[] temp;
-			DBob.open();
+			SoulissDBHelper.open();
 			// SQLiteDatabase db = DBob.getDatabase();
 			DBob.truncateImportTables();
 			SharedPreferences.Editor editor = customSharedPreference.edit();
