@@ -159,7 +159,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     db = new SoulissDBHelper(context);
                     db.open();
                     if (node > Constants.MASSIVE_NODE_ID) {
-                        final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
+                        final SoulissTypical tgt = db.getSoulissTypical(node, slot);
                         UDPHelper.pollRequest(opzioni, 1, tgt.getNodeId());
                         final SoulissCommand cmdd = new SoulissCommand(tgt);
                         cmdd.getCommandDTO().setCommand(cmd);

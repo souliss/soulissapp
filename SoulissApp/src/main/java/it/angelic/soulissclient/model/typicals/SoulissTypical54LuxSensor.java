@@ -54,7 +54,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	
 	@Override
 	public float getOutputFloat() {
-		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
+		int miofratello = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))
 				.getTypicalDTO().getOutput();
 		// ora ho i due bytes, li converto
 		int shifted = miofratello << 8;

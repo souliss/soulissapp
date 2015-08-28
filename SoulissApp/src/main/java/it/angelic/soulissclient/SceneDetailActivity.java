@@ -61,7 +61,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		setContentView(R.layout.main_scenedetail);
 
 		// Backg. stuff
-		SoulissClient.setBackground((RelativeLayout) findViewById(R.id.containerlista), getWindowManager());
+		SoulissClient.setBackground(findViewById(R.id.containerlista), getWindowManager());
 		// Testata, info scena
 		createHeader();
 
@@ -69,7 +69,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaComandiView);
-        SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
+        SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +116,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 				// TODO exec single command ?
 			}
 		});
-        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**
@@ -219,11 +219,6 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
 		// thru = opzioni.isSoulissReachable();
@@ -232,9 +227,5 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		// filtere.addAction("it.angelic.soulissclient.GOT_DATA");
 	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
 
 }

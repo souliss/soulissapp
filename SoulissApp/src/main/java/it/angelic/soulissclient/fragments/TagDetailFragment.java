@@ -45,7 +45,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -367,7 +366,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
-     */
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         private final TextView textView;
         private final TextView textViewInfo1;
@@ -418,5 +417,5 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
 
     }
-
+*/
 }

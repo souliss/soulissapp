@@ -3,6 +3,7 @@ package com.robobunny;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.Preference;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,7 +99,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     }
    
     @Override
-    public void onBindView(View view) {
+    public void onBindView(@NonNull View view) {
         super.onBindView(view);
 
         try

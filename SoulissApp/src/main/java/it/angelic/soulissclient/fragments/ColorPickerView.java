@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -73,7 +74,6 @@ public class ColorPickerView extends View {
 
     }
 
-    @SuppressLint("NewApi")
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
@@ -102,7 +102,7 @@ public class ColorPickerView extends View {
     /**
      * {@inheritDoc}
      */
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
         // remove offset
         int centerX = colorSwitchRelativeLayout.getWidth() / 2;
         float r = (centerX - paint.getStrokeWidth()) / 2;

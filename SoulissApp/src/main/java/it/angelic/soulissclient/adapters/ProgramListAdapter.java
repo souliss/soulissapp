@@ -40,7 +40,7 @@ public class ProgramListAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return (int) programmi.length;
+        return programmi.length;
     }
 
     public Object getItem(int position) {
@@ -78,7 +78,7 @@ public class ProgramListAdapter extends BaseAdapter {
             holder.textCmdInfo.setTextColor(context.getResources().getColor(R.color.black));
         }
         SoulissCommandDTO dto = holder.data.getCommandDTO();
-        StringBuilder info = new StringBuilder(holder.data.toString());
+        //StringBuilder info = new StringBuilder(holder.data.toString());
 
         holder.textCmd.setText(holder.data.getNiceName());
         /* programma temporale */

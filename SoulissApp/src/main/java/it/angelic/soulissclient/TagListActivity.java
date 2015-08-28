@@ -100,7 +100,7 @@ public class TagListActivity extends AbstractStatusedFragmentActivity {
         listaTagsView = (ListView) findViewById(R.id.ListViewListaScenes);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaTagsView);
-        SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
+        SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {

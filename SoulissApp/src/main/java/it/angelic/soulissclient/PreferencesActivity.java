@@ -1,58 +1,30 @@
 package it.angelic.soulissclient;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.Constants;
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
-import it.angelic.soulissclient.preferences.BroadcastSettingsPreferenceListener;
-import it.angelic.soulissclient.preferences.DbPreferenceListener;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
-import it.angelic.soulissclient.preferences.IpChangerListener;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
-import it.angelic.soulissclient.preferences.ServicePreferenceListener;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
-import it.angelic.soulissclient.preferences.SetHtmlRootListener;
 import it.angelic.soulissclient.preferences.VisualSettingsFragment;
-import it.angelic.soulissclient.preferences.WebServerPreferenceListener;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -75,22 +47,23 @@ public class PreferencesActivity extends PreferenceActivity {
                     case Constants.Souliss_UDP_function_db_struct_resp:
                         Log.w(TAG, "DB STRUCT: " + currentScreen);
                         //if (currentScreen != null && currentScreen.equals("db_setup")) {
-                        Intent inten = PreferencesActivity.this.getIntent();
+                       /* Intent inten = PreferencesActivity.this.getIntent();
                         inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                         PreferencesActivity.this.finish();
                         PreferencesActivity.this.overridePendingTransition(0, 0);
-
                         inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
                         inten.setAction("db_setup");
                         inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         Toast.makeText(PreferencesActivity.this,
                                 PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
                                 Toast.LENGTH_SHORT).show();
-                        PreferencesActivity.this.startActivity(inten);
+                        PreferencesActivity.this.startActivity(inten);*/
+                        getFragmentManager().beginTransaction()
+                                .replace(android.R.id.content, new DbSettingsFragment()).commit();
                         //}
                         break;
                 /*case Constants.Souliss_UDP_function_ping_resp:// restart
-					if (currentScreen != null && currentScreen.equals("network_setup")) {
+                    if (currentScreen != null && currentScreen.equals("network_setup")) {
 						Intent intend = PreferencesActivity.this.getIntent();
 						intend.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 						PreferencesActivity.this.finish();
@@ -139,7 +112,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
         ListView v = getListView();
         v.setCacheColorHint(0);
-
 
     }
 

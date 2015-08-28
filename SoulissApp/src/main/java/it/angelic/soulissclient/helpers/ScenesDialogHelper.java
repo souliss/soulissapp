@@ -202,7 +202,7 @@ public class ScenesDialogHelper {
         for (SoulissNode object : goer) {
             nodiArray[q++] = object;
         }
-        SoulissNode fake = new SoulissNode((short) Constants.MASSIVE_NODE_ID);// MASSIVO
+        SoulissNode fake = new SoulissNode(Constants.MASSIVE_NODE_ID);// MASSIVO
         fake.setName(context.getString(R.string.allnodes));
         fake.setTypicals(datasource.getUniqueTypicals(fake));
         nodiArray[q] = fake;
@@ -272,7 +272,7 @@ public class ScenesDialogHelper {
                                 Toast.makeText(context, "Typical not selected", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            tull.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
+                            tull.getCommandDTO().setNodeId(Constants.MASSIVE_NODE_ID);
                             //tull.getCommandDTO().setType(Constants.COMMAND_MASSIVE);
                             tull.getCommandDTO().setSlot(model.getTypicalDTO().getTypical());
                         } else

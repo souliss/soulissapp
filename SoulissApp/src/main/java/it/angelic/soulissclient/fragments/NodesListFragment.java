@@ -45,7 +45,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,8 +71,6 @@ public class NodesListFragment extends ListFragment {
 	//private TextView tt;
 	private boolean mDualPane;
 	private TextView textHeadListInfo;
-	private ImageButton online;
-	private TextView statusOnline;
     private SwipeRefreshLayout swipeLayout;
     private Toolbar actionBar;
 
@@ -395,12 +392,6 @@ public class NodesListFragment extends ListFragment {
 		}, 2500, Constants.GUI_UPDATE_INTERVAL); // updates UI each 5 secs
 	}
 
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-		// doUnbindService();
-		//datasource.close();
-	}
 
     private void refreshStatusIcon() {
         try {

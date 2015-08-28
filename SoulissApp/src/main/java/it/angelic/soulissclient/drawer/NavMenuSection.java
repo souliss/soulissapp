@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.drawer;
 public class NavMenuSection implements INavDrawerItem {
 
-    public static final int SECTION_TYPE = 0;
+    private static final int SECTION_TYPE = 0;
     private int id;
     private String label;
 
@@ -23,7 +23,7 @@ public class NavMenuSection implements INavDrawerItem {
         return label;
     }
 
-    public void setLabel(String label) {
+    private void setLabel(String label) {
         this.label = label;
     }
 

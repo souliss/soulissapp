@@ -31,7 +31,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,7 +96,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 
 		registerForContextMenu(listaProgrammiView);
 
-        SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
+        SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
 
 	}

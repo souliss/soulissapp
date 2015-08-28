@@ -35,7 +35,7 @@ public class NodesListAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return (int) nodi.length;
+		return nodi.length;
 	}
 
 	public Object getItem(int position) {
@@ -75,7 +75,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.hlt.setMax(50);
 			holder.hlt.setProgress(20);
 			holder.hlt.setProgress(0);
-			holder.hlt.setMax((int) Constants.MAX_HEALTH);
+			holder.hlt.setMax(Constants.MAX_HEALTH);
 			holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
 			holder.imageRes = nodi[position].getIconResourceId();
 			// pgDrawable.getPaint().setStrokeWidth(3);

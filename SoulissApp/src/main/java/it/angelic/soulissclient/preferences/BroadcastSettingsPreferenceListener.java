@@ -2,15 +2,12 @@ package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.io.File;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;

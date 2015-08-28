@@ -90,7 +90,7 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 						Intent nodeDatail = new Intent(ctx, T15RGBIrActivity.class);
-						nodeDatail.putExtra("TIPICO", (SoulissTypical15) SoulissTypical15.this);
+						nodeDatail.putExtra("TIPICO", SoulissTypical15.this);
 						ctx.startActivity(nodeDatail);
 					}
 				};

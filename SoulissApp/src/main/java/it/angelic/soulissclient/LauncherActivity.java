@@ -97,7 +97,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             timeoutHandler.removeCallbacks(timeExpired);
             Bundle extras = intent.getExtras();
 
-            if (extras != null) {
+            if (extras != null && extras.get("MACACO") != null) {
                 Log.i(TAG, "Broadcast receive, refresh from DB");
                 @SuppressWarnings("unchecked")
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
@@ -240,11 +240,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         programsActivity = (Button) findViewById(R.id.Button06);
         basinfo = (TextView) findViewById(R.id.textViewBasicInfo);
         // basinfoLine = (View) findViewById(R.id.textViewBasicInfoLine);
-        serviceinfoLine = (View) findViewById(R.id.TextViewServiceLine);
+        serviceinfoLine = findViewById(R.id.TextViewServiceLine);
         dbwarn = (TextView) findViewById(R.id.textViewDBWarn);
-        dbwarnline = (View) findViewById(R.id.textViewDBWarnLine);
-        posInfoLine = (View) findViewById(R.id.PositionWarnLine);
-        webServiceInfoLine = (View) findViewById(R.id.TextViewWebServiceLine);
+        dbwarnline = findViewById(R.id.textViewDBWarnLine);
+        posInfoLine = findViewById(R.id.PositionWarnLine);
+        webServiceInfoLine = findViewById(R.id.TextViewWebServiceLine);
         serviceInfo = (TextView) findViewById(R.id.TextViewServiceActions);
         webserviceInfo = (TextView) findViewById(R.id.TextViewWebService);
         coordinfo = (TextView) findViewById(R.id.TextViewCoords);

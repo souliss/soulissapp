@@ -75,30 +75,6 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 		return ret;
 	}
 
-	/**
-	 * Ottiene il layout del pannello comandi
-	 * 
-	 */
-	@Override
-	public void getActionsLayout(final Context ctx, final LinearLayout parent) {
-
-		/*LinearLayout cont = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
-		cont.removeAllViews();
-		final TextView cmd = new TextView(ctx);
-		cmd.setText(ctx.getString(R.string.actions));
-		if (prefs.isLightThemeSelected())
-			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
-
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		cmd.setLayoutParams(lp);
-		// cmd.setGravity(Gravity.TOP);
-		cont.addView(cmd);
-*/
-		
-
-	}
-
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {
 			textStatusVal.setText(getOutputDesc());

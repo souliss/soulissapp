@@ -81,7 +81,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 		final Spinner slotspinner = (Spinner) findViewById(R.id.spinner2);
 		final EditText editCmd = (EditText) findViewById(R.id.editText1);
 
-		SoulissClient.setBackground((LinearLayout) findViewById(R.id.container), getWindowManager());
+		SoulissClient.setBackground(findViewById(R.id.container), getWindowManager());
 
         // DRAWER
         final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
@@ -382,7 +382,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			Bundle extras = intent.getExtras();
-			if (extras != null) {
+			if (extras != null && extras.get("MACACO") != null) {
 				ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
 				Log.d(TAG, "Broadcast RAW DATA: " + vers);
 				timeoutHandler.removeCallbacks(timeExpired);
@@ -413,7 +413,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 				GoButt.setEnabled(true);
 
 			} else {
-				Log.e(TAG, "EMPTY response!!");
+				Log.e(TAG, "EMPTY response ( extras.get(\"MACACO\"))!!");
 			}
 		}
 	};

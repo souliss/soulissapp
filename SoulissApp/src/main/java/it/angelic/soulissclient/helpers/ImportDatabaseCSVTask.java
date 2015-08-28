@@ -9,7 +9,6 @@ import it.angelic.soulissclient.db.SoulissLogDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
-import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +28,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.SQLException;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
 import android.preference.PreferenceActivity;

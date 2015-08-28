@@ -84,7 +84,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 		// Ci metto il nodo dentro
 		if (content != null) {
-			args.putSerializable("TIPICO", (SoulissTypical) content);
+			args.putSerializable("TIPICO", content);
 		}
 		f.setArguments(args);
 
@@ -356,11 +356,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 	}
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// inflater.inflate(R.menu.queue_options, menu);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

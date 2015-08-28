@@ -87,6 +87,7 @@ public class SoulissDBHelper {
      * @param nodeIN
      * @return
      */
+    @Deprecated
     public int refreshNode(SoulissNode nodeIN) {
         ContentValues values = new ContentValues();
         // wrap values from object
@@ -113,6 +114,7 @@ public class SoulissDBHelper {
      * @param nodeIN
      * @return
      */
+    @Deprecated
     public int refreshNodeAndTypicals(SoulissNode nodeIN) {
         ContentValues values = new ContentValues();
         // wrap values from object

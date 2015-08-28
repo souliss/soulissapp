@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
 
-import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,9 +20,6 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -43,7 +39,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         Log.d(Constants.TAG, "Element " + i + " set.");
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        ((ViewHolder) viewHolder).getTextView().setText((CharSequence) mDataset.get(i).getNiceName());
+        ((ViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
         ((ViewHolder) viewHolder).getTextView().setTag(i);
         mDataset.get(i).setOutputDescView(((ViewHolder) viewHolder).getTextViewInfo1());
         ((ViewHolder) viewHolder).getTextViewInfo2().setText(SoulissClient.getAppContext().getString(R.string.update) + " "

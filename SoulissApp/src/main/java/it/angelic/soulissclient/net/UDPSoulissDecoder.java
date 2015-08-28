@@ -238,7 +238,7 @@ public class UDPSoulissDecoder {
             for (SoulissTrigger soulissTrigger : triggers) {
                 SoulissTypical source = refreshedNodes.get(soulissTrigger.getInputNodeId()).getTypical(soulissTrigger.getInputSlot());
                 //SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto(),source);
-               // SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
+                // SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
 
                 // SoulissTypical target =
                 // refreshedNodes.get(command.getNodeId()).getTypical(command.getSlot());
@@ -417,7 +417,10 @@ public class UDPSoulissDecoder {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //ask for all typicals
                 UDPHelper.typicalRequest(opzioni, nodes, 0);
+                //first health req
+                UDPHelper.healthRequest(opzioni, nodes, 0);
             }
         }).start();
 
@@ -437,7 +440,7 @@ public class UDPSoulissDecoder {
             int done = 0;
             // SoulissNode node = database.getSoulissNode(tgtnode);
             int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
-            Log.i(Constants.TAG, "--DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
+            Log.i(Constants.TAG, "--DECODE MACACO TypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
                     + typXnodo);
             // creates Souliss nodes
             for (int j = 0; j < numberOf; j++) {
@@ -446,12 +449,18 @@ public class UDPSoulissDecoder {
                     dto.setTypical(mac.get(5 + j));
                     dto.setSlot(((short) (j % typXnodo)));// magia
                     dto.setNodeId((short) (j / typXnodo + tgtnode));
-                    // conta solo i master
-                    if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
-                        done++;
-                    Log.d(Constants.TAG, "---PERSISTING TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
-                            + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
-                    dto.persist();
+                    try {
+                        dto.persist();
+                        // conta solo i master
+                        if (mac.get(5 + j) != it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related)
+                            done++;
+                        Log.d(Constants.TAG, "---PERSISTED TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
+                                + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
+                    } catch (Exception ie) {
+                        Log.e(Constants.TAG, "---PERSIST ERROR:" + ie.getMessage()+" - " + ((short) (j / typXnodo + tgtnode))
+                                + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
+
+                    }
                 }
             }
             if (soulissSharedPreference.contains("numTipici"))
@@ -550,7 +559,7 @@ public class UDPSoulissDecoder {
     public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
 
         Intent notificationIntent = new Intent(ctx, T4nFragWrapper.class);
-        notificationIntent.putExtra("TIPICO", (SoulissTypical41AntiTheft) ty);
+        notificationIntent.putExtra("TIPICO", ty);
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 

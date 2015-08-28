@@ -203,7 +203,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
-		tableRowLamp = (TableRow) ret.findViewById(R.id.tableRowLamp);
+		tableRowLamp = ret.findViewById(R.id.tableRowLamp);
 		tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
 
 		btFlash = (Button) ret.findViewById(R.id.flash);
@@ -348,7 +348,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		args.putInt("index", index);
 		// Ci metto il nodo dentro
 		if (content != null) {
-			args.putSerializable("TIPICO", (SoulissTypical19AnalogChannel) content);
+			args.putSerializable("TIPICO", content);
 		}
 		f.setArguments(args);
 

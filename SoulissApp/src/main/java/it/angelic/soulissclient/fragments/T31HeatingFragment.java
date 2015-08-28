@@ -66,7 +66,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment {
 		
 		// Ci metto il nodo dentro
 		if (content != null) {
-			args.putSerializable("TIPICO", (SoulissTypical) content);
+			args.putSerializable("TIPICO", content);
 		}
 		f.setArguments(args);
 

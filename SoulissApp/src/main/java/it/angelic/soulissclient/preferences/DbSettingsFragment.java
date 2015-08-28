@@ -3,26 +3,38 @@ package it.angelic.soulissclient.preferences;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import android.annotation.TargetApi;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.util.Log;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 public class DbSettingsFragment extends PreferenceFragment {
 
-    @Override
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		getView().setClickable(true);
+		//http://stackoverflow.com/questions/8362908/preferencefragment-is-shown-transparently
+		getView().setBackgroundColor(Color.BLACK);
+	}
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
         SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
 		//String settings;
 		super.onCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.settings_db);
-		Preference createDbPref = (Preference) findPreference("createdb");
-		Preference dropDbPref = (Preference) findPreference("dropdb");
-		Preference exportDBPref = (Preference) findPreference("dbexp");
-		Preference imortDBPref = (Preference) findPreference("dbimp");
-		Preference optimDBPref = (Preference) findPreference("dbopt");
-		Preference dbinfopref = (Preference) findPreference("dbinfo");
+		Preference createDbPref = findPreference("createdb");
+		Preference dropDbPref = findPreference("dropdb");
+		Preference exportDBPref = findPreference("dbexp");
+		Preference imortDBPref = findPreference("dbimp");
+		Preference optimDBPref = findPreference("dbopt");
+		Preference dbinfopref = findPreference("dbinfo");
 		/* listeners DB */
 		exportDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		imortDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
@@ -36,7 +48,6 @@ public class DbSettingsFragment extends PreferenceFragment {
 				strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
 				opzioni.getCustomPref().getInt("numTipici", 0));
 		dbinfopref.setSummary(strMeatMsg);
-
 
 	}
 	

@@ -55,7 +55,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	private ListView listaScenesView;
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
-	private TextView tt;
 
 
 	private ArrayAdapter<INavDrawerItem> mAdapter;
@@ -86,7 +85,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaScenesView);
-		SoulissClient.setBackground((LinearLayout) findViewById(R.id.containerlistaScenes), getWindowManager());
+		SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +125,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 				Log.w(TAG, "Activating SCENE " + arg2);
 				Intent nodeDatail = new Intent(SceneListActivity.this, SceneDetailActivity.class);
 				SceneViewHolder holder = (SceneViewHolder) arg1.getTag();
-				nodeDatail.putExtra("SCENA", (SoulissScene) holder.data);
+				nodeDatail.putExtra("SCENA", holder.data);
 				SceneListActivity.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
 					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

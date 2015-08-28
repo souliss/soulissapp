@@ -21,7 +21,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -99,7 +98,7 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
 
 	@Override
 	public float getOutputFloat() {
-		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
+		int miofratello = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))
 				.getTypicalDTO().getOutput();
 		// ora ho i due bytes, li converto
 		int shifted = miofratello << 8;

@@ -41,7 +41,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
 		// Hack lista vuota
 		//if (comandiScena == null || comandiScena.length == 0)
 		//	return 1;
-		return (int) comandiScena.length;
+		return comandiScena.length;
 	}
 
 	public Object getItem(int position) {

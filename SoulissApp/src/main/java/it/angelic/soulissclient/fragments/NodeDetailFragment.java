@@ -385,29 +385,29 @@ public class NodeDetailFragment extends ListFragment {
 				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
 				nodeDatail = new Intent(getActivity(), T32AirConActivity.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical32AirCon) target);
+				nodeDatail.putExtra("TIPICO", target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getSlot() + 1)));
 			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T15_RGB) {
 				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical15) target);
+				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == Souliss_T16) {
 				nodeDatail = new Intent(getActivity(), T16RGBFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical16AdvancedRGB) target);
+				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == Souliss_T19) {
 				nodeDatail = new Intent(getActivity(), T19SingleChannelFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical19AnalogChannel) target);
+				nodeDatail.putExtra("TIPICO", target);
 			}  else if (target.getTypical() == Souliss_T31) {
 				nodeDatail = new Intent(getActivity(), T31FragWrapper.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical31Heating) target);
+				nodeDatail.putExtra("TIPICO", target);
 			} else if ((target.getTypical() == Souliss_T11)
                     || (target.getTypical() == Souliss_T12)) {
 				nodeDatail = new Intent(getActivity(), T1nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
+				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == Souliss_T41_Antitheft_Main
 					|| target.getTypical() == Souliss_T42_Antitheft_Peer
 					|| target.getTypical() == Souliss_T43_Antitheft_LocalPeer) {
 				nodeDatail = new Intent(getActivity(), T4nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", (SoulissTypical) target);
+				nodeDatail.putExtra("TIPICO", target);
 			}
 
 			if (nodeDatail != null) {// se ho fatto uno degli if precedente

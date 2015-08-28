@@ -188,7 +188,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		btBlu3.setOnClickListener(plus);
 		btBlu4.setOnClickListener(plus);
 		btBlu5.setOnClickListener(plus);
-        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -262,7 +262,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 			int howmany = extras.getInt("quantity");
 
 			// SoulissNode[] numversioni = new SoulissNode[(int) howmany];
-			int temp = (int) howmany - 1;
+			int temp = howmany - 1;
 
 			while (temp >= 0) {
 				SoulissNode temrp = (SoulissNode) vers.getSerializable("" + temp);

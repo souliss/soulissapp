@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.model;
 
-import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 
@@ -54,7 +53,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
      * @return
      */
     public static SoulissNode cursorToNode(Cursor cursor) {
-        SoulissNode comment = new SoulissNode((short) cursor.getShort(1));
+        SoulissNode comment = new SoulissNode(cursor.getShort(1));
         // comment.setName(cursor.getString(3));
 
         comment.setHealth(cursor.getShort(2));
@@ -88,7 +87,7 @@ public class SoulissNode implements Serializable, ISoulissObject {
         iconId = itemResId;
     }
 
-    public short getId() {
+    public  short  getId() {
         return id;
     }
 

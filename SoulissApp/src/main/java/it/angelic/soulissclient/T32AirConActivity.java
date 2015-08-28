@@ -231,7 +231,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 			}
 		};
 		btOff.setOnClickListener(simplecan);
-        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
@@ -362,7 +362,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 			int howmany = extras.getInt("quantity");
 
 			// SoulissNode[] numversioni = new SoulissNode[(int) howmany];
-			int temp = (int) howmany - 1;
+			int temp = howmany - 1;
 
 			//TODO sta qua e` roba vetusta. Controllare
 			while (temp >= 0) {

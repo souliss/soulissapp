@@ -102,18 +102,18 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         nodiArray = new SoulissNode[goer.size()];
         nodiArray = goer.toArray(nodiArray);
         //Aggiungo massivo
-        SoulissNode massive = new SoulissNode((short) Constants.MASSIVE_NODE_ID);// MASSIVO
+        SoulissNode massive = new SoulissNode( Constants.MASSIVE_NODE_ID);// MASSIVO
         massive.setName(getString(R.string.allnodes));
         massive.setTypicals(datasource.getUniqueTypicals(massive));
         goer.add(massive);
         //AGGIUNGO scene
-        SoulissNode fake = new SoulissNode((short) Constants.COMMAND_FAKE_SCENE);// MASSIVO
+        SoulissNode fake = new SoulissNode( Constants.COMMAND_FAKE_SCENE);// MASSIVO
         fake.setName(getString(R.string.scenes_title));
         goer.add(fake);
 
         nodiArrayWithExtra = new SoulissNode[goer.size()];
         nodiArrayWithExtra = goer.toArray(nodiArrayWithExtra);
-        SoulissClient.setBackground((ScrollView) findViewById(R.id.ScrollView01), getWindowManager());
+        SoulissClient.setBackground( findViewById(R.id.ScrollView01), getWindowManager());
 
     }
 
@@ -246,7 +246,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         final Button btCancel = (Button) findViewById(R.id.buttonInsertProgram);
         final Button btSave = (Button) findViewById(R.id.buttonCancelProgram);
 
-        ((AbstractStatusedFragmentActivity) this).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /**
          * LISTENER SPINNER DESTINATARIO, IN TESTATA
          */
@@ -394,13 +394,15 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     //programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
                     //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
                 }
-                //sceneId solo per i comandi che appartengono a una scena
-                programToSave.getCommandDTO().setSceneId(null);
-
                 if (programToSave == null) {
                     Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
                     return;
                 }
+
+                //sceneId solo per i comandi che appartengono a una scena
+                programToSave.getCommandDTO().setSceneId(null);
+
+
                 Intent intent = AddProgramActivity.this.getIntent();
                 datasource.open();
                 if (radioTimed.isChecked()) {// temporal schedule
@@ -637,10 +639,5 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         tgt.setAdapter(adapter);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // datasource.close();
-    }
 
 }

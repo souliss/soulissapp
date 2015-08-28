@@ -73,9 +73,9 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 
 	public @ColorRes int bitColor(int bitNum) {
 		if (isnThOn(bitNum))
-			return SoulissClient.getAppContext().getResources().getColor(R.color.std_green);
+			return R.color.std_green;
 		else
-			return SoulissClient.getAppContext().getResources().getColor(R.color.std_red);
+			return R.color.std_red;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		for (int i = 0; i < 8; i++) {
-			str.setSpan(new ForegroundColorSpan(bitColor(i)), i, i  + 1,
+			str.setSpan(new ForegroundColorSpan(SoulissClient.getAppContext().getResources().getColor(bitColor(i))), i, i  + 1,
 					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 			// cmd.setVisibility(View.GONE);

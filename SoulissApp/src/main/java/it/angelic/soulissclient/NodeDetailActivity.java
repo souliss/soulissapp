@@ -85,8 +85,10 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         //super.onCreate(savedInstanceState);
 
 		Bundle extras = getIntent().getExtras();
-		if (extras != null && extras.get("NODO") != null)
+		if (extras != null && extras.get("NODO") != null) {
 			collected = (SoulissNode) extras.get("NODO");
+			initDrawer(NodeDetailActivity.this, collected.getId());
+		}
 		if (savedInstanceState == null) {
 			// During initial setup, plug in the details fragment.
 			NodeDetailFragment details = new NodeDetailFragment();
@@ -94,7 +96,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
            // questo fragment viene usato anche per typ detail
             getSupportFragmentManager().beginTransaction().add(R.id.detailPane, details).commit();
         }
-        initDrawer(NodeDetailActivity.this, collected.getId());
+
 	}
 	@Override
 	protected void onStart() {

@@ -97,7 +97,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     if (bcast_IP.getText().length() == 0)
                         throw new Exception("empty parameter: IP address");
                     InetAddress i4 = InetAddress.getByName(bcast_IP.getText());
-                    Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_IP parameter:" + i4.getHostAddress().toString());
+                    Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_IP parameter:" + i4.getHostAddress());
                     for (int tper = 0; tper < i4.getAddress().length; tper++) {
                         bcastPayload.add(i4.getAddress()[tper]);
                     }
@@ -110,7 +110,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                 // SUBNET
                 try {
                     InetAddress is4 = InetAddress.getByName(bcast_subnet.getText());
-                    Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_subnet parameter:" + is4.getHostAddress().toString());
+                    Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_subnet parameter:" + is4.getHostAddress());
                     for (int tper = 0; tper < is4.getAddress().length; tper++) {
                         bcastPayload.add(is4.getAddress()[tper]);
                     }
@@ -126,7 +126,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     for (int tper = 0; tper < ig4.getAddress().length; tper++) {
                         bcastPayload.add(ig4.getAddress()[tper]);
                     }
-                    Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_gateway parameter:" + ig4.getHostAddress().toString());
+                    Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_gateway parameter:" + ig4.getHostAddress());
                 } catch (Exception e) {
                     bcastPayload.add((byte) 0);
                     bcastPayload.add((byte) 0);
@@ -137,9 +137,11 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                 try {
                     wifi = bcast_ssid.getText().getBytes();
                     Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_ssid parameter:" + bcast_ssid.getText());
-                    for (int i = 0; i < wifi.length; i++) {
+                    int i = 0;
+                    while (i < wifi.length) {
                         byte b = wifi[i];
                         ssidPayload.add(b);// lunghezza
+                        i++;
                     }
                 } catch (Exception e) {
                     Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_ssid parameter:" + bcast_ssid.getText() + e.getMessage());

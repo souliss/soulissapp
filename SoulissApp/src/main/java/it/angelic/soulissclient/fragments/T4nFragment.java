@@ -100,7 +100,7 @@ public class T4nFragment extends Fragment {
         args.putInt("index", index);
         // Ci metto il nodo dentro
         if (content != null) {
-            args.putSerializable("TIPICO", (SoulissTypical) content);
+            args.putSerializable("TIPICO", content);
         }
         f.setArguments(args);
 
@@ -146,7 +146,7 @@ public class T4nFragment extends Fragment {
             Log.e(Constants.TAG, "Error retriving node:");
             return ret;
         }
-        assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
+        assertTrue("TIPICO NULLO", collected!=null);
         collected.setPrefs(opzioni);
 
 

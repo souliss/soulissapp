@@ -47,10 +47,10 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 		// datasource = new SoulissDBHelper(getActivity());
 
 		addPreferencesFromResource(R.xml.settings_dataservice);
-		final Preference serviceActive = (Preference) findPreference("checkboxService");
-		final Preference webserviceActive = (Preference) findPreference("webserverEnabled");
-		final Preference setHomeLocation = (Preference) findPreference("setHomeLocation");
-		final Preference setHtmlRoot = (Preference) findPreference("setHtmlRoot");
+		final Preference serviceActive = findPreference("checkboxService");
+		final Preference webserviceActive = findPreference("webserverEnabled");
+		final Preference setHomeLocation = findPreference("setHomeLocation");
+		final Preference setHtmlRoot = findPreference("setHtmlRoot");
 		/* START STOP SoulissDataService */
 		serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(getActivity()));
 

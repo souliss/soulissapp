@@ -2,7 +2,9 @@ package it.angelic.soulissclient.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -95,7 +97,7 @@ public class SoulissTypicalDTO implements Serializable {
     public int persist() {
         SoulissDBHelper.open();
         SQLiteDatabase db = SoulissDBHelper.getDatabase();
-
+int upd;
         ContentValues values = new ContentValues();
         assertTrue(getSlot() != -1);
         values.put(SoulissDB.COLUMN_TYPICAL_NODE_ID, getNodeId());
@@ -107,14 +109,20 @@ public class SoulissTypicalDTO implements Serializable {
         values.put(SoulissDB.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
         //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
         values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
-        int upd = SoulissDBHelper.getDatabase().update(
-                SoulissDB.TABLE_TYPICALS,
-                values,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
-                        + " = " + getSlot(), null);
-        if (upd == 0) {
+
+        try {
             upd = (int) db.insert(SoulissDB.TABLE_TYPICALS, null, values);
+        } catch (SQLiteConstraintException sqe){
+            upd = SoulissDBHelper.getDatabase().update(
+                    SoulissDB.TABLE_TYPICALS,
+                    values,
+                    SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                            + " = " + getSlot(), null);
         }
+        if (upd == 0) {
+            Log.w(TAG, "WARNING: UNPERSISTED TYPICAL! ");
+        }
+
         return upd;
     }
 
@@ -155,7 +163,7 @@ public class SoulissTypicalDTO implements Serializable {
      *
      * @return
      */
-    public int refresh(@Nullable SoulissTypical parent) {
+    public int refresh(@NonNull SoulissTypical parent) {
         if (SoulissClient.getOpzioni().isLogHistoryEnabled() && !(this instanceof ISoulissTypicalSensor)) {
             // se e` un sensore viene loggato altrove
             Cursor cursor = SoulissDBHelper.getDatabase().query(

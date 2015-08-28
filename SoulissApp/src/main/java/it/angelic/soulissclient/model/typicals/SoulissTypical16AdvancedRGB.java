@@ -81,11 +81,11 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	}
 
 	public int getColor(){
-		int r = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
+		int r = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))
 				.getTypicalDTO().getOutput();
-		int g = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 2)))
+		int g = getParentNode().getTypical((short) (typicalDTO.getSlot() + 2))
 				.getTypicalDTO().getOutput();
-		int b = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 3)))
+		int b = getParentNode().getTypical((short) (typicalDTO.getSlot() + 3))
 				.getTypicalDTO().getOutput();
 		return Color.rgb(r, g, b);
 	}

@@ -6,6 +6,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -30,23 +31,23 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
  * @author Ale
  * 
  */
-public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity {
-	protected SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
-	protected Toolbar actionBar;
+public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity {
+	SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+	private Toolbar actionBar;
 
     //IL drawer ci piace qui
-    protected LinearLayout mDrawerLinear;
+    LinearLayout mDrawerLinear;
     // private CharSequence mTitle;
 
-    protected TextView info1;
-    protected TextView info2;
-    protected DrawerMenuHelper dmh;
-    protected DrawerLayout mDrawerLayout;
-    protected ActionBarDrawerToggle mDrawerToggle;
-    protected ListView mDrawerList;
-    protected NavDrawerAdapter mDrawermAdapter;
+    private TextView info1;
+    private TextView info2;
+    DrawerMenuHelper dmh;
+    DrawerLayout mDrawerLayout;
+    ActionBarDrawerToggle mDrawerToggle;
+    ListView mDrawerList;
+    NavDrawerAdapter mDrawermAdapter;
     private FloatingActionButton mDrawerFloatButt;
-    protected TextView actionTitle;
+    TextView actionTitle;
 
     /**
 	 * chiamato dal layout xml
@@ -65,7 +66,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 		super.onStart();
 	}
 
-	protected void setActionBarInfo(String title) {
+	void setActionBarInfo(String title) {
 		try {
 			//actionBar = getSupportActionBar();
 			View ds = actionBar.getRootView();
@@ -89,7 +90,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
 		}
 	}
 
-    protected void initDrawer(final Activity parentActivity,int activeSection){
+    void initDrawer(final Activity parentActivity, int activeSection){
 
         // DRAWER
         dmh = new DrawerMenuHelper();
@@ -131,7 +132,7 @@ public abstract class AbstractStatusedFragmentActivity extends ActionBarActivity
                     mDrawerLayout.closeDrawer(mDrawerLinear);
                     Intent myIntent = new Intent(AbstractStatusedFragmentActivity.this, TagDetailActivity.class);
                     //I preferiti son sempre quelli
-                    myIntent.putExtra("TAG", (long) SoulissDB.FAVOURITES_TAG_ID);
+                    myIntent.putExtra("TAG", SoulissDB.FAVOURITES_TAG_ID);
 
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     AbstractStatusedFragmentActivity.this.startActivity(myIntent);

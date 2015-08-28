@@ -61,7 +61,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     }
 
     public int getIntensity() {
-        int r = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)))
+        int r = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))
                 .getTypicalDTO().getOutput();
         return r;
     }
@@ -76,7 +76,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     public void getActionsLayout(final Context ctx,
                                  LinearLayout convertView) {
 
-        LinearLayout cont = (LinearLayout) convertView;
+        LinearLayout cont = convertView;
         cont.removeAllViews();
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);

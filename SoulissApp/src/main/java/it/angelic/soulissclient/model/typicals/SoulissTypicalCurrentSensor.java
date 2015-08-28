@@ -39,13 +39,13 @@ public class SoulissTypicalCurrentSensor extends SoulissTypical {
 	private static final long serialVersionUID = 3784476625375361669L;
 
 	public int getOutputFloat() {
-		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
+		int miofratello = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)).getTypicalDTO().getOutput();
 
-		return (int)10 * ( typicalDTO.getOutput() + (int) miofratello / 100);
+		return 10 * ( typicalDTO.getOutput() + miofratello / 100);
 	}
 
 	public String getOutputAmperes() {
-		int miofratello = ((SoulissTypical) getParentNode().getTypical((short) (typicalDTO.getSlot() + 1))).getTypicalDTO().getOutput();
+		int miofratello = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)).getTypicalDTO().getOutput();
 
 		return "" + typicalDTO.getOutput() + "." + miofratello;
 	}
@@ -93,7 +93,7 @@ public class SoulissTypicalCurrentSensor extends SoulissTypical {
 		par.setProgress(20);
 		par.setProgress(0);
 		par.setMax(3000);//20 amperes
-		par.setProgress((int) getOutputFloat());
+		par.setProgress(getOutputFloat());
 
 		cont.addView(par);
 

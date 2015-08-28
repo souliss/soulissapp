@@ -63,7 +63,7 @@ public class UDPHelper {
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
+				merd[i] = buf.get(i);
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
@@ -86,6 +86,7 @@ public class UDPHelper {
 		}
 	}
 
+	/*
 	public static String issueSoulissCommand(SoulissCommand in, SoulissPreferenceHelper prefs) {
 		SoulissCommandDTO dto = in.getCommandDTO();
 
@@ -93,7 +94,7 @@ public class UDPHelper {
 				 String.valueOf(dto.getCommand()));
 		return ret;
 
-	}
+	}*/
 
 	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, int functional, List<Byte> bcastPayload,@Nullable Boolean isGw) {
 		InetAddress serverAddr;
@@ -130,7 +131,7 @@ public class UDPHelper {
 					 * (lunghezza password byte)*/
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
+				merd[i] = buf.get(i);
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
@@ -172,7 +173,7 @@ public class UDPHelper {
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
+				merd[i] = buf.get(i);
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
@@ -247,7 +248,7 @@ public class UDPHelper {
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
+				merd[i] = buf.get(i);
 			}
 			sender.bind(sa);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  pref.getUDPPort());
@@ -282,7 +283,7 @@ public class UDPHelper {
 
 			byte[] merd = new byte[buf.size()];
 			for (int i = 0; i < buf.size(); i++) {
-				merd[i] = (byte) buf.get(i);
+				merd[i] = buf.get(i);
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
@@ -549,7 +550,7 @@ public class UDPHelper {
 		byte[] dude = ip.getAddress();
 		frame.add((byte) 23);// PUTIN
 
-		frame.add((byte) dude[3]);// es 192.168.1.XX BOARD
+		frame.add(dude[3]);// es 192.168.1.XX BOARD
 		// n broadcast : La comunicazione avviene utilizzando l'indirizzo IP
 		// 255.255.255.255 a cui associare l'indirizzo vNet 0xFFFF.
 		frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);
@@ -569,7 +570,7 @@ public class UDPHelper {
 
 		// Send broadcast timeout
 		Intent i = new Intent();
-		int it = (int) (SoulissClient.getOpzioni().getRemoteTimeoutPref());
+		int it = SoulissClient.getOpzioni().getRemoteTimeoutPref();
 		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
@@ -600,7 +601,7 @@ public class UDPHelper {
 		assertEquals(true, functional < Byte.MAX_VALUE);
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add((byte) functional);// functional code
+		frame.add(functional);// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
@@ -647,7 +648,7 @@ public class UDPHelper {
 			// che schifo
 			int merdata = Integer.decode(number);
 			if (merdata > 255)
-				Log.w(Constants.TAG, "Overflow with command " + cmd);
+				Log.w(Constants.TAG, "Overflow with command string: " + number);
 			frame.add((byte) merdata);
 		}
 
@@ -669,7 +670,7 @@ public class UDPHelper {
 
 		for (Byte number : payLoad) {
 			// che schifo
-			frame.add((byte) number);
+			frame.add(number);
 		}
 
 		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
@@ -690,7 +691,7 @@ public class UDPHelper {
 
 		for (Byte number : payLoad) {
 			// che schifo
-			frame.add((byte) number);
+			frame.add(number);
 		}
 
 		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
@@ -711,7 +712,7 @@ public class UDPHelper {
 
 		for (Byte number : payLoad) {
 			// che schifo
-			frame.add((byte) number);
+			frame.add(number);
 		}
 
 		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
@@ -728,7 +729,7 @@ public class UDPHelper {
 	private static byte[] toByteArray(ArrayList<Byte> buf) {
 		byte[] merd = new byte[buf.size()];
 		for (int i = 0; i < buf.size(); i++) {
-			merd[i] = (byte) buf.get(i);
+			merd[i] = buf.get(i);
 		}
 		return merd;
 	}

@@ -31,7 +31,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 			Log.i(TAG, "Calling setBestAddress to check connectivity");
 			opzioni.setBestAddress();
 		}
-		if (intent.getExtras().getBoolean(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
+		if (intent.getExtras() != null && intent.getExtras().getBoolean(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
 			Log.w(TAG, "There's no network connectivity");
 			if (opzioni.getCustomPref().contains("connection"))
 				editor.remove("connection");

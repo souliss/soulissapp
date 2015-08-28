@@ -62,7 +62,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(getActivity()));
 		
 		// GOOGLE PLUS link
-		Preference creditsPref = (Preference) findPreference("credits");
+		Preference creditsPref = findPreference("credits");
 		creditsPref.setTitle(getResources().getString(R.string.app_name) + " Version " + strVersionName);
 		creditsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
@@ -130,7 +130,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 			}
 		});
 
-		nodeIndex = (Preference) findPreference("nodeindexIC");
+		nodeIndex = findPreference("nodeindexIC");
 		String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
 		nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 

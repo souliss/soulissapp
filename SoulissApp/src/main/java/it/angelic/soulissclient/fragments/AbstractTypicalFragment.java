@@ -13,8 +13,8 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 public class AbstractTypicalFragment extends Fragment {
-	protected Toolbar actionBar;
-	protected SoulissPreferenceHelper opzioni;
+	Toolbar actionBar;
+	private SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;
 
     public AbstractTypicalFragment() {
@@ -34,7 +34,7 @@ public class AbstractTypicalFragment extends Fragment {
     }
 
 
-    protected  void refreshStatusIcon() {
+    void refreshStatusIcon() {
 		try {
             View ds = actionBar.getRootView();
 			if (ds != null) {
@@ -65,7 +65,7 @@ public class AbstractTypicalFragment extends Fragment {
 	public SoulissTypical getCollected() {
 		return collected;
 	}
-	public void setCollected(SoulissTypical collected) {
+	void setCollected(SoulissTypical collected) {
 		this.collected = collected;
 	}
 

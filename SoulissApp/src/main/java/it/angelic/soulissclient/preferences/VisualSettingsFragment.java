@@ -20,7 +20,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 		super.onCreate(savedInstanceState);
 		opzioni = SoulissClient.getOpzioni();
 		addPreferencesFromResource(R.xml.settings_visual);
-		final Preference restoreWarns = (Preference) findPreference("restoredialogs");
+		final Preference restoreWarns = findPreference("restoredialogs");
 		//final Preference lightThemeCheckBox = (Preference) findPreference("checkboxHoloLight");
 
 		// Rimette i dialogs

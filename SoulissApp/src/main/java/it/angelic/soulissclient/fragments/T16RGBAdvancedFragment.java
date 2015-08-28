@@ -1,16 +1,12 @@
 package it.angelic.soulissclient.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -22,14 +18,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -43,9 +37,7 @@ import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -131,7 +123,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         args.putInt("index", index);
         // Ci metto il nodo dentro
         if (content != null) {
-            args.putSerializable("TIPICO", (SoulissTypical16AdvancedRGB) content);
+            args.putSerializable("TIPICO", content);
         }
         f.setArguments(args);
 

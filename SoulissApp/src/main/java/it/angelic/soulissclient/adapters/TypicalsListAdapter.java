@@ -59,7 +59,7 @@ public class TypicalsListAdapter extends BaseAdapter {
         // Hack lista vuota
         if (tipici == null || tipici.length == 0)
             return 1;
-        return (int) tipici.length;
+        return tipici.length;
     }
 
     public Object getItem(int position) {

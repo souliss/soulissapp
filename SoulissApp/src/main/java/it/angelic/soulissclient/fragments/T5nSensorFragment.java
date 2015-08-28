@@ -306,12 +306,12 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
 		Set<Date> dates = logs.keySet();
 		for (Date date2 : dates) {
-			if (((SoulissHistoryGraphData) logs.get(date2)).min != 0) {
-				avgSeries.add(date2, ((SoulissHistoryGraphData) logs.get(date2)).average);
-				minSeries.add(date2, ((SoulissHistoryGraphData) logs.get(date2)).min);
-				maxSeries.add(date2, ((SoulissHistoryGraphData) logs.get(date2)).max);
-				Log.d(TAG, "Adding serie " + date2 + ": min=" + ((SoulissHistoryGraphData) logs.get(date2)).min
-						+ " max=" + ((SoulissHistoryGraphData) logs.get(date2)).max);
+			if (logs.get(date2).min != 0) {
+				avgSeries.add(date2, logs.get(date2).average);
+				minSeries.add(date2, logs.get(date2).min);
+				maxSeries.add(date2, logs.get(date2).max);
+				Log.d(TAG, "Adding serie " + date2 + ": min=" + logs.get(date2).min
+						+ " max=" + logs.get(date2).max);
 			} else {
 				avgSeries.add(date2, 0);
 				minSeries.add(date2, 0);
@@ -371,18 +371,18 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
 		int lengt = logs.size();
 		for (int k = 0; k < lengt; k++) {
-			Log.d(TAG, "Adding serie " + (k ) + ": min=" + ((SoulissGraphData) logs.get(k)).min + " max="
-					+ ((SoulissGraphData) logs.get(k)).max
-					 + " AVG=" + ((SoulissGraphData) logs.get(k)).average);
+			Log.d(TAG, "Adding serie " + (k ) + ": min=" + logs.get(k).min + " max="
+					+ logs.get(k).max
+					 + " AVG=" + logs.get(k).average);
 			
-			if (((SoulissGraphData) logs.get(k )).min != 0) {
-				minmaxserie.add(((SoulissGraphData) logs.get(k )).min,
-						((SoulissGraphData) logs.get(k )).max);
+			if (logs.get(k ).min != 0) {
+				minmaxserie.add(logs.get(k ).min,
+						logs.get(k ).max);
 			} else {
 				minmaxserie.add(0, 0);
 			}
-			sunSeries.add(k+1, ((SoulissGraphData) logs.get(k)).average);
-			Log.d(TAG, "Adding serie " + (k) + " AVG=" + ((SoulissGraphData) logs.get(k)).average);
+			sunSeries.add(k+1, logs.get(k).average);
+			Log.d(TAG, "Adding serie " + (k) + " AVG=" + logs.get(k).average);
 		}
 
 		dataset.addSeries(0, minmaxserie.toXYSeries());
