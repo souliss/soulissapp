@@ -65,6 +65,7 @@
                 android:id="@+id/TextViewWebService"
                 style="@style/CodeFontMain"
                 android:layout_marginLeft="5dip"
+                android:layout_below="@id/textViewDBWarnLine"
                 android:textIsSelectable="false" />
 
             <View

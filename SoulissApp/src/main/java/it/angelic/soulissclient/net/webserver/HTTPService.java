@@ -42,7 +42,7 @@ public class HTTPService extends Service {
 		startWebServer();
 
 		Log.i(Constants.TAG, "Service onStartCommand()");
-		Toast.makeText(server.getContext(), "Zozzariello ON", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(server.getContext(), "Zozzariello ON", Toast.LENGTH_SHORT).show();
 		
 
 		return START_STICKY;

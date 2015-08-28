@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
-import org.apache.http.conn.util.InetAddressUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -38,7 +38,7 @@ public class NetUtils {
 				//System.out.println("ip2--:" + inetAddress.getHostAddress());
 
 				// for getting IPV4 format
-				if (!inetAddress.isLoopbackAddress() && InetAddressUtils.isIPv4Address(inetAddress.getHostAddress())) {
+				if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
 					// return inetAddress.getHostAddress().toString();
 					return inetAddress;
 				}

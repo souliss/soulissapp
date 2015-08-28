@@ -9,7 +9,6 @@ import android.util.Log;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthenticationException;
 import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.impl.DefaultHttpServerConnection;
@@ -168,24 +167,24 @@ public class Zozzariello extends Thread {
 	}
 
 	protected static void doLogin(HttpRequest request, HttpResponse response, HttpContext httpContext,
-			SharedPreferences pref) throws AuthenticationException {
+			SharedPreferences pref) throws Exception {
 		if (request.getHeaders("Authorization").length == 0) {
 
-			throw new AuthenticationException();
+			throw new Exception("Authentication");
 		} else {
 			String auth = request.getHeaders("Authorization")[0].getValue();
 			if (!auth.startsWith("Basic "))
-				throw new AuthenticationException();
+				throw new Exception("Authentication");
 			auth = auth.substring(6);
 			byte[] in = Base64.decode(auth, Base64.DEFAULT);
 			try {
 				String o = new String(in, "UTF-8");
 				if (o.compareTo(pref.getString("webUser", "") + ":" + pref.getString("webPass", "")) != 0)
-					throw new AuthenticationException();
+					throw new Exception("Authentication");
 				// Login Success!!
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-				throw new AuthenticationException();
+				throw new Exception("Authentication");
 			}
 			// byte[] in = {'u','s','e','r',':'};
 			byte[] out = Base64.encode(in, Base64.DEFAULT);

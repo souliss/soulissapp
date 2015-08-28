@@ -200,7 +200,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     void doBindWebService() {
         //FIXME check flags, add BIND_NOT_FOREGROUND
         Log.d(TAG, "doBindWebService(), BIND_NOT_FOREGROUND.");
-        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_NOT_FOREGROUND);
+        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_AUTO_CREATE);
     }
 
     void doUnbindService() {

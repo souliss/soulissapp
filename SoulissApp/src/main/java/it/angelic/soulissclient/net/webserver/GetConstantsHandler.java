@@ -13,7 +13,6 @@ import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.auth.AuthenticationException;
 import org.apache.http.entity.ContentProducer;
 import org.apache.http.entity.EntityTemplate;
 import org.apache.http.protocol.HttpContext;
@@ -42,7 +41,7 @@ public class GetConstantsHandler implements HttpRequestHandler {
 		//LOGIN STUFF
 		try {
 			Zozzariello.doLogin(request, response, httpContext, pref);
-		} catch (AuthenticationException e) {
+		} catch (Exception e) {
 			if ("".compareTo(pref.getString("webUser", "")) == 0) {
 				// user disabilitata nelle opzioni
 			} else {
