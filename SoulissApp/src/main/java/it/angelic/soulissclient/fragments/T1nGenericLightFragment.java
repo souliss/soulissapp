@@ -123,6 +123,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 	}
 
+
+
 	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

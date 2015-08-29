@@ -30,7 +30,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,6 +58,7 @@ import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import java.io.File;
 import java.util.List;
 
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -67,6 +70,7 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.net.UDPHelper;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -80,6 +84,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.i(TAG, "Broadcast received, refresh from DB");
+            swipeLayout.setRefreshing(false);
             SoulissDBHelper.open();
             initDataset(getActivity());
             mAdapter.notifyDataSetChanged();
@@ -99,6 +104,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private TextView bro;
     private SoulissTag collectedTag;
     private List<SoulissTypical> mDataset;
+    private SwipeRefreshLayout swipeLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -148,6 +154,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshContainer);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
         ImageView mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
         //mLayoutManager = new LinearLayoutManager(getActivity());
@@ -169,6 +176,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
 
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
+
         layoutManagerFixed.setHeaderIncrementFixer(header);
 
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
@@ -183,6 +191,35 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 alert.show();
             }
         });
+
+        swipeLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        for (SoulissTypical typ : mDataset) {
+                            UDPHelper.stateRequest(opzioni, 4, typ.getSlot());
+                        }
+
+                        if (!opzioni.isSoulissReachable()) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getActivity(),
+                                            getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                            .show();
+                                    swipeLayout.setRefreshing(false);
+                                }
+                            });
+
+
+                        }
+                    }
+                }).start();
+            }} );
+        swipeLayout.setColorSchemeResources(R.color.std_blue,
+                R.color.std_blue_shadow);
 
 
         if (bro != null && collectedTag != null)

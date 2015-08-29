@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  Copyright 2014 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,29 +16,34 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tagContainer"
-    android:transitionName="photo_hero"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-   <!-- <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:checkedButton="@+id/linear_layout_rb">
-        <RadioButton android:id="@+id/linear_layout_rb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="aaa"/>
-        <RadioButton android:id="@+id/grid_layout_rb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="bbb"/>
-    </RadioGroup>-->
+    android:orientation="vertical"
+    android:transitionName="photo_hero">
+    <!-- <RadioGroup
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:gravity="center_horizontal"
+         android:orientation="horizontal"
+         android:checkedButton="@+id/linear_layout_rb">
+         <RadioButton android:id="@+id/linear_layout_rb"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="aaa"/>
+         <RadioButton android:id="@+id/grid_layout_rb"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="bbb"/>
+     </RadioGroup>-->
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
