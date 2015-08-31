@@ -3,7 +3,7 @@
 
     <!-- MANUAL_SECTION -->
     <string name="app_name">SoulissApp</string>
-    <string name="app_opt">SoulissApp -Настройки</string>
+    <string name="app_opt">SoulissApp - Настройки</string>
     <string name="app_addprog">Добавить Программу</string>
     <string name="opt_network">Настройки Сети</string>
     <string name="bridge_IP"> IP адрес Souliss бриджа будет назначен динамически</string>
@@ -16,8 +16,8 @@
     <string name="db_size">Размер БД</string>
     <string name="waiting">Ждем обновлений&#8230;</string>
     <string name="historyof">История</string>
-    <string name="daily">Всреднем за день</string>
-    <string name="monthly">Всреднем за месяц</string>
+    <string name="daily">В среднем за день</string>
+    <string name="monthly">В среднем за месяц</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Похоже что Souliss не сконфигурирована. Пожалуйста, настройте локальный адрес Souliss в окне настроек</string>
@@ -27,14 +27,14 @@
     <string name="dialog_notinited_service">Запуск программ по расписанию невозможен!\nАктивируйте службу DataService на экране настроек</string>
     <string name="dialog_dontshowagain">Не показывать снова</string>
     <string name="dialog_warn_db">Внимание!</string>
-    <string name="dialog_drop_db">Вы удаляете все узлы Souliss типажи и их историю.\nСбросит БД?</string>
+    <string name="dialog_drop_db">Вы удаляете все узлы Souliss типажи и их историю.\nСбросить БД?</string>
     <string name="dialog_create_db">Все узлы Souliss будут удалены и созданы из http://</string>
     <string name="dialog_create_db2">. Вы потеряете все предыдущие настройки и историю. Продолжить?</string>
     <string name="dialog_title_edittext_IP_pubb">Публичный адрес</string>
     <string name="dialog_remove_title">Удалить Программу</string>
     <string name="dialog_remove_cmd">Вы уверены, что хотите удалить эту команду?</string>
-    <string name="dialog_choose_icon">Выбирите иконку для </string>
-    <string name="dialog_choose_html">Вибирите  .html файл в каталоге /sdcard/Souliss</string>
+    <string name="dialog_choose_icon">Выберите иконку для </string>
+    <string name="dialog_choose_html">Выберите  .html файл в каталоге /sdcard/Souliss</string>
     <string name="allnodes">Все узлы</string>
 
     <!-- PROGRAMS_SECTION -->
@@ -91,7 +91,7 @@
     <string name="addprogram_positional_comeback">Активировать когда я возвращаюсь</string>
     <string name="addprogram_positional_desc">Команда ниже активируется с изменением местоположения пользователя</string>
     <string name="addprogram_sensorial">Активация на основе сенсоров</string>
-    <string name="addprogram_sensorial_desc">Команда ниже активируется с определенным значением слота. Выбирите оператор и диапазон значения</string>
+    <string name="addprogram_sensorial_desc">Команда ниже активируется с определенным значением слота. Выберите оператор и диапазон значения</string>
     <string name="addprogram_threshold">Диапазон значения</string>
     <!-- MENU -->
     <string name="menu_exit">Выход</string>
@@ -115,7 +115,7 @@
     <string name="manual_cmd_hint">команда</string>
     <string name="manual_slot">Слот</string>
     <string name="manual_typicals">типаж</string>
-    <string name="inserire_almeno">Выбирите ID узла, слот и введите команду</string>
+    <string name="inserire_almeno">Выберите ID узла, слот и введите команду</string>
     <string name="db_notempty">БД не пуста. Обнулить БД</string>
     <string name="manual_id_prompt">Выбрать  ID узла</string>
     <string name="manual_slot_prompt">Выбрать слот</string>
@@ -132,7 +132,7 @@
     <string name="service_disabled">Служба данных Souliss <b>отключена</b></string>
     <string name="service_lastexec"><b>Последний запуск службы:</b></string>
     <string name="service_warnbound">Сервис <b>активирован</b> но <b>не доступен</b>, перезапуск</string>
-    <string name="webservice_enabled">Zozzariello <b>активиров</b> слушаем на </string>
+    <string name="webservice_enabled">Zozzariello <b>активирован</b> слушаем на </string>
     <string name="timeout_expired">Время выполнения команды <![CDATA[<b><font color=\"#FF4444\">истекло</font></b>]]>.Возможно сеть Souliss не доступна</string>
     <!-- STATUS -->
     <string name="status_souliss">Состояние Souliss</string>
@@ -155,7 +155,7 @@
     <string name="opt_dbexp">Выгрузить БД</string>
     <string name="opt_dbexp_desc">Записать .csv файл содержащий текущую БД на СД карту</string>
     <string name="opt_setHtmlRoot">Домашняя страница Zozzariello </string>
-    <string name="opt_setHtmlRoot_desc">Выбирите .html файл на СД карте для использования как корневой</string>
+    <string name="opt_setHtmlRoot_desc">Выберите .html файл на СД карте для использования как корневой</string>
     <string name="opt_dbimp">Загрузить БД</string>
     <string name="opt_dbimp_desc">Загрузить .csv файл. Внимание! Данные Souliss будут перезаписаны!</string>
     <string name="opt_dbopt_desc">Очистить БД и удалить логи старше года</string>
@@ -172,9 +172,9 @@
     <string name="title_edittext_IP">Локальный адрес Souliss (обязательно)</string>
     <string name="summary_edittext_IP">Введите адрес Souliss бриджа, IP адрес узла когда используется домашняя сеть</string>
     <string name="dialog_title_edittext_IP">IP адрес</string>
-    <string name="summary_edittext_IP_pubb">Ввести публичный адрес сети Souliss, для использования когда Вы вне дома. Вы можете использовать dynamic DNS и перенаправление портов чтобы с лехкостью подключиться к дому</string>
+    <string name="summary_edittext_IP_pubb">Ввести публичный адрес сети Souliss, для использования когда Вы вне дома. Вы можете использовать dynamic DNS и перенаправление портов, чтобы с лёгкостью подключиться к дому</string>
     <string name="title_edittext_IP_pubb">Публичный адрес сети Souliss</string>
-    <string name="opt_fontsizedesc">Выбирите размер текста</string>
+    <string name="opt_fontsizedesc">Выберите размер текста</string>
     <string name="opt_fonttitledesc">Шрифт используемый для заголовков</string>
     <string name="opt_tetxfx">Текстовые эффекты</string>
     <string name="opt_tetxfx_desc">Анимировать иконки и текст</string>
@@ -199,7 +199,7 @@
     <string name="opt_WebServerPort_desc">Порт используемый для входящих соединений</string>
     <string name="opt_WebServerUser">Пользователь</string>
     <string name="opt_WebServerUser_desc">Если не пусто, Zozzariello запросит имя пользователя и пароль</string>
-    <string name="opt_WebServerPass">Пвроль</string>
+    <string name="opt_WebServerPass">Пароль</string>
     <string name="opt_WebServerPass_desc">Пароль вебсервера Souliss</string>
     <string name="opt_WebServerPass_err">Zozzaziello паника</string>
     <string name="opt_servicehomepos">Установить расположение Дома</string>
@@ -215,7 +215,7 @@
     <string name="unknown_typical">Неизвестный типаж</string>
     <string name="opt_net_home">Сеть</string>
     <string name="opt_net_remote">Удаленная сеть (опционально)</string>
-    <string name="opt_db_upd_desc">обновления конфигурации устройств Souliss. Убедитесь что сеть настроена</string>
+    <string name="opt_db_upd_desc">обновления конфигурации устройств Souliss. Убедитесь, что сеть настроена</string>
 
     <!-- TYPICALS -->
     <string name="Souliss_TurnOn_desc">Включить</string>
@@ -238,14 +238,14 @@
     <string name="Souliss_T19_desc">Диммируемый свет</string>
     <string name="Souliss_T19_received">Текущая яркость:</string>
     <string name="Souliss_T19_set">Установка яркости в:</string>
-    <string name="Souliss_UndefinedCmd_desc">Неопределено</string>
+    <string name="Souliss_UndefinedCmd_desc">Не определено</string>
     <string name="Souliss_T21_desc">Моторизованное устройство (с/ концевым датчиком)</string>
     <string name="Souliss_T22_desc">Моторизованное устройство</string>
     <string name="Souliss_T31_desc">Термометр</string>
     <string name="Souliss_T41_desc">Система Антивзлом</string>
     <string name="Souliss_T42_desc">Датчик Антивзлом</string>
     <string name="Souliss_T51_desc">Аналоговый вход</string>
-    <string name="Souliss_T52_desc">Аналоговый вхот основное значение</string>
+    <string name="Souliss_T52_desc">Аналоговый вход основное значение</string>
     <string name="Souliss_T53_desc">Аналоговый вход, максимум повторений</string>
     <string name="Souliss_T54_desc">Сенсор освещенности</string>
     <string name="Souliss_T55_desc">Сенсор напряжения</string>
@@ -256,7 +256,7 @@
     <string name="Souliss_TTemperature_desc">Сенсор температуры</string>
     <string name="Souliss_THumidity_desc">Сенсор влажности</string>
     <string name="Souliss_TAircon_desc">Кондиционер</string>
-    <string name="Souliss_TRGB_desc">Управляемая IR ппультом RGB лента</string>
+    <string name="Souliss_TRGB_desc">Управляемая IR пультом RGB лента</string>
     <string name="Souliss_TRGB_fade">Затухание</string>
     <string name="Souliss_TRGB_smooth">Сглаживание</string>
     <string name="Souliss_TRGB_strobe">Стробо</string>
@@ -278,7 +278,7 @@
     <string name="eula_refuse">Rifiuto</string>
     <string name="programs_warn_trigger_notset">Вы должны выбрать входящий тригер и пороговое значение</string>
     <string name="positional_executed">Геозависимая программа Souliss выполнена</string>
-    <string name="timed_program_executed">Программа Souliss запущена повремени</string>
+    <string name="timed_program_executed">Программа Souliss запущена по времени</string>
     <string name="execute_at">Запуск в:</string>
     <string name="favourites" >Избранное</string>
     <string name="tag">Метка</string>
@@ -296,12 +296,12 @@
     <string name="udphint" >Пожалуйста, введите число в диапазоне 1&#8211;65535</string>
     <string name="amongFav">Это устройство в Избранном</string>
     <string name="amongTags">Это устройство было отмечено</string>
-    <string name="status_souliss_nodetail" >Окно свойств не доступно</string>
+    <string name="status_souliss_nodetail" >Окно свойств недоступно</string>
     <string name="bridge_isgateway" />
     <string name="nodeleteFav" />
 
-    <string name="warn_wifi">Не возможно использовать локальный адрес без подключения к WI-FI!</string>
-    <string name="warn_connection">Соединение не доступно</string>
+    <string name="warn_wifi">Невозможно использовать локальный адрес без подключения к WI-FI!</string>
+    <string name="warn_connection">Соединение недоступно</string>
     <string name="contact_at">Подключаюсь к Souliss по </string>
     <string name="contact_progress">Сервер Souliss будет подключен&#8230;</string>
     <string name="homedist"><b>Расстояние до дома:</b></string>
