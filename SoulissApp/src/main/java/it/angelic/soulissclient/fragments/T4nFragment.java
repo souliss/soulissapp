@@ -311,7 +311,7 @@ public class T4nFragment extends Fragment {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     if (opzioni.isAnimationsEnabled())
                         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-                    ft.replace(R.id.details, details);
+                    ft.replace(R.id.detailPane, details);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                     ft.commit();
                 } else {

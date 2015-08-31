@@ -76,7 +76,7 @@ public class NodesListFragment extends ListFragment {
 
     @Override
 	public void onConfigurationChanged(Configuration newConfig) {
-		View detailsFrame = getActivity().findViewById(R.id.details);
+		View detailsFrame = getActivity().findViewById(R.id.detailPane);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 		super.onConfigurationChanged(newConfig);
 	}
@@ -115,7 +115,7 @@ public class NodesListFragment extends ListFragment {
 		}
 		// Check to see if we have a frame in which to embed the details
 		// fragment directly in the containing UI.
-		View detailsFrame = getActivity().findViewById(R.id.details);
+		View detailsFrame = getActivity().findViewById(R.id.detailPane);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 		
 
@@ -218,7 +218,7 @@ public class NodesListFragment extends ListFragment {
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
 			if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_left_delay, R.anim.slide_out_left);
-			ft.replace(R.id.details, details);
+			ft.replace(R.id.detailPane, details);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 			ft.commit();
 

@@ -20,6 +20,7 @@
 
         <ImageView
             android:id="@+id/card_thumbnail_image2"
+            android:transitionName="MyTransition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawingCacheQuality="high"

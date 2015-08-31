@@ -123,7 +123,12 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 	}
 
-	@SuppressLint("NewApi")
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (container == null)
@@ -380,13 +385,16 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				if (opzioni.isAnimationsEnabled())
 					ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-				ft.replace(R.id.details, details);
+				ft.replace(R.id.detailPane, details);
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 				ft.commit();
 			} else {
-				getActivity().finish();
+				Log.i(Constants.TAG, "Close fragment");
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane));
+				/*getActivity().supportFinishAfterTransition();
 				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);*/
 
 			}
 			return true;

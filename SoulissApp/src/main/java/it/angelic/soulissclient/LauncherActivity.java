@@ -441,7 +441,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         };
         soulissManualBtn.setOnClickListener(simpleOnClickListener);
 
-        
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // refresh testo

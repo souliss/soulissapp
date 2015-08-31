@@ -155,7 +155,7 @@ public class NodeDetailFragment extends ListFragment {
 	void doBindService() {
 		if (!mIsBound) {
 			getActivity().bindService(new Intent(getActivity(), SoulissDataService.class), mConnection,
-					Context.BIND_AUTO_CREATE);
+                    Context.BIND_AUTO_CREATE);
 			mIsBound = true;
 		}
 	}
@@ -192,7 +192,7 @@ public class NodeDetailFragment extends ListFragment {
 		timeoutHandler = new Handler();
 		setHasOptionsMenu(true);
 		datasource = new SoulissDBHelper(getActivity());
-		View detailsFrame = getActivity().findViewById(R.id.details);
+		View detailsFrame = getActivity().findViewById(R.id.detailPane);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 		// nodoInfo.removeAllViews();
 		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicalsTitle);
@@ -320,9 +320,9 @@ public class NodeDetailFragment extends ListFragment {
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
-		View detailsFrame = getActivity().findViewById(R.id.details);
+		View detailsFrame = getActivity().findViewById(R.id.detailPane);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-        Log.i(Constants.TAG,"DUALPANE:"+mDualPane);
+        Log.i(Constants.TAG, "DUALPANE:" + mDualPane);
 		super.onConfigurationChanged(newConfig);
 	}
 
@@ -342,22 +342,24 @@ public class NodeDetailFragment extends ListFragment {
 			// We can display everything in-place with fragments, so update
 			// the list to highlight the selected item and show the data.
 			li.setItemChecked(index, true);
-			// Check what fragment is currently shown, replace if needed.
-			Fragment details = getFragmentManager().findFragmentById(R.id.details);
-            Fragment NewFrag = null;
+		}else{
+            //((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+			Fragment NewFrag = null;
 			// Istanzia e ci mette l'indice
 			if (target.isSensor())
-                NewFrag = T5nSensorFragment.newInstance(index, target);
+				NewFrag = T5nSensorFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical16AdvancedRGB)
-                NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
+				NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical19AnalogChannel)
-                NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
+				NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical31Heating)
-                NewFrag = T31HeatingFragment.newInstance(index, target);
+				NewFrag = T31HeatingFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
-                NewFrag = T1nGenericLightFragment.newInstance(index, target);
+				NewFrag = T1nGenericLightFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer|| target instanceof SoulissTypical43AntiTheftLocalPeer)
-                NewFrag = T4nFragment.newInstance(index, target);
+				NewFrag = T4nFragment.newInstance(index, target);
 			else if (target instanceof SoulissTypical14PulseOutput)
 			{
 				//no detail, notice user and return
@@ -367,17 +369,17 @@ public class NodeDetailFragment extends ListFragment {
 				return;
 			}
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (opzioni.isAnimationsEnabled())
+			if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-			ft.replace(R.id.details, NewFrag);
-			// ft.addToBackStack(null);
-           // ft.remove(details);
-            //ft.add(NewFrag,"BOH");
+			ft.replace(R.id.detailPane, NewFrag);
+			ft.addToBackStack(null);
+			// ft.remove(details);
+			//ft.add(NewFrag,"BOH");
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 			ft.commit();
 
-		} else {
-			Intent nodeDatail = null;
+
+			/*Intent nodeDatail = null;
 			if (target.isSensor()) {
 				Log.d(Constants.TAG, getResources().getString(R.string.manual_showing_typ) + index);
 				// Activity Dettaglio nodo
@@ -414,8 +416,8 @@ public class NodeDetailFragment extends ListFragment {
 				NodeDetailFragment.this.startActivity(nodeDatail);
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-			}
-		}
+			}*/
+
 	}
 
 	private void refreshHeader() {
