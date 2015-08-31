@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -29,7 +30,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
@@ -71,7 +71,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     // private Runnable senderThread;
     private boolean continueDecrementing;
     private ColorPickerView cpv;
-    private ToggleButton togMulticast;
+    private SwitchCompat togMulticast;
     private TableRow tableRowVis;
     private TableRow tableRowChannel;
     private Spinner modeSpinner;
@@ -254,7 +254,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
         buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
-        togMulticast = (ToggleButton) ret.findViewById(R.id.checkBoxMulticast);
+        togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
         togMulticast.setChecked(opzioni.isRgbSendAllDefault());
         btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         btOn = (Button) ret.findViewById(R.id.buttonTurnOn);

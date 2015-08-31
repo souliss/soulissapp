@@ -19,6 +19,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +30,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 
 public class T32AirConActivity extends AbstractStatusedFragmentActivity {
@@ -47,9 +47,9 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 	Spinner spinnerInterval;
 	// position based
 	TextView textviewPositional;
-	ToggleButton togSwirl;
-	ToggleButton togIon;
-	ToggleButton togEnergySave;
+	SwitchCompat togSwirl;
+	SwitchCompat togIon;
+	SwitchCompat togEnergySave;
 	// data based
 	TextView textviewTriggered;
 
@@ -116,9 +116,9 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 		// time based
 		textviewTemperature = (TextView) findViewById(R.id.textviewTemp);
 		textviewPositional = (TextView) findViewById(R.id.textViewInfoPos);
-		togSwirl = (ToggleButton) findViewById(R.id.toggleButtonSwing);
-		togIon = (ToggleButton) findViewById(R.id.toggleButtonIon);
-		togEnergySave = (ToggleButton) findViewById(R.id.toggleButtonEco);
+		togSwirl = (SwitchCompat) findViewById(R.id.toggleButtonSwing);
+		togIon = (SwitchCompat) findViewById(R.id.toggleButtonIon);
+		togEnergySave = (SwitchCompat) findViewById(R.id.toggleButtonEco);
 		textviewTriggered = (TextView) findViewById(R.id.textViewInfoTrig);
 
 		buttPlus = (Button) findViewById(R.id.buttonPlus);

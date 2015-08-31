@@ -36,7 +36,7 @@
             android:contentDescription="Online status Icon" />
         <TextView
             android:id="@+id/actionbar_title"
-            android:transitionName="ToolbarText"
+
             style="@style/CodeFontActionBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

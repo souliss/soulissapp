@@ -168,7 +168,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 FragmentTransaction ftt = manager.beginTransaction()
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
-                        .addSharedElement(mProductText, "ToolbarText");
+                        .addSharedElement(mProductText, "ToolbarText");//NOT WORK
                 //.addSharedElement(mProductText, "ToolbarText");
                 ftt.commit();
             } else {

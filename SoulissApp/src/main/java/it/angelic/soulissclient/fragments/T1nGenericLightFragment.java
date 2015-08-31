@@ -9,10 +9,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,13 +23,12 @@ import android.widget.SeekBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+
 
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
-import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -72,7 +70,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	private Button buttAuto;
 	private TextView autoInfo;
 	private TextView infoTyp;
-	private ToggleButton togMassive;
+	private SwitchCompat togMassive;
 	private TextView infoHistory;
     private TableRow infoTags;
     private TableRow infoFavs;
@@ -175,7 +173,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
-		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
+		togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
 		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);

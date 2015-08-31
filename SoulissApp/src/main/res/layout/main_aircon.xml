@@ -116,7 +116,7 @@
                 android:text="@string/menu_options"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <ToggleButton
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/toggleButtonEco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                 android:textOff="Eco Mode"
                 android:textOn="Eco Mode" />
 
-            <ToggleButton
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/toggleButtonIon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                 android:textOff="Air Clean"
                 android:textOn="Air Clean" />
 
-            <ToggleButton
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/toggleButtonSwing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
