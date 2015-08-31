@@ -43,7 +43,7 @@
             android:dialogTitle="@string/opt_udpport"
             android:inputType="number"
             android:summary="Choose outgoing datagrams'port"
-            android:key="udpport"
+            android:key="udpportIC"
             android:title="@string/opt_udpport" />
 
         <EditTextPreference
