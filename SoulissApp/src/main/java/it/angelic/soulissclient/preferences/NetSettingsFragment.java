@@ -36,6 +36,9 @@ public class NetSettingsFragment extends PreferenceFragment {
 		Preference privateIP =  findPreference("edittext_IP");
 		Preference publicIP =  findPreference("edittext_IP_pubb");
 		Preference bCast = findPreference("advbroadcastKey");
+        userIndex =  findPreference("userindexIC");
+        udpport =  findPreference("udpportIC");
+        nodeIndex = findPreference("nodeindexIC");
 
 		String summar = getResources().getString(R.string.summary_edittext_IP);
 		privateIP.setSummary(opzioni.getPrefIPAddress().compareToIgnoreCase("") == 0 ? summar : opzioni
@@ -86,10 +89,10 @@ public class NetSettingsFragment extends PreferenceFragment {
 		 * 
 		 * ATTENZIONE CODICE DUPLICATO NELLA PREF ACTIVITY
 		 */
-		userIndex =  findPreference("userindexIC");
-        udpport =  findPreference("udpport");
+
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);
 		userIndex.setSummary(String.format(stdrMeatFormat, opzioni.getUserIndex()));
+        //udpport.setSummary(String.format(stdrMeatFormat, opzioni.getUDPPort()));
         udpport.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -102,7 +105,7 @@ public class NetSettingsFragment extends PreferenceFragment {
                         throw new IllegalArgumentException();
                     opzioni.setUDPPort(rete);
                     String stdrMeatFormat = getString(R.string.opt_udpport);
-                    udpport.setSummary(String.format(stdrMeatFormat, opzioni.getUDPPort()));
+
                 } catch (Exception e) {
                     Toast.makeText(getActivity(), getString(R.string.udphint), Toast.LENGTH_SHORT)
                             .show();
@@ -130,7 +133,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 			}
 		});
 
-		nodeIndex = findPreference("nodeindexIC");
+
 		String strMeatFormat = getActivity().getString(R.string.opt_nodeindex_desc);
 		nodeIndex.setSummary(String.format(strMeatFormat, opzioni.getNodeIndex()));
 

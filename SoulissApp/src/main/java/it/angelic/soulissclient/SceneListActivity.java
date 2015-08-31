@@ -139,6 +139,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	protected void onStart() {
 		super.onStart();
 		setActionBarInfo(getString(R.string.scenes_title));
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(this);
