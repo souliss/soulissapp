@@ -677,7 +677,9 @@ public class SoulissDBHelper {
     public int countTypicals() {
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
                 + SoulissDB.COLUMN_TYPICAL + " <> "
-                + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related, null);
+                + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related
+                +" AND "+ SoulissDB.COLUMN_TYPICAL + " <> "
+                + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_empty, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

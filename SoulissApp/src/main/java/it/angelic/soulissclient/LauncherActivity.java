@@ -369,9 +369,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
-
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
-
         initLocationProvider();
         /*TAGS*/
         OnClickListener ssc = new OnClickListener() {
@@ -442,9 +440,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         };
         soulissManualBtn.setOnClickListener(simpleOnClickListener);
-        // forza refresh drawer
-        //mDrawerAdapter = new NavDrawerAdapter(LauncherActivity.this, R.layout.drawer_list_item, dmh.getStuff(), -99);
-        //mDrawerList.setAdapter(mDrawerAdapter);
+
+        
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // refresh testo
         setHeadInfo();
