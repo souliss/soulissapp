@@ -329,7 +329,7 @@ public class SoulissDataService extends Service implements LocationListener {
         super.onDestroy();
         Log.w(TAG, "Service Destroy!! " + opts.getBackedOffServiceIntervalMsec());
         mHandler.removeCallbacks(mUpdateSoulissRunnable);
-        db.close();
+        //db.close();
         locationManager.removeUpdates(SoulissDataService.this);
         if (udpThread != null && udpThread.isAlive()) {
             udpThread.interrupt();

@@ -30,7 +30,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +69,7 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.net.UDPHelper;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -84,6 +87,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             initDataset(getActivity());
             mAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
+            swipeLayout.setRefreshing(false);
         }
     };
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -92,7 +96,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-
+    private SwipeRefreshLayout swipeLayout;
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -146,6 +150,37 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
         Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        if (collectedTag != null) {
+                            UDPHelper.stateRequest(opzioni, 1, collectedTag.getAssignedTypicals().get(0).getNodeId());
+                            Log.d(Constants.TAG, "stateRequest for node:" + collectedTag.getAssignedTypicals().get(0).getNodeId());
+                        }
+
+                        if (!opzioni.isSoulissReachable()) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getActivity(),
+                                            getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                            .show();
+                                    swipeLayout.setRefreshing(false);
+                                }
+                            });
+
+
+                        }
+                    }
+                }).start();
+            }
+        });
+        swipeLayout.setColorSchemeResources(R.color.std_blue,
+                R.color.std_blue_shadow);
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
@@ -216,7 +251,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         return rootView;
     }
-
 
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "onContextItemSelected id:" + item.getItemId());

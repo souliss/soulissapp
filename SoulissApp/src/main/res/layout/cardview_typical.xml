@@ -42,6 +42,7 @@
 
             <TextView
                 android:id="@+id/TextViewTypicalsTitle"
+                android:transitionName="ToolbarText"
                 style="@style/CodeFontTitle"
                 android:layout_marginLeft="5dip"
                 android:text="@string/position" />

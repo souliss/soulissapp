@@ -140,6 +140,17 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private HTTPService mBoundWebService;
     private TextView webserviceInfo;
 
+    private Timer autoUpdate;
+    private Geocoder geocoder;
+    private SoulissDBTagHelper tagDb;
+    private View webServiceInfoLine;
+    private Criteria criteria;
+    private CardView cardViewBasicInfo;
+    private CardView cardViewPositionInfo;
+    private CardView cardViewServiceInfo;
+    private CardView cardViewFav;
+    private List<SoulissTag> tags;
+
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -181,16 +192,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             mIsWebBound = false;
         }
     };
-    private Timer autoUpdate;
-    private Geocoder geocoder;
-    private SoulissDBTagHelper db;
-    private View webServiceInfoLine;
-    private Criteria criteria;
-    private CardView cardViewBasicInfo;
-    private CardView cardViewPositionInfo;
-    private CardView cardViewServiceInfo;
-    private CardView cardViewFav;
-    private List<SoulissTag> tags;
+
 
     void doBindService() {
         Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
@@ -236,7 +238,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         setContentView(R.layout.main_launcher);
 
-        db = new SoulissDBTagHelper(this);
+        tagDb = new SoulissDBTagHelper(this);
 
         geocoder = new Geocoder(this, Locale.getDefault());
         soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
@@ -316,7 +318,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     e.printStackTrace();
                 }
 
-            }}).start();
+            }
+        }).start();
        /* Animation animatio = AnimationUtils.loadAnimation(cardViewFav.getContext(), (R.anim.slide_in_left));
         cardViewFav.startAnimation(animatio);
         Animation animation = AnimationUtils.loadAnimation(cardViewBasicInfo.getContext(), (R.anim.slide_in_left));
@@ -511,7 +514,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             return;
         }
         String base = opzioni.getAndSetCachedAddress();
-        Log.d(TAG, "cached Address: " + base+ " backoff: "+ opzioni.getBackoff());
+        Log.d(TAG, "cached Address: " + base + " backoff: " + opzioni.getBackoff());
         if (base != null && "".compareTo(base) != 0) {
             basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
                     + "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
@@ -542,11 +545,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         } else {
             SoulissDBHelper.open();
-            dbwarn.setText(getString(R.string.db_size) + ": " + db.getSize() + "B");
+            dbwarn.setText(getString(R.string.db_size) + ": " + tagDb.getSize() + "B");
             dbwarn.setVisibility(View.VISIBLE);
             dbwarnline.setVisibility(View.GONE);
             //FAVOURITES
-            final int favCount = db.countFavourites();
+            final int favCount = tagDb.countFavourites();
 
             new Thread(new Runnable() {
                 @Override
@@ -554,7 +557,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     final TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
                     final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
                     final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);
-                    tags = db.getTags(LauncherActivity.this);
+                    tags = tagDb.getTags(LauncherActivity.this);
                     if (tags.size() > 1 || favCount > 0) {//1 di sicuro
 
                         try {
@@ -564,15 +567,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                     cardViewFav.setVisibility(View.VISIBLE);
                                     tagCont.removeAllViews();
                                     String strMeatFormat = LauncherActivity.this.getString(R.string.tag_info_format);
-                                    textViewFav.setText(String.format(strMeatFormat, db.countTypicalTags(), db.countTags()));
-                                    textViewFav2.setText(getString(R.string.typical) + " Marked as Favourites:" + db.countFavourites());
+                                    textViewFav.setText(String.format(strMeatFormat, tagDb.countTypicalTags(), tagDb.countTags()));
+                                    textViewFav2.setText(getString(R.string.typical) + " Marked as Favourites:" + tagDb.countFavourites());
                                 }
                             });
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-
                         for (final SoulissTag tag : tags) {
                             final ListButton turnOffButton = new ListButton(LauncherActivity.this);
                             runOnUiThread(new Runnable() {
@@ -590,10 +591,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                     tagCont.addView(turnOffButton);
                                 }
                             });
-
                         }
 
                     }
+
                 }
             }).start();
         }
@@ -604,7 +605,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             serviceInfoAntiTheft.setVisibility(View.VISIBLE);
             SoulissDBHelper.open();
             try {
-                SoulissTypical41AntiTheft at = db.getAntiTheftMasterTypical();
+                SoulissTypical41AntiTheft at = tagDb.getAntiTheftMasterTypical();
                 serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
                         + at.getOutputDesc()));
             } catch (Exception e) {

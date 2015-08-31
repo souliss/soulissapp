@@ -19,7 +19,6 @@ package it.angelic.soulissclient;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -154,7 +153,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         if (NewFrag != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
-                details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.explode));
+                details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.fade));
 
                 // Create new fragment to add (Fragment B)
                 NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
@@ -163,19 +162,19 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
                 // Our shared element (in Fragment A)
                 ImageView mProductImage = (ImageView) details.getView().findViewById(R.id.card_thumbnail_image2);
-                TextView mProductText = (TextView)findViewById(R.id.actionbar_title);
+                TextView mProductText = (TextView) findViewById(R.id.TextViewTypicalsTitle);
 
                 // Add Fragment B
                 FragmentTransaction ftt = manager.beginTransaction()
-                        .add(R.id.detailPane, NewFrag)
+                        .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
-                        .addSharedElement(mProductImage, "MyTransition")
                         .addSharedElement(mProductText, "ToolbarText");
+                //.addSharedElement(mProductText, "ToolbarText");
                 ftt.commit();
             } else {
                 // if (opzioni.isAnimationsEnabled())
                 //     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-                ft.add(R.id.detailPane, NewFrag);
+                ft.replace(R.id.detailPane, NewFrag);
                 ft.addToBackStack(null);
                 // ft.remove(details);
                 //ft.add(NewFrag,"BOH");
@@ -200,18 +199,20 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         ImageView icon = (ImageView) findViewById(R.id.node_icon);
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    // nothing to do here...
-                } else {
+                // if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // nothing to do here...
+                //   } else {
                    /* supportFinishAfterTransition();
                     if (opzioni.isAnimationsEnabled())
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     return true;*/
-                    android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-                    Fragment details = manager.findFragmentById(R.id.detailPane);
-                    FragmentTransaction ftt = manager.beginTransaction()
-                            .remove(details);
-                    ftt.commit();
+                android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+                Fragment details = manager.findFragmentById(R.id.detailPane);
+                if (details instanceof TagDetailFragment)
+                    supportFinishAfterTransition();
+                else {
+                    getSupportFragmentManager().popBackStack();
+                    setActionBarInfo(collected.getNiceName());
                 }
                 return true;
             case R.id.Opzioni:
@@ -272,11 +273,10 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         transaction.commit();
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         setActionBarInfo(collected.getNiceName());
-
-
     }
 }
