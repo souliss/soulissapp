@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
+@Deprecated
 public class T19SingleChannelFragWrapper extends AbstractStatusedFragmentActivity {
 	private SoulissTypical collected;
 

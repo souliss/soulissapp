@@ -30,6 +30,7 @@ import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -157,7 +158,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);*/
-
+		//((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 

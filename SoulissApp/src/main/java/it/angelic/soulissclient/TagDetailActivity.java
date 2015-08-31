@@ -167,7 +167,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
                 // Add Fragment B
                 FragmentTransaction ftt = manager.beginTransaction()
-                        .replace(R.id.detailPane, NewFrag)
+                        .add(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
                         .addSharedElement(mProductImage, "MyTransition")
                         .addSharedElement(mProductText, "ToolbarText");
@@ -175,7 +175,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             } else {
                 // if (opzioni.isAnimationsEnabled())
                 //     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-                ft.replace(R.id.detailPane, NewFrag);
+                ft.add(R.id.detailPane, NewFrag);
                 ft.addToBackStack(null);
                 // ft.remove(details);
                 //ft.add(NewFrag,"BOH");
@@ -203,10 +203,15 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                     // nothing to do here...
                 } else {
-                    supportFinishAfterTransition();
+                   /* supportFinishAfterTransition();
                     if (opzioni.isAnimationsEnabled())
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                    return true;
+                    return true;*/
+                    android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+                    Fragment details = manager.findFragmentById(R.id.detailPane);
+                    FragmentTransaction ftt = manager.beginTransaction()
+                            .remove(details);
+                    ftt.commit();
                 }
                 return true;
             case R.id.Opzioni:

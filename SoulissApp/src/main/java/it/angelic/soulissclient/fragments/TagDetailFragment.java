@@ -365,58 +365,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         LINEAR_LAYOUT_MANAGER
     }
 
-    /**
-     * Provide a reference to the type of views that you are using (custom ViewHolder)
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-        private final TextView textView;
-        private final TextView textViewInfo1;
-        private final TextView textViewInfo2;
-        private final CardView cardView;
-        private LinearLayout linearActionsLayout;
-        private ImageView imageView;
 
-        public ViewHolder(View v) {
-            super(v);
-            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
-            imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
-            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
-            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
-            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
-            cardView = (CardView) v.findViewById(R.id.TypCard);
-            v.setOnCreateContextMenuListener(this);
-        }
-
-        public CardView getCardView() {
-            return cardView;
-        }
-
-        public TextView getTextView() {
-            return textView;
-        }
-
-        public ImageView getImageView() {
-            return imageView;
-        }
-
-        public LinearLayout getLinearActionsLayout() {
-            return linearActionsLayout;
-        }
-
-        public TextView getTextViewInfo1() {
-            return textViewInfo1;
-        }
-
-        public TextView getTextViewInfo2() {
-            return textViewInfo2;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(Menu.NONE, R.id.eliminaTag, Menu.NONE, R.string.tag_delete);
-
-        }
-
-    }
-*/
 }

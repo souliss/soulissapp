@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+@Deprecated
 public class T16RGBFragWrapper extends AbstractStatusedFragmentActivity {
 	private SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;

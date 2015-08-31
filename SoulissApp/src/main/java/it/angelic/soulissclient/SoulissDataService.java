@@ -247,7 +247,7 @@ public class SoulissDataService extends Service implements LocationListener {
     private Intent cIntent;
 
     public static void sendTooLongWarnNotification(Context ctx, String desc, String longdesc, @NonNull SoulissTypical ppr) {
-        Intent notificationIntent = new Intent(ctx, T1nFragWrapper.class);
+        Intent notificationIntent = new Intent(ctx, TypicalDetailFragWrapper.class);
         notificationIntent.putExtra("TIPICO", ppr);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

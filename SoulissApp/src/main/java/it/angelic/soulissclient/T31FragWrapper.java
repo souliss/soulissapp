@@ -6,6 +6,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+@Deprecated
 public class T31FragWrapper extends AbstractStatusedFragmentActivity {
 	private SoulissTypical collected;
 

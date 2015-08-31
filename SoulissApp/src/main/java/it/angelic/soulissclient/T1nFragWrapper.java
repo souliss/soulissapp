@@ -5,7 +5,7 @@ import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
 import it.angelic.soulissclient.model.SoulissTypical;
 import android.content.res.Configuration;
 import android.os.Bundle;
-
+@Deprecated
 public class T1nFragWrapper extends AbstractStatusedFragmentActivity {
 	private SoulissTypical collected;
 

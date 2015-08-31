@@ -9,7 +9,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import static junit.framework.Assert.assertTrue;
-
+@Deprecated
 public class T4nFragWrapper extends ActionBarActivity {
 	private SoulissPreferenceHelper opzioni;
 	private SoulissTypical collected;

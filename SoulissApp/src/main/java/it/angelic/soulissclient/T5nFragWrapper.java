@@ -14,7 +14,7 @@ import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
+@Deprecated
 public class T5nFragWrapper extends AbstractStatusedFragmentActivity {
 	private TypicalsListAdapter ta;
 	private SoulissDataService mBoundService;
