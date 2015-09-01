@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import junit.framework.Assert;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -61,13 +63,13 @@ private int exportedNodes;
 
 		if (!exportDir.exists())
 		{
-			Log.d(TAG, "Creating export DIR");
+
 			exportDir.mkdirs();
 		}
 
 		Date now = new Date();
 		File file = new File(exportDir, yearFormat.format(now) + "_SoulissDB.csv");
-
+		Log.d(TAG, "Creating export File: "+ file.getAbsolutePath());
 		try {
 
 			file.createNewFile();
@@ -77,10 +79,13 @@ private int exportedNodes;
 			SQLiteDatabase db = SoulissDBHelper.getDatabase();
 			// NODI
 			Cursor curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_NODES, null);
-			csvWrite.writeNext(curCSV.getColumnNames());
+			String colNames[] = curCSV.getColumnNames();
+			csvWrite.writeNext(colNames);
+			String arrStr[] = new String[curCSV.getColumnCount()];
 			while (curCSV.moveToNext()) {
-				String arrStr[] = { curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3),
-						curCSV.getString(4), curCSV.getString(5) };
+				for (int t=0; t<arrStr.length;t++ ){
+					arrStr[t] = curCSV.getString(curCSV.getColumnIndex(colNames[t]));
+				}
 				csvWrite.writeNext(arrStr);
 				exportedNodes++;
 			}
@@ -89,20 +94,29 @@ private int exportedNodes;
 			curCSV.close();
 			// TIPICI
 			curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TYPICALS, null);
-			csvWrite.writeNext(curCSV.getColumnNames());
+			colNames = curCSV.getColumnNames();
+			csvWrite.writeNext(colNames);
+			arrStr= new String[curCSV.getColumnCount()];
+			Assert.assertTrue(colNames.length == arrStr.length);
 			while (curCSV.moveToNext()) {
-				String arrStr[] = { curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3),
-						curCSV.getString(4), curCSV.getString(5), curCSV.getString(6), curCSV.getString(7) };
+
+				for (int t=0; t<arrStr.length;t++ ){
+					arrStr[t] = curCSV.getString(curCSV.getColumnIndex(colNames[t]));
+				}
 				csvWrite.writeNext(arrStr);
 			}
 			Log.i(TAG, "exported TYP rows:" + curCSV.getCount());
 			curCSV.close();
 
 			curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_LOGS, null);
-			csvWrite.writeNext(curCSV.getColumnNames());
+			colNames = curCSV.getColumnNames();
+			csvWrite.writeNext(colNames);
+			arrStr = new String[curCSV.getColumnCount()];
+			Assert.assertTrue(colNames.length == arrStr.length);
 			while (curCSV.moveToNext()) {
-				String arrStr[] = { curCSV.getString(0), curCSV.getString(1), curCSV.getString(2), curCSV.getString(3),
-						curCSV.getString(4) };
+				for (int t=0; t<arrStr.length;t++ ){
+					arrStr[t] = curCSV.getString(curCSV.getColumnIndex(colNames[t]));
+				}
 				csvWrite.writeNext(arrStr);
 			}
 			Log.i(TAG, "exported LOG rows:" + curCSV.getCount());

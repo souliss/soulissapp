@@ -240,7 +240,7 @@ public class SoulissDBHelper {
      * @param slot
      * @return produced Typical
      */
-    public SoulissTypical getSoulissTypical(int node, short slot) {
+    public SoulissTypical getTypical(int node, short slot) {
         // query with primary key
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + node + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
@@ -709,7 +709,7 @@ public class SoulissDBHelper {
 
         while (!cursor.isAfterLast()) {
             SoulissCommandDTO cmd = new SoulissCommandDTO(cursor);
-            SoulissTypical tgt = getSoulissTypical(cmd.getNodeId(), cmd.getSlot());
+            SoulissTypical tgt = getTypical(cmd.getNodeId(), cmd.getSlot());
             SoulissTrigger cols = new SoulissTrigger(context, cmd, tgt);
             SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
 
@@ -781,7 +781,7 @@ public class SoulissDBHelper {
             short slot = comment.getSlot();
             SoulissCommand adding = null;
             if (node > Constants.MASSIVE_NODE_ID) {
-                SoulissTypical tgt = getSoulissTypical(node, slot);
+                SoulissTypical tgt = getTypical(node, slot);
                 //hack nodeId, Massive
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
@@ -824,7 +824,7 @@ public class SoulissDBHelper {
             short slot = comment.getSlot();
             SoulissCommand adding;
             if (node > Constants.MASSIVE_NODE_ID) {
-                SoulissTypical tgt = getSoulissTypical(node, slot);
+                SoulissTypical tgt = getTypical(node, slot);
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
                 adding = new SoulissCommand(comment, tgt);
@@ -897,7 +897,7 @@ public class SoulissDBHelper {
             short slot = comment.getSlot();
             SoulissCommand adding;
             if (node > MASSIVE_NODE_ID) {
-                SoulissTypical parentTypical = getSoulissTypical(node, slot);
+                SoulissTypical parentTypical = getTypical(node, slot);
                 adding = new SoulissCommand(comment, parentTypical);
             } else {
                 adding = new SoulissCommand(comment);

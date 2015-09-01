@@ -91,7 +91,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         public void onReceive(Context context, Intent intent) {
             // SoulissNode coll = datasource.getSoulissNode();
             try {
-                collected = (SoulissTypical16AdvancedRGB) datasource.getSoulissTypical(collected
+                collected = (SoulissTypical16AdvancedRGB) datasource.getTypical(collected
                         .getNodeId(), collected.getSlot());
                 // Bundle extras = intent.getExtras();
                 // Bundle vers = (Bundle) extras.get("NODES");
