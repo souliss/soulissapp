@@ -166,10 +166,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".T16RGBFragWrapper"
+            android:name=".TypicalDetailFragWrapper"
             android:exported="false"
-            android:icon="@drawable/remote"
-            android:label="@string/Souliss_TRGB_desc">
+            android:icon="@drawable/remote">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>

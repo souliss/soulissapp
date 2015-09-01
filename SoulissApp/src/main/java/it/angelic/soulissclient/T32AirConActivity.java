@@ -135,6 +135,8 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical32AirCon);
 		
 		related = (SoulissTypical) extras.get("RELATO");
+		if (related == null)
+			related = datasource.getSoulissTypical(collected.getNodeId(),(short)(collected.getSlot() +1)  );
 
 		// upcast
 		Integer status = Integer.valueOf(collected.getTypicalDTO().getOutput());

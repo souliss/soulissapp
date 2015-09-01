@@ -125,7 +125,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
+		setHasOptionsMenu(false);
 	}
 
 	@Override
@@ -469,6 +469,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                     refreshHistoryInfo();
                 }
 				refreshStatusIcon();
+
 				// datasource.close();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);

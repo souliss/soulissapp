@@ -65,6 +65,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         //if (actionBar != null)
         setSupportActionBar(actionBar);
 		super.onStart();
+
 	}
 
 	void setActionBarInfo(String title) {
