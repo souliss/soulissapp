@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.helpers;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -41,7 +42,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 	private final String TAG = "SoulissApp:" + getClass().getName();
 	// private ProgressDialog dialog;
 
-	private SoulissDBHelper DBob;
+	private SoulissDBHelper database;
 	private SharedPreferences customSharedPreference;
 	private File file;
 	private int tottyp = 0;
@@ -93,7 +94,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		int lin = 0;
 		int loopMode = 0;
 		// File dbFile = null;// getDatabasePath("excerDB.db");
-		DBob = new SoulissDBHelper(SoulissClient.getAppContext());
+		database = new SoulissDBHelper(SoulissClient.getAppContext());
 
 		try {
 			Looper.prepare();
@@ -121,8 +122,8 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			CSVReader csvReader = new CSVReader(new FileReader(file));
 			String[] temp;
 			SoulissDBHelper.open();
-			// SQLiteDatabase db = DBob.getDatabase();
-			DBob.truncateImportTables();
+			// SQLiteDatabase db = database.getDatabase();
+			database.truncateImportTables();
 			SharedPreferences.Editor editor = customSharedPreference.edit();
 			// sistema configurato
 			if (customSharedPreference.contains("numNodi"))
@@ -147,6 +148,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			while ((temp = csvReader.readNext()) != null) {
 				// Log.d("Souliss:file import", temp.toString());
 				if (temp[1].compareToIgnoreCase(SoulissDB.COLUMN_NODE_ID) == 0) {
+                    Log.i(TAG, "Importing nodes...");
 					loopMode = 1;
 					activity.runOnUiThread(new Runnable() {
 						public void run() {
@@ -157,6 +159,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 					});
 					continue;
 				} else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TYPICAL_NODE_ID) == 0) {
+                    Log.i(TAG, "Imported "+totNodes+" nodes. Importing typicals...");
 					editor.putInt("numNodi", totNodes);
 					loopMode = 2;
 					activity.runOnUiThread(new Runnable() {
@@ -166,7 +169,8 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 					});
 					continue;
 				} else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LOG_ID) == 0) {
-					editor.putInt("numTipici", tottyp);
+					editor.putInt("numTipici", database.countTypicals());
+                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
 					loopMode = 3;
 					activity.runOnUiThread(new Runnable() {
 						public void run() {
@@ -187,7 +191,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 					totNodes++;
 					break;
 				case 2:
-					insertTypical(temp);
+					SoulissTypicalDTO ret = insertTypical(temp);
 					tottyp++;
 					break;
 				case 3:
@@ -200,7 +204,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 			}
 			editor.commit();
 			csvReader.close();
-			DBob.close();
+			database.close();
 			Log.i(TAG, "Import finished");
 		} catch (SQLException sqlEx) {
 			Log.e(TAG, sqlEx.getMessage(), sqlEx);
@@ -246,7 +250,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		}
 	}
 
-	private void insertTypical(String[] temp) {
+	private SoulissTypicalDTO insertTypical(String[] temp) {
 		SoulissTypicalDTO typo = new SoulissTypicalDTO();
 		typo.setNodeId(Short.valueOf(temp[0]));
 		typo.setTypical(Short.valueOf(temp[1]));
@@ -263,20 +267,32 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		} catch (Exception e) {
 			// NO icon here
 		}
+        try {
+            if (temp[6].length() > 0)
+                typo.setFavourite(temp[6]=="1"?true:false);
+        } catch (Exception e) {
+            Log.w("NOT Favourite", e.getMessage());
+        }
 		try {
-			if (temp[6].length() > 0)
-				typo.setName(temp[6]);
+			if (temp[7].length() > 0)
+				typo.setName(temp[7]);
 		} catch (Exception e) {
 			Log.w("Unnamed typical", e.getMessage());
 		}
 		try {
 			Calendar cal = Calendar.getInstance();
-			cal.setTime(new Date(Long.valueOf(temp[7])));
+			cal.setTime(new Date(Long.valueOf(temp[8])));
 			typo.setRefreshedAt(cal);
 		} catch (Exception e) {
 			Log.w("Untimed typ", e.getMessage());
 		}
+        try {
+            typo.setWarnDelayMsec(Integer.valueOf(temp[9]));
+        } catch (Exception e) {
+            // NO icon here
+        }
 		typo.persist();
+        return typo;
 	}
 
 	private void insertNode(String[] temp) {
@@ -301,7 +317,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 		} catch (Exception e) {
 			Log.w("Untimed node", e.getMessage());
 		}
-		DBob.createOrUpdateNode(nit);
+		database.createOrUpdateNode(nit);
 	}
 
 	// can use UI thread here
@@ -354,8 +370,11 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 	                    prefEdit.putLong(key, ((Long) v).longValue());
 	                else if (v instanceof String)
 	                    prefEdit.putString(key, ((String) v));
+
+                    Log.d(Constants.TAG, "Restored pref:"+key+" Value:"+v);
 	            }
 	            prefEdit.commit();
+				SoulissClient.getOpzioni().reload();
 	        res = true;         
 	    } catch (FileNotFoundException | ClassNotFoundException e) {
 	        e.printStackTrace();

@@ -254,6 +254,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  pref.getUDPPort());
 			sender.send(packet);
 			Log.d(Constants.TAG, "Ping sent to: " + serverAddr);
+			debugByteArray(buf);
 			return serverAddr;
 		} finally {
 			if (sender != null && !sender.isClosed())
