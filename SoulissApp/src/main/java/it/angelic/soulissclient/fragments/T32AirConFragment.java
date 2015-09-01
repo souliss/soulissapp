@@ -1,8 +1,15 @@
-package it.angelic.soulissclient;
+package it.angelic.soulissclient.fragments;
 
 import static junit.framework.Assert.assertTrue;
+
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
@@ -19,12 +26,15 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -32,8 +42,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-public class T32AirConActivity extends AbstractStatusedFragmentActivity {
-	private SoulissDBHelper datasource = new SoulissDBHelper(this);
+public class T32AirConFragment extends AbstractTypicalFragment {
+	private SoulissDBHelper datasource;
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -60,83 +70,88 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 	Button btOn;
 	private SoulissTypical collected;
 	private SoulissTypical related;
+	private SoulissPreferenceHelper opzioni;
 
-	/* SOULISS DATA SERVICE BINDING */
-	private ServiceConnection mConnection = new ServiceConnection() {
+	public static T32AirConFragment newInstance(int index, SoulissTypical content) {
+		T32AirConFragment f = new T32AirConFragment();
 
-		public void onServiceConnected(ComponentName className, IBinder service) {
-			mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-			// Tell the user about this for our demo.
-			Log.i(Constants.TAG, "Dataservice connected");
+		// Supply index input as an argument.
+		Bundle args = new Bundle();
+		args.putInt("index", index);
+
+		// Ci metto il nodo dentro
+		if (content != null) {
+			args.putSerializable("TIPICO", content);
 		}
+		f.setArguments(args);
 
-		public void onServiceDisconnected(ComponentName className) {
-			mBoundService = null;
-			// if (ta != null)
-			Log.i(Constants.TAG, "Dataservice disconnected");
-		}
-
-	};
-
-	void doBindService() {
-		if (!mIsBound) {
-			bindService(new Intent(T32AirConActivity.this, SoulissDataService.class), mConnection,
-					Context.BIND_AUTO_CREATE);
-			mIsBound = true;
-		}
+		return f;
 	}
 
-	void doUnbindService() {
-		if (mIsBound) {
-			// Detach our existing connection.
-			unbindService(mConnection);
-			mIsBound = false;
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+
+		// tema
+		if (opzioni.isLightThemeSelected())
+			getActivity().setTheme(R.style.LightThemeSelector);
+		else
+			getActivity().setTheme(R.style.DarkThemeSelector);
+		super.onCreate(savedInstanceState);
+
+		if (!opzioni.isDbConfigured()) {
+			AlertDialogHelper.dbNotInitedDialog(getActivity());
 		}
 
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
+		if (container == null)
+			return null;
+		opzioni = SoulissClient.getOpzioni();
+		opzioni.reload();
 
-		// tema
-		if (opzioni.isLightThemeSelected())
-			setTheme(R.style.LightThemeSelector);
-		else
-			setTheme(R.style.DarkThemeSelector);
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_aircon);
-
-		if (!opzioni.isDbConfigured()) {
-			AlertDialogHelper.dbNotInitedDialog(this);
-		}
-
-		functionSpinner = (Spinner) findViewById(R.id.spinnerFunction);
-		fanSpiner = (Spinner) findViewById(R.id.spinnerFan);
-
-		// time based
-		textviewTemperature = (TextView) findViewById(R.id.textviewTemp);
-		textviewPositional = (TextView) findViewById(R.id.textViewInfoPos);
-		togSwirl = (SwitchCompat) findViewById(R.id.toggleButtonSwing);
-		togIon = (SwitchCompat) findViewById(R.id.toggleButtonIon);
-		togEnergySave = (SwitchCompat) findViewById(R.id.toggleButtonEco);
-		textviewTriggered = (TextView) findViewById(R.id.textViewInfoTrig);
-
-		buttPlus = (Button) findViewById(R.id.buttonPlus);
-		buttMinus = (Button) findViewById(R.id.buttonMinus);
-
-		btOff = (Button) findViewById(R.id.buttonTurnOff);
-		btOn = (Button) findViewById(R.id.buttonTurnOn);
-
-		datasource = new SoulissDBHelper(this);
+		View ret = inflater.inflate(R.layout.main_aircon, container, false);
+		datasource = new SoulissDBHelper(getActivity());
 		SoulissDBHelper.open();
 
-		Bundle extras = getIntent().getExtras();
-		collected = (SoulissTypical32AirCon) extras.get("TIPICO");
+		Bundle extras = getActivity().getIntent().getExtras();
+		if (extras != null && extras.get("TIPICO") != null) {
+			collected = (SoulissTypical) extras.get("TIPICO");
+		} else if (getArguments() != null) {
+			collected = (SoulissTypical) getArguments().get("TIPICO");
+		} else {
+			Log.e(Constants.TAG, "Error retriving node:");
+			return ret;
+		}
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical32AirCon);
-		
-		related = (SoulissTypical) extras.get("RELATO");
+
+		related = (SoulissTypical) getActivity().getIntent().getExtras().get("RELATO");
 		if (related == null)
 			related = datasource.getTypical(collected.getNodeId(), (short) (collected.getSlot() + 1));
+
+		collected.setPrefs(opzioni);
+		super.setCollected(collected);
+
+		functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
+		fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
+
+		// time based
+		textviewTemperature = (TextView) ret.findViewById(R.id.textviewTemp);
+		textviewPositional = (TextView) ret.findViewById(R.id.textViewInfoPos);
+		togSwirl = (SwitchCompat) ret.findViewById(R.id.toggleButtonSwing);
+		togIon = (SwitchCompat) ret.findViewById(R.id.toggleButtonIon);
+		togEnergySave = (SwitchCompat) ret.findViewById(R.id.toggleButtonEco);
+		textviewTriggered = (TextView) ret.findViewById(R.id.textViewInfoTrig);
+
+		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
+		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
+
+		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
+		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+
 
 		// upcast
 		Integer status = Integer.valueOf(collected.getTypicalDTO().getOutput());
@@ -189,12 +204,13 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 			}
 		});
 
+		return ret;
 	}
 
 	@Override
-	protected void onStart() {
+	public void onStart() {
 		super.onStart();
-		setActionBarInfo(collected.getNiceName());
+
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
 				int act = Integer.parseInt(textviewTemperature.getText().toString());
@@ -227,49 +243,34 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 		// Cancel
 		OnClickListener simplecan = new OnClickListener() {
 			public void onClick(View v) {
-				// T32AirConActivity.this.finish();
+				// T32AirConFragment.this.finish();
 				issueIrCommand(buildIrCommand(0));
 				return;
 			}
 		};
 		btOff.setOnClickListener(simplecan);
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		//setActionBarInfo(collected.getNiceName());
+        //this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		return true;
-	}
+
+
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			if (opzioni.isAnimationsEnabled())
-				overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-		registerReceiver(soulissDataReceiver, filtere);
-		doBindService();
+		getActivity().registerReceiver(soulissDataReceiver, filtere);
 	}
 
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
-		unregisterReceiver(soulissDataReceiver);
-		doUnbindService();
+		getActivity().unregisterReceiver(soulissDataReceiver);
 	}
 
 	/**
@@ -346,12 +347,7 @@ public class T32AirConActivity extends AbstractStatusedFragmentActivity {
 		return finalCommand;
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		datasource.close();
-		doUnbindService();
-	}
+
 
 	// Aggiorna il feedback
 	private BroadcastReceiver soulissDataReceiver = new BroadcastReceiver() {

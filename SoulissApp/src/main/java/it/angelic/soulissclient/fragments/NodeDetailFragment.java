@@ -66,6 +66,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical14PulseOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
@@ -346,6 +347,8 @@ public class NodeDetailFragment extends ListFragment {
             NewFrag = T1nGenericLightFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer || target instanceof SoulissTypical43AntiTheftLocalPeer)
             NewFrag = T4nFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical32AirCon)
+            NewFrag = T32AirConFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical14PulseOutput) {
             //no detail, notice user and return
             Toast.makeText(getActivity(),
@@ -380,7 +383,7 @@ public class NodeDetailFragment extends ListFragment {
 				nodeDatail = new Intent(getActivity(), T5nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
-				nodeDatail = new Intent(getActivity(), T32AirConActivity.class);
+				nodeDatail = new Intent(getActivity(), T32AirConFragment.class);
 				nodeDatail.putExtra("TIPICO", target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getSlot() + 1)));
 			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T15_RGB) {

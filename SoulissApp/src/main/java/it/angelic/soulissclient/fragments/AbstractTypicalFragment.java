@@ -20,7 +20,6 @@ public class AbstractTypicalFragment extends Fragment {
     public AbstractTypicalFragment() {
 		super();
 		opzioni = SoulissClient.getOpzioni();
-		
 	}
 
     @Override

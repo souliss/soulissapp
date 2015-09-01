@@ -11,6 +11,7 @@ import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
 import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
 import it.angelic.soulissclient.fragments.T31HeatingFragment;
+import it.angelic.soulissclient.fragments.T32AirConFragment;
 import it.angelic.soulissclient.fragments.T4nFragment;
 import it.angelic.soulissclient.fragments.T5nSensorFragment;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -73,6 +74,8 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
                 NewFrag = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
             else if (collected instanceof SoulissTypical41AntiTheft || collected instanceof SoulissTypical42AntiTheftPeer || collected instanceof SoulissTypical43AntiTheftLocalPeer)
                 NewFrag = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            else if (collected instanceof SoulissTypical32AirCon)
+                NewFrag = T32AirConFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
             else if (collected instanceof SoulissTypical14PulseOutput) {
                 //no detail, notice user and return
                 Toast.makeText(this,
@@ -81,11 +84,7 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
                 return;
             } else {
                 //TODO transform these in Frags
-                if (collected instanceof SoulissTypical32AirCon) {
-                    Intent nodeDatail = new Intent(this, T32AirConActivity.class);
-                    nodeDatail.putExtra("TIPICO", collected);
-                    startActivity(nodeDatail);
-                } else if (collected instanceof SoulissTypical15) {
+                 if (collected instanceof SoulissTypical15) {
                     Intent nodeDatail = new Intent(this, T15RGBIrActivity.class);
                     nodeDatail.putExtra("TIPICO", collected);
                     startActivity(nodeDatail);
