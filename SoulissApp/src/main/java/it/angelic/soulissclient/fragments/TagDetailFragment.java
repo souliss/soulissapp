@@ -89,6 +89,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             initDataset(getActivity());
             mAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
+            swipeLayout.setRefreshing(false);
         }
     };
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -97,7 +98,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-
+    private SwipeRefreshLayout swipeLayout;
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -152,6 +153,37 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
         Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Looper.prepare();
+                        if (collectedTag != null) {
+                            UDPHelper.stateRequest(opzioni, 1, collectedTag.getAssignedTypicals().get(0).getNodeId());
+                            Log.d(Constants.TAG, "stateRequest for node:" + collectedTag.getAssignedTypicals().get(0).getNodeId());
+                        }
+
+                        if (!opzioni.isSoulissReachable()) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(getActivity(),
+                                            getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
+                                            .show();
+                                    swipeLayout.setRefreshing(false);
+                                }
+                            });
+
+
+                        }
+                    }
+                }).start();
+            }
+        });
+        swipeLayout.setColorSchemeResources(R.color.std_blue,
+                R.color.std_blue_shadow);
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshContainer);
@@ -253,7 +285,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         return rootView;
     }
-
 
     public boolean onContextItemSelected(MenuItem item) {
         Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
@@ -402,58 +433,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         LINEAR_LAYOUT_MANAGER
     }
 
-    /**
-     * Provide a reference to the type of views that you are using (custom ViewHolder)
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-        private final TextView textView;
-        private final TextView textViewInfo1;
-        private final TextView textViewInfo2;
-        private final CardView cardView;
-        private LinearLayout linearActionsLayout;
-        private ImageView imageView;
 
-        public ViewHolder(View v) {
-            super(v);
-            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
-            imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
-            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
-            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
-            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
-            cardView = (CardView) v.findViewById(R.id.TypCard);
-            v.setOnCreateContextMenuListener(this);
-        }
-
-        public CardView getCardView() {
-            return cardView;
-        }
-
-        public TextView getTextView() {
-            return textView;
-        }
-
-        public ImageView getImageView() {
-            return imageView;
-        }
-
-        public LinearLayout getLinearActionsLayout() {
-            return linearActionsLayout;
-        }
-
-        public TextView getTextViewInfo1() {
-            return textViewInfo1;
-        }
-
-        public TextView getTextViewInfo2() {
-            return textViewInfo2;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(Menu.NONE, R.id.eliminaTag, Menu.NONE, R.string.tag_delete);
-
-        }
-
-    }
-*/
 }

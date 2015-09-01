@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,7 +23,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+
 
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
@@ -59,7 +60,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	private boolean continueIncrementing;
 	private boolean continueDecrementing;
-	private ToggleButton togMulticast;
+	private SwitchCompat togMulticast;
 	private TableRow tableRowVis;
 	private TableRow tableRowChannel;
 	private View tableRowLamp;
@@ -178,7 +179,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			try {
 				// try emergency
 				Log.w(Constants.TAG, "Attempting emergency load");
-				collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
+				collected = (SoulissTypical19AnalogChannel) datasource.getTypical(collected.getTypicalDTO()
 						.getNodeId(), collected.getTypicalDTO().getSlot());
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error retriving node:" + e.getMessage());
@@ -199,7 +200,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
 		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
-		togMulticast = (ToggleButton) ret.findViewById(R.id.checkBoxMulticast);
+		togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
 
 		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
@@ -361,7 +362,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		super.onResume();
 		SoulissDBHelper.open();
 		if (collected != null) {
-			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected.getTypicalDTO()
+			collected = (SoulissTypical19AnalogChannel) datasource.getTypical(collected.getTypicalDTO()
 					.getNodeId(), collected.getSlot());
 			collected.issueRefresh();
 		}
@@ -389,7 +390,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// SoulissNode coll = datasource.getSoulissNode();
-			collected = (SoulissTypical19AnalogChannel) datasource.getSoulissTypical(collected
+			collected = (SoulissTypical19AnalogChannel) datasource.getTypical(collected
 					.getNodeId(), collected.getSlot());
 			// Bundle extras = intent.getExtras();
 			// Bundle vers = (Bundle) extras.get("NODES");

@@ -147,7 +147,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		if (opzioni.isDbConfigured()) {
 			SoulissDBHelper.open();
 			// per il refresh dal dettaglio
-			collected = datasource.getSoulissTypical(collected.getTypicalDTO().getNodeId(), collected.getTypicalDTO()
+			collected = datasource.getTypical(collected.getTypicalDTO().getNodeId(), collected.getTypicalDTO()
 					.getSlot());
 		}
 		final Spinner graphtSpinner = (Spinner) getActivity().findViewById(R.id.spinnerGraphType);

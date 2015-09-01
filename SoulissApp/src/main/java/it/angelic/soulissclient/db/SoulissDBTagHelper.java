@@ -30,6 +30,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
 
     // Database fields
 
+
     public static synchronized SQLiteDatabase getDatabase() {
         return database;
     }

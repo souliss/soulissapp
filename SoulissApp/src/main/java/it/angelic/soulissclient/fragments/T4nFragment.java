@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
+
 
 import com.pheelicks.visualizer.VisualizerView;
 
@@ -57,7 +58,7 @@ public class T4nFragment extends Fragment {
     private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
     private SoulissPreferenceHelper opzioni;
 
-    private ToggleButton toggleButton;
+    private SwitchCompat toggleButton;
 
     private SoulissTypical collected;
     // private SoulissTypical related;
@@ -150,7 +151,7 @@ public class T4nFragment extends Fragment {
         collected.setPrefs(opzioni);
 
 
-        toggleButton = (ToggleButton) ret.findViewById(R.id.buttonPlus);
+        toggleButton = (SwitchCompat) ret.findViewById(R.id.buttonPlus);
         resetButton = (Button) ret.findViewById(R.id.resetButton);
 
         alarmInfoTextView = (TextView) ret.findViewById(R.id.textviewAlarmInfo);
@@ -311,7 +312,7 @@ public class T4nFragment extends Fragment {
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     if (opzioni.isAnimationsEnabled())
                         ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-                    ft.replace(R.id.details, details);
+                    ft.replace(R.id.detailPane, details);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                     ft.commit();
                 } else {

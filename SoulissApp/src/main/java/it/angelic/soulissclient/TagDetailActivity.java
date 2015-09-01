@@ -19,18 +19,19 @@ package it.angelic.soulissclient;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -83,7 +84,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             public void onTransitionEnd(Transition transition) {
                 ImageView mLogoImg = (ImageView) findViewById(R.id.photo);
                 mLogoImg.animate().scaleX(1.0f);
-                ImageView heroAlpha= (ImageView) findViewById(R.id.infoAlpha);
+                ImageView heroAlpha = (ImageView) findViewById(R.id.infoAlpha);
                 heroAlpha.animate().scaleX(1.0f);
                 /*ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
                         getResources().getColor(R.color.white), 0);
@@ -113,6 +114,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
         fab = (FloatingActionButton) findViewById(R.id.fabTag);
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             faiFigate();
 
@@ -122,6 +124,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
+
     }
 
     public void showDetails(int pos) {
@@ -148,14 +151,36 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         FragmentTransaction ft = manager.beginTransaction();
 
         if (NewFrag != null) {
-            if (opzioni.isAnimationsEnabled())
-                ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-            ft.replace(R.id.detailPane, NewFrag);
-            // ft.addToBackStack(null);
-            // ft.remove(details);
-            //ft.add(NewFrag,"BOH");
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            ft.commit();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
+                details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.fade));
+
+                // Create new fragment to add (Fragment B)
+                NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
+                NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.explode));
+
+
+                // Our shared element (in Fragment A)
+                ImageView mProductImage = (ImageView) details.getView().findViewById(R.id.card_thumbnail_image2);
+                TextView mProductText = (TextView) findViewById(R.id.TextViewTypicalsTitle);
+
+                // Add Fragment B
+                FragmentTransaction ftt = manager.beginTransaction()
+                        .replace(R.id.detailPane, NewFrag)
+                        .addToBackStack("transaction")
+                        .addSharedElement(mProductText, "ToolbarText");//NOT WORK
+                //.addSharedElement(mProductText, "ToolbarText");
+                ftt.commit();
+            } else {
+                // if (opzioni.isAnimationsEnabled())
+                //     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+                ft.replace(R.id.detailPane, NewFrag);
+                ft.addToBackStack(null);
+                // ft.remove(details);
+                //ft.add(NewFrag,"BOH");
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                ft.commit();
+            }
         } else {
             Toast.makeText(getApplicationContext(), "No detail to show", Toast.LENGTH_SHORT).show();
         }
@@ -174,13 +199,20 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         ImageView icon = (ImageView) findViewById(R.id.node_icon);
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    // nothing to do here...
-                } else {
-                    finish();
+                // if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                // nothing to do here...
+                //   } else {
+                   /* supportFinishAfterTransition();
                     if (opzioni.isAnimationsEnabled())
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                    return true;
+                    return true;*/
+                android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+                Fragment details = manager.findFragmentById(R.id.detailPane);
+                if (details instanceof TagDetailFragment)
+                    supportFinishAfterTransition();
+                else {
+                    getSupportFragmentManager().popBackStack();
+                    setActionBarInfo(collected.getNiceName());
                 }
                 return true;
             case R.id.Opzioni:
@@ -241,11 +273,10 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         transaction.commit();
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         setActionBarInfo(collected.getNiceName());
-
-
     }
 }

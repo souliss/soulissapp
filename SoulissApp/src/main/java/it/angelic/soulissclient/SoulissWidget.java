@@ -59,7 +59,7 @@ public class SoulissWidget extends AppWidgetProvider {
             db = new SoulissDBHelper(context);
             SoulissDBHelper.open();
             if (node > Constants.MASSIVE_NODE_ID) {
-                final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
+                final SoulissTypical tgt = db.getTypical(node, (short) slot);
                 if (!name.equals(""))
                     updateViews.setTextViewText(R.id.button1, name);
                 else
@@ -83,7 +83,7 @@ public class SoulissWidget extends AppWidgetProvider {
 
                 updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
             } else if (node == Constants.MASSIVE_NODE_ID) {
-               //final SoulissTypical tgt = db.getSoulissTypical(node, (short) slot);
+               //final SoulissTypical tgt = db.getTypical(node, (short) slot);
                 updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.allnodes));
                 updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.typical) + " " + slot);
                 updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.scene_cmd_massive));
@@ -159,7 +159,7 @@ public class SoulissWidget extends AppWidgetProvider {
                     db = new SoulissDBHelper(context);
                     SoulissDBHelper.open();
                     if (node > Constants.MASSIVE_NODE_ID) {
-                        final SoulissTypical tgt = db.getSoulissTypical(node, slot);
+                        final SoulissTypical tgt = db.getTypical(node, slot);
                         UDPHelper.pollRequest(opzioni, 1, tgt.getNodeId());
                         final SoulissCommand cmdd = new SoulissCommand(tgt);
                         cmdd.getCommandDTO().setCommand(cmd);

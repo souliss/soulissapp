@@ -31,7 +31,7 @@
             android:background="@color/std_blue_shadow" />
 
         <FrameLayout
-            android:id="@+id/details"
+            android:id="@+id/detailPane"
             android:layout_below="@id/my_awesome_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

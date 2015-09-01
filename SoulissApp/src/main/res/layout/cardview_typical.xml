@@ -21,6 +21,7 @@
 
         <ImageView
             android:id="@+id/card_thumbnail_image2"
+            android:transitionName="MyTransition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawingCacheQuality="high"
@@ -42,6 +43,7 @@
 
             <TextView
                 android:id="@+id/TextViewTypicalsTitle"
+                android:transitionName="ToolbarText"
                 style="@style/CodeFontTitle"
                 android:layout_marginLeft="5dip"
                 android:text="@string/position" />

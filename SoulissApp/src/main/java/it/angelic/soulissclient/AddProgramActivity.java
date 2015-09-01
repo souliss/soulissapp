@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
     private RadioButton radioTimed;
     private RadioButton radioPositional;
     private RadioButton radioTrigger;
-    private ToggleButton togglehomeaway;
+    private SwitchCompat togglehomeaway;
     private LinkedList<SoulissScene> scenes;
     private Spinner outputCommandSpinner;
     private TimePicker commandTimePicker;
@@ -235,7 +235,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         commandSpinnerInterval = (Spinner) findViewById(R.id.spinnerRepeatEvery);
         // position based
         final TextView textviewPositional = (TextView) findViewById(R.id.textViewInfoPos);
-        togglehomeaway = (ToggleButton) findViewById(R.id.toggleButtonPosition);
+        togglehomeaway = (SwitchCompat) findViewById(R.id.toggleButtonPosition);
         // data based
         final TextView textviewTriggered = (TextView) findViewById(R.id.textViewInfoTrig);
         triggeredNodeSpinner = (Spinner) findViewById(R.id.Spinner05);

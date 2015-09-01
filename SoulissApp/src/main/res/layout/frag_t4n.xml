@@ -19,7 +19,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
 
-        <ToggleButton
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/buttonPlus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

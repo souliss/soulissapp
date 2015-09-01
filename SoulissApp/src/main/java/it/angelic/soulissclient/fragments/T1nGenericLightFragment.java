@@ -9,10 +9,9 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +23,6 @@ import android.widget.SeekBar;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.pheelicks.visualizer.VisualizerView;
 
@@ -71,7 +69,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	private Button buttAuto;
 	private TextView autoInfo;
 	private TextView infoTyp;
-	private ToggleButton togMassive;
+	private SwitchCompat togMassive;
 	private TextView infoHistory;
     private TableRow infoTags;
     private TableRow infoFavs;
@@ -123,9 +121,12 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 	}
 
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(false);
+	}
 
-
-	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (container == null)
@@ -154,6 +155,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);*/
+		//((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -171,7 +173,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
-		togMassive = (ToggleButton) ret.findViewById(R.id.buttonMassive);
+		togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
 		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
@@ -382,13 +384,16 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				if (opzioni.isAnimationsEnabled())
 					ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
-				ft.replace(R.id.details, details);
+				ft.replace(R.id.detailPane, details);
 				ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 				ft.commit();
 			} else {
-				getActivity().finish();
+				Log.i(Constants.TAG, "Close fragment");
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane));
+				/*getActivity().supportFinishAfterTransition();
 				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);*/
 
 			}
 			return true;
@@ -464,6 +469,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                     refreshHistoryInfo();
                 }
 				refreshStatusIcon();
+
 				// datasource.close();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);

@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.Serializable;
@@ -228,7 +227,7 @@ public class SoulissTypicalDTO implements Serializable {
         if (upd == 0) {
             SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_TYPICALS, null, values);
         }
-        return database.getSoulissTypical(getNodeId(), getSlot());
+        return database.getTypical(getNodeId(), getSlot());
     }
 
     public String getName() {

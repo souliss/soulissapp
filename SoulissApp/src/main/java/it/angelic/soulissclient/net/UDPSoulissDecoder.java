@@ -412,7 +412,7 @@ public class UDPSoulissDecoder {
 
         editor.putInt("numNodi", nodes);
         editor.putInt("TipiciXNodo", maxTypicalXnode);
-        editor.commit();
+        editor.apply();
 
         // FIXME centralizzare sta roba
         new Thread(new Runnable() {

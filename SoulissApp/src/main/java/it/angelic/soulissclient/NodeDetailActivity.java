@@ -126,6 +126,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 		ImageView icon = (ImageView) findViewById(R.id.node_icon);
 		switch (item.getItemId()) {
 		case android.R.id.home:
+
 			if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 				// nothing to do here...
 			} else {

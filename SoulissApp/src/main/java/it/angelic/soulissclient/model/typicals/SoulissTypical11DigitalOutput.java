@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.ListButton;
-import it.angelic.soulissclient.helpers.ListToggleButton;
+
+import it.angelic.soulissclient.helpers.ListSwitchCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -85,7 +86,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
 		cont.addView(getQuickActionTitle());
 		// cmd.setVisibility(View.GONE);
 
-		final ListToggleButton tog = new ListToggleButton(ctx);
+		final ListSwitchCompat tog = new ListSwitchCompat(ctx);
 		// final int tpos = position;
 		tog.setLayoutParams(lp);
 		tog.setTextOff("I/O");

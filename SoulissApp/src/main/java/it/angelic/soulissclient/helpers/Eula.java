@@ -101,7 +101,7 @@ public class Eula {
 	    }
 
 	    private static void accept(SharedPreferences preferences) {
-	        preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true).commit();
+	        preferences.edit().putBoolean(PREFERENCE_EULA_ACCEPTED, true).apply();
 	        //this tries to auto-configure Souliss at first run
 	        SoulissClient.getOpzioni().getAndSetCachedAddress();
 	    }
