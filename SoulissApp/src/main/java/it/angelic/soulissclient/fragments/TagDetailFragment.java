@@ -392,6 +392,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
         cursor.close();
         return res;
+        
     }
 
     private enum LayoutManagerType {
