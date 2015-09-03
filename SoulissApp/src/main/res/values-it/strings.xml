@@ -325,5 +325,8 @@
 
     <string name="dialog_import_nofolder">La cartella di importazione non esiste</string>
     <string name="dialog_import_nofile">Import file doesn\'t exist</string>
+    <string name="bridge_useDhcp">Usa DHCP per la configurazione del nodo remoto</string>
+    <string name="udpport_summary">Scegli la porta UDP dei pacchetti in uscita</string>
+    <string name="advbroadcast_summary">Configura Souliss da remoto</string>
 
 </resources>

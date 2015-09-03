@@ -328,4 +328,7 @@
 
     <string name="dialog_import_nofolder">Import folder doesn\'t exist</string>
     <string name="dialog_import_nofile">Import file doesn\'t exist</string>
+    <string name="bridge_useDhcp" >Use DHCP for remote board IP address assignment</string>
+    <string name="udpport_summary">Choose outgoing datagrams\'port</string>
+    <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
 </resources>

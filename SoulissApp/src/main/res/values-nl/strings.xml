@@ -299,4 +299,7 @@
     <string name="timed_warning">Energy alert</string>
     <string name="useridxhint">Please insert a number in range 1&#8211;100</string>
     <string name="udphint">Please insert a number in range 1&#8211;65535</string>
+    <string name="bridge_useDhcp" />
+    <string name="udpport_summary">Choose outgoing datagrams\'port</string>
+    <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
 </resources>

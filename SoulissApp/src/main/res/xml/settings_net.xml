@@ -36,13 +36,13 @@
             android:name="advbroadcast"
             android:dialogTitle="@string/opt_userindex"
             android:key="advbroadcastKey"
-            android:summary="Remotely configure Souliss Bridge Node"
+            android:summary="@string/advbroadcast_summary"
             android:title="Broadcast Setting" />
         <EditTextPreference
             android:name="udpport"
             android:dialogTitle="@string/opt_udpport"
             android:inputType="number"
-            android:summary="Choose outgoing datagrams'port"
+            android:summary="@string/udpport_summary"
             android:key="udpportIC"
             android:title="@string/opt_udpport" />
 

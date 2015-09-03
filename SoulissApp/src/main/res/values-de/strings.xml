@@ -300,4 +300,7 @@
     <string name="warn_connection">Connection not available</string>
     <string name="warn_wifi">Can\'t use local address without WI-FI connection!</string>
     <string name="useridxhint">Please insert a number in range 1&#8211;100</string>
+    <string name="bridge_useDhcp" />
+    <string name="udpport_summary">Choose outgoing datagrams\'port</string>
+    <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
 </resources>

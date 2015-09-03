@@ -23,6 +23,11 @@
     <CheckBoxPreference
         android:dialogTitle="@string/bridge_isgateway"
         android:key="bcast_isgateway"
+        android:summary="@string/bridge_useDhcp"
+        android:title="DHCP" />
+    <CheckBoxPreference
+        android:dialogTitle="@string/bridge_isgateway"
+        android:key="bcast_useDhcp"
         android:summary="@string/bridge_isgateway"
         android:title="Gateway/Peer" />
     <EditTextPreference

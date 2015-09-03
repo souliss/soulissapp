@@ -96,7 +96,7 @@ public class UDPHelper {
 
 	}*/
 
-	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, int functional, List<Byte> bcastPayload,@Nullable Boolean isGw) {
+	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, int functional, List<Byte> bcastPayload,@Nullable Boolean isGw, Boolean useDhcp) {
 		InetAddress serverAddr;
 		DatagramSocket sender = null;
 		DatagramPacket packet;
@@ -112,7 +112,7 @@ public class UDPHelper {
 
 			switch (functional){
 				case Constants.Souliss_UDP_function_broadcast_configure:
-					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigure(isGw, bcastPayload);
+					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigure(isGw,useDhcp, bcastPayload);
 					break;
 				case Constants.Souliss_UDP_function_broadcast_configure_wifissid:
 					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigureWifiSsid(bcastPayload);
@@ -658,7 +658,7 @@ public class UDPHelper {
 
 	}
 
-	private static ArrayList<Byte> buildMaCaCoBroadCastConfigure(boolean isGateway, List<Byte> payLoad) {
+	private static ArrayList<Byte> buildMaCaCoBroadCastConfigure(boolean isGateway,boolean useDhcp, List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
 		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure));// functional code
@@ -666,7 +666,21 @@ public class UDPHelper {
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
 		assertTrue(payLoad.size() == 0XC);
-		frame.add((byte) (isGateway?0x1:0x0)); // STARTOFFSET
+		byte dhcpOrStatic;
+		if (useDhcp){
+			if (isGateway)
+				dhcpOrStatic =0x2;
+			else
+				dhcpOrStatic=0x4;
+		}else{
+			if (isGateway)
+				dhcpOrStatic =0x1;
+			else
+				dhcpOrStatic=0x3;
+		}
+
+
+		frame.add((byte) dhcpOrStatic); // STARTOFFSET
 		frame.add((byte) payLoad.size()); // NUMBEROF
 
 		for (Byte number : payLoad) {

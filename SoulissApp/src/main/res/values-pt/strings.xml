@@ -320,5 +320,8 @@
     <string name="dialog_import_nofile">Import file doesn\'t exist</string>
     <string name="programs_trigger_executed">Souliss Trigger executed</string>
     <string name="widget_cantsave">Command empty/not selected</string>
+    <string name="bridge_useDhcp" />
+    <string name="udpport_summary">Choose outgoing datagrams\'port</string>
+    <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
 
 </resources>
