@@ -49,6 +49,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     private boolean isSlave = false;// indica se includerlo nelle liste
     private boolean isSensor = false;// indica se va loggato
 
+    //AUTOF
     public SoulissTypical(SoulissPreferenceHelper pre) {
         super();
         prefs = pre;
@@ -56,74 +57,18 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     @Override
-    public String getNiceName() {
-        if (typicalDTO.getName() != null)
-            return typicalDTO.getName();
-        return getDefaultName();
-
+    public void getActionsLayout(final Context ctx, LinearLayout convertView) {
     }
 
-    public Float getOutput() {
-        return Float.valueOf(typicalDTO.getOutput());
+    public ArrayList<SoulissCommand> getCommands(Context ctx) {
+        // to be overridden
+        ArrayList<SoulissCommand> ret = new ArrayList<>();
+        return ret;
     }
 
-    @Override
-    public void setIconResourceId(int resId) {
-        typicalDTO.setIconId(resId);
-
-    }
-
-    @Override
-    public void setName(String newName) {
-        typicalDTO.setName(newName);
-    }
-
-    @Override
-    public String getName() {
-        return typicalDTO.getName();
-    }
-
-    public short getTypical() {
-      return typicalDTO.getTypical();
-    }
-
-    public short getSlot() {
-        return typicalDTO.getSlot();
-    }
-
-    public void setRelated(SoulissTypical in) {
-        throw new RuntimeException("Can't call setRelated on a single generic typical");
-    }
-
-    /**
-     * Decide come interpretare gli out e logga
-     */
-    public void logTypical() {
-        ContentValues values = new ContentValues();
-
-        // wrap values from object
-        values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
-        values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
-        values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
-        if (isSensor()) {
-            values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
-        } else {
-            values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
-        }
-        try {
-            SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);
-        } catch (SQLiteConstraintException e) {
-            // sensori NaN violano il constraint
-            Log.e(it.angelic.soulissclient.Constants.TAG, "error saving log: " + e);
-        }
-
-    }
-
-    public void refresh(){
-        typicalDTO.refresh(this);
-    }
-
-    public @StringRes String getDefaultName() {
+    public
+    @StringRes
+    String getDefaultName() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 
@@ -188,7 +133,9 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     @Override
-    public @DrawableRes int getIconResourceId() {
+    public
+    @DrawableRes
+    int getIconResourceId() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 
@@ -250,6 +197,45 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return R.drawable.empty_narrow;
     }
 
+    @Override
+    public void setIconResourceId(int resId) {
+        typicalDTO.setIconId(resId);
+
+    }
+
+    @Override
+    public String getName() {
+        return typicalDTO.getName();
+    }
+
+    @Override
+    public void setName(String newName) {
+        typicalDTO.setName(newName);
+    }
+
+    @Override
+    public String getNiceName() {
+        if (typicalDTO.getName() != null)
+            return typicalDTO.getName();
+        return getDefaultName();
+
+    }
+
+    public short getNodeId() {
+        return typicalDTO.getNodeId();
+    }
+
+    public Float getOutput() {
+        return Float.valueOf(typicalDTO.getOutput());
+    }
+
+    /**
+     * Should be sub-implemented
+     */
+    public String getOutputDesc() {
+        return "TOIMPLEMENT";
+    }
+
     public SoulissNode getParentNode() {
         return parentNode;
     }
@@ -260,49 +246,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         this.parentNode = parentNode;
     }
 
-    public boolean isEmpty() {
-        return typicalDTO.getTypical() == Constants.Souliss_T_empty;
-    }
-
-    public boolean isRelated() {
-        return isSlave;
-    }
-
-    public void setRelated(boolean isSlave) {
-        this.isSlave = isSlave;
-    }
-
-    public ArrayList<SoulissCommand> getCommands(Context ctx) {
-        // to be overridden
-        ArrayList<SoulissCommand> ret = new ArrayList<>();
-        return ret;
-    }
-
-    public SoulissTypicalDTO getTypicalDTO() {
-        return typicalDTO;
-    }
-
-    public void setTypicalDTO(SoulissTypicalDTO typicalDTO) {
-        this.typicalDTO = typicalDTO;
-    }
-
-    @Override
-    public String toString() {
-        return getNiceName();
-    }
-
-    public boolean isSensor() {
-        if (!(this instanceof ISoulissTypicalSensor)){
-            Log.w(Constants.TAG,"SoulissTypical "+getNiceName()+" NOT instanceof ISoulissTypicalSensor");
-        }
-        //TODO return (this instanceof ISoulissTypicalSensor)
-        return isSensor;
-    }
-
-    public void setSensor(boolean isSensor) {
-        this.isSensor = isSensor;
-    }
-
     public SoulissPreferenceHelper getPrefs() {
         return prefs;
     }
@@ -310,9 +253,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     public void setPrefs(SoulissPreferenceHelper prefs) {
         this.prefs = prefs;
     }
-
-    @Override
-    public void getActionsLayout (final Context ctx, LinearLayout convertView){}
 
     protected TextView getQuickActionTitle() {
         // Infotext nascosto all'inizio
@@ -329,11 +269,72 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return cmd;
     }
 
+    public short getSlot() {
+        return typicalDTO.getSlot();
+    }
+
+    public short getTypical() {
+        return typicalDTO.getTypical();
+    }
+
+    public SoulissTypicalDTO getTypicalDTO() {
+        return typicalDTO;
+    }
+
+    public void setTypicalDTO(SoulissTypicalDTO typicalDTO) {
+        this.typicalDTO = typicalDTO;
+    }
+
+    public boolean isEmpty() {
+        return typicalDTO.getTypical() == Constants.Souliss_T_empty;
+    }
+
+    public boolean isRelated() {
+        return isSlave;
+    }
+
+    public void setRelated(boolean isSlave) {
+        this.isSlave = isSlave;
+    }
+
+    public boolean isSensor() {
+        if (!(this instanceof ISoulissTypicalSensor)) {
+            Log.w(Constants.TAG, "SoulissTypical " + getNiceName() + " NOT instanceof ISoulissTypicalSensor");
+        }
+        //TODO return (this instanceof ISoulissTypicalSensor)
+        return isSensor;
+    }
+
+    public void setSensor(boolean isSensor) {
+        this.isSensor = isSensor;
+    }
+
     /**
-     * Should be sub-implemented
+     * Decide come interpretare gli out e logga
      */
-    public String getOutputDesc() {
-        return "TOIMPLEMENT";
+    public void logTypical() {
+        ContentValues values = new ContentValues();
+
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
+        values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
+        if (isSensor()) {
+            values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
+        } else {
+            values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
+        }
+        try {
+            SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);
+        } catch (SQLiteConstraintException e) {
+            // sensori NaN violano il constraint
+            Log.e(it.angelic.soulissclient.Constants.TAG, "error saving log: " + e);
+        }
+
+    }
+
+    public void refresh() {
+        typicalDTO.refresh(this);
     }
 
     public void setOutputDescView(TextView textStatusVal) {
@@ -347,7 +348,14 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         }
     }
 
-    public short getNodeId() {
-        return typicalDTO.getNodeId();
+    public void setRelated(SoulissTypical in) {
+        throw new RuntimeException("Can't call setRelated on a single generic typical");
     }
+
+    @Override
+    public String toString() {
+        return getNiceName();
+    }
+
+
 }
