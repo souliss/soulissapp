@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
@@ -106,7 +108,13 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		short TemperatureMeasuredValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 2))
 				.getTypicalDTO().getOutput();
 
-		// ora ho i due bytes, li converto
+        // Serve solo per dare comandi, da togliere
+        TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
+        TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
+        short TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3)).getTypicalDTO().getOutput();
+        short TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4)).getTypicalDTO().getOutput();
+
+        // ora ho i due bytes, li converto
 		int shifted = TemperatureMeasuredValue2 << 8;
 
 		TemperatureMeasuredVal = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
@@ -116,11 +124,6 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 						+ Long.toHexString((long) TemperatureMeasuredValue2) + " SENSOR Reading:"
 						+ TemperatureMeasuredVal);
 
-		// Serve solo per dare comandi, da togliere
-		TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
-		TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
-		short TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3)).getTypicalDTO().getOutput();
-		short TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4)).getTypicalDTO().getOutput();
 		// ora ho i due bytes, li converto
 		int shifteds = TemperatureSetpointValue2 << 8;
 
@@ -158,7 +161,23 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		return strout.toString();
 	}
 
-	public void issueCommand(final int function, final Float temp) {
+    private void verifyCommand(Float toSend, String byteOne, String byteTwo){
+        int re = HalfFloatUtils.fromFloat(toSend);
+        String pars = Long.toHexString(re);
+        Log.d(Constants.TAG, "SetPoint"+toSend+", in HEX:"+pars);
+        String first = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
+        String second = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
+        Log.d(Constants.TAG, "Splitted (DEC) - first:"+first+" - second:"+second);
+
+        short TemperatureMeasuredValue2 = Short.parseShort(first);
+        short TemperatureMeasuredValue = Short.parseShort(second);
+        int shifted = TemperatureMeasuredValue2 << 8;
+
+        float reconv = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
+        Log.d(Constants.TAG, "Reconverted:" + reconv);
+    }
+
+    public void issueCommand(final int function, final Float temp) {
 		Thread t = new Thread() {
 			public void run() {
 				if (temp == null) {
@@ -167,11 +186,13 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 							SoulissClient.getOpzioni(), "" + function);
 				
 				} else {
-					int re = HalfFloatUtils.fromFloat(temp);
+					int re = HalfFloatUtils.fromFloat(85f );
 					String pars = Long.toHexString(re);
 					String first = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
 					String second = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
-					String[] cmd = { String.valueOf(function), "0", "0",  second , first};
+                    //INVERTITI? Occhio
+					String[] cmd = { String.valueOf(function), "0", "0", first, second};
+                    verifyCommand(85f, second, first);
 					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + second+" "+first);
 					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
 							SoulissClient.getOpzioni(),  cmd);

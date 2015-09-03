@@ -1,16 +1,11 @@
 package it.angelic.soulissclient.test;
 
 import android.test.AndroidTestCase;
-import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import junit.framework.TestCase;
-
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
@@ -32,27 +27,21 @@ public class SoulissTestPersistence extends AndroidTestCase {
         db.open();
     }
 
-    @Override
-    public void tearDown() throws Exception {
-        db.close();
-        super.tearDown();
-        Log.i(Constants.TAG, "tearDown test DB");
+    protected void testAll() throws Throwable {
+
+        Log.i(Constants.TAG, "runTest()");
+        addFakeNode();
+        addFakeSensor();
     }
 
-    @Override
-    protected void runTest() throws Throwable {
-        testAddNode();
-        testAddSensorTypical();
-    }
-
-    public void testAddNode(){
+    public void addFakeNode(){
         SoulissNode testNode = new SoulissNode((short)fakeNodeId);
         db.createOrUpdateNode(testNode);
-        assertEquals(db.countNodes(), 1);
+        assertEquals(1, db.countNodes());
         // Here i have my new database wich is not connected to the standard database of the App
     }
 
-    public void testAddSensorTypical(){
+    public void addFakeSensor(){
         SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(opzioni);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot((short) 1);
@@ -60,7 +49,16 @@ public class SoulissTestPersistence extends AndroidTestCase {
         testTypical.setParentNode(father);
         testTypical.getTypicalDTO().persist();
 
-        assertEquals(db.countTypicals(), 1);
+        assertEquals( 1, db.countTypicals());
         // Here i have my new database wich is not connected to the standard database of the App
+    }
+
+
+    @Override
+    public void tearDown() throws Exception {
+        Log.i(Constants.TAG, "tearDown test DB");
+        db.close();
+        super.tearDown();
+
     }
 }
