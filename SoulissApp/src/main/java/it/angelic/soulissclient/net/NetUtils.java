@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -38,7 +39,7 @@ public class NetUtils {
 				//System.out.println("ip2--:" + inetAddress.getHostAddress());
 
 				// for getting IPV4 format
-				if (!inetAddress.isLoopbackAddress() && InetAddressUtils.isIPv4Address(inetAddress.getHostAddress())) {
+				if (!inetAddress.isLoopbackAddress() && (inetAddress instanceof Inet4Address)) {
 					// return inetAddress.getHostAddress().toString();
 					return inetAddress;
 				}
@@ -103,8 +104,6 @@ public class NetUtils {
 			Log.e(it.angelic.soulissclient.Constants.TAG, e.toString());
 			return null;
 		}
-		
-	
 	}
 	public static int getDeviceGateway(Context ctx) {
 		WifiManager wifii = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);

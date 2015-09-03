@@ -113,7 +113,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
 		Log.i(Constants.TAG,
 				"first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"
-						+ Long.toHexString((long) TemperatureMeasuredValue2) + "SENSOR Reading:"
+						+ Long.toHexString((long) TemperatureMeasuredValue2) + " SENSOR Reading:"
 						+ TemperatureMeasuredVal);
 
 		// Serve solo per dare comandi, da togliere
@@ -125,6 +125,10 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 		int shifteds = TemperatureSetpointValue2 << 8;
 
 		TemperatureSetpointVal = HalfFloatUtils.toFloat(shifteds + TemperatureSetpointValue);
+		Log.i(Constants.TAG,
+				"first:" + Long.toHexString((long) TemperatureSetpointValue) + " second:"
+						+ Long.toHexString((long) TemperatureSetpointValue2) + "SENSOR Setpoint:"
+						+ TemperatureSetpointVal);
 		/*
 		 * Log.d(Constants.TAG, "AirCon State: 0x" +
 		 * Integer.toHexString(typicalDTO.getOutput()) + " " +
@@ -167,8 +171,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 					String pars = Long.toHexString(re);
 					String first = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
 					String second = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
-					String[] cmd = { String.valueOf(function), "0", "0", first, second };
-					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + first+" "+second);
+					String[] cmd = { String.valueOf(function), "0", "0",  second , first};
+					Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + second+" "+first);
 					UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
 							SoulissClient.getOpzioni(),  cmd);
 				}
