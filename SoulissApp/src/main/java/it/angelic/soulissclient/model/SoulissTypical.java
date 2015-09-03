@@ -22,6 +22,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.Constants;
+import it.angelic.soulissclient.net.UDPHelper;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -358,4 +359,13 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
 
+    public void issueRefresh() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UDPHelper.pollRequest(prefs, 1, getNodeId());
+            }
+        }).start();
+
+    }
 }

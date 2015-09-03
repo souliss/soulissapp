@@ -98,7 +98,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    private SwipeRefreshLayout swipeLayout;
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
     private long tagId;

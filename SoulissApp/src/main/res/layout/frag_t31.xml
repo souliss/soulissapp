@@ -56,38 +56,16 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_below="@id/relativeLayout3" >
 
-        <TextView
-            android:id="@+id/textviewTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"
-            android:text="24"
-            android:textSize="140sp" />
-
-        <Button
-            android:id="@+id/buttonPlus"
+        <NumberPicker
+            android:id="@+id/tempSlider"
             android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="15dip"
-            android:layout_marginRight="15dip"
-            android:layout_marginTop="25dip"
-            android:layout_toRightOf="@id/textviewTemp"
-            android:text="@string/plus" />
-
-        <Button
-            android:id="@+id/buttonMinus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/buttonPlus"
-            android:layout_marginLeft="15dip"
-            android:layout_marginRight="15dip"
-            android:layout_marginTop="15dip"
-            android:layout_toRightOf="@id/textviewTemp"
-            android:text="@string/minus" />
+            android:layout_weight="1" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -98,9 +76,73 @@
 
         <TextView
             android:id="@+id/textviewStatus"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dip"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/asMeasured"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayoutStats" >
+
+        <Button android:layout_width="wrap_content"
+            android:id="@+id/asMeasuredButton"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Sto bene cosi"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/asMeasured">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#FFCCCCCC" />
+
+        <TextView
+            android:id="@+id/textviewOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/fan"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageView
+            android:id="@+id/ImageFan2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewOptions"
+            android:layout_centerHorizontal="true"
+            android:drawableTop="@drawable/fan"
+            android:background="@drawable/fan"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/ImageFan1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewOptions"
+            android:layout_marginRight="15dip"
+            android:layout_toLeftOf="@id/ImageFan2"
+            android:background="@drawable/fan"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/ImageFan3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewOptions"
+            android:layout_marginLeft="15dip"
+            android:layout_toRightOf="@id/ImageFan2"
+            android:background="@drawable/fan"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
 

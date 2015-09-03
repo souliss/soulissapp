@@ -326,11 +326,11 @@ public class UDPSoulissDecoder {
         if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
             opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
             editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
-            Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getIPPreferencePublic());
+            Log.w(Constants.TAG, "Set cached address: " + opzioni.getIPPreferencePublic());
         } else if (putIn == 0xF) {// PRIVATO
             opzioni.setCachedAddr(opzioni.getPrefIPAddress());
             editor.putString("cachedAddress", opzioni.getPrefIPAddress());
-            Log.w(Constants.TAG, "Refreshing cached address: " + opzioni.getPrefIPAddress());
+            Log.w(Constants.TAG, "Set cached address: " + opzioni.getPrefIPAddress());
         } else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
 
             try {// sanity check
