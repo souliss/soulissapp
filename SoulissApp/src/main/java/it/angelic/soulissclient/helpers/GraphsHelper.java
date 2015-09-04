@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
@@ -36,7 +37,7 @@ public class GraphsHelper {
 		lightRenderer.setDisplayChartValues(false);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.CIRCLE);
-
+        lightRenderer.setChartValuesTextSize(16);
 		XYSeriesRenderer aRenderer = new XYSeriesRenderer();
 		//aRenderer.setChartValuesSpacing(1.0f);
 		aRenderer.setDisplayChartValues(false);
@@ -48,14 +49,17 @@ public class GraphsHelper {
 		mRenderer.setFillPoints(false);
 		mRenderer.setPointStyle(PointStyle.DIAMOND);
 		if (opzioni.isLightThemeSelected()){
-			lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow_shadow));
-			aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue_shadow));
-			mRenderer.setColor(ctx.getResources().getColor(R.color.std_red_shadow));
+			lightRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_yellow_shadow));
+			aRenderer.setColor(ContextCompat.getColor(ctx,R.color.std_blue_shadow));
+			mRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_red_shadow));
+            lightRenderer.setLineWidth(4);
+            aRenderer.setLineWidth(2);
+            mRenderer.setLineWidth(2);
 		}
 		else{
-		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
-		aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue));
-		mRenderer.setColor(ctx.getResources().getColor(R.color.std_red));
+		lightRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_yellow));
+		aRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_blue));
+		mRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_red));
 		}
 		renderer.addSeriesRenderer(lightRenderer);
 		renderer.addSeriesRenderer(aRenderer);
@@ -104,22 +108,23 @@ public class GraphsHelper {
 	public static XYMultipleSeriesRenderer buildHourRenderer(Context ctx) {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 
-		SimpleSeriesRenderer rangeRenderer = new SimpleSeriesRenderer();
-		rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
-		rangeRenderer.setDisplayChartValues(false);
+        XYSeriesRenderer rangeRenderer = new XYSeriesRenderer();
+		rangeRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_green));
+		//rangeRenderer.setDisplayChartValues(false);
 		// r.setChartValuesSpacing(3);
 		rangeRenderer.setGradientEnabled(true);
-		rangeRenderer.setGradientStart(-10, ctx.getResources().getColor(R.color.std_blue));
-		rangeRenderer.setGradientStop(40, ctx.getResources().getColor(R.color.std_red));
+		rangeRenderer.setGradientStart(-10, ContextCompat.getColor(ctx, R.color.std_blue));
+		rangeRenderer.setGradientStop(40, ContextCompat.getColor(ctx, R.color.std_red));
 		
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
-		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
+		lightRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_yellow));
 		lightRenderer.setDisplayChartValues(true);
 		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
+        lightRenderer.setChartValuesTextSize(16);
 		// lightRenderer.setGradientEnabled(true);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.DIAMOND);
-
+        lightRenderer.setLineWidth(4);
 		renderer.addSeriesRenderer(rangeRenderer);
 		renderer.addSeriesRenderer(1, lightRenderer);
 		
@@ -139,21 +144,21 @@ public class GraphsHelper {
 		// Background fix
 		renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 
-		setChartSettings(ctx, renderer, "Hour of Day", "Celsius degrees", -2, 30, Color.GRAY, Color.LTGRAY);
+		setChartSettings(ctx, renderer, "", "Celsius degrees", -2, 30, Color.GRAY, Color.LTGRAY);
 		return renderer;
 	}
 
 	public static XYMultipleSeriesRenderer buildMonthRenderer(Context ctx) {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 
-		SimpleSeriesRenderer rangeRenderer = new SimpleSeriesRenderer();
-		rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
-		rangeRenderer.setDisplayChartValues(true);
+        XYSeriesRenderer rangeRenderer = new XYSeriesRenderer();
+		rangeRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_green));
+		//rangeRenderer.setDisplayChartValues(true);
 		rangeRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
 		// r.setChartValuesSpacing(3);
 		rangeRenderer.setGradientEnabled(true);
-		rangeRenderer.setGradientStart(-10, ctx.getResources().getColor(R.color.std_blue));
-		rangeRenderer.setGradientStop(50, ctx.getResources().getColor(R.color.std_red));
+		rangeRenderer.setGradientStart(-10, ContextCompat.getColor(ctx, R.color.std_blue));
+		rangeRenderer.setGradientStop(50,ContextCompat.getColor(ctx, R.color.std_red));
 
 		renderer.addSeriesRenderer(rangeRenderer);
 		
@@ -161,10 +166,10 @@ public class GraphsHelper {
 		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
 		lightRenderer.setDisplayChartValues(true);
 		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
-		// lightRenderer.setGradientEnabled(true);
-
+        lightRenderer.setChartValuesTextSize(16);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.DIAMOND);
+		lightRenderer.setLineWidth(4);
 		renderer.addSeriesRenderer(lightRenderer);
 		
 		renderer.setShowLegend(false);
@@ -283,6 +288,9 @@ public class GraphsHelper {
 		renderer.setChartTitleTextSize(val);
 		renderer.setLabelsTextSize(val);
 		renderer.setLegendTextSize(val);
+
+
+
 		//renderer.setChartValuesTextSize(val-2);
 	}
 

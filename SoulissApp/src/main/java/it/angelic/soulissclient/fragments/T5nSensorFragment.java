@@ -19,6 +19,10 @@ import java.util.Set;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.BarChart;
+import org.achartengine.chart.BubbleChart;
+import org.achartengine.chart.CombinedXYChart;
+import org.achartengine.chart.CubicLineChart;
 import org.achartengine.chart.LineChart;
 import org.achartengine.chart.RangeBarChart;
 import org.achartengine.model.RangeCategorySeries;
@@ -388,8 +392,9 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		dataset.addSeries(0, minmaxserie.toXYSeries());
 		dataset.addSeries(1, sunSeries);
 
-		String[] types = new String[] { RangeBarChart.TYPE, LineChart.TYPE };
-
+		//String[] types = new String[] { RangeBarChart.TYPE, LineChart.TYPE };
+		CombinedXYChart.XYCombinedChartDef[] types = new CombinedXYChart.XYCombinedChartDef[] {
+				new CombinedXYChart.XYCombinedChartDef(RangeBarChart.TYPE, 0), new CombinedXYChart.XYCombinedChartDef(LineChart.TYPE, 1) };
 		BarChartView = ChartFactory.getCombinedXYChartView(getActivity(), dataset, renderer, types);
 		layout.removeAllViews();
 		layout.addView(BarChartView);
