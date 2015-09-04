@@ -47,9 +47,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
 	 */
 	public int getOutputLux() {
-		float ret = getOutputFloat();
-		int casted = (int) ret * 1000;
-		return casted;
+		return (int) getOutputFloat();
 	}
 	
 	@Override
