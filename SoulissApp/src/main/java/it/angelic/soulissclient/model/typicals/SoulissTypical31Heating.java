@@ -59,6 +59,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     private float TemperatureMeasuredVal;
     private float TemperatureSetpointVal;
 
+//AUTOF
     public SoulissTypical31Heating(SoulissPreferenceHelper pp) {
         super(pp);
     }
@@ -70,56 +71,6 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
         return ret;
     }
-
-    public boolean isFannTurnedOn(int fan){
-        if (fan <1 || fan>3)
-            return false;
-        //fan start from
-        return isStatusByteSet(statusByte, 2 + fan);
-    }
-
-    @Override
-    public void setOutputDescView(TextView textStatusVal) {
-        textStatusVal.setText(getOutputDesc());
-        if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
-                || "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
-            textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
-        } else {
-
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
-            textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
-        }
-    }
-    public boolean isCoolMode(){
-        return isStatusByteSet(statusByte, 7);
-
-    }
-    private boolean isHeatMode(){
-        return !isCoolMode();
-
-    }
-    private boolean isStatusByteSet(int b, int n) {
-        return ((b & (1L << n)) != 0);
-    }
-
-
-    public float getTemperatureSetpointVal() {
-        return TemperatureSetpointVal;
-    }
-
-    public void setTemperatureSetpointVal(float temperatureSetpointVal) {
-        TemperatureSetpointVal = temperatureSetpointVal;
-    }
-
-    public float getTemperatureMeasuredVal() {
-        return TemperatureMeasuredVal;
-    }
-
-    public void setTemperatureMeasuredVal(float temperatureMeasuredVal) {
-        TemperatureMeasuredVal = temperatureMeasuredVal;
-    }
-
 
     @Override
     public String getOutputDesc() {
@@ -154,7 +105,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
                         + Long.toHexString((long) TemperatureSetpointValue2) + "SENSOR Setpoint:"
                         + TemperatureSetpointVal);
         /*
-		 * Log.d(Constants.TAG, "AirCon State: 0x" +
+         * Log.d(Constants.TAG, "AirCon State: 0x" +
 		 * Integer.toHexString(typicalDTO.getOutput()) + " " +
 		 * Integer.toHexString
 		 * (TemperatureMeasuredValue.getTypicalDTO().getOutput()));
@@ -188,10 +139,96 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             strout.append(" - Fan Manual");
 
 
-
         strout.append(" ").append(TemperatureMeasuredVal).append("°")
                 .append(" (").append(TemperatureSetpointVal).append("°)");
         return strout.toString();
+    }
+
+    public float getTemperatureMeasuredVal() {
+        return TemperatureMeasuredVal;
+    }
+
+    public void setTemperatureMeasuredVal(float temperatureMeasuredVal) {
+        TemperatureMeasuredVal = temperatureMeasuredVal;
+    }
+
+    public float getTemperatureSetpointVal() {
+        return TemperatureSetpointVal;
+    }
+
+    public void setTemperatureSetpointVal(float temperatureSetpointVal) {
+        TemperatureSetpointVal = temperatureSetpointVal;
+    }
+
+    public boolean isCoolMode() {
+        return isStatusByteSet(statusByte, 7);
+
+    }
+
+    public boolean isFannTurnedOn(int fan) {
+        if (fan < 1 || fan > 3)
+            return false;
+        //fan start from
+        return isStatusByteSet(statusByte, 2 + fan);
+    }
+
+    private boolean isHeatMode() {
+        return !isCoolMode();
+
+    }
+
+    private boolean isStatusByteSet(int b, int n) {
+        return ((b & (1L << n)) != 0);
+    }
+
+    public void issueCommand(final int function, final Float temp) {
+        Thread t = new Thread() {
+            public void run() {
+                if (temp == null) {
+                    Log.i(Constants.TAG, "ISSUE COMMAND W/O TEMP:" + String.valueOf((float) function));
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+                            SoulissClient.getOpzioni(), "" + function);
+
+                } else {
+                    int re = HalfFloatUtils.fromFloat(temp);
+                    String first, second;
+                    String pars = Long.toHexString(re);
+                    Log.i(Constants.TAG, "PARSED SETPOINT TEMP: 0x" + pars);
+
+                    try {
+                        second = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
+                    } catch (StringIndexOutOfBoundsException sie) {
+                        second = "0";
+                    }
+                    try {
+                        first = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
+                    } catch (StringIndexOutOfBoundsException sie) {
+                        first = "0";
+                    }
+                    //INVERTITI? Occhio
+                    String[] cmd = {String.valueOf(function), "0", "0", first, second};
+                    //verifyCommand(temp, first, second);
+                    Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + first + " " + second);
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+                            SoulissClient.getOpzioni(), cmd);
+                }
+            }
+        };
+        t.start();
+    }
+
+    @Override
+    public void setOutputDescView(TextView textStatusVal) {
+        textStatusVal.setText(getOutputDesc());
+        if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
+                || "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
+            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
+        } else {
+
+            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
+        }
     }
 
     //TODO move in tests
@@ -211,36 +248,6 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         Log.d(Constants.TAG, "Reconverted:" + reconv);
         Assert.assertTrue(byteOne.equals(first));
         Assert.assertTrue(byteTwo.equals(second));
-    }
-
-    public void issueCommand(final int function, final Float temp) {
-        Thread t = new Thread() {
-            public void run() {
-                if (temp == null) {
-                    Log.i(Constants.TAG, "ISSUE COMMAND W/O TEMP:" + String.valueOf((float) function));
-                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-                            SoulissClient.getOpzioni(), "" + function);
-
-                } else {
-                    int re = HalfFloatUtils.fromFloat(temp);
-                    String second;String pars = Long.toHexString(re);
-                    try {
-                         second = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
-                    }catch (StringIndexOutOfBoundsException sie){
-                        second = "0";
-                    }
-
-                    String first = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
-                    //INVERTITI? Occhio
-                    String[] cmd = {String.valueOf(function), "0", "0", first, second};
-                    //verifyCommand(temp, first, second);
-                    Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + first + " " + second);
-                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-                            SoulissClient.getOpzioni(), cmd);
-                }
-            }
-        };
-        t.start();
     }
 
 }
