@@ -32,11 +32,14 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     private long tagId;
     private SoulissPreferenceHelper opzioni;
 
-
+    @Override
+    public void setData(List data) {
+        mDataset = data;
+    }
 
     @Override
     public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
-        Log.d(Constants.TAG, "Element " + i + " set.");
+        Log.d(Constants.TAG, "Element " + i + " set: last upd: "+Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         ((ViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
@@ -69,7 +72,6 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
-        opzioni = SoulissClient.getOpzioni();
         return new ViewHolder(v);
     }
 
@@ -82,10 +84,11 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
             return 0;
     }
 
-    public ParallaxExenderAdapter(List data, long tagId) {
+    public ParallaxExenderAdapter(SoulissPreferenceHelper pref,List data, long tagId) {
         super(data);
         mDataset = data;
         this.tagId = tagId;
+        opzioni = pref;
     }
 
     /**

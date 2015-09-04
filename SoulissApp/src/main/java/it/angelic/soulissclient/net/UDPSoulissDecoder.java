@@ -492,8 +492,7 @@ public class UDPSoulissDecoder {
             SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
-                // Log.d(Constants.TAG, "---REFRESHING NODE:"+(((int)j /
-                // typXnodo) + tgtnode)+" SLOT:"+(j % typXnodo));
+                Log.v(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
                     SoulissTypical temp = it.getTypical((short) (j % typXnodo));
@@ -501,14 +500,12 @@ public class UDPSoulissDecoder {
                     dto.setSlot(((short) (j % typXnodo)));
                     dto.setNodeId((short) (j / typXnodo + tgtnode));
                     // sufficiente una refresh
-                    //Log.d(Constants.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
                     dto.refresh(temp);
                 } catch (NotFoundException e) {
                     // skipping unexistent typical");
-
+                    //OK, può succedere
                 } catch (Exception e) {
-                    // unknown error
-                    Log.e(Constants.TAG, e.getMessage());
+                    // FIXME nodes.get(((int) j / typXnodo) + tgtnode) è SBAGLIATO
                 }
             }
             // Log.d(Constants.TAG, "Refreshed " + refreshed +

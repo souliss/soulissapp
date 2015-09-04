@@ -33,15 +33,12 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +55,6 @@ import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import java.io.File;
 import java.util.List;
 
-import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
@@ -87,9 +83,9 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             swipeLayout.setRefreshing(false);
             SoulissDBHelper.open();
             initDataset(getActivity());
+            mAdapter.setData(collectedTagTypicals);
             mAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
-            swipeLayout.setRefreshing(false);
         }
     };
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -103,7 +99,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private long tagId;
     private TextView bro;
     private SoulissTag collectedTag;
-    private List<SoulissTypical> mDataset;
+    private List<SoulissTypical> collectedTagTypicals;
     private SwipeRefreshLayout swipeLayout;
 
     @Override
@@ -133,15 +129,15 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         collectedTag = datasource.getTag(ctx, tagId);
         Log.i(Constants.TAG, "initDataset tagId" + tagId);
         List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
-        Log.i(Constants.TAG, "getTagTypicals() returned" + favs.size());
+        Log.i(Constants.TAG, "getTagTypicals() returned " + favs.size());
         if (!opzioni.isDbConfigured())
             AlertDialogHelper.dbNotInitedDialog(ctx);
         else {
-            //mDataset = new SoulissTypical[favs.size()];
-            mDataset = favs;
-       /* mDataset = new String[DATASET_COUNT];
+            //collectedTagTypicals = new SoulissTypical[favs.size()];
+            collectedTagTypicals = favs;
+       /* collectedTagTypicals = new String[DATASET_COUNT];
         for (int i = 0; i < DATASET_COUNT; i++) {
-            mDataset[i] = "This is element #" + i;
+            collectedTagTypicals[i] = "This is element #" + i;
         }*/
         }
     }
@@ -151,7 +147,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
-        Log.i(Constants.TAG, "onCreateView with size of data:" + mDataset.size());
+        Log.i(Constants.TAG, "onCreateView with size of data:" + collectedTagTypicals.size());
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -201,7 +197,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new ParallaxExenderAdapter(mDataset,tagId);
+        mAdapter = new ParallaxExenderAdapter(collectedTagTypicals,tagId);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         //mRecyclerView.setLayoutManager(layoutManagerFixed);
 
@@ -230,7 +226,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                     @Override
                     public void run() {
                         Looper.prepare();
-                        for (SoulissTypical typ : mDataset) {
+                        for (SoulissTypical typ : collectedTagTypicals) {
                             UDPHelper.stateRequest(opzioni, 4, typ.getSlot());
                         }
 
@@ -293,11 +289,11 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
         switch (item.getItemId()) {
             case R.id.eliminaTag:
-                SoulissTypical soulissTypical = mDataset.get(position);
+                SoulissTypical soulissTypical = collectedTagTypicals.get(position);
                 Log.i(Constants.TAG, "DELETE TAGID:"+position);
                 datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
-                mDataset.remove(position);
-                mAdapter.setData(mDataset);
+                collectedTagTypicals.remove(position);
+                mAdapter.setData(collectedTagTypicals);
                 mAdapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
                 mRecyclerView.invalidate();
