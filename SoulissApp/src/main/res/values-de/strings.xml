@@ -3,21 +3,21 @@
 
     <!-- MANUAL_SECTION -->
     <string name="app_name">SoulissApp</string>
-    <string name="app_opt">SoulissApp - Options</string>
-    <string name="app_addprog">Add Program</string>
-    <string name="opt_network">Network Options</string>
-    <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
-    <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>
-    <string name="bridge_gateway">Gateway for Souliss bridge node, most likely your router\'s address</string>
-    <string name="bridge_ssid">Name of your wireless network, to be used by Souliss bridge</string>
-    <string name="bridge_wifipass">Password of wireless network indicated above</string>
-    <string name="last_update">Last update at:</string>
-    <string name="last_exec">Last exec at:</string>
-    <string name="db_size">DB size</string>
-    <string name="waiting">Waiting for updates&#8230;</string>
-    <string name="historyof">History of</string>
-    <string name="daily">Daily average</string>
-    <string name="monthly">Monthly average</string>
+    <string name="app_opt">SoulissApp - Optionen</string>
+    <string name="app_addprog">Programm hinzufuegen</string>
+    <string name="opt_network">Netzwerk Optionen</string>
+    <string name="bridge_IP"> Dynamische IP-Vergabe an einen Brücken-Knotenpunkt von Souliss</string>
+    <string name="bridge_subnet">Subnetzmaske für einen Brücken-Knotenpunkt von Souliss</string>
+    <string name="bridge_gateway">Gateway für einen Brücken-Knotenpunkt von Souliss, vorzugsweise Ihre Router-Adresse</string>
+    <string name="bridge_ssid">Name Ihres WiFi-Netzwerkes, für die Verwendung durch die Souliss-Bridge</string>
+    <string name="bridge_wifipass">Passwort des oben genannten WiFi-Netzwerkes</string>
+    <string name="last_update">Letztes Update:</string>
+    <string name="last_exec">Zuletzt ausgefuehrt:</string>
+    <string name="db_size">DB Groesse</string>
+    <string name="waiting">Warte auf Updates&#8230;</string>
+    <string name="historyof">Verlauf von</string>
+    <string name="daily">Durchschnitt taegl.</string>
+    <string name="monthly">Durchschnitt monatl.</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss doesn\'t seem configured. Please configure Souliss local address on preferences screen</string>
