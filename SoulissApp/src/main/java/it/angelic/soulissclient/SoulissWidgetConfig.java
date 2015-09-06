@@ -157,8 +157,7 @@ public class SoulissWidgetConfig extends Activity {
 
             //editor.putString("COMMAND", outputCommandSpinner.getSelectedItem());
             editor.commit();
-            Log.i(Constants.TAG, "Saving new Widget: NODE:"+((SoulissNode) outputNodeSpinner.getSelectedItem()).getId()
-            +" SLOT:"+ ((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getSlot() );
+            Log.i(Constants.TAG, "Saving new Widget: "+mAppWidgetId );
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             appWidgetManager.updateAppWidget(mAppWidgetId, views);
