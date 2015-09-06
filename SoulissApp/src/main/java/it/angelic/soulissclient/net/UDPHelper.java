@@ -78,7 +78,7 @@ public class UDPHelper {
 			et.printStackTrace();
 			return et.getLocalizedMessage();
 		} catch (Exception e) {
-			Log.d(Constants.TAG, "***Fail", e);
+			Log.e(Constants.TAG, "***Fail", e);
 			return e.getLocalizedMessage();
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -585,7 +585,7 @@ public class UDPHelper {
 		for (int i = 0; i < frame.size(); i++) {
 			deb.append("0x" + Long.toHexString((long) frame.get(i) & 0xff) + " ");
 		}
-		Log.v(Constants.TAG, "frame debug: " + deb.toString());
+		Log.d(Constants.TAG, "frame debug: " + deb.toString());
 	}
 
 	/**

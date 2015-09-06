@@ -72,6 +72,10 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
         return r;
     }
 
+    public String getIntensityPercent(){
+        return ""+String.valueOf((int)(Float.valueOf(getIntensity() / 255f) * 100)) + "%";
+    }
+
     /**
      * Ottiene il layout del pannello comandi
      *
@@ -154,7 +158,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
             return SoulissClient.getAppContext().getString(R.string.OFF);
         else
-            return SoulissClient.getAppContext().getString(R.string.ON);
+            return SoulissClient.getAppContext().getString(R.string.ON) + " "  +getIntensityPercent();
     }
 
     /**
