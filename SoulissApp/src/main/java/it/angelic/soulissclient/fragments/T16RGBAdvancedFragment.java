@@ -100,10 +100,13 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     cpv.setCenterColor(getResources().getColor(R.color.black));
                 } else {
                     Log.d(Constants.TAG, "RGB Out:" + collected.getOutput());
-                    Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(collected.getColor())
-                            + " G" + Color.green(collected.getColor()) + " B" + Color.blue(collected.getColor()));
+
                     cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
                             Color.green(collected.getColor()), Color.blue(collected.getColor())));
+                    color = Color.argb(255, Color.red(collected.getColor()),
+                            Color.green(collected.getColor()), Color.blue(collected.getColor()));
+                    Log.d(Constants.TAG, "Detected data arrival, color change to: R" + Color.red(color)
+                            + " G" + Color.green(color) + " B" + Color.blue(color));
                 }
                 cpv.invalidate();
             } catch (Exception e) {
@@ -129,9 +132,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         return f;
     }
-
-
-
 
 
     /**
@@ -290,14 +290,20 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
-        // CHANNEL Listeners
-        seekChannelRed.setOnSeekBarChangeListener(new channelInputListener());
-        seekChannelGreen.setOnSeekBarChangeListener(new channelInputListener());
-        seekChannelBlue.setOnSeekBarChangeListener(new channelInputListener());
+        // avoid auto call upon Creation with runnable
+        seekChannelRed.post(new Runnable() {
+            public void run() {
+                // CHANNEL Listeners
+                seekChannelRed.setOnSeekBarChangeListener(new channelInputListener());
+                seekChannelGreen.setOnSeekBarChangeListener(new channelInputListener());
+                seekChannelBlue.setOnSeekBarChangeListener(new channelInputListener());
+            }
+        });
+
 
         if (collected.getTypicalDTO().isFavourite()) {
             infoFavs.setVisibility(View.VISIBLE);
-        }else if (collected.getTypicalDTO().isTagged()){
+        } else if (collected.getTypicalDTO().isTagged()) {
             infoTags.setVisibility(View.VISIBLE);
         }
 
@@ -312,8 +318,9 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     mVisualizerView.setEnabled(false);
                     colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
                     eqText.setVisibility(View.INVISIBLE);
+                    cpv.setCenterColor(Color.argb(255, Color.red(color),
+                            Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
-                    Log.i(Constants.TAG, "channel mode, color=" + collected.getColor());
                     tableRowVis.setVisibility(View.GONE);
                     mVisualizerView.setVisibility(View.GONE);
                     mVisualizerViewFrame.setVisibility(View.GONE);
@@ -329,9 +336,10 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     seekChannelGreen.invalidate();
                     seekChannelBlue.setProgress(0);
                     seekChannelBlue.invalidate();
-                    seekChannelRed.setProgress(Color.red(collected.getColor()));
-                    seekChannelGreen.setProgress(Color.green(collected.getColor()));
-                    seekChannelBlue.setProgress(Color.blue(collected.getColor()));
+                    seekChannelRed.setProgress(Color.red(color));
+                    seekChannelGreen.setProgress(Color.green(color));
+                    seekChannelBlue.setProgress(Color.blue(color));
+                    Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
                     tableRowChannel.invalidate();
                 } else {// music
                     mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
@@ -343,7 +351,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     mVisualizerView.setEnabled(true);
                     mVisualizerView.link(togMulticast.isChecked());
-eqText.setVisibility(View.VISIBLE);
+                    eqText.setVisibility(View.VISIBLE);
                     tableRowEq.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
                 }
@@ -463,12 +471,15 @@ eqText.setVisibility(View.VISIBLE);
                 color = c;
                 collected.issueRGBCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set,
                         Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+                Log.d(Constants.TAG, "dialogColorChangedListener, color change to: R" + Color.red(color)
+                        + " G" + Color.green(color) + " B" + Color.blue(color));
             }
         };
-        cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color, colorSwitchRelativeLayout, collected);
-
-        cpv.setCenterColor(Color.argb(255, Color.red(collected.getColor()),
+        //la prima volta prendo il colore dal typ
+        color = (Color.argb(255, Color.red(collected.getColor()),
                 Color.green(collected.getColor()), Color.blue(collected.getColor())));
+
+        cpv = new ColorPickerView(getActivity(), dialogColorChangedListener, color, colorSwitchRelativeLayout, collected);
 
         colorSwitchRelativeLayout.addView(cpv);
         return ret;
@@ -569,14 +580,19 @@ eqText.setVisibility(View.VISIBLE);
     private class channelInputListener implements SeekBar.OnSeekBarChangeListener {
 
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (fromUser) {
+                Log.d(Constants.TAG, "onProgressChanged, color change to: R" + seekChannelRed.getProgress()
+                        + " G" + seekChannelGreen.getProgress() + " B" + seekChannelBlue.getProgress() + " from user:" + fromUser);
 
-            color = Color.argb(255, seekChannelRed.getProgress(), seekChannelGreen.getProgress(),
-                    seekChannelBlue.getProgress());
-            issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
-                    Color.green(color), Color.blue(color), togMulticast.isChecked());
-            redChanabel.setText(getString(R.string.red) + " - " + Color.red(color));
-            greenChanabel.setText(getString(R.string.green) + " - " + Color.green(color));
-            blueChanabel.setText(getString(R.string.blue) + " - " + Color.blue(color));
+                redChanabel.setText(getString(R.string.red) + " - " + Color.red(color));
+                greenChanabel.setText(getString(R.string.green) + " - " + Color.green(color));
+                blueChanabel.setText(getString(R.string.blue) + " - " + Color.blue(color));
+                color = Color.argb(255, seekChannelRed.getProgress(), seekChannelGreen.getProgress(),
+                        seekChannelBlue.getProgress());
+
+                issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, Color.red(color),
+                        Color.green(color), Color.blue(color), togMulticast.isChecked());
+            }
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
@@ -593,7 +609,6 @@ eqText.setVisibility(View.VISIBLE);
         }
 
     }
-
 
 
 }

@@ -110,8 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_margin="5dp"
                     android:weightSum="3">
 
                     <Spinner
@@ -152,7 +151,7 @@
                 <TableRow
                     android:id="@+id/tableRowChannel"
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
+
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:weightSum="1">
@@ -160,13 +159,16 @@
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
                         android:layout_weight="1">
 
                         <SeekBar
                             android:id="@+id/channelRed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/aa_red"
+                            android:layout_margin="4dp"
+                            android:background="@color/barbackg_red"
                             android:max="255" />
 
                         <TextView
@@ -174,15 +176,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/channelRed"
-                            android:layout_marginLeft="2dp"
+                            android:layout_marginLeft="4dp"
                             android:text="@string/red" />
 
                         <SeekBar
                             android:id="@+id/channelGreen"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
                             android:layout_below="@id/channelRedLabel"
-                            android:background="@color/aa_green"
+                            android:background="@color/barbackg_green"
                             android:max="255" />
 
                         <TextView
@@ -190,15 +193,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/channelGreen"
-                            android:layout_marginLeft="2dp"
+                            android:layout_marginLeft="4dp"
                             android:text="@string/green" />
 
                         <SeekBar
                             android:id="@+id/channelBlue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
                             android:layout_below="@id/channelGreenLabel"
-                            android:background="@color/aa_blue"
+                            android:background="@color/barbackg_blue"
                             android:max="255" />
 
                         <TextView
@@ -206,7 +210,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/channelBlue"
-                            android:layout_marginLeft="2dp"
+                            android:layout_marginLeft="4dp"
                             android:text="@string/blue" />
                     </RelativeLayout>
                 </TableRow>

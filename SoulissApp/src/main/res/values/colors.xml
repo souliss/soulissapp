@@ -26,4 +26,8 @@
     <color name="aa_yellow">#AAFFBB33</color>
     <color name="aa_violet">#AABB00FF</color>
 
+    <color name="barbackg_red">#66FF0000</color>
+    <color name="barbackg_green">#6600FF00</color>
+    <color name="barbackg_blue">#660000FF</color>
+
 </resources>
