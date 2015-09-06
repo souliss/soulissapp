@@ -661,7 +661,7 @@ public class UDPHelper {
 	private static ArrayList<Byte> buildMaCaCoBroadCastConfigure(boolean isGateway,boolean useDhcp, List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure));// functional code
+		frame.add(Constants.Souliss_UDP_function_broadcast_configure);// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
@@ -696,7 +696,7 @@ public class UDPHelper {
 	private static ArrayList<Byte> buildMaCaCoBroadCastConfigureWifiSsid(List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure_wifissid));// functional code
+		frame.add(Constants.Souliss_UDP_function_broadcast_configure_wifissid);// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));

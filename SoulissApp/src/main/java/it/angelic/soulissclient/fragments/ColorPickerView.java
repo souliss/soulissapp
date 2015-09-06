@@ -119,6 +119,10 @@ public class ColorPickerView extends View {
                 if (unit < 0) {
                     unit += 1;
                 }
+                // Fix scrolling
+                if (getParent() != null) {
+                    getParent().requestDisallowInterceptTouchEvent(true);
+                }
                 // centerPaint.setColor(interpColor(colors, unit));
                 // fa inviare il comando ir
                 dialogColorChangedListener.colorChanged(interpColor(colors, unit));
