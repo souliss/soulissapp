@@ -119,6 +119,13 @@
             android:label="@string/app_name"
             android:parentActivityName=".SceneListActivity"
             android:uiOptions="splitActionBarWhenNarrow"></activity>
+
+        <activity
+            android:name="TagGridActivity"
+            android:icon="@drawable/warn"
+            android:label="@string/app_name"
+            android:parentActivityName=".LauncherActivity"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
         <activity
             android:name="TagListActivity"
             android:icon="@drawable/warn"

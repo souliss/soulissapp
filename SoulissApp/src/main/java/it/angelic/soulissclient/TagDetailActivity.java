@@ -209,7 +209,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
                 Fragment details = manager.findFragmentById(R.id.detailPane);
                 if (details instanceof TagDetailFragment)
-                    supportFinishAfterTransition();
+                    finish();
                 else {
                     getSupportFragmentManager().popBackStack();
                     setActionBarInfo(collected.getNiceName());

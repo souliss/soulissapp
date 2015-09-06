@@ -377,7 +377,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         /*TAGS*/
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, TagListActivity.class);
+                Intent myIntent = new Intent(LauncherActivity.this, TagGridActivity.class);
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 cardViewFav,   // The view which starts the transition

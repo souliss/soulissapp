@@ -83,8 +83,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             swipeLayout.setRefreshing(false);
             SoulissDBHelper.open();
             initDataset(getActivity());
-            mAdapter.setData(collectedTagTypicals);
-            mAdapter.notifyDataSetChanged();
+            parallaxExtAdapter.setData(collectedTagTypicals);
+            parallaxExtAdapter.notifyDataSetChanged();
             mRecyclerView.invalidate();
         }
     };
@@ -92,7 +92,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
-    protected ParallaxExenderAdapter mAdapter;
+    protected ParallaxExenderAdapter parallaxExtAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     private SoulissDBTagHelper datasource;
     private SoulissPreferenceHelper opzioni;
@@ -197,7 +197,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        mAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals,tagId);
+        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals,tagId);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
         //mRecyclerView.setLayoutManager(layoutManagerFixed);
 
@@ -273,8 +273,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 Log.d(TAG, "can't set logo", e);
             }*/
         }
-        mAdapter.setShouldClipView(true);
-        mAdapter.setParallaxHeader(header, mRecyclerView);
+        parallaxExtAdapter.setShouldClipView(true);
+        parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
 
         registerForContextMenu(mRecyclerView);
 
@@ -290,11 +290,11 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         switch (item.getItemId()) {
             case R.id.eliminaTag:
                 SoulissTypical soulissTypical = collectedTagTypicals.get(position);
-                Log.i(Constants.TAG, "DELETE TAGID:"+position);
+                Log.i(Constants.TAG, "DELETE TYP POS:"+position);
                 datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
                 collectedTagTypicals.remove(position);
-                mAdapter.setData(collectedTagTypicals);
-                mAdapter.notifyDataSetChanged();
+                parallaxExtAdapter.setData(collectedTagTypicals);
+                parallaxExtAdapter.notifyDataSetChanged();
                 Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
                 mRecyclerView.invalidate();
                 break;
@@ -311,7 +311,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         super.onStart();
         refreshStatusIcon();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mAdapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
+            parallaxExtAdapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
                 @SuppressLint("NewApi")
                 @Override
                 public void onParallaxScroll(float v, float v2, View view) {
@@ -330,7 +330,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                     } else {
                         // windowBackground is not a color, probably a drawable
                         Log.e(TAG, "WTF:" + a.toString());
-                       // Drawable d = getActivity().getResources().getDrawable(a.resourceId);
+                        // Drawable d = getActivity().getResources().getDrawable(a.resourceId);
 
                     }
                 }
@@ -338,7 +338,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         }
 
 
-        mAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
+        parallaxExtAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
             @Override
             public void onClick(View view, int i) {
 
@@ -354,7 +354,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         Log.i(Constants.TAG, "mCurrentLayoutManagerType: " + mCurrentLayoutManagerType);
 
         // Set CustomAdapter as the adapter for RecyclerView.
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(parallaxExtAdapter);
     }
 
     @Override
@@ -411,10 +411,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         super.onSaveInstanceState(savedInstanceState);
     }
 
-    private String getRealPathFromURI(Uri contentUri) {
+    public static String getRealPathFromURI(Uri contentUri) {
         String res = null;
         String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        Cursor cursor = SoulissClient.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
         if(cursor.moveToFirst()){
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);

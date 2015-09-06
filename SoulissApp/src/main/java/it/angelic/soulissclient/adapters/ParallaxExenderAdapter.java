@@ -42,16 +42,16 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         Log.d(Constants.TAG, "Element " + i + " set: last upd: "+Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        ((ViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
-        ((ViewHolder) viewHolder).getTextView().setTag(i);
-        mDataset.get(i).setOutputDescView(((ViewHolder) viewHolder).getTextViewInfo1());
-        ((ViewHolder) viewHolder).getTextViewInfo2().setText(SoulissClient.getAppContext().getString(R.string.update) + " "
+        ((TypicalCardViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
+        ((TypicalCardViewHolder) viewHolder).getTextView().setTag(i);
+        mDataset.get(i).setOutputDescView(((TypicalCardViewHolder) viewHolder).getTextViewInfo1());
+        ((TypicalCardViewHolder) viewHolder).getTextViewInfo2().setText(SoulissClient.getAppContext().getString(R.string.update) + " "
                 + Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
-        ((ViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
-        LinearLayout sghembo = ((ViewHolder) viewHolder).getLinearActionsLayout();
+        ((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
+        LinearLayout sghembo = ((TypicalCardViewHolder) viewHolder).getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()) {
-            ((ViewHolder) viewHolder).getCardView().setCardBackgroundColor(SoulissClient.getAppContext().getResources().getColor(R.color.background_floating_material_light));
+            ((TypicalCardViewHolder) viewHolder).getCardView().setCardBackgroundColor(SoulissClient.getAppContext().getResources().getColor(R.color.background_floating_material_light));
         }
         //viewHolder.getTextView().setOnClickListener(this);
         if (opzioni.isSoulissReachable()) {
@@ -72,7 +72,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
-        return new ViewHolder(v);
+        return new TypicalCardViewHolder(v);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
+    public static class TypicalCardViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         private final TextView textView;
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
@@ -102,7 +102,7 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
         private LinearLayout linearActionsLayout;
         private ImageView imageView;
 
-        public ViewHolder(View v) {
+        public TypicalCardViewHolder(View v) {
             super(v);
             textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
             imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
