@@ -98,6 +98,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:weightSum="3" >
 
                 <Spinner
@@ -133,6 +135,7 @@
 
                     <SeekBar
                         android:id="@+id/channelRed"
+                        android:layout_margin="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="255" />
@@ -178,6 +181,8 @@
                     </com.pheelicks.visualizer.VisualizerView>
                 </FrameLayout>
             </TableRow>
+            <include layout="@layout/tablerow_favinfo"/>
+            <include layout="@layout/tablerow_taginfo"/>
         </TableLayout>
     </RelativeLayout>
 

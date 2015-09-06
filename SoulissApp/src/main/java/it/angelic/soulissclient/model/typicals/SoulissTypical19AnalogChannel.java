@@ -57,6 +57,12 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
         ft.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         ft.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(ft);
+
+        SoulissCommand ftt = new SoulissCommand( this);
+        ftt.getCommandDTO().setCommand(Constants.Souliss_T19_Min);
+        ftt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
+        ftt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ret.add(ftt);
         return ret;
     }
 
@@ -159,17 +165,41 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
      * INPUT data 'read' from GUI
      * ************************************************************************
      */
-    public void issueAnalogCommand(final short val, final int r, final boolean togMulticast) {
+    public void issueSingleChannelCommand(final short command, final int intensity, final boolean togMulticast) {
 
         Thread t = new Thread() {
             public void run() {
                 Looper.prepare();
 
                 if (togMulticast)//a tutti i nodi
-                    UDPHelper.issueMassiveCommand("" + Constants.Souliss_T19, prefs, "" + val, "" + r);
+                    UDPHelper.issueMassiveCommand("" + Constants.Souliss_T19, prefs, "" + command, "" + intensity);
                 else
                     UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
-                            + getTypicalDTO().getSlot(), prefs, "" + val, "" + r);
+                            + getTypicalDTO().getSlot(), prefs, "" + command, "" + intensity);
+            }
+        };
+
+        t.start();
+    }
+    /**
+     * ***********************************************************************
+     * Souliss RGB light command Souliss OUTPUT Data is:
+     * <p/>
+     * <p/>
+     * INPUT data 'read' from GUI
+     * ************************************************************************
+     */
+    public void issueSingleChannelCommand(final short command,  final boolean togMulticast) {
+
+        Thread t = new Thread() {
+            public void run() {
+                Looper.prepare();
+
+                if (togMulticast)//a tutti i nodi
+                    UDPHelper.issueMassiveCommand("" + Constants.Souliss_T19, prefs, "" + command );
+                else
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
+                            + getTypicalDTO().getSlot(), prefs, "" + command );
             }
         };
 

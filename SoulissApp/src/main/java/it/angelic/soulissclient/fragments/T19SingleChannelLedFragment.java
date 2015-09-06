@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -66,9 +65,11 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 	private View tableRowLamp;
 	private Spinner modeSpinner;
 	private SeekBar seekChannelIntensity;
-	private TextView redChanabel;
+	private TextView singleChanabel;
+    private TableRow infoFavs;
+    private TableRow infoTags;
 
-	/**
+    /**
 	 * Serve per poter tenuto il bottone brightness
 	 * 
 	 * @param cmd
@@ -79,7 +80,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			public void run() {
 				while (isIncrementing()) {
 					intensity +=5;
-					issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity, 0, 0, togMulticast.isChecked());
+                    collected.issueSingleChannelCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp, togMulticast.isChecked());
 					try {
 						Thread.sleep(250);
 					} catch (InterruptedException e) {
@@ -110,7 +111,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			public void run() {
 				while (isDecrementing() && intensity > 5) {
 					intensity -= 5;
-					issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity, 0, 0, togMulticast.isChecked());
+                    collected.issueSingleChannelCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown, togMulticast.isChecked());
 					try {
 						Thread.sleep(250);
 					} catch (InterruptedException e) {
@@ -160,7 +161,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (container == null)
@@ -216,7 +216,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 		seekChannelIntensity = (SeekBar) ret.findViewById(R.id.channelRed);
 
-		redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
+		singleChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
 	//	buttLamp = (ImageView) ret.findViewById(R.id.buttonLamp);
 		btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
 		btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
@@ -224,7 +224,13 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		buttMinus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown);
 		btFlash.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Flash);
 		btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
-
+		infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
+		infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
+        if (collected.getTypicalDTO().isFavourite()) {
+            infoFavs.setVisibility(View.VISIBLE);
+        } else if (collected.getTypicalDTO().isTagged()) {
+            infoTags.setVisibility(View.VISIBLE);
+        }
 		// CHANNEL Listeners
 		seekChannelIntensity.setOnSeekBarChangeListener(new channelInputListener());
 
@@ -266,9 +272,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
 				Short cmd = (Short) v.getTag();
-				assertTrue(cmd != null);
-
-				issueIrCommand(cmd, intensity, 0, 0, togMulticast.isChecked());
+                assertTrue(cmd != null);
+                collected.issueSingleChannelCommand(cmd, togMulticast.isChecked());
 				collected.issueRefresh();
 			}
 
@@ -396,7 +401,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			// Bundle vers = (Bundle) extras.get("NODES");
 			intensityReal = collected.getIntensity();
 			Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + intensityReal);
-			redChanabel.setText(getString(R.string.Souliss_T19_received) + " " + intensityReal);
+			singleChanabel.setText(getString(R.string.Souliss_T19_received) + " " + intensityReal);
 			seekChannelIntensity.setProgress(intensityReal);
 			refreshStatusIcon();
 		}
@@ -414,9 +419,9 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			if (out > 255)
 				out = 255;*/
 			intensity = val;
-			issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity, 0, 0,
-					togMulticast.isChecked());
-			redChanabel.setText(getString(R.string.Souliss_T19_set) + " " + val);
+            collected.issueSingleChannelCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity,
+                    togMulticast.isChecked());
+			singleChanabel.setText(getString(R.string.Souliss_T19_set) + " " + val);
 		}
 
 		public void onStartTrackingTouch(SeekBar seekBar) {
@@ -431,12 +436,12 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
 	/**
 	 * Souliss RGB light command Souliss OUTPUT Data is:
-	 * 
-	 * 
+	 *
+	 *
 	 * INPUT data 'read' from GUI
 	 */
 	public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-		collected.issueAnalogCommand(val, r, multicast);
+		collected.issueSingleChannelCommand(val, r, multicast);
 	}
 
 }

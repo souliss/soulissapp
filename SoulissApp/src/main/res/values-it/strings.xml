@@ -328,5 +328,8 @@
     <string name="bridge_useDhcp">Usa DHCP per la configurazione del nodo remoto</string>
     <string name="udpport_summary">Scegli la porta UDP dei pacchetti in uscita</string>
     <string name="advbroadcast_summary">Configura Souliss da remoto</string>
+    <string name="Souliss_T19_Max_desc" >Intensità massima</string>
+    <string name="Souliss_T19_Med_desc" >Intensità media</string>
+    <string name="Souliss_T19_Min_desc" >Intensità minima</string>
 
 </resources>

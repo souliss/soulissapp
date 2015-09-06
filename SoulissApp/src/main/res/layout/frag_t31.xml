@@ -1,191 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Cont01"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/relativeLayout3"
+        android:id="@+id/Cont01"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <View
+                android:id="@+id/strut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut"
+                android:text="@string/mode" />
+
+            <TextView
+                android:id="@+id/textView1dx"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut"
+                android:layout_alignParentRight="true"
+                android:text="@string/fan" />
+
+            <Spinner
+                android:id="@+id/spinnerFunction"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut"
+                android:layout_below="@id/textView1"
+                android:entries="@array/HeatingFunction" />
+
+            <Spinner
+                android:id="@+id/spinnerFan"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/textView1"
+                android:layout_toRightOf="@id/spinnerFunction"
+                android:entries="@array/AirConFan" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayout3"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp">
+
+            <NumberPicker
+                android:id="@+id/tempSlider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="4dp"
+                android:layout_weight="1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayout1">
+
+            <TextView
+                android:id="@+id/textviewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="15dip" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/asMeasured"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayoutStats">
+
+            <Button
+                android:id="@+id/asMeasuredButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="4dp"
+                android:text="Sto bene cosi" />
+        </RelativeLayout>
+
+        <TableLayout
+            android:id="@+id/containerfavtag"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/asMeasured">
+
+            <include layout="@layout/tablerow_favinfo">
+
+            </include>
+
+            <include layout="@layout/tablerow_taginfo">
+
+            </include>
+        </TableLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/containerfavtag">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:background="#FFCCCCCC" />
+
+            <TextView
+                android:id="@+id/textviewOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/fan"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageView
+                android:id="@+id/ImageFan2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewOptions"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/fan"
+                android:drawableTop="@drawable/fan"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/ImageFan1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewOptions"
+                android:layout_marginRight="15dip"
+                android:layout_toLeftOf="@id/ImageFan2"
+                android:background="@drawable/fan"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/ImageFan3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textviewOptions"
+                android:layout_marginLeft="15dip"
+                android:layout_toRightOf="@id/ImageFan2"
+                android:background="@drawable/fan"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
 
         <View
-            android:id="@+id/strut"
+            android:id="@+id/strut2"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:id="@+id/textView1"
+        <Button
+            android:id="@+id/buttonTurnOn"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignRight="@id/strut"
-            android:text="@string/mode" />
+            android:layout_alignRight="@id/strut2"
+            android:width="0dip"
+            android:text="@string/ON" />
 
-        <TextView
-            android:id="@+id/textView1dx"
+        <Button
+            android:id="@+id/buttonTurnOff"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/strut"
+            android:layout_alignLeft="@id/strut2"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/fan" />
-
-        <Spinner
-            android:id="@+id/spinnerFunction"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@id/strut"
-            android:layout_below="@id/textView1"
-            android:entries="@array/HeatingFunction" />
-
-        <Spinner
-            android:id="@+id/spinnerFan"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/strut"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/textView1"
-            android:layout_toRightOf="@id/spinnerFunction"
-            android:entries="@array/AirConFan" />
+            android:layout_alignStart="@id/strut2"
+            android:text="@string/OFF" />
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_below="@id/relativeLayout3" >
-
-        <NumberPicker
-            android:id="@+id/tempSlider"
-            android:layout_width="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayoutStats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayout1" >
-
-        <TextView
-            android:id="@+id/textviewStatus"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/asMeasured"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutStats" >
-
-        <Button android:layout_width="wrap_content"
-            android:id="@+id/asMeasuredButton"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Sto bene cosi"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/asMeasured">
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#FFCCCCCC" />
-
-        <TextView
-            android:id="@+id/textviewOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="@string/fan"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <ImageView
-            android:id="@+id/ImageFan2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textviewOptions"
-            android:layout_centerHorizontal="true"
-            android:drawableTop="@drawable/fan"
-            android:background="@drawable/fan"
-            android:visibility="invisible"
-            />
-
-        <ImageView
-            android:id="@+id/ImageFan1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textviewOptions"
-            android:layout_marginRight="15dip"
-            android:layout_toLeftOf="@id/ImageFan2"
-            android:background="@drawable/fan"
-            android:visibility="invisible"/>
-
-        <ImageView
-            android:id="@+id/ImageFan3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textviewOptions"
-            android:layout_marginLeft="15dip"
-            android:layout_toRightOf="@id/ImageFan2"
-            android:background="@drawable/fan"
-            android:visibility="invisible"/>
-    </RelativeLayout>
-
-
-    <TableLayout
-        android:id="@+id/containervermegame"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayoutStats">
-
-        <include layout="@layout/tablerow_favinfo">
-
-        </include>
-
-        <include layout="@layout/tablerow_taginfo">
-
-        </include>
-    </TableLayout>
-
-    <View
-        android:id="@+id/strut2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/buttonTurnOn"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignRight="@id/strut2"
-        android:text="@string/ON"
-        android:width="0dip" />
-
-    <Button
-        android:id="@+id/buttonTurnOff"
-        android:layout_width="0dip"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/strut2"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignStart="@id/strut2"
-        android:text="@string/OFF" />
-
-</RelativeLayout>
+</ScrollView>

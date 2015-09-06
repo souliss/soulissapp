@@ -263,6 +263,12 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 resId = R.string.Souliss_ToggleCmd_desc;
             else if (command == Constants.Souliss_T1n_AutoCmd)
                 resId = R.string.Souliss_AutoCmd_desc;
+            else if (command == Constants.Souliss_T19_Min)
+                resId = R.string.Souliss_T19_Min_desc;
+            else if (command == Constants.Souliss_T19_Med)
+                resId = R.string.Souliss_T19_Med_desc;
+            else if (command == Constants.Souliss_T19_Max)
+                resId = R.string.Souliss_T19_Max_desc;
             else
                 resId = R.string.Souliss_UndefinedCmd_desc;
         } else if (typical == Constants.Souliss_T14) {

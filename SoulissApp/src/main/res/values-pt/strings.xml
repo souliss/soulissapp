@@ -323,5 +323,8 @@
     <string name="bridge_useDhcp" />
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
     <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
+    <string name="Souliss_T19_Max_desc" />
+    <string name="Souliss_T19_Med_desc" />
+    <string name="Souliss_T19_Min_desc" />
 
 </resources>

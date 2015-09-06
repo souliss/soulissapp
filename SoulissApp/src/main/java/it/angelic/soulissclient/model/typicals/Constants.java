@@ -171,6 +171,10 @@ public class Constants {
 	public static final long Souliss_T16_Green = 0x2200FF00;
 	public static final long Souliss_T16_Blue = 0x220000FF;
 	public static final long Souliss_T18_Pulse = 0xA1;
+
+	public static final short Souliss_T19_Min = 0x2255; // 85 Dec, un terzo
+	public static final short Souliss_T19_Med = 0x22AA; // 170 Dec
+	public static final short Souliss_T19_Max = 0x22FF; // Set a state
 	/*
 	 * IR RGB Typical
 	 */
