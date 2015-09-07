@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,7 +90,6 @@ public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter
         holder.textCmd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w(Constants.TAG, "sdvsdvsdvdvsdvdv");
                 Log.w(Constants.TAG, "Activating TAG " + position);
                 Intent nodeDatail = new Intent(context, TagDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
@@ -97,9 +97,11 @@ public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter
 
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                                holder.image,   // The view which starts the transition
-                                "photo_hero"    // The transitionName of the view we’re transitioning to
-                        );
+						//holder.image,   // The view which starts the transition
+						//"photo_hero"    // The transitionName of the view we’re transitioning to
+								Pair.create((View)holder.image, "photo_hero"),
+								Pair.create((View)holder.textCmd, "tag_title")
+				);
 
                  ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
                 //context.startActivity(nodeDatail);

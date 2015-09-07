@@ -29,18 +29,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/scene_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="4dip"
-                    android:layout_marginTop="4dip"
-                    android:alpha="0.5"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/tv" />
-
                 <TextView
                     android:id="@+id/TextViewScenesDesc"
                     style="@style/CodeFontSmall"

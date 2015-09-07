@@ -51,6 +51,7 @@ import static it.angelic.soulissclient.Constants.TAG;
  *
  * @author Ale
  */
+@Deprecated
 public class TagListActivity extends AbstractStatusedFragmentActivity {
     private SoulissTag[] tags;
     private ListView listaTagsView;

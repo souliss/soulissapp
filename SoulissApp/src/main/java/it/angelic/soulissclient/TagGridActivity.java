@@ -124,26 +124,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         // DRAWER
         super.initDrawer(this, DrawerMenuHelper.TAGS);
 
-     /*   mRecyclerView.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                Log.w(TAG, "Activating TAG " + arg2);
-                Intent nodeDatail = new Intent(TagGridActivity.this, TagDetailActivity.class);
-                TagListAdapter.TagViewHolder holder = (TagListAdapter.TagViewHolder) arg1.getTag();
-                nodeDatail.putExtra("TAG", holder.data.getTagId());
-
-                ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(TagGridActivity.this,
-                                arg1,   // The view which starts the transition
-                                "photo_hero"    // The transitionName of the view we’re transitioning to
-                        );
-                ActivityCompat.startActivity(TagGridActivity.this, nodeDatail, options.toBundle());
-                //TagListActivity.this.startActivity(nodeDatail);
-                //if (opzioni.isAnimationsEnabled())
-                 //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-            }
-        });*/
-
+     //FIXME
         registerForContextMenu(mRecyclerView);
     }
 
@@ -232,17 +213,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             case R.id.scegliImmagineTag:
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, (int) arrayAdapterPosition);
-               /* Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-                String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
-                Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra
-                        (
-                                Intent.EXTRA_INITIAL_INTENTS,
-                                new Intent[]{takePhotoIntent}
-                        );
-                //uso come reqId il TagId cosi da riconoscere cosa avevo richiesto
-                startActivityForResult(chooserIntent, (int) arrayAdapterPosition);*/
                 return true;
             default:
                 return super.onContextItemSelected(item);
@@ -300,9 +271,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, LauncherActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                supportFinishAfterTransition();
                 return true;
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
@@ -322,11 +291,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         // ignore orientation change
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 }

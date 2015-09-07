@@ -6,6 +6,7 @@ import it.angelic.soulissclient.NodesListActivity;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.SceneListActivity;
+import it.angelic.soulissclient.TagGridActivity;
 import it.angelic.soulissclient.TagListActivity;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
@@ -86,7 +87,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerList.setItemChecked(position, true);
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
-                    Intent myIntent5d = new Intent(mActivity, TagListActivity.class);
+                    Intent myIntent5d = new Intent(mActivity, TagGridActivity.class);
                     myIntent5d.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     mActivity.startActivity(myIntent5d);
                     break;

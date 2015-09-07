@@ -99,6 +99,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
+
         db = new SoulissDBTagHelper(this);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
@@ -168,7 +169,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 FragmentTransaction ftt = manager.beginTransaction()
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
-                        .addSharedElement(mProductText, "ToolbarText");//NOT WORK
+                        .addSharedElement(mProductText, "hero_title");//NOT WORK
                 //.addSharedElement(mProductText, "ToolbarText");
                 ftt.commit();
             } else {
@@ -185,6 +186,11 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             Toast.makeText(getApplicationContext(), "No detail to show", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        supportFinishAfterTransition();
     }
 
     @Override
