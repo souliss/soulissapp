@@ -21,7 +21,7 @@
             android:layout_marginRight="4dip"
             android:layout_marginTop="4dip"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/lamp" />
+            android:src="@drawable/moon" />
 
         <TextView
             android:id="@+id/TextViewCommand"

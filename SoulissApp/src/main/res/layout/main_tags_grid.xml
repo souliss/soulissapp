@@ -36,7 +36,7 @@
                     android:layout_marginTop="2dp"
                     android:text="@string/tag_desc" />
 
-                <android.support.v7.widget.RecyclerView
+                <it.angelic.soulissclient.helpers.ContextMenuRecyclerView
 
                     android:id="@+id/recyclerViewTags"
                     android:layout_width="match_parent"

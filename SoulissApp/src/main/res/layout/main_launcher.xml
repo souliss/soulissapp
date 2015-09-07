@@ -44,7 +44,7 @@
                             android:layout_width="0dip"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:drawableTop="@drawable/filmmaker"
+                            android:drawableTop="@drawable/moon"
                             android:drawingCacheQuality="high"
                             android:elevation="2dp"
                             android:freezesText="false"

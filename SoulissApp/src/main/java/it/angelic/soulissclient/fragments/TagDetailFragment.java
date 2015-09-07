@@ -263,6 +263,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+               // Bitmap resized = Bitmap.createScaledBitmap(yourBitmap, newWidth, newHeight, true);
                 Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                 mLogoImg.setImageBitmap(myBitmap);
             }

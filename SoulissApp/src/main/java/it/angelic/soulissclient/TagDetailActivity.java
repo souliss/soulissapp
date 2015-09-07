@@ -16,7 +16,6 @@
 
 package it.angelic.soulissclient;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,7 +23,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
@@ -38,7 +36,6 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 
-import it.angelic.soulissclient.adapters.TransitionAdapter;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
@@ -77,24 +74,6 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     private FloatingActionButton fab;
 
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void faiFigate() {
-        getWindow().getEnterTransition().addListener(new TransitionAdapter() {
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                ImageView mLogoImg = (ImageView) findViewById(R.id.photo);
-                mLogoImg.animate().scaleX(1.0f);
-                ImageView heroAlpha = (ImageView) findViewById(R.id.infoAlpha);
-                heroAlpha.animate().scaleX(1.0f);
-                /*ObjectAnimator color = ObjectAnimator.ofArgb(hero.getDrawable(), "tint",
-                        getResources().getColor(R.color.white), 0);
-                color.start();*/
-                //findViewById(R.id.fabTag).animate().alpha(1.0f);
-                //findViewById(R.id.star).animate().alpha(1.0f);
-                getWindow().getEnterTransition().removeListener(this);
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

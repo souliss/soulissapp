@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -31,8 +28,9 @@ import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.helpers.AlertDialogGridHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.ScenesDialogHelper;
+import it.angelic.soulissclient.helpers.ContextMenuRecyclerView;
 import it.angelic.soulissclient.model.SoulissTag;
 
 
@@ -48,8 +46,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBTagHelper datasource;
     private TagRecyclerAdapter tagAdapter;
 
-    private ArrayAdapter<INavDrawerItem> mAdapter;
-    private RecyclerView mRecyclerView;
+    private ArrayAdapter<INavDrawerItem> navAdapter;
+    private ContextMenuRecyclerView mRecyclerView;
     private RecyclerView.LayoutManager gridManager;
 
     @Override
@@ -74,16 +72,11 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 		 * tt.setTypeface(font, Typeface.NORMAL); }
 		 */
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTags);
-        gridManager = new GridLayoutManager(this, 2);
+        mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewTags);
 
+        //3 colonne in hor
+        gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE?3:2);
 
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.w("SDSDVV","sdvskudbcvsdiubv");
-            }
-        });
 
         mRecyclerView.setLayoutManager(gridManager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -102,7 +95,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 //tagAdapter = new TagListAdapter(TagGridActivity.this, tags, opzioni);
                 // Adapter della lista
                 //SceneListAdapter t = listaTagsView.getAdapter();
-                tagAdapter.setTags(tags);
+                tagAdapter.setTagArray(tags);
                 tagAdapter.notifyDataSetChanged();
 
                 //listaTagsView.invalidateViews();
@@ -168,8 +161,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 }));*/
         // ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
         // nodeic.setAlpha(150);
-        mAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
-        mDrawerList.setAdapter(mAdapter);
+        navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
+        mDrawerList.setAdapter(navAdapter);
     }
 
     @Override
@@ -184,27 +177,27 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();
         TagRecyclerAdapter ada = (TagRecyclerAdapter) mRecyclerView.getAdapter();
 
         long arrayAdapterPosition = info.position;
-        final SoulissTag todoItem = (SoulissTag) ada.getItem((int) arrayAdapterPosition);
+        final SoulissTag todoItem = (SoulissTag) ada.getTag((int) arrayAdapterPosition);
 
         switch (item.getItemId()) {
 
             case R.id.eliminaTag:
-                ScenesDialogHelper.removeTagDialog(this, null, datasource, todoItem, opzioni);
+                AlertDialogGridHelper.removeTagDialog(this, tagAdapter, datasource, todoItem, opzioni);
                 return true;
             case R.id.rinominaTag:
-                AlertDialog.Builder alert3 = AlertDialogHelper.renameSoulissObjectDialog(this, null, null,
+                AlertDialog.Builder alert3 = AlertDialogGridHelper.renameSoulissObjectDialog(this, null, tagAdapter,
                         datasource, todoItem);
                 alert3.show();
                 return true;
             case R.id.scegliconaTag:
-                SoulissTag convertView = (SoulissTag) tagAdapter.getItem(item.getOrder());
+                SoulissTag convertView = (SoulissTag) tagAdapter.getTag(item.getOrder());
                 ImageView at = new ImageView(getApplicationContext());
                 at.setImageResource(convertView.getIconResourceId());
-                AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, at, null, datasource,
+                AlertDialog.Builder alert2 = AlertDialogGridHelper.chooseIconDialog(this, at, tagAdapter, datasource,
                         todoItem);
                 alert2.show();
                 // nodesAdapter.notifyDataSetChanged();

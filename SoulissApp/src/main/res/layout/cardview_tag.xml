@@ -26,19 +26,26 @@
             android:scaleType="centerCrop"
             android:src="@drawable/home_automation"
             android:transitionName="photo_hero" />
-
+        <ImageView
+            android:id="@+id/imageTagIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/window"  />
         <TextView
             android:id="@+id/TextViewTagDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imageViewTag"
             android:layout_marginLeft="4dp"
+            android:layout_marginBottom="2dp"
             android:elevation="2dp"
             android:maxLines="2"
             android:text="@string/health"
             android:textColor="@color/white_bitaplha"
             android:textSize="@dimen/text_size"
-            tools:text="Descrizione TAG molto lunga e piena di fanghiglia hhhhhhhhhhh kkkkkkkkkkkk"/>
+            tools:text="Descrizione TAG molto lunga e piena di fanghiglia hhhhhhhhhhh kkkkkkkkkkkk" />
 
         <TextView
             android:id="@+id/TextViewTagTitle"
@@ -51,20 +58,18 @@
             android:textColor="@color/white_bitaplha"
             android:textIsSelectable="false"
             android:transitionName="tag_title"
-            tools:text="Titolo TAG"/>
+            tools:text="Titolo TAG" />
 
-            <ImageView
-                android:id="@+id/infoTagAlpha"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/TextViewTagDesc"
-                android:layout_alignBottom="@id/imageViewTag"
-                android:layout_alignTop="@id/TextViewTagTitle"
-                android:layout_gravity="bottom"
-                android:alpha="0.4"
-                android:background="@color/black" />
-
-
+        <ImageView
+            android:id="@+id/infoTagAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/TextViewTagDesc"
+            android:layout_alignBottom="@id/imageViewTag"
+            android:layout_alignTop="@id/TextViewTagTitle"
+            android:layout_gravity="bottom"
+            android:alpha="0.4"
+            android:background="@color/black" />
 
 
     </RelativeLayout>

@@ -40,7 +40,7 @@
                      android:layout_marginTop="4dip"
                      android:alpha="0.5"
                      android:contentDescription="@string/app_name"
-                     android:src="@drawable/filmmaker" />
+                     android:src="@drawable/moon" />
 
                  <TextView
                      android:id="@+id/TextViewScenesDesc"
