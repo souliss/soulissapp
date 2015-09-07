@@ -115,8 +115,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         fab = (FloatingActionButton) findViewById(R.id.fabTag);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            faiFigate();
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+       //     faiFigate();
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -152,11 +152,11 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         if (NewFrag != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
+                //details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
                 details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.fade));
 
                 // Create new fragment to add (Fragment B)
-                NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
+               // NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
                 NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.explode));
 
 
@@ -209,7 +209,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
                 Fragment details = manager.findFragmentById(R.id.detailPane);
                 if (details instanceof TagDetailFragment)
-                    finish();
+                    supportFinishAfterTransition();
                 else {
                     getSupportFragmentManager().popBackStack();
                     setActionBarInfo(collected.getNiceName());

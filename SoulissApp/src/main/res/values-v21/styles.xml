@@ -2,8 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
-        <item name="android:windowSharedElementReturnTransition">@android:transition/fade</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/grid_element_enter</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/fade</item>
 
         <item name="android:windowTranslucentStatus">true</item>
@@ -21,8 +20,8 @@
     </style>
 
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
-        <item name="android:windowSharedElementExitTransition">@android:transition/slide_top</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/grid_element_enter</item>
+        <item name="android:windowSharedElementExitTransition">@transition/grid_element_enter</item>
         <item name="android:windowSharedElementsUseOverlay">false</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>
         <item name="android:windowExitTransition">@android:transition/explode</item>

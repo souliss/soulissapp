@@ -1,9 +1,14 @@
 package it.angelic.soulissclient.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,9 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
@@ -24,18 +31,19 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.TagGridActivity;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 
-public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter.TagViewHolder> {
-	private LayoutInflater mInflater;
-	private Context context;
+public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter.TagViewHolder>{
+    private LayoutInflater mInflater;
+	private Activity context;
 	SoulissTag[] soulissTags;
 	private SoulissPreferenceHelper opzioni;
 
-	public TagRecyclerAdapter(Context context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
+	public TagRecyclerAdapter(Activity context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
 		this.soulissTags = versio;
@@ -68,7 +76,7 @@ public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter
 	}
 
 	@Override
-	public void onBindViewHolder(TagViewHolder holder, int position) {
+	public void onBindViewHolder(final TagViewHolder holder, final int position) {
 		List<SoulissTypical> appoggio = soulissTags[position].getAssignedTypicals();
 		// SoulissCommandDTO dto = holder.data.getCommandDTO();
 		// if (name == null || "".compareTo(name) == 0)
@@ -77,7 +85,32 @@ public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter
 		String strMeatFormat = "Contains %1$d devices";
 		holder.textCmdWhen.setText(String.format(strMeatFormat, appoggio.size()));
 		holder.data = soulissTags[position];
-		//holder.image.setImageResource(soulissTags[position].getIconResourceId());
+
+        holder.textCmd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "sdvsdvsdvdvsdvdv");
+                Log.w(Constants.TAG, "Activating TAG " + position);
+                Intent nodeDatail = new Intent(context, TagDetailActivity.class);
+                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                nodeDatail.putExtra("TAG", soulissTags[position].getTagId());
+
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                                holder.image,   // The view which starts the transition
+                                "photo_hero"    // The transitionName of the view we’re transitioning to
+                        );
+
+                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+                //context.startActivity(nodeDatail);
+                //if (opzioni.isAnimationsEnabled())
+                //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            }
+        });
+
+
+        //holder.image.setImageResource(soulissTags[position].getIconResourceId());
         if ( holder.data.getImagePath() != null) {
 
             File picture = new File(TagDetailFragment.getRealPathFromURI(Uri.parse(holder.data.getImagePath())));
@@ -114,7 +147,7 @@ public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter
 	}
 
 
-	public static class TagViewHolder extends RecyclerView.ViewHolder   {
+	public static class TagViewHolder extends RecyclerView.ViewHolder  {
 
 		TextView textCmd;
 		TextView textCmdWhen;
@@ -128,7 +161,8 @@ public class TagRecyclerAdapter extends  RecyclerView.Adapter<TagRecyclerAdapter
             image = (ImageView)  itemView.findViewById(R.id.imageViewTag);
 		}
 
-    }
+
+	}
 
 	public void setTags(SoulissTag[] scene) {
 		this.soulissTags = scene;

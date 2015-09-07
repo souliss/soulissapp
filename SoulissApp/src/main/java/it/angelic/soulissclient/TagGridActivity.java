@@ -32,7 +32,6 @@ import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.RecyclerItemClickListener;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 
@@ -77,7 +76,14 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewTags);
         gridManager = new GridLayoutManager(this, 2);
-        gridManager.requestSimpleAnimationsInNextLayout();
+
+
+        mRecyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w("SDSDVV","sdvskudbcvsdiubv");
+            }
+        });
 
         mRecyclerView.setLayoutManager(gridManager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -158,7 +164,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         tagAdapter = new TagRecyclerAdapter(this, tags, opzioni);
         // Adapter della lista
         mRecyclerView.setAdapter(tagAdapter);
-        mRecyclerView.addOnItemTouchListener(
+     /*   mRecyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
@@ -172,12 +178,13 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                                         view,   // The view which starts the transition
                                         "photo_hero"    // The transitionName of the view we’re transitioning to
                                 );
-                        ActivityCompat.startActivity(TagGridActivity.this, nodeDatail, options.toBundle());
-                        //TagListActivity.this.startActivity(nodeDatail);
+
+                       // ActivityCompat.startActivity(TagGridActivity.this, nodeDatail, options.toBundle());
+                        TagGridActivity.this.startActivity(nodeDatail);
                         //if (opzioni.isAnimationsEnabled())
                         //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
-                }));
+                }));*/
         // ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
         // nodeic.setAlpha(150);
         mAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
