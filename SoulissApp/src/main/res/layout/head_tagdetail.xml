@@ -30,6 +30,7 @@
         />
     <TextView
         android:id="@+id/tagTextView"
+        android:transitionName="tag_title"
         android:textColor="@color/white_bitaplha"
         android:layout_gravity="bottom|left"
         android:layout_marginBottom="10dp"

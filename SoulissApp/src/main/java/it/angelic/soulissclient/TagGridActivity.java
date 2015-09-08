@@ -1,10 +1,13 @@
 package it.angelic.soulissclient;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
+import java.util.Map;
 
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -110,13 +114,52 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
         // TODO error management
         datasource = new SoulissDBTagHelper(this);
+datasource.open();
+        // prendo comandi dal DB, setto adapter
+        List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
+        tags = new SoulissTag[goer.size()];
+        tags = goer.toArray(tags);
+        tagAdapter = new TagRecyclerAdapter(this, tags, opzioni);
+        // Adapter della lista
+        mRecyclerView.setAdapter(tagAdapter);
 
-        // datasource.open();
+
 
         // DRAWER
         super.initDrawer(this, DrawerMenuHelper.TAGS);
 
         registerForContextMenu(mRecyclerView);
+
+        //TODEBUG TRANSACTIONS
+       setExitSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:"+sharedElementNames.size());
+                super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                Log.i(Constants.TAG, "ExitSharedElementCallback.onMapSharedElements:"
+                        + names.get(0));
+                super.onMapSharedElements(names, sharedElements);
+            }
+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onRejectSharedElements(List<View> rejectedSharedElements) {
+                Log.w(Constants.TAG, "ExitSharedElementCallback.onRejectSharedElements:"
+                        + rejectedSharedElements.size());
+
+                super.onRejectSharedElements(rejectedSharedElements);
+            }
+
+            @Override
+            public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementEnd");
+                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+        });
     }
 
     @Override
@@ -128,15 +171,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             AlertDialogHelper.dbNotInitedDialog(this);
         }
         SoulissDBHelper.open();
-
-        // prendo comandi dal DB, setto adapter
-        List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
-        tags = new SoulissTag[goer.size()];
-        tags = goer.toArray(tags);
-        tagAdapter = new TagRecyclerAdapter(this, tags, opzioni);
-        // Adapter della lista
-        mRecyclerView.setAdapter(tagAdapter);
-
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(navAdapter);
     }

@@ -238,7 +238,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         setContentView(R.layout.main_launcher);
 
-        tagDb = new SoulissDBTagHelper(this);
 
         geocoder = new Geocoder(this, Locale.getDefault());
         soulissSceneBtn = (Button) findViewById(R.id.ButtonScene);
@@ -369,6 +368,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     protected void onStart() {
         super.onStart();
         opzioni.reload();
+
+        tagDb = new SoulissDBTagHelper(this);
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();

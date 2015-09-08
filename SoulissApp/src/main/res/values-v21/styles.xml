@@ -4,9 +4,7 @@
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition">@transition/grid_element_enter</item>
-        <item name="android:windowSharedElementExitTransition">
-            @transition/grid_element_enter</item>
-        <!-- enable window content transitions -->
+
 
         <item name="android:windowSharedElementsUseOverlay">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>

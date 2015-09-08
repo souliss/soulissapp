@@ -23,11 +23,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SharedElementCallback;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import android.widget.Toast;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
+import java.util.Map;
 
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
@@ -72,8 +75,34 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBTagHelper db;
     private SoulissTag collected;
     private FloatingActionButton fab;
+    private TagDetailFragment fragment;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        Log.i(Constants.TAG, "SAVING IMG RESULT:" + resultCode);
 
+        if (resultCode == RESULT_OK) {
+            Uri selectedImage = imageReturnedIntent.getData();
+            Log.i(Constants.TAG, "RESULT_OK PATH:" + selectedImage.toString());
+            collected.setImagePath(selectedImage.toString());
+            //String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            db.createOrUpdateTag(collected);
+            //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+            Log.i(Constants.TAG, "SAVED IMG PATH:" + collected.getImagePath());
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        TagDetailFragment fragment = new TagDetailFragment();
+        transaction.replace(R.id.detailPane, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        supportFinishAfterTransition();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +126,82 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            TagDetailFragment fragment = new TagDetailFragment();
+            fragment = new TagDetailFragment();
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
 
+        setEnterSharedElementCallback(new SharedElementCallback() {
+
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size());
+                //manual override perche il fragment ancora non c'e
+                sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
+                sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
+                super.onMapSharedElements(names, sharedElements);
+            }
+
+            @Override
+            public void onRejectSharedElements(List<View> rejectedSharedElements) {
+                Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + rejectedSharedElements.size());
+                super.onRejectSharedElements(rejectedSharedElements);
+            }
+
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tagdetail_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        ImageView icon = (ImageView) findViewById(R.id.node_icon);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                Fragment details = getSupportFragmentManager().findFragmentById(R.id.detailPane);
+                if (details instanceof TagDetailFragment)
+                    supportFinishAfterTransition();
+                else {
+                    getSupportFragmentManager().popBackStack();
+                    setActionBarInfo(collected.getNiceName());
+                }
+                return true;
+            case R.id.Opzioni:
+                Intent settingsActivity = new Intent(this, PreferencesActivity.class);
+                startActivity(settingsActivity);
+                final Intent preferencesActivity = new Intent(this.getBaseContext(), PreferencesActivity.class);
+                // evita doppie aperture per via delle sotto-schermate
+                preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(preferencesActivity);
+                return true;
+            case R.id.scegliconaTag:
+                AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, db, collected);
+                alert2.show();
+                return true;
+            case R.id.rinominaTag:
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitle, null, db,
+                        collected);
+                alert.show();
+                return true;
+            case R.id.scegliImmagineTag:
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, collected.getTagId().intValue());
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setActionBarInfo(collected.getNiceName());
     }
 
     public void showDetails(int pos) {
@@ -130,12 +230,11 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         if (NewFrag != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
-                details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.fade));
+                //details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.fade));
 
                 // Create new fragment to add (Fragment B)
-               // NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
+                // NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
                 NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.explode));
-
 
                 // Our shared element (in Fragment A)
                 ImageView mProductImage = (ImageView) details.getView().findViewById(R.id.card_thumbnail_image2);
@@ -162,103 +261,5 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             Toast.makeText(getApplicationContext(), "No detail to show", Toast.LENGTH_SHORT).show();
         }
 
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        supportFinishAfterTransition();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tagdetail_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        ImageView icon = (ImageView) findViewById(R.id.node_icon);
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                // nothing to do here...
-                //   } else {
-                   /* supportFinishAfterTransition();
-                    if (opzioni.isAnimationsEnabled())
-                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                    return true;*/
-                android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-                Fragment details = manager.findFragmentById(R.id.detailPane);
-                if (details instanceof TagDetailFragment)
-                    supportFinishAfterTransition();
-                else {
-                    getSupportFragmentManager().popBackStack();
-                    setActionBarInfo(collected.getNiceName());
-                }
-                return true;
-            case R.id.Opzioni:
-                Intent settingsActivity = new Intent(this, PreferencesActivity.class);
-                startActivity(settingsActivity);
-                final Intent preferencesActivity = new Intent(this.getBaseContext(), PreferencesActivity.class);
-                // evita doppie aperture per via delle sotto-schermate
-                preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(preferencesActivity);
-                return true;
-            case R.id.scegliconaTag:
-                AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, db, collected);
-                alert2.show();
-                return true;
-            case R.id.rinominaTag:
-                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitle, null, db,
-                        collected);
-                alert.show();
-                return true;
-            case R.id.scegliImmagineTag:
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, collected.getTagId().intValue());
-               /* Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
-                Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-                chooserIntent.putExtra
-                        (
-                                Intent.EXTRA_INITIAL_INTENTS,
-                                new Intent[]{takePhotoIntent}
-                        );
-                //uso come reqId il TagId cosi da riconoscere cosa avevo richiesto
-                startActivityForResult(chooserIntent, (int) arrayAdapterPosition);*/
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        Log.i(Constants.TAG, "SAVING IMG RESULT:" + resultCode);
-
-        if (resultCode == RESULT_OK) {
-            Uri selectedImage = imageReturnedIntent.getData();
-            Log.i(Constants.TAG, "RESULT_OK PATH:" + selectedImage.toString());
-            collected.setImagePath(selectedImage.toString());
-            //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            db.createOrUpdateTag(collected);
-            //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-            Log.i(Constants.TAG, "SAVED IMG PATH:" + collected.getImagePath());
-        }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        TagDetailFragment fragment = new TagDetailFragment();
-        transaction.replace(R.id.detailPane, fragment);
-        transaction.commit();
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setActionBarInfo(collected.getNiceName());
     }
 }
