@@ -95,6 +95,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected ParallaxExenderAdapter parallaxExtAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     private SoulissDBTagHelper datasource;
+    private ImageView mLogoIcon;
+    private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
     private TextView bro;
@@ -183,7 +185,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshContainer);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
-        ImageView mLogoImg = (ImageView) rootView.findViewById(R.id.photo);
+
         //mLayoutManager = new LinearLayoutManager(getActivity());
 
 
@@ -199,13 +201,13 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals,tagId);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
-        //mRecyclerView.setLayoutManager(layoutManagerFixed);
 
-
+        //HEADER
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
-
         layoutManagerFixed.setHeaderIncrementFixer(header);
-
+        mLogoIcon = (ImageView) header.findViewById(R.id.imageTagIcon);
+        if(collectedTag.getIconResourceId() != 0)
+        mLogoIcon.setImageResource(collectedTag.getIconResourceId());
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
         FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);

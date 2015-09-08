@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals
+        name="Devices">
+        <item quantity="zero">0 Dispositivi</item>
+        <item quantity="one">1 Dispositivo</item>
+        <item quantity="other">%d Dispositivi</item>
+    </plurals>
+</resources>

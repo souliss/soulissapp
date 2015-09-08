@@ -44,57 +44,9 @@ import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Classe helper per i dialoghi riciclabili
+ * Classe helper per i dialoghi riciclabili CHE USANO GRIDVIEW
  */
 public class AlertDialogGridHelper {
-    // private static ProgressDialog progressDialog;
-
-
-    /**
-     * Remove a command
-     *
-     * @param ctx        used to invalidate views
-     * @param datasource to store new value
-     * @param toRename
-     * @return
-     */
-    public static AlertDialog.Builder removeCommandDialog(final Context cont, final ListView ctx,
-                                                          final SoulissDBHelper datasource, final SoulissCommand toRename) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(cont);
-        alert.setTitle(cont.getString(R.string.dialog_remove_title));
-        alert.setIcon(android.R.drawable.ic_dialog_alert);
-        alert.setMessage(cont.getString(R.string.dialog_remove_cmd));
-        alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        SoulissDBHelper.open();
-                        int res = datasource.deleteCommand(toRename);
-                        Log.i(TAG, "SoulissCommand deletion returned: " + res);
-                        if (ctx != null) {
-                            // prendo comandi dal DB
-                            LinkedList<SoulissCommand> goer = datasource.getUnexecutedCommands(cont);
-                            SoulissCommand[] programsArray = new SoulissCommand[goer.size()];
-                            programsArray = goer.toArray(programsArray);
-
-                            ProgramListAdapter progsAdapter = new ProgramListAdapter(cont, programsArray, datasource
-                                    .getTriggerMap(cont), new SoulissPreferenceHelper(cont.getApplicationContext()));
-                            // Adapter della lista
-                            ctx.setAdapter(progsAdapter);
-                            ctx.invalidateViews();
-                        }
-                        datasource.close();
-                    }
-                });
-
-        alert.setNegativeButton(cont.getResources().getString(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                    }
-                });
-        return alert;
-    }
 
     /**
      * Rename a node
@@ -127,7 +79,7 @@ public class AlertDialogGridHelper {
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
                             if (listV != null) {
-                               throw new RuntimeException("NOT IMPLEMENTED");
+                                throw new RuntimeException("NOT IMPLEMENTED");
                             }
 
                         } else if (toRename instanceof SoulissScene) {
@@ -136,7 +88,7 @@ public class AlertDialogGridHelper {
                                 throw new RuntimeException("NOT IMPLEMENTED");
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            if (((SoulissTag) toRename).getTagId()  < Constants.TAG_DEFAULT_FAV) {
+                            if (((SoulissTag) toRename).getTagId() < Constants.TAG_DEFAULT_FAV) {
                                 Toast.makeText(cont, cont.getString(R.string.nodeleteFav), Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -178,52 +130,6 @@ public class AlertDialogGridHelper {
         return alert;
     }
 
-    public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate) {
-        final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
-        // alert2.setTitle("Choose " + toRename.toString() + " icon");
-        final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
-
-        LayoutInflater factory = LayoutInflater.from(context);
-        final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null, false);
-
-        final SeekBar low = (SeekBar) deleteDialogView.findViewById(R.id.seekBarLow);
-        final SeekBar med = (SeekBar) deleteDialogView.findViewById(R.id.seekBarMed);
-        final SeekBar hi = (SeekBar) deleteDialogView.findViewById(R.id.seekBarHigh);
-        low.setProgress(Float.valueOf(opzioni.getEqLow() * 100f).intValue());
-        med.setProgress(Float.valueOf(opzioni.getEqMed() * 100f).intValue());
-        hi.setProgress(Float.valueOf(opzioni.getEqHigh() * 100f).intValue());
-        Log.i("SoulissEqualizer", "Setting new eq low:" + opzioni.getEqLow() + " med: " + opzioni.getEqMed()
-                + " high: " + opzioni.getEqHigh());
-
-        deleteBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        opzioni.setEqLow(low.getProgress() / 100f);
-                        opzioni.setEqMed((float) med.getProgress() / 100f);
-                        opzioni.setEqHigh(hi.getProgress() / 100f);
-                        String strDisease2Format = context.getString(R.string.Souliss_TRGB_eq);
-                        String strDisease2Msg = String.format(strDisease2Format,
-                                Constants.twoDecimalFormat.format(opzioni.getEqLow()),
-                                Constants.twoDecimalFormat.format(opzioni.getEqMed()),
-                                Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
-                        if (toUpdate != null)
-                            toUpdate.setText(strDisease2Msg);
-                    }
-                });
-
-        deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                    }
-                });
-        final AlertDialog deleteDialog = deleteBuilder.create();
-
-        deleteDialog.setView(deleteDialogView);
-
-        deleteDialog.setTitle("Global equalizer");
-        return deleteDialog;
-    }
 
     /**
      * Sceglie nuova icona
@@ -321,7 +227,7 @@ public class AlertDialogGridHelper {
             return;
         }
         AlertDialog.Builder alert = new AlertDialog.Builder(cont);
-        alert.setTitle("Remove Tag");
+        alert.setTitle(R.string.removeTag);
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         alert.setMessage(R.string.sureToRemoveTag);
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),

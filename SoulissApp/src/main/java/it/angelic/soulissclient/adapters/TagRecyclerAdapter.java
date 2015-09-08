@@ -77,10 +77,15 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         // if (name == null || "".compareTo(name) == 0)
         // name = context.getString(appoggio.getAliasNameResId());
         holder.textCmd.setText(soulissTags[position].getName());
-        String strMeatFormat = "Contains %1$d devices";
-        holder.textCmdWhen.setText(String.format(strMeatFormat, appoggio.size()));
+        String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
+                appoggio.size(),appoggio.size(), R.plurals.Devices);
+        holder.textCmdWhen.setText(quantityString);
         holder.data = soulissTags[position];
-        holder.imageTag.setImageDrawable(ContextCompat.getDrawable(context, soulissTags[position].getIconResourceId()));
+        if (soulissTags[position].getIconResourceId() != 0){
+            holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
+            holder.imageTag.setVisibility(View.VISIBLE);
+    }else
+            holder.imageTag.setVisibility(View.INVISIBLE);
         // Here you apply the animation when the view is bound
         setAnimation(holder.container, position);
 
@@ -101,10 +106,6 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
-                //context.startActivity(nodeDatail);
-                //if (opzioni.isAnimationsEnabled())
-                //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
             }
         });
         holder.container.setOnLongClickListener(new View.OnLongClickListener() {
@@ -149,7 +150,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
      */
     private void setAnimation(View viewToAnimate, int position) {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition && opzioni.isAnimationsEnabled()) {
+        if ( opzioni.isAnimationsEnabled()) {
             Animation animation = AnimationUtils.loadAnimation(context,  R.anim.slide_in_left);
             animation.setStartOffset(position * 100);
             viewToAnimate.startAnimation(animation);
@@ -172,7 +173,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             textCmdWhen = (TextView) itemView.findViewById(R.id.TextViewTagDesc);
             image = (ImageView) itemView.findViewById(R.id.imageViewTag);
             container = (CardView) itemView.findViewById(R.id.TagCard);
-            imageTag = (ImageView) itemView.findViewById(R.id.imageViewTag);
+            imageTag = (ImageView) itemView.findViewById(R.id.imageTagIcon);
         }
 
 

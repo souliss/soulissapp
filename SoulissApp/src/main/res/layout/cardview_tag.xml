@@ -23,6 +23,7 @@
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+
             android:scaleType="centerCrop"
             android:src="@drawable/home_automation"
             android:transitionName="photo_hero" />
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_margin="4dp"
             android:src="@drawable/window"  />
         <TextView
             android:id="@+id/TextViewTagDesc"

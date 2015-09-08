@@ -95,9 +95,6 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         fab = (FloatingActionButton) findViewById(R.id.fabTag);
 
 
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-       //     faiFigate();
-
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             TagDetailFragment fragment = new TagDetailFragment();

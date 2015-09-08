@@ -53,7 +53,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissClient.getOpzioni();
-        getWindow().requestFeature(android.view.Window.FEATURE_CONTENT_TRANSITIONS);
         // Remove title bar
         // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (opzioni.isLightThemeSelected())
@@ -117,7 +116,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         // DRAWER
         super.initDrawer(this, DrawerMenuHelper.TAGS);
 
-     //FIXME
         registerForContextMenu(mRecyclerView);
     }
 
@@ -138,29 +136,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         tagAdapter = new TagRecyclerAdapter(this, tags, opzioni);
         // Adapter della lista
         mRecyclerView.setAdapter(tagAdapter);
-     /*   mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Log.w(Constants.TAG, "Activating TAG " + position);
-                        Intent nodeDatail = new Intent(TagGridActivity.this, TagDetailActivity.class);
-                       // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                        nodeDatail.putExtra("TAG", tags[position].getTagId());
 
-                        ActivityOptionsCompat options =
-                                ActivityOptionsCompat.makeSceneTransitionAnimation(TagGridActivity.this,
-                                        view,   // The view which starts the transition
-                                        "photo_hero"    // The transitionName of the view we’re transitioning to
-                                );
-
-                       // ActivityCompat.startActivity(TagGridActivity.this, nodeDatail, options.toBundle());
-                        TagGridActivity.this.startActivity(nodeDatail);
-                        //if (opzioni.isAnimationsEnabled())
-                        //   overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                }));*/
-        // ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
-        // nodeic.setAlpha(150);
         navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(navAdapter);
     }

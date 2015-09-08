@@ -11,8 +11,15 @@
         android:layout_width="match_parent"
         android:src="@drawable/home_automation"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-         />
+        android:scaleType="centerCrop" />
+    <ImageView
+        android:id="@+id/imageTagIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="4dp"
+        android:src="@drawable/window"  />
     <ImageView
         android:id="@+id/infoAlpha"
         android:background="@color/black"

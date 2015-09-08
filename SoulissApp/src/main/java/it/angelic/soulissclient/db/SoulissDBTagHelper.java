@@ -119,29 +119,29 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
     /**
      * Crea un nuovo scenario vuoto
      *
-     * @param nodeIN
+     * @param tagIN
      * @return
      */
-    public long createOrUpdateTag(SoulissTag nodeIN) {
+    public long createOrUpdateTag(SoulissTag tagIN) {
         ContentValues values = new ContentValues();
         long ret = -1;
-        if (nodeIN != null) {
-            values.put(SoulissDB.COLUMN_TAG_NAME, nodeIN.getName());
-            values.put(SoulissDB.COLUMN_TAG_ICONID, nodeIN.getIconResourceId());
-            values.put(SoulissDB.COLUMN_TAG_IMGPTH, nodeIN.getImagePath());
+        if (tagIN != null) {
+            values.put(SoulissDB.COLUMN_TAG_NAME, tagIN.getName());
+            values.put(SoulissDB.COLUMN_TAG_ICONID, tagIN.getIconResourceId());
+            values.put(SoulissDB.COLUMN_TAG_IMGPTH, tagIN.getImagePath());
 
-                ret = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + nodeIN.getTagId(),
+                ret = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + tagIN.getTagId(),
                         null);
-                Log.i(Constants.TAG,"UPD TAG "+nodeIN.getTagId());
+                Log.i(Constants.TAG,"UPD TAG "+tagIN.getTagId());
 
-            List<SoulissTypical> typs = nodeIN.getAssignedTypicals();
+            List<SoulissTypical> typs = tagIN.getAssignedTypicals();
             for (SoulissTypical nowT : typs) {
-                createOrUpdateTagTypicalNode(nowT, nodeIN, 0);
-                Log.i(Constants.TAG,"INSERTED TAG->TYP"+nowT.getNiceName()+" TO "+nodeIN.getNiceName());
+                createOrUpdateTagTypicalNode(nowT, tagIN, 0);
+                Log.i(Constants.TAG,"INSERTED TAG->TYP"+nowT.getNiceName()+" TO "+tagIN.getNiceName());
             }
             return ret;
         } else {//brand new
-            values.put(SoulissDB.COLUMN_TAG_ICONID, R.drawable.tv);
+            values.put(SoulissDB.COLUMN_TAG_ICONID, 0);
             // Inserisco e risetto il nome
             ret = (int) database.insert(SoulissDB.TABLE_TAGS, null, values);
             values.put(SoulissDB.COLUMN_TAG_NAME,

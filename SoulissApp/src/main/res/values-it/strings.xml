@@ -333,5 +333,6 @@
     <string name="Souliss_T19_Min_desc" >Intensità minima</string>
     <string name="sureToRemoveTag">Rimuovere questo TAG?</string>
     <string name="cantRemoveDefault">Can\'t remove default Favourite Tag</string>
+    <string name="removeTag">Elimina Tag</string>
 
 </resources>
