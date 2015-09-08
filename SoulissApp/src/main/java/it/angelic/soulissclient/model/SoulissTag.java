@@ -69,4 +69,16 @@ public class SoulissTag implements Serializable, ISoulissObject {
         this.assignedTypicals = assignedTypicals;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SoulissTag){
+           return ( ((SoulissTag) o).getTagId() == getTagId() );
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int)(getTagId()%Integer.MAX_VALUE);
+    }
 }

@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,31 +15,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
-import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import us.feras.ecogallery.EcoGallery;
 
-import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -51,13 +45,13 @@ public class AlertDialogGridHelper {
     /**
      * Rename a node
      *
-     * @param listV      used to invalidate views
-     * @param datasource to store new value
+     * @param tagRecyclerAdapter used to invalidate views
+     * @param datasource         to store new value
      * @param toRename
      * @return
      */
     public static AlertDialog.Builder renameSoulissObjectDialog(final Context cont, final TextView tgt,
-                                                                final TagRecyclerAdapter listV, final SoulissDBHelper datasource, final ISoulissObject toRename) {
+                                                                final TagRecyclerAdapter tagRecyclerAdapter, final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
@@ -78,13 +72,13 @@ public class AlertDialogGridHelper {
                         SoulissDBHelper.open();
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
-                            if (listV != null) {
+                            if (tagRecyclerAdapter != null) {
                                 throw new RuntimeException("NOT IMPLEMENTED");
                             }
 
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
-                            if (listV != null) {
+                            if (tagRecyclerAdapter != null) {
                                 throw new RuntimeException("NOT IMPLEMENTED");
                             }
                         } else if (toRename instanceof SoulissTag) {
@@ -94,20 +88,28 @@ public class AlertDialogGridHelper {
                             }
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);
-                            if (listV != null) {
+                            if (tagRecyclerAdapter != null) {
+                                int tgtPos = -1;
                                 List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
-                                SoulissTag[] scenesArray = new SoulissTag[goer.size()];
-                                scenesArray = goer.toArray(scenesArray);
+                                SoulissTag[] tagArray = new SoulissTag[goer.size()];
+                                tagArray = goer.toArray(tagArray);
+                                tagRecyclerAdapter.setTagArray(tagArray);
                                 try {
+                                    for (int i = 0; i < tagArray.length; i++) {
+                                        if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
+                                            tgtPos = i;
+                                            tagRecyclerAdapter.notifyItemChanged(tgtPos);
+                                            Log.w(Constants.TAG, "notifiedAdapter of change on index "+tgtPos);
+                                        }
+                                    }
 
-                                    listV.setTagArray(scenesArray);
-                                    listV.notifyDataSetChanged();
+
                                 } catch (Exception e) {
                                     Log.w(Constants.TAG, "rename didn't find proper view to refresh");
                                 }
                             }
                         } else {
-                            if (listV != null) {
+                            if (tagRecyclerAdapter != null) {
                                 throw new RuntimeException("NOT IMPLEMENTED");
                             }
                         }
@@ -183,10 +185,19 @@ public class AlertDialogGridHelper {
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
                                 List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
-                                SoulissTag[] scenesArray = new SoulissTag[goer.size()];
-                                scenesArray = goer.toArray(scenesArray);
-                                list.setTagArray(scenesArray);
-                                list.notifyDataSetChanged();
+                                SoulissTag[] tagArray = new SoulissTag[goer.size()];
+                                tagArray = goer.toArray(tagArray);
+                                list.setTagArray(tagArray);
+                                try {
+                                    for (int i = 0; i < tagArray.length; i++) {
+                                        if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
+                                            list.notifyItemChanged(i);
+                                            Log.w(Constants.TAG, "notifiedAdapter of change on index "+i);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    Log.w(Constants.TAG, "rename didn't find proper view to refresh");
+                                }
                             }
                         } else {
                             ((SoulissTypical) toRename).getTypicalDTO().persist();
@@ -219,7 +230,7 @@ public class AlertDialogGridHelper {
      * @param toRename
      * @return //TODO rivedere parametri
      */
-    public static void removeTagDialog(final Context cont, final TagRecyclerAdapter ctx, final SoulissDBHelper datasource,
+    public static void removeTagDialog(final Context cont, final TagRecyclerAdapter ctx, final SoulissDBTagHelper datasource,
                                        final SoulissTag toRename, final SoulissPreferenceHelper opts) {
         Log.w(Constants.TAG, "Removing TAG:" + toRename.getNiceName() + " ID:" + toRename.getTagId());
         if (toRename.getTagId() < Constants.TAG_DEFAULT_FAV) {
@@ -234,17 +245,23 @@ public class AlertDialogGridHelper {
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        int tgtPos = -1;
                         datasource.deleteTag(toRename);
                         if (ctx != null) {
-                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
+                            SoulissTag[] tagArrBck = ctx.getTagArray();
+                            for (int i = 0; i < tagArrBck.length; i++) {
+                                if (tagArrBck[i].getTagId() == toRename.getTagId())
+                                    tgtPos = i;
+                            }
+
                             // prendo dal DB
-                            List<SoulissTag> goer = dbt.getTags(cont);
-                            SoulissTag[] tagArr= new SoulissTag[goer.size()];
+                            List<SoulissTag> goer = datasource.getTags(cont);
+                            SoulissTag[] tagArr = new SoulissTag[goer.size()];
                             tagArr = goer.toArray(tagArr);
                             // targetScene.setCommandArray(goer);
                             // Adapter della lista
                             ctx.setTagArray(tagArr);
-                            ctx.notifyDataSetChanged();
+                            ctx.notifyItemRemoved(tgtPos);
                         }
                     }
                 });

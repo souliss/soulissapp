@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,22 +70,26 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(final TagViewHolder holder, final int position) {
-        List<SoulissTypical> appoggio = soulissTags[position].getAssignedTypicals();
-        // SoulissCommandDTO dto = holder.data.getCommandDTO();
-        // if (name == null || "".compareTo(name) == 0)
-        // name = context.getString(appoggio.getAliasNameResId());
-        holder.textCmd.setText(soulissTags[position].getName());
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                appoggio.size(),appoggio.size(), R.plurals.Devices);
+                0, R.plurals.Devices);
+        try {
+            List<SoulissTypical> appoggio = soulissTags[position].getAssignedTypicals();
+            quantityString = context.getResources().getQuantityString(R.plurals.Devices,
+                    appoggio.size(), appoggio.size(), R.plurals.Devices);
+        } catch (Exception ce) {
+            Log.w(Constants.TAG, "TAG Empty? ");
+        }
+
+        holder.textCmd.setText(soulissTags[position].getName());
         holder.textCmdWhen.setText(quantityString);
         holder.data = soulissTags[position];
-        if (soulissTags[position].getIconResourceId() != 0){
+        if (soulissTags[position].getIconResourceId() != 0) {
             holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
             holder.imageTag.setVisibility(View.VISIBLE);
-    }else
+        } else
             holder.imageTag.setVisibility(View.INVISIBLE);
         // Here you apply the animation when the view is bound
-        setAnimation(holder.container, position);
+        //setAnimation(holder.container, position);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +118,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         });
 
         //holder.image.setImageResource(soulissTags[position].getIconResourceId());
-        try{
+        try {
             File picture = new File(TagDetailFragment.getRealPathFromURI(Uri.parse(holder.data.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
@@ -130,7 +132,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                 holder.image.setImageBitmap(myBitmap);
             }
 
-        }catch (Exception io){
+        } catch (Exception io) {
             Log.i(Constants.TAG, "cant load image " + holder.data.getImagePath());
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
@@ -147,17 +149,17 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
 
     /**
      * Here is the key method to apply the animation
+     * <p/>
+     * private void setAnimation(View viewToAnimate, int position) {
+     * // If the bound view wasn't previously displayed on screen, it's animated
+     * if ( opzioni.isAnimationsEnabled()) {
+     * Animation animation = AnimationUtils.loadAnimation(context,  R.anim.slide_in_left);
+     * animation.setStartOffset(position * 100);
+     * viewToAnimate.startAnimation(animation);
+     * lastPosition = position;
+     * }
+     * }
      */
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if ( opzioni.isAnimationsEnabled()) {
-            Animation animation = AnimationUtils.loadAnimation(context,  R.anim.slide_in_left);
-            animation.setStartOffset(position * 100);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
-    }
-
     public static class TagViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView imageTag;

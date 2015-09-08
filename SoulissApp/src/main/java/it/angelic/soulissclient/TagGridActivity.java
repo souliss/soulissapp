@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.SharedElementCallback;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -77,29 +78,34 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
         mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewTags);
 
-        //3 colonne in hor
+        //3 colonne in horiz
         gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE?3:2);
-
-
         mRecyclerView.setLayoutManager(gridManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
+        //Floatin Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToRecyclerView(mRecyclerView);
-        SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
+
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<SoulissTag> goerBck = datasource.getTags(SoulissClient.getAppContext());
+
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
                 List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
+
+                //TODO insert at pos 2 to create movement
+                // goer.removeAll(goerBck);
                 //tags = new SoulissScene[goer.size()];
                 tags = goer.toArray(tags);
                 //tagAdapter = new TagListAdapter(TagGridActivity.this, tags, opzioni);
                 // Adapter della lista
                 //SceneListAdapter t = listaTagsView.getAdapter();
                 tagAdapter.setTagArray(tags);
-                tagAdapter.notifyDataSetChanged();
+                tagAdapter.notifyItemInserted(tags.length-1);
 
                 //listaTagsView.invalidateViews();
                 Toast.makeText(TagGridActivity.this,

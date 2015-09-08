@@ -71,7 +71,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            Log.i(Constants.TAG, "filling TAG:"+ dto.getTagId());
+            Log.i(Constants.TAG, "retrieving TAG:"+ dto.getTagId());
             dto.setAssignedTypicals(getTagTypicals(dto));
             cursor.moveToNext();
         }
