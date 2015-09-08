@@ -20,22 +20,22 @@
     <string name="monthly">Durchschnitt monatl.</string>
 
     <!-- dialogs_SECTION -->
-    <string name="dialog_notinited_ip">Souliss doesn\'t seem configured. Please configure Souliss local address on preferences screen</string>
-    <string name="dialog_disabled_db">Souliss DB is Empty</string>
-    <string name="dialog_notinited_db">Souliss DB is empty. Please create nodes configuration on preferences screen</string>
-    <string name="dialog_disabled_service">Souliss Data Service Disabled</string>
-    <string name="dialog_notinited_service">Scheduled programs will not be executed!\nActivate DataService on preference screen</string>
-    <string name="dialog_dontshowagain">Don\'t show again</string>
-    <string name="dialog_warn_db">Warning!</string>
-    <string name="dialog_drop_db">You are removing all Souliss nodes and typicals with their history.\nDrop the entire DB?</string>
-    <string name="dialog_create_db">All Souliss nodes will be deleted and created again from http://</string>
-    <string name="dialog_create_db2">. You\'ll lose any previous configuration and history. Proceed?</string>
-    <string name="dialog_title_edittext_IP_pubb">Public Address</string>
-    <string name="dialog_remove_title">Delete Program</string>
-    <string name="dialog_remove_cmd">Are you sure you want to delete this command ?</string>
-    <string name="dialog_choose_icon">Select icon for </string>
-    <string name="dialog_choose_html">Choose a .html file inside /sdcard/Souliss folder</string>
-    <string name="allnodes">All Nodes</string>
+    <string name="dialog_notinited_ip">Souliss scheint nicht konfiguriert. Bitte konfigurieren Sie die lokale Souliss-Adresse unter Einstellungen</string>
+    <string name="dialog_disabled_db">Die Souliss DB ist leer</string>
+    <string name="dialog_notinited_db">Die Souliss DB ist leer. Bitte erstellen Sie eine Netzknoten-Konfiguration unter Einstellungen</string>
+    <string name="dialog_disabled_service">Der Souliss Daten-Service ist deaktiviert</string>
+    <string name="dialog_notinited_service">Die geplanten Programme werden nicht ausgefuehrt !\nAktivieren Sie den Daten-Service unter Einstellungen</string>
+    <string name="dialog_dontshowagain">Nicht noch einmal anzeigen</string>
+    <string name="dialog_warn_db">Warnung!</string>
+    <string name="dialog_drop_db">Sie sind im Begriff alle Netzknoten und Routinen sowie deren Chronik zu loeschen.\nDie gesamte DB verwerfen?</string>
+    <string name="dialog_create_db">Alle Souliss Netzknoten werden geloescht und wiederhergestellt aus http://</string>
+    <string name="dialog_create_db2">. Sie verlieren alle vorherigen Konfigurationen und die Chronik. Fortfahren?</string>
+    <string name="dialog_title_edittext_IP_pubb">Oeffentliche Addresse</string>
+    <string name="dialog_remove_title">Programm loeschen</string>
+    <string name="dialog_remove_cmd">Wollen Sie dieses Kommando wirklich loeschen ?</string>
+    <string name="dialog_choose_icon">Ein Icon waehlen fuer</string>
+    <string name="dialog_choose_html">Waehlen Sie eine .html Datei innerhalb /der sdcard /des Souliss Ordners</string>
+    <string name="allnodes">All Netzknoten</string>
 
     <!-- PROGRAMS_SECTION -->
     <string name="programs_title">Programs</string>
