@@ -58,13 +58,6 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     }
 
 
-
-    @Override
-    public void onViewRecycled(TagViewHolder holder) {
-        holder.container.setOnClickListener(null);
-        super.onViewRecycled(holder);
-    }
-
     @Override
     public TagViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 

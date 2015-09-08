@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -112,8 +113,15 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 tagAdapter.setTagArray(tags);
 
                 tagAdapter.notifyItemInserted(1);
-                //force rebind of click listeners
-                tagAdapter.notifyDataSetChanged();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    //brutta pezza per riallineare position
+                    public void run() {
+                        //force rebind of click listeners
+                        tagAdapter.notifyDataSetChanged();
+                    }
+                }, 1000);  // msec
+
                 //listaTagsView.invalidateViews();
                 Toast.makeText(TagGridActivity.this,
                         getString(R.string.tag) + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();

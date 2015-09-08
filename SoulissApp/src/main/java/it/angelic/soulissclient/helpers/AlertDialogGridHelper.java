@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -257,8 +258,15 @@ public class AlertDialogGridHelper {
                             // targetScene.setCommandArray(goer);
                             // Adapter della lista
                             ctx.setTagArray(tagArr);
+                            //shift visivo
                             ctx.notifyItemRemoved(tgtPos);
-                            ctx.notifyDataSetChanged();
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                //brutta pezza per riallineare position
+                                public void run() {
+                                   ctx.notifyDataSetChanged();
+                                }
+                            }, 1000);  // 1500 seconds
                         }
                     }
                 });
