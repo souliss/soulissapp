@@ -71,8 +71,10 @@ public class SoulissTag implements Serializable, ISoulissObject {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null)
+            return false;
         if (o instanceof SoulissTag){
-           return ( ((SoulissTag) o).getTagId() == getTagId() );
+           return ( ((SoulissTag) o).getTagId().equals(getTagId()) );
         }
         return false;
     }

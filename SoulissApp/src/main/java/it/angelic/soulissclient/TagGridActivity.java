@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import junit.framework.Assert;
+
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +81,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewTags);
 
         //3 colonne in horiz
-        gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE?3:2);
+        gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
         mRecyclerView.setLayoutManager(gridManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
         //Floatin Button
@@ -96,17 +98,22 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
                 List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
+                goer.removeAll(goerBck);
+                Assert.assertTrue(goer.size() == 1);
+                SoulissTag newTag = goer.get(0);
+                goerBck.add(1, newTag);
 
-                //TODO insert at pos 2 to create movement
                 // goer.removeAll(goerBck);
-                //tags = new SoulissScene[goer.size()];
-                tags = goer.toArray(tags);
+                tags = new SoulissTag[goerBck.size()];
+                tags = goerBck.toArray(tags);
                 //tagAdapter = new TagListAdapter(TagGridActivity.this, tags, opzioni);
                 // Adapter della lista
                 //SceneListAdapter t = listaTagsView.getAdapter();
                 tagAdapter.setTagArray(tags);
-                tagAdapter.notifyItemInserted(tags.length-1);
 
+                tagAdapter.notifyItemInserted(1);
+                //force rebind of click listeners
+                tagAdapter.notifyDataSetChanged();
                 //listaTagsView.invalidateViews();
                 Toast.makeText(TagGridActivity.this,
                         getString(R.string.tag) + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
@@ -118,9 +125,9 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             alert.show();
         }
 
-        // TODO error management
+
         datasource = new SoulissDBTagHelper(this);
-datasource.open();
+        datasource.open();
         // prendo comandi dal DB, setto adapter
         List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
         tags = new SoulissTag[goer.size()];
@@ -130,23 +137,22 @@ datasource.open();
         mRecyclerView.setAdapter(tagAdapter);
 
 
-
         // DRAWER
         super.initDrawer(this, DrawerMenuHelper.TAGS);
 
         registerForContextMenu(mRecyclerView);
 
         //TODEBUG TRANSACTIONS
-       setExitSharedElementCallback(new SharedElementCallback() {
+        setExitSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
-                Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:"+sharedElementNames.size());
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:" + sharedElementNames.size());
                 super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
             }
 
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                Log.i(Constants.TAG, "ExitSharedElementCallback.onMapSharedElements:"
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onMapSharedElements:"
                         + names.get(0));
                 super.onMapSharedElements(names, sharedElements);
             }
@@ -154,7 +160,7 @@ datasource.open();
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onRejectSharedElements(List<View> rejectedSharedElements) {
-                Log.w(Constants.TAG, "ExitSharedElementCallback.onRejectSharedElements:"
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onRejectSharedElements:"
                         + rejectedSharedElements.size());
 
                 super.onRejectSharedElements(rejectedSharedElements);
@@ -223,6 +229,10 @@ datasource.open();
             case R.id.scegliImmagineTag:
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, (int) arrayAdapterPosition);
+
+                return true;
+            case R.id.scegliOrdineTag:
+
 
                 return true;
             default:

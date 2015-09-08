@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -33,13 +34,12 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     SoulissTag[] soulissTags;
     private Activity context;
     // Allows to remember the last item shown on screen
-    private int lastPosition = -1;
-    private LayoutInflater mInflater;
+
     private SoulissPreferenceHelper opzioni;
 
 
-    public TagRecyclerAdapter(Activity context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
-        mInflater = LayoutInflater.from(context);
+    public TagRecyclerAdapter(Activity context,@NonNull SoulissTag[] versio, SoulissPreferenceHelper opts) {
+      //  mInflater = LayoutInflater.from(context);
         this.context = context;
         this.soulissTags = versio;
         opzioni = opts;
@@ -57,6 +57,14 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         this.soulissTags = scene;
     }
 
+
+
+    @Override
+    public void onViewRecycled(TagViewHolder holder) {
+        holder.container.setOnClickListener(null);
+        super.onViewRecycled(holder);
+    }
+
     @Override
     public TagViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -71,11 +79,11 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     @Override
     public void onBindViewHolder(final TagViewHolder holder, final int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                0, R.plurals.Devices);
+                0 );
         try {
             List<SoulissTypical> appoggio = soulissTags[position].getAssignedTypicals();
             quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                    appoggio.size(), appoggio.size(), R.plurals.Devices);
+                    appoggio.size(), appoggio.size() );
         } catch (Exception ce) {
             Log.w(Constants.TAG, "TAG Empty? ");
         }
@@ -137,9 +145,9 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
     }
-
+    @Override
     public long getItemId(int position) {
-        return position;
+        return soulissTags[position].getTagId();
     }
 
     @Override

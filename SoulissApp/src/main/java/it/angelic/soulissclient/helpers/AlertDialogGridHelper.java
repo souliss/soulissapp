@@ -3,19 +3,14 @@ package it.angelic.soulissclient.helpers;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +21,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
+import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
@@ -82,7 +78,7 @@ public class AlertDialogGridHelper {
                                 throw new RuntimeException("NOT IMPLEMENTED");
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            if (((SoulissTag) toRename).getTagId() < Constants.TAG_DEFAULT_FAV) {
+                            if (((SoulissTag) toRename).getTagId() <= SoulissDB.FAVOURITES_TAG_ID) {
                                 Toast.makeText(cont, cont.getString(R.string.nodeleteFav), Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -99,7 +95,7 @@ public class AlertDialogGridHelper {
                                         if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
                                             tgtPos = i;
                                             tagRecyclerAdapter.notifyItemChanged(tgtPos);
-                                            Log.w(Constants.TAG, "notifiedAdapter of change on index "+tgtPos);
+                                            Log.w(Constants.TAG, "notifiedAdapter of change on index " + tgtPos);
                                         }
                                     }
 
@@ -192,7 +188,7 @@ public class AlertDialogGridHelper {
                                     for (int i = 0; i < tagArray.length; i++) {
                                         if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
                                             list.notifyItemChanged(i);
-                                            Log.w(Constants.TAG, "notifiedAdapter of change on index "+i);
+                                            Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
                                         }
                                     }
                                 } catch (Exception e) {
@@ -233,7 +229,7 @@ public class AlertDialogGridHelper {
     public static void removeTagDialog(final Context cont, final TagRecyclerAdapter ctx, final SoulissDBTagHelper datasource,
                                        final SoulissTag toRename, final SoulissPreferenceHelper opts) {
         Log.w(Constants.TAG, "Removing TAG:" + toRename.getNiceName() + " ID:" + toRename.getTagId());
-        if (toRename.getTagId() < Constants.TAG_DEFAULT_FAV) {
+        if (toRename.getTagId() <= SoulissDB.FAVOURITES_TAG_ID) {
             Toast.makeText(cont, R.string.cantRemoveDefault, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -262,6 +258,7 @@ public class AlertDialogGridHelper {
                             // Adapter della lista
                             ctx.setTagArray(tagArr);
                             ctx.notifyItemRemoved(tgtPos);
+                            ctx.notifyDataSetChanged();
                         }
                     }
                 });
@@ -275,127 +272,48 @@ public class AlertDialogGridHelper {
         alert.show();
     }
 
-    /**
-     * Sceglie nuova icona
-     * <p/>
-     * puo essere nodo o Scenario
-     *
-     * @return
-     */
-    public static AlertDialog.Builder addTagCommandDialog(final Context context,
-                                                          final SoulissDBTagHelper datasource,
-                                                          final SoulissTypical toadd,
-                                                          @Nullable final ListView toReferesh) {
-        // prendo tag dal DB
-        List<SoulissTag> goer = datasource.getTags(context);
-        final SoulissTag[] tagArray = new SoulissTag[goer.size()];
-        int q = 0;
-        for (SoulissTag object : goer) {
-            tagArray[q++] = object;
-        }
-        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissClient.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
-        final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
+    public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final TagRecyclerAdapter adapter) {
+        final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+        // alert2.setTitle("Choose " + toRename.toString() + " icon");
+        final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
 
-        View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);
-        alert2.setView(dialoglayout);
-        // alert2.setInverseBackgroundForced( true );
-        alert2.setTitle(context.getString(R.string.scene_add_to));
-        //alert2.setIcon(android.R.drawable.ic_dialog_map);
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View deleteDialogView = factory.inflate(R.layout.dialog_numberpicker, null, false);
 
-        final RadioButton tagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonTag);
-        final RadioButton newTagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonNewTag);
-        final EditText editNewTag = (EditText) dialoglayout.findViewById(R.id.editTextNewTag);
-
-        final Spinner outputNodeSpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerTags);
-        ArrayAdapter<SoulissTag> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, tagArray);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        outputNodeSpinner.setAdapter(adapter);
-
-        /* INTERLOCK */
-        View.OnClickListener se_radio_listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                outputNodeSpinner.setEnabled(true);
-                editNewTag.setEnabled(false);
-                newTagRadio.setChecked(false);
-            }
-        };
-        tagRadio.setOnClickListener(se_radio_listener);
-
-        View.OnClickListener te_radio_listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                outputNodeSpinner.setEnabled(false);
-                editNewTag.setEnabled(true);
-                tagRadio.setChecked(false);
-            }
-        };
-        newTagRadio.setOnClickListener(te_radio_listener);
+        final NumberPicker low = (NumberPicker) deleteDialogView.findViewById(R.id.numberPicker1);
 
 
-		/* Cambiando nodo, cambia i tipici */
-        AdapterView.OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                //setTypicalSpinner(outputTypicalSpinner, nodiArray[pos], context);
-            }
+        Log.i(Constants.TAG, "Setting new TAG order:" + toUpdate.getName());
 
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        };
-        outputNodeSpinner.setOnItemSelectedListener(lit);
-
-
-        alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
+        deleteBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        SoulissTag it;
-                        if (tagRadio.isChecked()) {
-                            it = (SoulissTag) outputNodeSpinner.getSelectedItem();
-                            if (!it.getAssignedTypicals().contains(toadd))
-                                it.getAssignedTypicals().add(toadd);
-                            datasource.createOrUpdateTag(it);
-                        } else if (newTagRadio.isChecked()) {
-                            if (editNewTag.getText() == null || editNewTag.getText().length() == 0) {
-                                Toast.makeText(context, context.getString(R.string.input_tag_name), Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            it = new SoulissTag();
-                            long newId = datasource.createOrUpdateTag(null);
-                            it.setTagId(newId);
-                            it.setName(editNewTag.getText().toString());
-                            it.setIconResourceId(R.drawable.tv);
-                            it.getAssignedTypicals().add(toadd);
-                            datasource.createOrUpdateTag(it);
-                            Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
+                        SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
+                        if (toUpdate != null)
+                            toUpdate.setTagId(low.getValue());
 
-                            return;
-                        } else {
-
-                            Toast.makeText(context, "Select " + context.getString(R.string.existing_tag) + " " + context.getString(R.string.or)
-                                    + " " + context.getString(R.string.new_tag), Toast.LENGTH_SHORT).show();
-                            return;
+                        if (adapter != null) {
+                            List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                            SoulissTag[] tagArray = new SoulissTag[goer.size()];
+                            tagArray = goer.toArray(tagArray);
+                            adapter.setTagArray(tagArray);
                         }
 
-
+                        adapter.notifyDataSetChanged();
                     }
                 });
 
-        alert2.setNegativeButton(context.getResources().getString(android.R.string.cancel),
+        deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
+
                     }
                 });
+        final AlertDialog deleteDialog = deleteBuilder.create();
 
-        tagRadio.performClick();
+        deleteDialog.setView(deleteDialogView);
 
-        editNewTag.requestFocus();
-
-//        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        //      imm.toggleSoftInput(InputMethodManager.HI, 0);
-        return alert2;
+        deleteDialog.setTitle("Global equalizer");
+        return deleteDialog;
     }
-
 }

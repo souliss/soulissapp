@@ -85,7 +85,7 @@ public class SoulissDB extends SQLiteOpenHelper {
             + "CONSTRAINT typ_keys PRIMARY KEY(" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ")" + ");";
     public static final String[] ALLCOLUMNS_TYPICALS = {COLUMN_TYPICAL_NODE_ID, COLUMN_TYPICAL, COLUMN_TYPICAL_SLOT,
             COLUMN_TYPICAL_INPUT, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_VALUE, COLUMN_TYPICAL_ICON, COLUMN_TYPICAL_ISFAV, COLUMN_TYPICAL_NAME,
-            COLUMN_TYPICAL_LASTMOD,COLUMN_TYPICAL_WARNTIMER};
+            COLUMN_TYPICAL_LASTMOD, COLUMN_TYPICAL_WARNTIMER};
 
     /*
      * TABELLA COMANDI
@@ -202,11 +202,10 @@ public class SoulissDB extends SQLiteOpenHelper {
             COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH};
 
 
-
-     /*
-      * TABELLA TAGS'TYP
-      * tabella di relazione n a m per TAG <-> typical
-      */
+    /*
+     * TABELLA TAGS'TYP
+     * tabella di relazione n a m per TAG <-> typical
+     */
     public static final String COLUMN_TAG_TYP_SLOT = "inttagtypslo";
     public static final String COLUMN_TAG_TYP_NODE_ID = "inttagtypnodeid";
     public static final String COLUMN_TAG_TYP_TAG_ID = "inttagtagid";
@@ -253,8 +252,8 @@ public class SoulissDB extends SQLiteOpenHelper {
         database.execSQL(DATABASE_CREATE_TAGS);
         database.execSQL(DATABASE_CREATE_TAG_TYPICAL);
         /* DEFAULT TAG */
-        database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," +COLUMN_TAG_NAME + "," + COLUMN_TAG_ICONID
-                + ") VALUES ("+FAVOURITES_TAG_ID+",'" + context.getResources().getString(R.string.favourites) + "',"
+        database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + "," + COLUMN_TAG_ICONID
+                + ") VALUES (" + FAVOURITES_TAG_ID + ",'" + context.getResources().getString(R.string.favourites) + "',"
                 + R.drawable.lightning + ")");
         /* DEFAULT SCENES */
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
@@ -303,20 +302,19 @@ public class SoulissDB extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(SoulissDB.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion);
 
-        if (oldVersion==30 && newVersion == DATABASE_VERSION){
+        if (oldVersion == 30 && newVersion == DATABASE_VERSION) {
             //added warn TIMER
             try {
-                String upgradeQuery = "ALTER TABLE "+ TABLE_TYPICALS+ " ADD COLUMN "+COLUMN_TYPICAL_WARNTIMER+" INTEGER";
+                String upgradeQuery = "ALTER TABLE " + TABLE_TYPICALS + " ADD COLUMN " + COLUMN_TYPICAL_WARNTIMER + " INTEGER";
                 db.execSQL(upgradeQuery);
-            }catch (Exception cazzo){
+            } catch (Exception cazzo) {
                 //somehow already existing, just log
-                Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:"+ cazzo.getMessage());
+                Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
             }
 
-        }else {
+        } else {
             dropCreate(db);
         }
-
 
 
     }
