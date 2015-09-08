@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import java.sql.SQLDataException;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +121,11 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
 
-        collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
+        try {
+            collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
+        }catch (SQLDataException sql){
+            Log.i(Constants.TAG, "TAGID NOT FOUND: " + tagId);
+        }
         fab = (FloatingActionButton) findViewById(R.id.fabTag);
 
 

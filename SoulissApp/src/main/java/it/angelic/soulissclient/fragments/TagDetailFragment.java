@@ -53,6 +53,7 @@ import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
 import java.io.File;
+import java.sql.SQLDataException;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -128,7 +129,12 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private void initDataset(Context ctx) {
         datasource = new SoulissDBTagHelper(ctx);
         SoulissDBHelper.open();
-        collectedTag = datasource.getTag(ctx, tagId);
+
+        try {
+            collectedTag = datasource.getTag(ctx, tagId);
+        } catch (SQLDataException e) {
+            Log.e(Constants.TAG, "CANT LOAD tagId" + tagId);
+        }
         Log.i(Constants.TAG, "initDataset tagId" + tagId);
         List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
         Log.i(Constants.TAG, "getTagTypicals() returned " + favs.size());

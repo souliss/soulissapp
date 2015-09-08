@@ -272,7 +272,7 @@ public class AlertDialogGridHelper {
         alert.show();
     }
 
-    public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final TagRecyclerAdapter adapter) {
+    public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate,final int oldPosition, final TagRecyclerAdapter adapter) {
         final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
@@ -281,7 +281,9 @@ public class AlertDialogGridHelper {
         final View deleteDialogView = factory.inflate(R.layout.dialog_numberpicker, null, false);
 
         final NumberPicker low = (NumberPicker) deleteDialogView.findViewById(R.id.numberPicker1);
+        low.setMinValue((int) (SoulissDB.FAVOURITES_TAG_ID + 1));
 
+        low.setMaxValue(adapter==null?10:adapter.getItemCount());
 
         Log.i(Constants.TAG, "Setting new TAG order:" + toUpdate.getName());
 
@@ -289,17 +291,24 @@ public class AlertDialogGridHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
-                        if (toUpdate != null)
+                        if (toUpdate != null && adapter != null) {
+                            //SoulissTag toMove = dbt.getTag(context, low.getValue());
+                            //shift di tutti da n in poi
+                            dbt.updateShiftAllTagIds((long) low.getValue());
+                            //lo metto dove devo, gli altri son spostati
                             toUpdate.setTagId(low.getValue());
+                            dbt.createOrUpdateTag( toUpdate);
 
-                        if (adapter != null) {
                             List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
                             SoulissTag[] tagArray = new SoulissTag[goer.size()];
                             tagArray = goer.toArray(tagArray);
                             adapter.setTagArray(tagArray);
+                            Log.i(Constants.TAG, "Moving Adapter FROM - TO:   " + oldPosition+" - "+low.getValue());
+                            adapter.notifyItemMoved(oldPosition,low.getValue());
+                            adapter.notifyDataSetChanged();
                         }
 
-                        adapter.notifyDataSetChanged();
+
                     }
                 });
 

@@ -38,8 +38,8 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     private SoulissPreferenceHelper opzioni;
 
 
-    public TagRecyclerAdapter(Activity context,@NonNull SoulissTag[] versio, SoulissPreferenceHelper opts) {
-      //  mInflater = LayoutInflater.from(context);
+    public TagRecyclerAdapter(Activity context, @NonNull SoulissTag[] versio, SoulissPreferenceHelper opts) {
+        //  mInflater = LayoutInflater.from(context);
         this.context = context;
         this.soulissTags = versio;
         opzioni = opts;
@@ -56,7 +56,6 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     public void setTagArray(SoulissTag[] scene) {
         this.soulissTags = scene;
     }
-
 
 
     @Override
@@ -79,11 +78,11 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     @Override
     public void onBindViewHolder(final TagViewHolder holder, final int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                0 );
+                0);
         try {
             List<SoulissTypical> appoggio = soulissTags[position].getAssignedTypicals();
             quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                    appoggio.size(), appoggio.size() );
+                    appoggio.size(), appoggio.size());
         } catch (Exception ce) {
             Log.w(Constants.TAG, "TAG Empty? ");
         }
@@ -94,8 +93,10 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         if (soulissTags[position].getIconResourceId() != 0) {
             holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
             holder.imageTag.setVisibility(View.VISIBLE);
-        } else
+        } else {
+            holder.imageTag.setImageResource(R.drawable.window);//avoid exc
             holder.imageTag.setVisibility(View.INVISIBLE);
+        }
         // Here you apply the animation when the view is bound
         //setAnimation(holder.container, position);
 
@@ -121,7 +122,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         holder.container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                return false;
+                return false;//chiama Parentàs onItemClickListener
             }
         });
 
@@ -145,6 +146,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
     }
+
     @Override
     public long getItemId(int position) {
         return soulissTags[position].getTagId();

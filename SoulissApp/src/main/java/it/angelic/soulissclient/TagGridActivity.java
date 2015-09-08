@@ -232,8 +232,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
                 return true;
             case R.id.scegliOrdineTag:
-
-
+                AlertDialog alertOrder = AlertDialogGridHelper.tagOrderPickerDialog(this, todoItem,item.getOrder(), tagAdapter);
+                alertOrder.show();
                 return true;
             default:
                 return super.onContextItemSelected(item);
