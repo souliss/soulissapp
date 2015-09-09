@@ -332,7 +332,9 @@
     <string name="Souliss_T19_Med_desc" >Intensità media</string>
     <string name="Souliss_T19_Min_desc" >Intensità minima</string>
     <string name="sureToRemoveTag">Rimuovere questo TAG?</string>
-    <string name="cantRemoveDefault">Can\'t remove default Favourite Tag</string>
+    <string name="cantRemoveDefault">Impossibile rimuovere il TAG predefinito</string>
     <string name="removeTag">Elimina Tag</string>
+    <string name="tagorder_desc">Se vengono trovati due TAG con lo stesso valore, verrà utilizzato il loro ID automatico per l\'ordinamento</string>
+    <string name="menu_addFav">Aggiungi ai Preferiti</string>
 
 </resources>

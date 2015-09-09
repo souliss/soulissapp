@@ -105,9 +105,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
                 goer.removeAll(goerBck);
                 Assert.assertTrue(goer.size() == 1);
-                SoulissTag newTag = goer.get(0);
-                newTag.setTagOrder(1);
-                goerBck.add(1, newTag);
+                SoulissTag newTag = goer.get(0);//quello nuovo
+                goerBck.add(Constants.TAG_INSERT_POINT, newTag);
 
                 // goer.removeAll(goerBck);
                 tags = new SoulissTag[goerBck.size()];
@@ -117,7 +116,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 //SceneListAdapter t = listaTagsView.getAdapter();
                 tagAdapter.setTagArray(tags);
 
-                tagAdapter.notifyItemInserted(1);
+                tagAdapter.notifyItemInserted(Constants.TAG_INSERT_POINT);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     //fai finire l'animazione

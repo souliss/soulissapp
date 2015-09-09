@@ -123,7 +123,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         try {
             collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
-        }catch (SQLDataException sql){
+        } catch (SQLDataException sql) {
             Log.i(Constants.TAG, "TAGID NOT FOUND: " + tagId);
         }
         fab = (FloatingActionButton) findViewById(R.id.fabTag);
@@ -135,25 +135,25 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
+        /*if (BuildConfig.DEBUG) {//solo DEBUG
+            // do something for a debug build
+            setEnterSharedElementCallback(new SharedElementCallback() {
+                @Override
+                public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                    Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size());
+                    //manual override perche il fragment ancora non c'e
+                    sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
+                    sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
+                    super.onMapSharedElements(names, sharedElements);
+                }
 
-        setEnterSharedElementCallback(new SharedElementCallback() {
-
-            @Override
-            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size());
-                //manual override perche il fragment ancora non c'e
-                sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
-                sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
-                super.onMapSharedElements(names, sharedElements);
-            }
-
-            @Override
-            public void onRejectSharedElements(List<View> rejectedSharedElements) {
-                Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + rejectedSharedElements.size());
-                super.onRejectSharedElements(rejectedSharedElements);
-            }
-
-        });
+                @Override
+                public void onRejectSharedElements(List<View> rejectedSharedElements) {
+                    Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + rejectedSharedElements.size());
+                    super.onRejectSharedElements(rejectedSharedElements);
+                }
+            });
+        }*/
     }
 
     @Override

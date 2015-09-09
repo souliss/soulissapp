@@ -26,6 +26,7 @@ import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -139,7 +140,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private boolean mIsBound;
     private HTTPService mBoundWebService;
     private TextView webserviceInfo;
-
     private Timer autoUpdate;
     private Geocoder geocoder;
     private SoulissDBTagHelper tagDb;
@@ -200,7 +200,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     }
 
     void doBindWebService() {
-        //FIXME check flags, add BIND_NOT_FOREGROUND
         Log.d(TAG, "doBindWebService(), BIND_NOT_FOREGROUND.");
         bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_AUTO_CREATE);
     }
@@ -331,6 +330,12 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         animation3.setStartOffset(1500);
         cardViewServiceInfo.startAnimation(animation3);
         */
+
+        opzioni.reload();
+
+        tagDb = new SoulissDBTagHelper(this);
+        //meno possibile
+        setDbAndFavouritesInfo();
     }
 
 	/*
@@ -367,9 +372,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     protected void onStart() {
         super.onStart();
-        opzioni.reload();
 
-        tagDb = new SoulissDBTagHelper(this);
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
@@ -449,7 +452,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         // refresh testo
         setHeadInfo();
-        setDbAndFavouritesInfo();
+
         setServiceInfo();
         setWebServiceInfo();
         setAntiTheftInfo();
@@ -555,6 +558,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+
+                    Log.d(Constants.TAG, "redraw FAVs");
                     final TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
                     final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
                     final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);

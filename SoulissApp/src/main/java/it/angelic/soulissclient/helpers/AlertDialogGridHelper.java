@@ -14,6 +14,8 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import junit.framework.Assert;
+
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -186,7 +188,7 @@ public class AlertDialogGridHelper {
                                 try {
                                     for (int i = 0; i < tagArray.length; i++) {
                                         if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
-                                            ((SoulissTag)list.getTag(i)).setIconResourceId(toRename.getIconResourceId() );
+                                            ((SoulissTag)list.getTag(i)).setIconResourceId(toRename.getIconResourceId());
                                             list.notifyItemChanged(i);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
                                         }
@@ -296,10 +298,19 @@ public class AlertDialogGridHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
+                        toUpdate.setTagOrder(low.getValue());//sempre
                         if (toUpdate != null && adapter != null) {
-                            toUpdate.setTagOrder(low.getValue());
+                            int newPosition = low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue();
+                            //swap elements
+                            SoulissTag[] temp = adapter.getTagArray();
+                            Assert.assertTrue(oldPosition<temp.length);
+                            SoulissTag oldOne = temp[newPosition];
+                            temp[newPosition] = toUpdate;
+                            temp[oldPosition] = oldOne;
+                            adapter.setTagArray(temp);
                             dbt.createOrUpdateTag(toUpdate);
-                            adapter.notifyItemMoved(oldPosition, low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue());
+                            //notify to move
+                            adapter.notifyItemMoved(oldPosition, newPosition);
                         }
                     }
                 }

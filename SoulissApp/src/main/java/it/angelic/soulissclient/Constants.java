@@ -19,6 +19,7 @@ public class Constants {
 	public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
 	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
 	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+	public static final int TAG_INSERT_POINT = 1;
 
 	public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");

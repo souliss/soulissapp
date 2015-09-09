@@ -71,7 +71,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				// setTitle(mPlanetTitles[position]);
 				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent = new Intent(mActivity, SceneListActivity.class);
-				myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+				//myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent);
 				break;
 			case DrawerMenuHelper.PROGRAMS:
@@ -79,7 +79,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				// setTitle(mPlanetTitles[position]);
 				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent2 = new Intent(mActivity, ProgramListActivity.class);
-				myIntent2.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 				mActivity.startActivity(myIntent2);
 				break;
             case DrawerMenuHelper.TAGS:
@@ -87,7 +86,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
                     Intent myIntent5d = new Intent(mActivity, TagGridActivity.class);
-                    myIntent5d.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     mActivity.startActivity(myIntent5d);
                     break;
 			case DrawerMenuHelper.MANUAL:
@@ -104,7 +102,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent4 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 				myIntent4.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
 				myIntent4.setAction("network_setup");
 				mActivity.startActivity(myIntent4);
@@ -115,7 +112,6 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				mDrawerLayout.closeDrawer(mDrawerLinear);
 				Intent myIntent5 = new Intent(mActivity, PreferencesActivity.class);
 				myIntent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 				myIntent5.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
 				myIntent5.setAction("db_setup");
 				mActivity.startActivity(myIntent5);
@@ -152,19 +148,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 				break;
 			}
 		}
-		// Create a new fragment and specify the planet to show based on
-		// position
-		/*
-		 * Fragment fragment = new PlanetFragment(); Bundle args = new Bundle();
-		 * args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-		 * fragment.setArguments(args);
-		 * 
-		 * // Insert the fragment by replacing any existing fragment
-		 * FragmentManager fragmentManager = getFragmentManager();
-		 * fragmentManager.beginTransaction() .replace(R.id.containervermegame,
-		 * fragment) .commit();
-		 */
-		// Highlight the selected item, update the title, and close the drawer
+		
 
 		return;
 
