@@ -5,6 +5,8 @@
     android:id="@+id/TagCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+     android:clickable="true"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2sp"
     card_view:cardPreventCornerOverlap="true"

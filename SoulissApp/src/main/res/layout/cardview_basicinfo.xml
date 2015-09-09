@@ -5,7 +5,7 @@
     android:id="@+id/BasicInfoCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:foreground="?attr/selectableItemBackground"
     android:elevation="2dp"
     card_view:cardBackgroundColor="@color/background_floating_material_dark"
     card_view:cardCornerRadius="2dp"

@@ -297,7 +297,9 @@ public class AlertDialogGridHelper {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
                         if (toUpdate != null && adapter != null) {
-
+                            toUpdate.setTagOrder(low.getValue());
+                            dbt.createOrUpdateTag(toUpdate);
+                            adapter.notifyItemMoved(oldPosition, low.getValue());
                         }
                     }
                 }
