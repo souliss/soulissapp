@@ -144,7 +144,7 @@
 
     <!-- OPZIONI -->
     <string name="opt_credits">Разработчики</string>
-    <string name="opt_credits_desc">Souliss от Veseo - Клиент от shine@angelic.it</string>
+    <string name="opt_credits_desc">Souliss is an open-source project with many contributors. Tap too see the list</string>
     <string name="opt_userindex">Индекс пользователя</string>
     <string name="opt_userindex_desc">Индекс пользователя определяет клиента Android в сети Souliss. Текущее значение %1$d. Кликнуть для изменения, в диапазоне 1&#8211;100</string>
     <string name="opt_nodeindex">Индекс узла</string>

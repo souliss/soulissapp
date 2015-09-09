@@ -71,7 +71,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 			public boolean onPreferenceClick(Preference preference) {
 				// open browser or intent here
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri
-						.parse("https://plus.google.com/113934123042484468682/posts")));
+						.parse("https://github.com/orgs/souliss/people")));
 				return true;
 			}
 		});

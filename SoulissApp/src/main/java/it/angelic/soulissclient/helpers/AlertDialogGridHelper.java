@@ -14,7 +14,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.SQLDataException;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -180,13 +179,14 @@ public class AlertDialogGridHelper {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissClient.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
-                                List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
-                                SoulissTag[] tagArray = new SoulissTag[goer.size()];
-                                tagArray = goer.toArray(tagArray);
-                                list.setTagArray(tagArray);
+                             //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                SoulissTag[] tagArray = list.getTagArray();
+                               // tagArray = goer.toArray(tagArray);
+                                //list.setTagArray(tagArray);
                                 try {
                                     for (int i = 0; i < tagArray.length; i++) {
                                         if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
+                                            ((SoulissTag)list.getTag(i)).setIconResourceId(toRename.getIconResourceId() );
                                             list.notifyItemChanged(i);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
                                         }
@@ -263,7 +263,7 @@ public class AlertDialogGridHelper {
                                 public void run() {
                                     ctx.notifyDataSetChanged();
                                 }
-                            }, 1000);  // 1500 seconds
+                            }, 500);  // 1500 seconds
                         }
                     }
                 });
@@ -299,21 +299,17 @@ public class AlertDialogGridHelper {
                         if (toUpdate != null && adapter != null) {
                             toUpdate.setTagOrder(low.getValue());
                             dbt.createOrUpdateTag(toUpdate);
-                            adapter.notifyItemMoved(oldPosition, low.getValue());
+                            adapter.notifyItemMoved(oldPosition, low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue());
                         }
                     }
                 }
         );
 
-        deleteBuilder.setNegativeButton(context.getResources().
-
-                        getString(android.R.string.cancel),
+        deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
 
                 new DialogInterface.OnClickListener()
-
                 {
                     public void onClick(DialogInterface dialog, int whichButton) {
-
                     }
                 }
 
@@ -322,7 +318,7 @@ public class AlertDialogGridHelper {
 
         deleteDialog.setView(deleteDialogView);
 
-        deleteDialog.setTitle("Global equalizer");
+        deleteDialog.setTitle("Select Position");
         return deleteDialog;
     }
 }

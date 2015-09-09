@@ -107,9 +107,13 @@ public class AlertDialogHelper {
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_db))) {
             final CheckBox checkBox = new CheckBox(source);
             checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
+
             LinearLayout linearLayout = new LinearLayout(source);
-            linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.FILL_PARENT));
+            LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.FILL_PARENT);
+            lParams.setMargins(15,15,15,15);
+            linearLayout.setLayoutParams(lParams);
+
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             alert.setMessage(source.getResources().getString(R.string.dialog_notinited_db));
             linearLayout.addView(checkBox);

@@ -142,7 +142,7 @@
 
     <!-- OPZIONI -->
     <string name="opt_credits">Créditos</string>
-    <string name="opt_credits_desc">Souliss by Veseo - Client by Shine - Visit www.souliss.net</string>
+    <string name="opt_credits_desc">Souliss is an open-source project with many contributors. Tap too see the list</string>
     <string name="opt_userindex">Índice de usuario</string>
     <string name="opt_userindex_desc">El índice de usuario identifica el cliente Android con Souliss. Valor actual es %1$d. No debe ser cambiado</string>
     <string name="opt_nodeindex">Índice de Nodo</string>

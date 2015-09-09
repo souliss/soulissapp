@@ -142,7 +142,7 @@
 
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>
-    <string name="opt_credits_desc">Souliss by Veseo - Client by shine@angelic.it</string>
+    <string name="opt_credits_desc">Souliss è un progetto open-source con diversi collaboratori. Tap per l\'elenco</string>
     <string name="opt_userindex">Index Utente</string>
     <string name="opt_userindex_desc">Indica a Souliss il tipo di dispositivo. Ora vale %1$d. Non dovrebbe essere necessario cambiarlo</string>
     <string name="opt_nodeindex">Index Nodo</string>

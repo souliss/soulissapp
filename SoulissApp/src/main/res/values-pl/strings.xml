@@ -144,7 +144,7 @@
 
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>
-    <string name="opt_credits_desc">Souliss by Veseo - Client by shine@angelic.it</string>
+    <string name="opt_credits_desc">Souliss is an open-source project with many contributors. Tap too see the list</string>
     <string name="opt_userindex">Indeks użytkownika</string>
     <string name="opt_userindex_desc">Indeks użytkownika identyfikuje klienta Android w Souliss. Bieżąca wartość to %1$d. Puknij by zmienić, w zakresie 1&#8211;100</string>
     <string name="opt_nodeindex">Indeks węzła</string>

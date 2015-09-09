@@ -27,6 +27,9 @@ import com.melnykov.fab.FloatingActionButton;
 
 import junit.framework.Assert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -94,7 +97,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<SoulissTag> goerBck = datasource.getTags(SoulissClient.getAppContext());
+                //LinkedList perche asList torna array non ridimensionabile
+                List<SoulissTag> goerBck = new LinkedList<>(Arrays.asList(tagAdapter.getTagArray()));
 
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
@@ -102,6 +106,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 goer.removeAll(goerBck);
                 Assert.assertTrue(goer.size() == 1);
                 SoulissTag newTag = goer.get(0);
+                newTag.setTagOrder(1);
                 goerBck.add(1, newTag);
 
                 // goer.removeAll(goerBck);
@@ -115,12 +120,12 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 tagAdapter.notifyItemInserted(1);
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
-                    //brutta pezza per riallineare position
+                    //fai finire l'animazione
                     public void run() {
                         //force rebind of click listeners
                         tagAdapter.notifyDataSetChanged();
                     }
-                }, 1000);  // msec
+                }, 500);  // msec
 
                 //listaTagsView.invalidateViews();
                 Toast.makeText(TagGridActivity.this,
