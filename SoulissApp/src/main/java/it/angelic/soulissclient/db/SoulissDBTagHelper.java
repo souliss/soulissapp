@@ -131,7 +131,6 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         long ret = -1;
         if (tagIN != null) {
             values.put(SoulissDB.COLUMN_TAG_NAME, tagIN.getName());
-            values.put(SoulissDB.COLUMN_TAG_ID, tagIN.getTagId());
             values.put(SoulissDB.COLUMN_TAG_ICONID, tagIN.getIconResourceId());
             values.put(SoulissDB.COLUMN_TAG_IMGPTH, tagIN.getImagePath());
 
@@ -157,24 +156,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
 
     }
 
-    /**
-     * Shift dei TAG per riposizionamento
-     *
-     * @param tagIdGreaterEqualThan
-     * @return
-     */
-    public void updateShiftAllTagIds(Long tagIdGreaterEqualThan) {
 
-
-        database.execSQL("UPDATE " + SoulissDB.TABLE_TAGS
-                        + " SET " + SoulissDB.COLUMN_TAG_ID + "=" + SoulissDB.COLUMN_TAG_ID + "+1"
-                        + " WHERE " + SoulissDB.COLUMN_TAG_ID + " >= ?",
-                new Long[]{Long.valueOf(tagIdGreaterEqualThan)});
-
-        Log.i(Constants.TAG, "SHIFT TAG ID GREAT OR EQUAL " + tagIdGreaterEqualThan);
-
-
-    }
 
     /**
      * relazione coi typ

@@ -10,11 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLDataException;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -134,13 +134,12 @@ public class AlertDialogGridHelper {
      * Sceglie nuova icona
      *
      * @param context
-     * @param ctx
      * @param list
      * @param datasource
      * @param toRename   puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder chooseIconDialog(final Context context, final ImageView ctx, final TagRecyclerAdapter list,
+    public static AlertDialog.Builder chooseIconDialog(final Context context, final TagRecyclerAdapter list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
@@ -202,8 +201,6 @@ public class AlertDialogGridHelper {
 
                             }
                         }
-                        ctx.setImageResource(toRename.getIconResourceId());
-                        ctx.invalidate();
 
                     }
                 });
@@ -264,7 +261,7 @@ public class AlertDialogGridHelper {
                             handler.postDelayed(new Runnable() {
                                 //brutta pezza per riallineare position
                                 public void run() {
-                                   ctx.notifyDataSetChanged();
+                                    ctx.notifyDataSetChanged();
                                 }
                             }, 1000);  // 1500 seconds
                         }
@@ -280,7 +277,7 @@ public class AlertDialogGridHelper {
         alert.show();
     }
 
-    public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate,final int oldPosition, final TagRecyclerAdapter adapter) {
+    public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final int oldPosition, final TagRecyclerAdapter adapter) {
         final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
@@ -291,7 +288,7 @@ public class AlertDialogGridHelper {
         final NumberPicker low = (NumberPicker) deleteDialogView.findViewById(R.id.numberPicker1);
         low.setMinValue((int) (SoulissDB.FAVOURITES_TAG_ID + 1));
 
-        low.setMaxValue(adapter==null?10:adapter.getItemCount());
+        low.setMaxValue(adapter == null ? 10 : adapter.getItemCount());
 
         Log.i(Constants.TAG, "Setting new TAG order:" + toUpdate.getName());
 
@@ -300,32 +297,25 @@ public class AlertDialogGridHelper {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
                         if (toUpdate != null && adapter != null) {
-                            //SoulissTag toMove = dbt.getTag(context, low.getValue());
-                            //shift di tutti da n in poi
-                            dbt.updateShiftAllTagIds((long) low.getValue());
-                            //lo metto dove devo, gli altri son spostati
-                            toUpdate.setTagId(low.getValue());
-                            dbt.createOrUpdateTag( toUpdate);
 
-                            List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
-                            SoulissTag[] tagArray = new SoulissTag[goer.size()];
-                            tagArray = goer.toArray(tagArray);
-                            adapter.setTagArray(tagArray);
-                            Log.i(Constants.TAG, "Moving Adapter FROM - TO:   " + oldPosition+" - "+low.getValue());
-                            adapter.notifyItemMoved(oldPosition,low.getValue());
-                            adapter.notifyDataSetChanged();
                         }
-
-
                     }
-                });
+                }
+        );
 
-        deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
-                new DialogInterface.OnClickListener() {
+        deleteBuilder.setNegativeButton(context.getResources().
+
+                        getString(android.R.string.cancel),
+
+                new DialogInterface.OnClickListener()
+
+                {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }
-                });
+                }
+
+        );
         final AlertDialog deleteDialog = deleteBuilder.create();
 
         deleteDialog.setView(deleteDialogView);

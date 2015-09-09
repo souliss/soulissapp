@@ -225,10 +225,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 alert3.show();
                 return true;
             case R.id.scegliconaTag:
-                SoulissTag convertView = (SoulissTag) tagAdapter.getTag(item.getOrder());
-                ImageView at = new ImageView(getApplicationContext());
-                at.setImageResource(convertView.getIconResourceId());
-                AlertDialog.Builder alert2 = AlertDialogGridHelper.chooseIconDialog(this, at, tagAdapter, datasource,
+                AlertDialog.Builder alert2 = AlertDialogGridHelper.chooseIconDialog(this,tagAdapter, datasource,
                         todoItem);
                 alert2.show();
                 // nodesAdapter.notifyDataSetChanged();
@@ -240,7 +237,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
                 return true;
             case R.id.scegliOrdineTag:
-                AlertDialog alertOrder = AlertDialogGridHelper.tagOrderPickerDialog(this, todoItem,item.getOrder(), tagAdapter);
+                AlertDialog alertOrder = AlertDialogGridHelper.tagOrderPickerDialog(this, todoItem, (int) arrayAdapterPosition, tagAdapter);
                 alertOrder.show();
                 return true;
             default:
@@ -252,7 +249,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        Log.i(Constants.TAG, "SAVING IMG RESULT:" + resultCode);
+        Log.i(Constants.TAG, "SAVED IMG RESULT:" + resultCode);
 
 
         if (resultCode == RESULT_OK) {
@@ -260,10 +257,10 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
             tags[requestCode].setImagePath(selectedImage.toString());
             //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
             datasource.createOrUpdateTag(tags[requestCode]);
             //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
             Log.i(Constants.TAG, "SAVED IMG PATH:" + tags[requestCode].getImagePath());
+            tagAdapter.notifyItemChanged(requestCode);
         }
 
     }
