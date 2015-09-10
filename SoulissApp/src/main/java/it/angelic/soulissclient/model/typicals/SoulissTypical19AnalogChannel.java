@@ -63,6 +63,18 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
         ftt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         ftt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(ftt);
+
+        SoulissCommand fttd = new SoulissCommand( this);
+        ftt.getCommandDTO().setCommand(Constants.Souliss_T19_Med);
+        ftt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
+        ftt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ret.add(fttd);
+
+        SoulissCommand ftts = new SoulissCommand( this);
+        ftt.getCommandDTO().setCommand(Constants.Souliss_T19_Max);
+        ftt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
+        ftt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ret.add(ftts);
         return ret;
     }
 
