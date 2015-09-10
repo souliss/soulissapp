@@ -8,14 +8,14 @@
     <string name="notconfigured">Souliss ist noch <b>nicht konfiguriert</b>, eine lokale IP-Adresse ist erforderlich</string>
     <string name="health">EMPFANG:</string>
     <string name="status">STATUS:</string>
-    <string name="update">AKTUALISIERT:</string>
+    <string name="update">AKTUAL. vor:</string>
     <string name="actions">AKTIONEN:</string>
     <string name="node">Knoten</string>
     <string name="nodes">Knoten</string>
     <string name="slot">Slot</string>
     <string name="sensors">Sensoren</string>
     <string name="ping">Ping</string>
-    <string name="ago">her</string>
+    <string name="ago"> </string>
     <string name="multicast">Multicast</string>
     <string name="multicast_desc">An alle Geräte dieses Types senden</string>
     <string name="days">Tage</string>

@@ -26,10 +26,10 @@
     <string name="dialog_disabled_service">Der Souliss Daten-Service ist deaktiviert</string>
     <string name="dialog_notinited_service">Die geplanten Programme werden nicht ausgeführt!\nAktivieren Sie den Daten-Service unter Einstellungen</string>
     <string name="dialog_dontshowagain">Nicht noch einmal anzeigen</string>
-    <string name="dialog_warn_db">Warnung!</string>
+    <string name="dialog_warn_db">WARNUNG!</string>
     <string name="dialog_drop_db">Sie sind im Begriff alle Netzknoten und Routinen sowie deren Chronik zu löschen.\nDie gesamte DB verwerfen?</string>
     <string name="dialog_create_db">Alle Souliss Netzknoten werden gelöscht und wiederhergestellt über das Gateway</string>
-    <string name="dialog_create_db2">. Sie verlieren alle vorherigen Konfigurationen und die Chronik. Fortfahren?</string>
+    <string name="dialog_create_db2">. Sie verlieren alle vorherigen Konfigurationen und die Chronik. Weiter?</string>
     <string name="dialog_title_edittext_IP_pubb">Öffentliche IP-Addresse</string>
     <string name="dialog_remove_title">Programm löschen</string>
     <string name="dialog_remove_cmd">Wollen Sie dieses Kommando wirklich löschen ?</string>
@@ -57,7 +57,7 @@
     <string name="command_send">Befehl senden</string>
     <string name="command_inserted">Neues Programm gespeichert</string>
     <string name="command_inserted_fail">Programm speichern fehlerhaft </string>
-    <string name="compatible">Kompatible Routinen</string>
+    <string name="compatible">kompatiblen Routinen</string>
     <string name="to_all">an alle</string>
     <string name="to">an</string>
     <string name="on_node">ein Netzknoten</string>
@@ -68,10 +68,10 @@
     <string name="scenes_changeicon">Szenario Icon ändern</string>
     <string name="scenes_add">Szenario hinzufügen</string>
     <string name="scenes_empty">Szenario ist leer!</string>
-    <string name="scenes_empty_desc">Den Knopf unten benutzen, um einen Befehl zu diesem Szenario hinzu zu fügen</string>
+    <string name="scenes_empty_desc">Den +Knopf unten benutzen, um einen Befehl zu diesem Szenario hinzu zu fügen</string>
     <string name="scenes_desc">Szenarien bestehen aus verschiedenen Souliss Befehlen. Das Szenario gedrückt halten, um es zu ändern oder auszuführen - zum editieren, kurz drücken. Benutzen Sie den Knopf unten fuer ein neues Szenario</string>
-    <string name="scene_turnoff_lights">Lichter AUS</string>
-    <string name="scene_turnon_lights">Lichter AN</string>
+    <string name="scene_turnoff_lights">Licht AUS</string>
+    <string name="scene_turnon_lights">Licht AN</string>
     <string name="scene_commands">Szenario Befehle</string>
     <string name="scene_add_command">Befehl hinzufügen</string>
     <string name="scene_add_command_to">Befehl hinzufügen zu</string>
@@ -79,10 +79,10 @@
     <string name="scene_send_command">Befehl senden</string>
     <string name="scene_cmd_order">Reihenfolge: </string>
     <string name="scene_cmd_massive">Globaler Befehl</string>
-    <string name="scene_subtitle">Szenario besteht aus %1$d Befehl\en</string>
+    <string name="scene_subtitle">Das Szenario enthält %1$d Befehl_e</string>
 
     <!-- ADD PROGRAMS_SECTION -->
-    <string name="addprogram_choosecommand">Choose Program\'s Command</string>
+    <string name="addprogram_choosecommand">Wählen sie einen Befehl des Programms</string>
     <string name="addprogram_timed">Zeitgesteuerte Aktivierung</string>
     <string name="addprogram_scheduleevery">Wiederholung alle:</string>
     <string name="addprogram_timed_desc">Der Befehl unten wird zur ausgewählten Tageszeit ausgeführt werden. Falls rekursiv, wird das Programm in einem bestimmten Intervall wiederholt</string>
@@ -106,28 +106,28 @@
 
     <!-- TEST_UDP -->
     <string name="test_health">Health request is used to required node communications\' health</string>
-    <string name="test_typ_title">TypReq</string>
-    <string name="test_typ">Request typicals once, no subscription</string>
-    <string name="test_poll">Require all souliss network data once, no subscription</string>
-    <string name="test_ping">Ping command to check Souliss connectivity</string>
-    <string name="manual_title">Manual</string>
-    <string name="manual_force">Force execution of commands. Must indicate target node and slot</string>
-    <string name="manual_cmd_hint">cmd</string>
+    <string name="test_typ_title">TYPREQ</string>
+    <string name="test_typ">Szenarien einmal anfragen, keine Indexierung</string>
+    <string name="test_poll">Netzwerkdaten einmal anfordern, keine Indexierung</string>
+    <string name="test_ping">Ping Befehl um Souliss Verbindung zu prüfen</string>
+    <string name="manual_title">Manuell</string>
+    <string name="manual_force">Erzwinge Befehle. Eingabe von Knoten u. Slots erforderlich </string>
+    <string name="manual_cmd_hint">CMD</string>
     <string name="manual_slot">SLOT</string>
-    <string name="manual_typicals">Typicals</string>
-    <string name="inserire_almeno">Choose the node ID, slot and insert a Command</string>
-    <string name="db_notempty">DB not empty. Drop DB first</string>
-    <string name="manual_id_prompt">Choose a NODE ID</string>
-    <string name="manual_slot_prompt">Choose a SLOT</string>
-    <string name="icon_select">Select Icon</string>
-    <string name="manual_showing_typ">Showing Typical Detail: </string>
-    <string name="manual_desc">Send commands to hardware Souliss Nodes manually. Tap on a Node to open Detail, long-press to edit it</string>
-    <string name="manual_litfrom">Turned on %1$s ago</string>
-    <string name="manual_tyinf">This device has been turned on for %1$s in the last month</string>
-    <string name="node_empty">Node is Empty!</string>
-    <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
+    <string name="manual_typicals">Routinen</string>
+    <string name="inserire_almeno">Knoten ID u. Slot wählen, dann einen Befehl eingeben</string>
+    <string name="db_notempty">Die DB ist nicht leer. DB zuerst löschen</string>
+    <string name="manual_id_prompt">Wählen Sie eine KNOTEN ID</string>
+    <string name="manual_slot_prompt">Wählen sie einen SLOT</string>
+    <string name="icon_select">Icon auswählen</string>
+    <string name="manual_showing_typ">Zeige Routinen Details: </string>
+    <string name="manual_desc">Manuell Befehle an die Souliss Netzknoten senden. Den Knoten kurz drücken, um Details anzuzeigen. Zum editieren lange drücken</string>
+    <string name="manual_litfrom">Eingeschaltet seit %1$s</string>
+    <string name="manual_tyinf">Dieses Gerät war im letzten Monat %1$s lang eingeschaltet</string>
+    <string name="node_empty">Knoten ist leer!</string>
+    <string name="node_empty_desc">Dieser Knoten enthält keine Routine. Sollte er das, dann erneuern Sie zuerst die DB Struktur unter Optionen</string>
     <!-- WIDGET -->
-    <string name="widget_cantsave">Command empty/not selected</string>
+    <string name="widget_cantsave">Befehl leer/nicht ausgewählt</string>
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
