@@ -234,7 +234,7 @@
     <string name="Souliss_UndefinedCmd_desc">Indefinido</string>
     <string name="Souliss_T21_desc">Dispositivo motorizado (con final de carrera)</string>
     <string name="Souliss_T22_desc">Dispositivo motorizado</string>
-    <string name="Souliss_T31_desc">Termómetro</string>
+    <string name="Souliss_T31_desc">Termostato</string>
     <string name="Souliss_T41_desc">Sistema antirobo</string>
     <string name="Souliss_T42_desc">Peer antirobo</string>
     <string name="Souliss_T51_desc">Entrada analógica</string>
