@@ -373,6 +373,18 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     protected void onStart() {
         super.onStart();
 
+        //******** TEMPORANEO
+        OnClickListener fullscreenActivity = new OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LauncherActivity.this, WellcomeActivity.class);
+                startActivity(myIntent);
+                // myIntent.putExtra("TAG", ()1);
+                return;
+            }
+        };
+        cardViewBasicInfo.setOnClickListener(fullscreenActivity);
+        //********
+
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
