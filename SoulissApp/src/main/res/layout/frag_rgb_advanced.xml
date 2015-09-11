@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/Cont01"
@@ -20,13 +20,13 @@
                 android:layout_marginLeft="5dip"
                 android:text="@string/brightness"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"/>
 
             <View
                 android:id="@+id/strut"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <Button
                 android:id="@+id/buttonPlus"
@@ -39,7 +39,7 @@
                 android:layout_marginRight="15dip"
                 android:drawableLeft="@drawable/light_off"
                 android:text="@string/plus"
-                android:textSize="40sp" />
+                android:textSize="40sp"/>
 
             <Button
                 android:id="@+id/buttonMinus"
@@ -52,10 +52,11 @@
                 android:layout_marginRight="15dip"
                 android:drawableLeft="@drawable/light_on"
                 android:text="@string/minus"
-                android:textSize="40sp" />
+                android:textSize="40sp"/>
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/contControls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativeLayout1"
@@ -67,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="@string/Souliss_T_modes"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TableLayout
                 android:id="@+id/containervermegame"
@@ -88,29 +89,29 @@
                         style="@style/ButtonText"
                         android:layout_width="0dip"
                         android:layout_weight="1"
-                        android:text="@string/Souliss_TRGB_white" />
+                        android:text="@string/Souliss_TRGB_white"/>
 
                     <Button
                         android:id="@+id/flash"
                         style="@style/ButtonText"
                         android:layout_width="0dip"
                         android:layout_weight="1"
-                        android:text="@string/Souliss_TRGB_flash" />
+                        android:text="@string/Souliss_TRGB_flash"/>
 
                     <Button
                         android:id="@+id/sleep"
                         style="@style/ButtonText"
                         android:layout_width="0dip"
                         android:layout_weight="1"
-                        android:text="@string/Souliss_TRGB_sleep" />
+                        android:text="@string/Souliss_TRGB_sleep"/>
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/tableRowSelector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_margin="5dp"
+                    android:gravity="center"
                     android:weightSum="3">
 
                     <Spinner
@@ -119,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="2dp"
                         android:layout_weight="2"
-                        android:entries="@array/rgbModes" />
+                        android:entries="@array/rgbModes"/>
 
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/checkBoxMulticast"
@@ -129,7 +130,7 @@
                         android:layout_weight="1"
                         android:text="@string/multicast"
                         android:textOff="@string/multicast"
-                        android:textOn="@string/multicast" />
+                        android:textOn="@string/multicast"/>
                 </TableRow>
 
                 <TableRow
@@ -145,23 +146,23 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
-                        </RelativeLayout>
+                    </RelativeLayout>
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/tableRowChannel"
                     android:layout_width="wrap_content"
-
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:weightSum="1">
 
                     <RelativeLayout
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:paddingLeft="4dp"
-                        android:paddingRight="4dp"
-                        android:layout_weight="1">
+                        android:paddingRight="4dp">
 
                         <SeekBar
                             android:id="@+id/channelRed"
@@ -169,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="4dp"
                             android:background="@color/barbackg_red"
-                            android:max="255" />
+                            android:max="255"/>
 
                         <TextView
                             android:id="@+id/channelRedLabel"
@@ -177,16 +178,16 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/channelRed"
                             android:layout_marginLeft="4dp"
-                            android:text="@string/red" />
+                            android:text="@string/red"/>
 
                         <SeekBar
                             android:id="@+id/channelGreen"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
                             android:layout_below="@id/channelRedLabel"
+                            android:layout_margin="4dp"
                             android:background="@color/barbackg_green"
-                            android:max="255" />
+                            android:max="255"/>
 
                         <TextView
                             android:id="@+id/channelGreenLabel"
@@ -194,16 +195,16 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/channelGreen"
                             android:layout_marginLeft="4dp"
-                            android:text="@string/green" />
+                            android:text="@string/green"/>
 
                         <SeekBar
                             android:id="@+id/channelBlue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="4dp"
                             android:layout_below="@id/channelGreenLabel"
+                            android:layout_margin="4dp"
                             android:background="@color/barbackg_blue"
-                            android:max="255" />
+                            android:max="255"/>
 
                         <TextView
                             android:id="@+id/channelBlueLabel"
@@ -211,7 +212,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/channelBlue"
                             android:layout_marginLeft="4dp"
-                            android:text="@string/blue" />
+                            android:text="@string/blue"/>
                     </RelativeLayout>
                 </TableRow>
 
@@ -226,19 +227,20 @@
 
                     <FrameLayout
                         android:id="@+id/visualizerViewFrame"
-                        android:visibility="gone"
                         android:layout_width="0dip"
                         android:layout_height="150dp"
                         android:layout_weight="1"
-                        android:background="@color/std_green">
+                        android:background="@color/std_green"
+                        android:visibility="gone">
 
                         <com.pheelicks.visualizer.VisualizerView
-                            android:visibility="gone"
                             android:id="@+id/visualizerView"
                             android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"/>
+                            android:layout_height="fill_parent"
+                            android:visibility="gone"/>
                     </FrameLayout>
                 </TableRow>
+
                 <include layout="@layout/tablerow_favinfo">
 
                 </include>
@@ -256,52 +258,58 @@
                     android:background="@color/trans_black">
 
                     <TextView
-                        android:visibility="invisible"
                         android:id="@+id/textEqualizer"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="30dp"
-                        android:layout_height="wrap_content" />
+                        android:visibility="invisible"/>
                 </TableRow>
 
             </TableLayout>
         </RelativeLayout>
 
-        <View
-            android:id="@+id/strut2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            android:id="@+id/buttonTurnOn"
-            android:layout_width="0dip"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@id/strut2"
-            android:width="0dip"
-            android:text="@string/ON"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_below="@id/contControls"
+            android:weightSum="4">
 
-        <TextView
-            android:id="@+id/textviewPower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/buttonTurnOn"
-            android:layout_marginLeft="5dip"
-            android:text="@string/power"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            <View
+                android:id="@+id/strut2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp"/>
 
-        <Button
-            android:id="@+id/buttonTurnOff"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/strut2"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="@string/OFF"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            <Button
+                android:id="@+id/buttonTurnOn"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut2"
+                android:width="0dip"
+                android:text="@string/ON"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+            <TextView
+                android:id="@+id/textviewPower"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/buttonTurnOn"
+                android:layout_marginLeft="5dip"
+                android:text="@string/power"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <Button
+                android:id="@+id/buttonTurnOff"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut2"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="@string/OFF"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+        </RelativeLayout>
     </RelativeLayout>
 </ScrollView>
