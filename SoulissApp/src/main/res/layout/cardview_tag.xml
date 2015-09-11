@@ -39,6 +39,45 @@
             android:transitionName="tag_icon"
             android:src="@drawable/window"  />
         <TextView
+            android:id="@+id/TextViewTagDescPlaceHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageViewTag"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="2dp"
+            android:elevation="2dp"
+            android:maxLines="2"
+            android:text="@string/health"
+            android:visibility="invisible"
+            android:textSize="@dimen/text_size"
+            tools:text="Descrizione TAG molto lunga e piena di fanghiglia hhhhhhhhhhh kkkkkkkkkkkk" />
+
+        <TextView
+            android:id="@+id/TextViewTagPlaceHolder"
+            style="@style/CodeFontTitle"
+            android:layout_width="match_parent"
+            android:layout_above="@id/TextViewTagDescPlaceHolder"
+            android:layout_margin="4dp"
+            android:elevation="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white_bitaplha"
+            android:textIsSelectable="false"
+            android:visibility="invisible"
+            tools:text="Titolo TAG" />
+
+        <ImageView
+            android:id="@+id/infoTagAlpha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/TextViewTagDescPlaceHolder"
+            android:layout_alignBottom="@id/imageViewTag"
+            android:layout_alignTop="@id/TextViewTagPlaceHolder"
+            android:layout_gravity="bottom"
+            android:alpha="0.4"
+            android:background="@color/black" />
+
+        <TextView
             android:id="@+id/TextViewTagDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,17 +104,6 @@
             android:textIsSelectable="false"
 
             tools:text="Titolo TAG" />
-
-        <ImageView
-            android:id="@+id/infoTagAlpha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/TextViewTagDesc"
-            android:layout_alignBottom="@id/imageViewTag"
-            android:layout_alignTop="@id/TextViewTagTitle"
-            android:layout_gravity="bottom"
-            android:alpha="0.4"
-            android:background="@color/black" />
 
 
     </RelativeLayout>
