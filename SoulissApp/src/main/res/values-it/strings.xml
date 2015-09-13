@@ -6,9 +6,9 @@
     <string name="app_opt">SoulissApp - Opzioni</string>
     <string name="app_addprog">Aggiungi Programma</string>
     <string name="opt_network">Opzioni di rete</string>
-    <string name="bridge_IP"> IP da assegnare dinamicamente al nodo bridge</string>
+    <string name="bridge_IP"> IP da assegnare dinamicamente al nodo</string>
     <string name="bridge_subnet">Subnet mask da utilizzare</string>
-    <string name="bridge_gateway">Gateway della rete da impostare sul bridge (probabilmente l\'indirizzo del router)</string>
+    <string name="bridge_gateway">Gateway della rete da impostare (indirizzo del router)</string>
     <string name="bridge_ssid">SSID della rete wireless</string>
     <string name="bridge_wifipass">Password della rete wi-fi sopra indicata</string>
     <string name="last_update">Ultimo aggiornamento:</string>

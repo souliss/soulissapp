@@ -6,20 +6,20 @@
     android:title="@string/opt_network" >
 
     <EditTextPreference
-        android:dialogTitle="Bridge Address"
+        android:dialogTitle="IP Address"
         android:key="bcast_IP"
         android:summary="@string/bridge_IP"
-        android:title="Bridge Address" />
+        android:title="IP Address" />
     <EditTextPreference
-        android:dialogTitle="Bridge Subnet"
+        android:dialogTitle="IP Subnet"
         android:key="bcast_subnet"
         android:summary="@string/bridge_subnet"
-        android:title="Bridge Subnet" />
+        android:title="IP Subnet" />
     <EditTextPreference
-        android:dialogTitle="Bridge Gateway"
+        android:dialogTitle="IP Gateway"
         android:key="bcast_gateway"
         android:summary="@string/bridge_gateway"
-        android:title="Bridge Gateway" />
+        android:title="IP Gateway" />
     <CheckBoxPreference
         android:dialogTitle="@string/bridge_isgateway"
         android:key="bcast_isgateway"
