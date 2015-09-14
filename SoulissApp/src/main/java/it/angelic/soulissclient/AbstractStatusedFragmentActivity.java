@@ -104,24 +104,24 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode,final Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_OK && resultCode == RESULT_OK) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-            ArrayList<String> thingsYouSaid = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            // ((TextView)findViewById(R.id.text1)).setText(thingsYouSaid.get(0));
-            final String yesMan = thingsYouSaid.get(0).toLowerCase();
-            Log.i(Constants.TAG, "onActivityResult, searching command");
-            final StringBuilder comandToSend = new StringBuilder();
-            if (yesMan.contains(getString(R.string.TurnON).toLowerCase())) {
-                comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
-            } else if (yesMan.contains(getString(R.string.TurnOFF).toLowerCase())) {
-                comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
-            }
+                    ArrayList<String> thingsYouSaid = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    // ((TextView)findViewById(R.id.text1)).setText(thingsYouSaid.get(0));
+                    final String yesMan = thingsYouSaid.get(0).toLowerCase();
+                    Log.i(Constants.TAG, "onActivityResult, searching command");
+                    final StringBuilder comandToSend = new StringBuilder();
+                    if (yesMan.contains(getString(R.string.TurnON).toLowerCase())) {
+                        comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
+                    } else if (yesMan.contains(getString(R.string.TurnOFF).toLowerCase())) {
+                        comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
+                    }
 
-            if (comandToSend.length() > 0) {//se c'e un comando
+                    if (comandToSend.length() > 0) {//se c'e un comando
 
                         Log.i(Constants.TAG, "Command recognized:" + yesMan);
                         SoulissDBHelper db = new SoulissDBHelper(AbstractStatusedFragmentActivity.this);
@@ -129,9 +129,14 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                         for (final SoulissNode premio : nodes) {
                             List<SoulissTypical> tippi = premio.getTypicals();
                             for (final SoulissTypical treppio : tippi) {
-                                if (treppio.getName()!=null&&yesMan.contains(treppio.getName().toLowerCase())) {
+                                if (treppio.getName() != null && yesMan.contains(treppio.getName().toLowerCase())) {
                                     Log.i(Constants.TAG, "Voice Command SENT!! :" + treppio.getName());
-                                    UDPHelper.issueSoulissCommand("" + premio.getId(), "" + treppio.getSlot(), opzioni, comandToSend.toString());
+                                    Toast.makeText(AbstractStatusedFragmentActivity.this, getString(R.string.command_sent), Toast.LENGTH_LONG).show();
+
+                                    if (yesMan.contains(getString(R.string.all)))
+                                        UDPHelper.issueMassiveCommand("" + treppio.getTypical(), opzioni, comandToSend.toString());
+                                    else
+                                        UDPHelper.issueSoulissCommand("" + premio.getId(), "" + treppio.getSlot(), opzioni, comandToSend.toString());
                                     return;
                                 }
 
@@ -140,7 +145,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                         }
                     }
 
-            }
+                }
             }).start();
         }
     }

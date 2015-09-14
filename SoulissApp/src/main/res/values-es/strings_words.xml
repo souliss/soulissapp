@@ -2,7 +2,7 @@
 <resources>
 
     <!-- SINGLE WORDS -->
-
+    <string name="all">todos</string>
     <string name="unavailable">No disponible</string>
     <string name="souliss_unavailable">!Souliss no disponible!</string>
     <string name="notconfigured">Souliss <b>no está configurado</b> aun, la dirección IP local es obligatoria</string>
