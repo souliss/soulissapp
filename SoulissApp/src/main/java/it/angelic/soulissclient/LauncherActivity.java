@@ -234,7 +234,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        Eula.show(this);
 
         setContentView(R.layout.main_launcher);
 
