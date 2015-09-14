@@ -46,8 +46,8 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	/**
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
 	 */
-	public int getOutputLux() {
-		return (int) getOutputFloat();
+	public String getOutputLux() {
+		return Constants.twoDecimalFormat.format(getOutputFloat()) + " Lux";
 	}
 	
 	@Override
@@ -68,7 +68,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs
 				.getDataServiceIntervalMsec() * 3))
-			return "OK";
+			return getOutputLux();
 		else
 			return "STALE";
 	}
@@ -80,7 +80,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputLux() + " Lux"));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputDesc()));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -110,7 +110,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		par.setProgress(20);
 		par.setProgress(0);
 		par.setMax(130000);
-		par.setProgress(getOutputLux());
+		par.setProgress((int) getOutputFloat());
 
 		cont.addView(par);
 

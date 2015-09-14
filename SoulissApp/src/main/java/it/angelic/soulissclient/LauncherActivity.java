@@ -334,9 +334,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         opzioni.reload();
 
-        tagDb = new SoulissDBTagHelper(this);
-        //meno possibile
-        setDbAndFavouritesInfo();
+
     }
 
 	/*
@@ -379,6 +377,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
         initLocationProvider();
+
+        tagDb = new SoulissDBTagHelper(this);
+        //meno possibile
+        setDbAndFavouritesInfo();
+
         /*TAGS*/
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {

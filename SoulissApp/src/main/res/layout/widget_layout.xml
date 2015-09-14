@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widgetcontainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,8 @@
         android:layout_alignParentTop="true"
         android:gravity="right"
         android:elevation="2dp"
-        android:text="@string/node" >
+        android:text="@string/node"
+        tools:text="@string/node">
     </TextView>
 
     <TextView
@@ -30,7 +32,8 @@
         android:shadowDy="1"
         android:elevation="2dp"
         android:shadowRadius="2"
-        android:text="@string/slot" >
+        android:text="@string/slot"
+        tools:text="@string/slot">
     </TextView>
 
     <Button
@@ -43,21 +46,23 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        tools:text="button1" />
 
     <TextView
         android:id="@+id/wid_info"
         android:layout_width="match_parent"
         android:layout_height="@dimen/text_size"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
         android:gravity="center|bottom"
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
         android:elevation="2dp"
         android:shadowRadius="2"
-        android:textColor="@color/white" >
+        android:textColor="@color/white"
+        tools:text="id/wid_info">
     </TextView>
 
 </RelativeLayout>

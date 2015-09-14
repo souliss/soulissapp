@@ -57,13 +57,13 @@ public class SoulissTypical53HumiditySensor extends SoulissTypical implements IS
 
 	public String getOutputPercent() {
 
-		return Constants.twoDecimalFormat.format(getOutputFloat() );
+		return Constants.twoDecimalFormat.format(getOutputFloat() )+ "% ";
 	}
 
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return "OK";
+			return getOutputPercent();
 		else
 			return "STALE";
 	}
@@ -75,7 +75,7 @@ public class SoulissTypical53HumiditySensor extends SoulissTypical implements IS
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputPercent() + "% "));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputPercent() ));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

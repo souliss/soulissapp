@@ -63,14 +63,14 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 	}
 
 	public String getOutputCelsius() {
-
-		return Constants.twoDecimalFormat.format(getOutputFloat() );
+		return Constants.twoDecimalFormat.format(getOutputFloat() )+"°C";
 	}
+
 
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return "OK";
+			return getOutputCelsius();
 		else
 			return "STALE";
 	}
@@ -82,7 +82,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius() + "°C"));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius()));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

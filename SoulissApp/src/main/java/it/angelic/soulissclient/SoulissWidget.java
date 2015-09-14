@@ -69,15 +69,8 @@ public class SoulissWidget extends AppWidgetProvider {
                 updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
 
                 if (tgt instanceof ISoulissTypicalSensor) {
-                    if (tgt instanceof SoulissTypical53HumiditySensor)
-                        updateViews.setTextViewText(R.id.wid_info,
-                                String.valueOf((((ISoulissTypicalSensor) tgt).getOutputFloat())) + "%");
-                    else if (tgt instanceof SoulissTypical52TemperatureSensor)
-                        updateViews.setTextViewText(R.id.wid_info,
-                                String.valueOf((((ISoulissTypicalSensor) tgt).getOutputFloat())) + "%");
-                    else
-                        updateViews.setTextViewText(R.id.wid_info,
-                                String.valueOf((((ISoulissTypicalSensor) tgt).getOutputFloat())));
+                    updateViews.setTextViewText(R.id.wid_info,
+                            tgt.getOutputDesc());
                 } else
                     updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
 

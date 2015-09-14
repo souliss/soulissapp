@@ -230,8 +230,11 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return Float.valueOf(typicalDTO.getOutput());
     }
 
+
     /**
      * Should be sub-implemented
+     * Get a meaningful result. Also Called from widget
+     * @return
      */
     public String getOutputDesc() {
         return "TOIMPLEMENT";
