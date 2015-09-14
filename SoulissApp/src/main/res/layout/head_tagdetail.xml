@@ -22,6 +22,7 @@
         android:src="@drawable/window"  />
     <ImageView
         android:id="@+id/infoAlpha"
+        android:transitionName="shadow_hero"
         android:background="@color/black"
         android:alpha="0.3"
         android:layout_gravity="bottom"

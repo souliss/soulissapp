@@ -74,6 +74,7 @@
             android:layout_alignBottom="@id/imageViewTag"
             android:layout_alignTop="@id/TextViewTagPlaceHolder"
             android:layout_gravity="bottom"
+            android:transitionName="shadow_hero"
             android:alpha="0.4"
             android:background="@color/black" />
 

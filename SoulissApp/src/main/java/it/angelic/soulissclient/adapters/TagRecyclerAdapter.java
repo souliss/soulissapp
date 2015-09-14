@@ -107,6 +107,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                                 //holder.image,   // The view which starts the transition
                                 //"photo_hero"    // The transitionName of the view we’re transitioning to
                                 Pair.create((View) holder.image, "photo_hero"),
+                                Pair.create((View) holder.shadowbar, "shadow_hero"),
                                 Pair.create((View) holder.imageTag, "tag_icon")
                         );
 
@@ -171,6 +172,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         TextView textCmd;
         TextView textCmdWhen;
         ImageView image;
+        public ImageView shadowbar;
 
         public TagViewHolder(View itemView) {
             super(itemView);
@@ -179,6 +181,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             image = (ImageView) itemView.findViewById(R.id.imageViewTag);
             container = (CardView) itemView.findViewById(R.id.TagCard);
             imageTag = (ImageView) itemView.findViewById(R.id.imageTagIcon);
+            shadowbar = (ImageView) itemView.findViewById(R.id.infoTagAlpha);
         }
 
 

@@ -96,6 +96,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected ParallaxExenderAdapter parallaxExtAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     private SoulissDBTagHelper datasource;
+    private FloatingActionButton fab;
     private ImageView mLogoIcon;
     private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
@@ -216,7 +217,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         mLogoIcon.setImageResource(collectedTag.getIconResourceId());
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
-        FloatingActionButton fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
+        fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
         //EDIT TAG
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,8 +227,14 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 alert.show();
             }
         });
-
-        swipeLayout.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+        fab.hide(false);
+        fab.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.show(true);
+            }
+        }, 500);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 new Thread(new Runnable() {
@@ -252,7 +259,8 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                         }
                     }
                 }).start();
-            }} );
+            }
+        });
         swipeLayout.setColorSchemeResources(R.color.std_blue,
                 R.color.std_blue_shadow);
 
@@ -364,7 +372,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(parallaxExtAdapter);
+
     }
+
+
 
     @Override
     public void onPause() {
@@ -418,7 +429,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         // Save currently selected layout manager.
         savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
         super.onSaveInstanceState(savedInstanceState);
+
     }
+
+    
 
     public static String getRealPathFromURI(Uri contentUri) {
         String res = null;
