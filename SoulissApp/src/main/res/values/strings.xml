@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- WELLCOME SECTION -->
-    <string name="wellcome_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ornare augue nec urna consequat, eget lacinia purus accumsan.</string>
-    <string name="wellcome_tour_button">Take a tour</string>
-    <string name="wellcome_skip_text">Skip</string>
+    <!-- WELCOME SECTION -->
+    <string name="welcome_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ornare augue nec urna consequat, eget lacinia purus accumsan.</string>
+    <string name="welcome_tour_button">Take a tour</string>
+    <string name="welcome_skip_text">Skip</string>
 
     <!-- MANUAL_SECTION -->
     <string name="app_name">SoulissApp</string>
@@ -343,7 +343,9 @@
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
 
-    <string name="title_activity_wellcome">WellcomeActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

@@ -233,7 +233,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        Eula.show(this);
 
         setContentView(R.layout.main_launcher);
 
@@ -372,18 +371,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     protected void onStart() {
         super.onStart();
-
-        //******** TEMPORANEO
-        OnClickListener fullscreenActivity = new OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, WellcomeActivity.class);
-                startActivity(myIntent);
-                // myIntent.putExtra("TAG", ()1);
-                return;
-            }
-        };
-        cardViewBasicInfo.setOnClickListener(fullscreenActivity);
-        //********
 
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
