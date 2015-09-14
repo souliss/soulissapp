@@ -13,9 +13,9 @@
     <string name="daily">Média diária</string>
     <string name="monthly">Média Mensal</string>
     <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
-    <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>
-    <string name="bridge_gateway">Gateway for Souliss bridge node, most likely your router\'s address</string>
-    <string name="bridge_ssid">Name of your wireless network, to be used by Souliss bridge</string>
+    <string name="bridge_subnet">Subnet mask to set on Souliss Node</string>
+    <string name="bridge_gateway">Gateway for Souliss Node, most likely your router\'s address</string>
+    <string name="bridge_ssid">Name of your wireless network, to be used by Souliss Node</string>
     <string name="bridge_wifipass">Password of wireless network indicated above</string>
 
     <!-- dialogs_SECTION -->
@@ -148,7 +148,7 @@
     <string name="opt_nodeindex">Índice da Central</string>
     <string name="opt_nodeindex_desc">O índice da central identifica este dispositivo em placas Souliss. O valor atual é %1$d. Toque para mudar</string>
     <string name="opt_title_broadcast">Broadcast Discovery</string>
-    <string name="opt_summary_broadcast">On local LANs Souliss can discover bridge node automatically</string>
+    <string name="opt_summary_broadcast">On local LANs Souliss can discover Gateway node automatically</string>
     <string name="opt_networkdesc">Configurações das redes interna e remota</string>
     <string name="opt_dbexp">Exportar Bando de Dados</string>
     <string name="opt_dbexp_desc">Escrever um arquivo .csv no sdcard contendo o atual banco de dados</string>
@@ -322,7 +322,7 @@
     <string name="widget_cantsave">Command empty/not selected</string>
     <string name="bridge_useDhcp" />
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
-    <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
+    <string name="advbroadcast_summary">Remotely configure Souliss Node</string>
     <string name="Souliss_T19_Max_desc" />
     <string name="Souliss_T19_Med_desc" />
     <string name="Souliss_T19_Min_desc" />
