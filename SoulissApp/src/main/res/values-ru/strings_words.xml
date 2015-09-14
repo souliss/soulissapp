@@ -3,13 +3,13 @@
 
     <!-- SINGLE WORDS -->
 
-    <string name="unavailable">Unavailable</string>
-    <string name="souliss_unavailable">Souliss not available!</string>
-    <string name="notconfigured">Souliss <b>not configured</b> yet, local IP address is mandatory</string>
-    <string name="health">HEALTH:</string>
-    <string name="status">STATUS:</string>
+    <string name="unavailable">недоступен</string>
+    <string name="souliss_unavailable">Souliss недоступна!</string>
+    <string name="notconfigured">Souliss <b>ещё не конфигурирована</b> , необходим локальный IP адрес</string>
+    <string name="health">ЗДОРОВЬЕ:</string>
+    <string name="status">СОСТОЯНИЕ:</string>
     <string name="update">UPDATED:</string>
-    <string name="actions">ACTIONS:</string>
+    <string name="actions">ДЕЙСТВИЯ:</string>
     <string name="node">Node</string>
     <string name="nodes">Nodes</string>
     <string name="slot">Slot</string>
@@ -28,13 +28,13 @@
     <string name="rename">Rename</string>
     <string name="reset">Reset</string>
     <string name="typical">Typical</string>
-    <string name="ON">ON</string>
+    <string name="ON">ВКЛ</string>
     <string name="power">Power</string>
-    <string name="OFF">OFF</string>
+    <string name="OFF">ВЫКЛ</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="stop">Stop</string>
-    <string name="toggle">Toggle</string>
+    <string name="stop">стоп</string>
+    <string name="toggle">переключить</string>
     <string name="TurnON">Turn On</string>
     <string name="TurnOFF">Turn Off</string>
     <string name="mode">Mode</string>
@@ -50,8 +50,8 @@
     <string name="meters">Meters</string>
     <string name="service">Service</string>
     <string name="position">Position</string>
-    <string name="Online">Online</string>
-    <string name="offline">Offline</string>
+    <string name="Online">В сети</string>
+    <string name="offline">Не в сети</string>
     
 
 </resources>
