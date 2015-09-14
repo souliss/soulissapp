@@ -76,7 +76,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.nodeslist_menu, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	

@@ -227,7 +227,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.scenelist_menu, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 
 	}
 	
