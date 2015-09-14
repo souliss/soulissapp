@@ -23,7 +23,7 @@
         android:required="false" />
 
     <application
-        android:name="it.angelic.soulissclient.SoulissClient"
+        android:name=".SoulissClient"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/soulisslogo"
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ManualUDPTestActivity"
+            android:name=".ManualUDPTestActivity"
             android:exported="false"
             android:icon="@drawable/knife"
             android:label="@string/app_name">
@@ -78,7 +78,7 @@
             android:process=":souliss_process" />
 
         <activity
-            android:name="it.angelic.soulissclient.NodesListActivity"
+            android:name=".NodesListActivity"
             android:exported="false"
             android:icon="@drawable/hand"
             android:label="@string/app_name"
@@ -89,7 +89,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="NodeDetailActivity"
+            android:name=".NodeDetailActivity"
             android:exported="false"
             android:icon="@drawable/square"
             android:label="@string/app_name"
@@ -102,31 +102,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ProgramListActivity"
+            android:name=".ProgramListActivity"
             android:icon="@drawable/remote"
             android:label="@string/app_name"
             android:parentActivityName=".LauncherActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow" />
         <activity
-            android:name="SceneListActivity"
+            android:name=".SceneListActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
             android:parentActivityName=".LauncherActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow" />
         <activity
-            android:name="SceneDetailActivity"
+            android:name=".SceneDetailActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
             android:parentActivityName=".SceneListActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
-
+            android:uiOptions="splitActionBarWhenNarrow" />
         <activity
-            android:name="TagGridActivity"
+            android:name=".TagGridActivity"
             android:icon="@drawable/warn"
             android:label="@string/app_name"
             android:parentActivityName=".LauncherActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
-
+            android:uiOptions="splitActionBarWhenNarrow" />
         <activity
             android:name=".TagDetailActivity"
             android:icon="@drawable/home"
@@ -138,12 +136,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="AddProgramActivity"
+            android:name=".AddProgramActivity"
             android:icon="@drawable/remote"
-            android:label="@string/app_addprog"></activity>
-
+            android:label="@string/app_addprog" />
         <activity
-            android:name="T15RGBIrActivity"
+            android:name=".T15RGBIrActivity"
             android:exported="false"
             android:icon="@drawable/remote"
             android:label="@string/Souliss_TRGB_desc">
@@ -159,9 +156,8 @@
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="T4nFragWrapper"
+            android:name=".T4nFragWrapper"
             android:exported="false"
             android:icon="@drawable/light_off"
             android:label="@string/typical">
@@ -169,9 +165,8 @@
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="it.angelic.soulissclient.PreferencesActivity"
+            android:name=".PreferencesActivity"
             android:exported="false"
             android:label="@string/app_opt">
             <intent-filter>
@@ -185,17 +180,16 @@
         </activity>
 
         <service
-            android:name="it.angelic.soulissclient.SoulissDataService"
+            android:name=".SoulissDataService"
             android:enabled="true"
             android:process=":souliss_process">
         </service>
-
         <service
-            android:name="it.angelic.soulissclient.net.webserver.HTTPService"
+            android:name=".net.webserver.HTTPService"
             android:enabled="true"
             android:process=":souliss_process" />
 
-        <receiver android:name="it.angelic.soulissclient.SoulissWidget">
+        <receiver android:name=".SoulissWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="it.angelic.SoulissClient.SoulissWidget.ACTION_WIDGET_RECEIVER" />
@@ -207,11 +201,17 @@
         </receiver>
 
         <activity
-            android:name="it.angelic.soulissclient.SoulissWidgetConfig"
+            android:name=".SoulissWidgetConfig"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".WellcomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_wellcome"
+            android:theme="@style/FullscreenTheme">
         </activity>
     </application>
 

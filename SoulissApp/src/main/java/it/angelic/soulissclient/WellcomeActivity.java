@@ -68,6 +68,7 @@ public class WellcomeActivity extends Activity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(WellcomeActivity.this, LauncherActivity.class);
                 startActivity(myIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return;
             }
         });
@@ -76,6 +77,7 @@ public class WellcomeActivity extends Activity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(WellcomeActivity.this, LauncherActivity.class);
                 startActivity(myIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 return;
             }
         });
