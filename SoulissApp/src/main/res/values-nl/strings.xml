@@ -6,9 +6,9 @@
     <string name="app_opt">SoulissApp - Options</string>
     <string name="app_addprog">Add Program</string>
     <string name="opt_network">Network Options</string>
-    <string name="bridge_IP"> IP to be dynamically assigned to Souliss bridge node</string>
-    <string name="bridge_subnet">Subnet mask to set on Souliss bridge node</string>
-    <string name="bridge_gateway">Gateway for Souliss bridge node, most likely your router\'s address</string>
+    <string name="bridge_IP"> IP to be dynamically assigned to Souliss node</string>
+    <string name="bridge_subnet">Subnet mask to set on Souliss node</string>
+    <string name="bridge_gateway">Gateway for Souliss node, (your router\'s address)</string>
     <string name="bridge_ssid">Name of your wireless network, to be used by Souliss bridge</string>
     <string name="bridge_wifipass">Password of wireless network indicated above</string>
     <string name="last_update">Last update at:</string>
@@ -150,7 +150,7 @@
     <string name="opt_nodeindex">Node Index</string>
     <string name="opt_nodeindex_desc">The Node index identifies this device on Souliss boards. Current value is %1$d. Tap to change it, in range 1&#8211;254</string>
     <string name="opt_title_broadcast">Broadcast Discovery</string>
-    <string name="opt_summary_broadcast">On local LANs Souliss can discover bridge node automatically</string>
+    <string name="opt_summary_broadcast">On local LANs Souliss can discover Gateway node automatically</string>
     <string name="opt_networkdesc">Home and remote network settings</string>
     <string name="opt_dbexp">Export DB</string>
     <string name="opt_dbexp_desc">Write a .csv file on sdcard containing current db</string>
@@ -170,7 +170,7 @@
     <string name="opt_dbinfo_desc">%1$d Souliss nodes are stored in DB, totally %2$d typicals are present.</string>
     <string name="opt_invalidAddress">Invalid address!!</string>
     <string name="title_edittext_IP">Souliss local Address (mandatory)</string>
-    <string name="summary_edittext_IP">Insert Souliss Bridge Node\'s IP Address when using home network</string>
+    <string name="summary_edittext_IP">Insert Souliss Gateway Node\'s IP Address when using home network</string>
     <string name="dialog_title_edittext_IP">IP Address</string>
     <string name="summary_edittext_IP_pubb">Insert Souliss public address, to use when away from home. You could use dynamic DNS and port-forwarding to reach your home easily</string>
     <string name="title_edittext_IP_pubb">Souliss public Address</string>
@@ -301,7 +301,7 @@
     <string name="udphint">Please insert a number in range 1&#8211;65535</string>
     <string name="bridge_useDhcp" />
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
-    <string name="advbroadcast_summary">Remotely configure Souliss Bridge Node</string>
+    <string name="advbroadcast_summary">Remotely configure Souliss Node</string>
     <string name="Souliss_T19_Max_desc" />
     <string name="Souliss_T19_Med_desc" />
     <string name="Souliss_T19_Min_desc" />
