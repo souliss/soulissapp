@@ -225,7 +225,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         setHasOptionsMenu(true);
     }
 
-    @SuppressLint("NewApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
@@ -317,7 +316,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     tableRowEq.setVisibility(View.INVISIBLE);
                     mVisualizerView.setEnabled(false);
                     colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
-                    eqText.setVisibility(View.INVISIBLE);
+                    eqText.setVisibility(View.GONE);
                     cpv.setCenterColor(Color.argb(255, Color.red(color),
                             Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
@@ -328,7 +327,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     mVisualizerView.setEnabled(false);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
-                    eqText.setVisibility(View.INVISIBLE);
+                    eqText.setVisibility(View.GONE);
                     // ok android 5
                     seekChannelRed.setProgress(0);
                     seekChannelRed.invalidate();
@@ -528,10 +527,11 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
         // Rinomina nodo e scelta icona
         inflater.inflate(R.menu.t16_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override

@@ -112,8 +112,8 @@
                     style="@style/CodeFontSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/RadioButtonTime"
-                    android:layout_marginTop="-5dip"
+                    android:layout_below="@id/timed_icon"
+                    android:layout_margin="4dip"
                     android:text="@string/addprogram_timed_desc" />
 
                 <TimePicker
@@ -175,8 +175,8 @@
                 <TextView
                     android:id="@+id/textViewInfoPos"
                     style="@style/CodeFontSmall"
-                    android:layout_below="@id/RadioButtonPosition"
-                    android:layout_marginTop="-5dip"
+                    android:layout_below="@id/position_icon"
+                    android:layout_margin="4dip"
                     android:text="@string/addprogram_positional_desc"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -186,9 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textViewInfoPos"
                     android:layout_margin="30dip"
-                    android:text="@string/addprogram_positional_goout"
-                    android:textOff="@string/addprogram_positional_goout"
-                    android:textOn="@string/addprogram_positional_comeback" />
+                    android:text="@string/addprogram_positional_goout"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -210,14 +208,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/addprogram_sensorial" />
-
-                <TextView
-                    android:id="@+id/textViewInfoTrig"
-                    style="@style/CodeFontSmall"
-                    android:layout_below="@id/RadioButtonTriggered"
-                    android:layout_marginTop="-5dip"
-                    android:text="@string/addprogram_sensorial_desc" />
-
                 <ImageView
                     android:id="@+id/triggered_icon"
                     android:layout_width="wrap_content"
@@ -226,6 +216,15 @@
                     android:alpha="0.5"
                     android:contentDescription="@string/addprogram_sensorial"
                     android:src="@drawable/lighthouse" />
+
+                <TextView
+                    android:id="@+id/textViewInfoTrig"
+                    style="@style/CodeFontSmall"
+                    android:layout_below="@id/triggered_icon"
+                    android:layout_margin="4dip"
+                    android:text="@string/addprogram_sensorial_desc" />
+
+
 
 
                 <View

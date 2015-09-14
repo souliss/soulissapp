@@ -8,6 +8,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -291,6 +292,17 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
+
+        togglehomeaway.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                /*
+                    android:textOff="@string/addprogram_positional_goout"
+                    android:textOn="@string/addprogram_positional_comeback"*/
+                togglehomeaway.setText(togglehomeaway.isChecked()?getString(R.string.addprogram_positional_comeback):getString(R.string.addprogram_positional_goout));
+                return false;
+            }
+        });
 
 
         /**
