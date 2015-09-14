@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context="it.angelic.soulissclient.WellcomeActivity">
+    tools:context="it.angelic.soulissclient.WelcomeActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -24,7 +24,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_wellcome"
+        android:background="@drawable/bg_welcome"
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -46,8 +46,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/wellcome_tour_button"
-            android:id="@+id/wellcome_tour_button"
+            android:text="@string/welcome_tour_button"
+            android:id="@+id/welcome_tour_button"
             android:layout_marginBottom="50dp"
             android:layout_gravity="center_horizontal|bottom" />
 
@@ -55,21 +55,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/wellcome_skip_text"
-            android:id="@+id/wellcome_skip_text"
+            android:text="@string/welcome_skip_text"
+            android:id="@+id/welcome_skip_text"
             android:textColor="#ffffff"
             android:layout_gravity="center_horizontal|bottom" />
 
-    </FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="143dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/welcome_desc"
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:singleLine="false"
+            android:padding="5pt" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="143dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/wellcome_desc"
-        android:id="@+id/textView"
-        android:layout_gravity="center|center_horizontal"
-        android:singleLine="false"
-        android:padding="5pt" />
+    </FrameLayout>
 
 </FrameLayout>

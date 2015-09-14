@@ -1,21 +1,20 @@
 package it.angelic.soulissclient;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.util.Log;
+import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.util.SystemUiHider;
 
 /**
@@ -24,7 +23,7 @@ import it.angelic.soulissclient.util.SystemUiHider;
  *
  * @see SystemUiHider
  */
-public class WellcomeActivity extends Activity {
+public class WelcomeActivity extends FragmentActivity {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -59,26 +58,20 @@ public class WellcomeActivity extends Activity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.activity_wellcome);
+        setContentView(R.layout.activity_welcome);
 
-        final TextView wellcomeSkipText = (TextView) findViewById(R.id.wellcome_skip_text);
-        final Button wellcomeTourButton = (Button) findViewById(R.id.wellcome_tour_button);
-        wellcomeSkipText.setOnClickListener(new View.OnClickListener() {
+        final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
+        final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
+        welcomeSkipText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(WellcomeActivity.this, LauncherActivity.class);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return;
+                gotoNormalMode();
             }
         });
-        wellcomeTourButton.setOnClickListener(new View.OnClickListener() {
+        welcomeTourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(WellcomeActivity.this, LauncherActivity.class);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return;
+                gotoDemoMode();
             }
         });
 
@@ -138,6 +131,49 @@ public class WellcomeActivity extends Activity {
                 }
             }
         });
+
+        /* show EULA if not accepted */
+        Eula.show(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        /* check for first time run */
+        firstTimeCheck();
+    }
+
+    private void firstTimeCheck() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        //SharedPreferences.Editor edit = prefs.edit();
+        //edit.remove("first_time_run");
+        //edit.commit();
+        boolean firstTimeRun = prefs.getBoolean("first_time_run", true);
+        //boolean firstTimeRun = true;
+        if (firstTimeRun) {
+            markAsRun(prefs);
+        } else {
+            gotoNormalMode();
+        }
+    }
+
+    private void markAsRun(SharedPreferences prefs) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("first_time_run", Boolean.FALSE);
+        edit.commit();
+    }
+
+    private void gotoDemoMode() {
+        //TODO this has to go to the demo
+        gotoNormalMode();
+    }
+
+    private void gotoNormalMode() {
+        Intent myIntent = new Intent(WelcomeActivity.this, LauncherActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
     }
 
     @Override
