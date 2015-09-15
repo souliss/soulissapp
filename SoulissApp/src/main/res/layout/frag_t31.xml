@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/Cont01"
@@ -18,7 +18,7 @@
                 android:id="@+id/strut"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/textView1"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut"
-                android:text="@string/mode" />
+                android:text="@string/mode"/>
 
             <TextView
                 android:id="@+id/textView1dx"
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/strut"
                 android:layout_alignParentRight="true"
-                android:text="@string/fan" />
+                android:text="@string/fan"/>
 
             <Spinner
                 android:id="@+id/spinnerFunction"
@@ -43,7 +43,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut"
                 android:layout_below="@id/textView1"
-                android:entries="@array/HeatingFunction" />
+                android:entries="@array/HeatingFunction"/>
 
             <Spinner
                 android:id="@+id/spinnerFan"
@@ -53,7 +53,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textView1"
                 android:layout_toRightOf="@id/spinnerFunction"
-                android:entries="@array/AirConFan" />
+                android:entries="@array/AirConFan"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="4dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="15dip" />
+                android:layout_marginLeft="15dip"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="4dp"
-                android:text="Sto bene cosi" />
+                android:text="Sto bene cosi"/>
         </RelativeLayout>
 
         <TableLayout
@@ -118,6 +118,7 @@
         </TableLayout>
 
         <RelativeLayout
+            android:id="@+id/fanContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/containerfavtag">
@@ -125,7 +126,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
-                android:background="#FFCCCCCC" />
+                android:background="#FFCCCCCC"/>
 
             <TextView
                 android:id="@+id/textviewOptions"
@@ -133,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="@string/fan"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <ImageView
                 android:id="@+id/ImageFan2"
@@ -143,7 +144,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/fan"
                 android:drawableTop="@drawable/fan"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/ImageFan1"
@@ -153,7 +154,7 @@
                 android:layout_marginRight="15dip"
                 android:layout_toLeftOf="@id/ImageFan2"
                 android:background="@drawable/fan"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/ImageFan3"
@@ -163,35 +164,39 @@
                 android:layout_marginLeft="15dip"
                 android:layout_toRightOf="@id/ImageFan2"
                 android:background="@drawable/fan"
-                android:visibility="invisible" />
+                android:visibility="visible"/>
+
+
+            <View
+                android:id="@+id/strut2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
+
+            <Button
+                android:id="@+id/buttonTurnOn"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut2"
+                android:layout_below="@+id/ImageFan3"
+                android:width="0dip"
+                android:text="@string/ON"/>
+
+            <Button
+                android:id="@+id/buttonTurnOff"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut2"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignStart="@id/strut2"
+                android:layout_below="@+id/ImageFan3"
+                android:text="@string/OFF"/>
         </RelativeLayout>
 
 
-        <View
-            android:id="@+id/strut2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_centerHorizontal="true" />
-
-        <Button
-            android:id="@+id/buttonTurnOn"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@id/strut2"
-            android:width="0dip"
-            android:text="@string/ON" />
-
-        <Button
-            android:id="@+id/buttonTurnOff"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/strut2"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignStart="@id/strut2"
-            android:text="@string/OFF" />
     </RelativeLayout>
 </ScrollView>

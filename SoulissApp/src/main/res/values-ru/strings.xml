@@ -332,5 +332,7 @@
     <string name="cantRemoveDefault">Can\'t remove default Favourite Tag</string>
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">Если обнаруживаются два TAG, занимающие одинаковую позицию, их Id будет использоваться для определения конечной позиции</string>
+    <string name="opt_fahrenheit"/>
+    <string name="opt_fahrenheit_desc"/>
 
 </resources>

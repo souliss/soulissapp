@@ -126,6 +126,7 @@
     <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
     <!-- WIDGET -->
     <string name="widget_cantsave">Comando vuoto/Non selezionato</string>
+    <string name="widget_cantupdate">Errore nel recupero informazioni</string>
     <!-- SERVICE -->
     <string name="service_disabled">Servizio in background <b>disabilitato</b></string>
     <string name="service_lastexec"><b>Ultima esecuzione servizio:</b></string>
@@ -336,5 +337,6 @@
     <string name="removeTag">Elimina Tag</string>
     <string name="tagorder_desc">Se vengono trovati due TAG con lo stesso valore, verrà utilizzato il loro ID automatico per l\'ordinamento</string>
     <string name="menu_addFav">Aggiungi ai Preferiti</string>
+    <string name="opt_fahrenheit">Usa Fahrenheit</string>
 
 </resources>

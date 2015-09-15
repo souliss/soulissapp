@@ -18,6 +18,7 @@ import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.net.Utils;
 
 /**
  * Typical 31 : Temperature control with cooling and heating mode
@@ -59,7 +60,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     private float TemperatureMeasuredVal;
     private float TemperatureSetpointVal;
 
-//AUTOF
+    //AUTOF
     public SoulissTypical31Heating(SoulissPreferenceHelper pp) {
         super(pp);
     }
@@ -88,8 +89,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
         // ora ho i due bytes, li converto
         int shifted = TemperatureMeasuredValue2 << 8;
-
-        TemperatureMeasuredVal = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
+        float celsius = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
+        TemperatureMeasuredVal = prefs.isFahrenheitChosen() ? Utils.celsiusToFahrenheit(celsius) : celsius;
 
         Log.i(Constants.TAG,
                 "first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"
@@ -116,7 +117,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
         buf.putInt(statusByte);
 /*
-			BIT 0	(0 System  OFF,  1 System  ON)
+            BIT 0	(0 System  OFF,  1 System  ON)
 			BIT 1	(0 Heating OFF , 1 Heating ON)
 			BIT 2	(0 Cooling OFF , 1 Cooling ON)
 			BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
@@ -139,8 +140,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             strout.append(" - Fan Manual");
 
 
-        strout.append(" ").append(TemperatureMeasuredVal).append("°")
-                .append(" (").append(TemperatureSetpointVal).append("°)");
+        strout.append(" ").append(TemperatureMeasuredVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C")
+                .append(" (").append(TemperatureSetpointVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C").append(")");
         return strout.toString();
     }
 

@@ -128,6 +128,7 @@
     <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
     <!-- WIDGET -->
     <string name="widget_cantsave">Command empty/not selected</string>
+    <string name="widget_cantupdate">Error retrieving Typical</string>
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Data service <b>disabled</b></string>
     <string name="service_lastexec"><b>Service last execution:</b></string>
@@ -338,4 +339,5 @@
     <string name="cantRemoveDefault">Can\'t remove default Favourite Tag</string>
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
+    <string name="opt_fahrenheit" >Use Fahrenheit</string>
 </resources>

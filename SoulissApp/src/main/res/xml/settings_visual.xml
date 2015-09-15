@@ -24,6 +24,10 @@
     <PreferenceCategory android:title="Other" >
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="checkboxFahrenheit"
+            android:title="@string/opt_fahrenheit" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="checkboxTestoEffetti"
             android:summary="@string/opt_tetxfx_desc"
             android:title="@string/opt_tetxfx" />

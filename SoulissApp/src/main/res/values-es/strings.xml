@@ -330,6 +330,8 @@
     <string name="cantRemoveDefault">No se puede eliminar la etiqueta Favoritos</string> 
     <string name="removeTag">Eliminar etiqueta</string>
     <string name="tagorder_desc">Si hay dos etiquetas con la misma posicion el ID será utilizado para determinar la posicion final.</string>
-    
+    <string name="opt_fahrenheit"/>
+    <string name="opt_fahrenheit_desc"/>
+
 
 </resources>

@@ -59,20 +59,24 @@ public class SoulissWidget extends AppWidgetProvider {
             db = new SoulissDBHelper(context);
             SoulissDBHelper.open();
             if (node > Constants.MASSIVE_NODE_ID) {
-                final SoulissTypical tgt = db.getTypical(node, (short) slot);
-                if (!name.equals(""))
-                    updateViews.setTextViewText(R.id.button1, name);
-                else
+                try {
+                    final SoulissTypical tgt = db.getTypical(node, (short) slot);
                     updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
+                    updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
+                    if (tgt instanceof ISoulissTypicalSensor) {
+                        updateViews.setTextViewText(R.id.wid_info,
+                                tgt.getOutputDesc());
+                    } else
+                        updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
+                }catch (Exception ee) {
+                    updateViews.setTextViewText(R.id.button1, name);
+                    updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.widget_cantsave));
+                }
+
                 updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
                 updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
 
-                if (tgt instanceof ISoulissTypicalSensor) {
-                    updateViews.setTextViewText(R.id.wid_info,
-                            tgt.getOutputDesc());
-                } else
-                    updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
+
 
                 updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
             } else if (node == Constants.MASSIVE_NODE_ID) {

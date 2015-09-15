@@ -36,8 +36,6 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		super(pre);
 	}
 
-	int maxTemp;
-	int minTemp;
 	/**
 	 * 
 	 */

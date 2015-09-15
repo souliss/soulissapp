@@ -331,5 +331,7 @@
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
     <string name="menu_addFav">Add to Favourites</string>
+    <string name="opt_fahrenheit"/>
+    <string name="opt_fahrenheit_desc"/>
 
 </resources>

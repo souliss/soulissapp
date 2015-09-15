@@ -268,6 +268,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         } else if (collected.getTypicalDTO().isTagged()) {
             infoTags.setVisibility(View.VISIBLE);
         }
+        tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
         //Ask first refresh
         collected.issueRefresh();
     }
@@ -296,7 +297,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 }
                 Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
                 textviewStatus.setText(collected.getOutputDesc());
-                tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
 
                 if (collected.isFannTurnedOn(1))
                     imageFan1.setVisibility(View.VISIBLE);

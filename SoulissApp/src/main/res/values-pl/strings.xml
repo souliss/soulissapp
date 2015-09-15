@@ -330,4 +330,6 @@
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
     <string name="warnmeifon">Warn me if turned on for more than (hours)</string>
+    <string name="opt_fahrenheit"/>
+    <string name="opt_fahrenheit_desc"/>
 </resources>

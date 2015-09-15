@@ -34,6 +34,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private Context contx;
 	// numNodes ed altri valori cached
 	private SharedPreferences customCachedPrefs;
+	private boolean fahrenheitChosen;
 
 	// effetti fade-in e cagate
 	private boolean fxOn;
@@ -74,6 +75,8 @@ public class SoulissPreferenceHelper implements Serializable {
 		initializePrefs();
 		// Log.d(TAG, "Constructing prefs");
 	}
+
+
 
 	public void reload() {
 		// SharedPreferences prefs =
@@ -128,6 +131,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
 		homeThold = prefs.getInt("distanceThold", 150);
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
+		fahrenheitChosen = prefs.getBoolean("checkboxFahrenheit", false);
 		webserverEnabled = prefs.getBoolean("webserverEnabled", false);
 		userIndex = prefs.getInt("userIndex", -1);
 		nodeIndex = prefs.getInt("nodeIndex", -1);
@@ -522,6 +526,10 @@ public class SoulissPreferenceHelper implements Serializable {
 	
 	public boolean isBroadCastEnabled() {
 		return broadCastEnabled;
+	}
+
+	public boolean isFahrenheitChosen() {
+		return fahrenheitChosen;
 	}
 
 	public void setHtmlRoot(String mChosenFile) {
