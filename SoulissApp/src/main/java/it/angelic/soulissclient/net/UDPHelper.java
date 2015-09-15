@@ -666,21 +666,21 @@ public class UDPHelper {
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
 		assertTrue(payLoad.size() == 0XC);
-		byte dhcpOrStatic;
+		byte startOffset;
 		if (useDhcp){
 			if (isGateway)
-				dhcpOrStatic =0x2;
+				startOffset=0x2;
 			else
-				dhcpOrStatic=0x4;
+				startOffset=0x4;
 		}else{
 			if (isGateway)
-				dhcpOrStatic =0x1;
+				startOffset=0x1;
 			else
-				dhcpOrStatic=0x3;
+				startOffset=0x3;
 		}
 
 
-		frame.add((byte) dhcpOrStatic); // STARTOFFSET
+		frame.add((byte) startOffset); // STARTOFFSET
 		frame.add((byte) payLoad.size()); // NUMBEROF
 
 		for (Byte number : payLoad) {

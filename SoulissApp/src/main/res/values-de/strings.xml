@@ -204,7 +204,7 @@
     <string name="opt_WebServerPass_err">Zozzaziello PANIK!!!</string>
     <string name="opt_servicehomepos">Heimatposition setzen</string>
     <string name="opt_servicehomepos_desc">Aktuelle Position als Referenz für Positions-Programme verwenden</string>
-    <string name="opt_Thold_desc">Entfernung ab der Sie als 'Außer Haus' registriert werden, wenn Sie sich entfernen</string>
+    <string name="opt_Thold_desc">Entfernung ab der Sie als \'Außer Haus\' registriert werden, wenn Sie sich entfernen</string>
     <string name="opt_Thold">Enfernungs-Schwellenwerte</string>
     <string name="opt_homepos_err">Empfang aktueller Position fehlerhaft</string>
     <string name="opt_homepos_set">Heimat-Position gesetzt</string>

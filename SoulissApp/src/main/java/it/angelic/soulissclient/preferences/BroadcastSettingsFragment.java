@@ -151,7 +151,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     pass = bcast_passwd.getText().getBytes();
                     Log.d(it.angelic.soulissclient.Constants.TAG, "parsed bcast_passwd parameter:" + bcast_passwd.getText());
                     for (byte b : pass) {
-                        ssidPayload.add(b);// lunghezza
+                        passPayload.add(b);// lunghezza
                     }
                 } catch (Exception e) {
                     Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_passwd parameter:" + bcast_passwd.getText() + e.getMessage());
