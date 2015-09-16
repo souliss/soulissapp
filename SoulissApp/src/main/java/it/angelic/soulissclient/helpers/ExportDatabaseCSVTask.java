@@ -120,8 +120,6 @@ private int exportedNodes;
 				csvWrite.writeNext(arrStr);
 			}
 			Log.i(TAG, "exported LOG rows:" + curCSV.getCount());
-			// dialog.setMessage( "exported LOG rows:" + curCSV.getCount());
-			csvWrite.close();
 			curCSV.close();
 
 			curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TAGS, null);
@@ -136,8 +134,8 @@ private int exportedNodes;
 				csvWrite.writeNext(arrStr);
 			}
 			Log.i(TAG, "exported TAG rows:" + curCSV.getCount());
-			// dialog.setMessage( "exported LOG rows:" + curCSV.getCount());
-			csvWrite.close();
+
+
 			curCSV.close();
 
 			curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS, null);
@@ -155,9 +153,7 @@ private int exportedNodes;
 			// dialog.setMessage( "exported LOG rows:" + curCSV.getCount());
 			csvWrite.close();
 			curCSV.close();
-
 			//return true;
-
 		}
 
 		catch (SQLException sqlEx){

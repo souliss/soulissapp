@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.sql.SQLDataException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
@@ -31,10 +32,12 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.db.SoulissLogDTO;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 
 public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
@@ -43,7 +46,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     private final String TAG = "SoulissApp:" + getClass().getName();
     // private ProgressDialog dialog;
 
-    private SoulissDBHelper database;
+    private SoulissDBTagHelper database;
     private SharedPreferences customSharedPreference;
     private File file;
     private int tottyp = 0;
@@ -97,7 +100,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         int lin = 0;
         int loopMode = 0;
         // File dbFile = null;// getDatabasePath("excerDB.db");
-        database = new SoulissDBHelper(SoulissClient.getAppContext());
+        database = new SoulissDBTagHelper(SoulissClient.getAppContext());
 
         try {
             Looper.prepare();
@@ -191,7 +194,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                         }
                     });
                     continue;
-                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_TAG_ID) == 0) {
+                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_SLOT) == 0) {
                     editor.putInt("numTipici", database.countTypicals());
                     Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
                     loopMode = 5;
@@ -263,8 +266,19 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     }
 
+    /*
+    public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
+                COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
+     */
     private void insertTagTyp(String[] temp) {
+        try {
+            SoulissTag hero = database.getTag(SoulissClient.getAppContext(), Long.valueOf(temp[2]));
+            SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]),Short.valueOf(temp[0]));
 
+            database.createOrUpdateTagTypicalNode( polloTyp ,hero,Integer.valueOf(temp[3]));
+        } catch (SQLDataException e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -287,7 +301,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         } catch (Exception e) {
             // NO icon here
         }
-
         try {
             if (temp[3].length() > 0)
                 tIns.setImagePath(temp[3]);
@@ -295,7 +308,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             Log.w(Constants.TAG, e.getMessage());
         }
         tIns.setTagOrder(Integer.valueOf(temp[4]));
-         
+        database.createOrUpdateTag(tIns);
     }
 
     private void insertLog(String[] temp) {
