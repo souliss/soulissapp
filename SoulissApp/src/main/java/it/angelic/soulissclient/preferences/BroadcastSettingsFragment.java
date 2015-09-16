@@ -162,13 +162,13 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     @Override
                     public void run() {
                         UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure, bcastPayload, bcast_isGateway.isChecked(), bcast_useDhcp.isChecked());
-                        Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure sent:");
+                        Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure sent");
                         if (ssidPayload.size() > 0){
                             UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifissid, ssidPayload, null, null);
-                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifissid sent:");}
+                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifissid sent");}
                         if (passPayload.size() > 0){
                             UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null, null);
-                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent:");}
+                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent");}
 
                         Toast.makeText(getContext(),R.string.command_sent,Toast.LENGTH_SHORT ).show();
                     }

@@ -124,6 +124,38 @@ private int exportedNodes;
 			csvWrite.close();
 			curCSV.close();
 
+			curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TAGS, null);
+			colNames = curCSV.getColumnNames();
+			csvWrite.writeNext(colNames);
+			arrStr = new String[curCSV.getColumnCount()];
+			Assert.assertTrue(colNames.length == arrStr.length);
+			while (curCSV.moveToNext()) {
+				for (int t=0; t<arrStr.length;t++ ){
+					arrStr[t] = curCSV.getString(curCSV.getColumnIndex(colNames[t]));
+				}
+				csvWrite.writeNext(arrStr);
+			}
+			Log.i(TAG, "exported TAG rows:" + curCSV.getCount());
+			// dialog.setMessage( "exported LOG rows:" + curCSV.getCount());
+			csvWrite.close();
+			curCSV.close();
+
+			curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS, null);
+			colNames = curCSV.getColumnNames();
+			csvWrite.writeNext(colNames);
+			arrStr = new String[curCSV.getColumnCount()];
+			Assert.assertTrue(colNames.length == arrStr.length);
+			while (curCSV.moveToNext()) {
+				for (int t=0; t<arrStr.length;t++ ){
+					arrStr[t] = curCSV.getString(curCSV.getColumnIndex(colNames[t]));
+				}
+				csvWrite.writeNext(arrStr);
+			}
+			Log.i(TAG, "exported TAG rows:" + curCSV.getCount());
+			// dialog.setMessage( "exported LOG rows:" + curCSV.getCount());
+			csvWrite.close();
+			curCSV.close();
+
 			//return true;
 
 		}
