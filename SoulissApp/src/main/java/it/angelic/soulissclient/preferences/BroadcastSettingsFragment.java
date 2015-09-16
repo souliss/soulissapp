@@ -8,6 +8,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -168,6 +169,8 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                         if (passPayload.size() > 0){
                             UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null, null);
                             Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent:");}
+
+                        Toast.makeText(getContext(),R.string.command_sent,Toast.LENGTH_SHORT ).show();
                     }
                 }).start();
 

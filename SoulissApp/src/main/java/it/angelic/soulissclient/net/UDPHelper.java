@@ -662,7 +662,7 @@ public class UDPHelper {
 		ArrayList<Byte> frame = new ArrayList<>();
 
 		frame.add(Constants.Souliss_UDP_function_broadcast_configure);// functional code
-
+		Log.d(Constants.TAG, "MaCaCo  BroadCastConfigure isGateway:" + isGateway +" useDhcp:" + useDhcp );
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
 		assertTrue(payLoad.size() == 0XC);
@@ -687,8 +687,8 @@ public class UDPHelper {
 			// che schifo
 			frame.add(number);
 		}
+		Log.d(Constants.TAG, "MaCaCo  BroadCastConfigure frame built size:" + frame.size());
 
-		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
 		return frame;
 
 	}

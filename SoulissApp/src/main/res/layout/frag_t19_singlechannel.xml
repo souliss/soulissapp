@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Cont01"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<RelativeLayout android:id="@+id/Cont01"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/textviewBright"
@@ -15,13 +16,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/brightness"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <View
             android:id="@+id/strut"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:id="@+id/buttonPlus"
@@ -34,7 +35,7 @@
             android:layout_marginRight="15dip"
             android:drawableLeft="@drawable/light_off"
             android:text="@string/plus"
-            android:textSize="40sp" />
+            android:textSize="40sp"/>
 
         <Button
             android:id="@+id/buttonMinus"
@@ -47,14 +48,14 @@
             android:layout_marginRight="15dip"
             android:drawableLeft="@drawable/light_on"
             android:text="@string/minus"
-            android:textSize="40sp" />
+            android:textSize="40sp"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout1"
-        android:weightSum="4" >
+        android:weightSum="4">
 
         <TextView
             android:id="@+id/textviewColours"
@@ -62,13 +63,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/Souliss_T_modes"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TableLayout
             android:id="@+id/containervermegame"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@id/textviewColours" >
+            android:layout_below="@id/textviewColours">
 
             <TableRow
                 android:id="@+id/tableRow1"
@@ -76,31 +77,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:gravity="center_horizontal"
-                android:weightSum="4" >
+                android:weightSum="4">
 
                 <Button
                     android:id="@+id/flash"
                     style="@style/ButtonText"
                     android:layout_width="0dip"
                     android:layout_weight="1"
-                    android:text="@string/Souliss_TRGB_flash" />
+                    android:text="@string/Souliss_TRGB_flash"/>
 
                 <Button
                     android:id="@+id/sleep"
                     style="@style/ButtonText"
                     android:layout_width="0dip"
                     android:layout_weight="1"
-                    android:text="@string/Souliss_TRGB_sleep" />
+                    android:text="@string/Souliss_TRGB_sleep"/>
             </TableRow>
 
             <TableRow
                 android:id="@+id/tableRowSelector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:weightSum="3" >
+                android:gravity="center"
+                android:weightSum="3">
 
                 <Spinner
                     android:id="@+id/modeSpinner"
@@ -108,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
                     android:layout_weight="2"
-                    android:entries="@array/singleChannelModes" />
+                    android:entries="@array/singleChannelModes"/>
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/checkBoxMulticast"
@@ -118,7 +119,7 @@
                     android:layout_weight="1"
                     android:text="@string/multicast"
                     android:textOff="@string/multicast"
-                    android:textOn="@string/multicast" />
+                    android:textOn="@string/multicast"/>
             </TableRow>
 
             <TableRow
@@ -126,26 +127,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:weightSum="1" >
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:weightSum="1">
 
                 <RelativeLayout
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" >
+                    android:layout_weight="1">
 
                     <SeekBar
                         android:id="@+id/channelRed"
-                        android:layout_margin="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:max="255" />
+                        android:layout_margin="6dp"
+                        android:max="255"/>
 
                     <TextView
                         android:id="@+id/channelLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/channelRed"
-                        android:layout_marginLeft="2dp" />
+                        android:layout_marginLeft="4dp"
+                        tools:text="Pirlottero"/>
                 </RelativeLayout>
             </TableRow>
 
@@ -154,9 +158,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:weightSum="1" >
-
-               
+                android:weightSum="1">
             </TableRow>
 
             <TableRow
@@ -166,22 +168,24 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@color/black"
-                android:weightSum="1" >
+                android:weightSum="1">
 
                 <FrameLayout
                     android:layout_width="0dip"
                     android:layout_height="150dp"
                     android:layout_weight="1"
-                    android:background="@color/std_green" >
+                    android:background="@color/std_green">
 
                     <com.pheelicks.visualizer.VisualizerView
                         android:id="@+id/visualizerView"
                         android:layout_width="fill_parent"
-                        android:layout_height="fill_parent" >
+                        android:layout_height="fill_parent">
                     </com.pheelicks.visualizer.VisualizerView>
                 </FrameLayout>
             </TableRow>
+
             <include layout="@layout/tablerow_favinfo"/>
+
             <include layout="@layout/tablerow_taginfo"/>
         </TableLayout>
     </RelativeLayout>
@@ -190,7 +194,7 @@
         android:id="@+id/strut2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/buttonTurnOn"
@@ -199,9 +203,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@id/strut2"
+        android:width="0dip"
         android:text="@string/ON"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:width="0dip" />
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
         android:id="@+id/textviewPower"
@@ -210,7 +214,7 @@
         android:layout_above="@id/buttonTurnOn"
         android:layout_marginLeft="5dip"
         android:text="@string/power"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Button
         android:id="@+id/buttonTurnOff"
@@ -220,6 +224,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="@string/OFF"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 </RelativeLayout>
