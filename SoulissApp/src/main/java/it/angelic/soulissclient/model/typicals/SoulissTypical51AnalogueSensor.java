@@ -5,6 +5,7 @@ import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +20,7 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
@@ -36,21 +38,18 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		super(pre);
 	}
 
-	int maxTemp;
-	int minTemp;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3784476625375361669L;
 
-
-
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return "OK";
+			return SoulissClient.getAppContext().getString(R.string.ok);
 		else
-			return "STALE";
+			return SoulissClient.getAppContext().getString(R.string.stale);
+
 	}
 	/**
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
@@ -70,10 +69,10 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 
 	}
 	@Override
-	public void getActionsLayout(Context ctx, final LinearLayout cont) {
+	public void getActionsLayout(Context ctx, final LinearLayout contLinear) {
 		WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
 		int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
-		cont.removeAllViews();
+		contLinear.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputFloat() ));
 		if (prefs.isLightThemeSelected())
@@ -83,7 +82,7 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		cmd.setLayoutParams(lp);
 		lp.setMargins(2, 0, 0, 2);
 		//cmd.setGravity(Gravity.TOP);
-		cont.addView(cmd);
+		contLinear.addView(cmd);
 
 		ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
 		// ProgressBar sfumata
@@ -107,7 +106,7 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		par.setMax(255);
 		par.setProgress((int) getTypicalDTO().getOutput());
 
-		cont.addView(par);
+		contLinear.addView(par);
 
 	}
 }

@@ -19,10 +19,12 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.net.Utils;
 
 /**
  * Occupa DUE slot, quindi l'output viene dal suo e dal suo fratello destro (related)
@@ -65,14 +67,18 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 	public String getOutputCelsius() {
 		return Constants.twoDecimalFormat.format(getOutputFloat() )+"°C";
 	}
+	public String getOutputFahrenheit() {
+		return Constants.twoDecimalFormat.format(Utils.celsiusToFahrenheit(getOutputFloat()) )+"°F";
+
+	}
 
 
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return getOutputCelsius();
+			return SoulissClient.getAppContext().getString(R.string.ok);
 		else
-			return "STALE";
+			return SoulissClient.getAppContext().getString(R.string.stale);
 	}
 
 	@Override
@@ -82,13 +88,14 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius()));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + (prefs.isFahrenheitChosen()?getOutputFahrenheit():getOutputCelsius())));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
-		cmd.setLayoutParams(lp);
 		lp.setMargins(2, 0, 0, 2);
+		cmd.setLayoutParams(lp);
+
 		//cmd.setGravity(Gravity.TOP);
 		cont.addView(cmd);
 
@@ -109,6 +116,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 				RelativeLayout.LayoutParams.MATCH_PARENT);
 		lp2.setMargins(2,2,4,2);
 		par.setLayoutParams(lp2);
+
 		par.setMax(50);
 		par.setProgress(20);
 		par.setProgress(0);

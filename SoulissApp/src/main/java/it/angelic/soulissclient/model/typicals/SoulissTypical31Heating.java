@@ -8,6 +8,7 @@ import junit.framework.Assert;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -18,6 +19,7 @@ import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.net.Utils;
 
 /**
  * Typical 31 : Temperature control with cooling and heating mode
@@ -59,7 +61,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     private float TemperatureMeasuredVal;
     private float TemperatureSetpointVal;
 
-//AUTOF
+    //AUTOF
     public SoulissTypical31Heating(SoulissPreferenceHelper pp) {
         super(pp);
     }
@@ -74,6 +76,23 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
     @Override
     public String getOutputDesc() {
+
+        if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
+        {
+            statusByte = getTypicalDTO().getOutput();
+            if (isStatusByteSet(statusByte, 0)) {
+                if (isCoolMode())
+                    return(SoulissClient.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[0]);
+                else
+                    return(SoulissClient.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[1]);
+            } else
+                return SoulissClient.getAppContext().getString(R.string.OFF);
+        }
+        else
+            return SoulissClient.getAppContext().getString(R.string.stale);
+    }
+
+    public String getOutputLongDesc() {
         statusByte = getTypicalDTO().getOutput();
         short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
                 .getTypicalDTO().getOutput();
@@ -88,8 +107,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
         // ora ho i due bytes, li converto
         int shifted = TemperatureMeasuredValue2 << 8;
-
-        TemperatureMeasuredVal = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
+        float celsius = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
+        TemperatureMeasuredVal = prefs.isFahrenheitChosen() ? Utils.celsiusToFahrenheit(celsius) : celsius;
 
         Log.i(Constants.TAG,
                 "first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"
@@ -116,7 +135,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
         buf.putInt(statusByte);
 /*
-			BIT 0	(0 System  OFF,  1 System  ON)
+            BIT 0	(0 System  OFF,  1 System  ON)
 			BIT 1	(0 Heating OFF , 1 Heating ON)
 			BIT 2	(0 Cooling OFF , 1 Cooling ON)
 			BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
@@ -139,8 +158,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             strout.append(" - Fan Manual");
 
 
-        strout.append(" ").append(TemperatureMeasuredVal).append("°")
-                .append(" (").append(TemperatureSetpointVal).append("°)");
+        strout.append(" ").append(TemperatureMeasuredVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C")
+                .append(" (").append(TemperatureSetpointVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C").append(")");
         return strout.toString();
     }
 
@@ -221,7 +240,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
-                || "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
+                || "UNKNOWN".compareTo(getOutputLongDesc()) == 0 || "NA".compareTo(getOutputLongDesc()) == 0) {
             textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {

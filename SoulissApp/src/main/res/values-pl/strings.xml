@@ -293,7 +293,7 @@
     <string name="img_select" >Wybierz zdjęcie</string>
     <string name="tag_info_format">Zaznaczono %1$d urządzeń w %2$d etykietach</string>
     <string name="err_command_not_sel">Komenda nie wybrana</string>
-    <string name="nodeleteFav" />
+    <string name="nodeleteFav" >Can\'t remove default Favourite Tag</string>
 
     <string name="warn_wifi">Nie można użyć adresu lokalnego bez połączenia WI-FI!</string>
     <string name="warn_connection">Połączenie nie dostępne</string>
@@ -319,7 +319,7 @@
     <string name="status_souliss_nodetail">Panel ze szczegółami niedostępny</string>
     <string name="timed_warning">Ostrzeżenie o poziomie energii</string>
     <string name="udphint">Please insert a number in range 1&#8211;65535</string>
-    <string name="bridge_useDhcp" />
+    <string name="bridge_useDhcp" >Use DHCP for remote board IP address assignment</string>
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
     <string name="advbroadcast_summary">Remotely configure Souliss Node</string>
     <string name="Souliss_T19_Max_desc" />
@@ -330,4 +330,12 @@
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
     <string name="warnmeifon">Warn me if turned on for more than (hours)</string>
+    <string name="opt_fahrenheit">Fahrenheit</string>
+    <string name="amongFav">This Device is among your favourites</string>
+    <string name="amongTags">This Device has been Tagged</string>
+    <string name="bridge_isgateway">Configure remote node as Gateway/Peer for the Souliss network</string>
+    <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
+    <string name="hours">hours</string>
+    <string name="opt_udpport">UDP Port</string>
+    <string name="widget_cantupdate">Error retrieving Typical</string>
 </resources>

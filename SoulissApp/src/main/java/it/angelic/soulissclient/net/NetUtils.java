@@ -124,8 +124,6 @@ public class NetUtils {
 			Log.e("getDeviceGateway: ", e.toString());
 			return null;
 		}
-		
-	
 	}
 
 	/**

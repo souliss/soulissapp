@@ -286,18 +286,18 @@
     <string name="img_select" >Seleziona Foto</string>
     <string name="tag_info_format">There are %1$d marked devices in %2$d TAGS</string>
     <string name="err_command_not_sel">Command not selected</string>
-    <string name="hours" />
+    <string name="hours" >hours</string>
     <string name="warnmeifon">Avvisami se accesa per piu di</string>
     <string name="timed_warning" >Energy alert</string>
     <string name="hasbeenturnedontoolong">Typical %s has been turned on too long</string>
-    <string name="opt_udpport" />
+    <string name="opt_udpport" >UDP Port</string>
     <string name="udphint" >Please insert a number in range 1&#8211;65535</string>
     <string name="amongFav">This Device is among favourites</string>
     <string name="amongTags">This Device has been Tagged</string>
     <string name="status_souliss_nodetail" >No detail panel available</string>
-    <string name="bridge_isgateway" />
+    <string name="bridge_isgateway" >Configure remote node as Gateway/Peer for the Souliss network</string>
     <string name="Online">Online</string>
-    <string name="nodeleteFav" />
+    <string name="nodeleteFav" >Can\'t remove default Favourite Tag</string>
 
     <string name="warn_wifi">Não é possível usar o endereço local sem conexão WI-FI!</string>
     <string name="warn_connection">Sem conexão disponível</string>
@@ -320,7 +320,7 @@
     <string name="dialog_import_nofile">Import file doesn\'t exist</string>
     <string name="programs_trigger_executed">Souliss Trigger executed</string>
     <string name="widget_cantsave">Command empty/not selected</string>
-    <string name="bridge_useDhcp" />
+    <string name="bridge_useDhcp" >Use DHCP for remote board IP address assignment</string>
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
     <string name="advbroadcast_summary">Remotely configure Souliss Node</string>
     <string name="Souliss_T19_Max_desc" />
@@ -331,5 +331,14 @@
     <string name="removeTag">Remove Tag</string>
     <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
     <string name="menu_addFav">Add to Favourites</string>
+    <string name="opt_fahrenheit">Fahrenheit</string>
+    <string name="Souliss_T1A_desc">Status Array</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="offline">Offline</string>
+    <string name="opt_loghist_desc">Save every Devices\' status change</string>
+    <string name="opt_loghist">History enabled</string>
+    <string name="widget_cantupdate">Error retrieving Typical</string>
+    <string name="opt_dbopt_desc">Vacuum DB and remove logs older than a year</string>
+    <string name="opt_dbopt">Optimize DB</string>
 
 </resources>

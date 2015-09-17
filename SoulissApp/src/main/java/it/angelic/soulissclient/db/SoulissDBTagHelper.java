@@ -167,13 +167,13 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
      * @param nodeIN
      * @return
      */
-    public int createOrUpdateTagTypicalNode(SoulissTypical nodeIN, SoulissTag toAssoc, Integer pri) {
+    public int createOrUpdateTagTypicalNode(SoulissTypical nodeIN, SoulissTag toAssoc, Integer priority) {
         ContentValues values = new ContentValues();
         // wrap values from object
         values.put(SoulissDB.COLUMN_TAG_TYP_NODE_ID, nodeIN.getNodeId());
         values.put(SoulissDB.COLUMN_TAG_TYP_SLOT, nodeIN.getSlot());
         values.put(SoulissDB.COLUMN_TAG_TYP_TAG_ID, toAssoc.getTagId());
-        values.put(SoulissDB.COLUMN_TAG_TYP_PRIORITY, pri);
+        values.put(SoulissDB.COLUMN_TAG_TYP_PRIORITY, priority);
         int upd = database.update(SoulissDB.TABLE_TAGS_TYPICALS, values, SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
                         + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot() + " AND " + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toAssoc.getTagId(),
                 null);

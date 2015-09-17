@@ -110,7 +110,7 @@ public class AlertDialogHelper {
 
             LinearLayout linearLayout = new LinearLayout(source);
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.FILL_PARENT);
+                    LinearLayout.LayoutParams.MATCH_PARENT);
             lParams.setMargins(15,15,15,15);
             linearLayout.setLayoutParams(lParams);
 
