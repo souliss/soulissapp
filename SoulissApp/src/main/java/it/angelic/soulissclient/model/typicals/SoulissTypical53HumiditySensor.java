@@ -5,6 +5,7 @@ import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,87 +28,86 @@ import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
  * Occupa DUE slot, quindi l'output viene dal suo e dal suo fratello destro (66)
- * 
+ *
  * @author Ale
- * 
  */
-public class SoulissTypical53HumiditySensor extends SoulissTypical implements ISoulissTypicalSensor{
+public class SoulissTypical53HumiditySensor extends SoulissTypical implements ISoulissTypicalSensor {
 
-	public SoulissTypical53HumiditySensor(SoulissPreferenceHelper pre) {
-		super(pre);
-	}
+    public SoulissTypical53HumiditySensor(SoulissPreferenceHelper pre) {
+        super(pre);
+    }
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3784476625375333669L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3784476625375333669L;
 
-	@Override
-	public Float getOutput() {
-		return getOutputFloat();
-	}
-	public float getOutputFloat() {
-		int miofratello = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)).getTypicalDTO().getOutput();
-		//ora ho i due bytes, li converto
-		int shifted = miofratello << 8;
-		Log.d(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
+    @Override
+    public Float getOutput() {
+        return getOutputFloat();
+    }
 
-	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
+    public float getOutputFloat() {
+        int miofratello = getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)).getTypicalDTO().getOutput();
+        //ora ho i due bytes, li converto
+        int shifted = miofratello << 8;
+        Log.d(Constants.TAG, "first:" + Long.toHexString((long) typicalDTO.getOutput()) + " second:" + Long.toHexString((long) miofratello) + "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()));
 
-	}
+        return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
-	public String getOutputPercent() {
+    }
 
-		return Constants.twoDecimalFormat.format(getOutputFloat() )+ "% ";
-	}
+    public String getOutputPercent() {
 
-	@Override
-	public String getOutputDesc() {
-		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return SoulissClient.getAppContext().getString(R.string.ok);
-		else
-			return SoulissClient.getAppContext().getString(R.string.stale);
-	}
+        return Constants.twoDecimalFormat.format(getOutputFloat()) + "%";
+    }
 
-	@Override
-	public void getActionsLayout( Context ctx,LinearLayout cont) {
-		WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
-		int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
-		cont.removeAllViews();
-		final TextView cmd = new TextView(ctx);
+    @Override
+    public String getOutputDesc() {
+        if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec() * 3))
+            return SoulissClient.getAppContext().getString(R.string.ok);
+        else
+            return SoulissClient.getAppContext().getString(R.string.stale);
+    }
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputPercent() ));
-		if (prefs.isLightThemeSelected())
-			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.MATCH_PARENT);
-		cmd.setLayoutParams(lp);
-		lp.setMargins(2, 0, 0, 2);
-		// cmd.setGravity(Gravity.TOP);
-		cont.addView(cmd);
+    @Override
+    public void getActionsLayout(Context ctx, LinearLayout cont) {
+        WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+        int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
+        cont.removeAllViews();
+        final TextView cmd = new TextView(ctx);
 
-		ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
-		// ProgressBar sfumata
-		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ctx.getResources().getColor(
-				color.aa_yellow), ctx.getResources().getColor(color.aa_blue), android.graphics.Shader.TileMode.CLAMP);
-		pgDrawable.getPaint().setStrokeWidth(3);
-		pgDrawable.getPaint().setDither(true);
-		pgDrawable.getPaint().setShader(gradient);
+        cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputPercent()));
+        if (prefs.isLightThemeSelected())
+            cmd.setTextColor(ctx.getResources().getColor(R.color.black));
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        cmd.setLayoutParams(lp);
+        lp.setMargins(2, 0, 0, 2);
+        // cmd.setGravity(Gravity.TOP);
+        cont.addView(cmd);
 
-		ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-		par.setProgressDrawable(progress);
-		par.setBackgroundDrawable(ctx.getResources().getDrawable(android.R.drawable.progress_horizontal));
+        ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
+        // ProgressBar sfumata
+        final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
+        final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ContextCompat.getColor(ctx, color.aa_yellow), ContextCompat.getColor(ctx, color.aa_blue), android.graphics.Shader.TileMode.CLAMP);
+        pgDrawable.getPaint().setStrokeWidth(3);
+        pgDrawable.getPaint().setDither(true);
+        pgDrawable.getPaint().setShader(gradient);
 
-		RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.MATCH_PARENT);
-		par.setLayoutParams(lp2);
-		par.setProgress(20);
-		par.setProgress(0);
-		par.setMax(100);
-		par.setProgress((int) getOutputFloat());
+        ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+        par.setProgressDrawable(progress);
+        par.setBackgroundResource(android.R.drawable.progress_horizontal);
 
-		cont.addView(par);
+        RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT);
+        par.setLayoutParams(lp2);
+        par.setProgress(20);
+        par.setProgress(0);
+        par.setMax(100);
+        par.setProgress((int) getOutputFloat());
 
-	}
+        cont.addView(par);
+
+    }
 }

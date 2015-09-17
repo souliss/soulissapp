@@ -93,8 +93,9 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
 				RelativeLayout.LayoutParams.MATCH_PARENT);
-		cmd.setLayoutParams(lp);
 		lp.setMargins(2, 0, 0, 2);
+		cmd.setLayoutParams(lp);
+
 		//cmd.setGravity(Gravity.TOP);
 		cont.addView(cmd);
 
@@ -115,6 +116,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 				RelativeLayout.LayoutParams.MATCH_PARENT);
 		lp2.setMargins(2,2,4,2);
 		par.setLayoutParams(lp2);
+
 		par.setMax(50);
 		par.setProgress(20);
 		par.setProgress(0);

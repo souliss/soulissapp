@@ -5,6 +5,7 @@ import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
@@ -93,8 +94,8 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
 		// ProgressBar sfumata
 		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ctx.getResources().getColor(
-				color.black), ctx.getResources().getColor(color.white), android.graphics.Shader.TileMode.CLAMP);
+		final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ContextCompat.getColor(ctx, color.black),
+				ContextCompat.getColor(ctx, color.white), android.graphics.Shader.TileMode.CLAMP);
 		pgDrawable.getPaint().setStrokeWidth(3);
 		pgDrawable.getPaint().setDither(true);
 		pgDrawable.getPaint().setShader(gradient);

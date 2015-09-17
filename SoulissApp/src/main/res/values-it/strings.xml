@@ -302,7 +302,7 @@
     <string name="opt_loghist">Storico abilitato</string>
     <string name="opt_loghist_desc">Salva ogni cambiamento di stato dei dispositivi</string>
     <string name="programs_trigger_executed">Souliss Trigger eseguito</string>
-    <string name="nodeleteFav" />
+    <string name="nodeleteFav" >Impossibile rimuovere il TAG preferiti</string>
 
     <string name="warn_wifi">Impossibile usare l\'indirizzo locale senza connessione WIFI!</string>
     <string name="warn_connection">Connessione non disponibile</string>
@@ -310,7 +310,7 @@
     <string name="contact_progress">Connessione al server Souliss in corso&#8230;</string>
     <string name="homedist"><b>Distanza da casa:</b></string>
     <string name="currentlyin">ora a</string>
-    <string name="positionfrom">Posizionamento tramite </string>
+    <string name="positionfrom"><b>Posizionamento tramite</b></string>
     <string name="homewarn">Posizione di casa <b>sconosciuta</b>, usa le opzioni per impostarla</string>
     <string name="useridxhint">Inserisci un numero tra 1 e 100</string>
     <string name="nodeidxhint">Inserisci un numero tra 1 e 254</string>
@@ -338,5 +338,7 @@
     <string name="tagorder_desc">Se vengono trovati due TAG con lo stesso valore, verrà utilizzato il loro ID automatico per l\'ordinamento</string>
     <string name="menu_addFav">Aggiungi ai Preferiti</string>
     <string name="opt_fahrenheit">Usa Fahrenheit</string>
+    <string name="Souliss_T1A_desc">Stati</string>
+    <string name="offline">Offline</string>
 
 </resources>
