@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.SharedElementCallback;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -28,6 +29,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter.SceneViewHolder;
@@ -131,7 +133,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 					overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 			}
 		});
-
 		registerForContextMenu(listaScenesView);
 	}
 

@@ -423,7 +423,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         OnClickListener simpleOnClickListenerProgr = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, ProgramListActivity.class);
-                //myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 programsActivity,   // The view which starts the transition
@@ -872,8 +872,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
         provider = locationManager.getBestProvider(criteria, true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-        if (enabled && (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+        if (enabled && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
                     + "</b>)"));
             // ogni minuto, minimo 100 metri

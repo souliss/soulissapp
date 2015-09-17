@@ -12,6 +12,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -525,30 +526,29 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             mVisualizerView.release();
     }
 
+
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        MenuInflater inflater = getActivity().getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Rinomina nodo e scelta icona
         inflater.inflate(R.menu.t16_ctx_menu, menu);
         Log.i(Constants.TAG, "Inflated Equalizer menu");
-        super.onCreateContextMenu(menu, v, menuInfo);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        long arrayAdapterPosition = info.position;
-
-        switch (item.getItemId()) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
             case R.id.equalizer:
                 AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
                 break;
             default:
-                return super.onContextItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
 
-        return true;
+        return false;
     }
+
 
     /**
      * ***********************************************************************

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <!-- The main content view -->
     <RelativeLayout
         android:transitionName="helloScenes"
         android:layout_width="match_parent"
@@ -59,19 +58,8 @@
                        android:cacheColorHint="@color/trans_black"
                        android:divider="@android:color/transparent"
                        android:fadingEdge="vertical"
-                       android:requiresFadingEdge="vertical"
-                       />
-                <!--  <com.nirhart.parallaxscroll.views.ParallaxListView
-                     android:id="@+id/ListViewListaScenes"
-                     android:layout_width="match_parent"
-                     android:layout_height="fill_parent"
-                     android:divider="@android:color/transparent"
-                     android:background="@drawable/item_selector"
-                     android:fillViewport="true"
-                     app:parallax_factor="1.9"
-                     app:parallax_views_num="3"
-                     android:fadingEdge="vertical"
-                     android:requiresFadingEdge="vertical"/>-->
+                       android:requiresFadingEdge="vertical" />
+
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
@@ -91,5 +79,4 @@
     </RelativeLayout>
 
     <include layout="@layout/custom_leftdrawer" />
-
 </android.support.v4.widget.DrawerLayout>

@@ -108,7 +108,7 @@ public class GraphsHelper {
 	public static XYMultipleSeriesRenderer buildHourRenderer(Context ctx) {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 
-		SimpleSeriesRenderer rangeRenderer = new SimpleSeriesRenderer();
+		SimpleSeriesRenderer rangeRenderer = new XYSeriesRenderer();
 		rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
 		//rangeRenderer.setDisplayChartValues(false);
 		// r.setChartValuesSpacing(3);
