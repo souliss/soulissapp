@@ -19,6 +19,7 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
@@ -66,11 +67,10 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 
 	@Override
 	public String getOutputDesc() {
-		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs
-				.getDataServiceIntervalMsec() * 3))
-			return getOutputLux();
+		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
+			return SoulissClient.getAppContext().getString(R.string.ok);
 		else
-			return "STALE";
+			return SoulissClient.getAppContext().getString(R.string.stale);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputDesc()));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputLux()));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

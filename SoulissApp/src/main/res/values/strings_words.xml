@@ -52,6 +52,8 @@
     <string name="position">Position</string>
     <string name="Online">Online</string>
     <string name="offline">Offline</string>
-    
+    <string name="ok">OK</string>
+    <string name="stale">STALE</string>
+
 
 </resources>

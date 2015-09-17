@@ -19,6 +19,7 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
@@ -41,14 +42,13 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 	 */
 	private static final long serialVersionUID = 3784476625375361669L;
 
-
-
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return "OK";
+			return SoulissClient.getAppContext().getString(R.string.ok);
 		else
-			return "STALE";
+			return SoulissClient.getAppContext().getString(R.string.stale);
+
 	}
 	/**
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat

@@ -8,6 +8,7 @@ import junit.framework.Assert;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -75,6 +76,23 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
     @Override
     public String getOutputDesc() {
+
+        if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
+        {
+            statusByte = getTypicalDTO().getOutput();
+            if (isStatusByteSet(statusByte, 0)) {
+                if (isCoolMode())
+                    return(SoulissClient.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[0]);
+                else
+                    return(SoulissClient.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[1]);
+            } else
+                return SoulissClient.getAppContext().getString(R.string.OFF);
+        }
+        else
+            return SoulissClient.getAppContext().getString(R.string.stale);
+    }
+
+    public String getOutputLongDesc() {
         statusByte = getTypicalDTO().getOutput();
         short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
                 .getTypicalDTO().getOutput();
@@ -222,7 +240,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
-                || "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
+                || "UNKNOWN".compareTo(getOutputLongDesc()) == 0 || "NA".compareTo(getOutputLongDesc()) == 0) {
             textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {

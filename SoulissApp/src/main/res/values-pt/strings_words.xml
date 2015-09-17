@@ -49,6 +49,8 @@
          <string name="meters">Metri</string>
     <string name="service">Servizio</string>
     <string name="position">Posizione</string>
-    
+    <string name="ok">OK</string>
+    <string name="stale">STALE</string>
+
 
 </resources>

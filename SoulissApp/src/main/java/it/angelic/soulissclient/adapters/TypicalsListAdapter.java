@@ -156,7 +156,7 @@ public class TypicalsListAdapter extends BaseAdapter {
         }
         // nascondi gli slot slave
         //if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
-        // holder.textStatusVal.setText(tipici[position].getOutputDesc());
+        // holder.textStatusVal.setText(tipici[position].getOutputLongDesc());
         // TODO remove following
         //holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
         tipici[position].setOutputDescView(holder.textStatusVal);

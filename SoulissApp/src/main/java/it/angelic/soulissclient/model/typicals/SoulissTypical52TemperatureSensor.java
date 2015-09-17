@@ -19,6 +19,7 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
@@ -75,9 +76,9 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return prefs.isFahrenheitChosen()?getOutputFahrenheit():getOutputCelsius();
+			return SoulissClient.getAppContext().getString(R.string.ok);
 		else
-			return "STALE";
+			return SoulissClient.getAppContext().getString(R.string.stale);
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputCelsius()));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + (prefs.isFahrenheitChosen()?getOutputFahrenheit():getOutputCelsius())));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

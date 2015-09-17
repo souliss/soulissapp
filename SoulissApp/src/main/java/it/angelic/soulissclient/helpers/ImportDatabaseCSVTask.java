@@ -307,7 +307,12 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         } catch (Exception e) {
             Log.w(Constants.TAG, e.getMessage());
         }
-        tIns.setTagOrder(Integer.valueOf(temp[4]));
+        try {
+            tIns.setTagOrder(Integer.valueOf(temp[4]));
+        } catch (Exception e) {
+            Log.w(Constants.TAG, e.getMessage());
+        }
+
         database.createOrUpdateTag(tIns);
     }
 

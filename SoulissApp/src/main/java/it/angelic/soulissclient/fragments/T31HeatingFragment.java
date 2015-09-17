@@ -31,7 +31,6 @@ import it.angelic.soulissclient.SoulissClient;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
@@ -296,7 +295,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                     infoTags.setVisibility(View.VISIBLE);
                 }
                 Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
-                textviewStatus.setText(collected.getOutputDesc());
+                textviewStatus.setText(collected.getOutputLongDesc());
 
                 if (collected.isFannTurnedOn(1))
                     imageFan1.setVisibility(View.VISIBLE);

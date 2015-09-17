@@ -52,6 +52,8 @@
     <string name="position">Position</string>
     <string name="Online">В сети</string>
     <string name="offline">Не в сети</string>
-    
+    <string name="ok">OK</string>
+    <string name="stale">STALE</string>
+
 
 </resources>
