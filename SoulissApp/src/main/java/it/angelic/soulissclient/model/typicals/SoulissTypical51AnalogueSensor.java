@@ -87,7 +87,8 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 		ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
 		// ProgressBar sfumata
 		final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-		final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ContextCompat.getColor(ctx, color.black), ContextCompat.getColor(ctx, R.color.white), android.graphics.Shader.TileMode.CLAMP);
+		final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ctx.getResources().getColor(
+				color.black), ctx.getResources().getColor(color.white), android.graphics.Shader.TileMode.CLAMP);
 		pgDrawable.getPaint().setStrokeWidth(3);
 		pgDrawable.getPaint().setDither(true);
 		pgDrawable.getPaint().setShader(gradient);

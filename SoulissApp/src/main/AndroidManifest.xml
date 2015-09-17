@@ -131,7 +131,7 @@
             android:name=".TagDetailActivity"
             android:icon="@drawable/home"
             android:label="@string/app_name"
-            android:parentActivityName=".TagListActivity"
+            android:parentActivityName=".TagGridActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.GOT_DATA" />

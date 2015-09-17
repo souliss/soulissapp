@@ -90,7 +90,8 @@ public class SoulissTypical53HumiditySensor extends SoulissTypical implements IS
         ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
         // ProgressBar sfumata
         final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-        final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ContextCompat.getColor(ctx, color.aa_yellow), ContextCompat.getColor(ctx, color.aa_blue), android.graphics.Shader.TileMode.CLAMP);
+        final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ctx.getResources().getColor(
+                color.aa_yellow), ctx.getResources().getColor(color.aa_blue), android.graphics.Shader.TileMode.CLAMP);
         pgDrawable.getPaint().setStrokeWidth(3);
         pgDrawable.getPaint().setDither(true);
         pgDrawable.getPaint().setShader(gradient);

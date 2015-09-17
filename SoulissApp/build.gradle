@@ -1,18 +1,18 @@
 apply plugin: 'com.android.application'
 android {
-    useLibrary 'org.apache.http.legacy'
-
     signingConfigs {
         config {
             storeFile file('C:/Users/Ale/Documents/shineangelic')
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "23.0.1"
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "it.angelic.soulissclient"
         minSdkVersion 11
-        targetSdkVersion 22
+        targetSdkVersion 23
     }
     buildTypes {
         release {
@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.4'
     compile files('libs/achartengine-1.2.0.jar')
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
 }

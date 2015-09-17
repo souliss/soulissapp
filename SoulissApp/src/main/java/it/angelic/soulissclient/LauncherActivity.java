@@ -1,5 +1,6 @@
 package it.angelic.soulissclient;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Criteria;
@@ -22,11 +24,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,7 +44,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -283,10 +284,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
         // Log.w(TAG, "WARNTEST");
         if (opzioni.isLightThemeSelected()) {
-            cardViewBasicInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
-            cardViewPositionInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
-            cardViewServiceInfo.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
-            cardViewFav.setCardBackgroundColor(getResources().getColor(R.color.background_floating_material_light));
+         /*   cardViewBasicInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light) );
+            cardViewPositionInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
+            cardViewServiceInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
+            cardViewFav.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));*/
         }
 
 
@@ -626,12 +627,12 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     private void setServiceInfo() {
         StringBuilder sb = new StringBuilder();
-        serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+        //serviceinfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_green));
         /* SERVICE MANAGEMENT */
         if (!opzioni.isDataServiceEnabled()) {
             if (mIsBound && mBoundService != null) {// in esecuzione? strano
                 sb.append("<br/><b>").append(getResources().getString(R.string.service_disabled)).append("!</b> ");
-                serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+                // serviceinfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_red));
                 if (opzioni.getTextFx()) {
                     Animation a2 = AnimationUtils.loadAnimation(this, R.anim.alpha_out);
                     a2.reset();
@@ -711,6 +712,17 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         registerReceiver(datareceiver, filtere);
 
         if (provider != null) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                //return;
+            }else
             locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                     Constants.POSITION_UPDATE_MIN_DIST, this);
         }
@@ -745,8 +757,20 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         super.onPause();
         autoUpdate.cancel();
         dbwarnline.clearAnimation();
-        locationManager.removeUpdates(this);
         timeoutHandler.removeCallbacks(timeExpired);
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        locationManager.removeUpdates(this);
+
     }
 
 
@@ -848,10 +872,20 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
         provider = locationManager.getBestProvider(criteria, true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-        if (enabled) {
+        if (enabled && (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
                     + "</b>)"));
             // ogni minuto, minimo 100 metri
+
+                // TODO: Consider calling
+                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+
             locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                     Constants.POSITION_UPDATE_MIN_DIST, this);
             Location location = locationManager.getLastKnownLocation(provider);

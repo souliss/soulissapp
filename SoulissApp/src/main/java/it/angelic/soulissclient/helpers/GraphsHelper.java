@@ -49,17 +49,17 @@ public class GraphsHelper {
 		mRenderer.setFillPoints(false);
 		mRenderer.setPointStyle(PointStyle.DIAMOND);
 		if (opzioni.isLightThemeSelected()){
-			lightRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_yellow_shadow));
-			aRenderer.setColor(ContextCompat.getColor(ctx,R.color.std_blue_shadow));
-			mRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_red_shadow));
-            lightRenderer.setLineWidth(4);
-            aRenderer.setLineWidth(2);
-            mRenderer.setLineWidth(2);
+			lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow_shadow));
+			aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue_shadow));
+			mRenderer.setColor(ctx.getResources().getColor(R.color.std_red_shadow));
+			lightRenderer.setLineWidth(4);
+			aRenderer.setLineWidth(2);
+			mRenderer.setLineWidth(2);
 		}
 		else{
-		lightRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_yellow));
-		aRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_blue));
-		mRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_red));
+		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
+		aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue));
+		mRenderer.setColor(ctx.getResources().getColor(R.color.std_red));
 		}
 		renderer.addSeriesRenderer(lightRenderer);
 		renderer.addSeriesRenderer(aRenderer);
@@ -108,16 +108,16 @@ public class GraphsHelper {
 	public static XYMultipleSeriesRenderer buildHourRenderer(Context ctx) {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 
-        XYSeriesRenderer rangeRenderer = new XYSeriesRenderer();
-		rangeRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_green));
+		SimpleSeriesRenderer rangeRenderer = new SimpleSeriesRenderer();
+		rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
 		//rangeRenderer.setDisplayChartValues(false);
 		// r.setChartValuesSpacing(3);
 		rangeRenderer.setGradientEnabled(true);
-		rangeRenderer.setGradientStart(-10, ContextCompat.getColor(ctx, R.color.std_blue));
-		rangeRenderer.setGradientStop(40, ContextCompat.getColor(ctx, R.color.std_red));
+		rangeRenderer.setGradientStart(-10, ctx.getResources().getColor(R.color.std_blue));
+		rangeRenderer.setGradientStop(40, ctx.getResources().getColor(R.color.std_red));
 		
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
-		lightRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_yellow));
+		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
 		lightRenderer.setDisplayChartValues(true);
 		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
         lightRenderer.setChartValuesTextSize(16);
@@ -152,13 +152,13 @@ public class GraphsHelper {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 
         XYSeriesRenderer rangeRenderer = new XYSeriesRenderer();
-		rangeRenderer.setColor(ContextCompat.getColor(ctx, R.color.std_green));
+        rangeRenderer.setColor(ctx.getResources().getColor(R.color.std_green));
 		//rangeRenderer.setDisplayChartValues(true);
 		rangeRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
 		// r.setChartValuesSpacing(3);
 		rangeRenderer.setGradientEnabled(true);
-		rangeRenderer.setGradientStart(-10, ContextCompat.getColor(ctx, R.color.std_blue));
-		rangeRenderer.setGradientStop(50,ContextCompat.getColor(ctx, R.color.std_red));
+		rangeRenderer.setGradientStart(-10, ctx.getResources().getColor(R.color.std_blue));
+		rangeRenderer.setGradientStop(50, ctx.getResources().getColor(R.color.std_red));
 
 		renderer.addSeriesRenderer(rangeRenderer);
 		
