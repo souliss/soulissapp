@@ -24,10 +24,10 @@
     <string name="dialog_disabled_db">БД Souliss пуста</string>
     <string name="dialog_notinited_db">БД Souliss пуста. Пожалуйста, создайте конфигурацию узлов на экране настроек</string>
     <string name="dialog_disabled_service">Служба данных Souliss отключена</string>
-    <string name="dialog_notinited_service">Запуск программ по расписанию невозможен!\nАктивируйте службу DataService на экране настроек</string>
+    <string name="dialog_notinited_service">Запуск программ по расписанию невозможен!\nАктивируйте службу Сервис Данных на экране настроек</string>
     <string name="dialog_dontshowagain">Не показывать снова</string>
     <string name="dialog_warn_db">Внимание!</string>
-    <string name="dialog_drop_db">Вы удаляете все узлы Souliss, типажи и их историю.\nСбросить БД?</string>
+    <string name="dialog_drop_db">Вы удаляете все узлы Souliss, устройства и их историю.\nСбросить БД?</string>
     <string name="dialog_create_db">Все узлы Souliss будут удалены и воссозданы из http://</string>
     <string name="dialog_create_db2">. Вы потеряете все предыдущие настройки и историю. Продолжить?</string>
     <string name="dialog_title_edittext_IP_pubb">Публичный адрес</string>
@@ -44,7 +44,7 @@
     <string name="execute">Выполнить</string>
     <string name="programs_trigger_executed">Событие Souliss Trigger запущено</string>
     <string name="programs_unexecuted">Активные программы</string>
-    <string name="programs_desc">SoulissClient поддерживает зависимые от времени программы (purple), Геозависимые программы (blue) и команды основанные на сенсорах (red) </string>
+    <string name="programs_desc">SoulissClient поддерживает зависимые от времени программы (бордовый), Геозависимые программы (синий) и команды основанные на сенсорах (красный) </string>
     <string name="programs_target">Выбрать цель для программ</string>
     <string name="programs_recursive">Команда не будет повторяться. Она выполнится однократно</string>
     <string name="programs_leave">Команда будет выполняться каждый раз, когда Вы покидаете дом</string>
@@ -57,7 +57,7 @@
     <string name="command_send">Отправить команду</string>
     <string name="command_inserted">Новая программа была сохранена</string>
     <string name="command_inserted_fail">Ошибка сохранения программы </string>
-    <string name="compatible">поддерживаемые типажи</string>
+    <string name="compatible">поддерживаемых устройств</string>
     <string name="to_all">для всех</string>
     <string name="to">для</string>
     <string name="on_node">на узле</string>
@@ -101,13 +101,13 @@
     <string name="menu_addFav">Добавить в избранное</string>
     <string name="menu_rename">Переименовать узел</string>
     <string name="menu_changenodeicon">Сменить иконку узла</string>
-    <string name="menu_changetypicon">Сменить иконку типажа</string>
-    <string name="rename_typical">Переименовать типаж</string>
+    <string name="menu_changetypicon">Сменить иконку устройтва</string>
+    <string name="rename_typical">Переименовать устройство</string>
 
     <!-- TEST_UDP -->
     <string name="test_health">Запрос состояния узла используется для определения состояния связи</string>
     <string name="test_typ_title">TypReq</string>
-    <string name="test_typ">Однократно запросить типажи, без подписки</string>
+    <string name="test_typ">Однократно запросить устройства, без подписки</string>
     <string name="test_poll">Запросить однократно данные всей сети souliss, без подписки</string>
     <string name="test_ping">Команда Ping для проверки связи с Souliss </string>
     <string name="manual_title">Ручной режим</string>
@@ -120,12 +120,12 @@
     <string name="manual_id_prompt">Выбрать  ID узла</string>
     <string name="manual_slot_prompt">Выбрать слот</string>
     <string name="icon_select">Выбрать иконку</string>
-    <string name="manual_showing_typ">Отображаемые свойства типажа: </string>
+    <string name="manual_showing_typ">Отображаемые свойства устройства: </string>
     <string name="manual_desc">Отправить команду устройству сети Souliss вручную. Кликнуть узел, чтобы открыть свойства, долгое нажатие для редактирования</string>
     <string name="manual_litfrom">Включено %1$с назад</string>
     <string name="manual_tyinf">Это устройство работало %1$с в последнием месяце</string>
     <string name="node_empty">Узел пуст!</string>
-    <string name="node_empty_desc">Этот узел не содержит типажей. Если должен содержать, попробуйте обновить структуру ДБ в настройках</string>
+    <string name="node_empty_desc">Этот узел не содержит устройств. Если должен содержать, попробуйте обновить структуру ДБ в настройках</string>
     <!-- WIDGET -->
     <string name="widget_cantsave">Устройство пусто/не выбрано</string>
     <!-- SERVICE -->
@@ -167,7 +167,7 @@
     <string name="opt_loghist_desc">Сохранять все изменения состояний устройств</string>
     <string name="opt_loghist">История включена</string>
     <string name="opt_dbinfo">Состояние БД</string>
-    <string name="opt_dbinfo_desc">%1$d узлов Souliss сохранено в БД, всего %2$d типажей.</string>
+    <string name="opt_dbinfo_desc">%1$d узлов Souliss сохранено в БД, всего %2$d устройств.</string>
     <string name="opt_invalidAddress">Неверный адрес!!</string>
     <string name="title_edittext_IP">Локальный адрес Souliss (обязательно)</string>
     <string name="summary_edittext_IP">Введите адрес Souliss бриджа, IP адрес узла когда используется домашняя сеть</string>
@@ -263,7 +263,7 @@
     <string name="Souliss_TRGB_sleep">Сон</string>
     <string name="Souliss_TRGB_flash">Вспышка</string>
     <string name="Souliss_TRGB_white">Белый</string>
-    <string name="Souliss_TRGB_eq">Минимум: %1$с Среднее: %2$с Максимум: %3$с</string>
+    <string name="Souliss_TRGB_eq">Минимум: %1$s Среднее: %2$s Максимум: %3$s</string>
     <string name="Souliss_emptycmd_desc">Команда не выбрана</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_20_desc">Режим: Авто - 20°</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Auto_24_desc">Режим: Авто - 24°</string>
