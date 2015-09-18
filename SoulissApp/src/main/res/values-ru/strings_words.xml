@@ -35,8 +35,8 @@
     <string name="close">Close</string>
     <string name="stop">стоп</string>
     <string name="toggle">переключить</string>
-    <string name="TurnON">Turn On</string>
-    <string name="TurnOFF">Turn Off</string>
+    <string name="TurnON">включить</string>
+    <string name="TurnOFF">выключить</string>
     <string name="mode">Mode</string>
     <string name="fan">Fan</string>
     <string name="red">Red</string>

@@ -87,7 +87,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaScenesView);
-		SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
+
+		//SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {

@@ -2,6 +2,7 @@ package it.angelic.soulissclient;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Looper;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,6 +34,7 @@ import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 
@@ -43,7 +45,7 @@ import it.angelic.soulissclient.net.UDPHelper;
  * @author Ale
  */
 public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity {
-    private static final int REQUEST_OK = 1;
+
     SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
     private Toolbar actionBar;
 
@@ -94,7 +96,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
             try {
-                startActivityForResult(i, REQUEST_OK);
+                startActivityForResult(i, Constants.VOICE_REQUEST_OK);
             } catch (Exception e) {
                 Toast.makeText(this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
             }
@@ -106,23 +108,39 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_OK && resultCode == RESULT_OK) {
+        if (requestCode == Constants.VOICE_REQUEST_OK && resultCode == RESULT_OK) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    Looper.prepare();
                     ArrayList<String> thingsYouSaid = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     // ((TextView)findViewById(R.id.text1)).setText(thingsYouSaid.get(0));
                     final String yesMan = thingsYouSaid.get(0).toLowerCase();
-                    Log.i(Constants.TAG, "onActivityResult, searching command");
+                    Log.i(Constants.TAG, "onActivityResult, searching command: " + yesMan);
                     final StringBuilder comandToSend = new StringBuilder();
-                    if (yesMan.contains(getString(R.string.TurnON).toLowerCase())) {
+                    if (yesMan.contains(getString(R.string.execute).toLowerCase()) &&
+                            yesMan.contains(getString(R.string.scene).toLowerCase())) {
+                        //capisci scena, eseguila e ciao
+                        SoulissDBHelper db = new SoulissDBHelper(AbstractStatusedFragmentActivity.this);
+                        for (SoulissScene scenario : db.getScenes(AbstractStatusedFragmentActivity.this)) {
+                            if (yesMan.contains(scenario.getName().toLowerCase()) || yesMan.contains((String.valueOf(scenario.getId())))) {
+                                Log.w(Constants.TAG, "Voice activated Scenario:!! :" + scenario.getName());
+                                Toast.makeText(AbstractStatusedFragmentActivity.this, getString(R.string.command_sent), Toast.LENGTH_LONG).show();
+                                scenario.execute();
+                                return;
+                            }
+                        }
+                    } else if (yesMan.contains(getString(R.string.TurnON).toLowerCase())) {
                         comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
                     } else if (yesMan.contains(getString(R.string.TurnOFF).toLowerCase())) {
                         comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
+                    } else if (yesMan.contains(getString(R.string.open).toLowerCase())) {
+                        comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T2n_OpenCmd);
+                    } else if (yesMan.contains(getString(R.string.close).toLowerCase())) {
+                        comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T2n_OpenCmd);
                     }
 
                     if (comandToSend.length() > 0) {//se c'e un comando
-
                         Log.i(Constants.TAG, "Command recognized:" + yesMan);
                         SoulissDBHelper db = new SoulissDBHelper(AbstractStatusedFragmentActivity.this);
                         List<SoulissNode> nodes = db.getAllNodes();
@@ -130,14 +148,19 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                             List<SoulissTypical> tippi = premio.getTypicals();
                             for (final SoulissTypical treppio : tippi) {
                                 if (treppio.getName() != null && yesMan.contains(treppio.getName().toLowerCase())) {
-                                    Log.i(Constants.TAG, "Voice Command SENT!! :" + treppio.getName());
-                                    Toast.makeText(AbstractStatusedFragmentActivity.this, getString(R.string.command_sent), Toast.LENGTH_LONG).show();
 
-                                    if (yesMan.contains(getString(R.string.all)))
+
+                                    if (yesMan.contains(getString(R.string.all))) {
                                         UDPHelper.issueMassiveCommand("" + treppio.getTypical(), opzioni, comandToSend.toString());
-                                    else
+                                        Log.i(Constants.TAG, "Voice MASSIVE Command SENT: " + treppio.getName());
+                                        Toast.makeText(AbstractStatusedFragmentActivity.this, getString(R.string.command_sent), Toast.LENGTH_LONG).show();
+                                        return;//uno basta e avanza
+                                    } else {
                                         UDPHelper.issueSoulissCommand("" + premio.getId(), "" + treppio.getSlot(), opzioni, comandToSend.toString());
-                                    return;
+                                        Log.i(Constants.TAG, "Voice Command SENT: " + treppio.getName());
+                                        Toast.makeText(AbstractStatusedFragmentActivity.this, getString(R.string.command_sent), Toast.LENGTH_LONG).show();
+                                    }
+
                                 }
 
 
