@@ -335,4 +335,7 @@
     <string name="warn_connection">Connection not available</string>
     <string name="warn_wifi">Can\'t use local address without WI-FI connection!</string>
     <string name="widget_cantupdate">Error retrieving Typical</string>
+    <string name="opt_voice_command">Voice Command</string>
+    <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
+    <string name="voice_command">Voice Command</string>
 </resources>

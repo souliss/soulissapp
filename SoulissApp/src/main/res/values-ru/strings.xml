@@ -338,5 +338,7 @@
     <string name="opt_udpport">UDP Порт</string>
     <string name="warnmeifon">Оповещать меня, если включено более, чем (часов)</string>
     <string name="widget_cantupdate">Ошибка при поиске Устройства</string>
-
+    <string name="opt_voice_command">Voice Command</string>
+    <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
+    <string name="voice_command">Voice Command</string>
 </resources>

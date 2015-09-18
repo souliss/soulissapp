@@ -87,7 +87,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaScenesView);
-		SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
+
+		//SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +229,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.scenelist_menu, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 
 	}
 	

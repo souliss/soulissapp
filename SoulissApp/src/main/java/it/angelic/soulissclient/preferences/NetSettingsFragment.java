@@ -17,7 +17,7 @@ import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.widget.Toast;
 
-@TargetApi(11)
+
 public class NetSettingsFragment extends PreferenceFragment {
 
 	private SoulissPreferenceHelper opzioni;

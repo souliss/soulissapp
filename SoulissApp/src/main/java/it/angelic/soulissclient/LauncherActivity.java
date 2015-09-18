@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +41,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ObservableScrollView;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +87,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             opzioni.getAndSetCachedAddress();
         }
     };
+    private ObservableScrollView scrollView;
     // meccanismo per network detection
     private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
         @Override
@@ -262,8 +267,27 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         cardViewPositionInfo = (CardView) findViewById(R.id.dbAndPositionCard);
         cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
         cardViewFav = (CardView) findViewById(R.id.TagsCard);
+        scrollView = (ObservableScrollView) findViewById(R.id.launcherScrollView);
         // previously invisible view
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (opzioni.isVoiceCommandEnabled()) {
+            fab.attachToScrollView(scrollView);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
+                    try {
+                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
+                    } catch (Exception e) {
+                        Toast.makeText(LauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            fab.hide();
+        }
 
         // gestore timeout dei comandi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -470,7 +494,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -713,7 +737,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         if (provider != null) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
                 // here to request the missing permissions, and then overriding
@@ -722,9 +746,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 // to handle the case where the user grants the permission. See the documentation
                 // for Activity#requestPermissions for more details.
                 //return;
-            }else
-            locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                    Constants.POSITION_UPDATE_MIN_DIST, this);
+            } else
+                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                        Constants.POSITION_UPDATE_MIN_DIST, this);
         }
 
         autoUpdate = new Timer();
@@ -758,7 +782,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         autoUpdate.cancel();
         dbwarnline.clearAnimation();
         timeoutHandler.removeCallbacks(timeExpired);
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
@@ -878,13 +902,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     + "</b>)"));
             // ogni minuto, minimo 100 metri
 
-                // TODO: Consider calling
-                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
 
             locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                     Constants.POSITION_UPDATE_MIN_DIST, this);
