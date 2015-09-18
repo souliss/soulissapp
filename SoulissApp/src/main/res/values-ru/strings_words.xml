@@ -7,7 +7,7 @@
     <string name="souliss_unavailable">Souliss недоступна!</string>
     <string name="notconfigured">Souliss <b>ещё не конфигурирована</b> , необходим локальный IP адрес</string>
     <string name="health">ЗДОРОВЬЕ:</string>
-    <string name="status">СОСТОЯНИЕ:</string>
+    <string name="status">СОСТ:</string>
     <string name="update">ОБНОВЛЕН:</string>
     <string name="actions">ДЕЙСТВИЯ:</string>
     <string name="node">Узел</string>
@@ -27,7 +27,7 @@
     <string name="scene">Сцена</string>
     <string name="rename">Переименовать</string>
     <string name="reset">Ресет</string>
-    <string name="typical">Устройство</string>
+    <string name="typical">Типаж</string>
     <string name="ON">ВКЛ</string>
     <string name="power">Сеть</string>
     <string name="OFF">ВЫКЛ</string>
