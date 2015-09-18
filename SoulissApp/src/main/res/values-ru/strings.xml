@@ -114,7 +114,7 @@
     <string name="manual_force">Принудительное выполнение команд. Необходимо указывать целевой узел и слот</string>
     <string name="manual_cmd_hint">команда</string>
     <string name="manual_slot">Слот</string>
-    <string name="manual_typicals">типаж</string>
+    <string name="manual_typicals">устройство</string>
     <string name="inserire_almeno">Выберите ID узла, слот и введите команду</string>
     <string name="db_notempty">БД не пуста. Обнулить БД</string>
     <string name="manual_id_prompt">Выбрать  ID узла</string>
@@ -273,7 +273,7 @@
     <string name="Souliss_T_IrCom_AirCon_Pow_Fan_desc">Режи: Только вентилятор</string>
     <string name="Souliss_T_IrCom_AirCon_Pow_Dry_desc">Режим: Осушения</string>
     <!-- EULA -->
-    <string name="eula_title">Лицензия d\'Uso</string>
+    <string name="eula_title">Пользовательское Соглашение</string>
     <string name="eula_accept">Принимаю</string>
     <string name="eula_refuse">Отклоняю</string>
     <string name="programs_warn_trigger_notset">Вы должны выбрать входящий тригер и пороговое значение</string>
@@ -338,7 +338,7 @@
     <string name="opt_udpport">UDP Порт</string>
     <string name="warnmeifon">Оповещать меня, если включено более, чем (часов)</string>
     <string name="widget_cantupdate">Ошибка при поиске Устройства</string>
-    <string name="opt_voice_command">Voice Command</string>
-    <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
-    <string name="voice_command">Voice Command</string>
+    <string name="opt_voice_command">Голосовая команда</string>
+    <string name="opt_voice_command_desc">Запускайте сценарии и посылайте команды голосом. Подробности</string>
+    <string name="voice_command">Голосовая команда</string>
 </resources>
