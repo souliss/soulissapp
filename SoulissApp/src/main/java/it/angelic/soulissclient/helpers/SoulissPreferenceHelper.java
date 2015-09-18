@@ -60,6 +60,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	private float eqLow;
 	private float eqMed;
 	private float eqHigh;
+	private boolean voiceCommandEnabled;
 	private boolean webserverEnabled;
 	private int homeThold;
 	private boolean broadCastEnabled;
@@ -133,6 +134,7 @@ public class SoulissPreferenceHelper implements Serializable {
 		dataServiceEnabled = prefs.getBoolean("checkboxService", false);
 		fahrenheitChosen = prefs.getBoolean("checkboxFahrenheit", false);
 		webserverEnabled = prefs.getBoolean("webserverEnabled", false);
+		voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", false);
 		userIndex = prefs.getInt("userIndex", -1);
 		nodeIndex = prefs.getInt("nodeIndex", -1);
 		UDPPort = prefs.getInt("udpport", it.angelic.soulissclient.net.Constants.DEFAULT_SOULISS_PORT);
@@ -356,6 +358,10 @@ public class SoulissPreferenceHelper implements Serializable {
 
 	public boolean isDataServiceEnabled() {
 		return dataServiceEnabled;
+	}
+
+	public boolean isVoiceCommandEnabled() {
+		return voiceCommandEnabled;
 	}
 	
 	public boolean isRgbSendAllDefault() {

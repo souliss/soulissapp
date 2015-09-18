@@ -82,11 +82,13 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.ctx_menu_voice, menu);
+        if (opzioni.isVoiceCommandEnabled()) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.ctx_menu_voice, menu);
+
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -94,7 +96,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.voiceCommand) {
             Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
+            i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            i.putExtra(RecognizerIntent.EXTRA_PROMPT, "name one of your devices and a command, such as turn on/off, open, close");
             try {
                 startActivityForResult(i, Constants.VOICE_REQUEST_OK);
             } catch (Exception e) {
@@ -148,8 +151,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                             List<SoulissTypical> tippi = premio.getTypicals();
                             for (final SoulissTypical treppio : tippi) {
                                 if (treppio.getName() != null && yesMan.contains(treppio.getName().toLowerCase())) {
-
-
                                     if (yesMan.contains(getString(R.string.all))) {
                                         UDPHelper.issueMassiveCommand("" + treppio.getTypical(), opzioni, comandToSend.toString());
                                         Log.i(Constants.TAG, "Voice MASSIVE Command SENT: " + treppio.getName());

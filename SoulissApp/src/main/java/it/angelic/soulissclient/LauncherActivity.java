@@ -271,26 +271,23 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // previously invisible view
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToScrollView(scrollView);
-        //fab.attachToListView(scrollView);
-        // SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
-
-        //ADD NEW SCENE
-        fab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
-                try {
-                    startActivityForResult(i, Constants.VOICE_REQUEST_OK);
-                } catch (Exception e) {
-                    Toast.makeText(LauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+        if (opzioni.isVoiceCommandEnabled()) {
+            fab.attachToScrollView(scrollView);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
+                    try {
+                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
+                    } catch (Exception e) {
+                        Toast.makeText(LauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+                    }
                 }
-
-            }
-        });
-
+            });
+        } else {
+            fab.hide();
+        }
 
         // gestore timeout dei comandi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

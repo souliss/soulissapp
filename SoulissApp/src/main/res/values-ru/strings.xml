@@ -338,5 +338,8 @@
     <string name="opt_udpport">UDP Port</string>
     <string name="warnmeifon">Warn me if turned on for more than (hours)</string>
     <string name="widget_cantupdate">Error retrieving Typical</string>
+    <string name="opt_voice_command">Voice Command</string>
+    <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
+    <string name="voice_command">Voice Command</string>
 
 </resources>

@@ -340,5 +340,8 @@
     <string name="opt_fahrenheit">Usa Fahrenheit</string>
     <string name="Souliss_T1A_desc">Stati</string>
     <string name="offline">Offline</string>
+    <string name="opt_voice_command">Voice Command</string>
+    <string name="opt_voice_command_desc">Esegui scenari e comandi con la voce. Per maggiori informazioni, visita il wiki di Souliss</string>
+    <string name="voice_command">Voice Command</string>
 
 </resources>
