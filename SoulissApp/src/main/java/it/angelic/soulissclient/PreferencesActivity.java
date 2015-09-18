@@ -110,8 +110,8 @@ public class PreferencesActivity extends PreferenceActivity {
             setTheme(R.style.DarkThemeSelector);*/
         super.onCreate(savedInstanceState);
 
-        ListView v = getListView();
-        v.setCacheColorHint(0);
+        //ListView v = getListView();
+       // v.setCacheColorHint(0);
 
     }
 
@@ -122,7 +122,7 @@ public class PreferencesActivity extends PreferenceActivity {
         //setActionBarInfo(getString(R.string.app_opt));
         //currentScreen = getIntent().getExtras().getString("opt_screen");
         ListView v = getListView();
-        v.setCacheColorHint(0);
+      //  v.setCacheColorHint(0);
         //LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
         //bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.custom_actionbar, root, false);
         //root.addView(bar, 0); // insert at top
