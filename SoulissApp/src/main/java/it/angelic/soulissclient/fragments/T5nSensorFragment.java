@@ -19,10 +19,7 @@ import java.util.Set;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
-import org.achartengine.chart.BarChart;
-import org.achartengine.chart.BubbleChart;
 import org.achartengine.chart.CombinedXYChart;
-import org.achartengine.chart.CubicLineChart;
 import org.achartengine.chart.LineChart;
 import org.achartengine.chart.RangeBarChart;
 import org.achartengine.model.RangeCategorySeries;

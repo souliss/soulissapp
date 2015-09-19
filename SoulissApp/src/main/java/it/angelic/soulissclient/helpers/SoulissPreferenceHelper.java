@@ -159,11 +159,6 @@ public class SoulissPreferenceHelper implements Serializable {
 			ListDimensTesto = 14;
 		}
 
-		/*
-		 * try { cachedInet = InetAddress.getByName(IPPreference); } catch
-		 * (UnknownHostException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
 	}
 
 	public void clearCachedAddress() {
@@ -402,8 +397,7 @@ public class SoulissPreferenceHelper implements Serializable {
 	}
 
 	public double getHomeLongitude() {
-		double ret = Double.parseDouble(customCachedPrefs.getString("homelongitude", "0"));
-		return ret;
+		return Double.parseDouble(customCachedPrefs.getString("homelongitude", "0"));
 	}
 
 	public void setCachedAddr(String cachedAd) {

@@ -82,8 +82,8 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
         } catch (Exception ex) {
             Log.e(Constants.TAG, ex.toString());
             ex.printStackTrace();
+            return false;
         }
-
         return true;
     }
 

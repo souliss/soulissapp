@@ -20,7 +20,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -461,7 +460,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                 // MERGE
                 if (collected != null)
                     programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
-                programToSave.getCommandDTO().persistCommand(datasource);
+                programToSave.getCommandDTO().persistCommand();
 
                 if (radioTrigger.isChecked()) {// TRIGGER
                     SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());

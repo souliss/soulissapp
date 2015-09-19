@@ -8,9 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.util.Log;
-
-import static it.angelic.soulissclient.Constants.TAG;
 
 public class DbSettingsFragment extends PreferenceFragment {
 

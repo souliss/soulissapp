@@ -308,10 +308,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
         // Log.w(TAG, "WARNTEST");
         if (opzioni.isLightThemeSelected()) {
-         /*   cardViewBasicInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light) );
+            cardViewBasicInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light) );
             cardViewPositionInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
             cardViewServiceInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
-            cardViewFav.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));*/
+            cardViewFav.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
         }
 
 

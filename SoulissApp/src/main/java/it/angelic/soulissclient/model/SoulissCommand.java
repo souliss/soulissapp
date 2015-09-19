@@ -2,7 +2,6 @@ package it.angelic.soulissclient.model;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
-import android.util.Log;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -162,7 +161,6 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     @Override
     public void execute() {
         SoulissCommandDTO dto = getCommandDTO();
-        Context ctx = SoulissClient.getAppContext();
         Calendar now = Calendar.getInstance();
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
             //inrealta devo eseguire una scena, non questo comando
@@ -194,19 +192,11 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         //in base al tipo, segno ultima esecuzione
         if (getType() == it.angelic.soulissclient.Constants.COMMAND_TIMED
                 && now.after(getCommandDTO().getScheduledTime())) {
-            // esegui comando
-            Log.w(Constants.TAG, "issuing command: " + toString());
-            //UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
             getCommandDTO().setExecutedTime(now);
-
         } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_COMEBACK_CODE) {
-            Log.w(Constants.TAG, "issuing COMEBACK command: " + toString());
-            // UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
             getCommandDTO().setExecutedTime(now);
             getCommandDTO().setSceneId(null);
         } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_GOAWAY_CODE) {
-            Log.w(Constants.TAG, "issuing GOAWAY command: " + toString());
-            // UDPHelper.issueSoulissCommand(this, SoulissClient.getOpzioni());
             getCommandDTO().setExecutedTime(now);
             getCommandDTO().setSceneId(null);
         }

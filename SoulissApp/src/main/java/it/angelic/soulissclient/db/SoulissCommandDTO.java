@@ -46,9 +46,9 @@ public class SoulissCommandDTO implements Serializable {
     }
 
     /**
-     * @return FIXME: non deve prendere parametri
+     * @return
      */
-    public long persistCommand(SoulissDBHelper dbh) {
+    public long persistCommand( ) {
         ContentValues values = new ContentValues();
         // assert (typicalIN.getSlot() != -1);
         if (commandId != null)

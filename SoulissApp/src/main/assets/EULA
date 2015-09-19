@@ -7,9 +7,17 @@ Please refer to www.souliss.net for more information
 
 CHANGES:
 
+1.5.4
+send commands with voice
+TAGs are now backed-up when saving DB
+Fixed bugs: #1, #2, #64, #65, #66
+german translation (thanks to Niels)
+better tag images handling
+added fahreneit conversions
+
 1.5.3
 Bugfixes #17
-Russian and polish translations
+Russian and polish (thanks Damian) translations
 Switches
 
 1.5.2

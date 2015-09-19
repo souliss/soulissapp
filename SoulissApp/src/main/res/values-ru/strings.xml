@@ -122,8 +122,8 @@
     <string name="icon_select">Выбрать иконку</string>
     <string name="manual_showing_typ">Отображаемые свойства устройства: </string>
     <string name="manual_desc">Отправить команду устройству сети Souliss вручную. Кликнуть узел, чтобы открыть свойства, долгое нажатие для редактирования</string>
-    <string name="manual_litfrom">Включено %1$с назад</string>
-    <string name="manual_tyinf">Это устройство работало %1$с в последнием месяце</string>
+    <string name="manual_litfrom">Включено %1$s назад</string>
+    <string name="manual_tyinf">Это устройство работало %1$s в последнием месяце</string>
     <string name="node_empty">Узел пуст!</string>
     <string name="node_empty_desc">Этот узел не содержит устройств. Если должен содержать, попробуйте обновить структуру ДБ в настройках</string>
     <!-- WIDGET -->
@@ -341,4 +341,5 @@
     <string name="opt_voice_command">Voice Command</string>
     <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
     <string name="voice_command">Voice Command</string>
+    <string name="opt_get_nodes">Get Souliss Nodes</string>
 </resources>

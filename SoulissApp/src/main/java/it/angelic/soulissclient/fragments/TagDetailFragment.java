@@ -48,7 +48,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
-
 import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
@@ -190,7 +189,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 R.color.std_blue_shadow);
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        swipeLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshContainer);
+        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
         LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
 
         //mLayoutManager = new LinearLayoutManager(getActivity());
@@ -206,15 +205,15 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals,tagId);
+        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals, tagId);
         HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
         View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
         layoutManagerFixed.setHeaderIncrementFixer(header);
         mLogoIcon = (ImageView) header.findViewById(R.id.imageTagIcon);
-        if(collectedTag.getIconResourceId() != 0)
-        mLogoIcon.setImageResource(collectedTag.getIconResourceId());
+        if (collectedTag.getIconResourceId() != 0)
+            mLogoIcon.setImageResource(collectedTag.getIconResourceId());
         mLogoImg = (ImageView) header.findViewById(R.id.photo);
         bro = (TextView) header.findViewById(R.id.tagTextView);
         fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
@@ -273,15 +272,17 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
             File picture = new File(getRealPathFromURI(Uri.parse(collectedTag.getImagePath())));
 
-           // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
-           if (picture.exists()) {
+            // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+            if (picture.exists()) {
                 //ImageView imageView = (ImageView)findViewById(R.id.imageView);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
-               // Bitmap resized = Bitmap.createScaledBitmap(yourBitmap, newWidth, newHeight, true);
+                if (myBitmap.getHeight() > mRecyclerView.getWidth())
+                    myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth()/2, myBitmap.getHeight()/2, true);
                 Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                 mLogoImg.setImageBitmap(myBitmap);
+
             }
            /* try {
                 mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
@@ -307,7 +308,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         switch (item.getItemId()) {
             case R.id.eliminaTag:
                 SoulissTypical soulissTypical = collectedTagTypicals.get(position);
-                Log.i(Constants.TAG, "DELETE TYP POS:"+position);
+                Log.i(Constants.TAG, "DELETE TYP POS:" + position);
                 datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
                 collectedTagTypicals.remove(position);
                 parallaxExtAdapter.setData(collectedTagTypicals);
@@ -376,7 +377,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     }
 
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -432,26 +432,24 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     }
 
-    
 
     public static String getRealPathFromURI(Uri contentUri) {
         String res = null;
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = SoulissClient.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
         }
         cursor.close();
         return res;
-        
+
     }
 
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
         LINEAR_LAYOUT_MANAGER
     }
-
 
 
 }

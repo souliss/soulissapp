@@ -106,26 +106,26 @@
             android:icon="@drawable/remote"
             android:label="@string/app_name"
             android:parentActivityName=".LauncherActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow"/>
         <activity
             android:name="SceneListActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
             android:parentActivityName=".LauncherActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow"/>
         <activity
             android:name="SceneDetailActivity"
             android:icon="@drawable/lamp"
             android:label="@string/app_name"
             android:parentActivityName=".SceneListActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow"/>
 
         <activity
             android:name="TagGridActivity"
             android:icon="@drawable/warn"
             android:label="@string/app_name"
             android:parentActivityName=".LauncherActivity"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow"/>
 
         <activity
             android:name=".TagDetailActivity"

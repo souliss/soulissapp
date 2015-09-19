@@ -31,7 +31,7 @@ public class SoulissTrigger extends SoulissCommand {
     public void persist(SoulissDBHelper dbh) {
         //ripetere non nuoce, sceneId sempre nullo nei trigger
         super.getCommandDTO().setSceneId(null);
-        super.getCommandDTO().persistCommand(dbh);
+        super.getCommandDTO().persistCommand();
         triggerDto.persist(dbh);
     }
 

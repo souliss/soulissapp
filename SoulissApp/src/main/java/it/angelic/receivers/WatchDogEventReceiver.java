@@ -12,8 +12,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.Date;
-
 /**
  * Receive per controllo esecuzione servizio. Viene invocato dopo il boot, e
  * all'USER_PRESENT
@@ -46,7 +44,7 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 		}
 	}
 
-	// FIXME or error checks
+	/*
 	private boolean isMyServiceRunning(final Context ctx, ActivityManager manager) {
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			if (SoulissDataService.class.getName().equals(service.service.getClassName())) {
@@ -56,7 +54,7 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 
 		}
 		return false;
-	}
+	}*/
 
 	// FIXME or error checks
 	private boolean isWebServiceRunning(final Context ctx, ActivityManager manager) {

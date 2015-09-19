@@ -279,7 +279,7 @@ public class ScenesDialogHelper {
                             tull.getCommandDTO().setType(Constants.COMMAND_SINGLE);
                         // lo metto dopo l'ultimo inserito
                         tull.getCommandDTO().setInterval(targetScene.getCommandArray().size() + 1);
-                        tull.getCommandDTO().persistCommand(datasource);
+                        tull.getCommandDTO().persistCommand();
                         // setta comando singolo
 
                         if (list != null) {

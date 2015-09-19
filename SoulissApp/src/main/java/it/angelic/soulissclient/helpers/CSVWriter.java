@@ -144,24 +144,11 @@ public class CSVWriter {
 
    }
 
-   /**
-    * Flush underlying stream to writer.
-    *
-    * @throws IOException if bad things happen
-    */
-   public void flush() throws IOException {
-
-       pw.flush();
-
-   }
 
    /**
     * Close the underlying stream writer flushing any buffered content.
-    *
-    * @throws IOException if bad things happen
-    *
     */
-   public void close() throws IOException {
+   public void close()  {
        pw.flush();
        pw.close();
    }

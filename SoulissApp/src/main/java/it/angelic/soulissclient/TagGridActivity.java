@@ -20,14 +20,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import junit.framework.Assert;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -139,7 +137,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
 
         datasource = new SoulissDBTagHelper(this);
-        datasource.open();
+        SoulissDBHelper.open();
         // prendo comandi dal DB, setto adapter
         List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
         tags = new SoulissTag[goer.size()];

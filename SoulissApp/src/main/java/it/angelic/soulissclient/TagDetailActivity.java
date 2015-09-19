@@ -34,8 +34,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.melnykov.fab.FloatingActionButton;
-
 import java.sql.SQLDataException;
 import java.util.List;
 import java.util.Map;
@@ -151,10 +149,6 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                     super.onRejectSharedElements(rejectedSharedElements);
                 }
 
-                @Override
-                public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
-                    super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
-                }
             });
         }catch (Exception uie){
             Log.e(Constants.TAG,"UIE:"+uie.getMessage());
@@ -251,12 +245,11 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 TextView mProductText = (TextView) findViewById(R.id.TextViewTypicalsTitle);
 
                 // Add Fragment B
-                FragmentTransaction ftt = manager.beginTransaction()
+                 manager.beginTransaction()
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
-                        .addSharedElement(mProductText, "hero_title");//NOT WORK
+                        .addSharedElement(mProductText, "hero_title").commit();//NOT WORK
                 //.addSharedElement(mProductText, "ToolbarText");
-                ftt.commit();
             } else {
                 // if (opzioni.isAnimationsEnabled())
                 //     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);

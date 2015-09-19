@@ -63,8 +63,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 
     public ArrayList<SoulissCommand> getCommands(Context ctx) {
         // to be overridden
-        ArrayList<SoulissCommand> ret = new ArrayList<>();
-        return ret;
+        return new ArrayList<SoulissCommand>();
     }
 
     public

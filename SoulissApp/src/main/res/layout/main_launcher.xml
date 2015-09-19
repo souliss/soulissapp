@@ -51,6 +51,7 @@
                             android:elevation="2dp"
                             android:freezesText="false"
                             android:text="@string/scenes_title"
+                            android:maxLines="1"
                             android:transitionName="helloScenes" />
 
                         <Button
@@ -63,6 +64,7 @@
                             android:drawingCacheQuality="high"
                             android:elevation="2dp"
                             android:text="@string/programs_title"
+                            android:maxLines="1"
                             android:transitionName="helloPrograms" />
 
                         <Button
@@ -74,6 +76,7 @@
                             android:drawableTop="@drawable/hand"
                             android:elevation="2dp"
                             android:text="@string/manual_title"
+                            android:maxLines="1"
                             android:transitionName="helloManual" />
                     </TableRow>
 

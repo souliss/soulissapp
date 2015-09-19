@@ -10,7 +10,7 @@
             android:name="createdb"
             android:key="createdb"
             android:summary=""
-            android:title="Get Souliss Nodes" />
+            android:title="@string/opt_get_nodes" />
         <Preference
             android:name="dropdb"
             android:key="dropdb"

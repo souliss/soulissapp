@@ -224,7 +224,7 @@ public class AlertDialogGridHelper {
      * @param ctx        used to invalidate views
      * @param datasource to store new value
      * @param toRename
-     * @return //TODO rivedere parametri
+     * @return
      */
     public static void removeTagDialog(final Context cont, final TagRecyclerAdapter ctx, final SoulissDBTagHelper datasource,
                                        final SoulissTag toRename, final SoulissPreferenceHelper opts) {

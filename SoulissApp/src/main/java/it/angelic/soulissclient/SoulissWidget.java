@@ -7,8 +7,6 @@ import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical52TemperatureSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import android.app.Activity;
@@ -67,6 +65,11 @@ public class SoulissWidget extends AppWidgetProvider {
                         updateViews.setTextViewText(R.id.wid_info,
                                 tgt.getOutputDesc());
                     } else
+
+                    if (tgt instanceof ISoulissTypicalSensor)
+                        //TODO change to effective output
+                        updateViews.setTextViewText(R.id.wid_info, ""+(((ISoulissTypicalSensor)tgt).getOutputFloat()));
+                    else
                         updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
                 }catch (Exception ee) {
                     updateViews.setTextViewText(R.id.button1, name);

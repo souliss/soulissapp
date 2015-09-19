@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.model.typicals;
 
 import android.content.Context;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;

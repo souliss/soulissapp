@@ -153,8 +153,7 @@ public class NodeDetailFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.frag_nodedetail, container, false);
-        return ret;
+        return inflater.inflate(R.layout.frag_nodedetail, container, false);
     }
 
     @Override

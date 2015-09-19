@@ -246,11 +246,6 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		return;
 	}
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-
 	// Aggiorna il feedback
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
 		@Override

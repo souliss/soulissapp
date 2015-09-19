@@ -224,8 +224,6 @@ public class AlertDialogHelper {
                                 editor.remove("numNodi");
                             if (soulissCust.contains("numTipici"))
                                 editor.remove("numTipici");
-                            // Toast.makeText(source, "Souliss DB Deleted",
-                            // Toast.LENGTH_SHORT).show();
                             editor.commit();
                             Log.w(TAG, "Souliss DB dropped");
                             // source.finish();
@@ -233,7 +231,6 @@ public class AlertDialogHelper {
                                     PreferencesActivity.class);
 
                             preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
-                            // preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
                             preferencesActivity.setAction("db_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

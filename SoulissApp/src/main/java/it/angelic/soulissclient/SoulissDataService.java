@@ -1,5 +1,6 @@
 package it.angelic.soulissclient;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -7,6 +8,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.location.Criteria;
@@ -20,6 +22,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -118,7 +121,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                 // esegui comando
                                 Log.w(TAG, "issuing command: " + unexnex.toString());
                                 unexnex.execute();
-                                unexnex.getCommandDTO().persistCommand(db);
+                                unexnex.getCommandDTO().persistCommand();
                                 // Se ricorsivo, ricrea
                                 if (unexnex.getCommandDTO().getInterval() > 0) {
 
@@ -132,7 +135,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                     cop.add(Calendar.SECOND, unexnex.getCommandDTO().getInterval());
                                     nc.getCommandDTO().setScheduledTime(cop);
                                     nc.getCommandDTO().setType(Constants.COMMAND_TIMED);
-                                    nc.getCommandDTO().persistCommand(db);
+                                    nc.getCommandDTO().persistCommand();
                                     Log.w(TAG, "recreate recursive command");
                                 }
                                 sendProgramNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
@@ -330,11 +333,23 @@ public class SoulissDataService extends Service implements LocationListener {
         Log.w(TAG, "Service Destroy!! " + opts.getBackedOffServiceIntervalMsec());
         mHandler.removeCallbacks(mUpdateSoulissRunnable);
         //db.close();
-        locationManager.removeUpdates(SoulissDataService.this);
+
         if (udpThread != null && udpThread.isAlive()) {
             udpThread.interrupt();
             Log.w(TAG, "UDP Interrupt");
         }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        locationManager.removeUpdates(SoulissDataService.this);
     }
 
     @Override
@@ -494,7 +509,7 @@ public class SoulissDataService extends Service implements LocationListener {
                         if (soulissCommand.getType() == Constants.COMMAND_COMEBACK_CODE) {
                             Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
                             soulissCommand.execute();
-                            soulissCommand.getCommandDTO().persistCommand(db);
+                            soulissCommand.getCommandDTO().persistCommand();
                             sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
                                     soulissCommand.toString() + " " + soulissCommand.getParentTypical().getNiceName(), R.drawable.exit, soulissCommand);
                         }
@@ -516,7 +531,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString());
 
                             soulissCommand.execute();
-                            soulissCommand.getCommandDTO().persistCommand(db);
+                            soulissCommand.getCommandDTO().persistCommand();
                             sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
                                     soulissCommand.getNiceName(), R.drawable.exit, soulissCommand);
                         }
