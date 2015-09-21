@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widgetcontainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dip"
+    android:background="@drawable/widget_shape"
+    android:orientation="vertical"
+    android:padding="4dip" >
+
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:drawable/ic_btn_speak_now"
+        android:gravity="center"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        tools:text="button1" />
+
+    <TextView
+        android:id="@+id/wid_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:elevation="2dp"
+        android:shadowRadius="2"
+        android:textColor="@color/white"
+        tools:text="Use one of your scenes' name, or a command (turn on, turn off, etc.) followed by a device's name">
+    </TextView>
+
+</RelativeLayout>

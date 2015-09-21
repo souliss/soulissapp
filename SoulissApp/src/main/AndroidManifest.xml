@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="it.angelic.soulissclient"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     android:versionCode="147"
     android:versionName="1.5.5">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 
     <uses-feature
         android:name="android.software.app_widgets"
-        android:required="false" />
+        android:required="false"/>
 
     <application
         android:name=".SoulissApp"
@@ -30,19 +31,23 @@
         android:label="@string/app_name"
         android:process=":souliss_process">
         <activity
+            android:name=".WrapperActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoDisplay"/>
+        <activity
             android:name=".LauncherActivity"
             android:label="@string/app_name"
             android:process=":souliss_process">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
+                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT" />
+                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
             </intent-filter>
         </activity>
         <activity
@@ -51,10 +56,10 @@
             android:icon="@drawable/knife"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
+                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT" />
+                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
             </intent-filter>
         </activity>
 
@@ -62,20 +67,20 @@
             android:name="it.angelic.receivers.NetworkStateReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="it.angelic.receivers.WatchDogSetupReceiver"
             android:process=":souliss_process">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="it.angelic.receivers.WatchDogEventReceiver"
-            android:process=":souliss_process" />
+            android:process=":souliss_process"/>
 
         <activity
             android:name="it.angelic.soulissclient.NodesListActivity"
@@ -84,8 +89,8 @@
             android:label="@string/app_name"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
-                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA"/>
+                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
             </intent-filter>
         </activity>
         <activity
@@ -95,10 +100,10 @@
             android:label="@string/app_name"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
-                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT" />
+                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
             </intent-filter>
         </activity>
         <activity
@@ -134,7 +139,7 @@
             android:parentActivityName=".TagGridActivity"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
-                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA"/>
             </intent-filter>
         </activity>
         <activity
@@ -148,7 +153,7 @@
             android:icon="@drawable/remote"
             android:label="@string/Souliss_TRGB_desc">
             <intent-filter>
-                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA"/>
             </intent-filter>
         </activity>
         <activity
@@ -156,7 +161,7 @@
             android:exported="false"
             android:icon="@drawable/remote">
             <intent-filter>
-                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA"/>
             </intent-filter>
         </activity>
 
@@ -166,7 +171,7 @@
             android:icon="@drawable/light_off"
             android:label="@string/typical">
             <intent-filter>
-                <action android:name="it.angelic.SoulissClient.GOT_DATA" />
+                <action android:name="it.angelic.SoulissClient.GOT_DATA"/>
             </intent-filter>
         </activity>
 
@@ -175,12 +180,12 @@
             android:exported="false"
             android:label="@string/app_opt">
             <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA" />
+                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
@@ -193,24 +198,37 @@
         <service
             android:name="it.angelic.soulissclient.net.webserver.HTTPService"
             android:enabled="true"
-            android:process=":souliss_process" />
+            android:process=":souliss_process"/>
 
-        <receiver android:name="it.angelic.soulissclient.SoulissWidget">
+        <receiver
+            android:name="it.angelic.soulissclient.SoulissWidgetVoice"
+            android:label="Souliss Voice Command">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="it.angelic.SoulissClient.SoulissWidget.ACTION_WIDGET_RECEIVER" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="it.angelic.SoulissClient.SoulissWidget.ACTION_WIDGET_RECEIVER"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/souliss_widget" />
+                android:resource="@xml/souliss_widget_voice"/>
+        </receiver>
+
+        <receiver android:name="it.angelic.soulissclient.SoulissWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="it.angelic.SoulissClient.SoulissWidget.ACTION_WIDGET_RECEIVER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/souliss_widget"/>
         </receiver>
 
         <activity
             android:name="it.angelic.soulissclient.SoulissWidgetConfig"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
     </application>
