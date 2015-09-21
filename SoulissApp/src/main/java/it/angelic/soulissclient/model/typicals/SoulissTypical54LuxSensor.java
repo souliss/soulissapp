@@ -19,7 +19,7 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
@@ -68,9 +68,9 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return SoulissClient.getAppContext().getString(R.string.ok);
+			return SoulissApp.getAppContext().getString(R.string.ok);
 		else
-			return SoulissClient.getAppContext().getString(R.string.stale);
+			return SoulissApp.getAppContext().getString(R.string.stale);
 	}
 
 	@Override

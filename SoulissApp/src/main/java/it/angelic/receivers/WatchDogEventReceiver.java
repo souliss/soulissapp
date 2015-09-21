@@ -1,7 +1,7 @@
 package it.angelic.receivers;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.webserver.HTTPService;
@@ -24,7 +24,7 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(final Context ctx, final Intent intent) {
 		Log.d(Constants.TAG + ":WatchDog", "WatchDog.onReceive() called, looking for Souliss Dataservice");
-		SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+		SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
 		ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
 		if (opzioni.isDataServiceEnabled()) {
 			Intent eventService = new Intent(ctx, SoulissDataService.class);

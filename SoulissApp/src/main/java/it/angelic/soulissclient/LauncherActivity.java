@@ -163,7 +163,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((SoulissDataService.LocalBinder) service).getService();
             Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceIntervalMsec());
-            SoulissPreferenceHelper pref = SoulissClient.getOpzioni();
+            SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
             if (pref.isDataServiceEnabled()) {
                 //will detect if late
                 mBoundService.reschedule(false);
@@ -230,7 +230,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         opzioni.clearCachedAddress();
         opzioni.reload();
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call start, cached address reset");

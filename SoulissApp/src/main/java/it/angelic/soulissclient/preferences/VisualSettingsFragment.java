@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import android.annotation.TargetApi;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		addPreferencesFromResource(R.xml.settings_visual);
 		final Preference restoreWarns = findPreference("restoredialogs");
 		//final Preference lightThemeCheckBox = (Preference) findPreference("checkboxHoloLight");
@@ -31,7 +31,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			public boolean onPreferenceClick(Preference arg0) {
 				opzioni.setDontShowAgain(getResources().getString(R.string.dialog_disabled_db), false);
 				opzioni.setDontShowAgain(getResources().getString(R.string.dialog_disabled_service), false);
-				Toast.makeText(getActivity(), SoulissClient.getAppContext().getString(R.string.opt_dialog_restored),
+				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
 						Toast.LENGTH_SHORT).show();
 				return true;
 			}

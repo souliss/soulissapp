@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -19,7 +19,7 @@ public class AbstractTypicalFragment extends Fragment {
 
     public AbstractTypicalFragment() {
 		super();
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 	}
 
     @Override

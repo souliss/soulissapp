@@ -2,7 +2,7 @@ package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import android.content.Intent;
@@ -28,7 +28,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		PackageInfo packageInfo;
 		String strVersionName;
 

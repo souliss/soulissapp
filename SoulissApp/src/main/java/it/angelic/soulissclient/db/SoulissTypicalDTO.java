@@ -12,7 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -172,7 +172,7 @@ public class SoulissTypicalDTO implements Serializable {
      * @return
      */
     public int refresh(@NonNull SoulissTypical parent) {
-        if (SoulissClient.getOpzioni().isLogHistoryEnabled() && !(this instanceof ISoulissTypicalSensor)) {
+        if (SoulissApp.getOpzioni().isLogHistoryEnabled() && !(this instanceof ISoulissTypicalSensor)) {
             // se e` un sensore viene loggato altrove
             Cursor cursor = SoulissDBHelper.getDatabase().query(
                     SoulissDB.TABLE_TYPICALS,

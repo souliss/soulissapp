@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.preferences;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.Constants;
 import it.angelic.soulissclient.net.NetUtils;
@@ -62,7 +63,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         // String settings;
        /* if (opzioni.isLightThemeSelected()) {
             getActivity().setTheme(R.style.LightThemeSelector);
@@ -157,21 +158,27 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_passwd parameter:" + bcast_passwd.getText() + e.getMessage());
                 }
 
-                new Thread(new Runnable() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure, bcastPayload, bcast_isGateway.isChecked(), bcast_useDhcp.isChecked());
                         Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure sent");
-                        if (ssidPayload.size() > 0){
+                        if (ssidPayload.size() > 0) {
                             UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifissid, ssidPayload, null, null);
-                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifissid sent");}
-                        if (passPayload.size() > 0){
+                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifissid sent");
+                        }
+                        if (passPayload.size() > 0) {
                             UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null, null);
-                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent");}
-
-                        Toast.makeText(getContext(),R.string.command_sent,Toast.LENGTH_SHORT ).show();
+                            Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent");
+                        }
+                        StringBuilder textOut = new StringBuilder();
+                        int numSent= passPayload.size() + ssidPayload.size() + bcastPayload.size();
+                        textOut.append(SoulissApp.getAppContext().getResources().getQuantityString(R.plurals.Bytes,numSent,numSent )).append(" ");
+                        textOut.append(SoulissApp.getAppContext().getString(R.string.command_sent) );
+                        Toast.makeText(SoulissApp.getAppContext(), textOut.toString(), Toast.LENGTH_SHORT).show();
                     }
-                }).start();
+                }) ;
 
                 return true;
             }

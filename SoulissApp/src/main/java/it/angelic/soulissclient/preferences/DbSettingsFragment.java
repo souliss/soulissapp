@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import android.graphics.Color;
@@ -21,7 +21,7 @@ public class DbSettingsFragment extends PreferenceFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-        SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
 		//String settings;
 		super.onCreate(savedInstanceState);
 

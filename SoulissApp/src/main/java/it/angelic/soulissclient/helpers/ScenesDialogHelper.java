@@ -21,7 +21,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.TagListAdapter;
@@ -318,7 +318,7 @@ public class ScenesDialogHelper {
             ref.getActiveTypicals().toArray(strArray);
 
             if (strArray.length == 0) {// nodo vuoto
-                SoulissTypical fake = new SoulissTypical(SoulissClient.getOpzioni());
+                SoulissTypical fake = new SoulissTypical(SoulissApp.getOpzioni());
                 fake.setName(ctx.getString(R.string.node_empty));
                 strArray = new SoulissTypical[1];
                 strArray[0] = fake;

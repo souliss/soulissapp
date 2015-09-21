@@ -37,7 +37,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -55,7 +55,7 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_ReAr
 import static junit.framework.Assert.assertTrue;
 
 public class T4nFragment extends Fragment {
-    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
+    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     private SoulissPreferenceHelper opzioni;
 
     private SwitchCompat toggleButton;
@@ -111,7 +111,7 @@ public class T4nFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         // tema
         if (opzioni.isLightThemeSelected())
             getActivity().setTheme(R.style.LightThemeSelector);
@@ -129,7 +129,7 @@ public class T4nFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
             return null;
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         View ret = inflater.inflate(R.layout.frag_t4n, container, false);
         datasource = new SoulissDBHelper(getActivity());
         SoulissDBHelper.open();

@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 
@@ -58,7 +58,7 @@ private int exportedNodes;
 
 	{
 
-		SoulissDBHelper DBob = new SoulissDBHelper(SoulissClient.getAppContext());
+		SoulissDBHelper DBob = new SoulissDBHelper(SoulissApp.getAppContext());
 		File exportDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
 
 		if (!exportDir.exists())
@@ -181,10 +181,10 @@ private int exportedNodes;
 	{
 		String strMeatFormat =context.getString(R.string.export_ok);
 		if (success) {
-			Toast.makeText(SoulissClient.getAppContext(), String.format(strMeatFormat, exportedNodes), Toast.LENGTH_SHORT).show();
+			Toast.makeText(SoulissApp.getAppContext(), String.format(strMeatFormat, exportedNodes), Toast.LENGTH_SHORT).show();
 		}
 		else {
-			Toast.makeText(SoulissClient.getAppContext(), "Export failed", Toast.LENGTH_SHORT).show();
+			Toast.makeText(SoulissApp.getAppContext(), "Export failed", Toast.LENGTH_SHORT).show();
 			Log.e(TAG, "Souliss DB export Failed");
 		}
 

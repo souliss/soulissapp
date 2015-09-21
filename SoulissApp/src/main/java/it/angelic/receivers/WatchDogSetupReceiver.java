@@ -1,7 +1,7 @@
 package it.angelic.receivers;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.util.Calendar;
@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class WatchDogSetupReceiver extends BroadcastReceiver {
 
-	SoulissPreferenceHelper opts = SoulissClient.getOpzioni();
+	SoulissPreferenceHelper opts = SoulissApp.getOpzioni();
 	//private static final int EXEC_INTERVAL = 200 * 1000;
 
 

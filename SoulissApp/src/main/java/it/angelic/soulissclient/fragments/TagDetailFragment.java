@@ -57,7 +57,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -107,7 +107,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
 
         if (opzioni.isLightThemeSelected())
             getActivity().setTheme(R.style.LightThemeSelector);
@@ -436,7 +436,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     public static String getRealPathFromURI(Uri contentUri) {
         String res = null;
         String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = SoulissClient.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
+        Cursor cursor = SoulissApp.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
         if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);

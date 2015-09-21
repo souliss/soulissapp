@@ -5,7 +5,7 @@ import static junit.framework.Assert.assertTrue;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
@@ -58,7 +58,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			getActivity().setTheme(R.style.LightThemeSelector);
 		else
@@ -144,7 +144,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		if (opzioni.isDbConfigured()) {
 			SoulissDBHelper.open();
 			// per il refresh dal dettaglio

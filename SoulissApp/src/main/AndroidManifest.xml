@@ -23,7 +23,7 @@
         android:required="false" />
 
     <application
-        android:name="it.angelic.soulissclient.SoulissClient"
+        android:name=".SoulissApp"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/soulisslogo"

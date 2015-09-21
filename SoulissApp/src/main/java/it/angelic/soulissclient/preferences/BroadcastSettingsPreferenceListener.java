@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
@@ -28,7 +28,7 @@ public class BroadcastSettingsPreferenceListener implements OnPreferenceClickLis
 	public BroadcastSettingsPreferenceListener(Activity parent) {
 		super();
 		this.parent = parent;
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		datasource = new SoulissDBHelper(parent);
         File mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
 	}

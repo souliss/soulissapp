@@ -33,7 +33,7 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
@@ -153,7 +153,7 @@ public class AlertDialogHelper {
     }
 
     public static void serviceNotActiveDialog(final Activity source) {
-        final SoulissPreferenceHelper opts = SoulissClient.getOpzioni();
+        final SoulissPreferenceHelper opts = SoulissApp.getOpzioni();
         AlertDialog.Builder alert = new AlertDialog.Builder(source);
 
         final CheckBox checkBox = new CheckBox(source);
@@ -341,7 +341,7 @@ public class AlertDialogHelper {
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
                             if (listV != null) {
-                                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
+                                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
                                 SoulissScene[] scenesArray = new SoulissScene[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 try {
@@ -366,7 +366,7 @@ public class AlertDialogHelper {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (listV != null) {
-                                List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 try {
@@ -411,7 +411,7 @@ public class AlertDialogHelper {
     }
 
     public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate) {
-        final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+        final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
 
@@ -508,7 +508,7 @@ public class AlertDialogHelper {
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
                             if (list != null) {
-                                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
+                                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
                                 SoulissScene[] scenesArray = new SoulissScene[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 SceneListAdapter progsAdapter = new SceneListAdapter(context, scenesArray, opzioni);
@@ -517,10 +517,10 @@ public class AlertDialogHelper {
                                 list.invalidateViews();
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissClient.getAppContext());
+                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
-                                List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 TagListAdapter progsAdapter = new TagListAdapter(context, scenesArray, opzioni);
@@ -593,7 +593,7 @@ public class AlertDialogHelper {
 
         }
 
-        alert.setNegativeButton(SoulissClient.getAppContext().getResources().getString(android.R.string.cancel),
+        alert.setNegativeButton(SoulissApp.getAppContext().getResources().getString(android.R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Canceled.
@@ -623,7 +623,7 @@ public class AlertDialogHelper {
         for (SoulissTag object : goer) {
             tagArray[q++] = object;
         }
-        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissClient.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
 
         View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);

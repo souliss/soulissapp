@@ -12,7 +12,7 @@ import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -82,14 +82,14 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             statusByte = getTypicalDTO().getOutput();
             if (isStatusByteSet(statusByte, 0)) {
                 if (isCoolMode())
-                    return(SoulissClient.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[0]);
+                    return(SoulissApp.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[0]);
                 else
-                    return(SoulissClient.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[1]);
+                    return(SoulissApp.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[1]);
             } else
-                return SoulissClient.getAppContext().getString(R.string.OFF);
+                return SoulissApp.getAppContext().getString(R.string.OFF);
         }
         else
-            return SoulissClient.getAppContext().getString(R.string.stale);
+            return SoulissApp.getAppContext().getString(R.string.stale);
     }
 
     public String getOutputLongDesc() {
@@ -206,7 +206,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
                 if (temp == null) {
                     Log.i(Constants.TAG, "ISSUE COMMAND W/O TEMP:" + String.valueOf((float) function));
                     UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-                            SoulissClient.getOpzioni(), "" + function);
+                            SoulissApp.getOpzioni(), "" + function);
 
                 } else {
                     int re = HalfFloatUtils.fromFloat(temp);
@@ -229,7 +229,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
                     //verifyCommand(temp, first, second);
                     Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + first + " " + second);
                     UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
-                            SoulissClient.getOpzioni(), cmd);
+                            SoulissApp.getOpzioni(), cmd);
                 }
             }
         };
@@ -241,11 +241,11 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         textStatusVal.setText(getOutputDesc());
         if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
                 || "UNKNOWN".compareTo(getOutputLongDesc()) == 0 || "NA".compareTo(getOutputLongDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
 
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }

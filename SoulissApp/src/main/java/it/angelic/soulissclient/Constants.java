@@ -58,7 +58,7 @@ public class Constants {
 		long milliseconds2 = now.getTimeInMillis();
 		long diff = milliseconds2 - milliseconds1;
 		long diffSeconds = diff / 1000;
-		return getScaledTime(diffSeconds) + SoulissClient.getAppContext().getString(R.string.ago);
+		return getScaledTime(diffSeconds) + SoulissApp.getAppContext().getString(R.string.ago);
 	}
 	public static String getScaledTime(long diffSeconds) {
 		if (diffSeconds < 120)
@@ -71,7 +71,7 @@ public class Constants {
 			return "" + diffHours + " hr";
 		
 		long diffDays = diffHours / (24);
-			return "" + diffDays + SoulissClient.getAppContext().getString(R.string.days);
+			return "" + diffDays + SoulissApp.getAppContext().getString(R.string.days);
 	}
 	public static String getDuration(long typicalOnDurationMsec) {
 		long secondi = typicalOnDurationMsec / 1000;

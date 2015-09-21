@@ -28,7 +28,7 @@ import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -38,7 +38,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import static junit.framework.Assert.assertTrue;
 
 public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
-    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
+    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     private SoulissPreferenceHelper opzioni;
 
     private Button buttPlus;
@@ -146,7 +146,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         // tema
         if (opzioni.isLightThemeSelected())
             getActivity().setTheme(R.style.LightThemeSelector);
@@ -164,7 +164,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
             return null;
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         View ret = inflater.inflate(R.layout.frag_t19_singlechannel, container, false);
         datasource = new SoulissDBHelper(getActivity());
         SoulissDBHelper.open();

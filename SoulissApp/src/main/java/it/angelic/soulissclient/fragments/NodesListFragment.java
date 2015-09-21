@@ -6,7 +6,7 @@ import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.NodesListAdapter.NodeViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -88,7 +88,7 @@ public class NodesListFragment extends ListFragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		/*ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
@@ -149,7 +149,7 @@ public class NodesListFragment extends ListFragment {
             }} );
         swipeLayout.setColorSchemeResources (R.color.std_blue,
                 R.color.std_blue_shadow);
-		SoulissClient.setBackground(getActivity().findViewById(R.id.relativeLayout1),
+		SoulissApp.setBackground(getActivity().findViewById(R.id.relativeLayout1),
 				getActivity().getWindowManager());
 
 		// check se IP non settato

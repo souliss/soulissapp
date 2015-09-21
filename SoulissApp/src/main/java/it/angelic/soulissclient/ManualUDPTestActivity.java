@@ -56,7 +56,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// tema
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else
@@ -81,7 +81,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 		final Spinner slotspinner = (Spinner) findViewById(R.id.spinner2);
 		final EditText editCmd = (EditText) findViewById(R.id.editText1);
 
-		SoulissClient.setBackground(findViewById(R.id.container), getWindowManager());
+		SoulissApp.setBackground(findViewById(R.id.container), getWindowManager());
 
         // DRAWER
         final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
@@ -313,7 +313,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
         setActionBarInfo(getString(R.string.menu_test_udp));
 
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
 			refreshButton.setEnabled(false);

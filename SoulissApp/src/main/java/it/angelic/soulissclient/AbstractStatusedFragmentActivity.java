@@ -45,7 +45,7 @@ import it.angelic.soulissclient.net.UDPHelper;
  */
 public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity {
 
-    SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+    SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
     private Toolbar actionBar;
 
     //IL drawer ci piace qui

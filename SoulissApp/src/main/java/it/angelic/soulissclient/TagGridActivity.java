@@ -61,7 +61,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         // Remove title bar
         // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (opzioni.isLightThemeSelected())
@@ -100,7 +100,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
-                List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
+                List<SoulissTag> goer = datasource.getTags(SoulissApp.getAppContext());
                 goer.removeAll(goerBck);
                 Assert.assertTrue(goer.size() == 1);
                 SoulissTag newTag = goer.get(0);//quello nuovo
@@ -139,7 +139,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         datasource = new SoulissDBTagHelper(this);
         SoulissDBHelper.open();
         // prendo comandi dal DB, setto adapter
-        List<SoulissTag> goer = datasource.getTags(SoulissClient.getAppContext());
+        List<SoulissTag> goer = datasource.getTags(SoulissApp.getAppContext());
         tags = new SoulissTag[goer.size()];
         tags = goer.toArray(tags);
         tagAdapter = new TagRecyclerAdapter(this, tags, opzioni);

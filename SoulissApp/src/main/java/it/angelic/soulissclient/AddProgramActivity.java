@@ -113,7 +113,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
 
         nodiArrayWithExtra = new SoulissNode[goer.size()];
         nodiArrayWithExtra = goer.toArray(nodiArrayWithExtra);
-        SoulissClient.setBackground( findViewById(R.id.ScrollView01), getWindowManager());
+        SoulissApp.setBackground(findViewById(R.id.ScrollView01), getWindowManager());
 
     }
 

@@ -14,7 +14,7 @@ import android.widget.TextView.BufferType;
 import java.util.ArrayList;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -104,7 +104,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		for (int i = 0; i < 8; i++) {
-			str.setSpan(new ForegroundColorSpan(SoulissClient.getAppContext().getResources().getColor(bitColor(i))), i, i  + 1,
+			str.setSpan(new ForegroundColorSpan(SoulissApp.getAppContext().getResources().getColor(bitColor(i))), i, i  + 1,
 					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 			// cmd.setVisibility(View.GONE);
@@ -116,7 +116,7 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 		textStatusVal.setGravity(Gravity.TOP);
 		textStatusVal.setBackgroundResource(0);
 		textStatusVal.setText(str, BufferType.SPANNABLE);
-		textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_PX,SoulissClient.getAppContext().getResources().getDimensionPixelSize(R.dimen.text_size_vbig) );
+		textStatusVal.setTextSize(TypedValue.COMPLEX_UNIT_PX, SoulissApp.getAppContext().getResources().getDimensionPixelSize(R.dimen.text_size_vbig) );
 		//textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 	}
 
@@ -124,10 +124,10 @@ public class SoulissTypical1ALightsArray extends SoulissTypical implements ISoul
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil
 				|| typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback)
-			return SoulissClient.getAppContext().getString(R.string.ON);
+			return SoulissApp.getAppContext().getString(R.string.ON);
 		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil
 				|| typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback)
-			return SoulissClient.getAppContext().getString(R.string.OFF);
+			return SoulissApp.getAppContext().getString(R.string.OFF);
 		else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
 			return "" + typicalDTO.getOutput();
 		// return ctx.getString(R.string.Souliss_TRGB_sleep);

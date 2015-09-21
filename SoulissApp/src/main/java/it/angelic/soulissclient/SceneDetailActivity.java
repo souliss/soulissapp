@@ -44,7 +44,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		// recuper nodo da extra
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissScene) extras.get("SCENA");
@@ -59,7 +59,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 		setContentView(R.layout.main_scenedetail);
 
 		// Backg. stuff
-		SoulissClient.setBackground(findViewById(R.id.containerlista), getWindowManager());
+		SoulissApp.setBackground(findViewById(R.id.containerlista), getWindowManager());
 		// Testata, info scena
 		createHeader();
 
@@ -67,7 +67,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToListView(listaComandiView);
-        SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
+        SoulissApp.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {

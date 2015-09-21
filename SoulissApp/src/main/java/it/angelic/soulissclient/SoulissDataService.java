@@ -67,7 +67,7 @@ public class SoulissDataService extends Service implements LocationListener {
             Log.d(TAG,
                     "Service run " + SoulissDataService.this.hashCode() + " backedoffInterval="
                             + opts.getBackedOffServiceIntervalMsec());
-            opts = SoulissClient.getOpzioni();
+            opts = SoulissApp.getOpzioni();
             if (!opts.isDbConfigured()) {
                 Log.w(TAG, "Database empty, closing service");
                 // mHandler.removeCallbacks(mUpdateSoulissRunnable);
@@ -311,7 +311,7 @@ public class SoulissDataService extends Service implements LocationListener {
     public void onCreate() {
         super.onCreate();
         Log.w(TAG, "service onCreate()");
-        opts = SoulissClient.getOpzioni();
+        opts = SoulissApp.getOpzioni();
         // subito
         startUDPListener();
 
@@ -354,7 +354,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        opts = SoulissClient.getOpzioni();
+        opts = SoulissApp.getOpzioni();
 
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();
@@ -460,7 +460,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        opts = SoulissClient.getOpzioni();
+        opts = SoulissApp.getOpzioni();
         double lat = (location.getLatitude());
         double lng = (location.getLongitude());
 

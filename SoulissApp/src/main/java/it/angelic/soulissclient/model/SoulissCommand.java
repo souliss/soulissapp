@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
@@ -55,8 +55,8 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         this.commandDTO = dto;
         // falso se trigger assertEquals(true, dto.getSceneId() != 0);
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
-            SoulissDBHelper db = new SoulissDBHelper(SoulissClient.getAppContext());
-            targetScene = db.getScene(SoulissClient.getAppContext(), dto.getSlot());
+            SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+            targetScene = db.getScene(SoulissApp.getAppContext(), dto.getSlot());
             commandDTO.setSceneId(null);
         }
     }
@@ -175,7 +175,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 laCosa[i] = "0x" + laCosa[i];
             }
             //split the command if longer
-            UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), SoulissClient.getOpzioni(), laCosa);
+            UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(), laCosa);
         } else {// COMANDO SINGOLO
             String start = Long.toHexString(dto.getCommand());
             String[] laCosa = ScenesDialogHelper.splitStringEvery(start, 2);
@@ -185,7 +185,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             }
             //codice che funziona ma non so perche`
             UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
-                    String.valueOf(dto.getSlot()), SoulissClient.getOpzioni(),
+                    String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(),
                     // pura magia della decode
                     laCosa);
         }
@@ -234,8 +234,8 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     public String getName() {
         short typical;
         if (targetScene != null) {
-            return SoulissClient.getAppContext().getString(R.string.execute)
-                    + " " + SoulissClient.getAppContext().getString(R.string.scene)
+            return SoulissApp.getAppContext().getString(R.string.execute)
+                    + " " + SoulissApp.getAppContext().getString(R.string.scene)
                     + " " + targetScene.getNiceName();
         } else
             typical = parentTypical.getTypical();
@@ -338,7 +338,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         } else
             resId = R.string.Souliss_emptycmd_desc;
 
-        return SoulissClient.getAppContext().getString(resId);
+        return SoulissApp.getAppContext().getString(resId);
     }
 
     @Override
@@ -349,7 +349,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     @Override
     public String getNiceName() {
         StringBuilder info = new StringBuilder();
-        Context ctx = SoulissClient.getAppContext();
+        Context ctx = SoulissApp.getAppContext();
         info.append(ctx.getString(R.string.scene_send_command));
         info.append(" ");
         info.append(getName()).append(" ");

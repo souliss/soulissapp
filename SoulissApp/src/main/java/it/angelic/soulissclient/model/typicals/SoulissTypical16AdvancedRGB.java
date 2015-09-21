@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -156,7 +156,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
-			textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 			textStatusVal.setTextColor(getColor());

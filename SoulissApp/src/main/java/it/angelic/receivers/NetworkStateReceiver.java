@@ -1,6 +1,6 @@
 package it.angelic.receivers;
 
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +19,7 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 		// final SharedPreferences customSharedPreference = context
 		// .getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		if (opzioni == null)
-			opzioni = SoulissClient.getOpzioni();
+			opzioni = SoulissApp.getOpzioni();
 		//solo if UDP?
 		opzioni.clearCachedAddress();
 		SharedPreferences.Editor editor = opzioni.getCustomPref().edit();

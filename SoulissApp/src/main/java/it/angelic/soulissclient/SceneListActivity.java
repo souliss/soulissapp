@@ -59,7 +59,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		// Remove title bar
 		// this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		if (opzioni.isLightThemeSelected())
@@ -92,7 +92,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
             public void onClick(View v) {
                 int rest = datasource.createOrUpdateScene(null);
                 // prendo comandi dal DB, setto adapter
-                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
+                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
                 //scenesArray = new SoulissScene[goer.size()];
                 scenesArray = goer.toArray(scenesArray);
                 progsAdapter = new SceneListAdapter(SceneListActivity.this, scenesArray, opzioni);
@@ -145,7 +145,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		SoulissDBHelper.open();
 
 		// prendo comandi dal DB, setto adapter
-		LinkedList<SoulissScene> goer = datasource.getScenes(SoulissClient.getAppContext());
+		LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
 		scenesArray = new SoulissScene[goer.size()];
 		scenesArray = goer.toArray(scenesArray);
 		progsAdapter = new SceneListAdapter(this, scenesArray, opzioni);

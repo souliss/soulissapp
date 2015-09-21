@@ -104,7 +104,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
 
         db = new SoulissDBTagHelper(this);
         if (opzioni.isLightThemeSelected())
@@ -119,7 +119,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             tagId = (long) extras.get("TAG");
 
         try {
-            collected = db.getTag(SoulissClient.getAppContext(), (int) tagId);
+            collected = db.getTag(SoulissApp.getAppContext(), (int) tagId);
         } catch (SQLDataException sql) {
             Log.i(Constants.TAG, "TAGID NOT FOUND: " + tagId);
         }

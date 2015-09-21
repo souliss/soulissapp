@@ -4,7 +4,7 @@ import static junit.framework.Assert.assertTrue;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -103,7 +103,7 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		super.onCreateView(inflater, container, savedInstanceState);
 		if (container == null)
 			return null;
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		opzioni.reload();
 
 		View ret = inflater.inflate(R.layout.main_aircon, container, false);

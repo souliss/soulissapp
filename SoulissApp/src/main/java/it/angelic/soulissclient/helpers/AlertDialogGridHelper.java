@@ -20,7 +20,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.db.SoulissDB;
@@ -88,7 +88,7 @@ public class AlertDialogGridHelper {
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (tagRecyclerAdapter != null) {
                                 int tgtPos = -1;
-                                List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
                                 SoulissTag[] tagArray = new SoulissTag[goer.size()];
                                 tagArray = goer.toArray(tagArray);
                                 tagRecyclerAdapter.setTagArray(tagArray);
@@ -178,7 +178,7 @@ public class AlertDialogGridHelper {
 
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissClient.getAppContext());
+                            SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
                              //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
@@ -280,7 +280,7 @@ public class AlertDialogGridHelper {
     }
 
     public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final int oldPosition, final TagRecyclerAdapter adapter) {
-        final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+        final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
 

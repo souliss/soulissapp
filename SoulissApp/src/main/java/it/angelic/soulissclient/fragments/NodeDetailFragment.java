@@ -49,7 +49,7 @@ import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
@@ -158,7 +158,7 @@ public class NodeDetailFragment extends ListFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
 
         if (opzioni.isLightThemeSelected())
             getActivity().setTheme(R.style.LightThemeSelector);
@@ -207,7 +207,7 @@ public class NodeDetailFragment extends ListFragment {
         getActivity().setTitle(collected.getNiceName());
 
         // SFONDO
-        SoulissClient.setBackground(getActivity().findViewById(R.id.containerlista), getActivity()
+        SoulissApp.setBackground(getActivity().findViewById(R.id.containerlista), getActivity()
                 .getWindowManager());
         // listaTypicalsView = (ListView) getListView();
         listaTypicalsView = getListView();
@@ -485,7 +485,7 @@ public class NodeDetailFragment extends ListFragment {
         refreshHeader();
 
         Log.d(Constants.TAG,
-                "Setting bar at " + collected.getHealth() + " win width=" + SoulissClient.getDisplayWidth() / 2);
+                "Setting bar at " + collected.getHealth() + " win width=" + SoulissApp.getDisplayWidth() / 2);
     }
 
     @Override

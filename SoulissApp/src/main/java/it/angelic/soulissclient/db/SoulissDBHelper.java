@@ -8,7 +8,7 @@ import static junit.framework.Assert.assertNotNull;
 import it.angelic.soulissclient.BuildConfig;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.fragments.TimeRangeEnum;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -64,7 +64,7 @@ public class SoulissDBHelper {
 
     public SoulissDBHelper(Context context) {
         soulissDatabase = new SoulissDB(context);
-        opts = SoulissClient.getOpzioni();
+        opts = SoulissApp.getOpzioni();
     }
 
     public static synchronized void open() throws SQLException {
@@ -178,7 +178,7 @@ public class SoulissDBHelper {
             // Inserisco e risetto il nome
             int ret = (int) database.insert(SoulissDB.TABLE_SCENES, null, values);
             values.put(SoulissDB.COLUMN_SCENE_NAME,
-                    SoulissClient.getAppContext().getResources().getString(R.string.scene) + " " + ret);
+                    SoulissApp.getAppContext().getResources().getString(R.string.scene) + " " + ret);
             database.update(SoulissDB.TABLE_SCENES, values, SoulissDB.COLUMN_SCENE_ID + " = " + ret, null);
             return ret;
         }

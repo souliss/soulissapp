@@ -344,5 +344,6 @@
     <string name="opt_voice_command_desc">Esegui scenari e comandi con la voce. Per maggiori informazioni, visita il wiki di Souliss</string>
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Richiedi configurazione nodi</string>
+    <string name="bytes_sent">Bytes inviati</string>
 
 </resources>

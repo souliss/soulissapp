@@ -18,7 +18,7 @@ import android.view.WindowManager;
  * @author pegoraro
  *
  */
-public class SoulissClient extends Application implements Serializable{
+public class SoulissApp extends Application implements Serializable{
 
 	private static final long serialVersionUID = 962480567399715745L;
 	private static volatile Context context;
@@ -28,7 +28,7 @@ public class SoulissClient extends Application implements Serializable{
 	private static SoulissPreferenceHelper opzioni;
 	
 	public static Context getAppContext() {
-        return SoulissClient.context;
+        return SoulissApp.context;
     }
     public static float getDisplayHeight() {
 		return displayHeight;
@@ -81,7 +81,7 @@ public class SoulissClient extends Application implements Serializable{
 	    return InetAddress.getByAddress("255.255.255.255");
 	}*/
 	private static void setOpzioni(SoulissPreferenceHelper opzioni) {
-		SoulissClient.opzioni = opzioni;
+		SoulissApp.opzioni = opzioni;
 	}
 	/*private static void setCtx(Context ct){
 		SoulissClient.context = ct;

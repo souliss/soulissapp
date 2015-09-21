@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.net.webserver;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -61,7 +61,7 @@ public class JSONForceHandler implements HttpRequestHandler {
 				public void writeTo(final OutputStream outstream) throws IOException {
 					OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
 					//Log.v(it.angelic.soulissclient.Constants.TAG,writeJSON(target));
-					writer.write(UDPHelper.issueSoulissCommand(message, slot, SoulissClient.getOpzioni(), parsed));
+					writer.write(UDPHelper.issueSoulissCommand(message, slot, SoulissApp.getOpzioni(), parsed));
 					writer.flush();
 				}
 			});

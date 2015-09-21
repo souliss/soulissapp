@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 
 public class DrawerMenuHelper {
-	private static Context ctx = SoulissClient.getAppContext();
+	private static Context ctx = SoulissApp.getAppContext();
 	
 	public static final int SCENES=-1;
 	public static final int PROGRAMS=-2;

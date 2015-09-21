@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.ListSwitchCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -166,11 +166,11 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback ||
                 "UNKNOWN".compareTo(getOutputDesc()) == 0 ||
                 "NA".compareTo(getOutputDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
             //textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
         } else {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
             //textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackon));
         }
@@ -179,9 +179,9 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
     @Override
     public String getOutputDesc() {
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback)
-            return SoulissClient.getAppContext().getString(R.string.ON);
+            return SoulissApp.getAppContext().getString(R.string.ON);
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback)
-            return SoulissClient.getAppContext().getString(R.string.OFF);
+            return SoulissApp.getAppContext().getString(R.string.OFF);
         else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
             return "" + typicalDTO.getOutput();
             //return ctx.getString(R.string.Souliss_TRGB_sleep);

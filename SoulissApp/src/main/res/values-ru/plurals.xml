@@ -4,6 +4,8 @@
         name="Devices">
         <item quantity="zero">No Device</item>
         <item quantity="one">one Device</item>
+        <item quantity="few">%d Device</item>
+        <item quantity="many">%d Device</item>
         <item quantity="other">%d  Devices</item>
     </plurals>
 

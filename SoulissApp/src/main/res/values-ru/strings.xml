@@ -342,4 +342,5 @@
     <string name="opt_voice_command_desc">Запускайте сценарии и посылайте команды голосом. Подробности</string>
     <string name="voice_command">Голосовая команда</string>
     <string name="opt_get_nodes">Get Souliss Nodes</string>
+    <string name="bytes_sent"/>
 </resources>

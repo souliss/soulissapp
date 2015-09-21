@@ -24,7 +24,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		opzioni.initializePrefs();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);

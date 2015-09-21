@@ -11,7 +11,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 
 /**
  * Souliss Unit, the node
@@ -99,9 +99,9 @@ public class SoulissNode implements Serializable, ISoulissObject {
         if (name != null && "".compareToIgnoreCase(name) != 0)
             return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
         else if (id > Constants.MASSIVE_NODE_ID)
-            return SoulissClient.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getId());
+            return SoulissApp.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getId());
         else
-            return SoulissClient.getAppContext().getString(R.string.allnodes);
+            return SoulissApp.getAppContext().getString(R.string.allnodes);
     }
 
     public Calendar getRefreshedAt() {

@@ -57,7 +57,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
@@ -70,7 +70,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
 
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
-		SoulissClient.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
+		SoulissApp.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
@@ -95,7 +95,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 
 		registerForContextMenu(listaProgrammiView);
 
-        SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
+        SoulissApp.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
 
 	}

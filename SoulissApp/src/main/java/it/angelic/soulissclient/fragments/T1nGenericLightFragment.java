@@ -29,7 +29,7 @@ import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -51,7 +51,7 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Time
 import static junit.framework.Assert.assertTrue;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
-	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissClient.getAppContext());
+	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
 	private Button buttPlus;
@@ -105,7 +105,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		opzioni.reload();
 		// tema
 		if (opzioni.isLightThemeSelected())
@@ -130,7 +130,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (container == null)
 			return null;
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		opzioni.reload();
 
 		View ret = inflater.inflate(R.layout.frag_t1n, container, false);

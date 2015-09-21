@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -66,11 +66,11 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     @Override
     public String getOutputDesc() {
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
-            return SoulissClient.getAppContext().getString(R.string.ON);
+            return SoulissApp.getAppContext().getString(R.string.ON);
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto)
-            return SoulissClient.getAppContext().getString(R.string.ON) + " (AUTO)";
+            return SoulissApp.getAppContext().getString(R.string.ON) + " (AUTO)";
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
-            return SoulissClient.getAppContext().getString(R.string.OFF);
+            return SoulissApp.getAppContext().getString(R.string.OFF);
         else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto)
             return "OFF (AUTO)";
         else
@@ -81,10 +81,10 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     public void setOutputDescView(@NonNull TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto) {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }

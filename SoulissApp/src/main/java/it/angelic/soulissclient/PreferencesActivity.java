@@ -100,7 +100,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissClient.getOpzioni();
+        opzioni = SoulissApp.getOpzioni();
         /*if (opzioni.isLightThemeSelected()) {
             setTheme(R.style.LightThemeSelector);
         } else

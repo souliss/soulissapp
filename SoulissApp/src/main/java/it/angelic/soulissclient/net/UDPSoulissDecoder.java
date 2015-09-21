@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.SoulissWidget;
 import it.angelic.soulissclient.T4nFragWrapper;
@@ -40,7 +40,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_InAlarm;
@@ -196,15 +195,15 @@ public class UDPSoulissDecoder {
      */
     private void processWidgets() {
         try {
-            int ids[] = AppWidgetManager.getInstance(SoulissClient.getAppContext()).getAppWidgetIds(new ComponentName(SoulissClient.getAppContext(), SoulissWidget.class));
+            int ids[] = AppWidgetManager.getInstance(SoulissApp.getAppContext()).getAppWidgetIds(new ComponentName(SoulissApp.getAppContext(), SoulissWidget.class));
             if (ids.length > 0) {
-                Intent intent = new Intent(SoulissClient.getAppContext(), SoulissWidget.class);
+                Intent intent = new Intent(SoulissApp.getAppContext(), SoulissWidget.class);
                 intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
                 // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
                 // since it seems the onUpdate() is only fired on that:
                 // int[] ids = {widgetId};
                 intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-                SoulissClient.getAppContext().sendBroadcast(intent);
+                SoulissApp.getAppContext().sendBroadcast(intent);
             }
         } catch (Exception we) {
             Log.e(Constants.TAG, "can't update widgets: " + we);
@@ -261,7 +260,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.execute();
                         soulissTrigger.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse, soulissTrigger);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
@@ -269,7 +268,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.execute();
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse, soulissTrigger);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
                         Log.w(Constants.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
@@ -277,7 +276,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissClient.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse, soulissTrigger);
                     }
                 }

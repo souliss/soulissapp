@@ -16,10 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import it.angelic.soulissclient.SoulissClient;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertEquals;
@@ -571,11 +569,11 @@ public class UDPHelper {
 
 		// Send broadcast timeout
 		Intent i = new Intent();
-		int it = SoulissClient.getOpzioni().getRemoteTimeoutPref();
+		int it = SoulissApp.getOpzioni().getRemoteTimeoutPref();
 		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
-		SoulissClient.getOpzioni().getContx().sendBroadcast(i);
+		SoulissApp.getOpzioni().getContx().sendBroadcast(i);
 
 		return frame;
 	}
@@ -680,7 +678,7 @@ public class UDPHelper {
 		}
 
 
-		frame.add((byte) startOffset); // STARTOFFSET
+		frame.add(startOffset); // STARTOFFSET
 		frame.add((byte) payLoad.size()); // NUMBEROF
 
 		for (Byte number : payLoad) {

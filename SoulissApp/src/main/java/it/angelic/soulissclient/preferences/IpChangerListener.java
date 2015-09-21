@@ -2,7 +2,7 @@ package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.net.InetAddress;
@@ -21,7 +21,7 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 	public IpChangerListener(Activity parent) {
 		super();
 		this.parent = parent;
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 	}
 
 	@Override

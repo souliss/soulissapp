@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
@@ -128,7 +128,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else
             id = R.string.unknown_typical;
 
-        Context cc = SoulissClient.getAppContext();
+        Context cc = SoulissApp.getAppContext();
         return cc.getResources().getString(id);
     }
 
@@ -262,11 +262,11 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        final TextView cmd = new TextView(SoulissClient.getAppContext());
+        final TextView cmd = new TextView(SoulissApp.getAppContext());
         cmd.setText(/*SoulissClient.getAppContext().getString(R.string.actions)*/"");
         // cmd.setTextSize(ctx.getResources().getDimension(R.dimen.text_size));
         if (prefs != null && prefs.isLightThemeSelected())
-            cmd.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.black));
+            cmd.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.black));
 
         cmd.setLayoutParams(lp);
         return cmd;
@@ -343,10 +343,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
-            textStatusVal.setTextColor(SoulissClient.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }

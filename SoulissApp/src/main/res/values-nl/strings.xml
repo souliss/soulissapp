@@ -339,4 +339,5 @@
     <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Get Souliss Nodes</string>
+    <string name="bytes_sent"/>
 </resources>

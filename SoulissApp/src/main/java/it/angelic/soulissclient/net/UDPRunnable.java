@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.net;
 
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.net.BindException;
@@ -80,7 +80,7 @@ public class UDPRunnable implements Runnable {
 				tpe.execute(new Runnable() {
 					@Override
 					public void run() {
-						UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
+						UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissApp.getAppContext());
 						Log.d("UDP", "***Created decoder:" + decoder.toString());
 						decoder.decodeVNetDatagram(packet);
 

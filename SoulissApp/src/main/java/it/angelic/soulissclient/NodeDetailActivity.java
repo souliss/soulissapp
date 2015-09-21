@@ -68,7 +68,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-        SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
 		if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else

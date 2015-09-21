@@ -2,7 +2,7 @@ package it.angelic.soulissclient.preferences;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		final SoulissPreferenceHelper opzioni = SoulissClient.getOpzioni();
+		final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
 
 		super.onCreate(savedInstanceState);
 		final LocationManager locationManager;
@@ -89,7 +89,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 
 	private void resetMesg(Preference setHomeLocation) {
 		String loc = null;
-		opzioni = SoulissClient.getOpzioni();
+		opzioni = SoulissApp.getOpzioni();
 		if (opzioni.getHomeLatitude() != 0) {
 
 			Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());

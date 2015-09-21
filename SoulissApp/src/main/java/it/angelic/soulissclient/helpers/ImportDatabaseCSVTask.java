@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissClient;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
@@ -100,7 +100,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         int lin = 0;
         int loopMode = 0;
         // File dbFile = null;// getDatabasePath("excerDB.db");
-        database = new SoulissDBTagHelper(SoulissClient.getAppContext());
+        database = new SoulissDBTagHelper(SoulissApp.getAppContext());
 
         try {
             Looper.prepare();
@@ -108,10 +108,10 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
 
             if (!importDir.exists())
-                Toast.makeText(SoulissClient.getAppContext(), SoulissClient.getAppContext().getString(R.string.dialog_import_nofolder), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SoulissApp.getAppContext(), SoulissApp.getAppContext().getString(R.string.dialog_import_nofolder), Toast.LENGTH_SHORT).show();
 
             if (!file.exists()) {
-                Toast.makeText(SoulissClient.getAppContext(), SoulissClient.getAppContext().getString(R.string.dialog_import_nofile), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SoulissApp.getAppContext(), SoulissApp.getAppContext().getString(R.string.dialog_import_nofile), Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "Import file doesn't exist!" + file.getAbsolutePath());
                 return false;
             }
@@ -272,7 +272,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
      */
     private void insertTagTyp(String[] temp) {
         try {
-            SoulissTag hero = database.getTag(SoulissClient.getAppContext(), Long.valueOf(temp[2]));
+            SoulissTag hero = database.getTag(SoulissApp.getAppContext(), Long.valueOf(temp[2]));
             SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]),Short.valueOf(temp[0]));
 
             database.createOrUpdateTagTypicalNode( polloTyp ,hero,Integer.valueOf(temp[3]));
@@ -409,7 +409,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     {
         if (success) {
-            Toast.makeText(SoulissClient.getAppContext(),
+            Toast.makeText(SoulissApp.getAppContext(),
                     "Imported successfully " + totNodes + " and " + tottyp + " typicals", Toast.LENGTH_SHORT).show();
             final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
 
@@ -423,7 +423,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             activity.startActivity(preferencesActivity);
 
         } else {
-            Toast.makeText(SoulissClient.getAppContext(), "Import failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SoulissApp.getAppContext(), "Import failed", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -454,7 +454,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 Log.d(Constants.TAG, "Restored pref:" + key + " Value:" + v);
             }
             prefEdit.commit();
-            SoulissClient.getOpzioni().reload();
+            SoulissApp.getOpzioni().reload();
             res = true;
         } catch (FileNotFoundException | ClassNotFoundException e) {
             e.printStackTrace();
