@@ -1,8 +1,6 @@
 # soulissapp
 SoulissApp is an Android Application that acts as client in Souliss Framework
 
-![SoulissApp GIF](https://lh5.googleusercontent.com/cfYyVrVaGa_WmBpVWJ_Sly1Whp2FjLSGtrF02bdafKukCz0A6KDgCL_6_yeVvjZMyhO22m8JG-S1KM8=w1886-h823)
-
 You can find it published on <a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient">Play store</a>; please note that the app itself is useless unless a souliss run-time is found on a local or remote network. Have a look at the <a href="http://souliss.github.io/welcome/">documentation</a> to get started with Souliss.
 
 To work on the project, just clone it from Android Studio main menu, it should compile without issues as needed libraries are encapsulated or *very* common. 
