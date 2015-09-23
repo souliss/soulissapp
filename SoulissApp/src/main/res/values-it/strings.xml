@@ -345,5 +345,7 @@
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Richiedi configurazione nodi</string>
     <string name="bytes_sent">Bytes inviati</string>
+    <string name="voice_command_help">Usa il nome di uno scenario, oppure un comando (accendi, spegni, etc.) seguito dal nome di un dispositivo</string>
+    <string name="souliss_voice_command">Comando Vocale Souliss</string>
 
 </resources>

@@ -277,9 +277,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 @Override
                 public void onClick(View v) {
 
-
                     Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, Locale.getDefault());
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, LauncherActivity.this.getString(R.string.voice_command_help));
                     try {
                         startActivityForResult(i, Constants.VOICE_REQUEST_OK);
                     } catch (Exception e) {

@@ -31,7 +31,6 @@ import it.angelic.soulissclient.model.SoulissTypical;
 
 public class SoulissWidgetConfig extends Activity {
     private SoulissNode[] nodiArray;
-    private static final String TAG = "Souliss:WidgetConfig";
     private Button configOkButton;
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     private SoulissDBHelper datasource;
@@ -227,7 +226,7 @@ public class SoulissWidgetConfig extends Activity {
                 Log.e(Constants.TAG, "UNPREDICTED");
             }
         } catch (Exception e) {
-            Log.e(TAG, "Errore in setTypicalSpinner:" + e.getMessage(), e);
+            Log.e(Constants.TAG, "Errore in setTypicalSpinner:" + e.getMessage(), e);
         }
     }
 

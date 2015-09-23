@@ -8,8 +8,6 @@
     android:background="@drawable/widget_shape"
     android:orientation="vertical"
     android:padding="4dip" >
-
-
     <Button
         android:id="@+id/button1"
         android:layout_width="fill_parent"
@@ -21,8 +19,7 @@
         android:shadowDy="1"
         android:shadowRadius="2"
         android:textStyle="bold"
-        android:layout_marginBottom="15dp"
-        tools:text="button1" />
+        android:layout_marginBottom="15dp" />
 
     <TextView
         android:id="@+id/wid_info"
@@ -36,7 +33,7 @@
         android:elevation="2dp"
         android:shadowRadius="2"
         android:textColor="@color/white"
-        tools:text="Use one of your scenes' name, or a command (turn on, turn off, etc.) followed by a device's name">
+        android:text="@string/souliss_voice_command">
     </TextView>
 
 </RelativeLayout>

@@ -30,10 +30,8 @@ import it.angelic.soulissclient.net.UDPHelper;
 public class SoulissWidgetVoice extends AppWidgetProvider {
 
     private static final String TAG = "SoulissWidget";
-    private static SoulissDBHelper db;
-    private Handler handler;
 
-    private SoulissPreferenceHelper opzioni;
+
 
     /**
      * Chiamato per refresh del widget, anche dalla rete (stateresponse e pollResponse)
@@ -49,24 +47,25 @@ public class SoulissWidgetVoice extends AppWidgetProvider {
 
 
 
-        // this intent points to activity that should handle results
-        Intent activityIntent = new Intent( );
-        activityIntent.setComponent(new ComponentName("it.angelic.soulissclient", "WrapperActivity"));
+        // this intent points to activity that should handle results, doesn't work
+        Intent activityIntent = new Intent(SoulissApp.getAppContext(), WrapperActivity.class );
+        //doesn't work as well
+        //activityIntent.setComponent(new ComponentName("it.angelic.soulissclient", "it.angelic.soulissclient.WrapperActivity"));
         // this intent wraps results activity intent
-        PendingIntent resultsPendingIntent = PendingIntent.getActivity(context, 0, activityIntent, 0);
+        PendingIntent resultsPendingIntent = PendingIntent.getActivity(SoulissApp.getAppContext(), 0, activityIntent, 0);
 
         // this intent calls the speech recognition
         Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speech recognition demo");
-        voiceIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.voice_command_help));
+        voiceIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         voiceIntent.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, resultsPendingIntent);
 
         Bundle fakeBun = new Bundle();
-        fakeBun.putChar("fake", 'f');
+        fakeBun.putInt("widgetId", appWidgetId);
         voiceIntent.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT_BUNDLE, fakeBun);
 
-        // this intent wraps voice recognition intent
+        // this intent wraps voice recognition intent, works
         PendingIntent pendingInt = PendingIntent.getActivity(context, 0, voiceIntent, 0);
         updateViews.setOnClickPendingIntent(R.id.button1, pendingInt);
 
@@ -79,8 +78,7 @@ public class SoulissWidgetVoice extends AppWidgetProvider {
 
     @Override
     public void onReceive(@NonNull final Context context, final Intent intent) {
-        opzioni = new SoulissPreferenceHelper(context);
-        handler = new Handler();
+
         super.onReceive(context, intent);
         Log.w(TAG, "onReceive from intent: " + intent.getPackage());
         final AppWidgetManager awm = AppWidgetManager.getInstance(context);
@@ -89,39 +87,7 @@ public class SoulissWidgetVoice extends AppWidgetProvider {
         if (thingsYouSaid != null ) {
             Log.w(TAG, "widget VOICE command from id:" + thingsYouSaid.get(0));
         }
-        if (got != -1) {
-            Log.w("SoulissWidget", "PRESS");
 
-            final RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-
-            updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_active);
-            //updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
-            //updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
-
-            // UPDATE SINCRONO
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra("_ID", got);
-            Uri data = Uri.withAppendedPath(Uri.parse("W://widget/id/"), String.valueOf(got));
-            intent.setData(data);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.button1, pendingIntent);
-            awm.updateAppWidget(got, updateViews);
-
-            new Thread(new Runnable() {
-                private SoulissDBHelper db;
-
-                @Override
-                public void run() {
-                    Looper.prepare();
-
-                    db = new SoulissDBHelper(context);
-                    SoulissDBHelper.open();
-
-
-                }
-            }).start();
-        }
     }
 
     @Override
