@@ -31,12 +31,7 @@
     <string name="ON">ВКЛ</string>
     <string name="power">Сеть</string>
     <string name="OFF">ВЫКЛ</string>
-    <string name="open">Открыть</string>
-    <string name="close">Закрыть</string>
-    <string name="stop">стоп</string>
-    <string name="toggle">переключить</string>
-    <string name="TurnON">Включить</string>
-    <string name="TurnOFF">Выключить</string>
+
     <string name="mode">Режим</string>
     <string name="fan">Фен</string>
     <string name="red">Красный</string>

@@ -31,12 +31,7 @@
     <string name="ON">WŁ</string>
     <string name="power">Zasilanie</string>
     <string name="OFF">WYŁ</string>
-    <string name="open">Otwórz</string>
-    <string name="close">Zamknij</string>
-    <string name="stop">Zatrzymaj</string>
-    <string name="toggle">Przełącz</string>
-    <string name="TurnON">Włącz</string>
-    <string name="TurnOFF">Wyłącz</string>
+    
     <string name="mode">Tryb</string>
     <string name="fan">Wentylator</string>
     <string name="red">Czerwony</string>

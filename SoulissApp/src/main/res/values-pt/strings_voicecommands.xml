@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+ 
+	<string name="open">Open</string>
+    <string name="close">Fechar</string>
+    <string name="stop">Pare</string>
+    <string name="toggle">Alternar</string>
+    <string name="TurnON">Ligar</string>
+    <string name="TurnOFF">Desligar</string>
+    
+</resources>

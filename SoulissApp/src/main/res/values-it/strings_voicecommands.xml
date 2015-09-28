@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+ 
+	<string name="open">Apri</string>
+    <string name="close">Chiudi</string>
+    <string name="stop">Stop</string>
+    <string name="toggle">Inverti</string>
+    <string name="TurnON">Accendi</string>
+    <string name="TurnOFF">Spegni</string>
+    
+</resources>

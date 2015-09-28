@@ -49,6 +49,7 @@ public class SoulissWidgetVoice extends AppWidgetProvider {
 
         // this intent points to activity that should handle results, doesn't work
         Intent activityIntent = new Intent(SoulissApp.getAppContext(), WrapperActivity.class );
+        activityIntent.setFlags(Intent.FLAG_EXCLUDE_STOPPED_PACKAGES | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         //doesn't work as well
         //activityIntent.setComponent(new ComponentName("it.angelic.soulissclient", "it.angelic.soulissclient.WrapperActivity"));
         // this intent wraps results activity intent
@@ -58,7 +59,7 @@ public class SoulissWidgetVoice extends AppWidgetProvider {
         Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.voice_command_help));
-        voiceIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        voiceIntent.setFlags(Intent.FLAG_EXCLUDE_STOPPED_PACKAGES | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         voiceIntent.putExtra(RecognizerIntent.EXTRA_RESULTS_PENDINGINTENT, resultsPendingIntent);
 
         Bundle fakeBun = new Bundle();

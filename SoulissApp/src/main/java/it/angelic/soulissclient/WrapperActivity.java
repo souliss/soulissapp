@@ -41,6 +41,7 @@ public class WrapperActivity extends Activity {
 
         //capisci scena, eseguila e ciao
         SoulissDBHelper db = new SoulissDBHelper(context);
+        SoulissDBHelper.open();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
         for (SoulissScene scenario : db.getScenes(context)) {
             if (yesMan.contains(scenario.getName().toLowerCase())  ) {

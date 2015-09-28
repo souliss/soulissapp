@@ -19,7 +19,7 @@
         android:src="@drawable/lamp" />
 
     <TextView
-        android:id="@+id/TextViewScenesDesc"
+        android:id="@+id/TextViewTagsDesc"
         style="@style/CodeFontSmall"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="2dp"

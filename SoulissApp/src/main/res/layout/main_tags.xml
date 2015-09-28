@@ -42,7 +42,7 @@
                     android:src="@drawable/tv" />
 
                 <TextView
-                    android:id="@+id/TextViewScenesDesc"
+                    android:id="@+id/TextViewTagsDesc"
                     style="@style/CodeFontSmall"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="2dp"
@@ -57,7 +57,7 @@
                     android:divider="@android:color/transparent"
                     android:fadingEdge="vertical"
                     android:requiresFadingEdge="vertical"
-                    android:layout_below="@id/TextViewScenesDesc" />
+                    android:layout_below="@id/TextViewTagsDesc" />
 
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"

@@ -42,7 +42,7 @@
                      android:src="@drawable/moon" />
 
                  <TextView
-                     android:id="@+id/TextViewScenesDesc"
+                     android:id="@+id/TextViewTagsDesc"
                      style="@style/CodeFontSmall"
                      android:layout_marginLeft="4dp"
                      android:layout_marginTop="2dp"
@@ -53,7 +53,7 @@
                        android:id="@+id/ListViewListaScenes"
                        android:layout_width="fill_parent"
                        android:layout_height="wrap_content"
-                       android:layout_below="@id/TextViewScenesDesc"
+                       android:layout_below="@id/TextViewTagsDesc"
                        android:background="@drawable/item_selector"
                        android:cacheColorHint="@color/trans_black"
                        android:divider="@android:color/transparent"

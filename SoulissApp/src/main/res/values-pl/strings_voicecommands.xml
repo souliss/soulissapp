@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+ 
+<string name="open">Otwórz</string>
+    <string name="close">Zamknij</string>
+    <string name="stop">Zatrzymaj</string>
+    <string name="toggle">Przełącz</string>
+    <string name="TurnON">Włącz</string>
+    <string name="TurnOFF">Wyłącz</string>
+    
+</resources>
