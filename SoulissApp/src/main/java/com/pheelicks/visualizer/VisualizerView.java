@@ -1,6 +1,6 @@
 /**
  * Copyright 2011, Felix Palmer
- *
+ * <p/>
  * Licensed under the MIT license:
  * http://creativecommons.org/licenses/MIT/
  */
@@ -38,298 +38,284 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
  */
 public class VisualizerView extends View {
 
-	private byte[] mBytes;
-	private byte[] mFFTBytes;
-	private Rect mRect = new Rect();
-	private Visualizer mVisualizer;
-	private SoulissPreferenceHelper opz;
+    private byte[] mBytes;
+    private byte[] mFFTBytes;
+    private Rect mRect = new Rect();
+    private Visualizer mVisualizer;
+    private SoulissPreferenceHelper opz;
 
-	private Set<Renderer> mRenderers;
+    private Set<Renderer> mRenderers;
 
-	//private Paint mFlashPaint = new Paint();
-	private Paint mFadePaint = new Paint();
+    //private Paint mFlashPaint = new Paint();
+    private Paint mFadePaint = new Paint();
 
-	private AbstractMusicVisualizerFragment parent;
+    private AbstractMusicVisualizerFragment parent;
 
-	// private Paint transPainter;
+    // private Paint transPainter;
 
-	public VisualizerView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs);
-		init();
-	}
+    public VisualizerView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs);
+        init();
+    }
 
-	public VisualizerView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public VisualizerView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public VisualizerView(Context context) {
-		this(context, null, 0);
-	}
+    public VisualizerView(Context context) {
+        this(context, null, 0);
+    }
 
-	public void setFrag(AbstractMusicVisualizerFragment par) {
-		parent = par;
-	}
+    public void setFrag(AbstractMusicVisualizerFragment par) {
+        parent = par;
+    }
 
-	@SuppressLint("NewApi")
-	private void init() {
-		mBytes = null;
-		mFFTBytes = null;
+    @SuppressLint("NewApi")
+    private void init() {
+        mBytes = null;
+        mFFTBytes = null;
 
-		//mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
-		mFadePaint.setColor(Color.argb(100, 255, 255, 255)); // Adjust alpha to
-																// change how
-																// quickly the
-																// image
-																// fades
-		// mFadePaint.setXfermode(new PorterDuffXfermode(Mode.MULTIPLY));
+        //mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
+        mFadePaint.setColor(Color.argb(100, 255, 255, 255)); // Adjust alpha to
+        // change how
+        // quickly the
+        // image
+        // fades
+        // mFadePaint.setXfermode(new PorterDuffXfermode(Mode.MULTIPLY));
 
-		mRenderers = new HashSet<>();
-		mVisualizer = new Visualizer(0);
-		mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-		// mVisualizer.
-		// transPainter = new Paint();
-		// transPainter.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
-	}
+        mRenderers = new HashSet<>();
+        mVisualizer = new Visualizer(0);
+        Log.w(Constants.TAG, "SetCapture Size (FFT MINRANGE):" + Visualizer.getCaptureSizeRange()[0]);
+        mVisualizer.setCaptureSize(16);
 
-	/**
-	 * Links the visualizer to a player
-	 *
-	 *            - MediaPlayer instance to link to
-	 */
+        // transPainter = new Paint();
+        // transPainter.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
+    }
 
-	@SuppressLint("NewApi")
-	public void link(final boolean multicast) {
-		// Create the Visualizer object and attach it to our media player.
+    /**
+     * Links the visualizer to a player
+     *
+     *            - MediaPlayer instance to link to
+     */
 
-		// mVisualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
+    @SuppressLint("NewApi")
+    public void link(final boolean multicast) {
+        // Create the Visualizer object and attach it to our media player.
 
-		// Pass through Visualizer data to VisualizerView
-		Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener() {
-			@Override
-			public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-				updateVisualizer(bytes);
-				Log.w(Constants.TAG, "should not run this");
-			}
+        // mVisualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
 
-			@Override
-			public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-				byte[] copy = new byte[bytes.length / 2];
+        // Pass through Visualizer data to VisualizerView
+        Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener() {
+            @Override
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+                updateVisualizer(bytes);
+                Log.w(Constants.TAG, "should not run this");
+            }
+
+            @Override
+            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+                byte[] copy = new byte[bytes.length / 2];
                 System.arraycopy(bytes, 0, copy, 0, copy.length);
-				updateVisualizerFFT(copy);
-				sendSoulissDario(copy,multicast);
-			}
-		};
-		int dcRate = Visualizer.getMaxCaptureRate();
-		if (dcRate < 30000) {
-			Log.w(Constants.TAG, "MAXDCRATE invalid, defaulting to:" + dcRate);
-		} else {
-			dcRate = 30000; // 15kHz
-		}
-		mVisualizer.setDataCaptureListener(captureListener, dcRate, false, true);
-		// Enabled Visualizer and disable when we're done with the stream
-		mVisualizer.setEnabled(true);
+                updateVisualizerFFT(copy);
+                sendSoulissPlinio(copy, multicast);
+            }
+        };
+        int dcRate = Visualizer.getMaxCaptureRate();
+        if (dcRate < 30000) {
+            Log.w(Constants.TAG, "MAXDCRATE invalid, defaulting to:" + dcRate);
+        } else {
+            dcRate = 30000; // 15kHz
+        }
+        mVisualizer.setDataCaptureListener(captureListener, dcRate, false, true);
+        // Enabled Visualizer and disable when we're done with the stream
+        mVisualizer.setEnabled(true);
 
-	}
+    }
 
-	// non devono essere azzerate ad ogni iterazione!!!
+    // non devono essere azzerate ad ogni iterazione!!!
 
-	float absMax_low = 300;
-	float absMax_med = 300;
-	float absMax_high = 300;
+    float absMax_low = 300;
+    float absMax_med = 300;
+    float absMax_high = 300;
 
-	int k_low = 30;
-	int k_med = 1;
-	int k_high = 1;
-	/**
-	 * Magie di Dario.
-	 * Dalla trasformata di fourier a tre colori
-	 * 
-	 * @param data FFT
-	 * @param multicast se inviare a tutti
-	 */
-	private void sendSoulissDario(byte[] data, boolean multicast) {
+    int k_low = 30;
+    int k_med = 1;
+    int k_high = 1;
 
-		int mDivisions = 3;
-		float dbValue_low = 1;
-		float dbValue_medium = 1;
-		float dbValue_high = 1;
-		int divisions = data.length / mDivisions - 1;
+    /**
+     * Magie di Dario.
+     * Dalla trasformata di fourier a tre colori
+     *
+     * @param data FFT
+     * @param multicast se inviare a tutti
+     */
+    private void sendSoulissPlinio(byte[] data, boolean multicast) {
 
-		for (int i = 0; i < divisions / 2; i++) {// half part is imaginary
+        int mDivisions = 3;
+        float dbValue_low = 1;
+        float dbValue_medium = 1;
+        float dbValue_high = 1;
+        int divisions = data.length / mDivisions - 1;
+        Log.v(Constants.TAG, "capture size:" + data.length);
+        for (int i = 0; i < divisions / 2; i++) {
+            // half part is imaginary
 
-			byte rfk = data[2 * i];
-			byte ifk = data[2 * (i + 1)];
-			float magnitude_low = (rfk * rfk + ifk * ifk);
-			dbValue_low += magnitude_low;
+            byte rfk = data[2 * i];
+            byte ifk = data[2 * (i + 1)];
+            float magnitude_low = (rfk * rfk + ifk * ifk);
+            dbValue_low += magnitude_low;
 
-			// MEDI
-			rfk = data[divisions + 2 * i];
-			ifk = data[divisions + 2 * (i + 1)];
-			float magnitude_med = (rfk * rfk + ifk * ifk);
-			dbValue_medium += magnitude_med;
+            // MEDI
+            rfk = data[divisions + 2 * i];
+            ifk = data[divisions + 2 * (i + 1)];
+            float magnitude_med = (rfk * rfk + ifk * ifk);
+            dbValue_medium += magnitude_med;
 
-			// ALTI
-			rfk = data[2 * divisions + 2 * i];
-			ifk = data[2 * divisions + 2 * (i + 1)];
-			float magnitude_high = (rfk * rfk + ifk * ifk);
-			dbValue_high += magnitude_high;
+            // ALTI
+            rfk = data[2 * divisions + 2 * i];
+            ifk = data[2 * divisions + 2 * (i + 1)];
+            float magnitude_high = (rfk * rfk + ifk * ifk);
+            dbValue_high += magnitude_high;
 
-		}
+        }
 
-		// scaling
+        dbValue_low /= k_low;
+        dbValue_medium /= k_med;
+        dbValue_high /= k_high;
 
-		dbValue_low /= k_low;
-		dbValue_medium /= k_med;
-		dbValue_high /= k_high;
+        if (dbValue_high > absMax_high)
+            absMax_high = dbValue_high;
 
-		if (dbValue_high > absMax_high)
-			absMax_high = dbValue_high;
+        if (dbValue_medium > absMax_med)
+            absMax_med = dbValue_medium;
 
-		if (dbValue_medium > absMax_med)
-			absMax_med = dbValue_medium;
+        if (dbValue_low > absMax_low)
+            absMax_low = dbValue_low;
 
-		if (dbValue_low > absMax_low)
-			absMax_low = dbValue_low;
+        try {
+            dbValue_low = 255 * (dbValue_low / absMax_low);
+            dbValue_medium = 255 * (dbValue_medium / absMax_med);
+            dbValue_high = 255 * (dbValue_high / absMax_high);
+        } catch (ArithmeticException e) {
+            dbValue_low = 0;
+            dbValue_medium = 0;
+            dbValue_high = 0;
+        }
 
-		try {
-			dbValue_low = 255 * (dbValue_low / absMax_low);
-			dbValue_medium = 255 * (dbValue_medium / absMax_med);
-			dbValue_high = 255 * (dbValue_high / absMax_high);
-		} catch (ArithmeticException e) {
+        dbValue_low *= opz.getEqLow();
+        dbValue_medium *= opz.getEqMed();
+        dbValue_high *= opz.getEqHigh();
+        Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
+        //n_red = sum of frequency selected for R
+        //red = R_equalizer * R_costant * (Frequency 1 / MAX_Frequency + Frequency2 / MAX Frequency + ... ) / n_red.
+        // scaling
 
-			dbValue_low = 0;
-			dbValue_medium = 0;
-			dbValue_high = 0;
+        parent.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, (int) dbValue_low,
 
-		}
-		dbValue_low *= opz.getEqLow();
-		dbValue_medium*= opz.getEqMed();
-		dbValue_high*= opz.getEqHigh();
-		Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
+                (int) dbValue_medium, (int) dbValue_high, multicast);
 
-		parent.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, (int) dbValue_low,
+    }
 
-		(int) dbValue_medium, (int) dbValue_high, multicast);
 
-	}
+    public void addRenderer(Renderer renderer) {
+        if (renderer != null) {
+            mRenderers.add(renderer);
+        }
+    }
 
-	
-	public void addRenderer(Renderer renderer) {
-		if (renderer != null) {
-			mRenderers.add(renderer);
-		}
-	}
+    public void clearRenderers() {
+        mRenderers.clear();
+    }
 
-	public void clearRenderers() {
-		mRenderers.clear();
-	}
-
-	/**
-	 * Call to release the resources used by VisualizerView. Like with the
-	 * MediaPlayer it is good practice to call this method
-	 */
+    /**
+     * Call to release the resources used by VisualizerView. Like with the
+     * MediaPlayer it is good practice to call this method
+     */
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
-	public void release() {
-		// XXX sposta il disable
-		mVisualizer.release();
-	}
+    public void release() {
+        // XXX sposta il disable
+        mVisualizer.release();
+    }
 
-	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
-	public void setEnabled(boolean in) {
-		mVisualizer.setEnabled(in);
-	}
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    public void setEnabled(boolean in) {
+        mVisualizer.setEnabled(in);
+    }
 
-	/**
-	 * Pass data to the visualizer. Typically this will be obtained from the
-	 * Android Visualizer.OnDataCaptureListener call back. See
-	 * {@link Visualizer.OnDataCaptureListener#onWaveFormDataCapture }
-	 * 
-	 * @param bytes
-	 */
-	public void updateVisualizer(byte[] bytes) {
-		mBytes = bytes;
-		invalidate();
-	}
+    /**
+     * Pass data to the visualizer. Typically this will be obtained from the
+     * Android Visualizer.OnDataCaptureListener call back. See
+     * {@link Visualizer.OnDataCaptureListener#onWaveFormDataCapture }
+     *
+     * @param bytes
+     */
+    public void updateVisualizer(byte[] bytes) {
+        mBytes = bytes;
+        invalidate();
+    }
 
-	/**
-	 * Pass FFT data to the visualizer. Typically this will be obtained from the
-	 * Android Visualizer.OnDataCaptureListener call back. See
-	 * {@link Visualizer.OnDataCaptureListener#onFftDataCapture }
-	 * 
-	 * @param bytes
-	 */
-	public void updateVisualizerFFT(byte[] bytes) {
-		mFFTBytes = bytes;
-		invalidate();
-	}
+    /**
+     * Pass FFT data to the visualizer. Typically this will be obtained from the
+     * Android Visualizer.OnDataCaptureListener call back. See
+     * {@link Visualizer.OnDataCaptureListener#onFftDataCapture }
+     *
+     * @param bytes
+     */
+    public void updateVisualizerFFT(byte[] bytes) {
+        mFFTBytes = bytes;
+        invalidate();
+    }
 
-	//boolean mFlash = false;
+    Bitmap mCanvasBitmap;
+    Canvas mCanvas;
+    FFTData fftData = new FFTData(mFFTBytes);
+    AudioData audioData = new AudioData(mBytes);
+    Matrix neo = new Matrix();
 
-	/**
-	 * Call this to make the visualizer flash. Useful for flashing at the start
-	 * of a song/loop etc...
-	 */
-	/*public void flash() {
-		mFlash = true;
-		invalidate();
-	}*/
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
-	Bitmap mCanvasBitmap;
-	Canvas mCanvas;
-	FFTData fftData = new FFTData(mFFTBytes);
-	AudioData audioData = new AudioData(mBytes);
-	Matrix neo = new Matrix();
-	
-	@Override
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
+        // Create canvas once we're ready to draw
+        mRect.set(0, 0, getWidth(), getHeight());
+        if (mCanvasBitmap == null) {
+            mCanvasBitmap = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Config.ARGB_4444);
+        }
+        if (mCanvas == null) {
+            mCanvas = new Canvas(mCanvasBitmap);
+        }
 
-		// Create canvas once we're ready to draw
-		mRect.set(0, 0, getWidth(), getHeight());
-		if (mCanvasBitmap == null) {
-			mCanvasBitmap = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Config.ARGB_4444);
-		}
-		if (mCanvas == null) {
-			mCanvas = new Canvas(mCanvasBitmap);
-		}
+        // mCanvas.drawRect(0, 0,mCanvasBitmap.getWidth(),
+        // mCanvasBitmap.getHeight(), transPainter);
+        canvas.drawBitmap(mCanvasBitmap, neo, null);
 
-		// mCanvas.drawRect(0, 0,mCanvasBitmap.getWidth(),
-		// mCanvasBitmap.getHeight(), transPainter);
-		canvas.drawBitmap(mCanvasBitmap, neo, null);
+        // Fade out old contents
+        mCanvas.drawPaint(mFadePaint);
 
-		// Fade out old contents
-		mCanvas.drawPaint(mFadePaint);
+        if (mBytes != null) {
+            // Render all audio renderers
+            //AudioData audioData = new AudioData(mBytes);
+            audioData.bytes = mBytes;
+            for (Renderer r : mRenderers) {
+                r.render(mCanvas, audioData, mRect);
+            }
+        }
 
-		if (mBytes != null) {
-			// Render all audio renderers
-			//AudioData audioData = new AudioData(mBytes);
-			audioData.bytes = mBytes;
-			for (Renderer r : mRenderers) {
-				r.render(mCanvas, audioData, mRect);
-			}
-		}
+        if (mFFTBytes != null) {
+            // Render all FFT renderers
+            //FFTData fftData = new FFTData(mFFTBytes);
+            fftData.bytes = mFFTBytes;
+            for (Renderer r : mRenderers) {
+                r.render(mCanvas, fftData, mRect);
+            }
+        }
+    }
 
-		if (mFFTBytes != null) {
-			// Render all FFT renderers
-			//FFTData fftData = new FFTData(mFFTBytes);
-			fftData.bytes = mFFTBytes;
-			for (Renderer r : mRenderers) {
-				r.render(mCanvas, fftData, mRect);
-			}
-		}
+    public SoulissPreferenceHelper getOpz() {
+        return opz;
+    }
 
-		/*if (mFlash) {
-			mFlash = false;
-			mCanvas.drawPaint(mFlashPaint);
-		}*/
-
-	}
-
-	public SoulissPreferenceHelper getOpz() {
-		return opz;
-	}
-
-	public void setOpz(SoulissPreferenceHelper opz) {
-		this.opz = opz;
-	}
+    public void setOpz(SoulissPreferenceHelper opz) {
+        this.opz = opz;
+    }
 }
