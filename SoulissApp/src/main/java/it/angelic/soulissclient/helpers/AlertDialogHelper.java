@@ -413,7 +413,7 @@ public class AlertDialogHelper {
     public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate) {
         final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
-        final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
+        final AlertDialog.Builder equalizerBuilder = new AlertDialog.Builder(context);
 
         LayoutInflater factory = LayoutInflater.from(context);
         final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null, false);
@@ -421,13 +421,23 @@ public class AlertDialogHelper {
         final SeekBar low = (SeekBar) deleteDialogView.findViewById(R.id.seekBarLow);
         final SeekBar med = (SeekBar) deleteDialogView.findViewById(R.id.seekBarMed);
         final SeekBar hi = (SeekBar) deleteDialogView.findViewById(R.id.seekBarHigh);
+
+        final SeekBar lowRange = (SeekBar) deleteDialogView.findViewById(R.id.seekBarRangeLow);
+        final SeekBar medRange = (SeekBar) deleteDialogView.findViewById(R.id.seekBarRangeMed);
+        final SeekBar hiRange = (SeekBar) deleteDialogView.findViewById(R.id.seekBarRangeHigh);
         low.setProgress(Float.valueOf(opzioni.getEqLow() * 100f).intValue());
         med.setProgress(Float.valueOf(opzioni.getEqMed() * 100f).intValue());
         hi.setProgress(Float.valueOf(opzioni.getEqHigh() * 100f).intValue());
+        //Range wideness
+        lowRange.setProgress(Float.valueOf(opzioni.getEqLowRange() * 100f).intValue());
+        medRange.setProgress(Float.valueOf(opzioni.getEqMedRange() * 100f).intValue());
+        hiRange.setProgress(Float.valueOf(opzioni.getEqHighRange() * 100f).intValue());
         Log.i("SoulissEqualizer", "Setting new eq low:" + opzioni.getEqLow() + " med: " + opzioni.getEqMed()
                 + " high: " + opzioni.getEqHigh());
+        Log.i("SoulissEqualizer", "Setting new eq low RANGE:" + opzioni.getEqLowRange() + " med: " + opzioni.getEqMedRange()
+                + " high: " + opzioni.getEqHighRange());
 
-        deleteBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
+        equalizerBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         opzioni.setEqLow(low.getProgress() / 100f);
@@ -438,18 +448,21 @@ public class AlertDialogHelper {
                                 Constants.twoDecimalFormat.format(opzioni.getEqLow()),
                                 Constants.twoDecimalFormat.format(opzioni.getEqMed()),
                                 Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
+                        opzioni.setEqLowRange(lowRange.getProgress() / 100f);
+                        opzioni.setEqMedRange(medRange.getProgress() / 100f);
+                        opzioni.setEqHighRange(hiRange.getProgress() / 100f);
                         if (toUpdate != null)
                             toUpdate.setText(strDisease2Msg);
                     }
                 });
 
-        deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
+        equalizerBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     }
                 });
-        final AlertDialog deleteDialog = deleteBuilder.create();
+        final AlertDialog deleteDialog = equalizerBuilder.create();
 
         deleteDialog.setView(deleteDialogView);
 

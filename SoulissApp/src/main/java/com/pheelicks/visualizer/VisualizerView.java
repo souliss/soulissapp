@@ -77,16 +77,11 @@ public class VisualizerView extends View {
 
         //mFlashPaint.setColor(Color.argb(122, 255, 255, 255));
         mFadePaint.setColor(Color.argb(100, 255, 255, 255)); // Adjust alpha to
-        // change how
-        // quickly the
-        // image
-        // fades
-        // mFadePaint.setXfermode(new PorterDuffXfermode(Mode.MULTIPLY));
 
         mRenderers = new HashSet<>();
         mVisualizer = new Visualizer(0);
-        Log.w(Constants.TAG, "SetCapture Size (FFT MINRANGE):" + Visualizer.getCaptureSizeRange()[0]);
-        mVisualizer.setCaptureSize(16);
+        Log.w(Constants.TAG, "SetCapture Size (FFT MINRANGE):" + mVisualizer.getCaptureSize());
+
 
         // transPainter = new Paint();
         // transPainter.setXfermode(new PorterDuffXfermode(Mode.CLEAR));
@@ -94,8 +89,8 @@ public class VisualizerView extends View {
 
     /**
      * Links the visualizer to a player
-     *
-     *            - MediaPlayer instance to link to
+     * <p/>
+     * - MediaPlayer instance to link to
      */
 
     @SuppressLint("NewApi")
@@ -146,38 +141,43 @@ public class VisualizerView extends View {
      * Magie di Dario.
      * Dalla trasformata di fourier a tre colori
      *
-     * @param data FFT
+     * @param data      FFT
      * @param multicast se inviare a tutti
      */
     private void sendSoulissPlinio(byte[] data, boolean multicast) {
 
-        int mDivisions = 3;
         float dbValue_low = 1;
         float dbValue_medium = 1;
         float dbValue_high = 1;
-        int divisions = data.length / mDivisions - 1;
-        Log.v(Constants.TAG, "capture size:" + data.length);
-        for (int i = 0; i < divisions / 2; i++) {
-            // half part is imaginary
-
-            byte rfk = data[2 * i];
-            byte ifk = data[2 * (i + 1)];
-            float magnitude_low = (rfk * rfk + ifk * ifk);
-            dbValue_low += magnitude_low;
-
-            // MEDI
-            rfk = data[divisions + 2 * i];
-            ifk = data[divisions + 2 * (i + 1)];
-            float magnitude_med = (rfk * rfk + ifk * ifk);
-            dbValue_medium += magnitude_med;
-
-            // ALTI
-            rfk = data[2 * divisions + 2 * i];
-            ifk = data[2 * divisions + 2 * (i + 1)];
-            float magnitude_high = (rfk * rfk + ifk * ifk);
-            dbValue_high += magnitude_high;
-
+        Log.v(Constants.TAG, "data.length:" + data.length);
+        float low_freq_slider = opz.getEqLowRange() * data.length / 2 ;
+        float med_freq_slider = opz.getEqMedRange() * data.length / 2 ;
+        float high_freq_slider = opz.getEqHighRange() * data.length / 2 ;
+        //Log.v(Constants.TAG, "low_freq_slider:" + low_freq_slider+"med_freq_slider:" + med_freq_slider+"hig_freq_slider:" + high_freq_slider);
+        for (int i = 0; i < data.length / 2-1; i++) {// half part is imaginary
+            byte rfk, ifk;
+            if ((i > low_freq_slider / 2) && (i < low_freq_slider)) {
+                rfk = data[2 * i];
+                ifk = data[2 * (i + 1)];
+                float magnitude_low = (rfk * rfk + ifk * ifk);
+                dbValue_low += magnitude_low;
+            }
+            if ((i > med_freq_slider / 2) && (i < med_freq_slider)) {
+                // MEDI
+                rfk = data[2 * i];
+                ifk = data[2 * (i + 1)];
+                float magnitude_med = (rfk * rfk + ifk * ifk);
+                dbValue_medium += magnitude_med;
+            }
+            if ((i > high_freq_slider / 2) && (i < high_freq_slider)) {
+                // ALTI
+                rfk = data[2 * i];
+                ifk = data[2 * (i + 1)];
+                float magnitude_high = (rfk * rfk + ifk * ifk);
+                dbValue_high += magnitude_high;
+            }
         }
+        Log.v(Constants.TAG, "RAWLOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
 
         dbValue_low /= k_low;
         dbValue_medium /= k_med;
@@ -206,9 +206,6 @@ public class VisualizerView extends View {
         dbValue_medium *= opz.getEqMed();
         dbValue_high *= opz.getEqHigh();
         Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
-        //n_red = sum of frequency selected for R
-        //red = R_equalizer * R_costant * (Frequency 1 / MAX_Frequency + Frequency2 / MAX Frequency + ... ) / n_red.
-        // scaling
 
         parent.issueIrCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, (int) dbValue_low,
 

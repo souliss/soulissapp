@@ -5,6 +5,7 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
 
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -55,5 +56,65 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textViewRangeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Select Frequences' range wideness"
+        android:layout_below="@+id/seekBarHigh"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+    <TextView
+        android:id="@+id/textViewRange1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Low"
+        android:layout_below="@+id/textViewRangeTitle"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewRange2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewRange1"
+        android:layout_marginTop="33dp"
+        android:text="Medium"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textViewRange3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewRange2"
+        android:layout_marginTop="33dp"
+        android:text="high"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <SeekBar
+        android:id="@+id/seekBarRangeLow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewRange1"
+        android:paddingLeft="15dp" />
+
+    <SeekBar
+        android:id="@+id/seekBarRangeMed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewRange2" />
+
+    <SeekBar
+        android:id="@+id/seekBarRangeHigh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewRange3" />
 
 </RelativeLayout>
