@@ -31,7 +31,12 @@
     <string name="ON">ON</string>
     <string name="power">Power</string>
     <string name="OFF">OFF</string>
-    
+    <string name="open">Open</string>
+    <string name="close">Fechar</string>
+    <string name="stop">Pare</string>
+    <string name="toggle">Alternar</string>
+    <string name="TurnON">Ligar</string>
+    <string name="TurnOFF">Desligar</string>
     <string name="mode">Modo</string>
     <string name="fan">Ventilador</string>
     <string name="red">Vermelho</string>

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.support.annotation.ArrayRes;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class WrapperActivity extends Activity {
 
         ArrayList<String> thingsYouSaid = getIntent().getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
         if (thingsYouSaid != null && thingsYouSaid.size() > 0){
-            Log.w(Constants.TAG, "GOTIT!!! "+thingsYouSaid.get(0));
+            Log.w(Constants.TAG, "GOT VOICE COMMAND: "+thingsYouSaid.get(0));
             interpretCommand(this, thingsYouSaid.get(0));
         }
         finish();
@@ -51,15 +52,15 @@ public class WrapperActivity extends Activity {
                 return;
             }
         }
-        if (yesMan.contains(context.getString(R.string.TurnON).toLowerCase())) {
+        if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnON_strarray))) {
             comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
-        } else if (yesMan.contains(context.getString(R.string.TurnOFF).toLowerCase())) {
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnOFF_strarray))) {
             comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
-        } else if (yesMan.contains(context.getString(R.string.toggle).toLowerCase())) {
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.toggle_strarray))) {
             comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_ToogleCmd);
-        } else if (yesMan.contains(context.getString(R.string.open).toLowerCase())) {
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.open_strarray))) {
             comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T2n_OpenCmd);
-        } else if (yesMan.contains(context.getString(R.string.close).toLowerCase())) {
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.close_strarray))) {
             comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T2n_CloseCmd);
         }
 
@@ -94,4 +95,12 @@ public class WrapperActivity extends Activity {
         }
     }
 
+    private static boolean isContainedInArray(String In,String[] synonyms){
+
+        for (String it : synonyms){
+            if (In.toLowerCase().contains(it.toLowerCase()))
+                return true;
+        }
+        return false;
+    }
 }

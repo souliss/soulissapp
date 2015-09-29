@@ -31,7 +31,12 @@
     <string name="ON">ON</string>
     <string name="power">Power</string>
     <string name="OFF">OFF</string>
-    
+    <string name="open">Apri</string>
+    <string name="close">Chiudi</string>
+    <string name="stop">Stop</string>
+    <string name="toggle">Inverti</string>
+    <string name="TurnON">Accendi</string>
+    <string name="TurnOFF">Spegni</string>
     <string name="mode">Mode</string>
     <string name="fan">Fan</string>
     <string name="red">Red</string>
