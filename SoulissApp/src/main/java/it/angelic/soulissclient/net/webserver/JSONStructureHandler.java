@@ -1,17 +1,8 @@
 package it.angelic.soulissclient.net.webserver;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.NetUtils;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -25,9 +16,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.net.NetUtils;
 
 public class JSONStructureHandler implements HttpRequestHandler {
 

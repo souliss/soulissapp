@@ -1,14 +1,5 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.Address;
@@ -22,6 +13,15 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 @TargetApi(11)
 public class ServiceSettingsFragment extends PreferenceFragment {

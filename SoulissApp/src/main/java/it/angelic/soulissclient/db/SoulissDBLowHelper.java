@@ -1,15 +1,15 @@
 package it.angelic.soulissclient.db;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera

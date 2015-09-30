@@ -1,13 +1,5 @@
 package it.angelic.soulissclient.adapters;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissScene;
-
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -18,6 +10,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissScene;
 
 public class SceneListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;

@@ -30,7 +30,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.List;

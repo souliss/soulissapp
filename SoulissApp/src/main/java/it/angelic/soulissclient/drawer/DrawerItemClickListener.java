@@ -1,5 +1,15 @@
 package it.angelic.soulissclient.drawer;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.preference.PreferenceActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
 import it.angelic.soulissclient.ManualUDPTestActivity;
 import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.NodesListActivity;
@@ -12,15 +22,6 @@ import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.preferences.VisualSettingsFragment;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.preference.PreferenceActivity;
-import android.support.v4.widget.DrawerLayout;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 public class DrawerItemClickListener implements ListView.OnItemClickListener {
 

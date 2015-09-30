@@ -1,16 +1,17 @@
 package it.angelic.receivers;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.webserver.HTTPService;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.SoulissDataService;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.net.webserver.HTTPService;
 
 /**
  * Receive per controllo esecuzione servizio. Viene invocato dopo il boot, e

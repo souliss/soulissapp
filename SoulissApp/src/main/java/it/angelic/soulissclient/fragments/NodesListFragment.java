@@ -1,24 +1,5 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.Constants.TAG;
-
-import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.NodeDetailActivity;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.adapters.NodesListAdapter;
-import it.angelic.soulissclient.adapters.NodesListAdapter.NodeViewHolder;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -47,6 +28,25 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.NodeDetailActivity;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.adapters.NodesListAdapter;
+import it.angelic.soulissclient.adapters.NodesListAdapter.NodeViewHolder;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.net.UDPHelper;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 /**
  * Activity per mostrare una lista di risultati (Nodi Souliss) questa modalita`

@@ -1,10 +1,10 @@
 package it.angelic.soulissclient.db;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import android.content.ContentValues;
 import android.database.Cursor;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class SoulissLogDTO {
 

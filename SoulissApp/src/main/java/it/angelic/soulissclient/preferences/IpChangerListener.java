@@ -1,17 +1,17 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-
-import java.net.InetAddress;
-
 import android.app.Activity;
 import android.os.Looper;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.Log;
+
+import java.net.InetAddress;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 public class IpChangerListener implements OnPreferenceChangeListener {
 

@@ -1,18 +1,18 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import java.util.List;
+
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.net.UDPHelper;
 
 
 public class NodesListActivity extends AbstractStatusedFragmentActivity {

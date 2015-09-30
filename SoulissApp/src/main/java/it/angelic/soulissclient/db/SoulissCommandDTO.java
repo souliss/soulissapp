@@ -1,12 +1,12 @@
 package it.angelic.soulissclient.db;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.support.annotation.Nullable;
+
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SoulissCommandDTO implements Serializable {
 

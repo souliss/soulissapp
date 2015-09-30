@@ -1,7 +1,5 @@
 package it.angelic.receivers;
 
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +7,9 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 public class NetworkStateReceiver extends BroadcastReceiver {
 	private static final String TAG = "Souliss:Network Monitor";

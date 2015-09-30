@@ -3,11 +3,11 @@ package it.angelic.soulissclient.model;
 import android.support.annotation.DrawableRes;
 import android.util.Log;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 
 public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecutable {
 

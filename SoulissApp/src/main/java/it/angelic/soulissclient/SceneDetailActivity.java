@@ -1,16 +1,5 @@
 package it.angelic.soulissclient;
 
-import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.ScenesDialogHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissScene;
-
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -32,6 +21,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+
+import java.util.ArrayList;
+
+import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.ScenesDialogHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.SoulissScene;
+
+import static junit.framework.Assert.assertTrue;
 
 
 public class SceneDetailActivity extends AbstractStatusedFragmentActivity {

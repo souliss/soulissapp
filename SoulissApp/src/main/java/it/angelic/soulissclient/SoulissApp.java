@@ -1,9 +1,5 @@
 package it.angelic.soulissclient;
 
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-
-import java.io.Serializable;
-
 import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -11,6 +7,10 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+
+import java.io.Serializable;
+
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 /**
  * Contenitore metodi globali per reperimento contesto
  * e dimensioni finestra

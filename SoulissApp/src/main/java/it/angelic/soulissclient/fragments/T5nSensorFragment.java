@@ -1,33 +1,5 @@
 package it.angelic.soulissclient.fragments;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissGraphData;
-import it.angelic.soulissclient.db.SoulissHistoryGraphData;
-import it.angelic.soulissclient.helpers.GraphsHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissTypical;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Set;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.chart.CombinedXYChart;
-import org.achartengine.chart.LineChart;
-import org.achartengine.chart.RangeBarChart;
-import org.achartengine.model.RangeCategorySeries;
-import org.achartengine.model.TimeSeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-
 import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -46,6 +18,35 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.CombinedXYChart;
+import org.achartengine.chart.LineChart;
+import org.achartengine.chart.RangeBarChart;
+import org.achartengine.model.RangeCategorySeries;
+import org.achartengine.model.TimeSeries;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Set;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissGraphData;
+import it.angelic.soulissclient.db.SoulissHistoryGraphData;
+import it.angelic.soulissclient.helpers.GraphsHelper;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissTypical;
+
+import static it.angelic.soulissclient.Constants.TAG;
+import static junit.framework.Assert.assertTrue;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
 

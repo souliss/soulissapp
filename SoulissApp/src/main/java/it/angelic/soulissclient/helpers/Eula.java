@@ -1,17 +1,17 @@
 package it.angelic.soulissclient.helpers;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 
 /**
  * Displays an EULA ("End User License Agreement") that the user has to accept before

@@ -1,14 +1,15 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.widget.Toast;
+
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 @TargetApi(11)
 public class VisualSettingsFragment extends PreferenceFragment {

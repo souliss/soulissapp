@@ -1,14 +1,15 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.net.webserver.HTTPService;
 import android.app.Activity;
 import android.content.Intent;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.Log;
 import android.widget.Toast;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.net.webserver.HTTPService;
 
 public class WebServerPreferenceListener implements OnPreferenceChangeListener {
 

@@ -16,11 +16,9 @@
 
 package it.angelic.soulissclient.helpers;
 
-import it.angelic.soulissclient.BuildConfig;
-
 import java.io.UnsupportedEncodingException;
 
-import android.util.Base64OutputStream;
+import it.angelic.soulissclient.BuildConfig;
 
 /**
  * Utilities for encoding and decoding the Base64 representation of

@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.model;
 
-import static junit.framework.Assert.assertTrue;
+import android.util.Log;
+
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.typicals.Constants;
@@ -25,7 +26,8 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
-import android.util.Log;
+
+import static junit.framework.Assert.assertTrue;
 
 public class SoulissTypicalFactory {
 	/**

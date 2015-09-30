@@ -1,10 +1,5 @@
 package it.angelic.soulissclient.adapters;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissNode;
 import android.content.Context;
 import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
@@ -20,6 +15,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.R.color;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.SoulissNode;
 
 public class NodesListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;

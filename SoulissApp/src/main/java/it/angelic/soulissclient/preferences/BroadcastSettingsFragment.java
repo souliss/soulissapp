@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.preferences;
 
 import android.os.Bundle;
-import android.os.Looper;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;

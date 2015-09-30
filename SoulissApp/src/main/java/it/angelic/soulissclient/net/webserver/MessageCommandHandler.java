@@ -1,9 +1,9 @@
 package it.angelic.soulissclient.net.webserver;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URLDecoder;
+import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -14,10 +14,10 @@ import org.apache.http.entity.EntityTemplate;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpRequestHandler;
 
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
 
 public class MessageCommandHandler implements HttpRequestHandler{
        

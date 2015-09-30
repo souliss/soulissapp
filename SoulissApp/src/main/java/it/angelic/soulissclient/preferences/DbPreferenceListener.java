@@ -1,17 +1,5 @@
 package it.angelic.soulissclient.preferences;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
-import it.angelic.soulissclient.helpers.ImportDatabaseCSVTask;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-
-import java.io.File;
-import java.io.FilenameFilter;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -22,6 +10,18 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FilenameFilter;
+
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
+import it.angelic.soulissclient.helpers.ImportDatabaseCSVTask;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 public class DbPreferenceListener implements OnPreferenceClickListener {
 

@@ -1,10 +1,10 @@
 package it.angelic.soulissclient.db;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import android.database.Cursor;
 import android.util.Log;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class SoulissHistoryGraphData {
 

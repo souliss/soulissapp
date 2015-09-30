@@ -1,16 +1,5 @@
 package it.angelic.soulissclient;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import static junit.framework.Assert.assertTrue;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.typicals.SoulissTypical15;
-import it.angelic.soulissclient.net.UDPHelper;
-
-import java.util.List;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +12,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
+import java.util.List;
+
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.typicals.SoulissTypical15;
+import it.angelic.soulissclient.net.UDPHelper;
+
+import static it.angelic.soulissclient.Constants.TAG;
+import static junit.framework.Assert.assertTrue;
 
 
 public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {

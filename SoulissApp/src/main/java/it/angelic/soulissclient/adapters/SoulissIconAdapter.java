@@ -1,13 +1,14 @@
 package it.angelic.soulissclient.adapters;
 
-import it.angelic.soulissclient.R;
-import us.feras.ecogallery.EcoGallery;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import it.angelic.soulissclient.R;
+import us.feras.ecogallery.EcoGallery;
 
 public class SoulissIconAdapter extends BaseAdapter {
     int mGalleryItemBackground;

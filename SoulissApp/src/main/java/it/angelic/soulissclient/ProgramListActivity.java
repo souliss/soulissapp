@@ -1,16 +1,5 @@
 package it.angelic.soulissclient;
 
-import static it.angelic.soulissclient.Constants.TAG;
-import it.angelic.soulissclient.adapters.ProgramListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.drawer.NavDrawerAdapter;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-
-import java.util.LinkedList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,6 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import it.angelic.soulissclient.adapters.ProgramListAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.model.SoulissCommand;
+
+import static it.angelic.soulissclient.Constants.TAG;
 
 
 /**

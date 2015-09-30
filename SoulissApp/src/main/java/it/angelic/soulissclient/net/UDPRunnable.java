@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.net;
 
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import android.os.Looper;
+import android.util.Log;
 
 import java.net.BindException;
 import java.net.DatagramPacket;
@@ -13,8 +13,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import android.os.Looper;
-import android.util.Log;
+import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 /**
  * Apre una porta sul 23000 e si mette in ascolto per le risposte.
