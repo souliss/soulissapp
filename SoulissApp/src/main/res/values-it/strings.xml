@@ -347,5 +347,8 @@
     <string name="bytes_sent">Bytes inviati</string>
     <string name="voice_command_help">Usa il nome di uno scenario, oppure un comando (accendi, spegni, etc.) seguito dal nome di un dispositivo</string>
     <string name="souliss_voice_command">Comando Vocale Souliss</string>
+    <string name="command_typ_error">Comando riconosciuto, ma dispositivo non trovato</string>
+    <string name="command_node_error">Strano. Comando e nodo riconosciuti, ma dispositivo non trovato</string>
+    <string name="err_command_not_recognized">Comando non riconosciuto</string>
 
 </resources>

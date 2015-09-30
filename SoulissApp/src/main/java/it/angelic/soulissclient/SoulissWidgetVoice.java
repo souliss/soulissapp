@@ -1,31 +1,18 @@
 package it.angelic.soulissclient;
 
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
-
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
-import it.angelic.soulissclient.model.SoulissScene;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.net.UDPHelper;
 
 public class SoulissWidgetVoice extends AppWidgetProvider {
 
@@ -48,7 +35,7 @@ public class SoulissWidgetVoice extends AppWidgetProvider {
 
 
         // this intent points to activity that should handle results, doesn't work
-        Intent activityIntent = new Intent(SoulissApp.getAppContext(), WrapperActivity.class );
+        Intent activityIntent = new Intent(SoulissApp.getAppContext(), VoiceCommandActivityNoDisplay.class );
         activityIntent.setFlags(Intent.FLAG_EXCLUDE_STOPPED_PACKAGES | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
         //doesn't work as well
         //activityIntent.setComponent(new ComponentName("it.angelic.soulissclient", "it.angelic.soulissclient.WrapperActivity"));

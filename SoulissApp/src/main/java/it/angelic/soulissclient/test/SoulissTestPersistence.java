@@ -24,7 +24,7 @@ public class SoulissTestPersistence extends AndroidTestCase {
         RenamingDelegatingContext context = new RenamingDelegatingContext(getContext(), "test_");
         db = new SoulissDBHelper(context);
         opzioni = new SoulissPreferenceHelper(context);
-        db.open();
+        SoulissDBHelper.open();
     }
 
     protected void testAll() throws Throwable {
@@ -35,7 +35,7 @@ public class SoulissTestPersistence extends AndroidTestCase {
     }
 
     public void addFakeNode(){
-        SoulissNode testNode = new SoulissNode((short)fakeNodeId);
+        SoulissNode testNode = new SoulissNode(fakeNodeId);
         db.createOrUpdateNode(testNode);
         assertEquals(1, db.countNodes());
         // Here i have my new database wich is not connected to the standard database of the App

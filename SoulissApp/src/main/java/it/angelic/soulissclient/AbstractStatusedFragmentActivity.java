@@ -127,7 +127,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             final String yesMan = thingsYouSaid.get(0).toLowerCase();
             Log.i(Constants.TAG, "onActivityResult, searching command: " + yesMan);
 
-            WrapperActivity.interpretCommand(this, yesMan);
+            VoiceCommandActivityNoDisplay.interpretCommand(this, yesMan);
         }
     }
 

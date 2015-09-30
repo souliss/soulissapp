@@ -339,4 +339,7 @@
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Get Souliss Nodes</string>
     <string name="voice_command_help">Use one of your scenes\' name, or a command (turn on, turn off, etc.) followed by a device\'s name</string>
+    <string name="command_typ_error"/>
+    <string name="command_node_error"/>
+    <string name="err_command_not_recognized"/>
 </resources>
