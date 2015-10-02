@@ -160,7 +160,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="16dp"
-            android:src="@android:drawable/ic_btn_speak_now"
+            android:src="@drawable/ic_mic_32"
             fab:fab_colorNormal="@color/std_green"
             fab:fab_colorPressed="@color/std_blue_shadow"
             fab:fab_colorRipple="@color/std_purple" />

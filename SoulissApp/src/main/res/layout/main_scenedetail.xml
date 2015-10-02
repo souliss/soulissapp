@@ -75,7 +75,7 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="16dp"
                 android:background="@color/white"
-                android:src="@android:drawable/ic_media_play"
+                android:src="@drawable/ic_play_arrow_32dp"
                 fab:fab_colorNormal="@color/std_green"
                 fab:fab_colorPressed="@color/std_blue_shadow"
                 fab:fab_colorRipple="@color/std_purple"/>
