@@ -280,9 +280,8 @@ public class ScenesDialogHelper {
                         // lo metto dopo l'ultimo inserito
                         tull.getCommandDTO().setInterval(targetScene.getCommandArray().size() + 1);
                         tull.getCommandDTO().persistCommand();
-                        // setta comando singolo
 
-                        if (list != null) {
+                        if (list != null) {//refresh
                             // prendo comandi dal DB per questa scena
                             ArrayList<SoulissCommand> goer = datasource.getSceneCommands(context, targetScene.getId());
                             SoulissCommand[] scenesArr = new SoulissCommand[goer.size()];
@@ -360,15 +359,12 @@ public class ScenesDialogHelper {
      * @param preferencesActivity
      * @return
      */
-    public static void executeSceneDialog(final Activity preferencesActivity, final SoulissScene toExec,
-                                          final SoulissPreferenceHelper opt) {
+    public static void executeSceneDialog(final Activity preferencesActivity, final SoulissScene toExec ) {
 
-        //progressDialog = ProgressDialog.show(preferencesActivity, "", "Executing Scene " + toExec.getNiceName());
         toExec.execute();
         preferencesActivity.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(preferencesActivity,
-                        "Execution of Scene " + toExec.toString() + " complete!", Toast.LENGTH_SHORT)
+                Toast.makeText(preferencesActivity,toExec.getName() + " " + preferencesActivity.getString(R.string.command_sent), Toast.LENGTH_SHORT)
                         .show();
             }
         });

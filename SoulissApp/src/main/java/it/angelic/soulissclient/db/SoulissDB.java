@@ -103,9 +103,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_SCENE_NAME = "strscenename";
     public static final String COLUMN_SCENE_ICON = "intsceneico";
     public static final String[] ALLCOLUMNS_SCENES = {COLUMN_SCENE_ID, COLUMN_SCENE_NAME, COLUMN_SCENE_ICON};
-    /*
-    * TABELLA TAGS
-    */
+    /*TABELLA TAGS*/
     public static final String COLUMN_TAG_ID = "inttagid";
     public static final String COLUMN_TAG_NAME = "strtagname";
     public static final String COLUMN_TAG_ICONID = "inttagico";
