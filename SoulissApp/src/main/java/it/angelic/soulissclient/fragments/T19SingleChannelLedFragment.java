@@ -430,7 +430,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
         // solo per sicurezza
         public void onStopTrackingTouch(SeekBar seekBar) {
-            collected.issueRefresh();//
+            //commented after https://github.com/souliss/soulissapp/issues/80
+            //collected.issueRefresh();//
         }
 
     }
