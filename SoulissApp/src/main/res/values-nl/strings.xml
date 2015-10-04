@@ -347,4 +347,5 @@
     <string name="err_command_not_recognized">Command not recognized</string>
     <string name="menu_changenodeRebuild">Rebuild Node</string>
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
+    <string name="addprogram_choosedelay"/>
 </resources>

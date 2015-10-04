@@ -348,4 +348,5 @@
     <string name="bytes_sent">Bytes sent</string>
     <string name="dbstruct_req">DB Structure received</string>
     <string name="souliss_voice_command">Souliss Voice Command</string>
+    <string name="addprogram_choosedelay"/>
 </resources>

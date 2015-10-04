@@ -351,6 +351,7 @@
     <string name="menu_changenodeRebuild">Rebuild Node</string>
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
     <string name="menu_addFav">Add to Favourites</string>
+    <string name="addprogram_choosedelay"/>
 
 
 </resources>

@@ -77,7 +77,7 @@
     <string name="scene_add_command_to">Add Command to</string>
     <string name="scene_del_command">Delete Command</string>
     <string name="scene_send_command">Send Command</string>
-    <string name="scene_cmd_order">Execution order: </string>
+    <string name="scene_cmd_order">Execution delay: </string>
     <string name="scene_cmd_massive">Global command</string>
     <string name="scene_subtitle">Scene based on %1$d commands</string>
 
@@ -352,4 +352,5 @@
     <string name="menu_changenodeRebuild">Rebuild Node</string>
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
     <string name="bytes_sent">Bytes sent</string>
+    <string name="addprogram_choosedelay">Command's delay</string>>
 </resources>

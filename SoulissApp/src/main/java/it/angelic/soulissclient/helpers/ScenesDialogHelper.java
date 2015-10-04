@@ -223,6 +223,7 @@ public class ScenesDialogHelper {
 
         final Spinner outputTypicalSpinner = (Spinner) dialoglayout.findViewById(R.id.spinner3);
         final Spinner outputCommandSpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerCommand);
+        final Spinner outputDelaySpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerCommandDelay);
 
 		/* Cambiando nodo, cambia i tipici */
         OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
@@ -278,7 +279,9 @@ public class ScenesDialogHelper {
                         } else
                             tull.getCommandDTO().setType(Constants.COMMAND_SINGLE);
                         // lo metto dopo l'ultimo inserito
-                        tull.getCommandDTO().setInterval(targetScene.getCommandArray().size() + 1);
+                        int[] mefisto = context.getResources().getIntArray(R.array.delayIntervalValues);
+                        tull.getCommandDTO().setInterval(mefisto[outputDelaySpinner.getSelectedItemPosition()]  );
+                        Log.w(Constants.TAG,"Saving new command with delay:"+ context.getResources().getIntArray(R.array.delayIntervalValues)[outputDelaySpinner.getSelectedItemPosition()]  );
                         tull.getCommandDTO().persistCommand();
 
                         if (list != null) {//refresh

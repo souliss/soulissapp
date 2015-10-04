@@ -33,13 +33,13 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
         new Thread() {
             public void run() {
                 for (final SoulissCommand soulissCommand : commandArray) {
-                    Log.w(Constants.TAG, "EXECUTING SCENE Command:" + soulissCommand.toString());
-                    soulissCommand.execute();
+                    Log.w(Constants.TAG, "EXECUTING SCENE Command:" + soulissCommand.toString() + " DELAY FROM NOW: " + soulissCommand.getCommandDTO().getInterval());
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(soulissCommand.getCommandDTO().getInterval());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    soulissCommand.execute();
                 }
 
             }
