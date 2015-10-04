@@ -131,7 +131,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(Constants.TAG, "onCreate WrapperActivity ");
+        Log.w(Constants.TAG, "onCreate WrapperActivity");
 
         ArrayList<String> thingsYouSaid = getIntent().getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
         if (thingsYouSaid != null && thingsYouSaid.size() > 0) {

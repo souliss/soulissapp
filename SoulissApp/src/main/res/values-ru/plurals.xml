@@ -2,18 +2,23 @@
 <resources>
     <plurals
         name="Devices">
-        <item quantity="zero">No Device</item>
-        <item quantity="one">one Device</item>
-        <item quantity="few">%d Device</item>
-        <item quantity="many">%d Device</item>
-        <item quantity="other">%d  Devices</item>
+        <item quantity="one">%d устройство</item>
+        <item quantity="few">%d устройства</item>
+        <item quantity="many">%d устройств</item>
     </plurals>
 
     <plurals
         name="Bytes">
-        <item quantity="zero">0 Byte</item>
-        <item quantity="one">1 Byte</item>
-        <item quantity="other">%d  Bytes</item>
+        <item quantity="zero">0 Байтов</item>
+        <item quantity="one">%d Байт</item>
+        <item quantity="few">%d Байта</item>
+        <item quantity="many">%d Байтов</item>
+        <item quantity="other">%d Байтов</item>
     </plurals>
-    <plurals name="seconds">seconds</plurals>
+    <plurals name="seconds">
+        <item quantity="zero">0 Секунд</item>
+        <item quantity="one">%d Секунда</item>
+        <item quantity="few">%d Секунды</item>
+        <item quantity="many">%d Секунд</item>
+    </plurals>
 </resources>

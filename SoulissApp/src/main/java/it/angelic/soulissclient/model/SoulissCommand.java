@@ -103,7 +103,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             return targetScene.getIconResourceId();
         } else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
             // comando massivo
-            return R.drawable.arrowmove;
+            return R.drawable.arrowmove1;
         }
         short typical = parentTypical.getTypicalDTO().getTypical();
         long command = commandDTO.getCommand();
