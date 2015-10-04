@@ -340,6 +340,12 @@
     <string name="opt_get_nodes">Get Souliss Nodes</string>
     <string name="voice_command_help">Use one of your scenes\' name, or a command (turn on, turn off, etc.) followed by a device\'s name</string>
     <string name="command_typ_error"/>
-    <string name="command_node_error"/>
-    <string name="err_command_not_recognized"/>
+    <string name="command_node_error">Weird. Command and node recognized, but device not found</string>
+    <string name="err_command_not_recognized">Command not recognized</string>
+    <string name="menu_changenodeRebuild">Rebuild Node</string>
+    <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
+    <string name="all">all</string>
+    <string name="bytes_sent">Bytes sent</string>
+    <string name="dbstruct_req">DB Structure received</string>
+    <string name="souliss_voice_command">Souliss Voice Command</string>
 </resources>

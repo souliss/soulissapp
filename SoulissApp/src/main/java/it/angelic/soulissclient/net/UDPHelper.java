@@ -402,6 +402,12 @@ public class UDPHelper {
 
 	}
 
+	/**
+	 * Trigger a structural request for given device
+	 * @param prefs
+	 * @param numberOf number of desired nodes' devices
+	 * @param startOffset node offset
+	 */
 	public static void typicalRequest(SoulissPreferenceHelper prefs, int numberOf, int startOffset) {
 
 		assertEquals(true, numberOf < 128);

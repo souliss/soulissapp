@@ -273,14 +273,14 @@
     <string name="positional_executed">Souliss Positional Program Executed</string>
     <string name="timed_program_executed">Souliss Timed Program Executed</string>
     <string name="execute_at">Execution at:</string>
-    <string name="favourites" />
-    <string name="tag" />
+    <string name="favourites" >Favourites</string>
+    <string name="tag" >Tag</string>
     <string name="scene_add_to" />
-    <string name="existing_tag" />
+    <string name="existing_tag" >Existing Tag</string>
     <string name="new_tag">New Tag</string>
-    <string name="or" />
+    <string name="or" >o</string>
     <string name="input_tag_name">Input new Tag\'s name</string>
-    <string name="tag_rename" />
+    <string name="tag_rename" >Rename TAG</string>
     <string name="tag_delete" >Delete TAG</string>
     <string name="tag_desc" >Tags group devices. You can create Tags to re-organize your devices as desired. There is one pre-defined group called Favourites</string>
     <string name="img_select" >Seleziona Foto</string>
@@ -323,7 +323,7 @@
     <string name="bridge_useDhcp" >Use DHCP for remote board IP address assignment</string>
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
     <string name="advbroadcast_summary">Remotely configure Souliss Node</string>
-    <string name="Souliss_T19_Max_desc" />
+    <string name="Souliss_T19_Max_desc" >Maximum intensity</string>
     <string name="Souliss_T19_Med_desc" />
     <string name="Souliss_T19_Min_desc" />
     <string name="sureToRemoveTag">Are you sure you want to delete this tag ?</string>
@@ -344,11 +344,13 @@
     <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Get Souliss Nodes</string>
-    <string name="bytes_sent"/>
+    <string name="bytes_sent">Bytes sent</string>
     <string name="voice_command_help">Use one of your scenes\' name, or a command (turn on, turn off, etc.) followed by a device\'s name</string>
     <string name="souliss_voice_command">Souliss Voice Command</string>
     <string name="command_typ_error"/>
-    <string name="command_node_error"/>
-    <string name="err_command_not_recognized"/>
+    <string name="command_node_error">Weird. Command and node recognized, but device not found</string>
+    <string name="err_command_not_recognized">Command not recognized</string>
+    <string name="menu_changenodeRebuild">Rebuild Node</string>
+    <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
 
 </resources>

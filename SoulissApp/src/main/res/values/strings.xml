@@ -349,4 +349,7 @@
     <string name="command_typ_error">Command recognized, but device not found</string>
     <string name="command_node_error">Weird. Command and node recognized, but device not found</string>
     <string name="err_command_not_recognized">Command not recognized</string>
+    <string name="menu_changenodeRebuild">Rebuild Node</string>
+    <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
+    <string name="bytes_sent">Bytes sent</string>
 </resources>

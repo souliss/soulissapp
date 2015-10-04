@@ -617,6 +617,48 @@ public class AlertDialogHelper {
 
     }
 
+    /**
+     * Dialogo creazione singolo nodo
+     * Rebuilds a single node's devices
+     *
+     * @param preferencesActivity
+     * @param toRebuild node to request the refresh for
+     * @return
+     */
+    public static AlertDialog.Builder rebuildNodeDialog(final Activity preferencesActivity, final SoulissNode toRebuild,
+                                                            final SoulissPreferenceHelper opts) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity);
+        alert.setTitle(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild ));
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        if (opts.isSoulissReachable()) {
+            // alert.setIcon()
+            alert.setMessage(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild_desc) );
+            alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
+                    new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            new Thread() {
+                                public void run() {
+                                    Looper.prepare();
+                                    UDPHelper.typicalRequest(opts, 1, toRebuild.getId());
+                                }
+                            }.start();
+                        }
+                    });
+        } else {
+            alert.setMessage(preferencesActivity.getResources().getString(R.string.souliss_unavailable));
+        }
+
+        alert.setNegativeButton(SoulissApp.getAppContext().getResources().getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+        return alert;
+
+    }
+
 
     /**
      * Sceglie nuova icona
