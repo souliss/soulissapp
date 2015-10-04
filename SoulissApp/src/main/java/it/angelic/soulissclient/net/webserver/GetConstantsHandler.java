@@ -22,12 +22,10 @@ import java.io.OutputStreamWriter;
 import it.angelic.soulissclient.model.typicals.Constants;
 
 public class GetConstantsHandler implements HttpRequestHandler {
-	private Context context = null;
 	final String contentType = "text/html; charset=UTF-8";
 	private SharedPreferences pref;
 
 	public GetConstantsHandler(Context context) {
-		this.context = context;
 		pref = PreferenceManager.getDefaultSharedPreferences(context);
 
 	}

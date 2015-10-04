@@ -587,7 +587,7 @@ public class UDPHelper {
 	private static void debugByteArray(ArrayList<Byte> frame) {
 		StringBuilder deb = new StringBuilder();
 		for (int i = 0; i < frame.size(); i++) {
-			deb.append("0x" + Long.toHexString((long) frame.get(i) & 0xff) + " ");
+			deb.append("0x").append(Long.toHexString((long) frame.get(i) & 0xff)).append(" ");
 		}
 		Log.d(Constants.TAG, "frame debug: " + deb.toString());
 	}

@@ -493,10 +493,6 @@ public class AlertDialogHelper {
         alert2.setIcon(android.R.drawable.ic_dialog_dialer);
         // loads gallery and requires icon selection*/
         final EcoGallery gallery = new EcoGallery(context);
-        // final Gallery gallery = new Gallery(context);
-        // Gallery gallery = (Gallery) findViewById(R.id.gallery);
-        // gallery.setMinimumHeight(300);
-        // gallery.setLayoutParams(new Layo);
         gallery.setAdapter(new SoulissIconAdapter(context));
         alert2.setView(gallery);
 

@@ -79,6 +79,32 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     protected PendingIntent netListenerPendingIntent;
     ConnectivityManager mConnectivity;
     TelephonyManager mTelephony;
+    private Timer autoUpdate;
+    private TextView basinfo;
+    private View basinfoLine;
+    private CardView cardViewBasicInfo;
+    private CardView cardViewFav;
+    private CardView cardViewPositionInfo;
+    private CardView cardViewServiceInfo;
+    private TextView coordinfo;
+    private Criteria criteria;
+    private TextView dbwarn;
+    private View dbwarnline;
+    private Geocoder geocoder;
+    private TextView homedist;
+    private LocationManager locationManager;
+    private SoulissDataService mBoundService;
+    private HTTPService mBoundWebService;
+    private boolean mIsBound;
+    private boolean mIsWebBound;
+    private SoulissPreferenceHelper opzioni;
+    private View posInfoLine;
+    private Button programsActivity;
+    private String provider;
+    private ObservableScrollView scrollView;
+    private TextView serviceInfo;
+    private TextView serviceInfoAntiTheft;
+    private TextView serviceInfoFoot;
     Runnable timeExpired = new Runnable() {
         @Override
         public void run() {
@@ -87,7 +113,36 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             opzioni.getAndSetCachedAddress();
         }
     };
-    private ObservableScrollView scrollView;
+    private View serviceinfoLine;
+    /* SOULISS DATA SERVICE BINDINGS */
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            mBoundService = ((SoulissDataService.LocalBinder) service).getService();
+            Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceIntervalMsec());
+            SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
+            if (pref.isDataServiceEnabled()) {
+                //will detect if late
+                mBoundService.reschedule(false);
+            } else {
+                Log.i(TAG, "Dataservice DISABLED");
+            }
+            setServiceInfo();
+            mIsBound = true;
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // Because it is running in our same process, we should never
+            // see this happen.
+            mBoundService = null;
+            Toast.makeText(LauncherActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
+            mIsBound = false;
+        }
+    };
+    private Button soulissManualBtn;
+    private Button soulissSceneBtn;
+    private SoulissDBTagHelper tagDb;
+    private List<SoulissTag> tags;
+    private Handler timeoutHandler;
     // meccanismo per network detection
     private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
         @Override
@@ -97,6 +152,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             timeoutHandler.postDelayed(timeExpired, delay);
         }
     };
+    private View webServiceInfoLine;
+    private TextView webserviceInfo;
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -125,64 +182,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         }
     };
-    private LocationManager locationManager;
-    private String provider;
-    private TextView coordinfo;
-    private TextView homedist;
-    private TextView basinfo;
-    private TextView dbwarn;
-    private View dbwarnline;
-    private View posInfoLine;
-    private TextView serviceInfoFoot;
-    private TextView serviceInfo;
-    private View serviceinfoLine;
-    private View basinfoLine;
-    private Handler timeoutHandler;
-    private Button soulissSceneBtn;
-    private Button soulissManualBtn;
-    private TextView serviceInfoAntiTheft;
-    private Button programsActivity;
-    private SoulissPreferenceHelper opzioni;
-    private SoulissDataService mBoundService;
-    private boolean mIsBound;
-    private HTTPService mBoundWebService;
-    private TextView webserviceInfo;
-    private Timer autoUpdate;
-    private Geocoder geocoder;
-    private SoulissDBTagHelper tagDb;
-    private View webServiceInfoLine;
-    private Criteria criteria;
-    private CardView cardViewBasicInfo;
-    private CardView cardViewPositionInfo;
-    private CardView cardViewServiceInfo;
-    private CardView cardViewFav;
-    private List<SoulissTag> tags;
-
-    /* SOULISS DATA SERVICE BINDINGS */
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-            Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceIntervalMsec());
-            SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
-            if (pref.isDataServiceEnabled()) {
-                //will detect if late
-                mBoundService.reschedule(false);
-            } else {
-                Log.i(TAG, "Dataservice DISABLED");
-            }
-            setServiceInfo();
-            mIsBound = true;
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            // Because it is running in our same process, we should never
-            // see this happen.
-            mBoundService = null;
-            Toast.makeText(LauncherActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
-            mIsBound = false;
-        }
-    };
-    private boolean mIsWebBound;
     private ServiceConnection mWebConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundWebService = ((HTTPService.LocalBinder) service).getService();
@@ -223,6 +222,53 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             Log.d(TAG, "UNBIND WEB, Detach our existing connection.");
             unbindService(mWebConnection);
         }
+    }
+
+    private void initLocationProvider() {
+        // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
+        provider = locationManager.getBestProvider(criteria, true);
+        boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
+        if (enabled && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
+                    + "</b>)"));
+            // ogni minuto, minimo 100 metri
+
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+
+            locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                    Constants.POSITION_UPDATE_MIN_DIST, this);
+            Location location = locationManager.getLastKnownLocation(provider);
+            // Initialize the location fields
+            if (location != null) {
+                onLocationChanged(location);
+            }
+        } else if (opzioni.getHomeLatitude() != 0) {
+            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
+            homedist.setVisibility(View.GONE);
+            posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+        } else {
+            coordinfo.setVisibility(View.GONE);
+            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
+            posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+        }
+    }
+
+	/*
+     * @Override public void setTitle(CharSequence title) { mTitle = title;
+	 * getActionBar().setTitle(mTitle); }
+	 */
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     /**
@@ -310,7 +356,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
         // Log.w(TAG, "WARNTEST");
         if (opzioni.isLightThemeSelected()) {
-            cardViewBasicInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light) );
+            cardViewBasicInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
             cardViewPositionInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
             cardViewServiceInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
             cardViewFav.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
@@ -364,22 +410,172 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     }
 
-	/*
-     * @Override public void setTitle(CharSequence title) { mTitle = title;
-	 * getActionBar().setTitle(mTitle); }
-	 */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onDestroy() {
+        doUnbindService();
+        doUnbindWebService();
+        // Muovo i log su file
+        Log.w(TAG, "Closing app, moving logs");
+        try {
+            File filename = new File(Environment.getExternalStorageDirectory() + "/souliss.log");
+            filename.createNewFile();
+            // String cmd = "logcat -d -v time  -f " +
+            // filename.getAbsolutePath()
+            String cmd = "logcat -d -v time  -f " + filename.getAbsolutePath()
+                    + " SoulissApp:W SoulissDataService:D *:S ";
+            Runtime.getRuntime().exec(cmd);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        final double lat = (location.getLatitude());
+        final double lng = (location.getLongitude());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String adString = "";
+                String loc = null;
+                try {
+
+                    List<Address> list;
+                    list = geocoder.getFromLocation(lat, lng, 1);
+
+                    if (list != null && list.size() > 0) {
+                        Address address = list.get(0);
+                        loc = address.getLocality();
+                        if (address.getAddressLine(0) != null)
+                            adString = ", " + address.getAddressLine(0);
+                    }
+                } catch (final IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.e(TAG, "Geocoder ERROR", e);
+                            homedist.setVisibility(View.VISIBLE);
+                            homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
+                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
+                        }
+                    });
+                    loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
+                }
+                final String ff = loc;
+                final String sonoIncapace = adString;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        coordinfo.setVisibility(View.VISIBLE);
+                        coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + ff
+                                + sonoIncapace));
+                    }
+                });
+                final float[] res = new float[3];
+                // Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
+                Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
+                if (opzioni.getHomeLatitude() != 0) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // calcola unita di misura e localita col
+                            // geocoder
+                            String unit = "m";
+                            if (res[0] > 2000) {// usa chilometri
+                                unit = "km";
+                                res[0] = res[0] / 1000;
+                            }
+                            homedist.setVisibility(View.VISIBLE);
+                            homedist.setText(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
+                                    + (int) res[0] + unit
+                                    + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_green));
+                        }
+                    });
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_yellow));
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
+                mDrawerLayout.closeDrawer(mDrawerLinear);
+            } else {
+                mDrawerLayout.openDrawer(mDrawerLinear);
+            }
+            return true;//cliccato sul drawer, non far altro
+        }
+        switch (item.getItemId()) {
+
+            case R.id.Opzioni:
+                Intent preferencesActivity = new Intent(getBaseContext(), PreferencesActivity.class);
+                // evita doppie aperture per via delle sotto-schermate
+                preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(preferencesActivity);
+                return true;
+            case R.id.TestUDP:
+                Intent myIntents = new Intent(LauncherActivity.this, ManualUDPTestActivity.class);
+                LauncherActivity.this.startActivity(myIntents);
+                return true;
+            case R.id.Esci:
+                super.finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
+     * Remove the locationlistener updates when Activity is paused and
+     * unregister connectivity updates
+     */
+    @Override
+    protected void onPause() {
+        // unregisterReceiver(connectivityReceiver);
+        unregisterReceiver(datareceiver);
+        unregisterReceiver(timeoutReceiver);
+        super.onPause();
+        autoUpdate.cancel();
+        dbwarnline.clearAnimation();
+        timeoutHandler.removeCallbacks(timeExpired);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        locationManager.removeUpdates(this);
+
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
@@ -393,6 +589,75 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             menu.getItem(i).setVisible(!drawerOpen);
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "Disabled provider " + provider);
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "Enabled new provider " + provider);
+    }
+
+    /**
+     * Request updates at startup
+     *
+     * @see NetworkStateReceiver
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // this is only used for refresh UI
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        // registerReceiver(connectivityReceiver, filter);
+
+        // this is only used for refresh UI
+        IntentFilter filtera = new IntentFilter();
+        filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
+        registerReceiver(timeoutReceiver, filtera);
+
+        // IDEM, serve solo per reporting
+        IntentFilter filtere = new IntentFilter();
+        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        registerReceiver(datareceiver, filtere);
+
+        if (provider != null) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                //return;
+            } else
+                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                        Constants.POSITION_UPDATE_MIN_DIST, this);
+        }
+
+        autoUpdate = new Timer();
+        autoUpdate.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        setHeadInfo();
+                        //setDbAndFavouritesInfo();
+                        setServiceInfo();
+                        setWebServiceInfo();
+                        setAntiTheftInfo();
+                    }
+                });
+            }
+            // UI updates every 5 secs.
+        }, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());
     }
 
     @Override
@@ -493,72 +758,22 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.i(Constants.TAG, "status change " + provider);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
-                mDrawerLayout.closeDrawer(mDrawerLinear);
-            } else {
-                mDrawerLayout.openDrawer(mDrawerLinear);
+    private void setAntiTheftInfo() {
+        if (opzioni.isAntitheftPresent()) {
+            serviceInfoAntiTheft.setVisibility(View.VISIBLE);
+            SoulissDBHelper.open();
+            try {
+                SoulissTypical41AntiTheft at = tagDb.getAntiTheftMasterTypical();
+                serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
+                        + at.getOutputDesc()));
+            } catch (Exception e) {
+                Log.e(TAG, "cant set ANTITHEFT info: " + e.getMessage());
             }
-            return true;//cliccato sul drawer, non far altro
         }
-        switch (item.getItemId()) {
-
-            case R.id.Opzioni:
-                Intent preferencesActivity = new Intent(getBaseContext(), PreferencesActivity.class);
-                // evita doppie aperture per via delle sotto-schermate
-                preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(preferencesActivity);
-                return true;
-            case R.id.TestUDP:
-                Intent myIntents = new Intent(LauncherActivity.this, ManualUDPTestActivity.class);
-                LauncherActivity.this.startActivity(myIntents);
-                return true;
-            case R.id.Esci:
-                super.finish();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setHeadInfo() {
-        setActionBarInfo(getString(R.string.app_name));
-        //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
-        // check se IP non settato check system configured
-        if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissPublicIpConfigured()) {
-            basinfo.setText(Html.fromHtml(getString(R.string.notconfigured)));
-            //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
-            return;
-        }
-        if (!opzioni.getCustomPref().contains("connectionName")) {
-            basinfo.setText(getString(R.string.warn_connection));
-            //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
-            return;
-        }
-        if (!opzioni.isSoulissPublicIpConfigured()
-                && !("WIFI".compareTo(opzioni.getCustomPref().getString("connectionName", "")) == 0)) {
-            basinfo.setText(Html.fromHtml(getString(R.string.warn_wifi)));
-            //	basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
-            return;
-        }
-        String base = opzioni.getAndSetCachedAddress();
-        Log.d(TAG, "cached Address: " + base + " backoff: " + opzioni.getBackoff());
-        if (base != null && "".compareTo(base) != 0) {
-            basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
-                    + "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
-        } else if (base != null && getString(R.string.unavailable).compareTo(base) != 0) {
-            basinfo.setText(getString(R.string.souliss_unavailable));
-        } else {
-            basinfo.setText(getString(R.string.contact_progress));
-        }
-
     }
 
     private void setDbAndFavouritesInfo() {
@@ -637,18 +852,37 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         }
     }
 
-    private void setAntiTheftInfo() {
-        if (opzioni.isAntitheftPresent()) {
-            serviceInfoAntiTheft.setVisibility(View.VISIBLE);
-            SoulissDBHelper.open();
-            try {
-                SoulissTypical41AntiTheft at = tagDb.getAntiTheftMasterTypical();
-                serviceInfoAntiTheft.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "
-                        + at.getOutputDesc()));
-            } catch (Exception e) {
-                Log.e(TAG, "cant set ANTITHEFT info: " + e.getMessage());
-            }
+    private void setHeadInfo() {
+        setActionBarInfo(getString(R.string.app_name));
+        //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+        // check se IP non settato check system configured
+        if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissPublicIpConfigured()) {
+            basinfo.setText(Html.fromHtml(getString(R.string.notconfigured)));
+            //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+            return;
         }
+        if (!opzioni.getCustomPref().contains("connectionName")) {
+            basinfo.setText(getString(R.string.warn_connection));
+            //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+            return;
+        }
+        if (!opzioni.isSoulissPublicIpConfigured()
+                && !("WIFI".compareTo(opzioni.getCustomPref().getString("connectionName", "")) == 0)) {
+            basinfo.setText(Html.fromHtml(getString(R.string.warn_wifi)));
+            //	basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+            return;
+        }
+        String base = opzioni.getAndSetCachedAddress();
+        Log.d(TAG, "cached Address: " + base + " backoff: " + opzioni.getBackoff());
+        if (base != null && "".compareTo(base) != 0) {
+            basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
+                    + "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
+        } else if (base != null && getString(R.string.unavailable).compareTo(base) != 0) {
+            basinfo.setText(getString(R.string.souliss_unavailable));
+        } else {
+            basinfo.setText(getString(R.string.contact_progress));
+        }
+
     }
 
     private void setServiceInfo() {
@@ -666,15 +900,14 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 }
                 mBoundService.stopSelf();
             } else {
-                sb.append("<b>" + getResources().getString(R.string.service_disabled) + "</b> "
-                        + (mIsBound ? " but <b>bound</b>" : " and not <b>bound</b>"));
+                sb.append("<b>").append(getResources().getString(R.string.service_disabled)).append("</b> ").append(mIsBound ? " but <b>bound</b>" : " and not <b>bound</b>");
             }
 
         } else {
             if (mIsBound && mBoundService != null) {
                 sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(Constants.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
-                sb.append(getString(R.string.opt_serviceinterval) + ":</b> "
-                        + Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
+                sb.append(getString(R.string.opt_serviceinterval)).append(":</b> ")
+                        .append(Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
             } else {
                 sb.append(getString(R.string.service_warnbound));
                 Intent serviceIntent = new Intent(this, SoulissDataService.class);
@@ -712,241 +945,5 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         }
         webserviceInfo.setText(Html.fromHtml(sb.toString()));
-    }
-
-    /**
-     * Request updates at startup
-     *
-     * @see NetworkStateReceiver
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // this is only used for refresh UI
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        // registerReceiver(connectivityReceiver, filter);
-
-        // this is only used for refresh UI
-        IntentFilter filtera = new IntentFilter();
-        filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
-        registerReceiver(timeoutReceiver, filtera);
-
-        // IDEM, serve solo per reporting
-        IntentFilter filtere = new IntentFilter();
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
-        registerReceiver(datareceiver, filtere);
-
-        if (provider != null) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                //return;
-            } else
-                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                        Constants.POSITION_UPDATE_MIN_DIST, this);
-        }
-
-        autoUpdate = new Timer();
-        autoUpdate.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        setHeadInfo();
-                        //setDbAndFavouritesInfo();
-                        setServiceInfo();
-                        setWebServiceInfo();
-                        setAntiTheftInfo();
-                    }
-                });
-            }
-            // UI updates every 5 secs.
-        }, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());
-    }
-
-    /*
-     * Remove the locationlistener updates when Activity is paused and
-     * unregister connectivity updates
-     */
-    @Override
-    protected void onPause() {
-        // unregisterReceiver(connectivityReceiver);
-        unregisterReceiver(datareceiver);
-        unregisterReceiver(timeoutReceiver);
-        super.onPause();
-        autoUpdate.cancel();
-        dbwarnline.clearAnimation();
-        timeoutHandler.removeCallbacks(timeExpired);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-            return;
-        }
-        locationManager.removeUpdates(this);
-
-    }
-
-
-    @Override
-    public void onLocationChanged(Location location) {
-        final double lat = (location.getLatitude());
-        final double lng = (location.getLongitude());
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String adString = "";
-                String loc = null;
-                try {
-
-                    List<Address> list;
-                    list = geocoder.getFromLocation(lat, lng, 1);
-
-                    if (list != null && list.size() > 0) {
-                        Address address = list.get(0);
-                        loc = address.getLocality();
-                        if (address.getAddressLine(0) != null)
-                            adString = ", " + address.getAddressLine(0);
-                    }
-                } catch (final IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.e(TAG, "Geocoder ERROR", e);
-                            homedist.setVisibility(View.VISIBLE);
-                            homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
-                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
-                        }
-                    });
-                    loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
-                }
-                final String ff = loc;
-                final String sonoIncapace = adString;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        coordinfo.setVisibility(View.VISIBLE);
-                        coordinfo.setText(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + ff
-                                + sonoIncapace));
-                    }
-                });
-                final float[] res = new float[3];
-                // Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
-                Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
-                if (opzioni.getHomeLatitude() != 0) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // calcola unita di misura e localita col
-                            // geocoder
-                            String unit = "m";
-                            if (res[0] > 2000) {// usa chilometri
-                                unit = "km";
-                                res[0] = res[0] / 1000;
-                            }
-                            homedist.setVisibility(View.VISIBLE);
-                            homedist.setText(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
-                                    + (int) res[0] + unit
-                                    + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
-                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_green));
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
-                        }
-                    });
-                }
-            }
-        }).start();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.i(Constants.TAG, "status change " + provider);
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "Enabled new provider " + provider);
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "Disabled provider " + provider);
-    }
-
-    private void initLocationProvider() {
-        // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(criteria, true);
-        boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-        if (enabled && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
-                    + "</b>)"));
-            // ogni minuto, minimo 100 metri
-
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-
-            locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                    Constants.POSITION_UPDATE_MIN_DIST, this);
-            Location location = locationManager.getLastKnownLocation(provider);
-            // Initialize the location fields
-            if (location != null) {
-                onLocationChanged(location);
-            }
-        } else if (opzioni.getHomeLatitude() != 0) {
-            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
-            homedist.setVisibility(View.GONE);
-            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
-        } else {
-            coordinfo.setVisibility(View.GONE);
-            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_yellow));
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        doUnbindService();
-        doUnbindWebService();
-        // Muovo i log su file
-        Log.w(TAG, "Closing app, moving logs");
-        try {
-            File filename = new File(Environment.getExternalStorageDirectory() + "/souliss.log");
-            filename.createNewFile();
-            // String cmd = "logcat -d -v time  -f " +
-            // filename.getAbsolutePath()
-            String cmd = "logcat -d -v time  -f " + filename.getAbsolutePath()
-                    + " SoulissApp:W SoulissDataService:D *:S ";
-            Runtime.getRuntime().exec(cmd);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        super.onDestroy();
     }
 }

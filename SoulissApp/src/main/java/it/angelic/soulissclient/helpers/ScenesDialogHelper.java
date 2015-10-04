@@ -67,7 +67,7 @@ public class ScenesDialogHelper {
                         datasource.deleteCommand(toRename);
                         if (ctx != null) {
                             // prendo comandi dal DB
-                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands(cont, tgt.getId());
+                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands( tgt.getId());
                             SoulissCommand[] programsArray = new SoulissCommand[goer.size()];
                             programsArray = goer.toArray(programsArray);
                             tgt.setCommandArray(goer);
@@ -286,7 +286,7 @@ public class ScenesDialogHelper {
 
                         if (list != null) {//refresh
                             // prendo comandi dal DB per questa scena
-                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands(context, targetScene.getId());
+                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands(targetScene.getId());
                             SoulissCommand[] scenesArr = new SoulissCommand[goer.size()];
                             scenesArr = goer.toArray(scenesArr);
                             targetScene.setCommandArray(goer);

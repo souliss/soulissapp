@@ -15,13 +15,15 @@ public class SoulissIconAdapter extends BaseAdapter {
     private Context mContext;
 
     private Integer[] mImageIds = {
-            R.drawable.baby,
-            R.drawable.bathtub,
-            R.drawable.bedroom,
-            R.drawable.bell,
-            R.drawable.button,
-            R.drawable.cabinet,
-            R.drawable.candle,
+            R.drawable.baby1,
+            R.drawable.analog1,
+            R.drawable.bathtub1,
+            R.drawable.bedroom1,
+            R.drawable.bell1,
+            R.drawable.button1,
+            R.drawable.cabinet1,
+            R.drawable.cafe1,
+            R.drawable.candle1,
             R.drawable.car,
             R.drawable.check,
             R.drawable.envelope,

@@ -22,10 +22,7 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
 
     public SoulissScene(int id) {
         super();
-        //ctx = ct;
         Id = id;
-        //this.commandDTO = new ArrayList<SoulissCommandDTO>();
-        //this.parentTypical = parentTypical;
     }
 
     @Override

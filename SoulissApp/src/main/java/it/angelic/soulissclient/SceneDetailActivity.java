@@ -211,7 +211,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
         // tipici dal DB
         SoulissDBHelper.open();
-        ArrayList<SoulissCommand> gottardo = datasource.getSceneCommands(this, collected.getId());
+        ArrayList<SoulissCommand> gottardo = datasource.getSceneCommands(collected.getId());
         SoulissCommand[] comandiArray = new SoulissCommand[gottardo.size()];
         comandiArray = gottardo.toArray(comandiArray);
 

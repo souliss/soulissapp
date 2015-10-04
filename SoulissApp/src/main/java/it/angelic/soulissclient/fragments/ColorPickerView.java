@@ -74,7 +74,7 @@ public class ColorPickerView extends View {
     }
 
     @Override
-    protected void onVisibilityChanged(View changedView, int visibility) {
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         Log.d(Constants.TAG, "vis CHANGE");
         setCenterColor(Color.argb(255, Color.red(collected.getColor()), Color.green(collected.getColor()),

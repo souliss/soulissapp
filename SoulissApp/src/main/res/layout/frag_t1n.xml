@@ -131,7 +131,7 @@
                         android:text="@string/multicast_desc" />
                 </TableRow>
 
-                <include layout="@layout/tablerow_toolongwarn"></include>
+                <include layout="@layout/tablerow_toolongwarn"/>
 
                 <TableRow
                     android:id="@+id/tableRow3"

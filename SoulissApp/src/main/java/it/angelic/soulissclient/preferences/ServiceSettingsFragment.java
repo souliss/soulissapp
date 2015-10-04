@@ -71,6 +71,9 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 					opzioni.initializePrefs();
 					resetMesg(setHomeLocation);
 					Toast.makeText(getActivity(), getString(R.string.opt_homepos_set), Toast.LENGTH_SHORT).show();
+				} catch (SecurityException xe) {
+					Log.e(Constants.TAG, "PERMISSION DENIED", xe);
+					Toast.makeText(getActivity(), "locationManager PERMISSION DENIED FROM USER", Toast.LENGTH_SHORT).show();
 				} catch (Exception e) {
 					Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
 					Toast.makeText(getActivity(), getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();

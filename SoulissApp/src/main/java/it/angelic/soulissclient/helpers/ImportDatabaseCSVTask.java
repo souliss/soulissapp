@@ -73,8 +73,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     private Activity activity;
     ProgressDialog mProgressDialog;
 
-    private File importDir;
-
     @Override
     protected void onPreExecute()
 
@@ -102,6 +100,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         // File dbFile = null;// getDatabasePath("excerDB.db");
         database = new SoulissDBTagHelper(SoulissApp.getAppContext());
 
+        File importDir;
         try {
             Looper.prepare();
 
@@ -351,7 +350,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         }
         try {
             if (temp[6].length() > 0)
-                typo.setFavourite(temp[6] == "1" ? true : false);
+                typo.setFavourite(temp[6].equals("1") ? true : false);
         } catch (Exception e) {
             Log.w("NOT Favourite", e.getMessage());
         }
