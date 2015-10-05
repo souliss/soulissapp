@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/tagContainer"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshContainer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_below="@id/TextViewTypicalsTitle">
 
-
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeRefreshContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/TextViewTypicalsTitle">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
-</LinearLayout>
+        android:layout_height="match_parent"
+        />
+</android.support.v4.widget.SwipeRefreshLayout>
+

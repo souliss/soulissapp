@@ -137,9 +137,9 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                     Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size());
                     //manual override perche il fragment ancora non c'e
-                    sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
-                    sharedElements.put("shadow_hero", fragment.getView().findViewById(R.id.infoAlpha));
-                    sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
+                    //sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
+                  //  sharedElements.put("shadow_hero", fragment.getView().findViewById(R.id.infoAlpha));
+                   // sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
                     super.onMapSharedElements(names, sharedElements);
                 }
 

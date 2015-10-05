@@ -16,7 +16,6 @@
 
 package it.angelic.soulissclient.fragments;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,30 +25,25 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
-import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
-import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 
 import java.io.File;
 import java.sql.SQLDataException;
@@ -58,7 +52,6 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
@@ -75,19 +68,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 public class TagDetailFragment extends AbstractTypicalFragment {
 
     private static final String TAG = "RecyclerViewFragment";
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.i(TAG, "Broadcast received, refresh from DB");
-            swipeLayout.setRefreshing(false);
-            SoulissDBHelper.open();
-            initDataset(getActivity());
-            parallaxExtAdapter.setData(collectedTagTypicals);
-            parallaxExtAdapter.notifyDataSetChanged();
-            mRecyclerView.invalidate();
-        }
-    };
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
@@ -104,21 +84,31 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     private SoulissTag collectedTag;
     private List<SoulissTypical> collectedTagTypicals;
     private SwipeRefreshLayout swipeLayout;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "Broadcast received, refresh from DB");
+            swipeLayout.setRefreshing(false);
+            SoulissDBHelper.open();
+            initDataset(getActivity());
+            parallaxExtAdapter.setData(collectedTagTypicals);
+            parallaxExtAdapter.notifyDataSetChanged();
+            mRecyclerView.invalidate();
+        }
+    };
+    private CollapsingToolbarLayout collapseToolbar;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissApp.getOpzioni();
-
-        if (opzioni.isLightThemeSelected())
-            getActivity().setTheme(R.style.LightThemeSelector);
-        else
-            getActivity().setTheme(R.style.DarkThemeSelector);
-        super.onCreate(savedInstanceState);
-        Bundle extras = getActivity().getIntent().getExtras();
-        // recuper nodo da extra
-        if (extras != null && extras.get("TAG") != null)
-            tagId = (long) extras.get("TAG");
-        initDataset(getActivity());
+    public static String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = SoulissApp.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
 
     }
 
@@ -148,6 +138,48 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             collectedTagTypicals[i] = "This is element #" + i;
         }*/
         }
+    }
+
+    public boolean onContextItemSelected(MenuItem item) {
+        Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
+        int position = item.getOrder();
+
+        /*ContextMenuRecyclerView.RecyclerContextMenuInfo info =
+                (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
+        switch (item.getItemId()) {
+            case R.id.eliminaTag:
+                SoulissTypical soulissTypical = collectedTagTypicals.get(position);
+                Log.i(Constants.TAG, "DELETE TYP POS:" + position);
+                datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
+                collectedTagTypicals.remove(position);
+                parallaxExtAdapter.setData(collectedTagTypicals);
+                parallaxExtAdapter.notifyDataSetChanged();
+                Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
+                mRecyclerView.invalidate();
+                break;
+            //TODO increase/dec priority
+            default:
+                Log.i(Constants.TAG, "not doing shit");
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        opzioni = SoulissApp.getOpzioni();
+
+        if (opzioni.isLightThemeSelected())
+            getActivity().setTheme(R.style.LightThemeSelector);
+        else
+            getActivity().setTheme(R.style.DarkThemeSelector);
+        super.onCreate(savedInstanceState);
+        Bundle extras = getActivity().getIntent().getExtras();
+        // recuper nodo da extra
+        if (extras != null && extras.get("TAG") != null)
+            tagId = (long) extras.get("TAG");
+        initDataset(getActivity());
+
     }
 
     @Override
@@ -190,7 +222,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         // BEGIN_INCLUDE(initializeRecyclerView)
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
-        LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
+        // LinearLayout tagContainer = (LinearLayout) rootView.findViewById(R.id.tagContainer);
 
         //mLayoutManager = new LinearLayoutManager(getActivity());
 
@@ -209,14 +241,15 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
-      //  View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
-       // layoutManagerFixed.setHeaderIncrementFixer(header);
+        //  View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
+        // layoutManagerFixed.setHeaderIncrementFixer(header);
 
-      /*  mLogoIcon = (ImageView) getActivity().findViewById(R.id.imageTagIcon);
+        mLogoIcon = (ImageView) getActivity().findViewById(R.id.imageTagIcon);
         if (collectedTag.getIconResourceId() != 0)
             mLogoIcon.setImageResource(collectedTag.getIconResourceId());
         mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
         bro = (TextView) getActivity().findViewById(R.id.tagTextView);
+        collapseToolbar = (CollapsingToolbarLayout) getActivity().findViewById(R.id.Collapselayout);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fabTag);
         //EDIT TAG
         fab.setOnClickListener(new View.OnClickListener() {
@@ -265,8 +298,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 R.color.std_blue_shadow);
 
 
-        if (bro != null && collectedTag != null)
-            bro.setText(collectedTag.getNiceName());
+        if (bro != null && collectedTag != null) {
+            // bro.setText(collectedTag.getNiceName());
+            collapseToolbar.setTitle(collectedTag.getNiceName());
+        }
 
 
         if (collectedTag != null && collectedTag.getImagePath() != null) {
@@ -280,7 +315,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 options.inSampleSize = 2;
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
                 if (myBitmap.getHeight() > mRecyclerView.getWidth())
-                    myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth()/2, myBitmap.getHeight()/2, true);
+                    myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
                 Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                 mLogoImg.setImageBitmap(myBitmap);
 
@@ -291,40 +326,38 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             } catch (Exception e) {
                 Log.d(TAG, "can't set logo", e);
             }
-        } */
+        }
 
 
         //parallaxExtAdapter.setShouldClipView(true);
-       // parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
+        // parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
 
         registerForContextMenu(mRecyclerView);
 
         return rootView;
     }
 
-    public boolean onContextItemSelected(MenuItem item) {
-        Log.d(TAG, "onContextItemSelected id:" + item.getItemId());
-        int position = item.getOrder();
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
 
-        /*ContextMenuRecyclerView.RecyclerContextMenuInfo info =
-                (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();*/
-        switch (item.getItemId()) {
-            case R.id.eliminaTag:
-                SoulissTypical soulissTypical = collectedTagTypicals.get(position);
-                Log.i(Constants.TAG, "DELETE TYP POS:" + position);
-                datasource.deleteTagTypical(collectedTag.getTagId().intValue(), soulissTypical.getNodeId(), soulissTypical.getSlot());
-                collectedTagTypicals.remove(position);
-                parallaxExtAdapter.setData(collectedTagTypicals);
-                parallaxExtAdapter.notifyDataSetChanged();
-                Toast.makeText(getActivity(), "Device deleted", Toast.LENGTH_SHORT).show();
-                mRecyclerView.invalidate();
-                break;
-            //TODO increase/dec priority
-            default:
-                Log.i(Constants.TAG, "not doing shit");
-                break;
-        }
-        return super.onContextItemSelected(item);
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filtere = new IntentFilter();
+        filtere.addAction("it.angelic.soulissclient.GOT_DATA");
+        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        getActivity().registerReceiver(datareceiver, filtere);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        // Save currently selected layout manager.
+        savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
+        super.onSaveInstanceState(savedInstanceState);
+
     }
 
     @Override
@@ -379,22 +412,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(datareceiver);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        IntentFilter filtere = new IntentFilter();
-        filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
-        getActivity().registerReceiver(datareceiver, filtere);
-    }
-
     /**
      * Set RecyclerView's LayoutManager to the one given.
      *
@@ -425,28 +442,6 @@ public class TagDetailFragment extends AbstractTypicalFragment {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save currently selected layout manager.
-        savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
-        super.onSaveInstanceState(savedInstanceState);
-
-    }
-
-
-    public static String getRealPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = SoulissApp.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-
     }
 
     private enum LayoutManagerType {

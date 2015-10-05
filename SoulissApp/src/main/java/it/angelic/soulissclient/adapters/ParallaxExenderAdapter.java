@@ -13,8 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
-
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
