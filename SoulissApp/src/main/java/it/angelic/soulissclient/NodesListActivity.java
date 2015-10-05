@@ -70,6 +70,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
         mDrawermAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
         mDrawerList.setAdapter(mDrawermAdapter);
         mDrawerToggle.syncState();
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		setActionBarInfo(getString(R.string.manual_title));
 		refreshStatusIcon();
 	}

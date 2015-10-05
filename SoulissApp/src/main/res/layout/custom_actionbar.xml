@@ -8,8 +8,9 @@
                                    android:background="?attr/colorPrimary"
                                    android:elevation="2dp"
                                    android:gravity="top"
+                                   android:minHeight="?attr/actionBarSize"
                                    app:layout_collapseMode="pin"
-                                   android:minHeight="?attr/actionBarSize" >
+                                   app:layout_scrollFlags="enterAlways">
 
     <RelativeLayout
         android:id="@+id/actionbar_container"
@@ -30,8 +31,7 @@
             android:maxLines="1"
             android:ems="3"
             android:textColor="@color/std_green"
-            tools:text="OnlinesSSS"/>
-
+            tools:text="Online"/>
         <ImageButton
             android:id="@+id/action_starred"
             android:layout_width="wrap_content"

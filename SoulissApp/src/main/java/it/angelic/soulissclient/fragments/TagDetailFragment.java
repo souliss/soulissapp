@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -65,7 +66,7 @@ import it.angelic.soulissclient.net.UDPHelper;
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
  * {@link android.support.v7.widget.GridLayoutManager}.
  */
-public class TagDetailFragment extends AbstractTypicalFragment {
+public class TagDetailFragment extends AbstractTypicalFragment implements AppBarLayout.OnOffsetChangedListener{
 
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -74,6 +75,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     protected RecyclerView mRecyclerView;
     protected ParallaxExenderAdapter parallaxExtAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    private AppBarLayout appBarLayout;
     private SoulissDBTagHelper datasource;
     private FloatingActionButton fab;
     private ImageView mLogoIcon;
@@ -188,6 +190,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
         Log.i(Constants.TAG, "onCreateView with size of data:" + collectedTagTypicals.size());
+        appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBar_layout);
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -338,9 +341,16 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     }
 
     @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        //The Refresh must be only active when the offset is zero :
+        swipeLayout.setEnabled(i == 0);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
+        appBarLayout.removeOnOffsetChangedListener(this);
     }
 
     @Override
@@ -350,6 +360,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
         filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
+        appBarLayout.addOnOffsetChangedListener(this);
     }
 
     @Override

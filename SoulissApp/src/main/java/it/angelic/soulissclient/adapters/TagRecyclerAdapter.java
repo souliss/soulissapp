@@ -108,7 +108,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                                 //"photo_hero"    // The transitionName of the view we’re transitioning to
                                 Pair.create((View) holder.image, "photo_hero"),
                                 Pair.create((View) holder.shadowbar, "shadow_hero"),
-                                Pair.create((View) holder.imageTag, "tag_icon")
+                                Pair.create((View) holder.imageTag, "tag_hero")
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());

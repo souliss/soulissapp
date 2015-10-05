@@ -58,14 +58,13 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     NavDrawerAdapter mDrawermAdapter;
     TextView actionTitle;
     private Toolbar actionBar;
+    private boolean hasPosted;
     Runnable timeExpired = new Runnable() {
         @Override
         public void run() {
-            Log.e(TAG, "TIMEOUT on AbstractStatused!");
-            //in caso di timeout chiedo subito
-            opzioni.clearCachedAddress();
-            opzioni.getAndSetCachedAddress();
             refreshStatusIcon();
+            opzioni.getAndSetCachedAddress();
+            hasPosted = false;
         }
     };
     private TextView info1;
@@ -79,26 +78,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             // rimuove timeout
             Log.i(TAG, "TIMEOUT CANCELED");
             timeoutHandler.removeCallbacks(timeExpired);
+            hasPosted = false;
             refreshStatusIcon();
-           /* Bundle extras = intent.getExtras();
-
-            if (extras != null && extras.get("MACACO") != null) {
-                Log.i(TAG, "Broadcast receive, refresh from DB");
-                @SuppressWarnings("unchecked")
-                ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
-                // Log.d(TAG, "RAW DATA: " + vers);
-
-                setHeadInfo();
-                setServiceInfo();
-                setWebServiceInfo();
-                setAntiTheftInfo();
-                serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.last_update) + "</b> "
-                        + Constants.hourFormat.format(new Date()) + " - " + vers.size() + " " + context.getString(R.string.bytes_received)));
-                // questo sovrascrive nodesinf
-
-            } else {
-                Log.e(TAG, "EMPTY response!!");
-            }*/
         }
     };
     // meccanismo per network detection
@@ -108,8 +89,12 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             Bundle extras = intent.getExtras();
 
             int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-            Log.w(Constants.TAG, "Something has been sent with timeout=" + delay);
-            timeoutHandler.postDelayed(timeExpired, delay);
+
+            if (!hasPosted) {
+                Log.w(Constants.TAG, "Something has been sent with timeout=" + delay);
+                timeoutHandler.postDelayed(timeExpired, delay);
+                hasPosted = true;
+            }
             setSynching();//will last till timeout or online
         }
     };
@@ -228,6 +213,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         super.onPause();
         unregisterReceiver(packetSentNotificationReceiver);
         unregisterReceiver(datareceiver);
+        timeoutHandler.removeCallbacks(timeExpired);
     }
 
     @Override
