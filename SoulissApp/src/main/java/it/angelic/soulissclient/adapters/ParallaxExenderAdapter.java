@@ -27,18 +27,34 @@ import it.angelic.soulissclient.model.SoulissTypical;
  * solo per implementare la posizione e passare  gli eventi
  * Created by Ale on 08/03/2015.
  */
-public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
+public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     protected List<SoulissTypical> mDataset;
     private long tagId;
     private SoulissPreferenceHelper opzioni;
 
     @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+       return onCreateViewHolderImpl(parent, viewType);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+onBindViewHolderImpl(holder, position);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (mDataset != null)
+            return mDataset.size();
+        else
+            return 0;
+    }
+
     public void setData(List data) {
         mDataset = data;
     }
 
-    @Override
-    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
+    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, int i) {
         Log.d(Constants.TAG, "Element " + i + " set: last upd: "+Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
@@ -68,24 +84,15 @@ public class ParallaxExenderAdapter extends ParallaxRecyclerAdapter {
 
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, ParallaxRecyclerAdapter parallaxRecyclerAdapter, int i) {
+    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup,  int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
         return new TypicalCardViewHolder(v);
     }
 
-    @Override
-    public int getItemCountImpl(ParallaxRecyclerAdapter parallaxRecyclerAdapter) {
-
-        if (mDataset != null)
-            return mDataset.size();
-        else
-            return 0;
-    }
 
     public ParallaxExenderAdapter(SoulissPreferenceHelper pref,List data, long tagId) {
-        super(data);
+        super();
         mDataset = data;
         this.tagId = tagId;
         opzioni = pref;

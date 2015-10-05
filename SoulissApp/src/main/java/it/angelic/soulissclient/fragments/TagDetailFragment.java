@@ -206,17 +206,18 @@ public class TagDetailFragment extends AbstractTypicalFragment {
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals, tagId);
-        HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
+        //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
-        View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
-        layoutManagerFixed.setHeaderIncrementFixer(header);
-        mLogoIcon = (ImageView) header.findViewById(R.id.imageTagIcon);
+      //  View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
+       // layoutManagerFixed.setHeaderIncrementFixer(header);
+
+      /*  mLogoIcon = (ImageView) getActivity().findViewById(R.id.imageTagIcon);
         if (collectedTag.getIconResourceId() != 0)
             mLogoIcon.setImageResource(collectedTag.getIconResourceId());
-        mLogoImg = (ImageView) header.findViewById(R.id.photo);
-        bro = (TextView) header.findViewById(R.id.tagTextView);
-        fab = (FloatingActionButton) header.findViewById(R.id.fabTag);
+        mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
+        bro = (TextView) getActivity().findViewById(R.id.tagTextView);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fabTag);
         //EDIT TAG
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,15 +285,17 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                 mLogoImg.setImageBitmap(myBitmap);
 
             }
-           /* try {
+            try {
                 mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
 
             } catch (Exception e) {
                 Log.d(TAG, "can't set logo", e);
-            }*/
-        }
-        parallaxExtAdapter.setShouldClipView(true);
-        parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
+            }
+        } */
+
+
+        //parallaxExtAdapter.setShouldClipView(true);
+       // parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
 
         registerForContextMenu(mRecyclerView);
 
@@ -328,7 +331,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
     public void onStart() {
         super.onStart();
         refreshStatusIcon();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             parallaxExtAdapter.setOnParallaxScroll(new ParallaxRecyclerAdapter.OnParallaxScroll() {
                 @SuppressLint("NewApi")
                 @Override
@@ -353,10 +356,10 @@ public class TagDetailFragment extends AbstractTypicalFragment {
                     }
                 }
             });
-        }
+        }*/
 
 
-        parallaxExtAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
+     /*   parallaxExtAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
             @Override
             public void onClick(View view, int i) {
 
@@ -368,7 +371,7 @@ public class TagDetailFragment extends AbstractTypicalFragment {
             }
 
         });
-
+*/
         Log.i(Constants.TAG, "mCurrentLayoutManagerType: " + mCurrentLayoutManagerType);
 
         // Set CustomAdapter as the adapter for RecyclerView.
