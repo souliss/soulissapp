@@ -64,6 +64,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.net.NetUtils;
+import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.webserver.HTTPService;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -277,7 +278,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-        opzioni.clearCachedAddress();
+
+
         opzioni.reload();
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call start, cached address reset");
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -696,15 +698,15 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                ActivityOptionsCompat options =
+               /* ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 soulissSceneBtn,   // The view which starts the transition
                                 "helloScenes"    // The transitionName of the view we’re transitioning to
                         );
-                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
 
 
-                // LauncherActivity.this.startActivity(myIntent);
+                LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };

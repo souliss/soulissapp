@@ -47,7 +47,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setHomeButtonEnabled(true);*/
 		//View ds = actionBar.getCustomView();
-		setActionBarInfo(getString(R.string.manual_title));
+
 		super.onStart();
 		SoulissDBHelper.open();
 		// prendo tipici dal DB
@@ -70,6 +70,8 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
         mDrawermAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
         mDrawerList.setAdapter(mDrawermAdapter);
         mDrawerToggle.syncState();
+		setActionBarInfo(getString(R.string.manual_title));
+		refreshStatusIcon();
 	}
 
 	@Override

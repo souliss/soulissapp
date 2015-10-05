@@ -27,7 +27,7 @@ public class Constants {
 	public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
 	public static final long POSITION_UPDATE_MIN_DIST = 25;
 	public static final int GUI_UPDATE_INTERVAL = 5000;
-	public static final int VOICE_REQUEST_OK = 1;
+	public static final int VOICE_REQUEST_OK = 9876;
 	//public static final int   CHECK_STATUS_PAUSE_MSEC = 250;
 	
 	//public static final long TEXT_SIZE_TITLE_OFFSET = 10;

@@ -66,14 +66,14 @@ public class NodesListFragment extends ListFragment {
 	private SoulissDBHelper datasource;
 	private NodesListAdapter nodesAdapter;
 	int mCurCheckPosition = 0;
-	private Handler timeoutHandler;
+	//private Handler timeoutHandler;
 	private Timer autoUpdate;
 
 	//private TextView tt;
 	private boolean mDualPane;
 	private TextView textHeadListInfo;
     private SwipeRefreshLayout swipeLayout;
-    private Toolbar actionBar;
+  //  private Toolbar actionBar;
 
     @Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -202,7 +202,9 @@ public class NodesListFragment extends ListFragment {
 	private void showDetails(int index, SoulissNode data) {
 		mCurCheckPosition = index;
 		if (mDualPane) {
-			refreshStatusIcon();
+
+			((AbstractStatusedFragmentActivity)getActivity()).setActionBarInfo(data.getNiceName());
+			((AbstractStatusedFragmentActivity)getActivity()).refreshStatusIcon();
 			//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			// We can display everything in-place with fragments, so update
 			// the list to highlight the selected item and show the data.
@@ -253,7 +255,7 @@ public class NodesListFragment extends ListFragment {
 		final List<SoulissNode> goer = datasource.getAllNodes();
 		nodiArray = new SoulissNode[goer.size()];
 		nodiArray = goer.toArray(nodiArray);
-		timeoutHandler = new Handler();
+		//timeoutHandler = new Handler();
 		Log.i(TAG, "mostro numnodi:" + goer.size());
 		
 		nodesAdapter = new NodesListAdapter(getActivity().getApplicationContext(), nodiArray, opzioni);
@@ -262,11 +264,12 @@ public class NodesListFragment extends ListFragment {
 		getListView().setAdapter(nodesAdapter);
 		getListView().invalidateViews();
 
-        actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
-        ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
-        ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        refreshStatusIcon();
+        //actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+       // ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
+       // ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+		//((AbstractStatusedFragmentActivity)getActivity()).setActionBarInfo(co);
+		//((AbstractStatusedFragmentActivity) getActivity()).refreshStatusIcon();
 	}
 
 	// Aggiorna il feedback
@@ -275,7 +278,7 @@ public class NodesListFragment extends ListFragment {
 		public void onReceive(Context context, Intent intent) {
 			Log.i(TAG, "Broadcast received, refresh from DB");
 			SoulissDBHelper.open();
-			timeoutHandler.removeCallbacks(timeExpired);
+			//timeoutHandler.removeCallbacks(timeExpired);
 			// ferma la rotellina del refresh
             swipeLayout.setRefreshing(false);
 			try {
@@ -341,27 +344,9 @@ public class NodesListFragment extends ListFragment {
 		super.onPause();
 
 		getActivity().unregisterReceiver(datareceiver);
-		getActivity().unregisterReceiver(timeoutReceiver);
+		//getActivity().unregisterReceiver(timeoutReceiver);
 	}
-	
-	Runnable timeExpired = new Runnable() {
-		@Override
-		public void run() {
-			Log.e(TAG, "TIMEOUT!!!");
-			refreshStatusIcon();
-			opzioni.getAndSetCachedAddress();
-		}
-	};
-	// meccanismo per network detection
-		private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
 
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				Bundle extras = intent.getExtras();
-				int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-				timeoutHandler.postDelayed(timeExpired, delay);
-			}
-		};
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -370,9 +355,9 @@ public class NodesListFragment extends ListFragment {
 		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 		// timeout handler
-		IntentFilter filtera = new IntentFilter();
-		filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
-		getActivity().registerReceiver(timeoutReceiver, filtera);
+		//IntentFilter filtera = new IntentFilter();
+		//filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
+		//getActivity().registerReceiver(timeoutReceiver, filtera);
 		
 		autoUpdate = new Timer();
 		autoUpdate.schedule(new TimerTask() {
@@ -381,7 +366,7 @@ public class NodesListFragment extends ListFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					public void run() {
 						try {
-							refreshStatusIcon();
+							((AbstractStatusedFragmentActivity) getActivity()).refreshStatusIcon();
 							getListView().invalidateViews();
 						} catch (Exception e) {
 							Log.e(Constants.TAG, "InvalidateViews fallita:"+e.getMessage());
@@ -394,7 +379,7 @@ public class NodesListFragment extends ListFragment {
 	}
 
 
-    private void refreshStatusIcon() {
+    /*private void refreshStatusIcon() {
         try {
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
@@ -417,5 +402,5 @@ public class NodesListFragment extends ListFragment {
         } catch (Exception e) {
             Log.e(Constants.TAG, "null bar? " + e.getMessage());
         }
-    }
+    }*/
 }

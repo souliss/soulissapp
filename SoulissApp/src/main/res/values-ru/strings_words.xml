@@ -54,6 +54,7 @@
     <string name="offline">Не в сети</string>
     <string name="ok">OK</string>
     <string name="stale">УСТАРЕЛ</string>
+    <string name="synch">synch</string>
 
 
 </resources>

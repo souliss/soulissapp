@@ -87,6 +87,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         if (extras != null && extras.get("NODO") != null) {
             collected = (SoulissNode) extras.get("NODO");
             initDrawer(NodeDetailActivity.this, collected.getId());
+            setActionBarInfo(collected.getNiceName());
         }
         if (savedInstanceState == null) {
             // During initial setup, plug in the details fragment.
@@ -164,6 +165,10 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         mDrawermAdapter = new NavDrawerAdapter(NodeDetailActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
         mDrawerList.setAdapter(mDrawermAdapter);
         mDrawerToggle.syncState();
+
+        setActionBarInfo(collected.getNiceName());
+        refreshStatusIcon();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     // meccanismo per timeout detection
