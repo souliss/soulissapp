@@ -37,23 +37,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 				return true;
 			}
 		});
-		// lightThemeCheckBox.setOnPreferenceChangeListener(new
-		// OnPreferenceChangeListener() {
-		//
-		// @Override
-		// public boolean onPreferenceChange(Preference preference, Object
-		// newValue) {
-		// // TODO togliere?
-		// opzioni.reload();
-		// final Intent preferencesActivity = new Intent(getActivity(),
-		// PreferencesActivity.class);
-		// preferencesActivity.putExtra("opt_screen", "visual_PrefScreen");
-		// preferencesActivity.setAction("visual_PrefScreen");
-		// preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		// startActivity(preferencesActivity);
-		// return true;
-		// }
-		// });
+
 
 	}
 

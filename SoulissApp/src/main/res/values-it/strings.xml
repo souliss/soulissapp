@@ -5,8 +5,8 @@
     <string name="app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Opzioni</string>
     <string name="app_addprog">Aggiungi Programma</string>
-    <string name="opt_network">Opzioni di rete</string>
-    <string name="bridge_IP"> IP da assegnare dinamicamente al nodo</string>
+    <string name="opt_network">Rete</string>
+    <string name="bridge_IP">IP da assegnare dinamicamente al nodo</string>
     <string name="bridge_subnet">Subnet mask da utilizzare</string>
     <string name="bridge_gateway">Gateway della rete da impostare (indirizzo del router)</string>
     <string name="bridge_ssid">SSID della rete wireless</string>
@@ -157,7 +157,7 @@
     <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importa DB</string>
     <string name="opt_dbimp_desc">Importa .csv. Attenzione! La configurazione attuale verrà sovrascritta!</string>
-    <string name="opt_db">Souliss DB</string>
+    <string name="opt_db">Modello</string>
     <string name="opt_db_desc">(Ri)crea database, importazione ed esportazione</string>
     <string name="opt_dbdrop">Drop DB</string>
     <string name="opt_dbdrop_desc">Elimina tutti i nodi, dispositivi e log dal DB</string>
@@ -179,7 +179,7 @@
     <string name="opt_lighttheme_desc">Usa colori chiari (richiede riavvio dell\'app)</string>
     <string name="opt_restore">Ripristina Avvertimenti</string>
     <string name="opt_restore_desc">Mostra di nuovo gli avvertimenti soppressi</string>
-    <string name="opt_visual">Opzioni di Visualizzazione</string>
+    <string name="opt_visual">Interfaccia</string>
     <string name="opt_fontsize">Dimensioni del testo</string>
     <string name="opt_fonttitle">Cambia il font dei titoli</string>
     <string name="opt_visualdesc">Aspetto ed Effetti</string>
@@ -203,7 +203,7 @@
     <string name="opt_Thold">Soglia Posizione</string>
     <string name="opt_homepos_err">Errore nella richiesta di posizione</string>
     <string name="opt_homepos_set">Posizione di casa impostata</string>
-    <string name="opt_service">Servizio in background</string>
+    <string name="opt_service">Servizi</string>
     <string name="opt_timeout_pubb">Timeout della connessione</string>
     <string name="opt_timeout_pubb_desc">Tempo di timeout attraverso internet</string>
     <string name="opt_dialog_restored">Finestre di avviso ripristinate</string>

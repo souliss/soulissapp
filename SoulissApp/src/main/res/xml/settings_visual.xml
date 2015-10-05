@@ -28,11 +28,6 @@
             android:title="@string/opt_fahrenheit" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="checkboxVoiceCommand"
-            android:summary="@string/opt_voice_command_desc"
-            android:title="@string/opt_voice_command" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="checkboxTestoEffetti"
             android:summary="@string/opt_tetxfx_desc"
             android:title="@string/opt_tetxfx" />
