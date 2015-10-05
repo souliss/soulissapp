@@ -332,22 +332,26 @@
     <string name="tagorder_desc">Si hay dos etiquetas con la misma posicion el ID será utilizado para determinar la posicion final.</string>
     <string name="opt_fahrenheit">Fahrenheit</string>
     <string name="Souliss_T1A_desc">Status Array</string>
-    <string name="offline">Offline</string>
-    <string name="opt_loghist_desc">Save every Devices\' status change</string>
-    <string name="opt_loghist">History enabled</string>
-    <string name="widget_cantupdate">Error retrieving Typical</string>
-    <string name="opt_dbopt_desc">Vacuum DB and remove logs older than a year</string>
-    <string name="opt_dbopt">Optimize DB</string>
-    <string name="opt_voice_command">Voice Command</string>
-    <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
-    <string name="voice_command">Voice Command</string>
-    <string name="opt_get_nodes">Get Souliss Nodes</string>
-    <string name="bytes_sent"/>
-    <string name="voice_command_help">Use one of your scenes\' name, or a command (turn on, turn off, etc.) followed by a device\'s name</string>
-    <string name="souliss_voice_command">Souliss Voice Command</string>
+    <string name="offline">Desconectado</string>
+    <string name="opt_loghist_desc">Guardar todos los dispositivos\' cambio de estado</string>
+    <string name="opt_loghist">Historial activado</string>
+    <string name="widget_cantupdate">Error al recuperar el dispositivo</string>
+    <string name="opt_dbopt_desc">Vaciar base de datos y eliminar los registros de más de un año</string>
+    <string name="opt_dbopt">Obtimizar base de datos</string>
+    <string name="opt_voice_command">Comando de voz</string>
+    <string name="opt_voice_command_desc">Ejecutar escenas y enviar comandos con tu voz. Pulse para más detalles</string>
+    <string name="voice_command">Comando de voz</string>
+    <string name="opt_get_nodes">Obtener nodo Souliss</string>
+    <string name="bytes_sent">Bytes enviados</string>
+    <string name="voice_command_help">Utilice una de sus escenas\' nombre, o un comando (encender, apagar, etc.) seguido de un dispositivo\'s nombre</string>
+    <string name="souliss_voice_command">Comando de voz Souliss</string>
     <string name="command_typ_error"/>
-    <string name="command_node_error"/>
-    <string name="err_command_not_recognized"/>
+    <string name="command_node_error">Weird. Command and node recognized, but device not found</string>
+    <string name="err_command_not_recognized">Command not recognized</string>
+    <string name="menu_changenodeRebuild">Rebuild Node</string>
+    <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
+    <string name="menu_addFav">Add to Favourites</string>
+    <string name="addprogram_choosedelay"/>
 
 
 </resources>

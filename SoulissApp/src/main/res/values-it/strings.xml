@@ -76,7 +76,7 @@
     <string name="scene_add_command_to">Aggiungi comando a</string>
     <string name="scene_del_command">Elimina comando</string>
     <string name="scene_send_command">Invia Comando</string>
-    <string name="scene_cmd_order">Ordine esecuzione:</string>
+    <string name="scene_cmd_order">Ritardo esecuzione:</string>
     <string name="scene_cmd_massive">Comando Massivo</string>
     <string name="scene_subtitle">Scenario formato da %1$d comandi</string>
 
@@ -350,5 +350,8 @@
     <string name="command_typ_error">Comando riconosciuto, ma dispositivo non trovato</string>
     <string name="command_node_error">Strano. Comando e nodo riconosciuti, ma dispositivo non trovato</string>
     <string name="err_command_not_recognized">Comando non riconosciuto</string>
+    <string name="menu_changenodeRebuild">Ricostruisci nodo</string>
+    <string name="menu_changenodeRebuild_desc">Ricostruendo il nodo verranno sovrascritti i suoi dispositivi</string>
+    <string name="addprogram_choosedelay">Ritardo esecuzione</string>
 
 </resources>

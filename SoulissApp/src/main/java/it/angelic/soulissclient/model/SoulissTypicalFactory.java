@@ -99,35 +99,35 @@ public class SoulissTypicalFactory {
 			break;
 		case Constants.Souliss_T51:
 			rest = new SoulissTypical51AnalogueSensor(opts);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		case Constants.Souliss_T52_TemperatureSensor:
 			rest = new SoulissTypical52TemperatureSensor(opts);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		case Constants.Souliss_T53_HumiditySensor:
 			rest = new SoulissTypical53HumiditySensor(opts);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		case Constants.Souliss_T54_LuxSensor:
 			rest = new SoulissTypical54LuxSensor(opts);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		case Constants.Souliss_T55_VoltageSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		case Constants.Souliss_T56_CurrentSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;			
 		case Constants.Souliss_T57_PowerSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		case Constants.Souliss_T58_PressureSensor:
 			rest = new SoulissTypical58PressureSensor(opts);
-			rest.setSensor(true);
+			//rest.setSensor(true);
 			break;
 		default:
 			Log.w(Constants.TAG, "warning, unknown typical");

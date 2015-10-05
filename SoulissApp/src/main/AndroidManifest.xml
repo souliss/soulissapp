@@ -145,7 +145,7 @@
         <activity
             android:name="AddProgramActivity"
             android:icon="@drawable/remote"
-            android:label="@string/app_addprog"></activity>
+            android:label="@string/app_addprog"/>
 
         <activity
             android:name="T15RGBIrActivity"

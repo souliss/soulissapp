@@ -30,7 +30,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
         for (SoulissScene scenario : db.getScenes(context)) {
             if (yesMan.contains(scenario.getName().toLowerCase())) {
                 Log.w(Constants.TAG, "Voice activated Scenario:!! :" + scenario.getName());
-                Toast.makeText(context, scenario.getName() + " " + context.getString(R.string.command_sent), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, scenario.getName() + " " + context.getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
                 scenario.execute();
                 return;
             }
@@ -54,7 +54,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             // SoulissDBHelper db = new SoulissDBHelper(AbstractStatusedFragmentActivity.this);
             List<SoulissNode> nodes = db.getAllNodes();
             for (final SoulissNode premio : nodes) {
-                if (yesMan.contains(premio.getName().toLowerCase()))
+                if (premio.getName() != null && yesMan.contains(premio.getName().toLowerCase()))
                     nodeMatch = true;
             }
             for (final SoulissNode premio : nodes) {
@@ -63,7 +63,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                     if (treppio.getName() != null && yesMan.contains(treppio.getName().toLowerCase())) {
                         typMatch = true;
                         if (yesMan.contains(context.getString(R.string.all))) {
-                            cmdSent= true;
+                            cmdSent = true;
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -74,7 +74,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                             }).start();
                             break;//uno basta e avanza
                         } else if (!nodeMatch || yesMan.contains(premio.getName().toLowerCase())) {
-                            cmdSent= true;
+                            cmdSent = true;
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -93,22 +93,21 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             }
             if (cmdSent) {
                 Toast.makeText(context, yesMan + " " + context.getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-            } else if (typMatch){
+            } else if (typMatch) {
                 //Error, doveva mandare
                 Log.e(Constants.TAG, "Potential match NOT found, has waited for the right node");
-                Toast.makeText(context, context.getString(R.string.command_node_error), Toast.LENGTH_SHORT).show();
-            }else if (nodeMatch){
-                Toast.makeText(context, context.getString(R.string.command_node_error), Toast.LENGTH_SHORT).show();
-            }else {//command found, but not device
-                Toast.makeText(context, context.getString(R.string.command_typ_error), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
+            } else if (nodeMatch) {
+                Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
+            } else {//command found, but not device
+                Toast.makeText(context, context.getString(R.string.command_typ_error) +": "+yesMan, Toast.LENGTH_LONG).show();
             }
-        }else{
+        } else {
             Toast.makeText(context, yesMan + " - " + context.getString(R.string.err_command_not_recognized), Toast.LENGTH_SHORT).show();
         }
 
 
     }
-
 
 
     /**
@@ -132,7 +131,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w(Constants.TAG, "onCreate WrapperActivity ");
+        Log.w(Constants.TAG, "onCreate WrapperActivity");
 
         ArrayList<String> thingsYouSaid = getIntent().getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
         if (thingsYouSaid != null && thingsYouSaid.size() > 0) {

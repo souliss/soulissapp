@@ -5,6 +5,7 @@ import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +62,7 @@ public class NodesListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			// ProgressBar sfumata
 			final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-			final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, context.getResources().getColor(
-					color.aa_red), context.getResources().getColor(color.aa_green),
+			final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, ContextCompat.getColor(context, color.aa_red), ContextCompat.getColor(context, R.color.aa_green),
 					android.graphics.Shader.TileMode.CLAMP);
 
 			convertView = mInflater.inflate(R.layout.listview, parent, false);
@@ -112,9 +112,9 @@ public class NodesListAdapter extends BaseAdapter {
 				nodi[position].getActiveTypicals().size(), nodi[position].getActiveTypicals().size())  + " - " + context.getString(R.string.update) + " " + Constants.getTimeAgo(nodi[position].getRefreshedAt()));
 
 		if (opzioni.isLightThemeSelected()) {
-			holder.textTyp.setTextColor(context.getResources().getColor(R.color.black));
-			holder.text.setTextColor(context.getResources().getColor(R.color.black));
-			holder.textHlt.setTextColor(context.getResources().getColor(R.color.black));
+			holder.textTyp.setTextColor(ContextCompat.getColor(context, R.color.black));
+			holder.text.setTextColor(ContextCompat.getColor(context, R.color.black));
+			holder.textHlt.setTextColor(ContextCompat.getColor(context, R.color.black));
 		}
 
 		/* Icona del nodo */

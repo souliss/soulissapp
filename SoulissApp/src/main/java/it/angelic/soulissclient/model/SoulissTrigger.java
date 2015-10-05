@@ -16,27 +16,12 @@ public class SoulissTrigger extends SoulissCommand {
         // TODO Auto-generated constructor stub
     }
 
-    public SoulissTriggerDTO getTriggerDto() {
-        return triggerDto;
-    }
-
-    public void setTriggerDto(SoulissTriggerDTO triggerDto) {
-        this.triggerDto = triggerDto;
-    }
+    /*public SoulissCommand getComand() {
+        return this;
+    }*/
 
     public SoulissCommandDTO getCommandDto() {
         return super.getCommandDTO();
-    }
-
-    public void persist(SoulissDBHelper dbh) {
-        //ripetere non nuoce, sceneId sempre nullo nei trigger
-        super.getCommandDTO().setSceneId(null);
-        super.getCommandDTO().persistCommand();
-        triggerDto.persist(dbh);
-    }
-
-    public SoulissCommand getComand() {
-        return this;
     }
 
     /* WRAPPED */
@@ -54,5 +39,20 @@ public class SoulissTrigger extends SoulissCommand {
 
     public float getThreshVal() {
         return triggerDto.getThreshVal();
+    }
+
+    public SoulissTriggerDTO getTriggerDto() {
+        return triggerDto;
+    }
+
+    public void setTriggerDto(SoulissTriggerDTO triggerDto) {
+        this.triggerDto = triggerDto;
+    }
+
+    public void persist(SoulissDBHelper dbh) {
+        //ripetere non nuoce, sceneId sempre nullo nei trigger
+        super.getCommandDTO().setSceneId(null);
+        super.getCommandDTO().persistCommand();
+        triggerDto.persist(dbh);
     }
 }

@@ -143,5 +143,20 @@
         <item>Manual</item>
         <item>Music sync</item>
     </string-array>
+
+    <string-array name="delayInterval">
+        <item name="0">No delay</item>
+        <item name="1000">1 second</item>
+        <item name="3000">3 seconds</item>
+        <item name="5000">5 seconds</item>
+        <item name="10000">10 seconds</item>
+    </string-array>
+    <integer-array name="delayIntervalValues">
+        <item name="0">0</item>
+        <item name="1000">1</item>
+        <item name="3000">3000</item>
+        <item name="5000">5000</item>
+        <item name="10000">10000</item>
+    </integer-array>
     
 </resources>

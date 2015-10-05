@@ -15,16 +15,13 @@ import it.angelic.soulissclient.SoulissApp;
 
 /**
  * Souliss Unit, the node
- *
+ * <p/>
  * It has a List of @SoulissTypical , and represents an actual arduino-like board
  *
- * @author Ale
+ * @author shine
  */
 public class SoulissNode implements Serializable, ISoulissObject {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 8673027563853737718L;
     private short health;
     /* Icon resource ID */
@@ -41,11 +38,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
         soulissTypicals = new ArrayList<>();
     }
 
-    @Override
-    public String toString() {
-        return getNiceName();
-    }
-
     /**
      * Data transfer method
      *
@@ -54,7 +46,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
      */
     public static SoulissNode cursorToNode(Cursor cursor) {
         SoulissNode comment = new SoulissNode(cursor.getShort(1));
-        // comment.setName(cursor.getString(3));
 
         comment.setHealth(cursor.getShort(2));
         comment.setIconResourceId(cursor.getInt(3));
@@ -69,6 +60,17 @@ public class SoulissNode implements Serializable, ISoulissObject {
     public void addTypical(SoulissTypical rest) {
         soulissTypicals.add(rest);
 
+    }
+
+    public List<SoulissTypical> getActiveTypicals() {
+        ArrayList<SoulissTypical> copy = new ArrayList<>();
+
+        for (SoulissTypical soulissTypical : soulissTypicals) {
+            if (!soulissTypical.isRelated() && !soulissTypical.isEmpty())
+                copy.add(soulissTypical);
+        }
+
+        return copy;
     }
 
     public short getHealth() {
@@ -87,12 +89,20 @@ public class SoulissNode implements Serializable, ISoulissObject {
         iconId = itemResId;
     }
 
-    public  short  getId() {
+    public short getId() {
         return id;
     }
 
     public void setId(short id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String namer) {
+        name = namer;
     }
 
     public String getNiceName() {
@@ -112,26 +122,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
         this.refreshedAt = refreshedAt;
     }
 
-    public List<SoulissTypical> getTypicals() {
-        return soulissTypicals;
-    }
-
-    public void setTypicals(List<SoulissTypical> soulissTypicals) {
-        this.soulissTypicals = soulissTypicals;
-    }
-
-    public List<SoulissTypical> getActiveTypicals() {
-        ArrayList<SoulissTypical> copy = new ArrayList<>();
-
-        for (SoulissTypical soulissTypical : soulissTypicals) {
-            if (!soulissTypical.isRelated() && !soulissTypical.isEmpty())
-                copy.add(soulissTypical);
-        }
-
-        return copy;
-    }
-
-
     public SoulissTypical getTypical(short slot) throws NotFoundException {
         for (SoulissTypical soulissTypical : soulissTypicals) {
             if (soulissTypical.getSlot() == slot)
@@ -141,12 +131,17 @@ public class SoulissNode implements Serializable, ISoulissObject {
 
     }
 
-    public String getName() {
-        return name;
+    public List<SoulissTypical> getTypicals() {
+        return soulissTypicals;
     }
 
-    public void setName(String namer) {
-        name = namer;
+    public void setTypicals(List<SoulissTypical> soulissTypicals) {
+        this.soulissTypicals = soulissTypicals;
+    }
+
+    @Override
+    public String toString() {
+        return getNiceName();
     }
 
 

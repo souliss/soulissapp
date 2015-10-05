@@ -47,8 +47,8 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     protected SoulissTypicalDTO typicalDTO;
     //transient per evitare problemi di serializzazione
     protected transient SoulissPreferenceHelper prefs;
-    private boolean isSlave = false;// indica se includerlo nelle liste
     private boolean isSensor = false;// indica se va loggato
+    private boolean isSlave = false;// indica se includerlo nelle liste
 
     //AUTOF
     public SoulissTypical(SoulissPreferenceHelper pre) {
@@ -233,6 +233,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     /**
      * Should be sub-implemented
      * Get a meaningful result. Also Called from widget
+     *
      * @return
      */
     public String getOutputDesc() {
@@ -296,20 +297,30 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return isSlave;
     }
 
-    public void setRelated(boolean isSlave) {
-        this.isSlave = isSlave;
+    public void setRelated(SoulissTypical in) {
+        throw new RuntimeException("Can't call setRelated on a single generic typical");
     }
 
     public boolean isSensor() {
-        if (!(this instanceof ISoulissTypicalSensor)) {
+      /*  if (!(this instanceof ISoulissTypicalSensor)) {
             Log.w(Constants.TAG, "SoulissTypical " + getNiceName() + " NOT instanceof ISoulissTypicalSensor");
-        }
-        //TODO return (this instanceof ISoulissTypicalSensor)
-        return isSensor;
+        }*/
+        return (this instanceof ISoulissTypicalSensor);
+       // return isSensor;
     }
 
-    public void setSensor(boolean isSensor) {
+   /* public void setSensor(boolean isSensor) {
         this.isSensor = isSensor;
+    }*/
+
+    public void issueRefresh() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UDPHelper.pollRequest(prefs, 1, getNodeId());
+            }
+        }).start();
+
     }
 
     /**
@@ -351,23 +362,12 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         }
     }
 
-    public void setRelated(SoulissTypical in) {
-        throw new RuntimeException("Can't call setRelated on a single generic typical");
+    public void setRelated(boolean isSlave) {
+        this.isSlave = isSlave;
     }
 
     @Override
     public String toString() {
         return getNiceName();
-    }
-
-
-    public void issueRefresh() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UDPHelper.pollRequest(prefs, 1, getNodeId());
-            }
-        }).start();
-
     }
 }

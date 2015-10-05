@@ -13,4 +13,5 @@
         <item quantity="one">1 Byte</item>
         <item quantity="other">%d  Bytes</item>
     </plurals>
+    <plurals name="seconds">seconds</plurals>
 </resources>

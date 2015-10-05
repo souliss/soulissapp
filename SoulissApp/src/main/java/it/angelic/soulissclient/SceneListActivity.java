@@ -178,7 +178,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 		switch (item.getItemId()) {
 		case R.id.eseguiScena:
-			ScenesDialogHelper.executeSceneDialog(SceneListActivity.this, todoItem, opzioni);
+			ScenesDialogHelper.executeSceneDialog(SceneListActivity.this, todoItem);
 			return true;
 		case R.id.eliminaScena:
 			ScenesDialogHelper.removeSceneDialog(this, listaScenesView, datasource, todoItem, opzioni);

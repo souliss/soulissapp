@@ -302,7 +302,7 @@
     <string name="bridge_useDhcp" >Use DHCP for remote board IP address assignment</string>
     <string name="udpport_summary">Choose outgoing datagrams\'port</string>
     <string name="advbroadcast_summary">Remotely configure Souliss Node</string>
-    <string name="Souliss_T19_Max_desc" />
+    <string name="Souliss_T19_Max_desc" >Maximum intensity</string>
     <string name="Souliss_T19_Med_desc" />
     <string name="Souliss_T19_Min_desc" />
     <string name="sureToRemoveTag">Are you sure you want to delete this tag ?</string>
@@ -339,10 +339,13 @@
     <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Get Souliss Nodes</string>
-    <string name="bytes_sent"/>
+    <string name="bytes_sent">Bytes sent</string>
     <string name="voice_command_help">Use one of your scenes\' name, or a command (turn on, turn off, etc.) followed by a device\'s name</string>
     <string name="souliss_voice_command">Souliss Voice Command</string>
     <string name="command_typ_error"/>
-    <string name="command_node_error"/>
-    <string name="err_command_not_recognized"/>
+    <string name="command_node_error">Weird. Command and node recognized, but device not found</string>
+    <string name="err_command_not_recognized">Command not recognized</string>
+    <string name="menu_changenodeRebuild">Rebuild Node</string>
+    <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
+    <string name="addprogram_choosedelay"/>
 </resources>

@@ -56,7 +56,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         // falso se trigger assertEquals(true, dto.getSceneId() != 0);
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
             SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
-            targetScene = db.getScene(SoulissApp.getAppContext(), dto.getSlot());
+            targetScene = db.getScene(dto.getSlot());
             commandDTO.setSceneId(null);
         }
     }
@@ -103,7 +103,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             return targetScene.getIconResourceId();
         } else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
             // comando massivo
-            return R.drawable.arrowmove;
+            return R.drawable.arrowmove1;
         }
         short typical = parentTypical.getTypicalDTO().getTypical();
         long command = commandDTO.getCommand();
@@ -125,9 +125,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             resId = R.drawable.sos;
         } else if (typical == Constants.Souliss_T14) {
             if (command == Constants.Souliss_T1n_OnCmd)
-                resId = R.drawable.light_on;
-            else if (command == Constants.Souliss_T1n_OffCmd)
-                resId = R.drawable.light_off;
+                resId = R.drawable.lock;
             else
                 resId = R.drawable.sos;
         } else if (typical == Constants.Souliss_T16) {
@@ -143,8 +141,9 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             resId = R.drawable.sos;
         else if (typical == Constants.Souliss_T22)
             resId = R.drawable.sos;
-        else if (typical == Constants.Souliss_T31)
+        else if (typical == Constants.Souliss_T31){
             resId = R.drawable.sos;
+        }
         else if (typical == Constants.Souliss_T_CurrentSensor)
             resId = R.drawable.sos;
         else if (typical == Constants.Souliss_T_TemperatureSensor)
@@ -163,7 +162,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         SoulissCommandDTO dto = getCommandDTO();
         Calendar now = Calendar.getInstance();
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
-            //inrealta devo eseguire una scena, non questo comando
+            //in realta devo eseguire una scena, non questo comando
             //salvato adalla Addprogram activity
             targetScene.execute();
             return;

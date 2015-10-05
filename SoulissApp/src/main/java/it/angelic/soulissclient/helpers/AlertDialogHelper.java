@@ -493,10 +493,6 @@ public class AlertDialogHelper {
         alert2.setIcon(android.R.drawable.ic_dialog_dialer);
         // loads gallery and requires icon selection*/
         final EcoGallery gallery = new EcoGallery(context);
-        // final Gallery gallery = new Gallery(context);
-        // Gallery gallery = (Gallery) findViewById(R.id.gallery);
-        // gallery.setMinimumHeight(300);
-        // gallery.setLayoutParams(new Layo);
         gallery.setAdapter(new SoulissIconAdapter(context));
         alert2.setView(gallery);
 
@@ -613,6 +609,48 @@ public class AlertDialogHelper {
                     }
                 });
 
+        return alert;
+
+    }
+
+    /**
+     * Dialogo creazione singolo nodo
+     * Rebuilds a single node's devices
+     *
+     * @param preferencesActivity
+     * @param toRebuild node to request the refresh for
+     * @return
+     */
+    public static AlertDialog.Builder rebuildNodeDialog(final Activity preferencesActivity, final SoulissNode toRebuild,
+                                                            final SoulissPreferenceHelper opts) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity);
+        alert.setTitle(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild ));
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        if (opts.isSoulissReachable()) {
+            // alert.setIcon()
+            alert.setMessage(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild_desc) );
+            alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
+                    new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            new Thread() {
+                                public void run() {
+                                    Looper.prepare();
+                                    UDPHelper.typicalRequest(opts, 1, toRebuild.getId());
+                                }
+                            }.start();
+                        }
+                    });
+        } else {
+            alert.setMessage(preferencesActivity.getResources().getString(R.string.souliss_unavailable));
+        }
+
+        alert.setNegativeButton(SoulissApp.getAppContext().getResources().getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
         return alert;
 
     }

@@ -30,6 +30,7 @@
             android:id="@+id/spinner2"
             android:layout_width="0dip"
             android:layout_height="36dp"
+            android:layout_margin="4dp"
             android:spinnerMode="dialog"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/strut"
@@ -40,6 +41,7 @@
             android:layout_width="0dip"
             android:layout_height="36dp"
             android:spinnerMode="dialog"
+            android:layout_margin="4dp"
             android:layout_alignLeft="@id/strut"
             android:layout_alignParentRight="true"
             android:layout_below="@id/textView1"
@@ -64,7 +66,32 @@
             android:id="@+id/spinnerCommand"
             android:layout_width="fill_parent"
             android:layout_height="36dp"
+            android:layout_margin="4dp"
             android:layout_below="@id/textViewCommand" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/textViewCommandDelay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/addprogram_choosedelay"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/spinnerCommandDelay"
+            android:layout_width="fill_parent"
+            android:layout_height="36dp"
+            android:layout_margin="4dp"
+            android:entries="@array/delayInterval"
+            android:entryValues="@array/delayIntervalValues"
+            android:layout_below="@id/textViewCommandDelay" />
     </RelativeLayout>
 
 </LinearLayout>

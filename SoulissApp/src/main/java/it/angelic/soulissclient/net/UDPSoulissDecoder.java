@@ -246,12 +246,12 @@ public class UDPSoulissDecoder {
                 if (!soulissTrigger.getTriggerDto().isActivated()) {
                     // Descrizione programma
                     StringBuilder info = new StringBuilder(soulissTrigger.toString());
-                    info.append(" slot " + soulissTrigger.getSlot());
+                    info.append(" slot ").append(soulissTrigger.getSlot());
                     if ("".compareTo(source.getNiceName()) != 0)
                         info.append(" (")
                                 .append(source.getNiceName())
                                 .append(")");
-                    info.append(" on " + source.getParentNode().getNiceName());
+                    info.append(" on " ).append(source.getParentNode().getNiceName());
 
                     String op = soulissTrigger.getOp();
                     if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > soulissTrigger.getThreshVal()) {

@@ -16,4 +16,9 @@
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/menu_changenodeicon"
         android:orderInCategory="2"/>
+    <item
+        android:id="@+id/Ricostruisci"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="@string/menu_changenodeRebuild"
+        android:orderInCategory="2"/>
 </menu>

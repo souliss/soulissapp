@@ -67,7 +67,7 @@ public class ScenesDialogHelper {
                         datasource.deleteCommand(toRename);
                         if (ctx != null) {
                             // prendo comandi dal DB
-                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands(cont, tgt.getId());
+                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands( tgt.getId());
                             SoulissCommand[] programsArray = new SoulissCommand[goer.size()];
                             programsArray = goer.toArray(programsArray);
                             tgt.setCommandArray(goer);
@@ -223,6 +223,7 @@ public class ScenesDialogHelper {
 
         final Spinner outputTypicalSpinner = (Spinner) dialoglayout.findViewById(R.id.spinner3);
         final Spinner outputCommandSpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerCommand);
+        final Spinner outputDelaySpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerCommandDelay);
 
 		/* Cambiando nodo, cambia i tipici */
         OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
@@ -278,13 +279,14 @@ public class ScenesDialogHelper {
                         } else
                             tull.getCommandDTO().setType(Constants.COMMAND_SINGLE);
                         // lo metto dopo l'ultimo inserito
-                        tull.getCommandDTO().setInterval(targetScene.getCommandArray().size() + 1);
+                        int[] mefisto = context.getResources().getIntArray(R.array.delayIntervalValues);
+                        tull.getCommandDTO().setInterval(mefisto[outputDelaySpinner.getSelectedItemPosition()]  );
+                        Log.w(Constants.TAG,"Saving new command with delay:"+ context.getResources().getIntArray(R.array.delayIntervalValues)[outputDelaySpinner.getSelectedItemPosition()]  );
                         tull.getCommandDTO().persistCommand();
-                        // setta comando singolo
 
-                        if (list != null) {
+                        if (list != null) {//refresh
                             // prendo comandi dal DB per questa scena
-                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands(context, targetScene.getId());
+                            ArrayList<SoulissCommand> goer = datasource.getSceneCommands(targetScene.getId());
                             SoulissCommand[] scenesArr = new SoulissCommand[goer.size()];
                             scenesArr = goer.toArray(scenesArr);
                             targetScene.setCommandArray(goer);
@@ -360,15 +362,12 @@ public class ScenesDialogHelper {
      * @param preferencesActivity
      * @return
      */
-    public static void executeSceneDialog(final Activity preferencesActivity, final SoulissScene toExec,
-                                          final SoulissPreferenceHelper opt) {
+    public static void executeSceneDialog(final Activity preferencesActivity, final SoulissScene toExec ) {
 
-        //progressDialog = ProgressDialog.show(preferencesActivity, "", "Executing Scene " + toExec.getNiceName());
         toExec.execute();
         preferencesActivity.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(preferencesActivity,
-                        "Execution of Scene " + toExec.toString() + " complete!", Toast.LENGTH_SHORT)
+                Toast.makeText(preferencesActivity,toExec.getName() + " " + preferencesActivity.getString(R.string.command_sent), Toast.LENGTH_SHORT)
                         .show();
             }
         });

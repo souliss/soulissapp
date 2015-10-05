@@ -48,18 +48,18 @@ public class SoulissDataService extends Service implements LocationListener {
     // RemoteService for a more complete example.
     private final IBinder mBinder = new LocalBinder();
     NotificationManager nm;
-    private LocationManager locationManager;
+    private Intent cIntent;
+    private String cached;
+    // private long uir;
+    private SoulissDBHelper db;
+    private float homeDist = 0;
     private Calendar lastupd = Calendar.getInstance();
+    private LocationManager locationManager;
     private Handler mHandler = new Handler();
     // private Timer timer = new Timer();
     private SoulissPreferenceHelper opts;
-    // private long uir;
-    private SoulissDBHelper db;
     private String provider;
-    private float homeDist = 0;
-    private String cached;
-
-
+    private Thread udpThread;
     private Runnable mUpdateSoulissRunnable = new Runnable() {
 
         public void run() {
@@ -246,8 +246,6 @@ public class SoulissDataService extends Service implements LocationListener {
         }
 
     };
-    private Thread udpThread;
-    private Intent cIntent;
 
     public static void sendTooLongWarnNotification(Context ctx, String desc, String longdesc, @NonNull SoulissTypical ppr) {
         Intent notificationIntent = new Intent(ctx, TypicalDetailFragWrapper.class);
@@ -301,11 +299,23 @@ public class SoulissDataService extends Service implements LocationListener {
         opts.setLastServiceRun(lastupd);
     }
 
+    private void logThings(Map<Short, SoulissNode> refreshedNodes) {
+        Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
+        for (Short index : refreshedNodes.keySet()) {
+            SoulissNode pirt = refreshedNodes.get(index);
+            List<SoulissTypical> tips = pirt.getTypicals();
+            for (SoulissTypical soulissTypical : tips) {
+                if (soulissTypical.isSensor()) {
+                    soulissTypical.logTypical();
+                }
+            }
+        }
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
-
 
     @Override
     public void onCreate() {
@@ -353,112 +363,6 @@ public class SoulissDataService extends Service implements LocationListener {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        opts = SoulissApp.getOpzioni();
-
-        requestBackedOffLocationUpdates();
-        // uir = opts.getDataServiceInterval();
-        Log.i(TAG, "Service onStartCommand()");
-        // delle opzioni
-
-        reschedule(false);
-
-        startUDPListener();
-
-        return START_STICKY;
-    }
-
-    private void startUDPListener() {
-        if (udpThread == null || !udpThread.isAlive()) {
-            // Create the object with the run() method
-            Runnable runnable = new UDPRunnable(opts);
-            // Create the udpThread supplying it with the runnable
-            // object
-            udpThread = new Thread(runnable);
-            // Start the udpThread
-            udpThread.start();
-            Log.i(TAG, "UDP thread started" + opts.getBackedOffServiceIntervalMsec());
-        }
-    }
-
-    /**
-     * Schedule a new execution of the srvice via mHandler.postDelayed
-     */
-    public void reschedule(boolean immediate) {
-
-        opts.initializePrefs();// reload interval
-
-        // the others
-        // reschedule self
-        Calendar calendar = Calendar.getInstance();
-        if (immediate) {
-            mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
-            Log.i(TAG, "Reschedule immediate");
-            mHandler.post(mUpdateSoulissRunnable);
-        } else {
-            Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
-
-            if (getLastupd().getTime().getTime() + opts.getBackedOffServiceIntervalMsec() < Calendar.getInstance().getTime().getTime()) {
-                Log.i(TAG, "DETECTED LATE SERVICE, LAST RUN: " + getLastupd().getTime());
-
-                reschedule(true);
-                return;
-            }
-            // mHandler.postDelayed(mUpdateSoulissRunnable,
-            // opts.getDataServiceIntervalMsec());
-            /* One of the two should get it */
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            PendingIntent secureShot = PendingIntent.getService(this, 0, cIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-
-                calendar.setTimeInMillis(getLastupd().getTime().getTime());
-                calendar.add(Calendar.MILLISECOND, opts.getBackedOffServiceIntervalMsec().intValue());
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
-                //will call onStart(), detect late and schedule immediate
-                Log.i(TAG, "DATASERVICE SCHEDULED ON: " + calendar.getTime());
-
-        }
-        startUDPListener();
-    }
-
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        Log.w(TAG, "Low memory, schedule a reserve task");
-        mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec() + 1000000);
-    }
-
-    private void logThings(Map<Short, SoulissNode> refreshedNodes) {
-        Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
-        for (Short index : refreshedNodes.keySet()) {
-            SoulissNode pirt = refreshedNodes.get(index);
-            List<SoulissTypical> tips = pirt.getTypicals();
-            for (SoulissTypical soulissTypical : tips) {
-                if (soulissTypical.isSensor()) {
-                    soulissTypical.logTypical();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Log.i(TAG, "Service received Provider Disabled");
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Log.i(TAG, "Service received Provider ENABLED");
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d(TAG, "Service location status Provider changed to: " + status);
-    }
-
-    @Override
     public void onLocationChanged(Location location) {
         opts = SoulissApp.getOpzioni();
         double lat = (location.getLatitude());
@@ -482,6 +386,44 @@ public class SoulissDataService extends Service implements LocationListener {
             Log.w(TAG, "can't compute home distance, home position not set");
         }
 
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Log.w(TAG, "Low memory, schedule a reserve task");
+        mHandler.postDelayed(mUpdateSoulissRunnable, opts.getDataServiceIntervalMsec() + 1000000);
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.i(TAG, "Service received Provider Disabled");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.i(TAG, "Service received Provider ENABLED");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        opts = SoulissApp.getOpzioni();
+
+        requestBackedOffLocationUpdates();
+        // uir = opts.getDataServiceInterval();
+        Log.i(TAG, "Service onStartCommand()");
+        // delle opzioni
+
+        reschedule(false);
+
+        startUDPListener();
+
+        return START_STICKY;
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d(TAG, "Service location status Provider changed to: " + status);
     }
 
     /**
@@ -574,8 +516,64 @@ public class SoulissDataService extends Service implements LocationListener {
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                         Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
             }
+        } catch (SecurityException re) {
+            Log.e(TAG, "NOT ALLOWED FROM USER PERMISSION", re);
         } catch (Exception e) {
             Log.e(TAG, "location manager updates request FAIL", e);
+        }
+    }
+
+    /**
+     * Schedule a new execution of the srvice via mHandler.postDelayed
+     */
+    public void reschedule(boolean immediate) {
+
+        opts.initializePrefs();// reload interval
+
+        // the others
+        // reschedule self
+        Calendar calendar = Calendar.getInstance();
+        if (immediate) {
+            mHandler.removeCallbacks(mUpdateSoulissRunnable);// the first removes
+            Log.i(TAG, "Reschedule immediate");
+            mHandler.post(mUpdateSoulissRunnable);
+        } else {
+            Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
+
+            if (getLastupd().getTime().getTime() + opts.getBackedOffServiceIntervalMsec() < Calendar.getInstance().getTime().getTime()) {
+                Log.i(TAG, "DETECTED LATE SERVICE, LAST RUN: " + getLastupd().getTime());
+
+                reschedule(true);
+                return;
+            }
+            // mHandler.postDelayed(mUpdateSoulissRunnable,
+            // opts.getDataServiceIntervalMsec());
+            /* One of the two should get it */
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+            PendingIntent secureShot = PendingIntent.getService(this, 0, cIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+
+            calendar.setTimeInMillis(getLastupd().getTime().getTime());
+            calendar.add(Calendar.MILLISECOND, opts.getBackedOffServiceIntervalMsec().intValue());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
+            //will call onStart(), detect late and schedule immediate
+            Log.i(TAG, "DATASERVICE SCHEDULED ON: " + calendar.getTime());
+
+        }
+        startUDPListener();
+    }
+
+    private void startUDPListener() {
+        if (udpThread == null || !udpThread.isAlive()) {
+            // Create the object with the run() method
+            Runnable runnable = new UDPRunnable(opts);
+            // Create the udpThread supplying it with the runnable
+            // object
+            udpThread = new Thread(runnable);
+            // Start the udpThread
+            udpThread.start();
+            Log.i(TAG, "UDP thread started" + opts.getBackedOffServiceIntervalMsec());
         }
     }
 

@@ -808,7 +808,7 @@ public class SoulissDBHelper {
         return ret;
     }
 
-    public ArrayList<SoulissCommand> getSceneCommands(Context context, int sceneId) {
+    public ArrayList<SoulissCommand> getSceneCommands(int sceneId) {
         ArrayList<SoulissCommand> ret = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS,
                 SoulissDB.COLUMN_COMMAND_SCENEID + " =" + sceneId, null, null, null,
@@ -856,7 +856,7 @@ public class SoulissDBHelper {
             comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
             comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
             cursor.moveToNext();
-            ArrayList<SoulissCommand> cmds = getSceneCommands(context, comment.getId());
+            ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
             comment.setCommandArray(cmds);
             ret.add(comment);
         }
@@ -865,7 +865,7 @@ public class SoulissDBHelper {
         return ret;
     }
 
-    public SoulissScene getScene(Context context, int sceneId) {
+    public SoulissScene getScene(int sceneId) {
         Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
                 SoulissDB.COLUMN_SCENE_ID);
         cursor.moveToFirst();
@@ -874,7 +874,7 @@ public class SoulissDBHelper {
         comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
         comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
 
-        ArrayList<SoulissCommand> cmds = getSceneCommands(context, comment.getId());
+        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
         comment.setCommandArray(cmds);
         cursor.close();
         return comment;

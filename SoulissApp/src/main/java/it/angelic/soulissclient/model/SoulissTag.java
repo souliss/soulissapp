@@ -10,12 +10,12 @@ import java.util.List;
  * Created by Ale on 27/02/2015.
  */
 public class SoulissTag implements Serializable, ISoulissObject {
-    private long tagId;
-    private String name;
+    private List<SoulissTypical> assignedTypicals = new ArrayList<>();
     private int iconId;
     private String imagePath;
+    private String name;
+    private long tagId;
     private Integer tagOrder;
-    private List<SoulissTypical> assignedTypicals = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

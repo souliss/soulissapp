@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -405,12 +406,12 @@ public class NodesListFragment extends ListFragment {
             actionTitle.setText("Manual");
             if (!opzioni.isSoulissReachable()) {
                 online.setBackgroundResource(R.drawable.red);
-                statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+                statusOnline.setTextColor(ContextCompat.getColor(getContext(), R.color.std_red));
                 statusOnline.setText(R.string.offline);
 
             } else {
                 online.setBackgroundResource(R.drawable.green);
-                statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+                statusOnline.setTextColor(ContextCompat.getColor(getContext(), R.color.std_green));
                 statusOnline.setText(R.string.Online);
             }
         } catch (Exception e) {
