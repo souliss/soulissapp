@@ -303,26 +303,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         scrollView = (ObservableScrollView) findViewById(R.id.launcherScrollView);
         // previously invisible view
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (opzioni.isVoiceCommandEnabled()) {
-            fab.attachToScrollView(scrollView);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, LauncherActivity.this.getString(R.string.voice_command_help));
-                    try {
-                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
-                    } catch (Exception e) {
-                        Toast.makeText(LauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        } else {
-            fab.hide();
-        }
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         // Get the location manager
@@ -727,6 +707,27 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         soulissManualBtn.setOnClickListener(simpleOnClickListener);
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //VOICE SEARCH
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (opzioni.isVoiceCommandEnabled()) {
+            fab.attachToScrollView(scrollView);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, LauncherActivity.this.getString(R.string.voice_command_help));
+                    try {
+                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
+                    } catch (Exception e) {
+                        Toast.makeText(LauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            fab.hide();
+        }
 
         // refresh testo
         setHeadInfo();

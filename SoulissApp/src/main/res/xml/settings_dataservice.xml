@@ -22,6 +22,11 @@
             robobunny:min="1"
             robobunny:unitsLeft=""
             robobunny:unitsRight="min" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="checkboxVoiceCommand"
+            android:summary="@string/opt_voice_command_desc"
+            android:title="@string/opt_voice_command" />
     </PreferenceCategory>
      <PreferenceCategory android:title="@string/position" >
         <Preference

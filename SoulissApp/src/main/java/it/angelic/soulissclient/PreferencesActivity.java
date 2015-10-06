@@ -109,7 +109,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
         //ListView v = getListView();
        // v.setCacheColorHint(0);
-
     }
 
 
@@ -144,8 +143,12 @@ public class PreferencesActivity extends PreferenceActivity {
     @Override
     protected void onPause() {
         unregisterReceiver(macacoRawDataReceiver);
+        //lo lascio per garanzia che SoulissApp.getOpzioni() sia aggiornato
+        opzioni.reload();
+
         super.onPause();
     }
+
 
     @Override
     protected boolean isValidFragment(String fragmentName) {

@@ -5,7 +5,7 @@
     <string name="app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Options</string>
     <string name="app_addprog">Add Program</string>
-    <string name="opt_network">Network Options</string>
+    <string name="opt_network">Network</string>
     <string name="bridge_IP"> IP Address assigned at runtime for Souliss node</string>
     <string name="bridge_subnet">IP Subnetmaskassigned at runtime for Souliss node</string>
     <string name="bridge_gateway">IP Gateway assigned at runtime for Souliss node, most likely your router\'s address</string>
@@ -161,7 +161,7 @@
     <string name="opt_dbimp_desc">Import a .csv file. Warning! Souliss Data will be ovewritten!</string>
     <string name="opt_dbopt_desc">Vacuum DB and remove logs older than a year</string>
     <string name="opt_dbopt">Optimize DB</string>
-    <string name="opt_db">Souliss DB</string>
+    <string name="opt_db">Model</string>
     <string name="opt_db_desc">(Re)create database, import and export</string>
     <string name="opt_dbdrop">Drop DB</string>
     <string name="opt_dbdrop_desc">Delete ALL nodes and Logs</string>
@@ -185,7 +185,7 @@
     <string name="opt_lighttheme_desc">Use light colors (need app restart)</string>
     <string name="opt_restore">Restore Warnings</string>
     <string name="opt_restore_desc">Show suppressed warning dialogs again</string>
-    <string name="opt_visual">Visual Options</string>
+    <string name="opt_visual">Interface</string>
     <string name="opt_fontsize">Text Size</string>
     <string name="opt_fonttitle">Change Title font</string>
     <string name="opt_visualdesc">Text size and effects</string>
@@ -209,7 +209,7 @@
     <string name="opt_Thold">Distance Threshold</string>
     <string name="opt_homepos_err">Error getting current position</string>
     <string name="opt_homepos_set">Home position set</string>
-    <string name="opt_service">Background Services</string>
+    <string name="opt_service">Services</string>
     <string name="opt_timeout_pubb">Connection Timeout</string>
     <string name="opt_timeout_pubb_desc">Choose Connection timeout when using Internet</string>
     <string name="opt_dialog_restored">All Dialogs restored</string>
