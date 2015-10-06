@@ -117,11 +117,98 @@
             </include>
         </TableLayout>
 
+        <TableLayout
+            android:id="@+id/containerweather"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/containerfavtag">
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+
+                    android:tint="@color/grey_lalpha"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/thermometer"
+                    />
+
+                <TextView
+                    android:id="@+id/temperature"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="press"
+                    />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+
+                    android:tint="@color/grey_lalpha"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/raindrop"
+                    />
+
+                <TextView
+                    android:id="@+id/hum"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hum"
+                    />
+
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+
+                    android:tint="@color/grey_lalpha"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/gauge2"
+                    />
+
+                <TextView
+                    android:id="@+id/pressure"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="press"
+                    />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:tint="@color/grey_lalpha"
+                    android:layout_marginLeft="8dp"
+                    android:src="@drawable/fan"
+                    />
+
+                <TextView
+                    android:id="@+id/wind"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="wind"
+                    />
+
+            </LinearLayout>
+        </TableLayout>
+
         <RelativeLayout
             android:id="@+id/fanContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/containerfavtag">
+            android:layout_below="@id/containerweather">
 
             <View
                 android:layout_width="fill_parent"

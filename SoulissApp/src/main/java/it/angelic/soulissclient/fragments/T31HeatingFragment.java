@@ -25,6 +25,20 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.survivingwithandroid.weather.lib.WeatherClient;
+import com.survivingwithandroid.weather.lib.WeatherConfig;
+import com.survivingwithandroid.weather.lib.client.volley.WeatherClientDefault;
+import com.survivingwithandroid.weather.lib.exception.LocationProviderNotFoundException;
+import com.survivingwithandroid.weather.lib.exception.WeatherLibException;
+import com.survivingwithandroid.weather.lib.model.City;
+import com.survivingwithandroid.weather.lib.model.CurrentWeather;
+import com.survivingwithandroid.weather.lib.provider.IWeatherProvider;
+import com.survivingwithandroid.weather.lib.provider.WeatherProviderFactory;
+import com.survivingwithandroid.weather.lib.provider.openweathermap.OpenweathermapProviderType;
+import com.survivingwithandroid.weather.lib.request.WeatherRequest;
+
+import java.util.List;
+
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -47,7 +61,7 @@ import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Shut
 import static junit.framework.Assert.assertTrue;
 
 
-public class T31HeatingFragment extends AbstractTypicalFragment  implements NumberPicker.OnValueChangeListener{
+public class T31HeatingFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
     private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     private SoulissPreferenceHelper opzioni;
 
@@ -66,7 +80,51 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
     private ImageView imageFan3;
     private ImageView imageFan2;
     private ImageView imageFan1;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
+                SoulissDBHelper.open();
+                SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
+                collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
+                refreshStatusIcon();
+                if (collected.getTypicalDTO().isFavourite()) {
+                    infoFavs.setVisibility(View.VISIBLE);
+                } else if (collected.getTypicalDTO().isTagged()) {
+                    infoTags.setVisibility(View.VISIBLE);
+                }
+                Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
+                textviewStatus.setText(collected.getOutputLongDesc());
 
+                if (collected.isFannTurnedOn(1))
+                    imageFan1.setVisibility(View.VISIBLE);
+                else
+                    imageFan1.setVisibility(View.INVISIBLE);
+                if (collected.isFannTurnedOn(2))
+                    imageFan2.setVisibility(View.VISIBLE);
+                else
+                    imageFan2.setVisibility(View.INVISIBLE);
+                if (collected.isFannTurnedOn(3))
+                    imageFan3.setVisibility(View.VISIBLE);
+                else
+                    imageFan3.setVisibility(View.INVISIBLE);
+
+                functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1);
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
+            }
+
+
+        }
+    };
+    private WeatherClientDefault client;
+    private City cityId;
+    private TextView tempView;
+    private TextView pressView;
+    private TextView humView;
+    private TextView windView;
 
     public static T31HeatingFragment newInstance(int index, SoulissTypical content) {
         T31HeatingFragment f = new T31HeatingFragment();
@@ -84,6 +142,81 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         return f;
     }
 
+    private void getWeather() {
+        if (client != null && cityId != null) {
+
+            WeatherRequest req = new WeatherRequest(opzioni.getHomeLongitude(), opzioni.getHomeLatitude());
+            client.getCurrentCondition(req, new WeatherClient.WeatherEventListener() {
+                @Override
+                public void onConnectionError(Throwable t) {
+                    Log.e(Constants.TAG, "Weather Error: " +cityId+ t);
+                }
+
+                @Override
+                public void onWeatherError(WeatherLibException t) {
+                    Log.e(Constants.TAG, "Weather Error: " + t);
+                }
+
+                @Override
+                public void onWeatherRetrieved(CurrentWeather currentWeather) {
+                    // Here we can use the weather information to upadte the view
+                    tempView.setText(String.format("%.0f", currentWeather.weather.temperature.getTemp()));
+                    pressView.setText(String.valueOf(currentWeather.weather.currentCondition.getPressure()));
+                    windView.setText(String.valueOf(currentWeather.weather.wind.getSpeed()));
+                    humView.setText(String.valueOf(currentWeather.weather.currentCondition.getHumidity()));
+
+                }
+            });
+        } else {
+            initWeatherClient();
+        }
+    }
+
+    private void initWeatherClient() {
+        client = WeatherClientDefault.getInstance();
+        client.init(getActivity());
+
+        WeatherConfig config = new WeatherConfig();
+        config.unitSystem = WeatherConfig.UNIT_SYSTEM.M;
+        config.lang = "en"; // If you want to use english
+        config.maxResult = 5; // Max number of cities retrieved
+        config.numDays = 6; // Max num of days in the forecast
+
+
+        IWeatherProvider provider = null;
+        try {
+            //provider = WeatherProviderFactory.createProvider(new YahooProviderType(), config);
+            provider = WeatherProviderFactory.createProvider(new OpenweathermapProviderType(), config);
+            //provider = WeatherProviderFactory.createProvider(new WeatherUndergroundProviderType(), config);
+            client.setProvider(provider);
+            client.updateWeatherConfig(config);
+
+            client.searchCityByLocation(WeatherClient.createDefaultCriteria(), new WeatherClient.CityEventListener() {
+
+                @Override
+                public void onCityListRetrieved(List<City> cityList) {
+                    cityId = cityList.get(0);
+                    Log.e(Constants.TAG, "Weather Ciry recv: " + cityList.get(0));
+                    getWeather();
+                }
+
+                @Override
+                public void onConnectionError(Throwable t) {
+                    Log.e(Constants.TAG, "Weather Ciry err: " +t);
+                }
+
+                @Override
+                public void onWeatherError(WeatherLibException wle) {
+                    Log.e(Constants.TAG, "Weather  err: " +wle);
+                }
+            });
+        } catch (LocationProviderNotFoundException lpnfe) {
+
+        } catch (Throwable t) {
+            // There's a problem
+        }
+
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -102,7 +235,18 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
     }
 
-    @SuppressLint("NewApi")
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // inflater.inflate(R.menu.queue_options, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initWeatherClient();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
@@ -111,6 +255,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         View ret = inflater.inflate(R.layout.frag_t31, container, false);
         datasource = new SoulissDBHelper(getActivity());
         SoulissDBHelper.open();
+
 
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null && extras.get("TIPICO") != null) {
@@ -139,6 +284,10 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
+        tempView= (TextView) ret.findViewById(R.id.temperature);
+        windView = (TextView) ret.findViewById(R.id.wind);
+        pressView = (TextView) ret.findViewById(R.id.pressure);
+        humView = (TextView) ret.findViewById(R.id.hum);
 
         final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
         /**
@@ -222,13 +371,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         return ret;
     }
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // inflater.inflate(R.menu.queue_options, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -255,6 +397,12 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         SoulissDBHelper.open();
@@ -273,54 +421,14 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(datareceiver);
-    }
-
-
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
-                SoulissDBHelper.open();
-                SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
-                collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
-                refreshStatusIcon();
-                if (collected.getTypicalDTO().isFavourite()) {
-                    infoFavs.setVisibility(View.VISIBLE);
-                } else if (collected.getTypicalDTO().isTagged()) {
-                    infoTags.setVisibility(View.VISIBLE);
-                }
-                Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
-                textviewStatus.setText(collected.getOutputLongDesc());
-
-                if (collected.isFannTurnedOn(1))
-                    imageFan1.setVisibility(View.VISIBLE);
-                else
-                    imageFan1.setVisibility(View.INVISIBLE);
-                if (collected.isFannTurnedOn(2))
-                    imageFan2.setVisibility(View.VISIBLE);
-                else
-                    imageFan2.setVisibility(View.INVISIBLE);
-                if (collected.isFannTurnedOn(3))
-                    imageFan3.setVisibility(View.VISIBLE);
-                else
-                    imageFan3.setVisibility(View.INVISIBLE);
-
-                functionSpinner.setSelection(collected.isCoolMode()?0:1);
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
-            }
-
-
-        }
-    };
-
-    @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
         collected.issueCommand(Souliss_T3n_Set, Float.valueOf(tempSlider.getValue()));
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getWeather();
+    }
+
 }

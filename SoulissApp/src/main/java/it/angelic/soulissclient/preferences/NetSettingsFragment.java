@@ -86,8 +86,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		 * In questo modo, l'User Index non verrebbe mai toccato a meno che non
 		 * vengano generati due "Node Index" uguali, a quel punto l'utente dovrà
 		 * intervenire manualmente per modificarli.
-		 * 
-		 * ATTENZIONE CODICE DUPLICATO NELLA PREF ACTIVITY
+		 *
 		 */
 
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);

@@ -342,7 +342,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         //The Refresh must be only active when the offset is zero :
-        swipeLayout.setEnabled(i == 0);
+        swipeLayout.setEnabled(i == 0 );
     }
 
     @Override

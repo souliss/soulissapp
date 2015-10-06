@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SharedElementCallback;
@@ -31,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -238,12 +240,26 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
                 AppBarLayout.Behavior beh = new AppBarLayout.Behavior();
 
+               /* Fragment current = getSupportFragmentManager().findFragmentById(R.id.detailPane);
+                FrameLayout layout =(FrameLayout) current.getView().getParent();
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) layout.getLayoutParams();
+                CoordinatorLayout.Behavior behavior = params.getBehavior();
+*/
+
                 // Add Fragment B
                  manager.beginTransaction()
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
                         .addSharedElement(mProductText, "hero_title").commit();//NOT WORK
                 //.addSharedElement(mProductText, "ToolbarText");
+
+               /* if (behavior != null) {
+                    Fragment currentd = getSupportFragmentManager().findFragmentById(R.id.detailPane);
+                    FrameLayout layoutd =(FrameLayout) currentd.getView().getParent();
+                    CoordinatorLayout.LayoutParams paramsd = (CoordinatorLayout.LayoutParams) layoutd.getLayoutParams();
+                    paramsd.setBehavior(behavior);
+                    Log.w(Constants.TAG, "Got non-empty behaviour");
+                }*/
             } else {
                 // if (opzioni.isAnimationsEnabled())
                 //     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
