@@ -18,6 +18,7 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -26,18 +27,17 @@ import it.angelic.soulissclient.model.SoulissTypical;
  * Created by Ale on 08/03/2015.
  */
 public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final TagDetailActivity tadDetailActivity;
     protected List<SoulissTypical> mDataset;
-    private long tagId;
     private SoulissPreferenceHelper opzioni;
+    private long tagId;
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-       return onCreateViewHolderImpl(parent, viewType);
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-onBindViewHolderImpl(holder, position);
+    public ParallaxExenderAdapter(SoulissPreferenceHelper pref, TagDetailActivity father, List data, long tagId) {
+        super();
+        mDataset = data;
+        this.tagId = tagId;
+        opzioni = pref;
+        tadDetailActivity = father;
     }
 
     @Override
@@ -48,12 +48,13 @@ onBindViewHolderImpl(holder, position);
             return 0;
     }
 
-    public void setData(List data) {
-        mDataset = data;
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        onBindViewHolderImpl(holder, position);
     }
 
-    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, int i) {
-        Log.d(Constants.TAG, "Element " + i + " set: last upd: "+Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
+    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder,final int i) {
+        Log.d(Constants.TAG, "Element " + i + " set: last upd: " + Constants.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         ((TypicalCardViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
@@ -68,9 +69,18 @@ onBindViewHolderImpl(holder, position);
             ((TypicalCardViewHolder) viewHolder).getCardView().setCardBackgroundColor(SoulissApp.getAppContext().getResources().getColor(R.color.background_floating_material_light));
         }
         //viewHolder.getTextView().setOnClickListener(this);
+        mDataset.get(i).getActionsLayout(SoulissApp.getAppContext(), sghembo);
+        ((TypicalCardViewHolder) viewHolder).getCardView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "OnClick");
+                tadDetailActivity.showDetails(i);
+            }
+        });
+        /* Dario dice di togliere...
         if (opzioni.isSoulissReachable()) {
             // richiama l'overloaded del tipico relativo
-            mDataset.get(i).getActionsLayout(SoulissApp.getAppContext(), sghembo);
+
         } else {
             TextView na = new TextView(SoulissApp.getAppContext());
             na.setText(SoulissApp.getAppContext().getString(R.string.souliss_unavailable));
@@ -78,23 +88,32 @@ onBindViewHolderImpl(holder, position);
                 na.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.black));
             }
             sghembo.addView(na);
-        }
+        }*/
 
     }
 
-    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup,  int i) {
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return onCreateViewHolderImpl(parent, viewType);
+
+    }
+
+    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, final int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(Constants.TAG, "nel holder click");
+            }
+        });
         return new TypicalCardViewHolder(v);
     }
 
-
-    public ParallaxExenderAdapter(SoulissPreferenceHelper pref,List data, long tagId) {
-        super();
+    public void setData(List data) {
         mDataset = data;
-        this.tagId = tagId;
-        opzioni = pref;
     }
+
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
@@ -104,8 +123,8 @@ onBindViewHolderImpl(holder, position);
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
-        private LinearLayout linearActionsLayout;
         private ImageView imageView;
+        private LinearLayout linearActionsLayout;
 
         public TypicalCardViewHolder(View v) {
             super(v);
@@ -122,16 +141,16 @@ onBindViewHolderImpl(holder, position);
             return cardView;
         }
 
-        public TextView getTextView() {
-            return textView;
-        }
-
         public ImageView getImageView() {
             return imageView;
         }
 
         public LinearLayout getLinearActionsLayout() {
             return linearActionsLayout;
+        }
+
+        public TextView getTextView() {
+            return textView;
         }
 
         public TextView getTextViewInfo1() {

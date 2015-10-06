@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SharedElementCallback;
@@ -58,18 +59,9 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 
-/**
- * A simple launcher activity containing a summary sample description, sample log and a custom
- * {@link android.support.v4.app.Fragment} which can display a view.
- * <p/>
- * For devices with displays with a width of 720dp or greater, the sample log is always visible,
- * on other devices it's visibility is controlled by an item on the Action Bar.
- */
+
 public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
-
-    // Whether the Log Fragment is currently shown
-    private boolean mLogShown;
     private long tagId;
     private SoulissDBTagHelper db;
     private SoulissTag collected;
@@ -211,24 +203,24 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     public void showDetails(int pos) {
         Bundle bundle = new Bundle();
         bundle.putInt("key", pos);
-        List<SoulissTypical> st = collected.getAssignedTypicals();
+        List<SoulissTypical> typicalList = collected.getAssignedTypicals();
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         // Check what fragment is currently shown, replace if needed.
         Fragment details = manager.findFragmentById(R.id.detailPane);
         Fragment NewFrag = null;
         // Istanzia e ci mette l'indice
-        if (st.get(pos).isSensor())
-            NewFrag = T5nSensorFragment.newInstance(pos, st.get(pos));
-        else if (st.get(pos) instanceof SoulissTypical16AdvancedRGB)
-            NewFrag = T16RGBAdvancedFragment.newInstance(pos, st.get(pos));
-        else if (st.get(pos) instanceof SoulissTypical19AnalogChannel)
-            NewFrag = T19SingleChannelLedFragment.newInstance(pos, st.get(pos));
-        else if (st.get(pos) instanceof SoulissTypical31Heating)
-            NewFrag = T31HeatingFragment.newInstance(pos, st.get(pos));
-        else if (st.get(pos) instanceof SoulissTypical11DigitalOutput || st.get(pos) instanceof SoulissTypical12DigitalOutputAuto)
-            NewFrag = T1nGenericLightFragment.newInstance(pos, st.get(pos));
-        else if (st.get(pos) instanceof SoulissTypical41AntiTheft || st.get(pos) instanceof SoulissTypical42AntiTheftPeer || st.get(pos) instanceof SoulissTypical43AntiTheftLocalPeer)
-            NewFrag = T4nFragment.newInstance(pos, st.get(pos));
+        if (typicalList.get(pos).isSensor())
+            NewFrag = T5nSensorFragment.newInstance(pos, typicalList.get(pos));
+        else if (typicalList.get(pos) instanceof SoulissTypical16AdvancedRGB)
+            NewFrag = T16RGBAdvancedFragment.newInstance(pos, typicalList.get(pos));
+        else if (typicalList.get(pos) instanceof SoulissTypical19AnalogChannel)
+            NewFrag = T19SingleChannelLedFragment.newInstance(pos, typicalList.get(pos));
+        else if (typicalList.get(pos) instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(pos, typicalList.get(pos));
+        else if (typicalList.get(pos) instanceof SoulissTypical11DigitalOutput || typicalList.get(pos) instanceof SoulissTypical12DigitalOutputAuto)
+            NewFrag = T1nGenericLightFragment.newInstance(pos, typicalList.get(pos));
+        else if (typicalList.get(pos) instanceof SoulissTypical41AntiTheft || typicalList.get(pos) instanceof SoulissTypical42AntiTheftPeer || typicalList.get(pos) instanceof SoulissTypical43AntiTheftLocalPeer)
+            NewFrag = T4nFragment.newInstance(pos, typicalList.get(pos));
         FragmentTransaction ft = manager.beginTransaction();
 
         if (NewFrag != null) {
@@ -243,6 +235,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 // Our shared element (in Fragment A)
                 ImageView mProductImage = (ImageView) details.getView().findViewById(R.id.card_thumbnail_image2);
                 TextView mProductText = (TextView) findViewById(R.id.TextViewTypicalsTitle);
+
+                AppBarLayout.Behavior beh = new AppBarLayout.Behavior();
 
                 // Add Fragment B
                  manager.beginTransaction()

@@ -53,6 +53,7 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
@@ -66,7 +67,7 @@ import it.angelic.soulissclient.net.UDPHelper;
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
  * {@link android.support.v7.widget.GridLayoutManager}.
  */
-public class TagDetailFragment extends AbstractTypicalFragment implements AppBarLayout.OnOffsetChangedListener{
+public class TagDetailFragment extends AbstractTypicalFragment implements AppBarLayout.OnOffsetChangedListener {
 
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
@@ -76,16 +77,17 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     protected ParallaxExenderAdapter parallaxExtAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     private AppBarLayout appBarLayout;
+    private TextView bro;
+    private CollapsingToolbarLayout collapseToolbar;
+    private SoulissTag collectedTag;
+    private List<SoulissTypical> collectedTagTypicals;
     private SoulissDBTagHelper datasource;
     private FloatingActionButton fab;
     private ImageView mLogoIcon;
     private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
-    private long tagId;
-    private TextView bro;
-    private SoulissTag collectedTag;
-    private List<SoulissTypical> collectedTagTypicals;
     private SwipeRefreshLayout swipeLayout;
+    private long tagId;
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -99,7 +101,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             mRecyclerView.invalidate();
         }
     };
-    private CollapsingToolbarLayout collapseToolbar;
 
     public static String getRealPathFromURI(Uri contentUri) {
         String res = null;
@@ -240,7 +241,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, collectedTagTypicals, tagId);
+        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni,(TagDetailActivity)getActivity(), collectedTagTypicals, tagId);
         //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
@@ -280,7 +281,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                         for (SoulissTypical typ : collectedTagTypicals) {
                             UDPHelper.stateRequest(opzioni, 4, typ.getSlot());
                         }
-
+                        //Avvisa solo
                         if (!opzioni.isSoulissReachable()) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
@@ -290,8 +291,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                                     swipeLayout.setRefreshing(false);
                                 }
                             });
-
-
                         }
                     }
                 }).start();
@@ -403,19 +402,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }*/
 
 
-     /*   parallaxExtAdapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
-            @Override
-            public void onClick(View view, int i) {
 
-                if (i >= 0) {//puo essere -1
-                    Log.d(TAG, "Element clicked:" + i);
-                    ((TagDetailActivity) getActivity()).showDetails(i);
-                }
-
-            }
-
-        });
-*/
         Log.i(Constants.TAG, "mCurrentLayoutManagerType: " + mCurrentLayoutManagerType);
 
         // Set CustomAdapter as the adapter for RecyclerView.
