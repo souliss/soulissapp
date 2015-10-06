@@ -12,6 +12,7 @@ import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -27,6 +28,7 @@ import com.melnykov.fab.FloatingActionButton;
 import junit.framework.Assert;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -147,10 +149,39 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView.setAdapter(tagAdapter);
 
 
+
+// Extend the Callback class
+        ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+            //and in your imlpementaion of
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                // get the viewHolder's and target's positions in your adapter data, swap them
+                //Collections.swap(/*RecyclerView.Adapter's data collection*/, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                // and notify the adapter that its dataset has changed
+                tagAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+
+            //defines the enabled move directions in each state (idle, swiping, dragging).
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                        ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
+            }
+        };
+
+        // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
+        ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
+        ith.attachToRecyclerView(mRecyclerView);
+
         // DRAWER
         super.initDrawer(this, DrawerMenuHelper.TAGS);
 
-        registerForContextMenu(mRecyclerView);
+     //   registerForContextMenu(mRecyclerView);
 
         //TODEBUG TRANSACTIONS
         setExitSharedElementCallback(new SharedElementCallback() {
