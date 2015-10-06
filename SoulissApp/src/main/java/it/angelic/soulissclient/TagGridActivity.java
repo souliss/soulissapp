@@ -53,13 +53,78 @@ import it.angelic.soulissclient.model.SoulissTag;
  * @author Ale
  */
 public class TagGridActivity extends AbstractStatusedFragmentActivity {
-    private SoulissTag[] tags;
     private SoulissDBTagHelper datasource;
-    private TagRecyclerAdapter tagAdapter;
-
-    private ArrayAdapter<INavDrawerItem> navAdapter;
-    private ContextMenuRecyclerView mRecyclerView;
     private RecyclerView.LayoutManager gridManager;
+    private ContextMenuRecyclerView mRecyclerView;
+    private ArrayAdapter<INavDrawerItem> navAdapter;
+    private TagRecyclerAdapter tagAdapter;
+    private SoulissTag[] tags;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        Log.i(Constants.TAG, "SAVED IMG RESULT:" + resultCode);
+
+
+        if (resultCode == RESULT_OK) {
+            Uri selectedImage = imageReturnedIntent.getData();
+            Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
+            tags[requestCode].setImagePath(selectedImage.toString());
+            //String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            datasource.createOrUpdateTag(tags[requestCode]);
+            //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+            Log.i(Constants.TAG, "SAVED IMG PATH:" + tags[requestCode].getImagePath());
+            tagAdapter.notifyItemChanged(requestCode);
+        }
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // ignore orientation change
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    /*
+    With Drag&Drop this WON'T BE CALLED
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();
+        TagRecyclerAdapter ada = (TagRecyclerAdapter) mRecyclerView.getAdapter();
+
+        long arrayAdapterPosition = info.position;
+        final SoulissTag todoItem = ada.getTag((int) arrayAdapterPosition);
+
+        switch (item.getItemId()) {
+
+            case R.id.eliminaTag:
+
+                return true;
+            case R.id.rinominaTag:
+                AlertDialog.Builder alert3 = AlertDialogGridHelper.renameSoulissObjectDialog(this, null, tagAdapter,
+                        datasource, todoItem);
+                alert3.show();
+                return true;
+            case R.id.scegliconaTag:
+                AlertDialog.Builder alert2 = AlertDialogGridHelper.chooseIconDialog(this, tagAdapter, datasource,
+                        todoItem);
+                alert2.show();
+                // nodesAdapter.notifyDataSetChanged();
+                // listaNodiView.invalidateViews();
+                return true;
+            case R.id.scegliImmagineTag:
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, (int) arrayAdapterPosition);
+
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -149,29 +214,47 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView.setAdapter(tagAdapter);
 
 
-
-// Extend the Callback class
+        // Extend the Callback class
         ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
+            //defines the enabled move directions in each state (idle, swiping, dragging).
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END;
+                int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
+                return makeMovementFlags(dragFlags, swipeFlags);
+              //  return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                //        ItemTouchHelper.DOWN | ItemTouchHelper.UP |);
+            }
+
             //and in your imlpementaion of
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 // get the viewHolder's and target's positions in your adapter data, swap them
-                //Collections.swap(/*RecyclerView.Adapter's data collection*/, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
+                SoulissTag origin = tagAdapter.getTag(viewHolder.getAdapterPosition());
+                origin.setTagOrder(target.getAdapterPosition());
+
+                SoulissTag dest = tagAdapter.getTag(target.getAdapterPosition());
+                dest.setTagOrder(viewHolder.getAdapterPosition());
+
+                dbt.createOrUpdateTag(origin);
+                dbt.createOrUpdateTag(dest);
+
+
+                Collections.swap(tagAdapter.getTagList(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 // and notify the adapter that its dataset has changed
                 tagAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;
             }
 
+
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
+                SoulissTag todoItem = tagAdapter.getTag(viewHolder.getAdapterPosition());
+                AlertDialogGridHelper.removeTagDialog(TagGridActivity.this, tagAdapter, datasource, todoItem);
+                clearView(mRecyclerView, viewHolder);
             }
 
-            //defines the enabled move directions in each state (idle, swiping, dragging).
-            @Override
-            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
-                        ItemTouchHelper.DOWN | ItemTouchHelper.UP | ItemTouchHelper.START | ItemTouchHelper.END);
-            }
         };
 
         // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
@@ -181,16 +264,10 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         // DRAWER
         super.initDrawer(this, DrawerMenuHelper.TAGS);
 
-     //   registerForContextMenu(mRecyclerView);
+        //   registerForContextMenu(mRecyclerView);
 
         //TODEBUG TRANSACTIONS
         setExitSharedElementCallback(new SharedElementCallback() {
-            @Override
-            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
-                Log.d(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:" + sharedElementNames.size());
-                super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
-            }
-
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                 Log.d(Constants.TAG, "ExitSharedElementCallback.onMapSharedElements:"
@@ -212,21 +289,13 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementEnd");
                 super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
             }
-        });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        setActionBarInfo(getString(R.string.tag));
-        opzioni.initializePrefs();
-        if (!opzioni.isDbConfigured()) {
-            AlertDialogHelper.dbNotInitedDialog(this);
-        }
-        SoulissDBHelper.open();
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
-        mDrawerList.setAdapter(navAdapter);
+            @Override
+            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:" + sharedElementNames.size());
+                super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+        });
     }
 
     @Override
@@ -240,79 +309,12 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();
-        TagRecyclerAdapter ada = (TagRecyclerAdapter) mRecyclerView.getAdapter();
-
-        long arrayAdapterPosition = info.position;
-        final SoulissTag todoItem = (SoulissTag) ada.getTag((int) arrayAdapterPosition);
-
-        switch (item.getItemId()) {
-
-            case R.id.eliminaTag:
-                AlertDialogGridHelper.removeTagDialog(this, tagAdapter, datasource, todoItem, opzioni);
-                return true;
-            case R.id.rinominaTag:
-                AlertDialog.Builder alert3 = AlertDialogGridHelper.renameSoulissObjectDialog(this, null, tagAdapter,
-                        datasource, todoItem);
-                alert3.show();
-                return true;
-            case R.id.scegliconaTag:
-                AlertDialog.Builder alert2 = AlertDialogGridHelper.chooseIconDialog(this,tagAdapter, datasource,
-                        todoItem);
-                alert2.show();
-                // nodesAdapter.notifyDataSetChanged();
-                // listaNodiView.invalidateViews();
-                return true;
-            case R.id.scegliImmagineTag:
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, (int) arrayAdapterPosition);
-
-                return true;
-            case R.id.scegliOrdineTag:
-                AlertDialog alertOrder = AlertDialogGridHelper.tagOrderPickerDialog(this, todoItem, (int) arrayAdapterPosition, tagAdapter);
-                alertOrder.show();
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        Log.i(Constants.TAG, "SAVED IMG RESULT:" + resultCode);
-
-
-        if (resultCode == RESULT_OK) {
-            Uri selectedImage = imageReturnedIntent.getData();
-            Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
-            tags[requestCode].setImagePath(selectedImage.toString());
-            //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            datasource.createOrUpdateTag(tags[requestCode]);
-            //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-            Log.i(Constants.TAG, "SAVED IMG PATH:" + tags[requestCode].getImagePath());
-            tagAdapter.notifyItemChanged(requestCode);
-        }
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.scenelist_menu, menu);
         return true;
 
     }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -343,12 +345,25 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        // ignore orientation change
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    protected void onStart() {
+        super.onStart();
+        setActionBarInfo(getString(R.string.tag));
+        opzioni.initializePrefs();
+        if (!opzioni.isDbConfigured()) {
+            AlertDialogHelper.dbNotInitedDialog(this);
+        }
+        SoulissDBHelper.open();
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
+        mDrawerList.setAdapter(navAdapter);
     }
 
 }

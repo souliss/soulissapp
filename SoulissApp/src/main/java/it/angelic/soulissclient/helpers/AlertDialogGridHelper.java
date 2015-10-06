@@ -181,14 +181,14 @@ public class AlertDialogGridHelper {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
-                             //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
                                 SoulissTag[] tagArray = list.getTagArray();
-                               // tagArray = goer.toArray(tagArray);
+                                // tagArray = goer.toArray(tagArray);
                                 //list.setTagArray(tagArray);
                                 try {
                                     for (int i = 0; i < tagArray.length; i++) {
                                         if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
-                                            ((SoulissTag)list.getTag(i)).setIconResourceId(toRename.getIconResourceId());
+                                            list.getTag(i).setIconResourceId(toRename.getIconResourceId());
                                             list.notifyItemChanged(i);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
                                         }
@@ -227,7 +227,7 @@ public class AlertDialogGridHelper {
      * @return
      */
     public static void removeTagDialog(final Context cont, final TagRecyclerAdapter ctx, final SoulissDBTagHelper datasource,
-                                       final SoulissTag toRename, final SoulissPreferenceHelper opts) {
+                                       final SoulissTag toRename) {
         Log.w(Constants.TAG, "Removing TAG:" + toRename.getNiceName() + " ID:" + toRename.getTagId());
         if (toRename.getTagId() <= SoulissDB.FAVOURITES_TAG_ID) {
             Toast.makeText(cont, R.string.cantRemoveDefault, Toast.LENGTH_SHORT).show();
@@ -273,12 +273,24 @@ public class AlertDialogGridHelper {
         alert.setNegativeButton(cont.getResources().getString(android.R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
+                        int tgtPos = -1;
+                        if (ctx != null) {
+                            SoulissTag[] tagArrBck = ctx.getTagArray();
+                            for (int i = 0; i < tagArrBck.length; i++) {
+                                if (tagArrBck[i].getTagId() == toRename.getTagId())
+                                    tgtPos = i;
+                            }
+
+                        }
+                        if (tgtPos != -1) {
+                            ctx.notifyItemChanged(tgtPos);
+                        }
                     }
                 });
         alert.show();
     }
 
+    @Deprecated
     public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final int oldPosition, final TagRecyclerAdapter adapter) {
         final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
@@ -303,7 +315,7 @@ public class AlertDialogGridHelper {
                             int newPosition = low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue();
                             //swap elements
                             SoulissTag[] temp = adapter.getTagArray();
-                            Assert.assertTrue(oldPosition<temp.length);
+                            Assert.assertTrue(oldPosition < temp.length);
                             SoulissTag oldOne = temp[newPosition];
                             temp[newPosition] = toUpdate;
                             temp[oldPosition] = oldOne;
@@ -318,8 +330,7 @@ public class AlertDialogGridHelper {
 
         deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
 
-                new DialogInterface.OnClickListener()
-                {
+                new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                     }
                 }

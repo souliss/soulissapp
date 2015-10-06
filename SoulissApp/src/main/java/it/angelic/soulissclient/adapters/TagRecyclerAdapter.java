@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -45,12 +47,16 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         opzioni = opts;
     }
 
-    public Object getTag(int position) {
+    public SoulissTag getTag(int position) {
         return soulissTags[position];
     }
 
     public SoulissTag[] getTagArray() {
         return soulissTags;
+    }
+
+    public List<SoulissTag> getTagList() {
+        return Arrays.asList(getTagArray());
     }
 
     public void setTagArray(SoulissTag[] scene) {
@@ -113,7 +119,12 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
             }
+
+
         });
+
+
+
         holder.container.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
