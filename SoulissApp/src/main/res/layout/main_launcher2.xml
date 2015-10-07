@@ -29,18 +29,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
-                    android:id="@+id/scene_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="4dip"
-                    android:layout_marginTop="4dip"
-                    android:alpha="0.5"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/tv" />
-
                 <TextView
                     android:id="@+id/TextViewTagsDesc"
                     style="@style/CodeFontSmall"
@@ -48,16 +36,13 @@
                     android:layout_marginTop="2dp"
                     android:text="@string/tag_desc" />
 
-                <ListView
-                    android:id="@+id/ListViewListaScenes"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/item_selector"
-                    android:cacheColorHint="@color/trans_black"
-                    android:divider="@android:color/transparent"
-                    android:fadingEdge="vertical"
-                    android:requiresFadingEdge="vertical"
-                    android:layout_below="@id/TextViewTagsDesc" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewLauncherItems"
+                    android:layout_width="match_parent"
+                    android:background="@android:color/transparent"
+                    android:layout_height="match_parent"
+
+                    android:layout_below="@id/TextViewTagsDesc"/>
 
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/fab"
@@ -68,7 +53,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_add_32dp"
+                    android:src="@drawable/ic_mic_32"
                     fab:fab_colorNormal="@color/std_green"
                     fab:fab_colorPressed="@color/std_blue_shadow"
                     fab:fab_colorRipple="@color/std_purple" />

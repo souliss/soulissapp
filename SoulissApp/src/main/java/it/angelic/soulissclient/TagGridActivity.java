@@ -147,7 +147,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 		 * tt.setTypeface(font, Typeface.NORMAL); }
 		 */
 
-        mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewTags);
+        mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewLauncherItems);
 
         //3 colonne in horiz
         gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
@@ -252,6 +252,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
                 SoulissTag todoItem = tagAdapter.getTag(viewHolder.getAdapterPosition());
                 AlertDialogGridHelper.removeTagDialog(TagGridActivity.this, tagAdapter, datasource, todoItem);
+                //forse non serve
                 clearView(mRecyclerView, viewHolder);
             }
 

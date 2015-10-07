@@ -51,6 +51,18 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:process=":souliss_process">
+
+            <intent-filter>
+                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name="ManualUDPTestActivity"
             android:exported="false"
             android:icon="@drawable/knife"

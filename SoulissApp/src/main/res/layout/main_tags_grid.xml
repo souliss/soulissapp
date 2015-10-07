@@ -37,7 +37,7 @@
                     android:text="@string/tag_desc" />
 
                 <it.angelic.soulissclient.helpers.ContextMenuRecyclerView
-                    android:id="@+id/recyclerViewTags"
+                    android:id="@+id/recyclerViewLauncherItems"
                     android:layout_width="match_parent"
                     android:background="@android:color/transparent"
                     android:layout_height="match_parent"
