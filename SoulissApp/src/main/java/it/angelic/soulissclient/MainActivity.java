@@ -2,17 +2,24 @@ package it.angelic.soulissclient;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
+import android.widget.ArrayAdapter;
 
 import java.util.Collections;
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.StaggeredAdapter;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.drawer.INavDrawerItem;
+import it.angelic.soulissclient.drawer.NavDrawerAdapter;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.LauncherElement;
 
@@ -28,6 +35,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     private RecyclerView mRecyclerView;
     private SoulissPreferenceHelper opzioni;
+    private ArrayAdapter<INavDrawerItem> navAdapter;
     /**
      * Images are taken by Romain Guy ! He's a great photographer as well as a
      * great programmer. http://www.flickr.com/photos/romainguy
@@ -72,7 +80,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         List vette = dbLauncher.getLauncherItems(this);
         LauncherElement[] array = (LauncherElement[]) vette.toArray(new LauncherElement[vette.size()]);
 
-        final StaggeredAdapter adapter = new StaggeredAdapter(array);
+        final StaggeredAdapter adapter = new StaggeredAdapter(this, array);
 
         mRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -111,13 +119,34 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
                 adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                 //clearView(mRecyclerView, viewHolder);
-            }
 
+                Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
+            }
+            View.OnClickListener mOnClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                   // add item
+                }
+            };
         };
 // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
         ith.attachToRecyclerView(mRecyclerView);
 
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setActionBarInfo(getString(R.string.app_name));
+        opzioni.initializePrefs();
+        if (!opzioni.isDbConfigured()) {
+            AlertDialogHelper.dbNotInitedDialog(this);
+        }
+        SoulissDBHelper.open();
+       // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
+        mDrawerList.setAdapter(navAdapter);
     }
 
 }

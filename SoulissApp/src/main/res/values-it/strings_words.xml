@@ -52,5 +52,6 @@
     <string name="position">Posizione</string>
     <string name="ok">OK</string>
     <string name="stale">OLD</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

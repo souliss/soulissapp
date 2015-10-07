@@ -54,6 +54,7 @@
     <string name="offline">Offline</string>
     <string name="ok">OK</string>
     <string name="stale">STALE</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

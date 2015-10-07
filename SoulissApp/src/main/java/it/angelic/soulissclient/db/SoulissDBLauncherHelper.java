@@ -44,6 +44,8 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         if (!database.isOpen())
             open();
 
+        SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
+
         //create FAKED Launcher array
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.SCENES);
         comments.add(scenari);
@@ -59,8 +61,17 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         comments.add(prop);
 
         LauncherElement prot = new LauncherElement(LauncherElementEnum.TYPICAL);
-        prot.setLinkedObject(super.getTypical( 0,(short) 0) );
+        prot.setLinkedObject(super.getTypical(0, (short) 0));
         comments.add(prot);
+
+        //TAG example
+        LauncherElement tag = new LauncherElement(LauncherElementEnum.TAGS);
+        try {
+            tag.setLinkedObject(dbt.getTag(SoulissApp.getAppContext(),0L ));
+        } catch (SQLDataException e) {
+            e.printStackTrace();
+        }
+        comments.add(tag);
 
 
         return comments;
