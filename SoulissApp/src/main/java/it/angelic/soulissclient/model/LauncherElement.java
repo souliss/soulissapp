@@ -8,6 +8,17 @@ public class LauncherElement {
     private LauncherElementEnum componentEnum;
     private short id;
     private short order;
+
+    public ISoulissObject getLinkedObject() {
+        return linkedObject;
+    }
+
+    public void setLinkedObject(ISoulissObject linkedObject) {
+        this.linkedObject = linkedObject;
+    }
+
+    private ISoulissObject linkedObject;
+
     public LauncherElement(LauncherElementEnum componentEnum) {
         super();
         this.componentEnum = componentEnum;

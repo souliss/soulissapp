@@ -330,6 +330,20 @@ public class SoulissDB extends SQLiteOpenHelper {
                 Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
             }
         }
+
+
+        /*
+        CREATE TABLE typBck AS select * from typicals;
+
+DROP TABLE typicals;
+
+CREATE TABLE typicals(inttypid integer PRIMARY KEY, inttypnodeid integer not null, inttyp integer not null, inttypslo integer not null, inttypcmd integer, inttypval integer not null, inttypico integer, flgtypisfav integer, strtypname textslot, cldtypmod integer not null,inttypwarn integer,  FOREIGN KEY( inttypnodeid) REFERENCES nodes (inttypnodeid), UNIQUE(inttypnodeid,inttypslo) )
+
+INSERT INTO typicals (inttypnodeid, inttyp, inttypslo, inttypcmd, inttypval, inttypico, flgtypisfav, strtypname, cldtypmod, inttypwarn)
+SELECT inttypnodeid, inttyp, inttypslo, inttypcmd, inttypval, inttypico, flgtypisfav, strtypname, cldtypmod, inttypwarn
+FROM typBck
+         */
+
         if (dropNeeded) {
             Log.e(SoulissDB.class.getName(), "Upgrading database went wrong, DROPPI&RE-CREATE");
             dropCreate(db);

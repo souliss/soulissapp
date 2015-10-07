@@ -58,6 +58,10 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         prop.setIsFullSpan(true);
         comments.add(prop);
 
+        LauncherElement prot = new LauncherElement(LauncherElementEnum.TYPICAL);
+        prot.setLinkedObject(super.getTypical( 0,(short) 0) );
+        comments.add(prot);
+
 
         return comments;
     }

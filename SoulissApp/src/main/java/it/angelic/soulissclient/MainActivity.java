@@ -108,7 +108,9 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
                 //SoulissTag todoItem = adapter.getItem(viewHolder.getAdapterPosition());
                 //forse non serve
-                clearView(mRecyclerView, viewHolder);
+
+                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                //clearView(mRecyclerView, viewHolder);
             }
 
         };

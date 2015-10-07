@@ -8,14 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import junit.framework.Assert;
 
 import java.util.Arrays;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.ViewHolder> {
 
@@ -44,7 +51,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final LauncherElement item = launcherElements[position];
-        LauncherElementEnum enumVal = LauncherElementEnum.values()[position];
 
         //holder.container.removeAllViews();
         //holder.textView.setText(item.title);
@@ -58,7 +64,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             holder.itemView.setLayoutParams(sglp);
         }
 
-        switch (enumVal) {
+        switch (item.getComponentEnum()) {
             case SCENES:
                 Button sce = (Button) holder.container.findViewById(R.id.ButtonManual);
                 break;
@@ -68,6 +74,32 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 break;
             case PROGRAMS:
 
+                break;
+            case TYPICAL:
+
+                SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
+                Log.d(Constants.TAG, "Element " + position + " set: last upd: "+Constants.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+
+                TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
+                ImageView imageView = (ImageView) holder.container.findViewById(R.id.card_thumbnail_image2);
+                LinearLayout linearActionsLayout = (LinearLayout) holder.container.findViewById(R.id.linearLayoutButtons);
+                TextView textViewInfo1 = (TextView)holder.container.findViewById(R.id.TextViewInfoStatus);
+                TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
+
+                // Get element from your dataset at this position and replace the contents of the view
+                // with that element
+                textView.setText(tipico.getNiceName());
+                textView.setTag(position);
+                tipico.setOutputDescView(textViewInfo1);
+                textViewInfo2.setText(SoulissApp.getAppContext().getString(R.string.update) + " "
+                        + Constants.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+                imageView.setImageResource(tipico.getIconResourceId());
+
+                linearActionsLayout.removeAllViews();
+                tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
+                if (SoulissApp.getOpzioni().isLightThemeSelected()) {
+                    holder.container.setCardBackgroundColor(SoulissApp.getAppContext().getResources().getColor(R.color.background_floating_material_light));
+                }
                 break;
         }
 
@@ -96,6 +128,11 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.card_button_manual, parent, false);
+                break;
+            case TYPICAL:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.cardview_typical, parent, false);
                 break;
 
 
