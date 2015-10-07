@@ -163,9 +163,9 @@ public class SoulissDataService extends Service implements LocationListener {
                             List<SoulissTypical> slots = piter.getActiveTypicals();
                             for (SoulissTypical tipico : slots) {
                                 Date when = tipico.getTypicalDTO().getLastStatusChange();
-                                if (tipico.getOutput() != it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil
-                                        && tipico.getTypicalDTO().getWarnDelayMsec() > 0 &&
-                                        now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
+                                if (when != null && tipico.getOutput() != it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil
+                                        && tipico.getTypicalDTO().getWarnDelayMsec() > 0
+                                        && now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
 
                                     Log.w(TAG, String.format(getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()));
                                     sendTooLongWarnNotification(SoulissDataService.this, getString(R.string.timed_warning),
