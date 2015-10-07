@@ -1,4 +1,6 @@
 # soulissapp
+
+[![Join the chat at https://gitter.im/souliss/soulissapp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/souliss/soulissapp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 SoulissApp is an Android Application that acts as client in Souliss Framework
 
 You can find it published on <a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient">Play store</a>; please note that the app itself is useless unless a souliss run-time is found on a local or remote network. Have a look at the <a href="http://souliss.github.io/welcome/">documentation</a> to get started with Souliss.
