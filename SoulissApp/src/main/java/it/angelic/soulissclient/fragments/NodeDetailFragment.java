@@ -93,7 +93,7 @@ public class NodeDetailFragment extends ListFragment {
     private SoulissDataService mBoundService;
     private boolean mIsBound;
     private SwipeRefreshLayout swipeLayout;
-    private Toolbar actionBar;
+   // private Toolbar actionBar;
 
     protected int getShownIndex() {
         if (getArguments() != null)
@@ -164,9 +164,9 @@ public class NodeDetailFragment extends ListFragment {
             getActivity().setTheme(R.style.LightThemeSelector);
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
-        actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
-        ((AbstractStatusedFragmentActivity) getActivity()).setSupportActionBar(actionBar);
-        ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+       // ((AbstractStatusedFragmentActivity) getActivity()).setSupportActionBar(actionBar);
+        //((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /*actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
@@ -256,9 +256,10 @@ public class NodeDetailFragment extends ListFragment {
     public void onStart() {
         super.onStart();
         if (collected == null || upda == null) {
+            Log.w(Constants.TAG, "Empty Typical!!");
             return;// no detail selected
         }
-        refreshStatusIcon();
+        //refreshStatusIcon();
 
         if (opzioni.isDbConfigured()) {
             SoulissDBHelper.open();
@@ -299,6 +300,8 @@ public class NodeDetailFragment extends ListFragment {
                     showDetails(arg2, holder.data);
                 }
             });
+            //serve per back da dettaglio
+            ((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(collected.getNiceName());
             // gestureListener = new SwipeGestureListener(getActivity());
             // listaTypicalsView.setOnTouchListener(gestureListener);
         }
@@ -329,7 +332,7 @@ public class NodeDetailFragment extends ListFragment {
             // the list to highlight the selected item and show the data.
             li.setItemChecked(index, true);
         } else {
-            ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+          //  ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Fragment NewFrag = null;
@@ -369,6 +372,7 @@ public class NodeDetailFragment extends ListFragment {
             ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
         ft.replace(R.id.detailPane, NewFrag);
         ft.addToBackStack(null);
+
         // ft.remove(details);
         //ft.add(NewFrag,"BOH");
         //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -425,7 +429,7 @@ public class NodeDetailFragment extends ListFragment {
 
     }
 
-    private void refreshStatusIcon() {
+    /*private void refreshStatusIcon() {
         try {
             View ds = actionBar.getRootView();
             if (ds != null) {
@@ -448,7 +452,7 @@ public class NodeDetailFragment extends ListFragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /**
      * Riga grigia cra spazio
@@ -546,10 +550,6 @@ public class NodeDetailFragment extends ListFragment {
         filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
 
-        // timeout handler
-        IntentFilter filtera = new IntentFilter();
-        filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
-        getActivity().registerReceiver(timeoutReceiver, filtera);
 
         autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
@@ -571,9 +571,7 @@ public class NodeDetailFragment extends ListFragment {
         super.onPause();
         autoUpdate.cancel();
         getActivity().unregisterReceiver(datareceiver);
-        getActivity().unregisterReceiver(timeoutReceiver);
         doUnbindService();
-        timeoutHandler.removeCallbacks(timeExpired);
     }
 
     // Aggiorna il feedback
@@ -583,7 +581,6 @@ public class NodeDetailFragment extends ListFragment {
             try {
                 Log.d(Constants.TAG, "Detected data arrival, refresh from DB");
                 // cancel timeout
-                timeoutHandler.removeCallbacks(timeExpired);
                 swipeLayout.setRefreshing(false);
                 if (listaTypicalsView == null) {
                     return;
@@ -614,25 +611,4 @@ public class NodeDetailFragment extends ListFragment {
         }
     };
 
-    Runnable timeExpired = new Runnable() {
-        @Override
-        public void run() {
-            Log.e(Constants.TAG, "TIMEOUT detected!!!");
-            // Reset cachedaddress
-            // opzioni.reload();
-            opzioni.getAndSetCachedAddress();
-            refreshStatusIcon();
-        }
-    };
-
-    // meccanismo per timeout detection
-    private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle extras = intent.getExtras();
-            int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-            Log.w(Constants.TAG, "Posting timeout, delay " + delay);
-            timeoutHandler.postDelayed(timeExpired, delay);
-        }
-    };
 }

@@ -105,14 +105,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private TextView serviceInfo;
     private TextView serviceInfoAntiTheft;
     private TextView serviceInfoFoot;
-    Runnable timeExpired = new Runnable() {
-        @Override
-        public void run() {
-            Log.e(TAG, "TIMEOUT!!!");
-            serviceInfoFoot.setText(Html.fromHtml(getString(R.string.timeout_expired)));
-            opzioni.getAndSetCachedAddress();
-        }
-    };
+
     private View serviceinfoLine;
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -142,16 +135,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private Button soulissSceneBtn;
     private SoulissDBTagHelper tagDb;
     private List<SoulissTag> tags;
-    private Handler timeoutHandler;
+    //private Handler timeoutHandler;
     // meccanismo per network detection
-    private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle extras = intent.getExtras();
-            int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
-            timeoutHandler.postDelayed(timeExpired, delay);
-        }
-    };
+
     private View webServiceInfoLine;
     private TextView webserviceInfo;
     // invoked when RAW data is received
@@ -160,7 +146,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         public void onReceive(Context context, Intent intent) {
             // opzioni.initializePrefs();
             // rimuove timeout
-            timeoutHandler.removeCallbacks(timeExpired);
+          //  timeoutHandler.removeCallbacks(timeExpired);
             Bundle extras = intent.getExtras();
 
             if (extras != null && extras.get("MACACO") != null) {
@@ -277,7 +263,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-        opzioni.clearCachedAddress();
+
+
         opzioni.reload();
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call start, cached address reset");
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -317,14 +304,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // previously invisible view
 
 
-        // gestore timeout dei comandi
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        timeoutHandler = new Handler();
         // Get the location manager
         // Define the criteria how to select the locatioin provider
         criteria = new Criteria();
         criteria.setPowerRequirement(Criteria.POWER_LOW);
-
 
         // DRAWER
         initDrawer(this, DrawerMenuHelper.MANUAL);
@@ -531,11 +515,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     protected void onPause() {
         // unregisterReceiver(connectivityReceiver);
         unregisterReceiver(datareceiver);
-        unregisterReceiver(timeoutReceiver);
         super.onPause();
         autoUpdate.cancel();
         dbwarnline.clearAnimation();
-        timeoutHandler.removeCallbacks(timeExpired);
+       // timeoutHandler.removeCallbacks(timeExpired);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -599,7 +582,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // this is only used for refresh UI
         IntentFilter filtera = new IntentFilter();
         filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
-        registerReceiver(timeoutReceiver, filtera);
 
         // IDEM, serve solo per reporting
         IntentFilter filtere = new IntentFilter();
@@ -676,15 +658,15 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                ActivityOptionsCompat options =
+               /* ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 soulissSceneBtn,   // The view which starts the transition
                                 "helloScenes"    // The transitionName of the view we’re transitioning to
                         );
-                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
 
 
-                // LauncherActivity.this.startActivity(myIntent);
+                LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -873,7 +855,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             //	basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
             return;
         }
-        String base = opzioni.getAndSetCachedAddress();
+        String base = opzioni.getCachedAddress();
         Log.d(TAG, "cached Address: " + base + " backoff: " + opzioni.getBackoff());
         if (base != null && "".compareTo(base) != 0) {
             basinfo.setText(Html.fromHtml(getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base

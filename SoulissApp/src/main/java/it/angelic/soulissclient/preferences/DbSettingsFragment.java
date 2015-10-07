@@ -9,8 +9,11 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
+/**
+ * Fragment of database options
+ */
 public class DbSettingsFragment extends PreferenceFragment {
-/*
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -18,7 +21,7 @@ public class DbSettingsFragment extends PreferenceFragment {
 		//http://stackoverflow.com/questions/8362908/preferencefragment-is-shown-transparently
 		getView().setBackgroundColor(Color.BLACK);
 	}
-*/
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
         SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();

@@ -85,7 +85,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         //3 colonne in horiz
         gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
         mRecyclerView.setLayoutManager(gridManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //Floatin Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToRecyclerView(mRecyclerView);
@@ -153,6 +153,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         registerForContextMenu(mRecyclerView);
 
         //TODEBUG TRANSACTIONS
+        /*
         setExitSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
@@ -181,7 +182,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementEnd");
                 super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
             }
-        });
+        });*/
     }
 
     @Override

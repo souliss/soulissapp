@@ -51,6 +51,7 @@
     <string name="position">Posizione</string>
     <string name="ok">OK</string>
     <string name="stale">STALE</string>
+    <string name="synch">synch</string>
 
 
 </resources>

@@ -66,7 +66,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
+			Log.i(Constants.TAG, "Command sent to: " + serverAddr);
 
 			return "UDP command OK";
 		} catch (UnknownHostException ed) {
@@ -176,7 +176,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.d(Constants.TAG, "***Command sent to: " + serverAddr);
+			Log.i(Constants.TAG, "Massive Command sent to: " + serverAddr);
 
 			return "UDP massive command OK";
 		} catch (UnknownHostException ed) {
@@ -251,7 +251,7 @@ public class UDPHelper {
 			sender.bind(sa);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  pref.getUDPPort());
 			sender.send(packet);
-			Log.d(Constants.TAG, "Ping sent to: " + serverAddr);
+			Log.i(Constants.TAG, "Ping sent to: " + serverAddr);
 			debugByteArray(buf);
 			return serverAddr;
 		} finally {
@@ -336,7 +336,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.TAG, "Subscribe sent. bytes:" + packet.getLength());
+			Log.i(Constants.TAG, "stateRequest sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.TAG, "***stateRequest Fail", ed);
 			return;
@@ -386,6 +386,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
+			Log.i(Constants.TAG, "poll Request sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.TAG, "***stateRequest Fail", ed);
 			return;
@@ -506,7 +507,7 @@ public class UDPHelper {
 	 */
 	public static String checkSoulissUdp(int timeoutMsec, SoulissPreferenceHelper prefs, String ip) {
 
-		// TODO timer che stacca la connessione in mancata risposta
+
 		// assertEquals(true, ip.equals(prefs.getIPPreferencePublic()) ||
 		// ip.equals(prefs.getPrefIPAddress()));
 
@@ -575,7 +576,7 @@ public class UDPHelper {
 
 		// Send broadcast timeout
 		Intent i = new Intent();
-		int it = SoulissApp.getOpzioni().getRemoteTimeoutPref();
+		int it = SoulissApp.getOpzioni().getRemoteTimeoutPref() + SoulissApp.getOpzioni().getBackoff() * 1000;
 		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
