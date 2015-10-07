@@ -1,28 +1,17 @@
 package it.angelic.soulissclient.model;
 
-import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-
 /**
  * Created by Ale on 06/10/2015.
  */
 public class LauncherElement {
-    public boolean isFullSpan;
-    private CardView cardView;
+    private boolean isFullSpan;
     private LauncherElementEnum componentEnum;
     private short id;
     private short order;
-
     public LauncherElement(LauncherElementEnum componentEnum) {
         super();
         this.componentEnum = componentEnum;
     }
-
-
 
     public LauncherElementEnum getComponentEnum() {
         return componentEnum;
@@ -48,6 +37,13 @@ public class LauncherElement {
         this.order = order;
     }
 
+    public boolean isFullSpan() {
+        return isFullSpan;
+    }
+
+    public void setIsFullSpan(boolean isFullSpan) {
+        this.isFullSpan = isFullSpan;
+    }
 
 
 }

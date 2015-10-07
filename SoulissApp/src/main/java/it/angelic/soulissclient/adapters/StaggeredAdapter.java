@@ -3,11 +3,16 @@ package it.angelic.soulissclient.adapters;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.Arrays;
+import java.util.List;
+
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
@@ -21,6 +26,9 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         this.launcherElements = launcherElements;
     }
 
+    public List getList(){
+        return Arrays.asList(launcherElements);
+    }
     @Override
     public int getItemCount() {
         return launcherElements.length;
@@ -45,7 +53,8 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
             StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
-            sglp.setFullSpan(item.isFullSpan);
+            sglp.setFullSpan(item.isFullSpan());
+            Log.w(Constants.TAG, "Full span for element?"+holder.getItemViewType() );
             holder.itemView.setLayoutParams(sglp);
         }
 

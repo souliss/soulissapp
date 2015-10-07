@@ -44,6 +44,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         if (!database.isOpen())
             open();
 
+        //create FAKED Launcher array
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.SCENES);
         comments.add(scenari);
 
@@ -52,6 +53,12 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.PROGRAMS);
         comments.add(pro);
+
+        LauncherElement prop = new LauncherElement(LauncherElementEnum.STATO);
+        prop.setIsFullSpan(true);
+        comments.add(prop);
+
+
         return comments;
     }
 
