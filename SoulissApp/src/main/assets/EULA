@@ -7,6 +7,10 @@ Please refer to www.souliss.net for more information
 
 CHANGES:
 
+1.5.5
+fixed #75, #69, #1, #80, #78, #79
+collapsible toolbar
+
 1.5.4
 send commands with voice
 TAGs are now backed-up when saving DB

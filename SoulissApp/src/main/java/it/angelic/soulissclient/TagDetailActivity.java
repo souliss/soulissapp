@@ -104,7 +104,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_tagswrapper);
+        setContentView(R.layout.main_tag_detail);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("TAG") != null)
