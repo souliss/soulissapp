@@ -1,43 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/custom_actionbar" />
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <fragment
-            android:id="@+id/listFragment"
-            class="it.angelic.soulissclient.fragments.NodesListFragment"
-            android:layout_below="@id/my_awesome_toolbar"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
 
-        <View
-            android:id="@+id/textViewBasicInfoLine"
-            android:layout_width="1dip"
-            android:layout_below="@id/my_awesome_toolbar"
-            android:layout_toRightOf="@id/listFragment"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            android:background="@color/std_blue_shadow" />
+                <include layout="@layout/custom_actionbar"/>
+        </android.support.design.widget.AppBarLayout>
 
         <FrameLayout
-            android:id="@+id/detailPane"
-            android:layout_below="@id/my_awesome_toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/textViewBasicInfoLine"
-            android:layout_weight="3" />
-    </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <include layout="@layout/custom_leftdrawer" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent">
+
+
+                <fragment
+                    android:id="@+id/listFragment"
+                    class="it.angelic.soulissclient.fragments.NodesListFragment"
+                    android:layout_width="240dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/my_awesome_toolbar"
+                    android:layout_weight="2"
+                    tools:layout="@layout/frag_nodelist"/>
+
+                <View
+                    android:id="@+id/textViewBasicInfoLine"
+                    android:layout_width="1dip"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/my_awesome_toolbar"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:layout_toRightOf="@id/listFragment"
+                    android:background="@color/std_blue_shadow"/>
+
+                <FrameLayout
+                    android:id="@+id/detailPane"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/my_awesome_toolbar"
+                    android:layout_toRightOf="@id/textViewBasicInfoLine"
+                    android:layout_weight="3"/>
+            </RelativeLayout>
+        </FrameLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <include layout="@layout/custom_leftdrawer"/>
 </android.support.v4.widget.DrawerLayout>

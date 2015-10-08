@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -170,8 +171,10 @@ public class NodesListFragment extends ListFragment {
 			final List<SoulissNode> goer = datasource.getAllNodes();
 			nodiArray = new SoulissNode[goer.size()];
 			nodiArray = goer.toArray(nodiArray);
-			
-			
+
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				getListView().setNestedScrollingEnabled(true);
+			}
 
 			getListView().setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -187,7 +190,9 @@ public class NodesListFragment extends ListFragment {
 				// Capita arrayOutofbound con size 0
 				if (mCurCheckPosition < nodiArray.length)
 					showDetails(mCurCheckPosition, nodiArray[mCurCheckPosition]);
+				if (textHeadListInfo != null)
 				textHeadListInfo.setVisibility(View.GONE);
+				if (nodeic != null)
 				nodeic.setVisibility(View.GONE);
 			}
 		}
