@@ -90,8 +90,18 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        supportFinishAfterTransition();
+
+        Fragment details = getSupportFragmentManager().findFragmentById(R.id.detailPane);
+        Log.w(Constants.TAG, "instanceof: " + details.getClass());
+        if (details instanceof TagDetailFragment) {
+            supportFinishAfterTransition();
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+            setActionBarInfo(collected.getNiceName());
+            //don't call super here
+        }
+
     }
 
     @Override
@@ -130,8 +140,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                     Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size());
                     //manual override perche il fragment ancora non c'e
                     //sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
-                  //  sharedElements.put("shadow_hero", fragment.getView().findViewById(R.id.infoAlpha));
-                   // sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
+                    //  sharedElements.put("shadow_hero", fragment.getView().findViewById(R.id.infoAlpha));
+                    // sharedElements.put("tag_icon", fragment.getView().findViewById(R.id.imageTagIcon));
                     super.onMapSharedElements(names, sharedElements);
                 }
 
@@ -142,8 +152,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 }
 
             });
-        }catch (Exception uie){
-            Log.e(Constants.TAG,"UIE:"+uie.getMessage());
+        } catch (Exception uie) {
+            Log.e(Constants.TAG, "UIE:" + uie.getMessage());
         }
     }
 
@@ -161,6 +171,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             case android.R.id.home:
 
                 Fragment details = getSupportFragmentManager().findFragmentById(R.id.detailPane);
+                Log.w(Constants.TAG, "instanceof: " + details.getClass());
                 if (details instanceof TagDetailFragment)
                     supportFinishAfterTransition();
                 else {
@@ -239,7 +250,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 AppBarLayout.Behavior beh = new AppBarLayout.Behavior();
 
                 // Add Fragment B
-                 manager.beginTransaction()
+                manager.beginTransaction()
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
                         .addSharedElement(mProductText, "hero_title").commit();//NOT WORK
