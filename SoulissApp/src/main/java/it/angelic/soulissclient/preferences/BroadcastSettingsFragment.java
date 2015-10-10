@@ -13,10 +13,10 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.Constants;
 import it.angelic.soulissclient.net.NetUtils;
 import it.angelic.soulissclient.net.UDPHelper;
 
@@ -161,14 +161,14 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     @Override
                     public void run() {
 
-                        UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure, bcastPayload, bcast_isGateway.isChecked(), bcast_useDhcp.isChecked());
+                        UDPHelper.issueBroadcastConfigure(opzioni, Constants.Net.Souliss_UDP_function_broadcast_configure, bcastPayload, bcast_isGateway.isChecked(), bcast_useDhcp.isChecked());
                         Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure sent");
                         if (ssidPayload.size() > 0) {
-                            UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifissid, ssidPayload, null, null);
+                            UDPHelper.issueBroadcastConfigure(opzioni, Constants.Net.Souliss_UDP_function_broadcast_configure_wifissid, ssidPayload, null, null);
                             Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifissid sent");
                         }
                         if (passPayload.size() > 0) {
-                            UDPHelper.issueBroadcastConfigure(opzioni, Constants.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null, null);
+                            UDPHelper.issueBroadcastConfigure(opzioni, Constants.Net.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null, null);
                             Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent");
                         }
                         StringBuilder textOut = new StringBuilder();

@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.helpers;
+package it.angelic.soulissclient;
 /**
  * Helper class to conver half precision float to int
  * int are used on analogue typicals (2 bytes)

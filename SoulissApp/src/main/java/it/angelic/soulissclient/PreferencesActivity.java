@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.Constants;
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
@@ -39,9 +38,9 @@ public class PreferencesActivity extends PreferenceActivity {
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 Log.w(TAG, "RAW DATA: " + vers);
                 switch (vers.get(0)) {
-                    case Constants.Souliss_UDP_function_typreq_resp:
+                    case Constants.Net.Souliss_UDP_function_typreq_resp:
                         // fallthrought x refresh dicitura tipici
-                    case Constants.Souliss_UDP_function_db_struct_resp:
+                    case Constants.Net.Souliss_UDP_function_db_struct_resp:
                         Log.w(TAG, "DB STRUCT: " + currentScreen);
                         //if (currentScreen != null && currentScreen.equals("db_setup")) {
                        /* Intent inten = PreferencesActivity.this.getIntent();
@@ -135,7 +134,7 @@ public class PreferencesActivity extends PreferenceActivity {
     protected void onResume() {
         // IDEM, serve solo per reporting
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(macacoRawDataReceiver, filtere);
         super.onResume();
     }

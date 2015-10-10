@@ -4,7 +4,7 @@ import android.test.InstrumentationTestCase;
 import android.util.Log;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.helpers.HalfFloatUtils;
+import it.angelic.soulissclient.HalfFloatUtils;
 
 /**
  * Created by pegoraro on 02/09/2015.

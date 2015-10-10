@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -36,42 +37,42 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     }
 
     @Override
-    public ArrayList<SoulissCommand> getCommands(Context ctx) {
+    public ArrayList<ISoulissCommand> getCommands(Context ctx) {
         // ritorna le bozze dei comandi, da riempire con la schermata addProgram
-        ArrayList<SoulissCommand> ret = new ArrayList<>();
+        ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
         SoulissCommand t = new SoulissCommand( this);
-        t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
+        t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
         t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(t);
 
         SoulissCommand ff = new SoulissCommand( this);
-        ff.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
+        ff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
         ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(ff);
 
         SoulissCommand ft = new SoulissCommand( this);
-        ft.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
+        ft.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
         ft.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         ft.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(ft);
 
         SoulissCommand ftt = new SoulissCommand( this);
-        ftt.getCommandDTO().setCommand(Constants.Souliss_T19_Min);
+        ftt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T19_Min);
         ftt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         ftt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(ftt);
 
         SoulissCommand fttd = new SoulissCommand( this);
-        fttd.getCommandDTO().setCommand(Constants.Souliss_T19_Med);
+        fttd.getCommandDTO().setCommand(Constants.Typicals.Souliss_T19_Med);
         fttd.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         fttd.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(fttd);
 
         SoulissCommand ftts = new SoulissCommand( this);
-        ftts.getCommandDTO().setCommand(Constants.Souliss_T19_Max);
+        ftts.getCommandDTO().setCommand(Constants.Typicals.Souliss_T19_Max);
         ftts.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         ftts.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(ftts);
@@ -126,7 +127,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 Thread t = new Thread() {
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-                                prefs,  String.valueOf(Constants.Souliss_T1n_OnCmd));
+                                prefs,  String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
                     }
                 };
 
@@ -143,7 +144,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 Thread t = new Thread() {
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-                                prefs, String.valueOf(Constants.Souliss_T1n_OffCmd));
+                                prefs, String.valueOf(Constants.Typicals.Souliss_T1n_OffCmd));
                     }
                 };
                 t.start();
@@ -156,7 +157,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     @Override
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
             textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
@@ -167,7 +168,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 
     @Override
     public String getOutputDesc() {
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
             return SoulissApp.getAppContext().getString(R.string.OFF);
         else
             return SoulissApp.getAppContext().getString(R.string.ON) + " "  +getIntensityPercent();
@@ -188,7 +189,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 Looper.prepare();
 
                 if (togMulticast)//a tutti i nodi
-                    UDPHelper.issueMassiveCommand("" + Constants.Souliss_T19, prefs, "" + command, "" + intensity);
+                    UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T19, prefs, "" + command, "" + intensity);
                 else
                     UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
                             + getTypicalDTO().getSlot(), prefs, "" + command, "" + intensity);
@@ -212,7 +213,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 Looper.prepare();
 
                 if (togMulticast)//a tutti i nodi
-                    UDPHelper.issueMassiveCommand("" + Constants.Souliss_T19, prefs, "" + command );
+                    UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T19, prefs, "" + command );
                 else
                     UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
                             + getTypicalDTO().getSlot(), prefs, "" + command );

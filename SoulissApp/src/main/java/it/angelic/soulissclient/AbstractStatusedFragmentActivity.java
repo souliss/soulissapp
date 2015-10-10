@@ -221,12 +221,12 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         super.onResume();
         // this is only used for refresh UI
         IntentFilter filtera = new IntentFilter();
-        filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
+        filtera.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
         registerReceiver(packetSentNotificationReceiver, filtera);
 
         // IDEM, serve solo per reporting
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(datareceiver, filtere);
 
         //DEVASTO TUTTO

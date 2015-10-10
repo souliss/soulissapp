@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
@@ -52,10 +53,10 @@ public class UDPHelper {
 			sender = getSenderSocket(serverAddr);
 			ArrayList<Byte> buf;
 			if (id.equals(""+it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) ){
-				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, slot, cmd),
+				buf = buildVNetFrame(buildMaCaCoMassive(Constants.Net.Souliss_UDP_function_force_massive, slot, cmd),
 						prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
 			} else {
-				buf = buildVNetFrame(buildMaCaCoForce(Constants.Souliss_UDP_function_force, id, slot, cmd),
+				buf = buildVNetFrame(buildMaCaCoForce(Constants.Net.Souliss_UDP_function_force, id, slot, cmd),
 						prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
 			}
 
@@ -66,7 +67,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.i(Constants.TAG, "Command sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "Command sent to: " + serverAddr);
 
 			return "UDP command OK";
 		} catch (UnknownHostException ed) {
@@ -76,7 +77,7 @@ public class UDPHelper {
 			et.printStackTrace();
 			return et.getLocalizedMessage();
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "***Fail", e);
+			Log.e(Constants.Net.TAG, "***Fail", e);
 			return e.getLocalizedMessage();
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -100,7 +101,7 @@ public class UDPHelper {
 		DatagramPacket packet;
 		try {
 
-			String ip = Constants.BROADCASTADDR;
+			String ip = Constants.Net.BROADCASTADDR;
 			serverAddr = InetAddress.getByName(ip);
 			sender = getSenderSocket(serverAddr);
 			
@@ -109,13 +110,13 @@ public class UDPHelper {
 			sender.setBroadcast(true);
 
 			switch (functional){
-				case Constants.Souliss_UDP_function_broadcast_configure:
+				case Constants.Net.Souliss_UDP_function_broadcast_configure:
 					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigure(isGw,useDhcp, bcastPayload);
 					break;
-				case Constants.Souliss_UDP_function_broadcast_configure_wifissid:
+				case Constants.Net.Souliss_UDP_function_broadcast_configure_wifissid:
 					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigureWifiSsid(bcastPayload);
 					break;
-				case Constants.Souliss_UDP_function_broadcast_configure_wifipass:
+				case Constants.Net.Souliss_UDP_function_broadcast_configure_wifipass:
 					macacoPay = UDPHelper.buildMaCaCoBroadCastConfigureWifiPass(bcastPayload);
 					break;
 			}
@@ -134,13 +135,13 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.w(Constants.TAG, "***BROADCAST sent to: " + serverAddr);
+			Log.w(Constants.Net.TAG, "***BROADCAST sent to: " + serverAddr);
 			//	Log.d(Constants.TAG, "***BYTES: " + buf.toString());
 			
 		} catch (UnknownHostException | SocketException ed) {
 			ed.printStackTrace();
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "***Fail", e);
+			Log.e(Constants.Net.TAG, "***Fail", e);
 		} finally {
 			if (sender != null && !sender.isClosed())
 				sender.close();
@@ -166,7 +167,7 @@ public class UDPHelper {
 
 			sender = getSenderSocket(serverAddr);
 			ArrayList<Byte> buf;
-			buf = buildVNetFrame(buildMaCaCoMassive(Constants.Souliss_UDP_function_force_massive, typ, cmd),
+			buf = buildVNetFrame(buildMaCaCoMassive(Constants.Net.Souliss_UDP_function_force_massive, typ, cmd),
 					prefs.getPrefIPAddress(), prefs.getUserIndex(), prefs.getNodeIndex());
 
 			byte[] merd = new byte[buf.size()];
@@ -176,7 +177,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.i(Constants.TAG, "Massive Command sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "Massive Command sent to: " + serverAddr);
 
 			return "UDP massive command OK";
 		} catch (UnknownHostException ed) {
@@ -186,7 +187,7 @@ public class UDPHelper {
 			et.printStackTrace();
 			return et.getLocalizedMessage();
 		} catch (Exception e) {
-			Log.d(Constants.TAG, "***Fail", e);
+			Log.d(Constants.Net.TAG, "***Fail", e);
 			return e.getLocalizedMessage();
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -227,18 +228,18 @@ public class UDPHelper {
 			sender.setReuseAddress(true);
 
 			// hole punch
-			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
+			InetSocketAddress sa = new InetSocketAddress(Constants.Net.SERVERPORT);
 
 			List<Byte> macaco = new ArrayList<>();
-			macaco = Arrays.asList(Constants.PING_PAYLOAD);
+			macaco = Arrays.asList(Constants.Net.PING_PAYLOAD);
 			// qui inserisco broadcast
 			byte whoami = 0xB;// PRIVATE by default
 			if (ipubbl.compareTo(ip) == 0)
 				whoami = 0xF;
-			else if (ipubbl.compareTo(Constants.BROADCASTADDR) == 0) {
+			else if (ipubbl.compareTo(Constants.Net.BROADCASTADDR) == 0) {
 				whoami = 0x5;
-				macaco = Arrays.asList(Constants.PING_BCAST_PAYLOAD);
-				ip = Constants.BROADCASTADDR;
+				macaco = Arrays.asList(Constants.Net.PING_BCAST_PAYLOAD);
+				ip = Constants.Net.BROADCASTADDR;
 				sender.setBroadcast(true);
 			}
 			macaco.set(1, whoami);
@@ -251,7 +252,7 @@ public class UDPHelper {
 			sender.bind(sa);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  pref.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.TAG, "Ping sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "Ping sent to: " + serverAddr);
 			debugByteArray(buf);
 			return serverAddr;
 		} finally {
@@ -276,7 +277,7 @@ public class UDPHelper {
 			sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
-			macaco = Arrays.asList(Constants.DBSTRUCT_PAYLOAD);
+			macaco = Arrays.asList(Constants.Net.DBSTRUCT_PAYLOAD);
 			ArrayList<Byte> buf = UDPHelper.buildVNetFrame(macaco, prefs.getPrefIPAddress(), prefs.getUserIndex(),
 					prefs.getNodeIndex());
 
@@ -286,13 +287,13 @@ public class UDPHelper {
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.TAG, "DB struct sent. bytes:" + packet.getLength());
+			Log.w(Constants.Net.TAG, "DB struct sent. bytes:" + packet.getLength());
 			return;
 		} catch (UnknownHostException | SocketException ed) {
-			Log.d(Constants.TAG, "***requestDBStruct Fail", ed);
+			Log.d(Constants.Net.TAG, "***requestDBStruct Fail", ed);
 			return;
 		} catch (Exception e) {
-			Log.d(Constants.TAG, "***requestDBStruct Fail", e);
+			Log.d(Constants.Net.TAG, "***requestDBStruct Fail", e);
 			return;
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -318,11 +319,11 @@ public class UDPHelper {
 
 		try {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			Log.w(Constants.TAG, "Staterequest, numberof=" + numberOf);
+			Log.w(Constants.Net.TAG, "Staterequest, numberof=" + numberOf);
 			sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
-			macaco.add(Constants.Souliss_UDP_function_subscribe);
+			macaco.add(Constants.Net.Souliss_UDP_function_subscribe);
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add((byte) 0x0);// PUTIN
 			macaco.add((byte) 0x0);// PUTIN
@@ -336,15 +337,15 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.TAG, "stateRequest sent. bytes:" + packet.getLength());
+			Log.i(Constants.Net.TAG, "stateRequest sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
-			Log.e(Constants.TAG, "***stateRequest Fail", ed);
+			Log.e(Constants.Net.TAG, "***stateRequest Fail", ed);
 			return;
 		} catch (SocketException et) {
-			Log.e(Constants.TAG, "***stateRequest Fail", et);
+			Log.e(Constants.Net.TAG, "***stateRequest Fail", et);
 			return;
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "***stateRequest Fail", e);
+			Log.e(Constants.Net.TAG, "***stateRequest Fail", e);
 			return;
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -370,7 +371,7 @@ public class UDPHelper {
 			sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
-			macaco.add(Constants.Souliss_UDP_function_poll);
+			macaco.add(Constants.Net.Souliss_UDP_function_poll);
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add((byte) 0x0);// PUTIN
 			macaco.add((byte) 0x0);// PUTIN
@@ -386,15 +387,15 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.TAG, "poll Request sent. bytes:" + packet.getLength());
+			Log.i(Constants.Net.TAG, "poll Request sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
-			Log.e(Constants.TAG, "***stateRequest Fail", ed);
+			Log.e(Constants.Net.TAG, "***stateRequest Fail", ed);
 			return;
 		} catch (SocketException et) {
-			Log.e(Constants.TAG, "***stateRequest Fail", et);
+			Log.e(Constants.Net.TAG, "***stateRequest Fail", et);
 			return;
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "***stateRequest Fail", e);
+			Log.e(Constants.Net.TAG, "***stateRequest Fail", e);
 			return;
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -422,7 +423,7 @@ public class UDPHelper {
 
 			List<Byte> macaco = new ArrayList<>();
 			// PUTIN, STARTOFFEST, NUMBEROF
-			macaco.add(Constants.Souliss_UDP_function_typreq);
+			macaco.add(Constants.Net.Souliss_UDP_function_typreq);
 			macaco.add((byte) 0x0);// PUTIN
 			macaco.add((byte) 0x0);// PUTIN
 			macaco.add((byte) startOffset);// startnode
@@ -434,7 +435,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.TAG, "typRequest sent to " + serverAddr.getHostAddress());
+			Log.w(Constants.Net.TAG, "typRequest sent to " + serverAddr.getHostAddress());
 		} catch (UnknownHostException ed) {
 			ed.printStackTrace();
 			return;
@@ -442,7 +443,7 @@ public class UDPHelper {
 			et.printStackTrace();
 			return;
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "typRequest Fail", e);
+			Log.e(Constants.Net.TAG, "typRequest Fail", e);
 			return;
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -465,7 +466,7 @@ public class UDPHelper {
 
 			List<Byte> macaco = new ArrayList<>();
 			// PUTIN, STARTOFFEST, NUMBEROF
-			macaco.add(Constants.Souliss_UDP_function_healthReq);
+			macaco.add(Constants.Net.Souliss_UDP_function_healthReq);
 			macaco.add((byte) 0x0);// PUTIN
 			macaco.add((byte) 0x0);// PUTIN
 			macaco.add((byte) startOffset);// startnode
@@ -477,15 +478,15 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.TAG, "healthRequest sent to " + serverAddr.getHostAddress());
+			Log.w(Constants.Net.TAG, "healthRequest sent to " + serverAddr.getHostAddress());
 		} catch (UnknownHostException ed) {
-			Log.e(Constants.TAG, "Souliss unavailable " + ed.getMessage());
+			Log.e(Constants.Net.TAG, "Souliss unavailable " + ed.getMessage());
 			return;
 		} catch (SocketException et) {
-			Log.e(Constants.TAG, "typRequest Fail", et);
+			Log.e(Constants.Net.TAG, "typRequest Fail", et);
 			return;
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "typRequest Fail", e);
+			Log.e(Constants.Net.TAG, "typRequest Fail", e);
 			return;
 		} finally {
 			if (sender != null && !sender.isClosed())
@@ -514,13 +515,13 @@ public class UDPHelper {
 		try {
 			return ping(prefs.getPrefIPAddress(), ip, prefs.getUserIndex(), prefs.getNodeIndex(),prefs).getHostAddress();
 		} catch (UnknownHostException ed) {
-			Log.e(Constants.TAG, "***UnknownHostFail", ed);
+			Log.e(Constants.Net.TAG, "***UnknownHostFail", ed);
 			return ed.getMessage();
 		} catch (SocketException et) {
-			Log.e(Constants.TAG, "***SocketFail", et);
+			Log.e(Constants.Net.TAG, "***SocketFail", et);
 			return et.getMessage();
 		} catch (Exception e) {
-			Log.e(Constants.TAG, "***Fail", e);
+			Log.e(Constants.Net.TAG, "***Fail", e);
 			return e.getMessage();
 		}
 
@@ -559,7 +560,7 @@ public class UDPHelper {
 		frame.add(dude[3]);// es 192.168.1.XX BOARD
 		// n broadcast : La comunicazione avviene utilizzando l'indirizzo IP
 		// 255.255.255.255 a cui associare l'indirizzo vNet 0xFFFF.
-		frame.add((byte) ipd.compareTo(Constants.BROADCASTADDR) == 0 ? dude[2] : 0);
+		frame.add((byte) ipd.compareTo(Constants.Net.BROADCASTADDR) == 0 ? dude[2] : 0);
 		// 192.168.XX.0
 		frame.add((byte) nodeidx); // NODE INDEX
 		frame.add((byte) useridx);// USER IDX
@@ -579,7 +580,7 @@ public class UDPHelper {
 		int it = SoulissApp.getOpzioni().getRemoteTimeoutPref() + SoulissApp.getOpzioni().getBackoff() * 1000;
 		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
-		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
+		i.setAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		SoulissApp.getOpzioni().getContx().sendBroadcast(i);
 
 		return frame;
@@ -590,7 +591,7 @@ public class UDPHelper {
 		for (int i = 0; i < frame.size(); i++) {
 			deb.append("0x").append(Long.toHexString((long) frame.get(i) & 0xff)).append(" ");
 		}
-		Log.d(Constants.TAG, "frame debug: " + deb.toString());
+		Log.d(Constants.Net.TAG, "frame debug: " + deb.toString());
 	}
 
 	/**
@@ -623,7 +624,7 @@ public class UDPHelper {
 					int merdata = Integer.decode(number);
 					if (merdata > 255) {
 						// TODO chiedere a Dario
-						Log.w(Constants.TAG, "Overflow with command " + number);
+						Log.w(Constants.Net.TAG, "Overflow with command " + number);
 					}
 					frame.add((byte) merdata);
 				}
@@ -633,7 +634,7 @@ public class UDPHelper {
 				frame.add(Byte.valueOf("0"));
 		}
 
-		Log.v(Constants.TAG, "MaCaCo frame built size:" + frame.size());
+		Log.v(Constants.Net.TAG, "MaCaCo frame built size:" + frame.size());
 		return frame;
 
 	}
@@ -654,11 +655,11 @@ public class UDPHelper {
 			// che schifo
 			int merdata = Integer.decode(number);
 			if (merdata > 255)
-				Log.w(Constants.TAG, "Overflow with command string: " + number);
+				Log.w(Constants.Net.TAG, "Overflow with command string: " + number);
 			frame.add((byte) merdata);
 		}
 
-		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
+		Log.d(Constants.Net.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
 		return frame;
 
 	}
@@ -666,8 +667,8 @@ public class UDPHelper {
 	private static ArrayList<Byte> buildMaCaCoBroadCastConfigure(boolean isGateway,boolean useDhcp, List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Constants.Souliss_UDP_function_broadcast_configure);// functional code
-		Log.d(Constants.TAG, "MaCaCo  BroadCastConfigure isGateway:" + isGateway +" useDhcp:" + useDhcp );
+		frame.add(Constants.Net.Souliss_UDP_function_broadcast_configure);// functional code
+		Log.d(Constants.Net.TAG, "MaCaCo  BroadCastConfigure isGateway:" + isGateway +" useDhcp:" + useDhcp );
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
 		assertTrue(payLoad.size() == 0XC);
@@ -692,7 +693,7 @@ public class UDPHelper {
 			// che schifo
 			frame.add(number);
 		}
-		Log.d(Constants.TAG, "MaCaCo  BroadCastConfigure frame built size:" + frame.size());
+		Log.d(Constants.Net.TAG, "MaCaCo  BroadCastConfigure frame built size:" + frame.size());
 
 		return frame;
 
@@ -701,7 +702,7 @@ public class UDPHelper {
 	private static ArrayList<Byte> buildMaCaCoBroadCastConfigureWifiSsid(List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Constants.Souliss_UDP_function_broadcast_configure_wifissid);// functional code
+		frame.add(Constants.Net.Souliss_UDP_function_broadcast_configure_wifissid);// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
@@ -714,7 +715,7 @@ public class UDPHelper {
 			frame.add(number);
 		}
 
-		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
+		Log.d(Constants.Net.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
 		return frame;
 
 	}
@@ -722,7 +723,7 @@ public class UDPHelper {
 	private static ArrayList<Byte> buildMaCaCoBroadCastConfigureWifiPass(List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Byte.valueOf(Constants.Souliss_UDP_function_broadcast_configure_wifipass));// functional code
+		frame.add(Byte.valueOf(Constants.Net.Souliss_UDP_function_broadcast_configure_wifipass));// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
@@ -735,7 +736,7 @@ public class UDPHelper {
 			frame.add(number);
 		}
 
-		Log.d(Constants.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
+		Log.d(Constants.Net.TAG, "MaCaCo MASSIVE frame built size:" + frame.size());
 		return frame;
 
 	}
@@ -767,12 +768,12 @@ public class UDPHelper {
 			sender = channel.socket();
 			sender.setReuseAddress(true);
 			// hole punch
-			InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
+			InetSocketAddress sa = new InetSocketAddress(Constants.Net.SERVERPORT);
 			sender.bind(sa);
 		} catch (SocketException e) {
-			Log.e(Constants.TAG, "SOCKETERR: " + e.getMessage());
+			Log.e(Constants.Net.TAG, "SOCKETERR: " + e.getMessage());
 		} catch (IOException e) {
-			Log.e(Constants.TAG, "IOERR: " + e.getMessage());
+			Log.e(Constants.Net.TAG, "IOERR: " + e.getMessage());
 		}
 		return sender;
 	}

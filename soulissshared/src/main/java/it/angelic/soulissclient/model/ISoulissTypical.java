@@ -8,12 +8,12 @@ import java.util.ArrayList;
 public interface ISoulissTypical extends ISoulissObject {
 
 
-    SoulissNode getParentNode();
+    ISoulissNode getParentNode();
 
-    void setParentNode(SoulissNode parentNode);
+    //void setParentNode(ISoulissNode parentNode);
 
 	
-	ArrayList<SoulissCommand> getCommands(Context ctx) ;
+	ArrayList<ISoulissCommand> getCommands(Context ctx) ;
 
     void getActionsLayout (Context ctx,
                            LinearLayout convertView);

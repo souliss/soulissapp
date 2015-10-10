@@ -44,13 +44,13 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.net.UDPHelper;
 
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Group;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Alarm;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Antitheft;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_Armed;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NoAntitheft;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_NotArmed;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T4n_ReArm;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T42_Antitheft_Group;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_Alarm;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_Antitheft;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_Armed;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_NoAntitheft;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_NotArmed;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_ReArm;
 import static junit.framework.Assert.assertTrue;
 
 public class T4nFragment extends Fragment {
@@ -331,7 +331,7 @@ public class T4nFragment extends Fragment {
         SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
     }
 

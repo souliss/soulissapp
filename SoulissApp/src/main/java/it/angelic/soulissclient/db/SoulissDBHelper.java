@@ -548,7 +548,7 @@ public class SoulissDBHelper {
         // query with primary key
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL + " = "
-                        + it.angelic.soulissclient.model.typicals.Constants.Souliss_T41_Antitheft_Main, null, null,
+                        + Constants.Typicals.Souliss_T41_Antitheft_Main, null, null,
                 null, null);
         if (cursor.moveToFirst()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
@@ -564,7 +564,7 @@ public class SoulissDBHelper {
         List<SoulissTypical> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
                 SoulissDB.COLUMN_TYPICAL + " = "
-                        + it.angelic.soulissclient.model.typicals.Constants.Souliss_T42_Antitheft_Peer, null, null,
+                        + Constants.Typicals.Souliss_T42_Antitheft_Peer, null, null,
                 null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -582,7 +582,7 @@ public class SoulissDBHelper {
         cursor.close();
 
         cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, SoulissDB.COLUMN_TYPICAL
-                        + " = " + it.angelic.soulissclient.model.typicals.Constants.Souliss_T43_Antitheft_LocalPeer, null,
+                        + " = " + Constants.Typicals.Souliss_T43_Antitheft_LocalPeer, null,
                 null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -677,9 +677,9 @@ public class SoulissDBHelper {
     public int countTypicals() {
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
                 + SoulissDB.COLUMN_TYPICAL + " <> "
-                + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related
+                + Constants.Typicals.Souliss_T_related
                 +" AND "+ SoulissDB.COLUMN_TYPICAL + " <> "
-                + it.angelic.soulissclient.model.typicals.Constants.Souliss_T_empty, null);
+                + Constants.Typicals.Souliss_T_empty, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

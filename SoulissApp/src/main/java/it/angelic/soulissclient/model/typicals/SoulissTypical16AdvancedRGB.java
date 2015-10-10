@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -37,42 +38,42 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<>();
+		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand( this);
-		t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
+		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		SoulissCommand ff = new SoulissCommand( this);
-		ff.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
+		ff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
 		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
 		
 		SoulissCommand tf = new SoulissCommand( this);
-		tf.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
+		tf.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
 		tf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		tf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tf);
 		
 		SoulissCommand fRed = new SoulissCommand( this);
-		fRed.getCommandDTO().setCommand(Constants.Souliss_T16_Red);
+		fRed.getCommandDTO().setCommand(Constants.Typicals.Souliss_T16_Red);
 		fRed.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		fRed.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(fRed);
 		
 		SoulissCommand fGreen = new SoulissCommand( this);
-		fGreen.getCommandDTO().setCommand(Constants.Souliss_T16_Green);
+		fGreen.getCommandDTO().setCommand(Constants.Typicals.Souliss_T16_Green);
 		fGreen.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		fGreen.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(fGreen);
 		
 		SoulissCommand fBlue = new SoulissCommand(this);
-		fBlue.getCommandDTO().setCommand(Constants.Souliss_T16_Blue);
+		fBlue.getCommandDTO().setCommand(Constants.Typicals.Souliss_T16_Blue);
 		fBlue.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		fBlue.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(fBlue);
@@ -123,7 +124,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs, String.valueOf(Constants.Souliss_T1n_OnCmd));
+									prefs, String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
 					}
 				};
 
@@ -140,7 +141,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs, String.valueOf(Constants.Souliss_T1n_OffCmd));
+									prefs, String.valueOf(Constants.Typicals.Souliss_T1n_OffCmd));
 					}
 				};
 
@@ -155,7 +156,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
 			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
@@ -165,7 +166,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	}
 	@Override
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
 			return "OFF";
 		else
 			return "ON";
@@ -183,7 +184,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 				//Looper.prepare();
 
 				if (togMulticast)//a tutti i nodi
-					UDPHelper.issueMassiveCommand(""+Constants.Souliss_T16, prefs,""+val, "" + r, ""
+					UDPHelper.issueMassiveCommand(""+ Constants.Typicals.Souliss_T16, prefs,""+val, "" + r, ""
 							+ g, "" + b);
 				else
 				UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""

@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package it.angelic.soulissclient.helpers;
+package it.angelic.soulissclient;
+
+import android.support.v7.appcompat.BuildConfig;
 
 import java.io.UnsupportedEncodingException;
 
-import it.angelic.soulissclient.BuildConfig;
 
 /**
  * Utilities for encoding and decoding the Base64 representation of

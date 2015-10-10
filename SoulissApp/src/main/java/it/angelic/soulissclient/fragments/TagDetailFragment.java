@@ -357,7 +357,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         super.onResume();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
         appBarLayout.addOnOffsetChangedListener(this);
     }

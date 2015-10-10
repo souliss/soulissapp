@@ -5,9 +5,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -31,42 +32,42 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<>();
+		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Auto_20);
+		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_20);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		SoulissCommand ff = new SoulissCommand(this);
-		ff.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Auto_24);
+		ff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_24);
 		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
 
 		SoulissCommand cf = new SoulissCommand(this);
-		cf.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Cool_18);
+		cf.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Cool_18);
 		cf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		cf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(cf);
 
 		SoulissCommand df = new SoulissCommand(this);
-		df.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Dry);
+		df.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Dry);
 		df.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		df.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(df);
 
 		SoulissCommand faf = new SoulissCommand( this);
-		faf.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Fan);
+		faf.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Fan);
 		faf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		faf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(faf);
 
 		SoulissCommand tt = new SoulissCommand(this);
-		tt.getCommandDTO().setCommand(Constants.Souliss_T_IrCom_AirCon_Pow_Off);
+		tt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Off);
 		tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tt);
@@ -97,15 +98,15 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 
 		if (typicalDTO.getOutput() ==0 || typicalDTO.getOutput() >> 6 == 1)
 			return "OFF";
-		else if (fun == Constants.Souliss_T_IrCom_AirCon_Fun_Auto)
+		else if (fun == Constants.Typicals.Souliss_T_IrCom_AirCon_Fun_Auto)
 			return "AUTO";
-		else if (fun == Constants.Souliss_T_IrCom_AirCon_Fun_Cool)
+		else if (fun == Constants.Typicals.Souliss_T_IrCom_AirCon_Fun_Cool)
 			return "COOL";
-		else if (fun == Constants.Souliss_T_IrCom_AirCon_Fun_Dry)
+		else if (fun == Constants.Typicals.Souliss_T_IrCom_AirCon_Fun_Dry)
 			return "DRY";
-		else if (fun == Constants.Souliss_T_IrCom_AirCon_Fun_Fan)
+		else if (fun == Constants.Typicals.Souliss_T_IrCom_AirCon_Fun_Fan)
 			return "FAN";
-		else if (fun == Constants.Souliss_T_IrCom_AirCon_Fun_Heat)
+		else if (fun == Constants.Typicals.Souliss_T_IrCom_AirCon_Fun_Heat)
 			return "HEAT";
 		else
 			return "UNKNOWN";

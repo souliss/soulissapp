@@ -7,9 +7,11 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -29,39 +31,39 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 
 	@Override
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Close
-				|| typicalDTO.getOutput() == Constants.Souliss_T2n_LimSwitch_Close)
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close
+				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Close)
 			return "CLOSED";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Open
-				|| typicalDTO.getOutput() == Constants.Souliss_T2n_LimSwitch_Open)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Open
+				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
 			return "OPENED";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Stop)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
 			return "STOP";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_NoLimSwitch)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_NoLimSwitch)
 			return "MIDDLE";
 		else
 			return "UNKNOWN";
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<>();
+		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Souliss_T2n_CloseCmd);
+		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_CloseCmd);
 		t.getCommandDTO().setSlot(typicalDTO.getSlot());
 		t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(t);
 
 		SoulissCommand rset = new SoulissCommand(this);
-		rset.getCommandDTO().setCommand(Constants.Souliss_T2n_OpenCmd);
+		rset.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_OpenCmd);
 		rset.getCommandDTO().setSlot(typicalDTO.getSlot());
 		rset.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(rset);
 
 		SoulissCommand rsest = new SoulissCommand(this);
-		rsest.getCommandDTO().setCommand(Constants.Souliss_T2n_StopCmd);
+		rsest.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_StopCmd);
 		rsest.getCommandDTO().setSlot(typicalDTO.getSlot());
 		rsest.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(rsest);
@@ -103,7 +105,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs,
-								String.valueOf(Constants.Souliss_T2n_CloseCmd));
+								String.valueOf(Constants.Typicals.Souliss_T2n_CloseCmd));
 					}
 				};
 				t.start();
@@ -117,7 +119,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs,
-								String.valueOf(Constants.Souliss_T2n_OpenCmd));
+								String.valueOf(Constants.Typicals.Souliss_T2n_OpenCmd));
 					}
 				};
 				t.start();
@@ -131,7 +133,7 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs,
-								String.valueOf(Constants.Souliss_T2n_StopCmd));
+								String.valueOf(Constants.Typicals.Souliss_T2n_StopCmd));
 					}
 				};
 				t.start();

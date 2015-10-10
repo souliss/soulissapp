@@ -20,7 +20,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -34,7 +33,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -52,6 +50,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -385,11 +384,11 @@ public class NodeDetailFragment extends ListFragment {
 				// Activity Dettaglio nodo
 				nodeDatail = new Intent(getActivity(), T5nFragWrapper.class);
 				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T32_IrCom_AirCon) {
+			} else if (target.getTypical() == it.angelic.soulissclient.Constants.Constants.Souliss_T32_IrCom_AirCon) {
 				nodeDatail = new Intent(getActivity(), T32AirConFragment.class);
 				nodeDatail.putExtra("TIPICO", target);
 				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getSlot() + 1)));
-			} else if (target.getTypical() == it.angelic.soulissclient.model.typicals.Constants.Souliss_T15_RGB) {
+			} else if (target.getTypical() == it.angelic.soulissclient.Constants.Constants.Souliss_T15_RGB) {
 				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
 				nodeDatail.putExtra("TIPICO", target);
 			} else if (target.getTypical() == Souliss_T16) {
@@ -425,7 +424,7 @@ public class NodeDetailFragment extends ListFragment {
         par.setProgress(20);
         par.setProgress(0); // <-- BUG Android
         par.setProgress(collected.getHealth());
-        upda.setText(getResources().getString(R.string.update) + " " + Constants.getTimeAgo(collected.getRefreshedAt()));
+        upda.setText(getResources().getString(R.string.update) + " " + Utils.getTimeAgo(collected.getRefreshedAt()));
 
     }
 
@@ -547,7 +546,7 @@ public class NodeDetailFragment extends ListFragment {
         doBindService();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
 
 

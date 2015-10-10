@@ -79,7 +79,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             public void run() {
                 while (isIncrementing()) {
                     intensity += 5;
-                    collected.issueSingleChannelCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp, togMulticast.isChecked());
+                    collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_BrightUp, togMulticast.isChecked());
                     try {
                         Thread.sleep(250);
                     } catch (InterruptedException e) {
@@ -110,7 +110,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             public void run() {
                 while (isDecrementing() && intensity > 5) {
                     intensity -= 5;
-                    collected.issueSingleChannelCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown, togMulticast.isChecked());
+                    collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_BrightDown, togMulticast.isChecked());
                     try {
                         Thread.sleep(250);
                     } catch (InterruptedException e) {
@@ -217,12 +217,12 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
         singleChanabel = (TextView) ret.findViewById(R.id.channelLabel);
         //	buttLamp = (ImageView) ret.findViewById(R.id.buttonLamp);
-        btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
-        btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
-        buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
-        buttMinus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightDown);
-        btFlash.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Flash);
-        btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
+        btOff.setTag(Constants.Typicals.Souliss_T1n_OffCmd);
+        btOn.setTag(Constants.Typicals.Souliss_T1n_OnCmd);
+        buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
+        buttMinus.setTag(Constants.Typicals.Souliss_T1n_BrightDown);
+        btFlash.setTag(Constants.Typicals.Souliss_T1n_Flash);
+        btSleep.setTag(Constants.Typicals.Souliss_T_related);
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         if (collected.getTypicalDTO().isFavourite()) {
@@ -371,7 +371,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             collected.issueRefresh();
         }
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
     }
 
@@ -419,7 +419,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 			if (out > 255)
 				out = 255;*/
                 intensity = val;
-                collected.issueSingleChannelCommand(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Set, intensity,
+                collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_Set, intensity,
                         togMulticast.isChecked());
                 singleChanabel.setText(getString(R.string.Souliss_T19_set) + " " + val);
             }

@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -133,7 +133,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		/* INFO slot e Alias Name */
         holder.textslot.setText(tipici[position].getNiceName());
         holder.textUpdated.setText(context.getString(R.string.update) + " "
-                + Constants.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
+                + Utils.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
                 + context.getString(R.string.manual_slot) + ": " + tipici[position].getSlot());
         holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
                 + ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import it.angelic.soulissclient.model.typicals.Constants;
+import it.angelic.soulissclient.Constants;
 
 public class GetConstantsHandler implements HttpRequestHandler {
 	final String contentType = "text/html; charset=UTF-8";
@@ -52,7 +52,7 @@ public class GetConstantsHandler implements HttpRequestHandler {
 		HttpEntity entity = new EntityTemplate(new ContentProducer() {
 			public void writeTo(final OutputStream outstream) throws IOException {
 				OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
-				Constants pieruzzo = new Constants();
+				Constants.Typicals pieruzzo = new Constants.Typicals();
 				String resp = pieruzzo.toString();
 
 				writer.write(resp);

@@ -29,8 +29,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import it.angelic.soulissclient.helpers.Base64;
-import it.angelic.soulissclient.net.Constants;
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.Base64;
 
 public class Zozzariello extends Thread {
 	private static final String SERVER_NAME = "Zozzariello";
@@ -78,7 +78,7 @@ public class Zozzariello extends Thread {
 
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 
-		serverPort = Integer.parseInt(pref.getString(Constants.PREF_SERVER_PORT, "" + Constants.WEB_SERVER_PORT));
+		serverPort = Integer.parseInt(pref.getString(Constants.Net.PREF_SERVER_PORT, "" + Constants.Net.WEB_SERVER_PORT));
 		httpproc = new BasicHttpProcessor();
 		httpContext = new BasicHttpContext();
 
@@ -137,13 +137,13 @@ public class Zozzariello extends Thread {
 		if (!isRunning) {
 			isRunning = true;
 			super.start();
-			Log.w(Constants.TAG, "Zozzariello startThread()");
+			Log.w(Constants.Net.TAG, "Zozzariello startThread()");
 		}
 	}
 
 	public synchronized void stopThread() {
 		isRunning = false;
-		Log.w(Constants.TAG, "Zozzariello stopThread()");
+		Log.w(Constants.Net.TAG, "Zozzariello stopThread()");
 	}
 
 	public void setNotifyManager(NotificationManager notifyManager) {

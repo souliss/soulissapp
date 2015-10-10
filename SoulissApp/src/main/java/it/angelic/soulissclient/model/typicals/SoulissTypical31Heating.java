@@ -13,8 +13,9 @@ import java.util.Calendar;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.HalfFloatUtils;
+import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -67,9 +68,9 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     }
 
     @Override
-    public ArrayList<SoulissCommand> getCommands(Context ctx) {
+    public ArrayList<ISoulissCommand> getCommands(Context ctx) {
         // ritorna le bozze dei comandi, da riempire con la schermata addProgram
-        ArrayList<SoulissCommand> ret = new ArrayList<>();
+        ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
         return ret;
     }

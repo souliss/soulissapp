@@ -35,15 +35,15 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_AsMeasured;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Cooling;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanAuto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanHigh;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanLow;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_FanMed;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Heating;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_Set;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T3n_ShutOff;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_AsMeasured;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_Cooling;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_FanAuto;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_FanHigh;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_FanLow;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_FanMed;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_Heating;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_Set;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_ShutOff;
 import static junit.framework.Assert.assertTrue;
 
 
@@ -260,7 +260,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
         if (collected.getTypicalDTO().isFavourite()) {
             infoFavs.setVisibility(View.VISIBLE);

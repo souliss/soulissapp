@@ -36,15 +36,15 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             }
         }
         if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnON_strarray))) {
-            comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd);
+            comandToSend.append("" + Constants.Typicals.Souliss_T1n_OnCmd);
         } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnOFF_strarray))) {
-            comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd);
+            comandToSend.append("" + Constants.Typicals.Souliss_T1n_OffCmd);
         } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.toggle_strarray))) {
-            comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_ToogleCmd);
+            comandToSend.append("" + Constants.Typicals.Souliss_T1n_ToogleCmd);
         } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.open_strarray))) {
-            comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T2n_OpenCmd);
+            comandToSend.append("" + Constants.Typicals.Souliss_T2n_OpenCmd);
         } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.close_strarray))) {
-            comandToSend.append("" + it.angelic.soulissclient.model.typicals.Constants.Souliss_T2n_CloseCmd);
+            comandToSend.append("" + Constants.Typicals.Souliss_T2n_CloseCmd);
         }
         boolean nodeMatch = false;
         boolean typMatch = false;

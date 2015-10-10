@@ -20,7 +20,7 @@ import it.angelic.soulissclient.SoulissApp;
  *
  * @author shine
  */
-public class SoulissNode implements Serializable, ISoulissObject {
+public class SoulissNode implements Serializable, ISoulissNode {
 
     private static final long serialVersionUID = 8673027563853737718L;
     private short health;
@@ -59,7 +59,6 @@ public class SoulissNode implements Serializable, ISoulissObject {
 
     public void addTypical(SoulissTypical rest) {
         soulissTypicals.add(rest);
-
     }
 
     public List<SoulissTypical> getActiveTypicals() {

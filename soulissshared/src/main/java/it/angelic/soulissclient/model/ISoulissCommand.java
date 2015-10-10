@@ -9,5 +9,5 @@ public interface ISoulissCommand extends ISoulissObject, ISoulissExecutable{
 
     int getType();
 
-    SoulissTypical getParentTypical();
+    ISoulissTypical getParentTypical();
 }

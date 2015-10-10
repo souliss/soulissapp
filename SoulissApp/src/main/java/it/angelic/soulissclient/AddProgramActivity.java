@@ -35,6 +35,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissExecutable;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -612,7 +613,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
      * @param ref tipico da cui ottenere i comandi
      */
     private void fillCommandSpinner(@NonNull Spinner tgt, SoulissTypical ref) {
-        ArrayList<SoulissCommand> cmds = ref.getCommands(this);
+        ArrayList<ISoulissCommand> cmds = ref.getCommands(this);
         //maledetto bastardo
         if (cmds!=null&&cmds.size() > 0) {
             tvcommand.setVisibility(View.VISIBLE);

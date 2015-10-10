@@ -20,7 +20,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.ActivityCompat;
@@ -61,6 +60,7 @@ import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.net.NetUtils;
@@ -581,11 +581,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         // this is only used for refresh UI
         IntentFilter filtera = new IntentFilter();
-        filtera.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
+        filtera.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
 
         // IDEM, serve solo per reporting
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(datareceiver, filtere);
 
         if (provider != null) {
@@ -888,9 +888,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         } else {
             if (mIsBound && mBoundService != null) {
-                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(Constants.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
+                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(Utils.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
                 sb.append(getString(R.string.opt_serviceinterval)).append(":</b> ")
-                        .append(Constants.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
+                        .append(Utils.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
             } else {
                 sb.append(getString(R.string.service_warnbound));
                 Intent serviceIntent = new Intent(this, SoulissDataService.class);

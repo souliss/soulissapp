@@ -7,9 +7,11 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -25,12 +27,12 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<>();
+		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Souliss_T2n_ToogleCmd);
+		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_ToogleCmd);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
@@ -62,7 +64,7 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs,  String.valueOf(Constants.Souliss_T2n_ToogleCmd));
+									prefs,  String.valueOf(Constants.Typicals.Souliss_T2n_ToogleCmd));
 					}
 				};
 				t.start();
@@ -72,15 +74,15 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 
 	@Override
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Close )
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close )
 			return "CLOSING";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_LimSwitch_Open)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
 			return "OPENED";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_LimSwitch_Close)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Close)
 			return "CLOSED";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Open)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Open)
 			return "OPENING";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T2n_Coil_Stop)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
 			return "STOP";
 		else
 			return "UNKNOWN";

@@ -1,6 +1,10 @@
 package it.angelic.soulissclient;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -8,7 +12,6 @@ import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class SoulissMainActivity extends Activity {
@@ -19,14 +22,91 @@ public class SoulissMainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_souliss_main);
+        Log.i("SoulissWear", "onCreate");
+
+        buildWearableOnlyNotification("Massimo", "casino", true);
+
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
                 mTextView = (TextView) stub.findViewById(R.id.text);
-                displaySpeechRecognizer();
+                //displaySpeechRecognizer();
+                //showNotificationAle(SoulissMainActivity.this);
+
             }
         });
+    }
+
+    /**
+     * Builds a simple notification on the wearable.
+     */
+    private void buildWearableOnlyNotification(String title, String content,
+                                               boolean withDismissal) {
+        Notification.Builder builder = new Notification.Builder(this)
+                .setSmallIcon(R.drawable.ic_phone_android_24dp)
+                .setContentTitle(title)
+                .setContentText(content);
+
+        if (withDismissal) {
+            Intent dismissIntent = new Intent(Constants.ACTION_DISMISS);
+            dismissIntent.putExtra(Constants.KEY_NOTIFICATION_ID, Constants.BOTH_ID);
+            PendingIntent pendingIntent = PendingIntent
+                    .getService(this, 0, dismissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setDeleteIntent(pendingIntent);
+        }
+
+        ((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
+                .notify(Constants.WATCH_ONLY_ID, builder.build());
+    }
+
+    public static void showNotificationAle(Context context) {
+        Notification.Builder builder = new Notification.Builder(context);
+        // Create the launch intent, in this case setting it as the content action
+        Intent launchMuzeiIntent = new Intent(context,
+                ActivateSoulissIntentService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0,
+                launchMuzeiIntent, 0);
+        Notification notif = new Notification.Builder(context)
+                .extend(new Notification.WearableExtender()
+                        .setDisplayIntent(pendingIntent)
+                        .setCustomSizePreset(Notification.WearableExtender.SIZE_MEDIUM))
+                .build();
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(3113, notif);
+
+    }
+
+    public static void showNotification(Context context) {
+        Notification.Builder builder = new Notification.Builder(context);
+        // Set up your notification as normal
+
+        // Create the launch intent, in this case setting it as the content action
+        Intent launchMuzeiIntent = new Intent(context,
+                ActivateSoulissIntentService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(context, 0,
+                launchMuzeiIntent, 0);
+        builder.addAction(new Notification.Action.Builder(R.drawable.ic_phone_android_24dp,
+                context.getString(R.string.common_open_on_phone), pendingIntent)
+                .extend(new Notification.Action.WearableExtender()
+                        .setAvailableOffline(false))
+                .build());
+        builder.extend(new Notification.WearableExtender()
+                .setContentAction(0));
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(Notification.PRIORITY_MAX)
+                .setAutoCancel(true)
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText("SMALL1");
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(NOTIFICATION_SERVICE);
+
+        Notification stacchio = builder.build();
+
+        notificationManager.notify(3113, builder.build());
+        Log.i("SoulissWear", "notified: "+builder.build().toString());
+        // Send the notification with notificationManager.notify as usual
     }
 
 
