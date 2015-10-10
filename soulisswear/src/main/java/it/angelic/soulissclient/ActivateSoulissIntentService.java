@@ -39,6 +39,7 @@ import com.google.android.gms.wearable.Wearable;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -92,7 +93,8 @@ public class ActivateSoulissIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         String action = intent.getAction();
-        Log.w(TAG, "onHandleIntent: "+action);
+        String voice = intent.getExtras().getString("THEVOICE");
+        Log.w(TAG, "onHandleIntent: "+voice);
         if (TextUtils.equals(action, ACTION_MARK_NOTIFICATION_READ)) {
             // Clear the notification
             NotificationManager notificationManager = (NotificationManager)
@@ -110,9 +112,12 @@ public class ActivateSoulissIntentService extends IntentService {
             Log.e(TAG, "Failed to connect to GoogleApiClient.");
             return;
         }
-        Set<Node> nodes =  Wearable.CapabilityApi.getCapability(googleApiClient, "activate_souliss",
-                CapabilityApi.FILTER_REACHABLE).await()
-                .getCapability().getNodes();
+        //Set<Node> nodes =  Wearable.CapabilityApi.getCapability(googleApiClient, "activate_souliss",
+         //       CapabilityApi.FILTER_REACHABLE).await()
+         //       .getCapability().getNodes();
+        List<Node> nodes =  Wearable.NodeApi.getConnectedNodes(googleApiClient)
+                .await().getNodes();
+        Log.w(TAG, "onHandleIntent.getNodes().size: "+nodes.size());
         if (!nodes.isEmpty()) {
             // Show the open on phone animation
             Intent openOnPhoneIntent = new Intent(this, ConfirmationActivity.class);
@@ -127,7 +132,7 @@ public class ActivateSoulissIntentService extends IntentService {
             // Send the message to the phone to open Muzei
             for (Node node : nodes) {
                 Wearable.MessageApi.sendMessage(googleApiClient, node.getId(),
-                        "notification/open", null).await();
+                        "notification/open", voice.getBytes()).await();
                 Log.e(TAG, "Message sent");
             }
         }

@@ -1,33 +1,29 @@
 package it.angelic.receivers;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.support.v4.app.RemoteInput;
 import android.util.Log;
-
-import java.util.ArrayList;
-
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
 
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
 
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
+
 public class SoulissWearDemandIntentReceiver extends WearableListenerService {
-  @Override
-  public void onMessageReceived(MessageEvent messageEvent) {
-    String path = messageEvent.getPath();
-      Log.d(Constants.TAG + ":WEAR", "WWear received");
-    if (path.equals("notification/open")) {
-      PackageManager packageManager = getPackageManager();
-      Intent mainIntent = packageManager.getLaunchIntentForPackage(getPackageName());
-      startActivity(mainIntent);
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        String path = messageEvent.getPath();
+        Log.w(Constants.TAG , "Wear.onMessageReceived" + messageEvent);
+        if (path.equals("notification/open")) {
+            PackageManager packageManager = getPackageManager();
+            String voice = new String(messageEvent.getData());
+            Intent mainIntent = packageManager.getLaunchIntentForPackage(getPackageName());
+            Log.w(Constants.TAG + ":WEAR", "Voice from Wear received:" + voice);
+            VoiceCommandActivityNoDisplay.interpretCommand(getBaseContext(), voice);
+            //startActivity(mainIntent);
+        }
     }
-  }
 
 //  @Override
 //  public void onReceive(Context context, Intent intent) {
@@ -50,4 +46,4 @@ public class SoulissWearDemandIntentReceiver extends WearableListenerService {
 //
 //      }
 //    }
- }
+}

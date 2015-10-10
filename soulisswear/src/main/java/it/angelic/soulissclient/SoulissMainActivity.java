@@ -24,7 +24,7 @@ public class SoulissMainActivity extends Activity {
         setContentView(R.layout.activity_souliss_main);
         Log.i("SoulissWear", "onCreate");
 
-        buildWearableOnlyNotification("Massimo", "casino", true);
+       // buildWearableOnlyNotification("Massimo", "casino", true);
 
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -32,7 +32,7 @@ public class SoulissMainActivity extends Activity {
             public void onLayoutInflated(WatchViewStub stub) {
                 mTextView = (TextView) stub.findViewById(R.id.text);
                 //displaySpeechRecognizer();
-                //showNotificationAle(SoulissMainActivity.this);
+                showNotification(SoulissMainActivity.this, "spegni luci");
 
             }
         });
@@ -60,33 +60,18 @@ public class SoulissMainActivity extends Activity {
                 .notify(Constants.WATCH_ONLY_ID, builder.build());
     }
 
-    public static void showNotificationAle(Context context) {
-        Notification.Builder builder = new Notification.Builder(context);
-        // Create the launch intent, in this case setting it as the content action
-        Intent launchMuzeiIntent = new Intent(context,
-                ActivateSoulissIntentService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-                launchMuzeiIntent, 0);
-        Notification notif = new Notification.Builder(context)
-                .extend(new Notification.WearableExtender()
-                        .setDisplayIntent(pendingIntent)
-                        .setCustomSizePreset(Notification.WearableExtender.SIZE_MEDIUM))
-                .build();
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(3113, notif);
 
-    }
 
-    public static void showNotification(Context context) {
+    public static void showNotification(Context context, String thevoice) {
         Notification.Builder builder = new Notification.Builder(context);
         // Set up your notification as normal
 
         // Create the launch intent, in this case setting it as the content action
         Intent launchMuzeiIntent = new Intent(context,
                 ActivateSoulissIntentService.class);
+        launchMuzeiIntent.putExtra("THEVOICE", thevoice );
         PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-                launchMuzeiIntent, 0);
+                launchMuzeiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.addAction(new Notification.Action.Builder(R.drawable.ic_phone_android_24dp,
                 context.getString(R.string.common_open_on_phone), pendingIntent)
                 .extend(new Notification.Action.WearableExtender()
@@ -102,7 +87,6 @@ public class SoulissMainActivity extends Activity {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(NOTIFICATION_SERVICE);
 
-        Notification stacchio = builder.build();
 
         notificationManager.notify(3113, builder.build());
         Log.i("SoulissWear", "notified: "+builder.build().toString());
@@ -110,7 +94,6 @@ public class SoulissMainActivity extends Activity {
     }
 
 
-    private static final int SPEECH_REQUEST_CODE = 9876;
 
     // Create an intent that can start the Speech Recognizer activity
     private void displaySpeechRecognizer() {
@@ -118,7 +101,7 @@ public class SoulissMainActivity extends Activity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 // Start the activity, the intent will be populated with the speech text
-        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+        startActivityForResult(intent, Constants.VOICE_REQUEST_OK);
     }
 
     // This callback is invoked when the Speech Recognizer returns.
@@ -126,7 +109,7 @@ public class SoulissMainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
-        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == Constants.VOICE_REQUEST_OK && resultCode == RESULT_OK) {
             List<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
             final String spokenText = results.get(0);

@@ -46,7 +46,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     // contenitore dati specchio del DB
     protected SoulissTypicalDTO typicalDTO;
     //transient per evitare problemi di serializzazione
-    protected transient SoulissPreferenceHelper prefs; 
+    protected transient SoulissPreferenceHelper prefs;
     private boolean isSlave = false;// indica se includerlo nelle liste
 
     //AUTOF
