@@ -23,7 +23,7 @@
             android:name="android.support.wearable.activity.ConfirmationActivity">
         </activity>
 
-        <service android:name=".ActivateSoulissIntentService" />
+        <service android:name=".SendSoulissCommandIntentService" />
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@ public class Constants {
 	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 	public static final int TAG_INSERT_POINT = 1;
     static final int NOTIFICATION_ID = 3113;
+    public static final String ACTION_OPEN_SOULISS = "it.angelic.soulissclient.OPEN_SOULISSAPP";
 
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 public class VoiceCommandActivityNoDisplay extends Activity {
 
-    public static void interpretCommand(final Context context, final String yesMan) {
+    public static void interpretCommand(final Context context,@NonNull final String yesMan) {
         final StringBuilder comandToSend = new StringBuilder();
 
         //capisci scena, eseguila e ciao
@@ -28,7 +29,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
         SoulissDBHelper.open();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
         for (SoulissScene scenario : db.getScenes(context)) {
-            if (yesMan.contains(scenario.getName().toLowerCase())) {
+            if (yesMan.toLowerCase().contains(scenario.getName().toLowerCase())) {
                 Log.w(Constants.TAG, "Voice activated Scenario:!! :" + scenario.getName());
                 Toast.makeText(context, scenario.getName() + " " + context.getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
                 scenario.execute();
