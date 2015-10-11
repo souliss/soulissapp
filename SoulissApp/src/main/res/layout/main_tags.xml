@@ -9,6 +9,7 @@
     <!-- The main content view -->
     <RelativeLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/external_margin"
         android:layout_height="match_parent">
 
         <include layout="@layout/custom_actionbar" />

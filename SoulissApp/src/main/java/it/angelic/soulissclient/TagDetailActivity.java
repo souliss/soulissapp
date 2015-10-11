@@ -133,7 +133,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
-        try {
+       /* try {
             setEnterSharedElementCallback(new SharedElementCallback() {
                 @Override
                 public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
@@ -154,7 +154,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             });
         } catch (Exception uie) {
             Log.e(Constants.TAG, "UIE:" + uie.getMessage());
-        }
+        }*/
     }
 
     @Override

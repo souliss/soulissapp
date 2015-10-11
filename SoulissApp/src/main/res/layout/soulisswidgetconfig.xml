@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/Cont01"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent" >
+<RelativeLayout android:id="@+id/Cont01"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/external_margin">
 
     <RelativeLayout
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:gravity="center">
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/programs_target"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <View
             android:id="@+id/strut"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
 
         <Spinner
             android:id="@+id/spinner2"
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/strut"
-            android:layout_below="@id/textView1" />
+            android:layout_below="@id/textView1"/>
 
         <Spinner
             android:id="@+id/spinner3"
@@ -38,7 +39,7 @@
             android:layout_alignLeft="@id/strut"
             android:layout_alignParentRight="true"
             android:layout_below="@id/textView1"
-            android:layout_toRightOf="@id/spinner2" />
+            android:layout_toRightOf="@id/spinner2"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,39 +47,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout3"
-        android:gravity="center" >
+        android:gravity="center">
 
         <TextView
             android:id="@+id/textViewCommand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/addprogram_choosecommand"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Spinner
             android:id="@+id/spinnerCommand"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewCommand" />
+            android:layout_below="@id/textViewCommand"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout43"
-        android:layout_marginTop="2dip" >
+        android:layout_marginTop="2dip">
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
-            android:background="#FFCCCCCC" />
+            android:background="#FFCCCCCC"/>
 
         <TextView
             android:id="@+id/textViewWidgetLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Widget label:"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <EditText
             android:id="@+id/editTextWidgetLabel"
@@ -86,9 +87,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewWidgetLabel"
             android:hint="Typical&apos;s Name"
-            android:inputType="text" >
+            android:inputType="text">
 
-            <requestFocus />
+            <requestFocus/>
         </EditText>
     </RelativeLayout>
 
@@ -96,7 +97,7 @@
         android:id="@+id/strut2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/buttonCancelWidgetConfig"
@@ -105,8 +106,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@id/strut2"
-        android:text="@android:string/cancel"
-        android:width="0dip" />
+        android:width="0dip"
+        android:text="@android:string/cancel"/>
 
     <Button
         android:id="@+id/buttonOkWidgetConfig"
@@ -115,6 +116,6 @@
         android:layout_alignLeft="@id/strut2"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="@string/save" />
+        android:text="@string/save"/>
 
 </RelativeLayout>

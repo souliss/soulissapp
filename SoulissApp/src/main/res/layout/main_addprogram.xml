@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/external_margin"
+                android:fitsSystemWindows="true">
 
-    <include layout="@layout/custom_actionbar" />
+    <include layout="@layout/custom_actionbar"/>
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ScrollView01"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/my_awesome_toolbar">
+    <ScrollView android:id="@+id/ScrollView01"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/my_awesome_toolbar">
 
         <RelativeLayout
             android:id="@+id/Cont01"
@@ -28,32 +29,32 @@
                     android:id="@+id/textView1"
                     style="@style/CodeFontTitle"
                     android:text="@string/programs_target"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
 
                 <View
                     android:id="@+id/strut"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"/>
 
                 <Spinner
                     android:id="@+id/spinner2"
                     style="@style/CodeFontMain"
-                    android:paddingTop="8dp"
                     android:layout_width="0dip"
                     android:layout_alignParentLeft="true"
                     android:layout_alignRight="@id/strut"
-                    android:layout_below="@id/textView1" />
+                    android:layout_below="@id/textView1"
+                    android:paddingTop="8dp"/>
 
                 <Spinner
                     android:id="@+id/spinner3"
                     style="@style/CodeFontMain"
                     android:layout_width="0dip"
-                    android:paddingTop="8dp"
                     android:layout_alignLeft="@id/strut"
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/textView1"
-                    android:layout_toRightOf="@id/spinner2" />
+                    android:layout_toRightOf="@id/spinner2"
+                    android:paddingTop="8dp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -68,14 +69,14 @@
                     android:id="@+id/textViewCommand"
                     style="@style/CodeFontTitle"
                     android:text="@string/addprogram_choosecommand"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
 
                 <Spinner
                     android:id="@+id/spinnerCommand"
-                    android:paddingTop="8dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewCommand" />
+                    android:layout_below="@id/textViewCommand"
+                    android:paddingTop="8dp"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -87,16 +88,16 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="2dip"
-                    android:background="#FFCCCCCC" />
+                    android:background="#FFCCCCCC"/>
 
                 <RadioButton
-                    android:paddingTop="2dp"
                     android:id="@+id/RadioButtonTime"
                     style="@style/CodeFontTitle"
                     android:layout_width="fill_parent"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:text="@string/addprogram_timed" />
+                    android:paddingTop="2dp"
+                    android:text="@string/addprogram_timed"/>
 
                 <ImageView
                     android:id="@+id/timed_icon"
@@ -105,7 +106,7 @@
                     android:layout_alignParentRight="true"
                     android:alpha="0.5"
                     android:contentDescription="@string/addprogram_timed"
-                    android:src="@drawable/clock" />
+                    android:src="@drawable/clock"/>
 
                 <TextView
                     android:id="@+id/textviewtimed"
@@ -114,14 +115,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/timed_icon"
                     android:layout_margin="4dip"
-                    android:text="@string/addprogram_timed_desc" />
+                    android:text="@string/addprogram_timed_desc"/>
 
                 <TimePicker
                     android:id="@+id/timePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textviewtimed"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"/>
 
                 <CheckBox
                     android:id="@+id/checkBoxRecursive"
@@ -129,7 +130,7 @@
                     android:layout_alignParentTop="false"
                     android:layout_below="@id/timePicker"
                     android:layout_marginTop="16dp"
-                    android:text="@string/addprogram_scheduleevery" />
+                    android:text="@string/addprogram_scheduleevery"/>
 
                 <Spinner
                     android:id="@+id/spinnerRepeatEvery"
@@ -141,7 +142,7 @@
                     android:layout_margin="10dp"
                     android:layout_toRightOf="@id/checkBoxRecursive"
                     android:entries="@array/scheduleInterval"
-                    android:entryValues="@array/scheduleIntervalValues" />
+                    android:entryValues="@array/scheduleIntervalValues"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -153,15 +154,15 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dip"
-                    android:background="#FFCCCCCC" />
+                    android:background="#FFCCCCCC"/>
 
                 <RadioButton
-                    android:paddingTop="2dp"
                     android:id="@+id/RadioButtonPosition"
                     style="@style/CodeFontTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/addprogram_positional" />
+                    android:paddingTop="2dp"
+                    android:text="@string/addprogram_positional"/>
 
                 <ImageView
                     android:id="@+id/position_icon"
@@ -170,7 +171,7 @@
                     android:layout_alignParentRight="true"
                     android:alpha="0.5"
                     android:contentDescription="@string/addprogram_positional"
-                    android:src="@drawable/exit" />
+                    android:src="@drawable/exit"/>
 
                 <TextView
                     android:id="@+id/textViewInfoPos"
@@ -178,7 +179,7 @@
                     android:layout_below="@id/position_icon"
                     android:layout_margin="4dip"
                     android:text="@string/addprogram_positional_desc"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 <android.support.v7.widget.SwitchCompat
                     android:id="@+id/toggleButtonPosition"
@@ -199,15 +200,16 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dip"
-                    android:background="#FFCCCCCC" />
+                    android:background="#FFCCCCCC"/>
 
                 <RadioButton
-                    android:paddingTop="2dp"
                     android:id="@+id/RadioButtonTriggered"
                     style="@style/CodeFontTitle"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/addprogram_sensorial" />
+                    android:paddingTop="2dp"
+                    android:text="@string/addprogram_sensorial"/>
+
                 <ImageView
                     android:id="@+id/triggered_icon"
                     android:layout_width="wrap_content"
@@ -215,23 +217,21 @@
                     android:layout_alignParentRight="true"
                     android:alpha="0.5"
                     android:contentDescription="@string/addprogram_sensorial"
-                    android:src="@drawable/lighthouse" />
+                    android:src="@drawable/lighthouse"/>
 
                 <TextView
                     android:id="@+id/textViewInfoTrig"
                     style="@style/CodeFontSmall"
                     android:layout_below="@id/triggered_icon"
                     android:layout_margin="4dip"
-                    android:text="@string/addprogram_sensorial_desc" />
-
-
+                    android:text="@string/addprogram_sensorial_desc"/>
 
 
                 <View
                     android:id="@+id/strutt"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerHorizontal="true"/>
 
                 <Spinner
                     android:id="@+id/Spinner05"
@@ -240,7 +240,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignRight="@id/strutt"
                     android:layout_below="@id/textViewInfoTrig"
-                    android:padding="10dp" />
+                    android:padding="10dp"/>
 
                 <Spinner
                     android:id="@+id/Spinner06"
@@ -250,7 +250,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/textViewInfoTrig"
                     android:layout_toRightOf="@id/Spinner05"
-                    android:padding="10dp" />
+                    android:padding="10dp"/>
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -265,7 +265,7 @@
                         style="@style/CodeFontMain"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".70" />
+                        android:layout_weight=".70"/>
 
                     <EditText
                         android:id="@+id/editTextThreshold"
@@ -273,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".30"
                         android:hint="@string/addprogram_threshold"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"/>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -281,12 +281,12 @@
                 android:id="@+id/strut2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
-                android:background="#FFCCCCCC" />
+                android:background="#FFCCCCCC"/>
 
             <Button
                 android:id="@+id/buttonInsertProgram"
@@ -298,7 +298,7 @@
                 android:layout_below="@id/relativeLayout4"
                 android:layout_marginBottom="25dp"
                 android:width="0dip"
-                android:text="@android:string/cancel" />
+                android:text="@android:string/cancel"/>
 
             <Button
                 android:id="@+id/buttonCancelProgram"
@@ -308,7 +308,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/relativeLayout4"
-                android:text="@string/save" />
+                android:text="@string/save"/>
         </RelativeLayout>
 
     </ScrollView>

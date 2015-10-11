@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ public class SoulissWearActivity extends Activity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 
     @Override
@@ -77,10 +79,12 @@ public class SoulissWearActivity extends Activity {
         notfHelper = new NotificationPresets();
         // buildWearableOnlyNotification("Massimo", "casino", true);
         Notification brick = notfHelper.buildPagedNotification(this);
-        NotificationManager notificationManager = (NotificationManager)
-                getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
 
         notificationManager.notify(Constants.NOTIFICATION_ID, brick);
+        displaySpeechRecognizer();
 
         final WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
        /* stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
@@ -102,28 +106,9 @@ public class SoulissWearActivity extends Activity {
                 SendSoulissCommandIntentService.class);
         launchMuzeiIntent.putExtra("THEVOICE", thevoice);
         launchMuzeiIntent.setAction(Constants.ACTION_SEND_SOULISS_COMMAND);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-                launchMuzeiIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         SoulissWearActivity.this.startService(launchMuzeiIntent);
         Log.i("SoulissWear", "startService: " + launchMuzeiIntent.toString());
-       /* builder.addAction(new Notification.Action.Builder(R.drawable.ic_phone_android_32dp,
-                context.getString(R.string.common_open_on_phone), pendingIntent)
-                .extend(new Notification.Action.WearableExtender()
-                        .setAvailableOffline(false))
-                .build());
-        builder.extend(new Notification.WearableExtender()
-                .setContentAction(0));
-        builder.setSmallIcon(R.mipmap.ic_launcher)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setAutoCancel(true)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(context.getString(R.string.command_sent) + " " + thevoice);
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(NOTIFICATION_SERVICE);
 
-
-        notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());*/
-
-        // Send the notification with notificationManager.notify as usual
     }
 }

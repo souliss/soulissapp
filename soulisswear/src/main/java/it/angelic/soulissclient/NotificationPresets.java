@@ -65,15 +65,6 @@ public class NotificationPresets {
         PendingIntent serviceOpenpendingIntent = PendingIntent.getService(context, 0,
                 launchSoulissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-        Notification page2 = buildBasicNotification(context)
-                .extend(new Notification.WearableExtender()
-                        .setHintShowBackgroundOnly(true)
-                        .setBackground(BitmapFactory.decodeResource(context.getResources(),
-                                R.drawable.home_automation)))
-
-                .build();
-
         SpannableStringBuilder suggeston1 = new SpannableStringBuilder(context.getString(R.string.scene_turnon_lights));
         SpannableStringBuilder suggeston2 = new SpannableStringBuilder(context.getString(R.string.scene_turnoff_lights));
 
@@ -86,6 +77,7 @@ public class NotificationPresets {
                                 .addAction(new Notification.Action.Builder(R.drawable.ic_mic_32,
                                         context.getString(R.string.voice_command), servicependingIntent)
                                         .addRemoteInput(new RemoteInput.Builder("reply")
+                                                .setLabel(context.getString(R.string.voice_command_help))
                                                 .setChoices(new CharSequence[]{
                                                         suggeston1,
                                                         suggeston2
@@ -95,6 +87,7 @@ public class NotificationPresets {
                                 .addAction(new Notification.Action.Builder(R.drawable.ic_phone_android_32dp,
                                         "Open on phone", serviceOpenpendingIntent)
                                         .build())
+                                //.setDisplayIntent(launchSoulissWpendingIntent)
                                 .setBackground(BitmapFactory.decodeResource(context.getResources(), R.drawable.home_automation))
                         //.addPage(page2)
                 )

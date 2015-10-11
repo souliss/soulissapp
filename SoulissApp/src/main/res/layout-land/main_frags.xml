@@ -26,16 +26,17 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-
-                android:layout_height="match_parent">
+                
+                android:layout_height="match_parent"
+                >
 
 
                 <fragment
                     android:id="@+id/listFragment"
                     class="it.angelic.soulissclient.fragments.NodesListFragment"
-                    android:layout_width="240dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_below="@id/my_awesome_toolbar"
                     android:layout_weight="2"
@@ -53,12 +54,13 @@
 
                 <FrameLayout
                     android:id="@+id/detailPane"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_below="@id/my_awesome_toolbar"
                     android:layout_toRightOf="@id/textViewBasicInfoLine"
-                    android:layout_weight="3"/>
-            </RelativeLayout>
+                    android:layout_weight="3"
+                    tools:layout="@layout/frag_nodedetail"/>
+            </LinearLayout>
         </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 

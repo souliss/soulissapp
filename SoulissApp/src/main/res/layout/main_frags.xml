@@ -2,67 +2,70 @@
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/external_margin">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar_layout"
+            android:background="@color/trans_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/Collapselayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:titleEnabled="true"
                 app:toolbarId="@id/my_awesome_toolbar">
-            <include layout="@layout/custom_actionbar"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/scene_icon"
-                    android:layout_width="wrap_content"
+                <include layout="@layout/custom_actionbar"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="4dip"
-                    android:alpha="0.5"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/hand" />
 
-                <TextView
-                    android:id="@+id/TextViewManualDesc"
-                    style="@style/CodeFontSmall"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/manual_desc" />
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:padding="2dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <TextView
-                    android:id="@+id/TextViewTypicals"
-                    style="@style/CodeFontTitleBig"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/TextViewManualDesc"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="4dp"
-                    android:ellipsize="end"
-                    android:text="@string/nodes"/>
-            </RelativeLayout>
-</android.support.design.widget.CollapsingToolbarLayout>
+                    <ImageView
+                        android:id="@+id/scene_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="4dip"
+                        android:alpha="0.5"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/hand"/>
+
+                    <TextView
+                        android:id="@+id/TextViewManualDesc"
+                        style="@style/CodeFontSmall"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/manual_desc"/>
+
+                    <TextView
+                        android:id="@+id/TextViewTypicals"
+                        style="@style/CodeFontTitleBig"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@id/TextViewManualDesc"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:text="@string/nodes"/>
+                </RelativeLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
 
