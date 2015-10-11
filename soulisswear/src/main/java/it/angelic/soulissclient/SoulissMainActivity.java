@@ -83,12 +83,12 @@ public class SoulissMainActivity extends Activity {
                 .setPriority(Notification.PRIORITY_MAX)
                 .setAutoCancel(true)
                 .setContentTitle(context.getString(R.string.app_name))
-                .setContentText("SMALL1");
+                .setContentText(context.getString(R.string.command_sent) + " "+ thevoice);
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(NOTIFICATION_SERVICE);
 
 
-        notificationManager.notify(3113, builder.build());
+        notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
         Log.i("SoulissWear", "notified: "+builder.build().toString());
         // Send the notification with notificationManager.notify as usual
     }

@@ -22,17 +22,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 import android.support.wearable.activity.ConfirmationActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.wearable.CapabilityApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
 
@@ -40,51 +37,14 @@ import com.google.android.gms.wearable.Wearable;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class ActivateSoulissIntentService extends IntentService {
     private static final String TAG = ActivateSoulissIntentService.class.getSimpleName();
-    private static final int NOTIFICATION_ID = 3113;
-    private static final String ACTIVATE_MUZEI_NOTIF_SHOWN_PREF_KEY = "ACTIVATE_MUZEI_NOTIF_SHOWN";
     private static final String ACTION_MARK_NOTIFICATION_READ =
             "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
 
-    public static void maybeShowActivateMuzeiNotification(Context context) {
 
-
-        Notification.Builder builder = new Notification.Builder(context);
-        builder.setSmallIcon(R.mipmap.ic_launcher)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setAutoCancel(true)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setContentText("SMALL1");
-        Intent deleteIntent = new Intent(context, ActivateSoulissIntentService.class);
-        deleteIntent.setAction(ACTION_MARK_NOTIFICATION_READ);
-
-
-        builder.setDeleteIntent(PendingIntent.getService(context, 0, deleteIntent, 0));
-        Intent launchMuzeiIntent = new Intent(context, ActivateSoulissIntentService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(context, 0, launchMuzeiIntent, 0);
-        builder.addAction(new Notification.Action.Builder(R.drawable.ic_phone_android_24dp,
-                context.getString(R.string.common_open_on_phone), pendingIntent)
-                .extend(new Notification.Action.WearableExtender()
-                        .setAvailableOffline(false))
-                .build());
-        Bitmap background = null;
-        try {
-            background = BitmapFactory.decodeStream(context.getAssets().open("starrynight.jpg"));
-        } catch (IOException e) {
-            Log.e(TAG, "Error reading default background asset", e);
-        }
-        builder.extend(new Notification.WearableExtender()
-                .setContentAction(0)
-                .setBackground(background));
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-      //  preferences.edit().putBoolean(ACTIVATE_MUZEI_NOTIF_SHOWN_PREF_KEY, true).apply();
-    }
 
     public ActivateSoulissIntentService() {
         super(TAG);
@@ -99,7 +59,7 @@ public class ActivateSoulissIntentService extends IntentService {
             // Clear the notification
             NotificationManager notificationManager = (NotificationManager)
                     getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.cancel(NOTIFICATION_ID);
+            notificationManager.cancel(Constants.NOTIFICATION_ID);
             return;
         }
         // else -> Open on Phone action
@@ -128,7 +88,7 @@ public class ActivateSoulissIntentService extends IntentService {
             // Clear the notification
             NotificationManager notificationManager = (NotificationManager)
                     getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.cancel(NOTIFICATION_ID);
+            notificationManager.cancel(Constants.NOTIFICATION_ID);
             // Send the message to the phone to open Muzei
             for (Node node : nodes) {
                 Wearable.MessageApi.sendMessage(googleApiClient, node.getId(),

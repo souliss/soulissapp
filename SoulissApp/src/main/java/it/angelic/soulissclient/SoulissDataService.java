@@ -257,12 +257,24 @@ public class SoulissDataService extends Service implements LocationListener {
         Resources res = ctx.getResources();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
+        SoulissCommand shutoff = new SoulissCommand(ppr);
+        shutoff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
+
+        Intent mapIntent = new Intent(ctx, SendCommandActivityNoDisplay.class);
+        mapIntent.putExtra("COMMAND", shutoff);
+
+        PendingIntent mapPendingIntent =
+                PendingIntent.getActivity(ctx, 0, mapIntent, 0);
+
 
         builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.bell))
+                .setLargeIcon(BitmapFactory.decodeResource(res, ppr.getIconResourceId()))
                 .setTicker("Turned on warning")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true).setContentTitle(desc)
+
+                .addAction(R.drawable.ic_cancel_24dp,
+                        ctx.getString(R.string.scene_turnoff_lights), mapPendingIntent)
                 .setContentText(longdesc);
 
         Notification n = builder.build();

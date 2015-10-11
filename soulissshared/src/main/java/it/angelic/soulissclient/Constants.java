@@ -37,8 +37,9 @@ public class Constants {
 	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
 	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 	public static final int TAG_INSERT_POINT = 1;
+    static final int NOTIFICATION_ID = 3113;
 
-	public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
+    public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
 	//public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
 	public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
