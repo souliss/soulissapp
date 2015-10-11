@@ -24,7 +24,8 @@ public class Constants {
 
     public static final String ACTION_DISMISS
             = "com.example.android.wearable.synchronizednotifications.DISMISS";
-
+    static final String ACTION_SEND_SOULISS_COMMAND =
+            "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
 	public static final int SEC_IN_A_MIN = 60;
 	public static final int MSEC_IN_A_SEC = 1000;
 	public static final int MIN_IN_A_HOUR = 60;
@@ -38,6 +39,7 @@ public class Constants {
 	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 	public static final int TAG_INSERT_POINT = 1;
     static final int NOTIFICATION_ID = 3113;
+
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
