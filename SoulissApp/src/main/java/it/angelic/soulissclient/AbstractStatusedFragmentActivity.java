@@ -57,6 +57,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     ListView mDrawerList;
     NavDrawerAdapter mDrawermAdapter;
     TextView actionTitle;
+    int numTries = 0;
     private Toolbar actionBar;
     private boolean hasPosted;
     Runnable timeExpired = new Runnable() {
@@ -64,9 +65,18 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         public void run() {
 
             Log.w(Constants.TAG, "TIMEOUT!");
-            opzioni.clearCachedAddress();
+            if (numTries > 2) {
+                opzioni.clearCachedAddress();
+                refreshStatusIcon();//put offline
+                numTries = 0;
+            } else {
+                opzioni.setBestAddress();
+                numTries++;
+                setSynching();//almost offline
+
+            }
             hasPosted = false;
-            refreshStatusIcon();
+
         }
     };
     private TextView info1;
@@ -78,10 +88,11 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         public void onReceive(Context context, Intent intent) {
             // opzioni.initializePrefs();
             // rimuove timeout
-            Log.i(TAG, "TIMEOUT CANCELED. cachaddress: "+opzioni.getCachedAddress());
+            Log.i(TAG, "TIMEOUT CANCELED. cachaddress: " + opzioni.getCachedAddress());
             timeoutHandler.removeCallbacks(timeExpired);
             hasPosted = false;
             refreshStatusIcon();
+
         }
     };
     // meccanismo per network detection
@@ -286,9 +297,20 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         if (ds != null) {
             ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
             TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-            online.setBackgroundResource(R.drawable.red5);
+            switch (numTries) {//sempre piu verso il rosso
+                case 0:
+                    online.setBackgroundResource(R.drawable.red5);
+                    break;
+                case 1:
+                    online.setBackgroundResource(R.drawable.red4);
+                    break;
+                case 2:
+                    online.setBackgroundResource(R.drawable.red3);
+                    break;
+            }
             statusOnline.setTextColor(getResources().getColor(R.color.std_yellow));
             statusOnline.setText(R.string.synch);
         }
     }
+
 }

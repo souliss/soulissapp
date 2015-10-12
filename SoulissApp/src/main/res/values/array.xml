@@ -60,9 +60,9 @@
         <item name="10000">10 seconds</item>
     </string-array>
     <string-array name="updateIntervalValues">
-        <item name="3000">3000</item>
-        <item name="5000">5000</item>
-        <item name="10000">10000</item>
+        <item name="3000">1000</item>
+        <item name="5000">3000</item>
+        <item name="10000">5000</item>
     </string-array>
     <string-array name="scheduleInterval">
         <item name="1800">half hour</item>
@@ -146,6 +146,7 @@
 
     <string-array name="delayInterval">
         <item name="0">No delay</item>
+        <item name="500">Half Second</item>
         <item name="1000">1 second</item>
         <item name="3000">3 seconds</item>
         <item name="5000">5 seconds</item>
@@ -153,7 +154,8 @@
     </string-array>
     <integer-array name="delayIntervalValues">
         <item name="0">0</item>
-        <item name="1000">1</item>
+        <item name="500">500</item>
+        <item name="1000">1000</item>
         <item name="3000">3000</item>
         <item name="5000">5000</item>
         <item name="10000">10000</item>

@@ -49,7 +49,7 @@
                             android:layout_weight="1"
                             android:drawableTop="@drawable/moon"
                             android:drawingCacheQuality="high"
-                            android:elevation="2dp"
+                            android:elevation="4dp"
                             android:freezesText="false"
                             android:text="@string/scenes_title"
                             android:maxLines="1"
@@ -63,7 +63,7 @@
                             android:layout_weight="1"
                             android:drawableTop="@drawable/remote"
                             android:drawingCacheQuality="high"
-                            android:elevation="2dp"
+                            android:elevation="4dp"
                             android:text="@string/programs_title"
                             android:maxLines="1"
                             android:transitionName="helloPrograms" />
@@ -75,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@drawable/hand"
-                            android:elevation="2dp"
+                            android:elevation="4dp"
                             android:text="@string/manual_title"
                             android:maxLines="1"
                             android:transitionName="helloManual" />

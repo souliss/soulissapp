@@ -8,30 +8,18 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <android.support.design.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/external_margin">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBar_layout"
-            android:background="@color/trans_black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/Collapselayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:toolbarId="@id/my_awesome_toolbar">
 
                 <include layout="@layout/custom_actionbar"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="?attr/actionBarSize"
                     android:padding="2dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -64,67 +52,15 @@
                         android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:text="@string/nodes"/>
+                    <fragment
+                        android:layout_below="@id/TextViewTypicals"
+                        android:id="@+id/listFragment"
+                        class="it.angelic.soulissclient.fragments.NodesListFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        tools:layout="@layout/frag_nodelist"/>
                 </RelativeLayout>
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
-
-
-        <fragment
-            android:id="@+id/listFragment"
-            class="it.angelic.soulissclient.fragments.NodesListFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:layout="@layout/frag_nodelist"/>
-    </android.support.design.widget.CoordinatorLayout>
-
+    </RelativeLayout>
     <include layout="@layout/custom_leftdrawer"/>
-</android.support.v4.widget.DrawerLayout><!--
-
-
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <fragment class="com.example.android.supportv4.app.FragmentLayoutSupport$TitlesFragment"
-            android:id="@+id/titles"
-            android:layout_width="match_parent" android:layout_height="match_parent" />
-</FrameLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="horizontal" >
-
-    <fragment
-        android:id="@+id/listFragment"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        class="it.angelic.soulissclient.NodesListFragment" ></fragment>
- <fragment
-        android:id="@+id/detailFragment"
-        android:layout_width="0dp"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
-        class="it.angelic.soulissclient.NodeDetailFragment" >
-         Preview: layout=@layout/details 
-    </fragment>
-
-</LinearLayout>
--->
+</android.support.v4.widget.DrawerLayout>

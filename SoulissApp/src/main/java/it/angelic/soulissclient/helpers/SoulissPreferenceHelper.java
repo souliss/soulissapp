@@ -343,7 +343,7 @@ public class SoulissPreferenceHelper implements Serializable {
         IPPreferencePublic = prefs.getString("edittext_IP_pubb", "");
         DimensTesto = prefs.getString("listPref", "0");
         PrefFont = prefs.getString("fontPref", "Futura.ttf");
-        remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "6000"));
+        remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "3000"));
         dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
         homeThold = prefs.getInt("distanceThold", 150);
         dataServiceEnabled = prefs.getBoolean("checkboxService", false);

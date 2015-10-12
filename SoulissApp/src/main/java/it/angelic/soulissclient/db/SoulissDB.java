@@ -274,33 +274,33 @@ public class SoulissDB extends SQLiteOpenHelper {
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
                 + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T11 + "," + Constants.Typicals.Souliss_T1n_OffCmd
-                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",1)");
+                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",200)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
                 + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T12 + "," + Constants.Typicals.Souliss_T1n_OffCmd
-                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",2)");
+                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",400)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT//RGB
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
                 + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T16 + "," + Constants.Typicals.Souliss_T1n_OffCmd
-                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",3)");
+                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",600)");
         // Comandi massivi di default ON
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
                 + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T11 + "," + Constants.Typicals.Souliss_T1n_OnCmd
-                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",1)");
+                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",200)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
                 + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T12 + "," + Constants.Typicals.Souliss_T1n_OnCmd
-                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",2)");
+                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",400)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
                 + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T16 + "," + Constants.Typicals.Souliss_T1n_OnCmd
-                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",3)");
+                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",600)");
 
     }
 

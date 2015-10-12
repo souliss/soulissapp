@@ -51,9 +51,9 @@
         <item name="10000">10 segundos</item>
     </string-array>
     <string-array name="updateIntervalValues">
-        <item name="3000">3000</item>
-        <item name="5000">5000</item>
-        <item name="10000">10000</item>
+        <item name="3000">1000</item>
+        <item name="5000">3000</item>
+        <item name="10000">5000</item>
     </string-array>
     <string-array name="scheduleInterval">
         <item name="1800">Media hora</item>

@@ -19,6 +19,6 @@
         <item quantity="zero">0 Секунд</item>
         <item quantity="one">%d Секунда</item>
         <item quantity="few">%d Секунды</item>
-        <item quantity="many">%d Секунд</item>
+        <item quantity="many">%s Секунд</item>
     </plurals>
 </resources>

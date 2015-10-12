@@ -58,7 +58,7 @@
         android:layout_width="fill_parent"
         android:layout_height="4dp"
         android:layout_below="@id/LinearLayout01"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="8dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:background="@drawable/shadow_left" />
 </RelativeLayout>
