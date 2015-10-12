@@ -116,6 +116,9 @@ public class UDPSoulissDecoder {
         opzioni.getContx().sendBroadcast(i);
         // resetta backoff irraggiungibilit�
         opzioni.resetBackOff();
+        //se era irraggiungibile, pinga
+        if (!opzioni.isSoulissReachable())
+            opzioni.setBestAddress();
 
     }
 

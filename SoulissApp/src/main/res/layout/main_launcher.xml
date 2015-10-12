@@ -164,6 +164,7 @@
             android:src="@drawable/ic_mic_32"
             fab:fab_colorNormal="@color/std_green"
             fab:fab_colorPressed="@color/std_blue_shadow"
+            android:visibility="invisible"
             fab:fab_colorRipple="@color/std_purple" />
     </RelativeLayout>
 

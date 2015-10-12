@@ -625,7 +625,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     protected void onStart() {
         super.onStart();
-
+        setActionBarInfo(getString(R.string.app_name));
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
@@ -710,6 +710,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         //VOICE SEARCH
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (opzioni.isVoiceCommandEnabled()) {
+            fab.setVisibility(View.VISIBLE);
             fab.attachToScrollView(scrollView);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -726,6 +727,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 }
             });
         } else {
+            fab.setVisibility(View.INVISIBLE);
             fab.hide();
         }
 
@@ -836,7 +838,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     }
 
     private void setHeadInfo() {
-        setActionBarInfo(getString(R.string.app_name));
+
         //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
         // check se IP non settato check system configured
         if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissPublicIpConfigured()) {

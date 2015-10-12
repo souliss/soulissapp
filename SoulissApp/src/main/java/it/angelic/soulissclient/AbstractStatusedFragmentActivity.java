@@ -62,9 +62,11 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     Runnable timeExpired = new Runnable() {
         @Override
         public void run() {
-            refreshStatusIcon();
-            opzioni.getAndSetCachedAddress();
+
+            Log.w(Constants.TAG, "TIMEOUT!");
+            opzioni.clearCachedAddress();
             hasPosted = false;
+            refreshStatusIcon();
         }
     };
     private TextView info1;
@@ -76,7 +78,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         public void onReceive(Context context, Intent intent) {
             // opzioni.initializePrefs();
             // rimuove timeout
-            Log.i(TAG, "TIMEOUT CANCELED");
+            Log.i(TAG, "TIMEOUT CANCELED. cachaddress: "+opzioni.getCachedAddress());
             timeoutHandler.removeCallbacks(timeExpired);
             hasPosted = false;
             refreshStatusIcon();
