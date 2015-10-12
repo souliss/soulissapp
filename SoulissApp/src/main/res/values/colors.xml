@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="white_bitaplha">#CCffffff</color>
+    <color name="grey_alpha">#44AAAAAA</color>
+    <color name="grey_lalpha">#FF999999</color>
+    <color name="trans_black">#00000000</color>
+    <color name="plain_grey">#DDCCCCCC</color>
+    <color name="deep_blue">#ff0066AA</color>
+    <color name="deep_green">#ff114411</color>
+    <color name="std_blue">#33B5E5</color>
+    <color name="std_purple">#AA66CC</color>
+    <color name="std_green">#99CC00</color>
+    <color name="std_yellow">#FFBB33</color>
+    <color name="std_red">#FF4444</color>
+    <color name="std_blue_shadow">#0099CC</color>
+    <color name="std_purple_shadow">#9933CC</color>
+    <color name="std_green_shadow">#669900</color>
+    <color name="std_yellow_shadow">#FF8800</color>
+    <color name="std_red_shadow">#CC0000</color>
+    <color name="aa_red">#AAFF0000</color>
+    <color name="aa_green">#AA99CC00</color>
+    <color name="aa_blue">#AA0000FF</color>
+    <color name="aa_yellow">#AAFFBB33</color>
+    <color name="aa_violet">#AABB00FF</color>
+
+    <color name="barbackg_red">#66FF0000</color>
+    <color name="barbackg_green">#6600FF00</color>
+    <color name="barbackg_blue">#660000FF</color>
+
+</resources>

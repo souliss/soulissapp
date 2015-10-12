@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- add pertinent synonyms, to be used during voice recognition -->
+    <string-array name="open_strarray">
+        <item>Abrir</item>
+    </string-array>
+
+    <string-array name="close_strarray">
+        <item>Cerrar</item>
+    </string-array>
+
+    <string-array name="stop_strarray">
+        <item>Detener</item>
+    </string-array>
+
+    <string-array name="toggle_strarray">
+        <item>Cambiar</item>
+    </string-array>
+
+    <string-array name="TurnON_strarray">
+        <item>Encender</item>
+    </string-array>
+
+    <string-array name="TurnOFF_strarray">
+        <item>Apagar</item>
+    </string-array>
+</resources>

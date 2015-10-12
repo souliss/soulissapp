@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+
+    <string name="unavailable">Nicht verfügbar</string>
+    <string name="souliss_unavailable">Souliss nicht verfügbar!</string>
+    <string name="notconfigured">Souliss ist noch <b>nicht konfiguriert</b>, eine lokale IP-Adresse ist erforderlich</string>
+    <string name="health">EMPFANG:</string>
+    <string name="status">STATUS:</string>
+    <string name="update">AKTUAL. vor:</string>
+    <string name="actions">AKTIONEN:</string>
+    <string name="node">Knoten</string>
+    <string name="nodes">Knoten</string>
+    <string name="slot">Slot</string>
+    <string name="sensors">Sensoren</string>
+    <string name="ping">Ping</string>
+    <string name="ago">ago</string>
+    <string name="multicast">Multicast</string>
+    <string name="multicast_desc">An alle Geräte dieses Types senden</string>
+    <string name="days">Tage</string>
+    <string name="poll">Abfragen</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="save">Speichern</string>
+    <string name="brightness">Helligkeit</string>
+    <string name="proceed">Weiter</string>
+    <string name="scene">Szenario</string>
+    <string name="rename">Umbenennen</string>
+    <string name="reset">Reset</string>
+    <string name="typical">Routine</string>
+    <string name="ON">AN</string>
+    <string name="power">Power</string>
+    <string name="OFF">AUS</string>
+    <string name="open">Öffnen</string>
+    <string name="close">Schließen</string>
+    <string name="stop">Stop</string>
+    <string name="toggle">Umschalten</string>
+    <string name="TurnON">Anschalten</string>
+    <string name="TurnOFF">Ausschalten</string>
+    <string name="mode">Modus</string>
+    <string name="fan">Ventilator</string>
+    <string name="red">Rot</string>
+    <string name="green">Grün</string>
+    <string name="blue">Blau</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="timer">Timer</string>
+    <string name="is">ist</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="meters">Meter</string>
+    <string name="service">Service</string>
+    <string name="position">Position</string>
+    <string name="Online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="ok">OK</string>
+    <string name="stale">STALE</string>
+    <string name="synch">synch</string>
+
+
+</resources>

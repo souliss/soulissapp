@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="func_array">
+        <item>Sceny</item>
+        <item>Programy</item>
+        <item>Ręczne</item>
+        <item>Ustawienia sieci</item>
+        <item>@string/unknown_typical</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="slot_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="nodes_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+    <string-array name="textsiz_array">
+        <item>Bardzo małe</item>
+        <item>Małe</item>
+        <item>Średnie</item>
+        <item>Duże</item>
+    </string-array>
+    <string-array name="textsiz_values">
+        <item>-1</item>
+        <item>0</item>
+        <item>2</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="font_array">
+        <item>Standard</item>
+        <item>Futura</item>
+        <item>Robotics</item>
+    </string-array>
+    <string-array name="font_values">
+        <item>def</item>
+        <item>Futura.ttf</item>
+        <item>Robotics.ttf</item>
+    </string-array>
+    <string-array name="updateInterval">
+        <item name="3000">3 sekundy</item>
+        <item name="5000">5 sekund</item>
+        <item name="10000">10 sekund</item>
+    </string-array>
+    <string-array name="updateIntervalValues">
+        <item name="3000">3000</item>
+        <item name="5000">5000</item>
+        <item name="10000">10000</item>
+    </string-array>
+    <string-array name="scheduleInterval">
+        <item name="1800">pół godziny</item>
+        <item name="3600">godzina</item>
+        <item name="21600">6 godzin</item>
+        <item name="86400">dzień</item>
+    </string-array>
+
+    <integer-array name="scheduleIntervalValues">
+        <item name="1800">1800</item>
+        <item name="3600">3600</item>
+        <item name="21600">21600</item>
+        <item name="86400">86400</item>
+    </integer-array>
+
+    <string-array name="graphType">
+        <item>Historia</item>
+        <item>Grupowanie wg miesięcy</item>
+        <item>Grupowanie wg godzin</item>
+    </string-array>
+    <string-array name="graphTypeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="graphRange">
+        <item>Wszystkie dane</item>
+        <item>Ostatni miesiąc</item>
+        <item>Ostatni tydzień</item>
+    </string-array>
+    <string-array name="graphRangeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="AirConFunction">
+        <item>Auto</item>
+        <item>Chłodzenie</item>
+        <item>Osuszanie</item>
+        <item>Wentylator</item>
+        <item>Grzanie</item>
+    </string-array>
+
+    <string-array name="HeatingFunction">
+        <item>Chłodzenie</item>
+        <item>Grzanie</item>
+    </string-array>
+
+    <integer-array name="AirConFunctionValues">
+        <item>15</item>
+        <item>7</item>
+        <item>11</item>
+        <item>3</item>
+        <item>13</item>
+    </integer-array>
+
+    <string-array name="AirConFan">
+        <item>Auto</item>
+        <item>Wysoki</item>
+        <item>Średni</item>
+        <item>Niski</item>
+    </string-array>
+
+    <integer-array name="AirConFanValues">
+        <item>7</item>
+        <item>2</item>
+        <item>6</item>
+        <item>5</item>
+    </integer-array>
+
+    <string-array name="rgbModes">
+        <item>Koło RGB</item>
+        <item>Kanały RGB</item>
+        <item>Synchronizacja z muzyką</item>
+    </string-array>
+
+    <string-array name="singleChannelModes">
+        <item>Ręczny</item>
+        <item>Synchronizacja z muzyką</item>
+    </string-array>
+
+</resources>

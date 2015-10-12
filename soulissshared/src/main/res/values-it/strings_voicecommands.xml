@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- add pertinent synonyms, to be used during voice recognition -->
+    <string-array name="open_strarray">
+        <item>Apri</item>
+        <item>spalanca</item>
+        <item>Aprire</item>
+        <item>saglie</item>
+        <item>verzi</item>
+    </string-array>
+
+    <string-array name="close_strarray">
+        <item>Chiudi</item>
+        <item>chiudere</item>
+        <item>scinne</item>
+    </string-array>
+
+    <string-array name="stop_strarray">
+        <item>stop</item>
+        <item>ferma</item>
+        <item>arresta</item>
+        <item>fermare</item>
+    </string-array>
+
+    <string-array name="toggle_strarray">
+        <item>Inverti</item>
+    </string-array>
+
+    <string-array name="TurnON_strarray">
+        <item>Accendi</item>
+        <item>accendere</item>
+        <item>impiza</item>
+        <item>appiccia</item>
+    </string-array>
+
+    <string-array name="TurnOFF_strarray">
+        <item>spegni</item>
+        <item>spegnere</item>
+        <item>uccidi</item>
+        <item>stuta</item>
+    </string-array>
+    
+</resources>
