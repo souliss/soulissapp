@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:fab="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:padding="@dimen/external_margin">
 
     <include layout="@layout/custom_actionbar"/>
 
     <RelativeLayout
         android:id="@+id/RelativeLayoutNodeDetail"
-        android:padding="@dimen/external_margin"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/my_awesome_toolbar">
@@ -67,6 +66,7 @@
                 android:divider="@android:color/transparent"
                 android:fadeScrollbars="true"
                 android:fadingEdge="vertical"
+                tools:listitem="@layout/listview_scene_detail"
                 android:requiresFadingEdge="vertical"/>
 
             <com.melnykov.fab.FloatingActionButton

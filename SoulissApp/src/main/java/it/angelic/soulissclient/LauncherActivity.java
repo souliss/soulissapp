@@ -677,13 +677,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, ProgramListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                ActivityOptionsCompat options =
+                /*ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 programsActivity,   // The view which starts the transition
                                 "helloPrograms"    // The transitionName of the view we’re transitioning to
                         );
-                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
-                //LauncherActivity.this.startActivity(myIntent);
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
+                LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -694,13 +694,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, NodesListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                ActivityOptionsCompat options =
+               /* ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
                                 soulissManualBtn,   // The view which starts the transition
                                 "helloManual"    // The transitionName of the view we’re transitioning to
                         );
-                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
-                //LauncherActivity.this.startActivity(myIntent);
+                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
+                LauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
