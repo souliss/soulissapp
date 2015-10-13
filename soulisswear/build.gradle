@@ -26,5 +26,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.1.0'
     compile 'com.google.android.gms:play-services:8.1.0'
 
-    compile project(':soulissshared')
+    compile project(':soulissLib')
 }

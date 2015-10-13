@@ -157,10 +157,10 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                     Log.e(it.angelic.soulissclient.Constants.TAG, "ERROR bcast_passwd parameter:" + bcast_passwd.getText() + e.getMessage());
                 }
 
-                getActivity().runOnUiThread(new Runnable() {
+
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
-
                         UDPHelper.issueBroadcastConfigure(opzioni, Constants.Net.Souliss_UDP_function_broadcast_configure, bcastPayload, bcast_isGateway.isChecked(), bcast_useDhcp.isChecked());
                         Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure sent");
                         if (ssidPayload.size() > 0) {
@@ -171,13 +171,20 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                             UDPHelper.issueBroadcastConfigure(opzioni, Constants.Net.Souliss_UDP_function_broadcast_configure_wifipass, passPayload, null, null);
                             Log.w(it.angelic.soulissclient.Constants.TAG, "Souliss_UDP_function_broadcast_configure_wifipass sent");
                         }
-                        StringBuilder textOut = new StringBuilder();
+                        final StringBuilder textOut = new StringBuilder();
                         int numSent= passPayload.size() + ssidPayload.size() + bcastPayload.size();
                         textOut.append(SoulissApp.getAppContext().getResources().getQuantityString(R.plurals.Bytes,numSent,numSent )).append(" ");
-                        textOut.append(SoulissApp.getAppContext().getString(R.string.command_sent) );
-                        Toast.makeText(SoulissApp.getAppContext(), textOut.toString(), Toast.LENGTH_SHORT).show();
+                        textOut.append(SoulissApp.getAppContext().getString(R.string.command_sent));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+
+                                Toast.makeText(SoulissApp.getAppContext(), textOut.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                }) ;
+                }).start();
 
                 return true;
             }

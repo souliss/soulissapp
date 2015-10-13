@@ -63,7 +63,7 @@ public class SoulissWearActivity extends Activity {
             // Do something with spokenText
             if (spokenText != null && spokenText.length() > 0) {
                 Log.i("SoulissWear", "Command received: " + spokenText);
-                mTextView.setText(spokenText);
+//                mTextView.setText(spokenText);
                 showNotification(SoulissWearActivity.this, spokenText);
             }
         }
