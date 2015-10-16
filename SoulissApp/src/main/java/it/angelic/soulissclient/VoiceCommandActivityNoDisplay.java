@@ -46,6 +46,12 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             comandToSend.append("" + Constants.Typicals.Souliss_T2n_OpenCmd);
         } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.close_strarray))) {
             comandToSend.append("" + Constants.Typicals.Souliss_T2n_CloseCmd);
+        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.red).toLowerCase())) {
+            comandToSend.append("" + Constants.Typicals.Souliss_T16_Red);
+        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.green).toLowerCase())) {
+            comandToSend.append("" + Constants.Typicals.Souliss_T16_Green);
+        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.blue).toLowerCase())) {
+            comandToSend.append("" + Constants.Typicals.Souliss_T16_Blue);
         }
         boolean nodeMatch = false;
         boolean typMatch = false;
