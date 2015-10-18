@@ -30,6 +30,7 @@ import java.util.Date;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -40,14 +41,14 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
 
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_AutoCmd;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCmd;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil_Auto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCmd;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OnCoil_Auto;
-import static it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_Timed;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_AutoCmd;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCmd;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCoil;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCoil_Auto;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OnCmd;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OnCoil;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OnCoil_Auto;
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_Timed;
 import static junit.framework.Assert.assertTrue;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
@@ -175,7 +176,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
-		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_BrightUp);
+		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
 		if (opzioni.isLogHistoryEnabled()) {
             refreshHistoryInfo();
@@ -216,7 +217,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			}
 		});
 
-		btSleep.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_related);
+		btSleep.setTag(Constants.Typicals.Souliss_T_related);
 		// Listener generico
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
@@ -298,13 +299,13 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                 long swap = new Date().getTime() - when.getTime();
                 msecOn += swap;
                 String strMeatFormat = getResources().getString(R.string.manual_litfrom);
-                String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(swap));
+                String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(swap));
                 str.append(strMeatMsg);
 
             }
             str.append("\n");
             String strMeatFormat = getResources().getString(R.string.manual_tyinf);
-            String strMeatMsg = String.format(strMeatFormat, Constants.getDuration(msecOn));
+            String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(msecOn));
             str.append(strMeatMsg);
             infoHistory.setText(str.toString());
             if (collected.getTypicalDTO().isFavourite()) {
@@ -425,7 +426,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-		filtere.addAction(it.angelic.soulissclient.net.Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+		filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 	}
 

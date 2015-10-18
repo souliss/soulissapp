@@ -38,6 +38,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
@@ -178,7 +179,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		par.setMax(Constants.MAX_HEALTH);
 		par.setProgress(collected.getParentNode().getHealth());
 		upda.setText(getResources().getString(R.string.update) + " "
-				+ Constants.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
+				+ Utils.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
 
 		icon.setImageResource(collected.getIconResourceId());
 		/**
@@ -269,27 +270,27 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		renderer = GraphsHelper.buildHistoryRenderer(getActivity(), opzioni);
 
 		switch (type) {
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_TemperatureSensor:
+		case Constants.Typicals.Souliss_T_TemperatureSensor:
 			renderer.setYAxisMin(-15);
 			renderer.setYAxisMax(50);
 			renderer.setYTitle("Celsius degrees");
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor:
+		case Constants.Typicals.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			renderer.setYTitle("Humidity %");
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T51:// generic
+		case Constants.Typicals.Souliss_T51:// generic
 																			// analog
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T54_LuxSensor:
+		case Constants.Typicals.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			renderer.setYTitle("Lux");
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T58_PressureSensor:
+		case Constants.Typicals.Souliss_T58_PressureSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			renderer.setYTitle("hPa");
@@ -345,19 +346,19 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			renderer = GraphsHelper.buildMonthRenderer(getActivity());
 
 		switch (type) {
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_TemperatureSensor:
+		case Constants.Typicals.Souliss_T_TemperatureSensor:
 			renderer.setYAxisMin(-15);
 			renderer.setYAxisMax(50);
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T_HumiditySensor:
+		case Constants.Typicals.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T54_LuxSensor:
+		case Constants.Typicals.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			break;
-		case it.angelic.soulissclient.model.typicals.Constants.Souliss_T58_PressureSensor:
+		case Constants.Typicals.Souliss_T58_PressureSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			break;

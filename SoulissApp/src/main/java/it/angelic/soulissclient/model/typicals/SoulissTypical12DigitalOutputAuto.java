@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -32,30 +33,30 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     }
 
     @Override
-    public ArrayList<SoulissCommand> getCommands(Context ctx) {
+    public ArrayList<ISoulissCommand> getCommands(Context ctx) {
         // ritorna le bozze dei comandi, da riempire con la schermata addProgram
-        ArrayList<SoulissCommand> ret = new ArrayList<>();
+        ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
         SoulissCommand t = new SoulissCommand(this);
-        t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
+        t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
         t.getCommandDTO().setSlot(typicalDTO.getSlot());
         t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
         ret.add(t);
 
         SoulissCommand tr = new SoulissCommand(this);
-        tr.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
+        tr.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
         tr.getCommandDTO().setSlot(typicalDTO.getSlot());
         tr.getCommandDTO().setNodeId(typicalDTO.getNodeId());
         ret.add(tr);
 
         SoulissCommand tj = new SoulissCommand(this);
-        tj.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
+        tj.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
         tj.getCommandDTO().setSlot(typicalDTO.getSlot());
         tj.getCommandDTO().setNodeId(typicalDTO.getNodeId());
         ret.add(tj);
 
         SoulissCommand td = new SoulissCommand(this);
-        td.getCommandDTO().setCommand(Constants.Souliss_T1n_AutoCmd);
+        td.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_AutoCmd);
         td.getCommandDTO().setSlot(typicalDTO.getSlot());
         td.getCommandDTO().setNodeId(typicalDTO.getNodeId());
         ret.add(td);
@@ -65,13 +66,13 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
 
     @Override
     public String getOutputDesc() {
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil)
             return SoulissApp.getAppContext().getString(R.string.ON);
-        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto)
+        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil_Auto)
             return SoulissApp.getAppContext().getString(R.string.ON) + " (AUTO)";
-        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
+        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
             return SoulissApp.getAppContext().getString(R.string.OFF);
-        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto)
+        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil_Auto)
             return "OFF (AUTO)";
         else
             return "UNKNOWN";
@@ -80,7 +81,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     @Override
     public void setOutputDescView(@NonNull TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil_Auto) {
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil_Auto) {
             textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
@@ -110,8 +111,8 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
         turnOffButton.setText(ctx.getString(R.string.OFF));
         cont.addView(turnOffButton);
         // disabilitazioni interlock
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil ||
-                typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil_Auto) {
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil ||
+                typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil_Auto) {
             turnOnButton.setEnabled(false);
         } else {
             turnOffButton.setEnabled(false);
@@ -130,7 +131,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
 
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
                                 prefs,
-                                String.valueOf(Constants.Souliss_T1n_OnCmd));
+                                String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
 
                     }
                 };
@@ -145,7 +146,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
                                 prefs,
-                                String.valueOf(Constants.Souliss_T1n_OffCmd));
+                                String.valueOf(Constants.Typicals.Souliss_T1n_OffCmd));
 
                     }
 
@@ -162,7 +163,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
                 Thread t = new Thread() {
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-                                prefs, String.valueOf(Constants.Souliss_T1n_AutoCmd));
+                                prefs, String.valueOf(Constants.Typicals.Souliss_T1n_AutoCmd));
                         // cmd.setText("Souliss command sent");
                     }
                 };

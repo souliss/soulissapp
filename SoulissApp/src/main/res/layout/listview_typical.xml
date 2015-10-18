@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:id="@+id/LinearLayout01"
@@ -10,6 +11,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
+        tools:layout_height="100dp"
 
         android:background="@drawable/list_rect_green"
         android:focusable="false" >
@@ -99,8 +101,8 @@
         android:layout_width="fill_parent"
         android:layout_height="4dp"
         android:layout_below="@id/LinearLayout01"
-        android:layout_marginLeft="8dip"
-        android:layout_marginRight="8dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
         android:background="@drawable/shadow_left" />
 
 </RelativeLayout>

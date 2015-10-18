@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.model.typicals.Constants;
 
 /**
  * Classe che rappresenta il DB associato a Souliss client
@@ -261,7 +261,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         /* DEFAULT TAG , Order=0 */
         database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + ","+ COLUMN_TAG_ORDER + "," + COLUMN_TAG_ICONID
                 + ") VALUES (" + FAVOURITES_TAG_ID + ",'" + context.getResources().getString(R.string.favourites) + "'," + 0 + ","
-                + R.drawable.lightning + ")");
+                + R.drawable.favorites2 + ")");
         /* DEFAULT SCENES */
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
                 + ") VALUES ('" + context.getResources().getString(R.string.scene_turnoff_lights) + "',"
@@ -273,34 +273,34 @@ public class SoulissDB extends SQLiteOpenHelper {
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
-                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Souliss_T11 + "," + Constants.Souliss_T1n_OffCmd
-                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",1)");
+                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T11 + "," + Constants.Typicals.Souliss_T1n_OffCmd
+                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",200)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
-                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Souliss_T12 + "," + Constants.Souliss_T1n_OffCmd
-                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",2)");
+                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T12 + "," + Constants.Typicals.Souliss_T1n_OffCmd
+                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",400)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT//RGB
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
-                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Souliss_T16 + "," + Constants.Souliss_T1n_OffCmd
-                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",3)");
+                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T16 + "," + Constants.Typicals.Souliss_T1n_OffCmd
+                + ",1," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",600)");
         // Comandi massivi di default ON
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
-                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Souliss_T11 + "," + Constants.Souliss_T1n_OnCmd
-                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",1)");
+                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T11 + "," + Constants.Typicals.Souliss_T1n_OnCmd
+                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",200)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
-                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Souliss_T12 + "," + Constants.Souliss_T1n_OnCmd
-                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",2)");
+                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T12 + "," + Constants.Typicals.Souliss_T1n_OnCmd
+                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",400)");
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
                 + COLUMN_COMMAND_SCHEDTIME_INTERVAL + ")"
-                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Souliss_T16 + "," + Constants.Souliss_T1n_OnCmd
-                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",3)");
+                + " VALUES " + "(" + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ", " + Constants.Typicals.Souliss_T16 + "," + Constants.Typicals.Souliss_T1n_OnCmd
+                + ",2," + it.angelic.soulissclient.Constants.MASSIVE_NODE_ID + ",600)");
 
     }
 

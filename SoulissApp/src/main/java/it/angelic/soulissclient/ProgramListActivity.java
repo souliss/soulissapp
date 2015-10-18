@@ -105,6 +105,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	protected void onStart() {
 		super.onStart();
 		setActionBarInfo(getString(R.string.programs_title));
+		this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		SoulissDBHelper.open();
 		opzioni.initializePrefs();
 		if (!opzioni.isDbConfigured()) {

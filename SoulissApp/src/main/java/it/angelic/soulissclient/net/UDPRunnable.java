@@ -13,6 +13,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
@@ -64,7 +65,7 @@ public class UDPRunnable implements Runnable {
 				socket.setReuseAddress(true);
 				socket.setBroadcast(true);
 				// port to receive souliss board data
-				InetSocketAddress sa = new InetSocketAddress(Constants.SERVERPORT);
+				InetSocketAddress sa = new InetSocketAddress(Constants.Net.SERVERPORT);
 				socket.bind(sa);
 
 				// create a buffer to copy packet contents into

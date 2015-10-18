@@ -17,9 +17,10 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.helpers.HalfFloatUtils;
+import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -53,7 +54,7 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical  i
 		int miofratello =  getParentNode().getTypical((short) (typicalDTO.getSlot() + 1)).getTypicalDTO().getOutput();
 		//ora ho i due bytes, li converto
 		int shifted = miofratello << 8;
-		Log.i(Constants.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
+		Log.i(Constants.Typicals.TAG,"first:"+ Long.toHexString((long) typicalDTO.getOutput())+" second:"+ Long.toHexString((long) miofratello)+ "SENSOR Reading:" + Long.toHexString((long) shifted + typicalDTO.getOutput()) );
 
 		return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
@@ -82,15 +83,15 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical  i
 		String sUnit="";
 		int iMax = 0;
 		switch (typ) {
-		case Constants.Souliss_T55_VoltageSensor:
+		case Constants.Typicals.Souliss_T55_VoltageSensor:
 			sUnit="V";
 			iMax=270;
 			break;
-		case Constants.Souliss_T56_CurrentSensor:
+		case Constants.Typicals.Souliss_T56_CurrentSensor:
 			sUnit="A";
 			iMax=30;
 			break;	
-		case Constants.Souliss_T57_PowerSensor:
+		case Constants.Typicals.Souliss_T57_PowerSensor:
 			sUnit="W";
 			iMax=7000;
 			break;		

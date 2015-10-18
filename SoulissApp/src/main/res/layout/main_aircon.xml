@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/external_margin"
+                android:fitsSystemWindows="true">
 
-    <include layout="@layout/custom_actionbar" />
+    <include layout="@layout/custom_actionbar"/>
 
     <RelativeLayout
         android:id="@+id/Cont01"
         android:layout_width="match_parent"
-        android:layout_below="@id/my_awesome_toolbar"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/my_awesome_toolbar">
 
         <RelativeLayout
             android:id="@+id/relativeLayout3"
@@ -22,7 +23,7 @@
                 android:id="@+id/strut"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"/>
 
             <TextView
                 android:id="@+id/textView1"
@@ -30,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut"
-                android:text="@string/mode" />
+                android:text="@string/mode"/>
 
             <TextView
                 android:id="@+id/textView1dx"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/strut"
                 android:layout_alignParentRight="true"
-                android:text="@string/fan" />
+                android:text="@string/fan"/>
 
             <Spinner
                 android:id="@+id/spinnerFunction"
@@ -47,7 +48,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut"
                 android:layout_below="@id/textView1"
-                android:entries="@array/AirConFunction" />
+                android:entries="@array/AirConFunction"/>
 
             <Spinner
                 android:id="@+id/spinnerFan"
@@ -57,7 +58,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textView1"
                 android:layout_toRightOf="@id/spinnerFunction"
-                android:entries="@array/AirConFan" />
+                android:entries="@array/AirConFan"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -72,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dip"
                 android:text="24"
-                android:textSize="140sp" />
+                android:textSize="140sp"/>
 
             <Button
                 android:id="@+id/buttonPlus"
@@ -83,7 +84,7 @@
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="25dip"
                 android:layout_toRightOf="@id/textviewTemp"
-                android:text="@string/plus" />
+                android:text="@string/plus"/>
 
             <Button
                 android:id="@+id/buttonMinus"
@@ -95,7 +96,7 @@
                 android:layout_marginRight="15dip"
                 android:layout_marginTop="15dip"
                 android:layout_toRightOf="@id/textviewTemp"
-                android:text="@string/minus" />
+                android:text="@string/minus"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -106,7 +107,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="2dip"
-                android:background="#FFCCCCCC" />
+                android:background="#FFCCCCCC"/>
 
             <TextView
                 android:id="@+id/textviewOptions"
@@ -114,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="@string/menu_options"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/toggleButtonEco"
@@ -124,7 +125,7 @@
                 android:layout_centerHorizontal="true"
                 android:drawableTop="@drawable/plug"
                 android:textOff="Eco Mode"
-                android:textOn="Eco Mode" />
+                android:textOn="Eco Mode"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/toggleButtonIon"
@@ -135,7 +136,7 @@
                 android:layout_toLeftOf="@id/toggleButtonEco"
                 android:drawableTop="@drawable/ionizer"
                 android:textOff="Air Clean"
-                android:textOn="Air Clean" />
+                android:textOn="Air Clean"/>
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/toggleButtonSwing"
@@ -146,14 +147,14 @@
                 android:layout_toRightOf="@id/toggleButtonEco"
                 android:drawableTop="@drawable/fan"
                 android:textOff="Air Swing"
-                android:textOn="Air Swing" />
+                android:textOn="Air Swing"/>
         </RelativeLayout>
 
         <View
             android:id="@+id/strut2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:id="@+id/buttonTurnOn"
@@ -163,7 +164,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/strut2"
             android:width="0dip"
-            android:text="@string/ON" />
+            android:text="@string/ON"/>
 
         <Button
             android:id="@+id/buttonTurnOff"
@@ -172,7 +173,7 @@
             android:layout_alignLeft="@id/strut2"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:text="@string/OFF" />
+            android:text="@string/OFF"/>
 
     </RelativeLayout>
 </RelativeLayout>

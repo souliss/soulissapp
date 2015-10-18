@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:id="@+id/Cont01"
@@ -21,7 +25,6 @@
             android:padding="5dp">
 
             <TextView
-                android:transitionName="ToolbarText"
                 android:id="@+id/textView1nInfo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +32,8 @@
                 android:gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textIsSelectable="false"
-                tools:text="Nodo 2 Slot 3" />
+                android:transitionName="ToolbarText"
+                tools:text="Nodo 2 Slot 3"/>
 
             <Button
                 android:id="@+id/buttonPlus"
@@ -37,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="15dp"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -52,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="@string/timer"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TableLayout
                 android:id="@+id/containervermegame"
@@ -74,13 +78,13 @@
                         android:id="@+id/sleepBar"
                         android:layout_margin="15dp"
                         android:layout_weight="3"
-                        android:max="255" />
+                        android:max="255"/>
 
                     <Button
                         android:id="@+id/sleep"
                         style="@style/ButtonText"
                         android:layout_weight="1"
-                        android:text="@string/Souliss_TRGB_sleep" />
+                        android:text="@string/Souliss_TRGB_sleep"/>
                 </TableRow>
 
                 <TableRow
@@ -96,7 +100,7 @@
                         style="@style/ButtonText"
                         android:layout_width="0dip"
                         android:layout_weight="1"
-                        android:text="@string/Souliss_AutoCmd_desc" />
+                        android:text="@string/Souliss_AutoCmd_desc"/>
 
                     <TextView
                         android:id="@+id/textviewAutoInfo"
@@ -104,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
                         android:layout_weight="2"
-                        android:text="@string/Souliss_Auto_mode" />
+                        android:text="@string/Souliss_Auto_mode"/>
                 </TableRow>
 
                 <TableRow
@@ -121,14 +125,14 @@
                         android:layout_width="0dip"
                         android:layout_weight="1"
                         android:textOff="@string/multicast"
-                        android:textOn="@string/multicast" />
+                        android:textOn="@string/multicast"/>
 
                     <TextView
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
                         android:layout_weight="2"
-                        android:text="@string/multicast_desc" />
+                        android:text="@string/multicast_desc"/>
                 </TableRow>
 
                 <include layout="@layout/tablerow_toolongwarn"/>
@@ -145,7 +149,7 @@
                         android:id="@+id/textviewHistoryInfo"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3" />
+                        android:layout_weight="3"/>
                 </TableRow>
 
                 <include layout="@layout/tablerow_favinfo">
@@ -160,4 +164,4 @@
             </TableLayout>
         </RelativeLayout>
     </RelativeLayout>
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

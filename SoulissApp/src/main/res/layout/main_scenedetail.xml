@@ -1,84 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:fab="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true">
 
-    <include layout="@layout/custom_actionbar"/>
-
     <RelativeLayout
-        android:id="@+id/RelativeLayoutNodeDetail"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/my_awesome_toolbar">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-        <ImageView
-            android:id="@+id/scene_icon"
-            android:layout_width="wrap_content"
+        android:padding="@dimen/external_margin">
+
+        <include layout="@layout/custom_actionbar"/>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayoutNodeDetail"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="4dip"
-            android:layout_marginTop="4dip"
-            android:alpha="0.5"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/lamp"/>
+            android:layout_below="@id/my_awesome_toolbar">
 
-        <TextView
-            android:id="@+id/TextViewNodeUpdate"
-            style="@style/CodeFontTitle"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="4dp"
-            android:ellipsize="end"
-            android:text="@string/update"/>
-
-        <TextView
-            android:id="@+id/TextViewHealth"
-            style="@style/CodeFontMain"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/TextViewNodeUpdate"
-            android:layout_marginLeft="4dp"
-            android:text="@string/health"/>
-
-        <TextView
-            android:id="@+id/TextViewTypicals"
-            style="@style/CodeFontTitleBig"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/TextViewHealth"
-            android:layout_marginLeft="2dp"
-            android:ellipsize="end"
-            android:text="@string/scene_commands"/>
-
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                     xmlns:fab="http://schemas.android.com/apk/res-auto"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"
-                     android:layout_below="@id/TextViewTypicals">
-
-            <ListView
-                android:id="@+id/ListViewListaScene"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dip"
-                android:divider="@android:color/transparent"
-                android:fadeScrollbars="true"
-                android:fadingEdge="vertical"
-                android:requiresFadingEdge="vertical"/>
-
-            <com.melnykov.fab.FloatingActionButton
-                android:id="@+id/fab"
+            <ImageView
+                android:id="@+id/scene_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:background="@color/white"
-                android:src="@drawable/ic_play_arrow_32dp"
-                fab:fab_colorNormal="@color/std_green"
-                fab:fab_colorPressed="@color/std_blue_shadow"
-                fab:fab_colorRipple="@color/std_purple"/>
-        </FrameLayout>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="4dip"
+                android:layout_marginTop="4dip"
+                android:alpha="0.5"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/lamp"/>
+
+            <TextView
+                android:id="@+id/TextViewNodeUpdate"
+                style="@style/CodeFontTitle"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:text="@string/update"/>
+
+            <TextView
+                android:id="@+id/TextViewHealth"
+                style="@style/CodeFontMain"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/TextViewNodeUpdate"
+                android:layout_marginLeft="4dp"
+                android:text="@string/health"/>
+
+            <TextView
+                android:id="@+id/TextViewTypicals"
+                style="@style/CodeFontTitleBig"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/TextViewHealth"
+                android:layout_marginLeft="2dp"
+                android:ellipsize="end"
+                android:text="@string/scene_commands"/>
+
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                         xmlns:fab="http://schemas.android.com/apk/res-auto"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:layout_below="@id/TextViewTypicals">
+
+                <ListView
+                    android:id="@+id/ListViewListaScene"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dip"
+                    android:divider="@android:color/transparent"
+                    android:fadeScrollbars="true"
+                    android:fadingEdge="vertical"
+                    android:requiresFadingEdge="vertical"
+                    tools:listitem="@layout/listview_scene_detail"/>
+
+                <com.melnykov.fab.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_play_arrow_32dp"
+                    fab:fab_colorNormal="@color/std_green"
+                    fab:fab_colorPressed="@color/std_blue_shadow"
+                    fab:fab_colorRipple="@color/std_purple"/>
+            </FrameLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

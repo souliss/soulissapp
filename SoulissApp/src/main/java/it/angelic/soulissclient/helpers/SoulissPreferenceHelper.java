@@ -343,7 +343,7 @@ public class SoulissPreferenceHelper implements Serializable {
         IPPreferencePublic = prefs.getString("edittext_IP_pubb", "");
         DimensTesto = prefs.getString("listPref", "0");
         PrefFont = prefs.getString("fontPref", "Futura.ttf");
-        remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "6000"));
+        remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "3000"));
         dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
         homeThold = prefs.getInt("distanceThold", 150);
         dataServiceEnabled = prefs.getBoolean("checkboxService", false);
@@ -352,7 +352,7 @@ public class SoulissPreferenceHelper implements Serializable {
         voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", false);
         userIndex = prefs.getInt("userIndex", -1);
         nodeIndex = prefs.getInt("nodeIndex", -1);
-        UDPPort = prefs.getInt("udpport", it.angelic.soulissclient.net.Constants.DEFAULT_SOULISS_PORT);
+        UDPPort = prefs.getInt("udpport", Constants.Net.DEFAULT_SOULISS_PORT);
 
         animations = prefs.getBoolean("checkboxAnimazione", true);
         antitheftPresent = prefs.getBoolean("antitheft", false);
@@ -482,6 +482,7 @@ public class SoulissPreferenceHelper implements Serializable {
     }
 
     public void reload() {
+        Log.i(TAG, "Going thru preference reload()" );
         // SharedPreferences prefs =
         // PreferenceManager.getDefaultSharedPreferences(contx);
         initializePrefs();
@@ -544,7 +545,7 @@ public class SoulissPreferenceHelper implements Serializable {
                         && customCachedPrefs.getInt("connection", -1) == ConnectivityManager.TYPE_WIFI) {
                     // Broadcast
                     Log.w(Constants.TAG, "if everything bad, try BROADCAST address");
-                    UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this, it.angelic.soulissclient.net.Constants.BROADCASTADDR);
+                    UDPHelper.checkSoulissUdp(getRemoteTimeoutPref() * 3, SoulissPreferenceHelper.this, Constants.Net.BROADCASTADDR);
                 }
             }
         }.start();

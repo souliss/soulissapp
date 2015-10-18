@@ -96,7 +96,7 @@ public class NetSettingsFragment extends PreferenceFragment {
         udpport.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Log.w(it.angelic.soulissclient.net.Constants.TAG, "CHANGING UDP PORT:" + newValue);
+                Log.w(Constants.Net.TAG, "CHANGING UDP PORT:" + newValue);
                 try {
                     String ics = (String) newValue;
                     Integer rete = Integer.parseInt(ics);

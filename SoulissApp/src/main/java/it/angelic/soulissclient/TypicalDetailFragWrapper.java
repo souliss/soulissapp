@@ -105,7 +105,8 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        setActionBarInfo(collected == null ? getString(R.string.scenes_title) : collected.getNiceName());
+        setActionBarInfo(collected == null ? getString(R.string.status_souliss_nodetail) : collected.getNiceName());
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
     }
 
 

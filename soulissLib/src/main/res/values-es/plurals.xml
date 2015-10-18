@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals
+        name="Devices">
+        <item quantity="zero">No Device</item>
+        <item quantity="one">one Device</item>
+        <item quantity="other">%d  Devices</item>
+    </plurals>
+
+    <plurals
+        name="Bytes">
+        <item quantity="zero">0 Byte</item>
+        <item quantity="one">1 Byte</item>
+        <item quantity="other">%d  Bytes</item>
+    </plurals>
+    <plurals name="seconds">
+        <item quantity="zero">0 Seconds</item>
+        <item quantity="one">1 Second</item>
+        <item quantity="other">%s  Seconds</item>
+    </plurals>
+</resources>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/containerlista"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_weight="1">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/containerlista"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
     <ImageView
         android:id="@+id/node_icon"
@@ -70,6 +71,7 @@
             android:dividerHeight="0dp"
             android:fadeScrollbars="true"
             android:fadingEdge="vertical"
-            android:requiresFadingEdge="vertical"/>
+            android:requiresFadingEdge="vertical"
+            tools:listitem="@layout/listview_typical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

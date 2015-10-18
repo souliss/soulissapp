@@ -1,7 +1,13 @@
 package it.angelic.soulissclient;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.PersistableBundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -31,6 +37,8 @@ import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
+import static it.angelic.soulissclient.Constants.TAG;
+
 
 /**
  * Tutte le activity con l'icona stato online devono estendere questa
@@ -49,10 +57,60 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     ListView mDrawerList;
     NavDrawerAdapter mDrawermAdapter;
     TextView actionTitle;
+    int numTries = 0;
     private Toolbar actionBar;
+    private boolean hasPosted;
+    Runnable timeExpired = new Runnable() {
+        @Override
+        public void run() {
+
+            Log.w(Constants.TAG, "TIMEOUT!");
+            if (numTries > 2) {
+                opzioni.clearCachedAddress();
+                refreshStatusIcon();//put offline
+                numTries = 0;
+            } else {
+                opzioni.setBestAddress();
+                numTries++;
+                setSynching();//almost offline
+
+            }
+            hasPosted = false;
+
+        }
+    };
     private TextView info1;
     private TextView info2;
     private FloatingActionButton mDrawerFloatButt;
+    private Handler timeoutHandler = new Handler();
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // opzioni.initializePrefs();
+            // rimuove timeout
+            Log.i(TAG, "TIMEOUT CANCELED. cachaddress: " + opzioni.getCachedAddress());
+            timeoutHandler.removeCallbacks(timeExpired);
+            hasPosted = false;
+            refreshStatusIcon();
+
+        }
+    };
+    // meccanismo per network detection
+    private BroadcastReceiver packetSentNotificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle extras = intent.getExtras();
+
+            int delay = extras.getInt("REQUEST_TIMEOUT_MSEC");
+
+            if (!hasPosted) {
+                Log.w(Constants.TAG, "Something has been sent with timeout=" + delay);
+                timeoutHandler.postDelayed(timeExpired, delay);
+                hasPosted = true;
+            }
+            setSynching();//will last till timeout or online
+        }
+    };
 
     void initDrawer(final Activity parentActivity, int activeSection) {
 
@@ -126,9 +184,15 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             // ((TextView)findViewById(R.id.text1)).setText(thingsYouSaid.get(0));
             final String yesMan = thingsYouSaid.get(0).toLowerCase();
             Log.i(Constants.TAG, "onActivityResult, searching command: " + yesMan);
-
+            //Invia comando
             VoiceCommandActivityNoDisplay.interpretCommand(this, yesMan);
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        timeoutHandler = new Handler();
     }
 
     @Override
@@ -157,15 +221,31 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * chiamato dal layout xml
-     * <p/>
-     * public void startOptions(View v) {
-     * opzioni.setBestAddress();
-     * Toast.makeText(this, getString(R.string.ping) + " " + getString(R.string.command_sent), Toast.LENGTH_SHORT)
-     * .show();
-     * }
-     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(packetSentNotificationReceiver);
+        unregisterReceiver(datareceiver);
+        timeoutHandler.removeCallbacks(timeExpired);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // this is only used for refresh UI
+        IntentFilter filtera = new IntentFilter();
+        filtera.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
+        registerReceiver(packetSentNotificationReceiver, filtera);
+
+        // IDEM, serve solo per reporting
+        IntentFilter filtere = new IntentFilter();
+        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        registerReceiver(datareceiver, filtere);
+
+        //DEVASTO TUTTO
+        opzioni.setBestAddress();
+    }
+
 
     @Override
     protected void onStart() {
@@ -176,27 +256,61 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
 
     }
 
-    void setActionBarInfo(String title) {
+    public void refreshStatusIcon() {
+        try {
+            View ds = actionBar.getRootView();
+            if (ds != null) {
+                ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+                TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+
+                if (!opzioni.isSoulissReachable()) {
+                    online.setBackgroundResource(R.drawable.red);
+                    statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+                    statusOnline.setText(R.string.offline);
+                } else {
+                    online.setBackgroundResource(R.drawable.green);
+                    statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+                    statusOnline.setText(R.string.Online);
+                }
+                statusOnline.invalidate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setActionBarInfo(String title) {
         try {
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
 
-            ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-            TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
             actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
             actionTitle.setText(title);
-            if (!opzioni.isSoulissReachable()) {
-                online.setBackgroundResource(R.drawable.red);
-                statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-                statusOnline.setText(R.string.offline);
-
-            } else {
-                online.setBackgroundResource(R.drawable.green);
-                statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-                statusOnline.setText(R.string.Online);
-            }
+            refreshStatusIcon();
         } catch (Exception e) {
             Log.e(Constants.TAG, "null bar? " + e.getMessage());
         }
     }
+
+    public void setSynching() {
+        View ds = actionBar.getRootView();
+        if (ds != null) {
+            ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+            TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+            switch (numTries) {//sempre piu verso il rosso
+                case 0:
+                    online.setBackgroundResource(R.drawable.red5);
+                    break;
+                case 1:
+                    online.setBackgroundResource(R.drawable.red4);
+                    break;
+                case 2:
+                    online.setBackgroundResource(R.drawable.red3);
+                    break;
+            }
+            statusOnline.setTextColor(getResources().getColor(R.color.std_yellow));
+            statusOnline.setText(R.string.synch);
+        }
+    }
+
 }

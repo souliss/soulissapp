@@ -7,9 +7,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -35,9 +36,9 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<>();
+		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		//NO COMMANDS
 
@@ -57,7 +58,7 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
-		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm ||
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_Alarm ||
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3))) {
 			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundDrawable(SoulissApp.getAppContext().getResources().getDrawable(R.drawable.borderedbackoff));
@@ -69,9 +70,9 @@ public class SoulissTypical42AntiTheftPeer extends SoulissTypical implements ISo
 	@Override
 	public String getOutputDesc() {
 		String ret;
-		if (typicalDTO.getOutput() == Constants.Souliss_T4n_RstCmd)
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_RstCmd)
 			ret = "OK";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm || typicalDTO.getOutput() == Constants.Souliss_T4n_Alarm)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm || typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_Alarm)
 			ret = "ALARM";
 		else
 			ret = "UNKNOWN";

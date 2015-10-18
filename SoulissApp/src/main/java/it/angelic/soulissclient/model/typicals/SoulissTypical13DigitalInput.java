@@ -6,8 +6,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -35,9 +37,9 @@ public class SoulissTypical13DigitalInput extends SoulissTypical implements ISou
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		return new ArrayList<SoulissCommand>();
+		return new ArrayList<ISoulissCommand>();
 	}
 
 	/**
@@ -62,9 +64,9 @@ public class SoulissTypical13DigitalInput extends SoulissTypical implements ISou
 
 	@Override
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil)
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil)
 			return "ON";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
 			return "OFF";
 		else
 			return "UNKNOWN";

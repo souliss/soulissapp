@@ -29,7 +29,7 @@ public class SoulissTestPersistence extends AndroidTestCase {
 
     protected void testAll() throws Throwable {
 
-        Log.i(Constants.TAG, "runTest()");
+        Log.i(Constants.TAG, "run Persistence Test()");
         addFakeNode();
         addFakeSensor();
     }

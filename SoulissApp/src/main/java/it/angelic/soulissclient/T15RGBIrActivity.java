@@ -103,35 +103,35 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		btBlu4 = (Button) findViewById(R.id.blue4);
 		btBlu5 = (Button) findViewById(R.id.blue5);
 
-		btOff.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_OffCmd);
-		btOn.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_OnCmd);
+		btOff.setTag(Constants.Typicals.Souliss_T1n_RGB_OffCmd);
+		btOn.setTag(Constants.Typicals.Souliss_T1n_RGB_OnCmd);
 
-		buttPlus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_RGB_bright_up);
-		buttMinus.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_RGB_bright_down);
+		buttPlus.setTag(Constants.Typicals.Souliss_T_IrCom_RGB_bright_up);
+		buttMinus.setTag(Constants.Typicals.Souliss_T_IrCom_RGB_bright_down);
 
-		btWhite.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_W);
-		btFlash.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_RGB_mode_flash);
-		btFade.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_RGB_mode_fade);
-		btShoot.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_RGB_mode_smooth);
-		btStrobo.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T_IrCom_RGB_mode_strobe);
+		btWhite.setTag(Constants.Typicals.Souliss_T1n_RGB_W);
+		btFlash.setTag(Constants.Typicals.Souliss_T_IrCom_RGB_mode_flash);
+		btFade.setTag(Constants.Typicals.Souliss_T_IrCom_RGB_mode_fade);
+		btShoot.setTag(Constants.Typicals.Souliss_T_IrCom_RGB_mode_smooth);
+		btStrobo.setTag(Constants.Typicals.Souliss_T_IrCom_RGB_mode_strobe);
 
-		btRed.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_R);
-		btRed2.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_R2);
-		btRed3.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_R3);
-		btRed4.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_R4);
-		btRed5.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_R5);
+		btRed.setTag(Constants.Typicals.Souliss_T1n_RGB_R);
+		btRed2.setTag(Constants.Typicals.Souliss_T1n_RGB_R2);
+		btRed3.setTag(Constants.Typicals.Souliss_T1n_RGB_R3);
+		btRed4.setTag(Constants.Typicals.Souliss_T1n_RGB_R4);
+		btRed5.setTag(Constants.Typicals.Souliss_T1n_RGB_R5);
 
-		btGreen.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_G);
-		btGreen2.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_G2);
-		btGreen3.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_G3);
-		btGreen4.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_G4);
-		btGreen5.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_G5);
+		btGreen.setTag(Constants.Typicals.Souliss_T1n_RGB_G);
+		btGreen2.setTag(Constants.Typicals.Souliss_T1n_RGB_G2);
+		btGreen3.setTag(Constants.Typicals.Souliss_T1n_RGB_G3);
+		btGreen4.setTag(Constants.Typicals.Souliss_T1n_RGB_G4);
+		btGreen5.setTag(Constants.Typicals.Souliss_T1n_RGB_G5);
 
-		btBlu.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_B);
-		btBlu2.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_B2);
-		btBlu3.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_B3);
-		btBlu4.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_B4);
-		btBlu5.setTag(it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_RGB_B5);
+		btBlu.setTag(Constants.Typicals.Souliss_T1n_RGB_B);
+		btBlu2.setTag(Constants.Typicals.Souliss_T1n_RGB_B2);
+		btBlu3.setTag(Constants.Typicals.Souliss_T1n_RGB_B3);
+		btBlu4.setTag(Constants.Typicals.Souliss_T1n_RGB_B4);
+		btBlu5.setTag(Constants.Typicals.Souliss_T1n_RGB_B5);
 
 		datasource = new SoulissDBHelper(this);
 		SoulissDBHelper.open();

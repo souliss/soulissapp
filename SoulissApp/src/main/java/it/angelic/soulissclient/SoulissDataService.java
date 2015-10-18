@@ -163,9 +163,9 @@ public class SoulissDataService extends Service implements LocationListener {
                             List<SoulissTypical> slots = piter.getActiveTypicals();
                             for (SoulissTypical tipico : slots) {
                                 Date when = tipico.getTypicalDTO().getLastStatusChange();
-                                if (tipico.getOutput() != it.angelic.soulissclient.model.typicals.Constants.Souliss_T1n_OffCoil
-                                        && tipico.getTypicalDTO().getWarnDelayMsec() > 0 &&
-                                        now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
+                                if (when != null && tipico.getOutput() != Constants.Typicals.Souliss_T1n_OffCoil
+                                        && tipico.getTypicalDTO().getWarnDelayMsec() > 0
+                                        && now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
 
                                     Log.w(TAG, String.format(getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()));
                                     sendTooLongWarnNotification(SoulissDataService.this, getString(R.string.timed_warning),
@@ -257,12 +257,24 @@ public class SoulissDataService extends Service implements LocationListener {
         Resources res = ctx.getResources();
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
 
+        SoulissCommand shutoff = new SoulissCommand(ppr);
+        shutoff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
+
+        Intent mapIntent = new Intent(ctx, SendCommandActivityNoDisplay.class);
+        mapIntent.putExtra("COMMAND", shutoff);
+
+        PendingIntent mapPendingIntent =
+                PendingIntent.getActivity(ctx, 0, mapIntent, 0);
+
 
         builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.bell))
+                .setLargeIcon(BitmapFactory.decodeResource(res, ppr.getIconResourceId()))
                 .setTicker("Turned on warning")
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true).setContentTitle(desc)
+
+                .addAction(R.drawable.ic_cancel_24dp,
+                        ctx.getString(R.string.scene_turnoff_lights), mapPendingIntent)
                 .setContentText(longdesc);
 
         Notification n = builder.build();

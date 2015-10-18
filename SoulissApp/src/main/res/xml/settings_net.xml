@@ -13,7 +13,7 @@
             android:title="@string/title_edittext_IP" />
 
         <ListPreference
-            android:defaultValue="10000"
+            android:defaultValue="3000"
             android:entries="@array/updateInterval"
             android:entryValues="@array/updateIntervalValues"
             android:key="remoteTimeout"

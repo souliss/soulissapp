@@ -7,6 +7,12 @@ Please refer to www.souliss.net for more information
 
 CHANGES:
 
+1.6.0
+Added Android wear support
+fixed #75, #69, #1, #80, #78, #79
+Visual enhancements, synch status
+
+
 1.5.4
 send commands with voice
 TAGs are now backed-up when saving DB

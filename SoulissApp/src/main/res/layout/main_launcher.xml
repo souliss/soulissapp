@@ -12,6 +12,7 @@
     -->
     <RelativeLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/external_margin"
         android:layout_height="match_parent">
 
 
@@ -48,7 +49,7 @@
                             android:layout_weight="1"
                             android:drawableTop="@drawable/moon"
                             android:drawingCacheQuality="high"
-                            android:elevation="2dp"
+                            android:elevation="4dp"
                             android:freezesText="false"
                             android:text="@string/scenes_title"
                             android:maxLines="1"
@@ -62,7 +63,7 @@
                             android:layout_weight="1"
                             android:drawableTop="@drawable/remote"
                             android:drawingCacheQuality="high"
-                            android:elevation="2dp"
+                            android:elevation="4dp"
                             android:text="@string/programs_title"
                             android:maxLines="1"
                             android:transitionName="helloPrograms" />
@@ -74,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@drawable/hand"
-                            android:elevation="2dp"
+                            android:elevation="4dp"
                             android:text="@string/manual_title"
                             android:maxLines="1"
                             android:transitionName="helloManual" />
@@ -162,6 +163,7 @@
             android:src="@drawable/ic_mic_32"
             fab:fab_colorNormal="@color/std_green"
             fab:fab_colorPressed="@color/std_blue_shadow"
+            android:visibility="invisible"
             fab:fab_colorRipple="@color/std_purple" />
     </RelativeLayout>
 

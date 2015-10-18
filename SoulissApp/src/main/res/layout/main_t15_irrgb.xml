@@ -10,6 +10,7 @@
         android:id="@+id/Cont01"
         android:layout_width="match_parent"
         android:layout_below="@id/my_awesome_toolbar"
+        android:padding="@dimen/external_margin"
         android:layout_height="match_parent">
 
         <RelativeLayout

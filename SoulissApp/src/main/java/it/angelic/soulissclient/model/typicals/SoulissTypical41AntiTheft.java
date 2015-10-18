@@ -11,10 +11,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -43,24 +44,24 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 	}
 
 	@Override
-	public ArrayList<SoulissCommand> getCommands(Context ctx) {
+	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<SoulissCommand> ret = new ArrayList<>();
+		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand( this);
-		t.getCommandDTO().setCommand(Constants.Souliss_T4n_Armed);
+		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T4n_Armed);
 		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		SoulissCommand tt = new SoulissCommand( this);
-		tt.getCommandDTO().setCommand(Constants.Souliss_T4n_NotArmed);
+		tt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T4n_NotArmed);
 		tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
 		tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tt);
 
 		SoulissCommand ter = new SoulissCommand( this);
-		ter.getCommandDTO().setCommand(Constants.Souliss_T4n_ReArm);
+		ter.getCommandDTO().setCommand(Constants.Typicals.Souliss_T4n_ReArm);
 		ter.getCommandDTO().setSlot(typicalDTO.getSlot());
 		ter.getCommandDTO().setNodeId(typicalDTO.getNodeId());
 		ret.add(ter);
@@ -100,12 +101,12 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		cont.addView(tog);
 		
 		// disabilitazioni interlock
-		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Antitheft) {
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_Antitheft) {
 			turnOnButton.setEnabled(false);
-		}else if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft){
+		}else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft){
 			turnOffButton.setEnabled(false);
 		}
-		else  if (typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm){
+		else  if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm){
 			
 		}
 
@@ -118,7 +119,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs,
-								String.valueOf(Constants.Souliss_T4n_Armed));
+								String.valueOf(Constants.Typicals.Souliss_T4n_Armed));
 					}
 				};
 				t.start();
@@ -134,7 +135,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 					public void run() {
 						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
 								prefs,
-								String.valueOf(Constants.Souliss_T4n_NotArmed));
+								String.valueOf(Constants.Typicals.Souliss_T4n_NotArmed));
 					}
 				};
 				t.start();
@@ -154,7 +155,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 								String.valueOf(Constants.Souliss_T4n_ReArm));*/
 						
 						//FIXES #40 ?
-						UDPHelper.issueMassiveCommand(String.valueOf(getTypicalDTO().getTypical()), prefs, String.valueOf(Constants.Souliss_T4n_ReArm));
+						UDPHelper.issueMassiveCommand(String.valueOf(getTypicalDTO().getTypical()), prefs, String.valueOf(Constants.Typicals.Souliss_T4n_ReArm));
 						
 						// cmd.setText("Souliss command sent");
 
@@ -171,9 +172,9 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 	@Override
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
-		if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft ||
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft ||
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3)) ||
-						typicalDTO.getOutput() == Constants.Souliss_T4n_InAlarm) {
+						typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm) {
 			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
@@ -184,11 +185,11 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 	@Override
 	public String getOutputDesc() {
 		String ret;
-		if (typicalDTO.getOutput() == Constants.Souliss_T4n_Antitheft)
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_Antitheft)
 			ret = "ARMED";
-		else if (typicalDTO.getOutput() == Constants.Souliss_T4n_NoAntitheft)
+		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft)
 			ret = "NOT ARMED";
-		else if (typicalDTO.getOutput() >= Constants.Souliss_T4n_InAlarm)
+		else if (typicalDTO.getOutput() >= Constants.Typicals.Souliss_T4n_InAlarm)
 			ret = "ALARM";
 		else
 			ret= "UNKNOWN";

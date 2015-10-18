@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     android:versionCode="200"
-    android:versionName="2.0.0">
+    android:versionName="2.0.0"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -30,8 +31,22 @@
         android:icon="@drawable/soulisslogo"
         android:label="@string/app_name"
         android:process=":souliss_process">
+
+
+
+        <service android:name="it.angelic.receivers.SoulissWearDemandIntentReceiver"
+                 tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".VoiceCommandActivityNoDisplay"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoDisplay"/>
+        <activity
+            android:name=".SendCommandActivityNoDisplay"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoDisplay"/>
         <activity

@@ -9,11 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.*;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.ListSwitchCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -42,24 +43,24 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
     }
 
     @Override
-    public ArrayList<SoulissCommand> getCommands(Context ctx) {
+    public ArrayList<ISoulissCommand> getCommands(Context ctx) {
         // ritorna le bozze dei comandi, da riempire con la schermata addProgram
-        ArrayList<SoulissCommand> ret = new ArrayList<>();
+        ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
         SoulissCommand t = new SoulissCommand(this);
-        t.getCommandDTO().setCommand(Constants.Souliss_T1n_OnCmd);
+        t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
         t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(t);
 
         SoulissCommand tt = new SoulissCommand(this);
-        tt.getCommandDTO().setCommand(Constants.Souliss_T1n_OffCmd);
+        tt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
         tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
         tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
         ret.add(tt);
 
         SoulissCommand ter = new SoulissCommand(this);
-        ter.getCommandDTO().setCommand(Constants.Souliss_T1n_ToogleCmd);
+        ter.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
         ter.getCommandDTO().setSlot(typicalDTO.getSlot());
         ter.getCommandDTO().setNodeId(typicalDTO.getNodeId());
         ret.add(ter);
@@ -96,7 +97,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
         turnOffButton.setText(ctx.getString(R.string.OFF));
         cont.addView(turnOffButton);
         // disabilitazioni interlock
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback) {
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnFeedback) {
             turnOnButton.setEnabled(false);
             tog.setChecked(true);
         } else {
@@ -113,7 +114,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
                                 prefs,
-                                String.valueOf(Constants.Souliss_T1n_OnCmd));
+                                String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
                     }
                 };
                 t.start();
@@ -130,7 +131,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
                                 prefs,
-                                String.valueOf(Constants.Souliss_T1n_OffCmd));
+                                String.valueOf(Constants.Typicals.Souliss_T1n_OffCmd));
                     }
                 };
 
@@ -150,7 +151,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
                                 prefs,
-                                String.valueOf(Constants.Souliss_T1n_ToogleCmd));
+                                String.valueOf(Constants.Typicals.Souliss_T1n_ToogleCmd));
                         // cmd.setText("Souliss command sent");
                     }
                 };
@@ -163,7 +164,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
     @Override
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback ||
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback ||
                 "UNKNOWN".compareTo(getOutputDesc()) == 0 ||
                 "NA".compareTo(getOutputDesc()) == 0) {
             textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
@@ -178,11 +179,11 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
 
     @Override
     public String getOutputDesc() {
-        if (typicalDTO.getOutput() == Constants.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OnFeedback)
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnFeedback)
             return SoulissApp.getAppContext().getString(R.string.ON);
-        else if (typicalDTO.getOutput() == Constants.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Souliss_T1n_OffFeedback)
+        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback)
             return SoulissApp.getAppContext().getString(R.string.OFF);
-        else if (typicalDTO.getOutput() >= Constants.Souliss_T1n_Timed)
+        else if (typicalDTO.getOutput() >= Constants.Typicals.Souliss_T1n_Timed)
             return "" + typicalDTO.getOutput();
             //return ctx.getString(R.string.Souliss_TRGB_sleep);
         else
