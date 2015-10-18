@@ -43,89 +43,89 @@ public class SoulissTypicalFactory {
 		SoulissTypical rest = null;
 		assertTrue(opts != null);
 		switch (typ) {
-		case Constants.Typicals.Souliss_T11:
+			case Constants.Typicals.Souliss_T11:
 			rest = new SoulissTypical11DigitalOutput(opts);
 			break;
-		case Constants.Typicals.Souliss_T12:
+			case Constants.Typicals.Souliss_T12:
 			rest = new SoulissTypical12DigitalOutputAuto(opts);
 			break;
-		case Constants.Typicals.Souliss_T13:
+			case Constants.Typicals.Souliss_T13:
 			rest = new SoulissTypical13DigitalInput(opts);
 			break;
-		case Constants.Typicals.Souliss_T14:
+			case Constants.Typicals.Souliss_T14:
 			rest = new SoulissTypical14PulseOutput(opts);
 			break;
-		case Constants.Typicals.Souliss_T15_RGB:
+			case Constants.Typicals.Souliss_T15_RGB:
 			rest = new SoulissTypical15(opts);
 			break;
-		case Constants.Typicals.Souliss_T16:
+			case Constants.Typicals.Souliss_T16:
 			rest = new SoulissTypical16AdvancedRGB(opts);
 			break;
-		case Constants.Typicals.Souliss_T18:
+			case Constants.Typicals.Souliss_T18:
 			rest = new SoulissTypical11DigitalOutput(opts);
 			break;
-		case Constants.Typicals.Souliss_T19:
+			case Constants.Typicals.Souliss_T19:
 			rest = new SoulissTypical19AnalogChannel(opts);
 			break;
-		case Constants.Typicals.Souliss_T1A:
+			case Constants.Typicals.Souliss_T1A:
 			rest = new SoulissTypical1ALightsArray(opts);
 			break;
-			
-		case Constants.Typicals.Souliss_T21:
+
+			case Constants.Typicals.Souliss_T21:
 			rest = new SoulissTypical21(opts);
 			break;
-		case Constants.Typicals.Souliss_T22:
+			case Constants.Typicals.Souliss_T22:
 			rest = new SoulissTypical22(opts);
-			break;	
-		case Constants.Typicals.Souliss_T31:
+				break;
+			case Constants.Typicals.Souliss_T31:
 			rest = new SoulissTypical31Heating(opts);
-			break;	
-		case Constants.Typicals.Souliss_T32_IrCom_AirCon:
+				break;
+			case Constants.Typicals.Souliss_T32_IrCom_AirCon:
 			rest = new SoulissTypical32AirCon(opts);
 			break;
-		case Constants.Typicals.Souliss_T41_Antitheft_Main:
+			case Constants.Typicals.Souliss_T41_Antitheft_Main:
 			//set the isAntitheftConfigure option TRUE
 			rest = new SoulissTypical41AntiTheft(opts);
 			break;
-		case Constants.Typicals.Souliss_T42_Antitheft_Peer:
+			case Constants.Typicals.Souliss_T42_Antitheft_Peer:
 			rest = new SoulissTypical42AntiTheftPeer(opts);
 			break;
-		case Constants.Typicals.Souliss_T43_Antitheft_LocalPeer:
+			case Constants.Typicals.Souliss_T43_Antitheft_LocalPeer:
 			rest = new SoulissTypical43AntiTheftLocalPeer(opts);
 			break;
-		case Constants.Typicals.Souliss_T_related:
+			case Constants.Typicals.Souliss_T_related:
 			rest = new SoulissTypical(opts);
 			rest.setRelated(true);
 			break;
-		case Constants.Typicals.Souliss_T51:
+			case Constants.Typicals.Souliss_T51:
 			rest = new SoulissTypical51AnalogueSensor(opts);
 			//rest.setSensor(true);
 			break;
-		case Constants.Typicals.Souliss_T52_TemperatureSensor:
+			case Constants.Typicals.Souliss_T52_TemperatureSensor:
 			rest = new SoulissTypical52TemperatureSensor(opts);
 			//rest.setSensor(true);
 			break;
-		case Constants.Typicals.Souliss_T53_HumiditySensor:
+			case Constants.Typicals.Souliss_T53_HumiditySensor:
 			rest = new SoulissTypical53HumiditySensor(opts);
 			//rest.setSensor(true);
 			break;
-		case Constants.Typicals.Souliss_T54_LuxSensor:
+			case Constants.Typicals.Souliss_T54_LuxSensor:
 			rest = new SoulissTypical54LuxSensor(opts);
 			//rest.setSensor(true);
 			break;
-		case Constants.Typicals.Souliss_T55_VoltageSensor:
+			case Constants.Typicals.Souliss_T55_VoltageSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
 			//rest.setSensor(true);
 			break;
-		case Constants.Typicals.Souliss_T56_CurrentSensor:
+			case Constants.Typicals.Souliss_T56_CurrentSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
 			//rest.setSensor(true);
-			break;			
-		case Constants.Typicals.Souliss_T57_PowerSensor:
+				break;
+			case Constants.Typicals.Souliss_T57_PowerSensor:
 			rest = new SoulissTypical5nCurrentVoltagePowerSensor(opts,typ);
 			//rest.setSensor(true);
 			break;
-		case Constants.Typicals.Souliss_T58_PressureSensor:
+			case Constants.Typicals.Souliss_T58_PressureSensor:
 			rest = new SoulissTypical58PressureSensor(opts);
 			//rest.setSensor(true);
 			break;

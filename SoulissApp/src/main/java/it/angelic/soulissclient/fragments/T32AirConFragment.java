@@ -441,35 +441,35 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 	static short demapTemperature(int CelsiusIn) {
 
 		switch (CelsiusIn) {
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_16C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_16C:
 			return 16;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_17C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_17C:
 			return 17;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_18C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_18C:
 			return 18;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_19C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_19C:
 			return 19;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_20C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_20C:
 			return 20;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_21C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_21C:
 			return 21;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_22C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_22C:
 			return 22;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_23C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_23C:
 			return 23;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_24C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_24C:
 			return 24;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_25C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_25C:
 			return 25;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_26C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_26C:
 			return 26;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_27C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_27C:
 			return 27;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_28C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_28C:
 			return 28;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_29C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_29C:
 			return 29;
-		case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_30C:
+			case Constants.Typicals.Souliss_T_IrCom_AirCon_temp_30C:
 			return 30;
 
 		default:

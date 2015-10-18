@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -127,7 +128,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 Thread t = new Thread() {
                     public void run() {
                         UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-                                prefs,  String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
+                                prefs, String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
                     }
                 };
 
@@ -213,7 +214,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 Looper.prepare();
 
                 if (togMulticast)//a tutti i nodi
-                    UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T19, prefs, "" + command );
+                    UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T19, prefs, "" + command);
                 else
                     UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
                             + getTypicalDTO().getSlot(), prefs, "" + command );

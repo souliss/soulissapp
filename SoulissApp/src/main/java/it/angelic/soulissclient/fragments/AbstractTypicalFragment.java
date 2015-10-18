@@ -33,7 +33,7 @@ public class AbstractTypicalFragment extends Fragment {
     }
 
 
-    public void refreshStatusIcon() {
+	public void refreshStatusIcon() {
 		try {
 			View ds = actionBar.getRootView();
 			if (ds != null) {

@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -64,7 +64,7 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs,  String.valueOf(Constants.Typicals.Souliss_T2n_ToogleCmd));
+									prefs, String.valueOf(Constants.Typicals.Souliss_T2n_ToogleCmd));
 					}
 				};
 				t.start();
@@ -74,7 +74,7 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 
 	@Override
 	public String getOutputDesc() {
-		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close )
+		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close)
 			return "CLOSING";
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
 			return "OPENED";

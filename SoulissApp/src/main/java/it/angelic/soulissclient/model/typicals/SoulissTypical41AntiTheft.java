@@ -11,8 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -103,10 +104,9 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		// disabilitazioni interlock
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_Antitheft) {
 			turnOnButton.setEnabled(false);
-		}else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft){
+		} else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft) {
 			turnOffButton.setEnabled(false);
-		}
-		else  if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm){
+		} else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm) {
 			
 		}
 
@@ -174,7 +174,7 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft ||
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3)) ||
-						typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm) {
+				typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm) {
 			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {

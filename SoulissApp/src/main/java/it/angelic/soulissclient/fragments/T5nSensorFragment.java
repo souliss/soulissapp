@@ -38,12 +38,12 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
 import it.angelic.soulissclient.helpers.GraphsHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -270,27 +270,27 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		renderer = GraphsHelper.buildHistoryRenderer(getActivity(), opzioni);
 
 		switch (type) {
-		case Constants.Typicals.Souliss_T_TemperatureSensor:
+			case Constants.Typicals.Souliss_T_TemperatureSensor:
 			renderer.setYAxisMin(-15);
 			renderer.setYAxisMax(50);
 			renderer.setYTitle("Celsius degrees");
 			break;
-		case Constants.Typicals.Souliss_T_HumiditySensor:
+			case Constants.Typicals.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			renderer.setYTitle("Humidity %");
 			break;
-		case Constants.Typicals.Souliss_T51:// generic
+			case Constants.Typicals.Souliss_T51:// generic
 																			// analog
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;
-		case Constants.Typicals.Souliss_T54_LuxSensor:
+			case Constants.Typicals.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			renderer.setYTitle("Lux");
 			break;
-		case Constants.Typicals.Souliss_T58_PressureSensor:
+			case Constants.Typicals.Souliss_T58_PressureSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			renderer.setYTitle("hPa");
@@ -346,19 +346,19 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			renderer = GraphsHelper.buildMonthRenderer(getActivity());
 
 		switch (type) {
-		case Constants.Typicals.Souliss_T_TemperatureSensor:
+			case Constants.Typicals.Souliss_T_TemperatureSensor:
 			renderer.setYAxisMin(-15);
 			renderer.setYAxisMax(50);
 			break;
-		case Constants.Typicals.Souliss_T_HumiditySensor:
+			case Constants.Typicals.Souliss_T_HumiditySensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(100);
 			break;
-		case Constants.Typicals.Souliss_T54_LuxSensor:
+			case Constants.Typicals.Souliss_T54_LuxSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			break;
-		case Constants.Typicals.Souliss_T58_PressureSensor:
+			case Constants.Typicals.Souliss_T58_PressureSensor:
 			renderer.setYAxisMin(0);
 			renderer.setYAxisMax(1024);
 			break;

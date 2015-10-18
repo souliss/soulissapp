@@ -50,13 +50,13 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -92,7 +92,7 @@ public class NodeDetailFragment extends ListFragment {
     private SoulissDataService mBoundService;
     private boolean mIsBound;
     private SwipeRefreshLayout swipeLayout;
-   // private Toolbar actionBar;
+    // private Toolbar actionBar;
 
     protected int getShownIndex() {
         if (getArguments() != null)
@@ -164,7 +164,7 @@ public class NodeDetailFragment extends ListFragment {
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
         //actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
-       // ((AbstractStatusedFragmentActivity) getActivity()).setSupportActionBar(actionBar);
+        // ((AbstractStatusedFragmentActivity) getActivity()).setSupportActionBar(actionBar);
         //((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /*actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
@@ -331,7 +331,7 @@ public class NodeDetailFragment extends ListFragment {
             // the list to highlight the selected item and show the data.
             li.setItemChecked(index, true);
         } else {
-          //  ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //  ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Fragment NewFrag = null;
@@ -379,7 +379,7 @@ public class NodeDetailFragment extends ListFragment {
 
 
 			/*Intent nodeDatail = null;
-			if (target.isSensor()) {
+            if (target.isSensor()) {
 				Log.d(Constants.TAG, getResources().getString(R.string.manual_showing_typ) + index);
 				// Activity Dettaglio nodo
 				nodeDatail = new Intent(getActivity(), T5nFragWrapper.class);

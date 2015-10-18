@@ -461,7 +461,7 @@ public class UDPSoulissDecoder {
                         Log.d(Constants.Net.TAG, "---PERSISTED TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
                                 + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
                     } catch (Exception ie) {
-                        Log.e(Constants.Net.TAG, "---PERSIST ERROR:" + ie.getMessage()+" - " + ((short) (j / typXnodo + tgtnode))
+                        Log.e(Constants.Net.TAG, "---PERSIST ERROR:" + ie.getMessage() + " - " + ((short) (j / typXnodo + tgtnode))
                                 + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
 
                     }
@@ -495,7 +495,7 @@ public class UDPSoulissDecoder {
             SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
-                Log.v(Constants.Net.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
+                Log.v(Constants.Net.TAG, "---REFRESHING NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
                     SoulissTypical temp = it.getTypical((short) (j % typXnodo));

@@ -30,11 +30,11 @@ import java.util.Date;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -299,15 +299,15 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                 long swap = new Date().getTime() - when.getTime();
                 msecOn += swap;
                 String strMeatFormat = getResources().getString(R.string.manual_litfrom);
-                String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(swap));
-                str.append(strMeatMsg);
+				String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(swap));
+				str.append(strMeatMsg);
 
             }
             str.append("\n");
             String strMeatFormat = getResources().getString(R.string.manual_tyinf);
-            String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(msecOn));
-            str.append(strMeatMsg);
-            infoHistory.setText(str.toString());
+			String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(msecOn));
+			str.append(strMeatMsg);
+			infoHistory.setText(str.toString());
             if (collected.getTypicalDTO().isFavourite()) {
                 infoFavs.setVisibility(View.VISIBLE);
             }else if (collected.getTypicalDTO().isTagged()){

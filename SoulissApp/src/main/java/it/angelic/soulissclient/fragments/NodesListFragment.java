@@ -70,7 +70,7 @@ public class NodesListFragment extends ListFragment {
 	private boolean mDualPane;
 	private TextView textHeadListInfo;
     private SwipeRefreshLayout swipeLayout;
-  //  private Toolbar actionBar;
+	//  private Toolbar actionBar;
 
     @Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -204,8 +204,8 @@ public class NodesListFragment extends ListFragment {
 		mCurCheckPosition = index;
 		if (mDualPane) {
 
-			((AbstractStatusedFragmentActivity)getActivity()).setActionBarInfo(data.getNiceName());
-			((AbstractStatusedFragmentActivity)getActivity()).refreshStatusIcon();
+			((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(data.getNiceName());
+			((AbstractStatusedFragmentActivity) getActivity()).refreshStatusIcon();
 			//getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			// We can display everything in-place with fragments, so update
 			// the list to highlight the selected item and show the data.
@@ -265,10 +265,10 @@ public class NodesListFragment extends ListFragment {
 		getListView().setAdapter(nodesAdapter);
 		getListView().invalidateViews();
 
-        //actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
-       // ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
-       // ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       // ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+		//actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+		// ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
+		// ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		// ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
 		//((AbstractStatusedFragmentActivity)getActivity()).setActionBarInfo(co);
 		//((AbstractStatusedFragmentActivity) getActivity()).refreshStatusIcon();
 	}
@@ -381,7 +381,7 @@ public class NodesListFragment extends ListFragment {
 
 
     /*private void refreshStatusIcon() {
-        try {
+		try {
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
             TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);

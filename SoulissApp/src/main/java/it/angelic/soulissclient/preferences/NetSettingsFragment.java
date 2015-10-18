@@ -96,9 +96,9 @@ public class NetSettingsFragment extends PreferenceFragment {
         udpport.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Log.w(Constants.Net.TAG, "CHANGING UDP PORT:" + newValue);
-                try {
-                    String ics = (String) newValue;
+				Log.w(Constants.Net.TAG, "CHANGING UDP PORT:" + newValue);
+				try {
+					String ics = (String) newValue;
                     Integer rete = Integer.parseInt(ics);
                     // enforce 0 < x < 0xfe
                     if (rete >= 65535 || rete < 1)

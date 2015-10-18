@@ -29,8 +29,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.Base64;
+import it.angelic.soulissclient.Constants;
 
 public class Zozzariello extends Thread {
 	private static final String SERVER_NAME = "Zozzariello";

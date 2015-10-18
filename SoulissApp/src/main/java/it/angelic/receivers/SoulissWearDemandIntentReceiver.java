@@ -14,13 +14,13 @@ public class SoulissWearDemandIntentReceiver extends WearableListenerService {
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         String path = messageEvent.getPath();
-        Log.w(Constants.TAG , "Wear.onMessageReceived" + messageEvent);
+        Log.w(Constants.TAG, "Wear.onMessageReceived" + messageEvent);
         if (path.equals("notification/send")) {
             PackageManager packageManager = getPackageManager();
             String voice = new String(messageEvent.getData());
             Log.w(Constants.TAG + ":WEAR", "Voice from Wear received:" + voice);
             VoiceCommandActivityNoDisplay.interpretCommand(getBaseContext(), voice);
-        }else if (path.equals("notification/open")) {
+        } else if (path.equals("notification/open")) {
             PackageManager packageManager = getPackageManager();
             String voice = new String(messageEvent.getData());
             Intent mainIntent = packageManager.getLaunchIntentForPackage(getPackageName());

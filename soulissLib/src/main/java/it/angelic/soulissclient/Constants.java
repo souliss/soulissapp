@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class Constants {
-	public static final String TAG = "SoulissApp";
+    public static final String TAG = "SoulissApp";
 
     public static final int WATCH_ONLY_ID = 2;
     public static final int PHONE_ONLY_ID = 3;
@@ -25,85 +25,83 @@ public class Constants {
             = "com.example.android.wearable.synchronizednotifications.DISMISS";
     static final String ACTION_SEND_SOULISS_COMMAND =
             "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
-	public static final int SEC_IN_A_MIN = 60;
-	public static final int MSEC_IN_A_SEC = 1000;
-	public static final int MIN_IN_A_HOUR = 60;
-	public static final int MAX_USER_IDX = 0x64;
-	public static final int MAX_NODE_IDX = 0xFE;
-	public static final int MAX_HEALTH = 255;
-	public static final int ICON_REQUEST = 1;
-	public static final float[] roundedCorners = new float[] { 5,5,5,5,5,5,5,5 };
-	public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
-	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
-	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-	public static final int TAG_INSERT_POINT = 1;
+    public static final int SEC_IN_A_MIN = 60;
+    public static final int MSEC_IN_A_SEC = 1000;
+    public static final int MIN_IN_A_HOUR = 60;
+    public static final int MAX_USER_IDX = 0x64;
+    public static final int MAX_NODE_IDX = 0xFE;
+    public static final int MAX_HEALTH = 255;
+    public static final int ICON_REQUEST = 1;
+    public static final float[] roundedCorners = new float[]{5, 5, 5, 5, 5, 5, 5, 5};
+    public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+    public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
+    public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    public static final int TAG_INSERT_POINT = 1;
     static final int NOTIFICATION_ID = 3113;
     public static final String ACTION_OPEN_SOULISS = "it.angelic.soulissclient.OPEN_SOULISSAPP";
 
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
-	public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
-	//public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
-	public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
-	public static final long POSITION_UPDATE_MIN_DIST = 25;
-	public static final int GUI_UPDATE_INTERVAL = 5000;
-	public static final int VOICE_REQUEST_OK = 9876;
-	//public static final int   CHECK_STATUS_PAUSE_MSEC = 250;
-	
-	//public static final long TEXT_SIZE_TITLE_OFFSET = 10;
+    public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
+    //public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
+    public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
+    public static final long POSITION_UPDATE_MIN_DIST = 25;
+    public static final int GUI_UPDATE_INTERVAL = 5000;
+    public static final int VOICE_REQUEST_OK = 9876;
+    //public static final int   CHECK_STATUS_PAUSE_MSEC = 250;
 
-	public static final int COMMAND_TIMED = 0;
-	// Interpretati come Calendar
-	public static final int COMMAND_COMEBACK_CODE = 1;
-	public static final int COMMAND_GOAWAY_CODE = 2;
-	public static final int COMMAND_TRIGGERED = 3;
-	public static final int COMMAND_SINGLE = 4;
-	//public static final int COMMAND_MASSIVE = 5;
+    //public static final long TEXT_SIZE_TITLE_OFFSET = 10;
+
+    public static final int COMMAND_TIMED = 0;
+    // Interpretati come Calendar
+    public static final int COMMAND_COMEBACK_CODE = 1;
+    public static final int COMMAND_GOAWAY_CODE = 2;
+    public static final int COMMAND_TRIGGERED = 3;
+    public static final int COMMAND_SINGLE = 4;
+    //public static final int COMMAND_MASSIVE = 5;
     public static final short COMMAND_FAKE_SCENE = -2;
-	public static final short MASSIVE_NODE_ID = -1;
-	public static final int CONNECTION_NONE = -1;
-	//Souliss Data Intent
-	public static final String CUSTOM_INTENT = "it.angelic.soulissclient.GOT_DATA";
+    public static final short MASSIVE_NODE_ID = -1;
+    public static final int CONNECTION_NONE = -1;
+    //Souliss Data Intent
+    public static final String CUSTOM_INTENT = "it.angelic.soulissclient.GOT_DATA";
 
     private static final String[] ROM = {"X\u0305", "V\u0305", "M", "D", "C", "L", "X", "V", "I"};
-	private static final int MAX = 10000; // value of R[0], must be a power of 10
+    private static final int MAX = 10000; // value of R[0], must be a power of 10
 
-	private static final int[][] DIGITS = {
-	    {},{0},{0,0},{0,0,0},{0,1},{1},
-	    {1,0},{1,0,0},{1,0,0,0},{0,2}};
-	public static final int POSITION_DEADZONE_METERS = 27;
-
-
-	/**
-	 * Utility per numeri Romani
-	 * @param number
-	 * @return
-	 */
-	public static String int2roman(int number) {
-	    if (number < 0 || number >= MAX*4) throw new IllegalArgumentException(
-	            "int2roman: " + number + " is not between 0 and " + (MAX*4-1));
-	    if (number == 0) return "O";
-	    StringBuilder sb = new StringBuilder();
-	    int i = 0, m = MAX;
-	    while (number > 0) {
-	        int[] d = DIGITS[number / m];
-	        for (int n: d) sb.append(ROM[i-n]);
-	        number %= m;
-	        m /= 10;
-	        i += 2;
-	    }
-	    return sb.toString();
-	}
-	
+    private static final int[][] DIGITS = {
+            {}, {0}, {0, 0}, {0, 0, 0}, {0, 1}, {1},
+            {1, 0}, {1, 0, 0}, {1, 0, 0, 0}, {0, 2}};
+    public static final int POSITION_DEADZONE_METERS = 27;
 
 
-	public static class Typicals {
+    /**
+     * Utility per numeri Romani
+     *
+     * @param number
+     * @return
+     */
+    public static String int2roman(int number) {
+        if (number < 0 || number >= MAX * 4) throw new IllegalArgumentException(
+                "int2roman: " + number + " is not between 0 and " + (MAX * 4 - 1));
+        if (number == 0) return "O";
+        StringBuilder sb = new StringBuilder();
+        int i = 0, m = MAX;
+        while (number > 0) {
+            int[] d = DIGITS[number / m];
+            for (int n : d) sb.append(ROM[i - n]);
+            number %= m;
+            m /= 10;
+            i += 2;
+        }
+        return sb.toString();
+    }
+
+
+    public static class Typicals {
         public static final String TAG = "SoulissApp:Typicals";
 
         /**
-         *
          * @author Ale
-         *
          */
         @Override
         public String toString() {
@@ -125,7 +123,7 @@ public class Constants {
 
         /**
          * /** // Defines for Typicals C LIBRARY
-         *
+         * <p/>
          * #define Souliss_T31 31 // Temperature control #define Souliss_T41 41 //
          * Anti-theft integration (Main) #define Souliss_T42 42 // Anti-theft
          * integration (Peer)
@@ -144,24 +142,24 @@ public class Constants {
         public static final short Souliss_T1A = 0x1A;
 
         public static final short Souliss_T21 = 0x21;// Motorized devices with limit
-                                                        // switches
+        // switches
         public static final short Souliss_T22 = 0x22;// Motorized devices with limit
-                                                        // switches and middle
-                                                        // position
+        // switches and middle
+        // position
         public static final short Souliss_T31 = 0x31;//HEATING
         public static final short Souliss_T32_IrCom_AirCon = 0x32;
 
         public static final short Souliss_T42_Antitheft_Group = 0x40; // Anti-theft
-                                                                        // group
-                                                                        // (used w/
-                                                                        // massive
-                                                                        // commands)
+        // group
+        // (used w/
+        // massive
+        // commands)
         public static final short Souliss_T41_Antitheft_Main = 0x41; // Anti-theft
-                                                                        // integration
-                                                                        // (Main)
+        // integration
+        // (Main)
         public static final short Souliss_T42_Antitheft_Peer = 0x42; // Anti-theft
-                                                                        // integration
-                                                                        // (Peer)
+        // integration
+        // (Peer)
         public static final short Souliss_T43_Antitheft_LocalPeer = 0x43;
 
         /*
@@ -335,19 +333,19 @@ public class Constants {
 
         // General defines for T4n
         public static final short Souliss_T4n_Alarm = 0x01; // Alarm Condition
-                                                            // Detected (Input)
+        // Detected (Input)
         public static final short Souliss_T4n_RstCmd = 0x00;
         public static final short Souliss_T4n_ReArm = 0x03; // Silence and Arm
-                                                            // Command
+        // Command
         public static final short Souliss_T4n_NotArmed = 0x04; // Anti-theft not
-                                                                // Armed Command
+        // Armed Command
         public static final short Souliss_T4n_Armed = 0x05; // Anti-theft Armed
-                                                            // Command
+        // Command
         public static final short Souliss_T4n_Antitheft = 0x01; // Anti-theft Armed
-                                                                // Feedback
+        // Feedback
         public static final short Souliss_T4n_NoAntitheft = 0x00; // Anti-theft not
-                                                                    // Armed
-                                                                    // Feedback
+        // Armed
+        // Feedback
         public static final short Souliss_T4n_InAlarm = 0x03; // Anti-theft in Alarm
 
         public static final short Souliss_RstCmd = 0x00;
@@ -370,7 +368,6 @@ public class Constants {
      * Network constants
      *
      * @author Ale
-     *
      */
     public static class Net {
 
@@ -408,9 +405,9 @@ public class Constants {
         public static final int Souliss_UDP_function_db_struct = 0x26;
         public static final int Souliss_UDP_function_db_struct_resp = 0x36;
 
-        public static final Byte[] PING_PAYLOAD = { Souliss_UDP_function_ping, 0, 0, 0, 0 };
-        public static final Byte[] PING_BCAST_PAYLOAD = { Souliss_UDP_function_ping_bcast, 0, 0, 0, 0 };
-        public static final Byte[] DBSTRUCT_PAYLOAD = { Souliss_UDP_function_db_struct, 0, 0, 0, 0 };
+        public static final Byte[] PING_PAYLOAD = {Souliss_UDP_function_ping, 0, 0, 0, 0};
+        public static final Byte[] PING_BCAST_PAYLOAD = {Souliss_UDP_function_ping_bcast, 0, 0, 0, 0};
+        public static final Byte[] DBSTRUCT_PAYLOAD = {Souliss_UDP_function_db_struct, 0, 0, 0, 0};
 
         //WEBSERVER
         public static final String PREF_SERVER_PORT = "prefServerPort";

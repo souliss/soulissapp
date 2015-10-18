@@ -482,7 +482,7 @@ public class SoulissPreferenceHelper implements Serializable {
     }
 
     public void reload() {
-        Log.i(TAG, "Going thru preference reload()" );
+        Log.i(TAG, "Going thru preference reload()");
         // SharedPreferences prefs =
         // PreferenceManager.getDefaultSharedPreferences(contx);
         initializePrefs();

@@ -19,8 +19,8 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
@@ -54,7 +54,7 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         onBindViewHolderImpl(holder, position);
     }
 
-    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder,final int i) {
+    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, final int i) {
         Log.d(Constants.TAG, "Element " + i + " set: last upd: " + Utils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element

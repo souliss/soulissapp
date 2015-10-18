@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.ListSwitchCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;

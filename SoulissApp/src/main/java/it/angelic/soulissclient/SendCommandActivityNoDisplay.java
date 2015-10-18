@@ -4,11 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
-import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -90,11 +88,11 @@ public class SendCommandActivityNoDisplay extends Activity {
             } else if (typMatch) {
                 //Error, doveva mandare
                 Log.e(Constants.TAG, "Potential match NOT found, has waited for the right node");
-                Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.command_node_error) + ": " + yesMan, Toast.LENGTH_SHORT).show();
             } else if (nodeMatch) {
-                Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.command_node_error) + ": " + yesMan, Toast.LENGTH_SHORT).show();
             } else {//command found, but not device
-                Toast.makeText(context, context.getString(R.string.command_typ_error) +": "+yesMan, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.command_typ_error) + ": " + yesMan, Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(context, yesMan + " - " + context.getString(R.string.err_command_not_recognized), Toast.LENGTH_SHORT).show();
@@ -128,8 +126,8 @@ public class SendCommandActivityNoDisplay extends Activity {
         Log.w(Constants.TAG, "onCreate WrapperActivity");
 
         final SoulissCommand toExec = (SoulissCommand) getIntent().getSerializableExtra("COMMAND");
-        if (toExec == null){
-            Log.e(Constants.TAG,"Null command, aborting");
+        if (toExec == null) {
+            Log.e(Constants.TAG, "Null command, aborting");
             //TODO return errror
             finishActivity(-1);
         }
@@ -139,7 +137,7 @@ public class SendCommandActivityNoDisplay extends Activity {
             public void run() {
                 Looper.prepare();
                 toExec.execute();
-               // UDPHelper.issueSoulissCommand("" + toExec.getNodeId(), "" + toExec.getSlot(), SoulissApp.getOpzioni(), toExec.toString());
+                // UDPHelper.issueSoulissCommand("" + toExec.getNodeId(), "" + toExec.getSlot(), SoulissApp.getOpzioni(), toExec.toString());
                 Log.i(Constants.TAG, "Voice Command SENT: " + toExec.getName());
             }
         }).start();

@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -184,7 +185,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 				//Looper.prepare();
 
 				if (togMulticast)//a tutti i nodi
-					UDPHelper.issueMassiveCommand(""+ Constants.Typicals.Souliss_T16, prefs,""+val, "" + r, ""
+					UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T16, prefs, "" + val, "" + r, ""
 							+ g, "" + b);
 				else
 				UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""

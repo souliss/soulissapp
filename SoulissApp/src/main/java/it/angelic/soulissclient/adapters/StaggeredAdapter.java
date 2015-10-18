@@ -21,8 +21,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import junit.framework.Assert;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +30,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
 import it.angelic.soulissclient.model.SoulissTag;
@@ -93,7 +92,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             case TYPICAL:
 
                 SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
-                Log.d(Constants.TAG, "Element " + position + " set: last upd: "+Constants.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+                Log.d(Constants.TAG, "Element " + position + " set: last upd: " + Utils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
 
                 TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
                 ImageView imageView = (ImageView) holder.container.findViewById(R.id.card_thumbnail_image2);
@@ -105,7 +104,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 textView.setTag(position);
                 tipico.setOutputDescView(textViewInfo1);
                 textViewInfo2.setText(SoulissApp.getAppContext().getString(R.string.update) + " "
-                        + Constants.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+                        + Utils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
                 imageView.setImageResource(tipico.getIconResourceId());
 
                 linearActionsLayout.removeAllViews();

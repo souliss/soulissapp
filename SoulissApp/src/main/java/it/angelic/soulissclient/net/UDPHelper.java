@@ -668,7 +668,7 @@ public class UDPHelper {
 		ArrayList<Byte> frame = new ArrayList<>();
 
 		frame.add(Constants.Net.Souliss_UDP_function_broadcast_configure);// functional code
-		Log.d(Constants.Net.TAG, "MaCaCo  BroadCastConfigure isGateway:" + isGateway +" useDhcp:" + useDhcp );
+		Log.d(Constants.Net.TAG, "MaCaCo  BroadCastConfigure isGateway:" + isGateway + " useDhcp:" + useDhcp);
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
 		assertTrue(payLoad.size() == 0XC);

@@ -8,8 +8,8 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -111,7 +111,7 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 				Thread t = new Thread() {
 					public void run() {
 							UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-									prefs,  String.valueOf(Constants.Typicals.Souliss_T1n_RGB_OnCmd));
+									prefs, String.valueOf(Constants.Typicals.Souliss_T1n_RGB_OnCmd));
 					}
 				};
 

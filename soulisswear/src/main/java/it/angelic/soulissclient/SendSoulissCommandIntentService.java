@@ -21,9 +21,7 @@ import android.app.RemoteInput;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.wearable.activity.ConfirmationActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -67,8 +65,8 @@ public class SendSoulissCommandIntentService extends IntentService {
                     CharSequence replyText = inputResults.getCharSequence("reply");
                     if (replyText != null && replyText.length() > 0) {
                         voice = replyText.toString();
-                       dataToSend = voice.getBytes();
-                       Log.w(TAG, "replaced Extra with getResultsFromIntent: " + voice);
+                        dataToSend = voice.getBytes();
+                        Log.w(TAG, "replaced Extra with getResultsFromIntent: " + voice);
                         outputPath = "notification/send";
                     }
                 }
@@ -83,7 +81,7 @@ public class SendSoulissCommandIntentService extends IntentService {
         ConnectionResult connectionResult =
                 googleApiClient.blockingConnect(30, TimeUnit.SECONDS);
 
-        if (outputPath == null){
+        if (outputPath == null) {
             Log.e(TAG, "Path not Found. Not implemented?");
 
             // Show the open on phone animation

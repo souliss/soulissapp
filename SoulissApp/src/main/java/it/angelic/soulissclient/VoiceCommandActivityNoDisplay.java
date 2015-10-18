@@ -21,7 +21,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 public class VoiceCommandActivityNoDisplay extends Activity {
 
-    public static void interpretCommand(final Context context,@NonNull final String yesMan) {
+    public static void interpretCommand(final Context context, @NonNull final String yesMan) {
         final StringBuilder comandToSend = new StringBuilder();
 
         //capisci scena, eseguila e ciao

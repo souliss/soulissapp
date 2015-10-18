@@ -97,8 +97,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
             SoulissCommandDTO dto = holder.data.getCommandDTO();
 
             holder.textCmd.setText(holder.data.getNiceName());
-            String strVal = Float.valueOf(dto.getInterval()/1000f).toString();
-            holder.textCmdWhen.setText(context.getResources().getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, dto.getInterval()/1000, strVal));
+            String strVal = Float.valueOf(dto.getInterval() / 1000f).toString();
+            holder.textCmdWhen.setText(context.getResources().getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, dto.getInterval() / 1000, strVal));
 
 			/* comando massivo */
         } else {
@@ -109,8 +109,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
                     android.graphics.PorterDuff.Mode.SRC_ATOP);
             SoulissCommandDTO dto = holder.data.getCommandDTO();
             holder.textCmd.setText(holder.data.getNiceName());
-            String strVal = Float.valueOf(dto.getInterval()/1000f).toString();
-            holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order) + " " +context.getResources().getQuantityString(R.plurals.seconds, dto.getInterval() / 1000, strVal) +
+            String strVal = Float.valueOf(dto.getInterval() / 1000f).toString();
+            holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, dto.getInterval() / 1000, strVal) +
                     " - " + context.getString(R.string.scene_cmd_massive));
         }
         // Nascondi, maf

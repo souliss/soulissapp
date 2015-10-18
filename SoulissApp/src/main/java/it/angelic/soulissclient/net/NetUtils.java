@@ -138,7 +138,7 @@ public class NetUtils {
 		// int sub = subnetMask.getAddress();//Constants.getSubnet(context);
 		// verificare inversione
 		// InetAddress subnet = intToInet(sub);
-        Log.d(Constants.Net.TAG, "testing belongsToNode subnetMask[]:"+ subnetMask.getHostName()+" toverify[]:"+ toverify.getHostName());
+		Log.d(Constants.Net.TAG, "testing belongsToNode subnetMask[]:" + subnetMask.getHostName() + " toverify[]:" + toverify.getHostName());
 		byte[] subnetAddr = subnetMask.getAddress();
 		byte[] actual = toverify.getAddress();
 		for (int i = 0; i < subnetAddr.length; i++) {
@@ -161,7 +161,7 @@ public class NetUtils {
 
 		// byte[] bytes = BigInteger.valueOf(sub).toByteArray();
 		// InetAddress subnet = intToInet(sub);
-        Log.d(Constants.Net.TAG, "testing subnet[]:"+ subnetMask.getHostName()+" toverify[]:"+ toverify.getHostName()+" localH[]:"+ localH.getHostName());
+		Log.d(Constants.Net.TAG, "testing subnet[]:" + subnetMask.getHostName() + " toverify[]:" + toverify.getHostName() + " localH[]:" + localH.getHostName());
 		byte[] subnetAddr = subnetMask.getAddress();
 		byte[] actual = toverify.getAddress();
 		byte[] local = localH.getAddress();

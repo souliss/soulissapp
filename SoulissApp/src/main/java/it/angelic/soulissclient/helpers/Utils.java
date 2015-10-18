@@ -26,32 +26,32 @@ public class Utils {
     }
 
     public static String getScaledTime(long diffSeconds) {
-		if (diffSeconds < 120)
-			return "" + diffSeconds + " sec.";
-		long diffMinutes = diffSeconds / 60;
-		if (diffMinutes < 120)
-			return "" + diffMinutes + " min.";
-		long diffHours = diffMinutes / (60);
-		if (diffHours < 72)
-			return "" + diffHours + " hr";
+        if (diffSeconds < 120)
+            return "" + diffSeconds + " sec.";
+        long diffMinutes = diffSeconds / 60;
+        if (diffMinutes < 120)
+            return "" + diffMinutes + " min.";
+        long diffHours = diffMinutes / (60);
+        if (diffHours < 72)
+            return "" + diffHours + " hr";
 
-		long diffDays = diffHours / (24);
-			return "" + diffDays + SoulissApp.getAppContext().getString(R.string.days);
-	}
+        long diffDays = diffHours / (24);
+        return "" + diffDays + SoulissApp.getAppContext().getString(R.string.days);
+    }
 
     public static String getDuration(long typicalOnDurationMsec) {
-		long secondi = typicalOnDurationMsec / 1000;
-		if (secondi < 60)
-			return "" + secondi + " sec.";
-		long diffMinutes = secondi / 60;
-		secondi = secondi  % 60;//resto
-		if (diffMinutes < 120)
-			return "" + diffMinutes + " minuti e "+secondi+" secondi";
-		long diffHours = diffMinutes / (60);
-		diffMinutes = diffMinutes % 60;
-			return "" + diffHours + " ore e "+diffMinutes+" minuti";
-		//return null;
-	}
+        long secondi = typicalOnDurationMsec / 1000;
+        if (secondi < 60)
+            return "" + secondi + " sec.";
+        long diffMinutes = secondi / 60;
+        secondi = secondi % 60;//resto
+        if (diffMinutes < 120)
+            return "" + diffMinutes + " minuti e " + secondi + " secondi";
+        long diffHours = diffMinutes / (60);
+        diffMinutes = diffMinutes % 60;
+        return "" + diffHours + " ore e " + diffMinutes + " minuti";
+        //return null;
+    }
 
     public static Float celsiusToFahrenheit(float in) {
         return Float.valueOf((9.0f / 5.0f) * in + 32);

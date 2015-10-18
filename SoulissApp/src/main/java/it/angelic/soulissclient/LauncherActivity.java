@@ -146,7 +146,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         public void onReceive(Context context, Intent intent) {
             // opzioni.initializePrefs();
             // rimuove timeout
-          //  timeoutHandler.removeCallbacks(timeExpired);
+            //  timeoutHandler.removeCallbacks(timeExpired);
             Bundle extras = intent.getExtras();
 
             if (extras != null && extras.get("MACACO") != null) {
@@ -518,7 +518,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         super.onPause();
         autoUpdate.cancel();
         dbwarnline.clearAnimation();
-       // timeoutHandler.removeCallbacks(timeExpired);
+        // timeoutHandler.removeCallbacks(timeExpired);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

@@ -141,10 +141,9 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             resId = R.drawable.sos;
         else if (typical == Constants.Typicals.Souliss_T22)
             resId = R.drawable.sos;
-        else if (typical == Constants.Typicals.Souliss_T31){
+        else if (typical == Constants.Typicals.Souliss_T31) {
             resId = R.drawable.sos;
-        }
-        else if (typical == Constants.Typicals.Souliss_T_CurrentSensor)
+        } else if (typical == Constants.Typicals.Souliss_T_CurrentSensor)
             resId = R.drawable.sos;
         else if (typical == Constants.Typicals.Souliss_T_TemperatureSensor)
             resId = R.drawable.sos;

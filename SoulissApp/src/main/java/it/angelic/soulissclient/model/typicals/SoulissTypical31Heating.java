@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;

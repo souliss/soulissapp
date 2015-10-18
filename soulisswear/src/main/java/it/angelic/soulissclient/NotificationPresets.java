@@ -40,7 +40,6 @@ import android.text.style.UnderlineSpan;
 public class NotificationPresets {
 
 
-
     private void appendStyled(SpannableStringBuilder builder, String str, Object... spans) {
         builder.append(str);
         for (Object span : spans) {
@@ -87,7 +86,7 @@ public class NotificationPresets {
                                 .addAction(new Notification.Action.Builder(R.drawable.ic_phone_android_32dp,
                                         "Open on phone", serviceOpenpendingIntent)
                                         .build())
-                                //.setDisplayIntent(launchSoulissWpendingIntent)
+                                        //.setDisplayIntent(launchSoulissWpendingIntent)
                                 .setBackground(BitmapFactory.decodeResource(context.getResources(), R.drawable.home_automation))
                         //.addPage(page2)
                 )

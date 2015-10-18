@@ -241,7 +241,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni,(TagDetailActivity)getActivity(), collectedTagTypicals, tagId);
+        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTagTypicals, tagId);
         //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER

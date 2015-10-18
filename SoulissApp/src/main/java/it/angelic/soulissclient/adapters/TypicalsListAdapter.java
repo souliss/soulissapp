@@ -17,8 +17,8 @@ import java.util.Locale;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 public class TypicalsListAdapter extends BaseAdapter {

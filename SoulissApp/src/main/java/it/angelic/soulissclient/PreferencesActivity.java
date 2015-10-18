@@ -15,8 +15,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
@@ -27,7 +25,7 @@ import static it.angelic.soulissclient.Constants.TAG;
 
 public class PreferencesActivity extends PreferenceActivity {
 
-   // SoulissPreferenceHelper opzioni;
+    // SoulissPreferenceHelper opzioni;
 
 
     private String currentScreen;
@@ -101,7 +99,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // opzioni = SoulissApp.getOpzioni();
+        // opzioni = SoulissApp.getOpzioni();
         /*if (opzioni.isLightThemeSelected()) {
             setTheme(R.style.LightThemeSelector);
         } else
