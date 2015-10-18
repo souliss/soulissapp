@@ -56,10 +56,10 @@ import static junit.framework.Assert.assertEquals;
 public class UDPSoulissDecoder {
 
     SoulissPreferenceHelper opzioni;
-    private SoulissDBLowHelper database;
-    private SharedPreferences soulissSharedPreference;
     private Context context;
+    private SoulissDBLowHelper database;
     private InetAddress localHost;
+    private SharedPreferences soulissSharedPreference;
 
     public UDPSoulissDecoder(SoulissPreferenceHelper opts, Context ctx) {
         this.opzioni = opts;
@@ -75,50 +75,105 @@ public class UDPSoulissDecoder {
     }
 
     /**
-     * processa il pacchetto UDP ricevuto e agisce di condeguenza
+     * TODO Should be moved. Produces Android notification
      *
-     * @param packet incoming datagram
+     * @param ctx
+     * @param desc
+     * @param longdesc
+     * @param icon
+     * @param ty
      */
-    public void decodeVNetDatagram(DatagramPacket packet) {
-        int checklen = packet.getLength();
-        // Log.d(Constants.TAG, "** Packet received");
-        ArrayList<Short> mac = new ArrayList<>();
-        for (int ig = 7; ig < checklen; ig++) {
-            mac.add((short) (packet.getData()[ig] & 0xFF));
-        }
+    public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
 
-        // 0xf 0xe 0x17 0x64 0x1 0x11 0x0 0x18 0x0 0x0 0x0 0x3 0xa 0x8 0xa
-        // il primo byte dev essere la dimensione
-        if (checklen != packet.getData()[0]) {
-            StringBuilder dump = new StringBuilder();
-            for (int ig = 0; ig < checklen; ig++) {
-                // 0xFF & buf[index]
-                dump.append("0x").append(Long.toHexString(0xFF & packet.getData()[ig])).append(" ");
-                // dump.append(":"+packet.getData()[ig]);
+        Intent notificationIntent = new Intent(ctx, T4nFragWrapper.class);
+        notificationIntent.putExtra("TIPICO", ty);
+        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Resources res = ctx.getResources();
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+
+        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
+                .setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker(desc)
+                .setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
+        Notification n = builder.build();
+        nm.notify(664, n);
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            Ringtone r = RingtoneManager.getRingtone(ctx, notification);
+            r.play();
+        } catch (Exception e) {
+            Log.e(Constants.Net.TAG, "Unable to play sounds:" + e.getMessage());
+        }
+    }
+
+    /**
+     * Sovrascrive la struttura I nodi e la struttura dei tipici e richiama
+     * UDPHelper.typicalRequest(opzioni, nodes, 0);
+     *
+     * @param mac
+     */
+    private void decodeDBStructRequest(ArrayList<Short> mac) {
+        // Threee static bytes
+        assertEquals(4, (short) mac.get(4));
+        final int nodes = mac.get(5);
+        int maxnodes = mac.get(6);
+        int maxTypicalXnode = mac.get(7);
+        int maxrequests = mac.get(8);
+
+        Log.i(Constants.Net.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
+                + maxrequests);
+        SoulissDBHelper.open();
+        database.createOrUpdateStructure(nodes, maxTypicalXnode);
+        // Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
+
+        SharedPreferences.Editor editor = soulissSharedPreference.edit();
+        // sistema configurato
+        if (soulissSharedPreference.contains("numNodi"))
+            editor.remove("numNodi");
+        if (soulissSharedPreference.contains("TipiciXNodo"))
+            editor.remove("TipiciXNodo");
+
+        editor.putInt("numNodi", nodes);
+        editor.putInt("TipiciXNodo", maxTypicalXnode);
+        editor.apply();
+
+        // FIXME centralizzare sta roba
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //ask for all typicals
+                UDPHelper.typicalRequest(opzioni, nodes, 0);
+                //first health req
+                UDPHelper.healthRequest(opzioni, nodes, 0);
             }
-            Log.e(Constants.Net.TAG, "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
-                    + "\n" + dump.toString());
-        } else {
-            decodeMacaco(mac);
+        }).start();
+
+    }
+
+    /**
+     * Decodes a souliss nodes health request
+     *
+     * @param mac packet
+     */
+    private void decodeHealthRequest(ArrayList<Short> mac) {
+        // Threee static bytes
+        int tgtnode = mac.get(3);
+        int numberOf = mac.get(4);
+
+        ArrayList<Short> healths = new ArrayList<>();
+        // build an array containing healths
+        for (int i = 5; i < 5 + numberOf; i++) {
+            healths.add(mac.get(i));
         }
 
-		/*
-         * DEBUG PACCHETTO StringBuilder dump = new StringBuilder(); for (int ig
-		 * = 0; ig < checklen; ig++) { // 0xFF & buf[index] dump.append("0x" +
-		 * Long.toHexString(0xFF & packet.getData()[ig]) + " "); //
-		 * dump.append(":"+packet.getData()[ig]); } Log.d(Constants.TAG, "***" +
-		 * dump.toString());
-		 */
-        // Qualcosa ho ricevuto, invia broadcast
-        Intent i = new Intent();
-        i.putExtra("MACACO", mac);
-        i.setAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
-        opzioni.getContx().sendBroadcast(i);
-        // resetta backoff irraggiungibilit�
-        opzioni.resetBackOff();
-        //se era irraggiungibile, pinga
-        if (!opzioni.isSoulissReachable())
-            opzioni.setBestAddress();
+        try {
+            numberOf = database.refreshNodeHealths(healths, tgtnode);
+            Log.d(Constants.Net.TAG, "Refreshed " + numberOf + " nodes' health");
+        } catch (IllegalStateException e) {
+            Log.e(Constants.Net.TAG, "DB connection closed! Can't update healths");
+            return;
+        }
 
     }
 
@@ -191,123 +246,6 @@ public class UDPSoulissDecoder {
                 break;
         }
 
-    }
-
-    /**
-     * Si fa dare gli ID di eventuali widgets e li aggiorna
-     * tramite sendBroadcast()
-     */
-    private void processWidgets() {
-        try {
-            int ids[] = AppWidgetManager.getInstance(SoulissApp.getAppContext()).getAppWidgetIds(new ComponentName(SoulissApp.getAppContext(), SoulissWidget.class));
-            if (ids.length > 0) {
-                Intent intent = new Intent(SoulissApp.getAppContext(), SoulissWidget.class);
-                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-                // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-                // since it seems the onUpdate() is only fired on that:
-                // int[] ids = {widgetId};
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-                SoulissApp.getAppContext().sendBroadcast(intent);
-            }
-        } catch (Exception we) {
-            Log.e(Constants.Net.TAG, "can't update widgets: " + we);
-        }
-    }
-
-    private void processTriggers() {
-        try {
-
-            List<SoulissNode> ref = database.getAllNodes();
-            List<SoulissTrigger> triggers = database.getAllTriggers(context);
-            Log.i(Constants.Net.TAG, "checked triggers: " + triggers.size());
-            // logThings(refreshedNodes);
-
-            Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
-
-			/* Check antifurto */
-            for (SoulissNode soulissNode : ref) {
-                refreshedNodes.put(soulissNode.getId(), soulissNode);
-                if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {
-                    for (SoulissTypical ty : soulissNode.getTypicals()) {
-                        // check Antitheft
-                        if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
-                                && ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-                            sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
-                                    context.getString(R.string.antitheft_notify_desc), R.drawable.shield, ty);
-                            break;
-                        }
-                    }
-                }
-            }
-            for (SoulissTrigger soulissTrigger : triggers) {
-                SoulissTypical source = refreshedNodes.get(soulissTrigger.getInputNodeId()).getTypical(soulissTrigger.getInputSlot());
-                //SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto(),source);
-                // SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
-
-                // SoulissTypical target =
-                // refreshedNodes.get(command.getNodeId()).getTypical(command.getSlot());
-                Calendar now = Calendar.getInstance();
-                if (!soulissTrigger.getTriggerDto().isActivated()) {
-                    // Descrizione programma
-                    StringBuilder info = new StringBuilder(soulissTrigger.toString());
-                    info.append(" slot ").append(soulissTrigger.getSlot());
-                    if ("".compareTo(source.getNiceName()) != 0)
-                        info.append(" (")
-                                .append(source.getNiceName())
-                                .append(")");
-                    info.append(" on " ).append(source.getParentNode().getNiceName());
-
-                    String op = soulissTrigger.getOp();
-                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > soulissTrigger.getThreshVal()) {
-                        Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
-                        soulissTrigger.getTriggerDto().setActive(true);
-                        soulissTrigger.execute();
-                        soulissTrigger.getCommandDTO().setExecutedTime(now);
-                        soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
-                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
-                        Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
-                        soulissTrigger.getTriggerDto().setActive(true);
-                        soulissTrigger.execute();
-                        soulissTrigger.getCommandDto().setExecutedTime(now);
-                        soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
-                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
-                        Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
-                        soulissTrigger.execute();
-                        soulissTrigger.getTriggerDto().setActive(true);
-                        soulissTrigger.getCommandDto().setExecutedTime(now);
-                        soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
-                    }
-                }
-                // vedi se bisogna disattivare
-                else {
-                    String op = soulissTrigger.getOp();
-                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() <= soulissTrigger.getThreshVal()) {
-                        Log.w(Constants.Net.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
-                        soulissTrigger.getTriggerDto().setActive(false);
-                        soulissTrigger.persist(database);
-                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() >= soulissTrigger.getThreshVal()) {
-                        Log.w(Constants.Net.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
-                        soulissTrigger.getTriggerDto().setActive(false);
-                        soulissTrigger.persist(database);
-                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() != soulissTrigger.getThreshVal()) {
-                        Log.w(Constants.Net.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
-                        soulissTrigger.getTriggerDto().setActive(false);
-                        soulissTrigger.persist(database);
-                    }
-                }
-
-            }
-        } catch (IllegalStateException e) {
-            Log.e(Constants.Net.TAG, "DB connection was closed, check trigger impossible");
-        } catch (Exception e) {
-            Log.e(Constants.Net.TAG, "check trigger impossible", e);
-        }
     }
 
     /**
@@ -387,97 +325,6 @@ public class UDPSoulissDecoder {
     }
 
     /**
-     * Sovrascrive la struttura I nodi e la struttura dei tipici e richiama
-     * UDPHelper.typicalRequest(opzioni, nodes, 0);
-     *
-     * @param mac
-     */
-    private void decodeDBStructRequest(ArrayList<Short> mac) {
-        // Threee static bytes
-        assertEquals(4, (short) mac.get(4));
-        final int nodes = mac.get(5);
-        int maxnodes = mac.get(6);
-        int maxTypicalXnode = mac.get(7);
-        int maxrequests = mac.get(8);
-
-        Log.i(Constants.Net.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
-                + maxrequests);
-        SoulissDBHelper.open();
-        database.createOrUpdateStructure(nodes, maxTypicalXnode);
-        // Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
-
-        SharedPreferences.Editor editor = soulissSharedPreference.edit();
-        // sistema configurato
-        if (soulissSharedPreference.contains("numNodi"))
-            editor.remove("numNodi");
-        if (soulissSharedPreference.contains("TipiciXNodo"))
-            editor.remove("TipiciXNodo");
-
-        editor.putInt("numNodi", nodes);
-        editor.putInt("TipiciXNodo", maxTypicalXnode);
-        editor.apply();
-
-        // FIXME centralizzare sta roba
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //ask for all typicals
-                UDPHelper.typicalRequest(opzioni, nodes, 0);
-                //first health req
-                UDPHelper.healthRequest(opzioni, nodes, 0);
-            }
-        }).start();
-
-    }
-
-    /**
-     * Definizione dei tipici
-     *
-     * @param mac
-     */
-    private void decodeTypRequest(ArrayList<Short> mac) {
-        try {
-            assertEquals(Constants.Net.Souliss_UDP_function_typreq_resp, (short) mac.get(0));
-            SharedPreferences.Editor editor = soulissSharedPreference.edit();
-            short tgtnode = mac.get(3);
-            int numberOf = mac.get(4);
-            int done = 0;
-            // SoulissNode node = database.getSoulissNode(tgtnode);
-            int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
-            Log.i(Constants.Net.TAG, "--DECODE MACACO TypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
-                    + typXnodo);
-            // creates Souliss nodes
-            for (int j = 0; j < numberOf; j++) {
-                if (mac.get(5 + j) != 0) {// create only not-empty typicals
-                    SoulissTypicalDTO dto = new SoulissTypicalDTO();
-                    dto.setTypical(mac.get(5 + j));
-                    dto.setSlot(((short) (j % typXnodo)));// magia
-                    dto.setNodeId((short) (j / typXnodo + tgtnode));
-                    try {
-                        dto.persist();
-                        // conta solo i master
-                        if (mac.get(5 + j) != it.angelic.soulissclient.Constants.Typicals.Souliss_T_related)
-                            done++;
-                        Log.d(Constants.Net.TAG, "---PERSISTED TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
-                                + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
-                    } catch (Exception ie) {
-                        Log.e(Constants.Net.TAG, "---PERSIST ERROR:" + ie.getMessage()+" - " + ((short) (j / typXnodo + tgtnode))
-                                + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
-
-                    }
-                }
-            }
-            if (soulissSharedPreference.contains("numTipici"))
-                editor.remove("numTipici");// unused
-            editor.putInt("numTipici", database.countTypicals());
-            editor.commit();
-            Log.i(Constants.Net.TAG, "Refreshed " + numberOf + " typicals for node " + tgtnode);
-        } catch (Exception uy) {
-            Log.e(Constants.Net.TAG, "decodeTypRequest ERROR", uy);
-        }
-    }
-
-    /**
      * puo giungere in seguito a state request oppure come subscription data
      * della publish. Semantica = a typical request. Aggiorna il DB solo se il
      * tipico esiste
@@ -495,7 +342,7 @@ public class UDPSoulissDecoder {
             SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
-                Log.v(Constants.Net.TAG, "---REFRESHING NODE:"+(j / typXnodo + tgtnode)+" SLOT:"+(j % typXnodo));
+                Log.v(Constants.Net.TAG, "---REFRESHING NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
                     SoulissTypical temp = it.getTypical((short) (j % typXnodo));
@@ -523,61 +370,223 @@ public class UDPSoulissDecoder {
     }
 
     /**
-     * Decodes a souliss nodes health request
+     * Definizione dei tipici
      *
-     * @param mac packet
+     * @param mac
      */
-    private void decodeHealthRequest(ArrayList<Short> mac) {
-        // Threee static bytes
-        int tgtnode = mac.get(3);
-        int numberOf = mac.get(4);
-
-        ArrayList<Short> healths = new ArrayList<>();
-        // build an array containing healths
-        for (int i = 5; i < 5 + numberOf; i++) {
-            healths.add(mac.get(i));
-        }
-
+    private void decodeTypRequest(ArrayList<Short> mac) {
         try {
-            numberOf = database.refreshNodeHealths(healths, tgtnode);
-            Log.d(Constants.Net.TAG, "Refreshed " + numberOf + " nodes' health");
-        } catch (IllegalStateException e) {
-            Log.e(Constants.Net.TAG, "DB connection closed! Can't update healths");
-            return;
-        }
+            assertEquals(Constants.Net.Souliss_UDP_function_typreq_resp, (short) mac.get(0));
+            SharedPreferences.Editor editor = soulissSharedPreference.edit();
+            short tgtnode = mac.get(3);
+            int numberOf = mac.get(4);
+            int done = 0;
+            // SoulissNode node = database.getSoulissNode(tgtnode);
+            int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
+            Log.i(Constants.Net.TAG, "--DECODE MACACO TypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
+                    + typXnodo);
+            // creates Souliss nodes
+            for (int j = 0; j < numberOf; j++) {
+                if (mac.get(5 + j) != 0) {// create only not-empty typicals
+                    SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+                    short slot = ((short) (j % typXnodo));
+                    short node = (short) (j / typXnodo + tgtnode);
+                    SoulissTypicalDTO dto;
+                    try {
+                        dto = db.getTypical(node, slot).getTypicalDTO();
+                    } catch (Exception e) {
+                        dto = new SoulissTypicalDTO();
+                    }
+                    dto.setTypical(mac.get(5 + j));
+                    dto.setSlot(slot);// magia
+                    dto.setNodeId(node);
+                    try {
+                        dto.persist();
+                        // conta solo i master
+                        if (mac.get(5 + j) != it.angelic.soulissclient.Constants.Typicals.Souliss_T_related) {
+                            done++;
+                            Log.d(Constants.Net.TAG, "---PERSISTED TYPICAL ON NODE:" + ((short) (j / typXnodo + tgtnode))
+                                    + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
+                        }
+                    } catch (Exception ie) {
+                        Log.e(Constants.Net.TAG, "---PERSIST ERROR:" + ie.getMessage() + " - " + ((short) (j / typXnodo + tgtnode))
+                                + " SLOT:" + ((short) (j % typXnodo)) + " TYP:" + (mac.get(5 + j)));
 
+                    }
+                }
+            }
+            if (soulissSharedPreference.contains("numTipici"))
+                editor.remove("numTipici");// unused
+            editor.putInt("numTipici", database.countTypicals());
+            editor.commit();
+            Log.i(Constants.Net.TAG, "Refreshed " + numberOf + " typicals for node " + tgtnode);
+        } catch (Exception uy) {
+            Log.e(Constants.Net.TAG, "decodeTypRequest ERROR", uy);
+        }
     }
 
     /**
-     * TODO Should be moved. Produces Android notification
+     * processa il pacchetto UDP ricevuto e agisce di condeguenza
      *
-     * @param ctx
-     * @param desc
-     * @param longdesc
-     * @param icon
-     * @param ty
+     * @param packet incoming datagram
      */
-    public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
+    public void decodeVNetDatagram(DatagramPacket packet) {
+        int checklen = packet.getLength();
+        // Log.d(Constants.TAG, "** Packet received");
+        ArrayList<Short> mac = new ArrayList<>();
+        for (int ig = 7; ig < checklen; ig++) {
+            mac.add((short) (packet.getData()[ig] & 0xFF));
+        }
 
-        Intent notificationIntent = new Intent(ctx, T4nFragWrapper.class);
-        notificationIntent.putExtra("TIPICO", ty);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
+        // 0xf 0xe 0x17 0x64 0x1 0x11 0x0 0x18 0x0 0x0 0x0 0x3 0xa 0x8 0xa
+        // il primo byte dev essere la dimensione
+        if (checklen != packet.getData()[0]) {
+            StringBuilder dump = new StringBuilder();
+            for (int ig = 0; ig < checklen; ig++) {
+                // 0xFF & buf[index]
+                dump.append("0x").append(Long.toHexString(0xFF & packet.getData()[ig])).append(" ");
+                // dump.append(":"+packet.getData()[ig]);
+            }
+            Log.e(Constants.Net.TAG, "**WRONG PACKET SIZE: " + packet.getData()[0] + "bytes\n" + "Actual size: " + checklen
+                    + "\n" + dump.toString());
+        } else {
+            decodeMacaco(mac);
+        }
 
-        Resources res = ctx.getResources();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
+		/*
+         * DEBUG PACCHETTO StringBuilder dump = new StringBuilder(); for (int ig
+		 * = 0; ig < checklen; ig++) { // 0xFF & buf[index] dump.append("0x" +
+		 * Long.toHexString(0xFF & packet.getData()[ig]) + " "); //
+		 * dump.append(":"+packet.getData()[ig]); } Log.d(Constants.TAG, "***" +
+		 * dump.toString());
+		 */
+        // Qualcosa ho ricevuto, invia broadcast
+        Intent i = new Intent();
+        i.putExtra("MACACO", mac);
+        i.setAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        opzioni.getContx().sendBroadcast(i);
+        // resetta backoff irraggiungibilit�
+        opzioni.resetBackOff();
+        //se era irraggiungibile, pinga
+        if (!opzioni.isSoulissReachable())
+            opzioni.setBestAddress();
 
-        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
-                .setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker(desc)
-                .setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
-        Notification n = builder.build();
-        nm.notify(664, n);
+    }
+
+    private void processTriggers() {
         try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            Ringtone r = RingtoneManager.getRingtone(ctx, notification);
-            r.play();
+
+            List<SoulissNode> ref = database.getAllNodes();
+            List<SoulissTrigger> triggers = database.getAllTriggers(context);
+            Log.i(Constants.Net.TAG, "checked triggers: " + triggers.size());
+            // logThings(refreshedNodes);
+
+            Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
+
+			/* Check antifurto */
+            for (SoulissNode soulissNode : ref) {
+                refreshedNodes.put(soulissNode.getId(), soulissNode);
+                if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {
+                    for (SoulissTypical ty : soulissNode.getTypicals()) {
+                        // check Antitheft
+                        if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
+                                && ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
+                            sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
+                                    context.getString(R.string.antitheft_notify_desc), R.drawable.shield, ty);
+                            break;
+                        }
+                    }
+                }
+            }
+            for (SoulissTrigger soulissTrigger : triggers) {
+                SoulissTypical source = refreshedNodes.get(soulissTrigger.getInputNodeId()).getTypical(soulissTrigger.getInputSlot());
+                //SoulissCommand command = new SoulissCommand(soulissTrigger.getCommandDto(),source);
+                // SoulissTriggerDTO src = soulissTrigger.getTriggerDto();
+
+                // SoulissTypical target =
+                // refreshedNodes.get(command.getNodeId()).getTypical(command.getSlot());
+                Calendar now = Calendar.getInstance();
+                if (!soulissTrigger.getTriggerDto().isActivated()) {
+                    // Descrizione programma
+                    StringBuilder info = new StringBuilder(soulissTrigger.toString());
+                    info.append(" slot ").append(soulissTrigger.getSlot());
+                    if ("".compareTo(source.getNiceName()) != 0)
+                        info.append(" (")
+                                .append(source.getNiceName())
+                                .append(")");
+                    info.append(" on ").append(source.getParentNode().getNiceName());
+
+                    String op = soulissTrigger.getOp();
+                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() > soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
+                        soulissTrigger.getTriggerDto().setActive(true);
+                        soulissTrigger.execute();
+                        soulissTrigger.getCommandDTO().setExecutedTime(now);
+                        soulissTrigger.persist(database);
+                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                                R.drawable.lighthouse, soulissTrigger);
+                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
+                        soulissTrigger.getTriggerDto().setActive(true);
+                        soulissTrigger.execute();
+                        soulissTrigger.getCommandDto().setExecutedTime(now);
+                        soulissTrigger.persist(database);
+                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                                R.drawable.lighthouse, soulissTrigger);
+                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
+                        soulissTrigger.execute();
+                        soulissTrigger.getTriggerDto().setActive(true);
+                        soulissTrigger.getCommandDto().setExecutedTime(now);
+                        soulissTrigger.persist(database);
+                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                                R.drawable.lighthouse, soulissTrigger);
+                    }
+                }
+                // vedi se bisogna disattivare
+                else {
+                    String op = soulissTrigger.getOp();
+                    if (">".compareTo(op) == 0 && source.getTypicalDTO().getOutput() <= soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.Net.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
+                        soulissTrigger.getTriggerDto().setActive(false);
+                        soulissTrigger.persist(database);
+                    } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() >= soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.Net.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
+                        soulissTrigger.getTriggerDto().setActive(false);
+                        soulissTrigger.persist(database);
+                    } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() != soulissTrigger.getThreshVal()) {
+                        Log.w(Constants.Net.TAG, "DEACTIVATE TRIGGER " + soulissTrigger.toString());
+                        soulissTrigger.getTriggerDto().setActive(false);
+                        soulissTrigger.persist(database);
+                    }
+                }
+
+            }
+        } catch (IllegalStateException e) {
+            Log.e(Constants.Net.TAG, "DB connection was closed, check trigger impossible");
         } catch (Exception e) {
-            Log.e(Constants.Net.TAG, "Unable to play sounds:" + e.getMessage());
+            Log.e(Constants.Net.TAG, "check trigger impossible", e);
+        }
+    }
+
+    /**
+     * Si fa dare gli ID di eventuali widgets e li aggiorna
+     * tramite sendBroadcast()
+     */
+    private void processWidgets() {
+        try {
+            int ids[] = AppWidgetManager.getInstance(SoulissApp.getAppContext()).getAppWidgetIds(new ComponentName(SoulissApp.getAppContext(), SoulissWidget.class));
+            if (ids.length > 0) {
+                Intent intent = new Intent(SoulissApp.getAppContext(), SoulissWidget.class);
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+                // since it seems the onUpdate() is only fired on that:
+                // int[] ids = {widgetId};
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                SoulissApp.getAppContext().sendBroadcast(intent);
+            }
+        } catch (Exception we) {
+            Log.e(Constants.Net.TAG, "can't update widgets: " + we);
         }
     }
 
