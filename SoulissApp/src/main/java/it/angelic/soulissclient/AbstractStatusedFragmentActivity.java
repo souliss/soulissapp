@@ -56,7 +56,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     ActionBarDrawerToggle mDrawerToggle;
     ListView mDrawerList;
     NavDrawerAdapter mDrawermAdapter;
-    TextView actionTitle;
+    TextView actionTitleTextView;
     int numTries = 0;
     private Toolbar actionBar;
     private boolean hasPosted;
@@ -279,13 +279,17 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         }
     }
 
+    public TextView getActionTitleTextView() {
+        return actionTitleTextView;
+    }
+
     public void setActionBarInfo(String title) {
         try {
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
 
-            actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-            actionTitle.setText(title);
+            actionTitleTextView = (TextView) ds.findViewById(R.id.actionbar_title);
+            actionTitleTextView.setText(title);
             refreshStatusIcon();
         } catch (Exception e) {
             Log.e(Constants.TAG, "null bar? " + e.getMessage());

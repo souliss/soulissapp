@@ -136,6 +136,13 @@ public class AlertDialogHelper {
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             source.startActivity(preferencesActivity);
+                            //visto che DB vuoto, anticipa
+                            new Thread() {
+                                public void run() {
+                                    Looper.prepare();
+                                    UDPHelper.dbStructRequest(opts);
+                                }
+                            }.start();
                         }
                     });
             alert.setNegativeButton(source.getResources().getString(android.R.string.cancel),

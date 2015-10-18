@@ -24,20 +24,17 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SharedElementCallback;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLDataException;
 import java.util.List;
-import java.util.Map;
 
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
@@ -192,7 +189,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 alert2.show();
                 return true;
             case R.id.rinominaTag:
-                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitle, null, db,
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitleTextView, null, db,
                         collected);
                 alert.show();
                 return true;

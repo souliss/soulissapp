@@ -22,7 +22,7 @@
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss non è configurato. Inserire l\'indirizzo locale di Souliss nelle impostazioni di rete</string>
     <string name="dialog_disabled_db">DB vuoto</string>
-    <string name="dialog_notinited_db">Il DB di Souliss è vuoto. Richiedi la struttura dei nodi nella schermata opzioni DB</string>
+    <string name="dialog_notinited_db">Il DB di Souliss è vuoto. Procedere con la ricostruzione del modello?</string>
     <string name="dialog_disabled_service">Servizio in background disabilitato</string>
     <string name="dialog_notinited_service">I Programmi non verranno eseguiti!\nAttiva il Servizio in background nelle opzioni</string>
     <string name="dialog_dontshowagain">Non mostrare più</string>

@@ -57,6 +57,7 @@ import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -146,7 +147,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         public void onReceive(Context context, Intent intent) {
             // opzioni.initializePrefs();
             // rimuove timeout
-          //  timeoutHandler.removeCallbacks(timeExpired);
+            //  timeoutHandler.removeCallbacks(timeExpired);
             Bundle extras = intent.getExtras();
 
             if (extras != null && extras.get("MACACO") != null) {
@@ -273,7 +274,12 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        Eula.show(this);
+        if (Eula.show(this))//se EULA gia` ok
+        {
+            if (!opzioni.isDbConfigured()) {
+                AlertDialogHelper.dbNotInitedDialog(this);
+            }
+        }
 
         setContentView(R.layout.main_launcher);
 
@@ -518,7 +524,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         super.onPause();
         autoUpdate.cancel();
         dbwarnline.clearAnimation();
-       // timeoutHandler.removeCallbacks(timeExpired);
+        // timeoutHandler.removeCallbacks(timeExpired);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -733,6 +739,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         // refresh testo
         setHeadInfo();
+
 
         setServiceInfo();
         setWebServiceInfo();
