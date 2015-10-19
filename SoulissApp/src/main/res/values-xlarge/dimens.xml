@@ -5,4 +5,5 @@
     <dimen name="text_size_big">36sp</dimen>
     <dimen name="text_size_vbig">48sp</dimen>
     <dimen name="external_margin">30dp</dimen>
+    <bool name="isTablet">true</bool>
 </resources>

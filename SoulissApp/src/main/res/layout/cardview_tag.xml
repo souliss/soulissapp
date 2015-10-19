@@ -9,7 +9,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
 
-    android:background="@android:color/transparent"
+    style="?attr/cardStyle"
     android:foreground="?attr/selectableItemBackground"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2sp"

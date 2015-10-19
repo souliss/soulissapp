@@ -247,7 +247,7 @@ public class SoulissDBHelper {
                         + slot, null, null, null, null);
         cursor.moveToFirst();
         SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-        //TAGS? no join, perche 1 a n
+        //TAG? no join, perche 1 a n
         Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
                 SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
                         + " AND "+SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
@@ -278,7 +278,7 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
-            //TAGS? no join, perche 1 a n
+            //TAG? no join, perche 1 a n
             Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
                     SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
                     + " AND "+SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),

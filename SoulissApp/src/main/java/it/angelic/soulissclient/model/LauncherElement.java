@@ -1,23 +1,17 @@
 package it.angelic.soulissclient.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 /**
- * Created by Ale on 06/10/2015.
+ * Created by shine@angelic.it on 06/10/2015.
  */
-public class LauncherElement {
-    private boolean isFullSpan;
+public class LauncherElement implements ILauncherTile {
     private LauncherElementEnum componentEnum;
     private short id;
-    private short order;
-
-    public ISoulissObject getLinkedObject() {
-        return linkedObject;
-    }
-
-    public void setLinkedObject(ISoulissObject linkedObject) {
-        this.linkedObject = linkedObject;
-    }
-
+    private boolean isFullSpan;
     private ISoulissObject linkedObject;
+    private short order;
 
     public LauncherElement(LauncherElementEnum componentEnum) {
         super();
@@ -36,8 +30,18 @@ public class LauncherElement {
         return id;
     }
 
-    public void setId(short id) {
+    public void setId(@NonNull short id) {
         this.id = id;
+    }
+
+    public
+    @Nullable
+    ISoulissObject getLinkedObject() {
+        return linkedObject;
+    }
+
+    public void setLinkedObject(ISoulissObject linkedObject) {
+        this.linkedObject = linkedObject;
     }
 
     public short getOrder() {

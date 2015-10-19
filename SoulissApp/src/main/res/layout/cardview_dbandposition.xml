@@ -8,7 +8,7 @@
     android:foreground="?attr/selectableItemBackground"
     android:clickable="true"
     android:elevation="2dp"
-    card_view:cardBackgroundColor="@color/background_floating_material_dark"
+                                    style="?attr/cardStyle"
     card_view:cardCornerRadius="2dp"
     tools:showIn="@layout/main_launcher">
 

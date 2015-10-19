@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <attr format="reference" name="cardStyle"/>
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition">@transition/grid_element_enter</item>
@@ -14,6 +14,7 @@
         <item name="windowActionBar">false</item>
         <!-- Toolbar styles -->
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+        <item name="cardStyle">@style/CardView.Light</item>
     </style>
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowContentTransitions">true</item>
@@ -28,7 +29,10 @@
         <item name="android:windowActionBar">false</item>
         <!-- Toolbar styles -->
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+        <item name="cardStyle">@style/CardView.Dark</item>
     </style>
+
+
     <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="android:windowActionBarOverlay">true</item>
         <!-- Support library compatibility -->

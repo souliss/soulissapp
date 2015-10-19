@@ -636,7 +636,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         //meno possibile
         setDbAndFavouritesInfo();
 
-        /*TAGS*/
+        /*TAG*/
         OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, MainActivity.class);
@@ -653,7 +653,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         };
         cardViewFav.setOnClickListener(ssc);
-        /* SCENES */
+        /* SCENE */
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
                 Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);

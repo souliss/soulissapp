@@ -77,9 +77,9 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             Log.w(Constants.TAG, "Full span for element?"+holder.getItemViewType() );
             holder.itemView.setLayoutParams(sglp);
         }
-
+        //qui la view c'e` gia
         switch (item.getComponentEnum()) {
-            case SCENES:
+            case SCENE:
                 Button sce = (Button) holder.container.findViewById(R.id.ButtonManual);
                 break;
             case MANUAL:
@@ -103,17 +103,14 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 textView.setText(tipico.getNiceName());
                 textView.setTag(position);
                 tipico.setOutputDescView(textViewInfo1);
-                textViewInfo2.setText(SoulissApp.getAppContext().getString(R.string.update) + " "
-                        + Utils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+                textViewInfo2.setText(Utils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
                 imageView.setImageResource(tipico.getIconResourceId());
 
                 linearActionsLayout.removeAllViews();
                 tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
-                if (SoulissApp.getOpzioni().isLightThemeSelected()) {
-                    holder.container.setCardBackgroundColor(SoulissApp.getAppContext().getResources().getColor(R.color.background_floating_material_light));
-                }
+
                 break;
-            case TAGS:
+            case TAG:
                 final SoulissTag soulissTag = (SoulissTag) item.getLinkedObject();
                 TextView textCmd = (TextView) holder.container.findViewById(R.id.TextViewTagTitle);
                 TextView textCmdWhen = (TextView) holder.container.findViewById(R.id.TextViewTagDesc);
@@ -205,11 +202,10 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 inflate(R.layout.cardview_launcher2, parent, false);
         switch (enumVal) {
 
-            case SCENES:
+            case SCENE:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.card_info_service, parent, false);
-
                 break;
             case MANUAL:
                 itemView = LayoutInflater.
@@ -224,9 +220,9 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             case TYPICAL:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
-                        inflate(R.layout.cardview_typical, parent, false);
+                        inflate(R.layout.cardview_typical_vertical, parent, false);
                 break;
-            case TAGS:
+            case TAG:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.cardview_tag , parent, false);

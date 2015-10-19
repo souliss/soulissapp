@@ -24,6 +24,8 @@ import static junit.framework.Assert.assertEquals;
  * <p/>
  * nel caso scenario, nodeId = -2
  * nel caso massivo, -1
+ *
+ * @author shine@angelic.it
  */
 public class SoulissCommand implements Serializable, ISoulissCommand {
 

@@ -69,8 +69,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
 
-
-        StaggeredGridLayoutManager gm = new StaggeredGridLayoutManager(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2, StaggeredGridLayoutManager.VERTICAL);
+        int gridsize = 2;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            gridsize = 3;
+        if (getResources().getBoolean(R.bool.isTablet))
+            gridsize++;
+        StaggeredGridLayoutManager gm = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
 
         mRecyclerView.setLayoutManager(gm);
 

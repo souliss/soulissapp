@@ -1,24 +1,16 @@
 package it.angelic.soulissclient.db;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
-import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTag;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.SoulissTypicalFactory;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -47,7 +39,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
 
         //create FAKED Launcher array
-        LauncherElement scenari = new LauncherElement(LauncherElementEnum.SCENES);
+        LauncherElement scenari = new LauncherElement(LauncherElementEnum.SCENE);
         comments.add(scenari);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.MANUAL);
@@ -65,7 +57,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         comments.add(prot);
 
         //TAG example
-        LauncherElement tag = new LauncherElement(LauncherElementEnum.TAGS);
+        LauncherElement tag = new LauncherElement(LauncherElementEnum.TAG);
         try {
             tag.setLinkedObject(dbt.getTag(SoulissApp.getAppContext(),0L ));
         } catch (SQLDataException e) {

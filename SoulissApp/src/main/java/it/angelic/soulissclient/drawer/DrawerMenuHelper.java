@@ -49,8 +49,8 @@ public class DrawerMenuHelper {
 		
 		NavMenuSection it = NavMenuSection.create(-9, "FUNZIONI");
 		tmp.add(it);
-		
-		//if (apartFromMe != SCENES){
+
+		//if (apartFromMe != SCENE){
 		NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), R.drawable.lamp,
 				false, ctx);
 		tmp.add(scenes);

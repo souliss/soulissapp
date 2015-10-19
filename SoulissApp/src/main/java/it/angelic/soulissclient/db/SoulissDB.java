@@ -98,12 +98,12 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_LOG_DATE = "cldlogwhen";
     public static final String[] ALLCOLUMNS_LOGS = {COLUMN_LOG_ID, COLUMN_LOG_NODE_ID, COLUMN_LOG_SLOT,
             COLUMN_LOG_VAL, COLUMN_LOG_DATE};
-    /* TABELLA SCENES */
+    /* TABELLA SCENE */
     public static final String COLUMN_SCENE_ID = "sceneid";
     public static final String COLUMN_SCENE_NAME = "strscenename";
     public static final String COLUMN_SCENE_ICON = "intsceneico";
     public static final String[] ALLCOLUMNS_SCENES = {COLUMN_SCENE_ID, COLUMN_SCENE_NAME, COLUMN_SCENE_ICON};
-    /*TABELLA TAGS*/
+    /*TABELLA TAG*/
     public static final String COLUMN_TAG_ID = "inttagid";
     public static final String COLUMN_TAG_NAME = "strtagname";
     public static final String COLUMN_TAG_ICONID = "inttagico";
@@ -114,7 +114,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
             COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH, COLUMN_TAG_ORDER};
     /*
-     * TABELLA TAGS'TYP
+     * TABELLA TAG'TYP
      * tabella di relazione n a m per TAG <-> typical
      */
     public static final String COLUMN_TAG_TYP_SLOT = "inttagtypslo";
@@ -262,7 +262,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + ","+ COLUMN_TAG_ORDER + "," + COLUMN_TAG_ICONID
                 + ") VALUES (" + FAVOURITES_TAG_ID + ",'" + context.getResources().getString(R.string.favourites) + "'," + 0 + ","
                 + R.drawable.favorites2 + ")");
-        /* DEFAULT SCENES */
+        /* DEFAULT SCENE */
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
                 + ") VALUES ('" + context.getResources().getString(R.string.scene_turnoff_lights) + "',"
                 + R.drawable.light_off + ")");
