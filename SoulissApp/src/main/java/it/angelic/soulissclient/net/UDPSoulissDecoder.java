@@ -283,21 +283,21 @@ public class UDPSoulissDecoder {
                  * verifiche hanno esito positivo, si può utilizzare tale
                  * indirizzo, altrimenti si continua ad usare broadcast.
                  */
-                if (NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)))
-                        && NetUtils.belongsToSameSubnet(toverify, NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)),
+
+                Log.d(Constants.Net.TAG, "BROADCAST detected, IP to verify: " + toverify);
+                Log.d(Constants.Net.TAG, "BROADCAST, subnet: " + NetUtils.getDeviceSubnetMask(context));
+                Log.d(Constants.Net.TAG, "BROADCAST, me: " + localHost);
+
+                Log.d(Constants.Net.TAG,
+                        "BROADCAST, belongsToNode: "
+                                + NetUtils.belongsToNode(toverify, NetUtils.getDeviceSubnetMask(context)));
+                Log.d(Constants.Net.TAG,
+                        "BROADCAST, belongsToSameSubnet: "
+                                + NetUtils.belongsToSameSubnet(toverify,
+                                NetUtils.getDeviceSubnetMask(context), localHost));
+                if (NetUtils.belongsToNode(toverify, NetUtils.getDeviceSubnetMask(context))
+                        && NetUtils.belongsToSameSubnet(toverify, NetUtils.getDeviceSubnetMask(context),
                         localHost)) {
-                    Log.d(Constants.Net.TAG, "BROADCAST detected, IP to verify: " + toverify);
-                    Log.d(Constants.Net.TAG, "BROADCAST, subnet: " + NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)));
-                    Log.d(Constants.Net.TAG, "BROADCAST, me: " + localHost);
-
-                    Log.d(Constants.Net.TAG,
-                            "BROADCAST, belongsToNode: "
-                                    + NetUtils.belongsToNode(toverify, NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context))));
-                    Log.d(Constants.Net.TAG,
-                            "BROADCAST, belongsToSameSubnet: "
-                                    + NetUtils.belongsToSameSubnet(toverify,
-                                    NetUtils.intToInet(NetUtils.getDeviceSubnetMask(context)), localHost));
-
                     opzioni.setCachedAddr(toverify.getHostAddress());
                     editor.putString("cachedAddress", toverify.getHostAddress());
                     if (!opzioni.isSoulissIpConfigured()) {// forse e` da

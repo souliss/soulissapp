@@ -54,7 +54,7 @@ public class VisualizerView extends View {
     // private Paint transPainter;
 
     public VisualizerView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs);
+        super(context, attrs, defStyle);
         init();
     }
 
