@@ -4,9 +4,12 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,7 +20,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
+import java.io.File;
+import java.io.IOException;
+
+import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Eula;
+import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
+import it.angelic.soulissclient.helpers.ImportDatabaseCSVTask;
 import it.angelic.soulissclient.util.SystemUiHider;
 
 /**
@@ -76,6 +86,12 @@ public class WelcomeActivity extends FragmentActivity {
     };
     private SharedPreferences soulissConfigurationPreference;
 
+    public static void saveWelcomeDisabledPreference(SharedPreferences prefs, boolean val) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("welcome_disabled", val);
+        edit.commit();
+    }
+
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -109,9 +125,51 @@ public class WelcomeActivity extends FragmentActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.w(Constants.TAG, "Config spinner selected val:" + confSpinner.getSelectedItem());
+                String previousConfig = soulissConfigurationPreference.getString("current_config", "");
+                final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+                SharedPreferences.Editor newConfig = soulissConfigurationPreference.edit();
+                newConfig.putString("current_config", confSpinner.getSelectedItem().toString());
+                //DEMO
+                if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
+                    if (!previousConfig.equals("")) {
 
-                //TODO manage&swap conf file
+                        //save Old DB and config
+                        File filePrefs = new File(importDir, previousConfig + "_SoulissDB.csv.prefs");
+                        ExportDatabaseCSVTask.saveSharedPreferencesToFile(WelcomeActivity.this, filePrefs);
+                        //locateDB
+                        SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
+                        String DbPath = SoulissDBHelper.getDatabase().getPath();
+                        File oldDb = new File(DbPath + SoulissDB.DATABASE_NAME);
+                        Log.w(Constants.TAG, "Saving old DB: " + oldDb.getTotalSpace());
 
+
+                    }
+                    File filePrefs;
+                    try {
+                        filePrefs = new File(importDir, "DEMO_SoulissDB.csv.prefs");
+                        if (!filePrefs.exists())
+                            throw new Resources.NotFoundException();
+
+                    } catch (Resources.NotFoundException e) {
+                        filePrefs = new File(importDir, "DEMO_SoulissDB.csv.prefs");
+                        try {
+                            ///se non esiste la demo, Creala
+                            filePrefs.createNewFile();
+                            SharedPreferences newDefault = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
+                            SharedPreferences.Editor demo = newDefault.edit();
+                            demo.putString("edittext_IP_pubb", "demo.souliss.net");
+                            demo.putString("edittext_IP", "10.14.10.77");
+                            demo.commit();
+                            ExportDatabaseCSVTask.saveSharedPreferencesToFile(WelcomeActivity.this, filePrefs);
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        Log.e(Constants.TAG, "Errore import prefs", e);
+                    }
+                    ImportDatabaseCSVTask.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
+                    Log.e(Constants.TAG, "DEMO prefs loaded");
+
+                }
                 //https://github.com/ribico/souliss_demo/blob/master/souliss_demo.ino
             }
 
@@ -212,12 +270,6 @@ public class WelcomeActivity extends FragmentActivity {
 
         /* check for first time run */
         welcomeEnabledCheck();
-    }
-
-    private void saveWelcomeDisabledPreference(SharedPreferences prefs, boolean val) {
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean("welcome_disabled", val);
-        edit.commit();
     }
 
     private void startSoulissMainActivity() {

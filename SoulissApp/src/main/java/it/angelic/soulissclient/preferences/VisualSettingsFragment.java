@@ -1,6 +1,8 @@
 package it.angelic.soulissclient.preferences;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -9,6 +11,7 @@ import android.widget.Toast;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.WelcomeActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 @TargetApi(11)
@@ -22,6 +25,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 		opzioni = SoulissApp.getOpzioni();
 		addPreferencesFromResource(R.xml.settings_visual);
 		final Preference restoreWarns = findPreference("restoredialogs");
+		final Preference restoreWelcome = findPreference("restorewelcome");
 		//final Preference lightThemeCheckBox = (Preference) findPreference("checkboxHoloLight");
 
 		// Rimette i dialogs
@@ -32,6 +36,17 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			public boolean onPreferenceClick(Preference arg0) {
 				opzioni.setDontShowAgain(getResources().getString(R.string.dialog_disabled_db), false);
 				opzioni.setDontShowAgain(getResources().getString(R.string.dialog_disabled_service), false);
+				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
+						Toast.LENGTH_SHORT).show();
+				return true;
+			}
+		});
+
+		restoreWelcome.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			@Override
+			public boolean onPreferenceClick(Preference arg0) {
+				SharedPreferences soulissConfigurationPreference = getActivity().getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
+				WelcomeActivity.saveWelcomeDisabledPreference(soulissConfigurationPreference, false);
 				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
 						Toast.LENGTH_SHORT).show();
 				return true;

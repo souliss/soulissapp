@@ -64,7 +64,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         //ESPORTA PREFS
         File filePrefs = new File(exportDir, yearFormat.format(now) + "_SoulissDB.csv.prefs");
-        saveSharedPreferencesToFile(filePrefs);
+        saveSharedPreferencesToFile(context, filePrefs);
         return true;
 
     }
@@ -101,7 +101,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     /*
      * Esporto tutte le pref utente, non quelle cached
      * */
-    private boolean saveSharedPreferencesToFile(File dst) {
+    public static boolean saveSharedPreferencesToFile(Context context, File dst) {
         boolean res = false;
         ObjectOutputStream output = null;
         try {

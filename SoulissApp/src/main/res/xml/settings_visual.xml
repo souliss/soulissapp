@@ -47,6 +47,12 @@
             android:key="restoredialogs"
             android:summary="@string/opt_restore_desc"
             android:title="@string/opt_restore" />
+
+        <Preference
+            android:name="restorewelcome"
+            android:key="restorewelcome"
+            android:summary="@string/opt_restore_welcome_desc"
+            android:title="@string/opt_restore_welcome"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

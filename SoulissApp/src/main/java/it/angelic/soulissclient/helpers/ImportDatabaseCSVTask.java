@@ -2,6 +2,7 @@ package it.angelic.soulissclient.helpers;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -257,7 +258,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         });
         try {
             File filePrefs = new File(importDir, file.getName() + ".prefs");
-            loadSharedPreferencesFromFile(filePrefs);
+            loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
         } catch (Exception e) {
             Log.e(TAG, "Errore import prefs", e);
         }
@@ -428,12 +429,12 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     }
 
-    private boolean loadSharedPreferencesFromFile(File src) {
+    public static boolean loadSharedPreferencesFromFile(Context ctx, File src) {
         boolean res = false;
         ObjectInputStream input = null;
         try {
             input = new ObjectInputStream(new FileInputStream(src));
-            Editor prefEdit = PreferenceManager.getDefaultSharedPreferences(activity).edit();
+            Editor prefEdit = PreferenceManager.getDefaultSharedPreferences(ctx).edit();
             prefEdit.clear();
             Map<String, ?> entries = (Map<String, ?>) input.readObject();
             for (Entry<String, ?> entry : entries.entrySet()) {
