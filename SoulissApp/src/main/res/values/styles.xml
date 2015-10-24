@@ -93,6 +93,10 @@
     </style>
 
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
-    <style name="ButtonBarButton" />
+    <style name="ButtonBarButton"/>
+
+    <style name="mySpinnerStyle">
+        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+    </style>
 
 </resources>

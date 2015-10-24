@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -73,7 +72,8 @@ public class SoulissPreferenceHelper implements Serializable {
     public SoulissPreferenceHelper(Context contx) {
         super();
         this.contx = contx;
-        customCachedPrefs = contx.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //customCachedPrefs = contx.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        customCachedPrefs = PreferenceManager.getDefaultSharedPreferences(contx);
         initializePrefs();
         // Log.d(TAG, "Constructing prefs");
     }

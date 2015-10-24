@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.net;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -65,7 +65,8 @@ public class UDPSoulissDecoder {
         this.opzioni = opts;
         this.context = ctx;
         database = new SoulissDBLowHelper(ctx);
-        soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        soulissSharedPreference = PreferenceManager.getDefaultSharedPreferences(ctx);
         SoulissDBHelper.open();
         try {
             localHost = NetUtils.getInetLocalIpAddress();

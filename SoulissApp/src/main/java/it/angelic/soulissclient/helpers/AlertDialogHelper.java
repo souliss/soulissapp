@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -216,7 +217,9 @@ public class AlertDialogHelper {
         // alert = new AlertDialog.Builder(new ContextThemeWrapper(source,
         // R.style.AboutDialog));
         alert.setIcon(android.R.drawable.ic_dialog_alert);
-        final SharedPreferences soulissCust = source.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //final SharedPreferences soulissCust = source.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        final SharedPreferences soulissCust = PreferenceManager.getDefaultSharedPreferences(source);
+
         alert.setTitle(source.getResources().getString(R.string.dialog_warn_db));
         alert.setMessage(source.getResources().getString(R.string.dialog_drop_db));
 

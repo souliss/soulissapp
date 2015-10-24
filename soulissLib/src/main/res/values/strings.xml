@@ -2,7 +2,7 @@
 <resources>
     <!-- WELCOME SECTION -->
     <string name="welcome_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ornare augue nec urna consequat, eget lacinia purus accumsan.</string>
-    <string name="welcome_tour_button">Take a tour</string>
+    <string name="welcome_tour_button">Start</string>
     <string name="welcome_skip_text">Skip</string>
 
     <!-- MANUAL_SECTION -->
@@ -357,5 +357,8 @@
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
     <string name="bytes_sent">Bytes sent</string>
     <string name="addprogram_choosedelay">Command\'s delay</string>
-    <string name="scene_add_typical_to">Add device to...</string>>
+    <string name="scene_add_typical_to">Add device to...</string>
+    <string name="action_settings">Settings</string>
+    <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
+    >
 </resources>

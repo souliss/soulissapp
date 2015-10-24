@@ -1,18 +1,21 @@
 package it.angelic.soulissclient;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.util.SystemUiHider;
@@ -46,35 +49,92 @@ public class WelcomeActivity extends FragmentActivity {
      * The flags to pass to {@link SystemUiHider#getInstance}.
      */
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
+    Handler mHideHandler = new Handler();
     /**
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+    Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mSystemUiHider.hide();
+        }
+    };
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
+    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (AUTO_HIDE) {
+                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+            }
+            return false;
+        }
+    };
+    private SharedPreferences soulissConfigurationPreference;
+
+    /**
+     * Schedules a call to hide() in [delay] milliseconds, canceling any
+     * previously scheduled calls.
+     */
+    private void delayedHide(int delayMillis) {
+        mHideHandler.removeCallbacks(mHideRunnable);
+        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        soulissConfigurationPreference = getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
         setContentView(R.layout.activity_welcome);
 
-        final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
+        // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
         final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
-        welcomeSkipText.setOnClickListener(new View.OnClickListener() {
+        final CheckBox welcomeEnableCheckBox = (CheckBox) findViewById(R.id.welcome_enable_checkbox);
+        welcomeEnableCheckBox.setChecked(soulissConfigurationPreference.getBoolean("welcome_disabled", false));
+        welcomeEnableCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                gotoNormalMode();
+            public void onClick(View v) {
+                saveWelcomeDisabledPreference(soulissConfigurationPreference, welcomeEnableCheckBox.isChecked());
+            }
+        });
+        final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
+        confSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.w(Constants.TAG, "Config spinner selected val:" + confSpinner.getSelectedItem());
+
+                //TODO manage&swap conf file
+
+                //https://github.com/ribico/souliss_demo/blob/master/souliss_demo.ino
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         welcomeTourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gotoDemoMode();
+                //here we've already chosen config and loaded right files
+                startSoulissMainActivity();
+            }
+        });
+        /*welcomeSkipText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSoulissMainActivity();
             }
         });
 
+*/
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
 
@@ -137,46 +197,6 @@ public class WelcomeActivity extends FragmentActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
-        /* check for first time run */
-        firstTimeCheck();
-    }
-
-    private void firstTimeCheck() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        //SharedPreferences.Editor edit = prefs.edit();
-        //edit.remove("first_time_run");
-        //edit.commit();
-        boolean firstTimeRun = prefs.getBoolean("first_time_run", true);
-        //boolean firstTimeRun = true;
-        if (firstTimeRun) {
-            markAsRun(prefs);
-        } else {
-            gotoNormalMode();
-        }
-    }
-
-    private void markAsRun(SharedPreferences prefs) {
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean("first_time_run", Boolean.FALSE);
-        edit.commit();
-    }
-
-    private void gotoDemoMode() {
-        //TODO this has to go to the demo
-        gotoNormalMode();
-    }
-
-    private void gotoNormalMode() {
-        Intent myIntent = new Intent(WelcomeActivity.this, LauncherActivity.class);
-        startActivity(myIntent);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();
-    }
-
-    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -186,36 +206,40 @@ public class WelcomeActivity extends FragmentActivity {
         delayedHide(100);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
+        /* check for first time run */
+        welcomeEnabledCheck();
+    }
+
+    private void saveWelcomeDisabledPreference(SharedPreferences prefs, boolean val) {
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean("welcome_disabled", val);
+        edit.commit();
+    }
+
+    private void startSoulissMainActivity() {
+        Intent myIntent = new Intent(WelcomeActivity.this, LauncherActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        finish();
+    }
+
+    private void welcomeEnabledCheck() {
+        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        //SharedPreferences.Editor edit = prefs.edit();
+        //edit.remove("first_time_run");
+        //edit.commit();
+        boolean firstTimeRun = soulissConfigurationPreference.getBoolean("welcome_disabled", true);
+        //boolean firstTimeRun = true;
+        if (firstTimeRun) {
+            startSoulissMainActivity();
+
+        } else {
+            //let the user choose config
         }
-    };
-
-    Handler mHideHandler = new Handler();
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSystemUiHider.hide();
-        }
-    };
-
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 }

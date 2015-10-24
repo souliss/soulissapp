@@ -64,7 +64,8 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     public ImportDatabaseCSVTask(Activity activity) {
         this.activity = activity;
-        customSharedPreference = activity.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //customSharedPreference = activity.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        customSharedPreference = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 
     /**

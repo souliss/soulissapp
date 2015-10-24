@@ -160,5 +160,10 @@
         <item name="5000">5000</item>
         <item name="10000">10000</item>
     </integer-array>
-    
+    <string-array name="configChooserArray">
+        <item>Demo</item>
+        <item>Create new</item>
+        <item>Import</item>
+        <!-- other dynamic configs -->
+    </string-array>
 </resources>

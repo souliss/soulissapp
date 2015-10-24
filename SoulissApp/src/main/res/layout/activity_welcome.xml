@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context="it.angelic.soulissclient.WelcomeActivity">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#0099cc"
+             tools:context="it.angelic.soulissclient.WelcomeActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -14,10 +14,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:keepScreenOn="true"
-        android:text="@string/dummy_content"
         android:textColor="#33b5e5"
         android:textSize="50sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
@@ -34,41 +33,50 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:orientation="vertical"
-            tools:ignore="UselessParent"></LinearLayout>
+            tools:ignore="UselessParent"/>
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView"
             android:layout_gravity="center_horizontal|top"
-            android:src="@drawable/souliss_logo_512_trasp" />
+            android:src="@drawable/souliss_logo_512_trasp"/>
+
+        <Spinner
+            android:id="@+id/configSpinner"
+            style="@style/mySpinnerStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="150dp"
+            android:entries="@array/configChooserArray"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_tour_button"
             android:id="@+id/welcome_tour_button"
-            android:layout_marginBottom="50dp"
-            android:layout_gravity="center_horizontal|bottom" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/welcome_skip_text"
-            android:id="@+id/welcome_skip_text"
-            android:textColor="#ffffff"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="80dp"
+            android:text="@string/welcome_tour_button"/>
+
+        <CheckBox
+            android:id="@+id/welcome_enable_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't show welcome screen again"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="30dp"/>
+
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="143dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/welcome_desc"
-            android:id="@+id/textView"
             android:layout_gravity="center"
+            android:padding="5pt"
             android:singleLine="false"
-            android:padding="5pt" />
+            android:text="@string/config_choose_desc"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     </FrameLayout>
 
