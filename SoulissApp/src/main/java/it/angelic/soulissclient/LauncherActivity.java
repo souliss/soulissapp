@@ -274,12 +274,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        if (Eula.show(this))//se EULA gia` ok
-        {
-            if (!opzioni.isDbConfigured()) {
-                AlertDialogHelper.dbNotInitedDialog(this);
-            }
-        }
 
         setContentView(R.layout.main_launcher);
 

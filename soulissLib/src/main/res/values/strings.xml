@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- WELCOME SECTION -->
+    <string name="welcome_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ornare augue nec urna consequat, eget lacinia purus accumsan.</string>
+    <string name="welcome_tour_button">Take a tour</string>
+    <string name="welcome_skip_text">Skip</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
     <!-- MANUAL_SECTION -->
     <string name="app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Options</string>
