@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.WelcomeActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 @TargetApi(11)
@@ -46,7 +45,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
 				SharedPreferences soulissConfigurationPreference = getActivity().getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
-				WelcomeActivity.saveWelcomeDisabledPreference(soulissConfigurationPreference, false);
+				SoulissApp.saveWelcomeDisabledPreference(false);
 				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
 						Toast.LENGTH_SHORT).show();
 				return true;

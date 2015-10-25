@@ -1,7 +1,6 @@
 package it.angelic.soulissclient;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -16,12 +15,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Set;
 
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -84,12 +89,19 @@ public class WelcomeActivity extends FragmentActivity {
             return false;
         }
     };
-    private SharedPreferences soulissConfigurationPreference;
 
-    public static void saveWelcomeDisabledPreference(SharedPreferences prefs, boolean val) {
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean("welcome_disabled", val);
-        edit.commit();
+    public static void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
     }
 
     /**
@@ -106,51 +118,81 @@ public class WelcomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        soulissConfigurationPreference = getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
+
         setContentView(R.layout.activity_welcome);
 
         // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
         final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
         final CheckBox welcomeEnableCheckBox = (CheckBox) findViewById(R.id.welcome_enable_checkbox);
-        welcomeEnableCheckBox.setChecked(soulissConfigurationPreference.getBoolean("welcome_disabled", false));
+        welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
         welcomeEnableCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveWelcomeDisabledPreference(soulissConfigurationPreference, welcomeEnableCheckBox.isChecked());
+                SoulissApp.saveWelcomeDisabledPreference(welcomeEnableCheckBox.isChecked());
             }
         });
         final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        confSpinner.setAdapter(spinnerAdapter);
+        Set<String> configs = SoulissApp.getConfigurations();
+        //quelli statici
+        String[] statiche = getResources().getStringArray(R.array.configChooserArray);
+        int selectedIdx = 0;
+        int i = 0;
+        for (String nconf : statiche) {
+            if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
+                selectedIdx = i;
+            i++;
+            spinnerAdapter.add(nconf);
+        }
+        //quelli dinamici
+        for (String nconf : configs) {
+            if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
+                selectedIdx = i;
+            i++;
+            spinnerAdapter.add(nconf);
+        }
+        spinnerAdapter.notifyDataSetChanged();
+        confSpinner.setSelection(selectedIdx, true);
+
         confSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.w(Constants.TAG, "Config spinner selected val:" + confSpinner.getSelectedItem());
-                String previousConfig = soulissConfigurationPreference.getString("current_config", "");
+                String previousConfig = SoulissApp.getCurrentConfig();
                 final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
-                SharedPreferences.Editor newConfig = soulissConfigurationPreference.edit();
-                newConfig.putString("current_config", confSpinner.getSelectedItem().toString());
-                //DEMO
-                if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
-                    if (!previousConfig.equals("")) {
-
-                        //save Old DB and config
-                        File filePrefs = new File(importDir, previousConfig + "_SoulissDB.csv.prefs");
-                        ExportDatabaseCSVTask.saveSharedPreferencesToFile(WelcomeActivity.this, filePrefs);
-                        //locateDB
-                        SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
-                        String DbPath = SoulissDBHelper.getDatabase().getPath();
-                        File oldDb = new File(DbPath + SoulissDB.DATABASE_NAME);
-                        Log.w(Constants.TAG, "Saving old DB: " + oldDb.getTotalSpace());
-
-
+                SoulissApp.setCurrentConfig(confSpinner.getSelectedItem().toString());
+                //SAVE PREVIOUS
+                if (!previousConfig.equals("")) {
+                    //save Old DB and config
+                    File filePrefs = new File(importDir, previousConfig + "_SoulissApp.prefs");
+                    ExportDatabaseCSVTask.saveSharedPreferencesToFile(WelcomeActivity.this, filePrefs);
+                    //locateDB
+                    SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
+                    SoulissDBHelper.open();
+                    String DbPath = SoulissDBHelper.getDatabase().getPath();
+                    File oldDb = new File(DbPath);
+                    File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
+                    Log.w(Constants.TAG, "Saving old DB: " + DbPath + " to: " + bckDb.getPath());
+                    try {
+                        copy(oldDb, bckDb);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                }
+                String selVal = confSpinner.getSelectedItem().toString();
+                //Adesso carico la nuova
+                if (selVal.equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
+
                     File filePrefs;
                     try {
-                        filePrefs = new File(importDir, "DEMO_SoulissDB.csv.prefs");
+                        filePrefs = new File(importDir, "DEMO_SoulissApp.prefs");
                         if (!filePrefs.exists())
                             throw new Resources.NotFoundException();
-
                     } catch (Resources.NotFoundException e) {
+                        //MAI creato prima, inizializza
                         filePrefs = new File(importDir, "DEMO_SoulissDB.csv.prefs");
                         try {
                             ///se non esiste la demo, Creala
@@ -167,8 +209,50 @@ public class WelcomeActivity extends FragmentActivity {
                         Log.e(Constants.TAG, "Errore import prefs", e);
                     }
                     ImportDatabaseCSVTask.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
-                    Log.e(Constants.TAG, "DEMO prefs loaded");
+                    Log.w(Constants.TAG, "DEMO prefs loaded");
+                    try {
+                        File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
+                        SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
+                        SoulissDBHelper.open();
+                        String DbPath = SoulissDBHelper.getDatabase().getPath();
+                        db.close();
+                        File newDb = new File(DbPath);
+                        copy(bckDb, newDb);
+                        Log.w(Constants.TAG, "DEMO DB loaded");
+                    } catch (Exception demex) {
+                        Log.e(Constants.TAG, "Can't load DEMO DB");
+                    }
 
+
+                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                    Log.i(Constants.TAG, "TODO? forse non c'e da fare nulla qui...");
+                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                    Log.i(Constants.TAG, "TODO? forse non c'e da fare nulla qui...");
+                } else {
+                    //caso dinamico
+                    File filePrefs;
+                    try {
+                        filePrefs = new File(importDir, selVal + "_SoulissApp.prefs");
+                        if (!filePrefs.exists())
+                            throw new Resources.NotFoundException();
+                        ImportDatabaseCSVTask.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
+                        Log.w(Constants.TAG, selVal + " prefs loaded");
+                    } catch (Resources.NotFoundException e) {
+                        //MAI creato prima? WTF
+                        Log.e(Constants.TAG, "Errore import config " + selVal, e);
+                    }
+                    try {
+                        File bckDb = new File(importDir, selVal + "_" + SoulissDB.DATABASE_NAME);
+                        SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
+                        SoulissDBHelper.open();
+                        String DbPath = SoulissDBHelper.getDatabase().getPath();
+                        db.close();
+                        File newDb = new File(DbPath);
+                        copy(bckDb, newDb);
+                        Log.w(Constants.TAG, "DEMO DB loaded");
+                    } catch (Exception demex) {
+                        Log.e(Constants.TAG, "Can't load DB for config " + selVal, demex);
+                    }
                 }
                 //https://github.com/ribico/souliss_demo/blob/master/souliss_demo.ino
             }
@@ -182,7 +266,13 @@ public class WelcomeActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 //here we've already chosen config and loaded right files
-                startSoulissMainActivity();
+                if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                    Intent createNewConfig = new Intent(WelcomeActivity.this, WelcomeCreateConfigActivity.class);
+                    startActivity(createNewConfig);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    supportFinishAfterTransition();
+                } else
+                    startSoulissMainActivity();
             }
         });
         /*welcomeSkipText.setOnClickListener(new View.OnClickListener() {
@@ -272,20 +362,16 @@ public class WelcomeActivity extends FragmentActivity {
         welcomeEnabledCheck();
     }
 
+
     private void startSoulissMainActivity() {
         Intent myIntent = new Intent(WelcomeActivity.this, LauncherActivity.class);
         startActivity(myIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        finish();
+        supportFinishAfterTransition();
     }
 
     private void welcomeEnabledCheck() {
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-
-        //SharedPreferences.Editor edit = prefs.edit();
-        //edit.remove("first_time_run");
-        //edit.commit();
-        boolean firstTimeRun = soulissConfigurationPreference.getBoolean("welcome_disabled", true);
+        boolean firstTimeRun = SoulissApp.isWelcomeDisabled();
         //boolean firstTimeRun = true;
         if (firstTimeRun) {
             startSoulissMainActivity();

@@ -39,6 +39,7 @@ public class Constants {
 	public static final int TAG_INSERT_POINT = 1;
     static final int NOTIFICATION_ID = 3113;
     public static final String ACTION_OPEN_SOULISS = "it.angelic.soulissclient.OPEN_SOULISSAPP";
+    public static final String SOULISS_CONFIGURATIONS_KEY = "configArray";
 
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
