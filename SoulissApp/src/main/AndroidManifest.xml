@@ -215,7 +215,17 @@
             android:process=":souliss_process"/>
 
         <receiver
+            android:name="it.angelic.soulissclient.SoulissAutomateReceiver"
+            android:exported="true"
+            android:label="Souliss Automate Integration Receiver">
+            <intent-filter>
+                <action android:name="it.angelic.SoulissClient.sendCommand"/>
+            </intent-filter>
+
+        </receiver>
+        <receiver
             android:name="it.angelic.soulissclient.SoulissWidgetVoice"
+            android:exported="false"
             android:label="Souliss Voice Command">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
