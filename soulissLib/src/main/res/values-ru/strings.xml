@@ -356,4 +356,8 @@
     <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
     <string name="opt_restore_welcome_desc">Show welcome screen when App starts</string>
     <string name="opt_restore_welcome">Restore Splash Screen</string>
+    <string name="export_failed">Export failed</string>
+    <string name="imported_success">Imported successfully %1$d totNodes and %2$d devices</string>
+    <string name="config_mandatory">Configuration name is mandatory</string>
+    <string name="welcome_dontshow">Don\'t show welcome screen again</string>
 </resources>

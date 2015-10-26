@@ -21,6 +21,7 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
+        android:id="@+id/frame_welcome_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_welcome"
@@ -48,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
+            android:gravity="center_horizontal"
             android:layout_marginBottom="150dp"
             android:entries="@array/configChooserArray"/>
 
@@ -57,16 +59,48 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="80dp"
-            android:text="@string/welcome_tour_button"/>
+            android:text="@string/welcome_tour_button"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <CheckBox
             android:id="@+id/welcome_enable_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't show welcome screen again"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:text="@string/welcome_dontshow"/>
 
+        <TextView
+            android:id="@+id/createConfigTitle"
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:gravity="center"
+            android:padding="5pt"
+            android:shadowColor="@color/black_overlay"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="2"
+            android:singleLine="false"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="46dip"/>
+
+        <TextView
+            android:id="@+id/createConfigTitleSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:gravity="center"
+            android:shadowColor="@color/black_overlay"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="2"
+            android:textStyle="italic"
+            android:padding="5pt"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="55dp"
+            android:singleLine="false"
+            android:text="Open-source IoT"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <TextView
             android:id="@+id/textView"

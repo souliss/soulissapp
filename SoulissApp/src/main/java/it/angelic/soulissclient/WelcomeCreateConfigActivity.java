@@ -2,7 +2,6 @@ package it.angelic.soulissclient;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,22 +23,6 @@ import it.angelic.soulissclient.util.SystemUiHider;
 public class WelcomeCreateConfigActivity extends FragmentActivity {
 
 
-    /**
-     * The flags to pass to {@link SystemUiHider#getInstance}.
-     */
-    private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-    Handler mHideHandler = new Handler();
-    /**
-     * The instance of the {@link SystemUiHider} for this activity.
-     */
-    private SystemUiHider mSystemUiHider;
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSystemUiHider.hide();
-        }
-    };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +42,7 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
                 if (configName.getText() == null ||
                         configName.getText().toString().length() <= 0) {
                     //Toast & exit
-                    Toast.makeText(WelcomeCreateConfigActivity.this, "Configuration name is mandatory", Toast.LENGTH_SHORT);
+                    Toast.makeText(WelcomeCreateConfigActivity.this, R.string.config_mandatory, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (initialIp.getText() != null &&
@@ -81,6 +64,8 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
                 SoulissApp.addConfiguration(adding);
                 //TODO Ask DB Struct
                 startSoulissMainActivity();
+                //close and don't go back here
+                supportFinishAfterTransition();
             }
         });
         /*welcomeSkipText.setOnClickListener(new View.OnClickListener() {
@@ -88,22 +73,9 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
             public void onClick(View view) {
                 startSoulissMainActivity();
             }
-        });
-
+        });*/
     }
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        /* check for first time run */
-    }
 
     private void startSoulissMainActivity() {
         Intent myIntent = new Intent(WelcomeCreateConfigActivity.this, LauncherActivity.class);

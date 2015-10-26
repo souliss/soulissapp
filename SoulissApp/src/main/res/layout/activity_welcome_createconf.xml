@@ -48,13 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginBottom="80dp"
             android:text="@string/welcome_tour_button"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/createConfigTitle"
@@ -62,15 +62,32 @@
                 android:layout_height="143dp"
                 android:gravity="center"
                 android:padding="5pt"
+                android:shadowColor="@color/black_overlay"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="2"
                 android:singleLine="false"
-                android:text="Create a new Configuration"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:text="Create new Configuration"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="32dip"/>
+
+            <TextView
+                android:id="@+id/createConfigDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/createConfigTitle"
+                android:gravity="left"
+                android:singleLine="false"
+                android:layout_margin="8dp"
+                android:text="Input configuration name and optionally set local IP address. Configuration's name is mandatory"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
             <EditText
                 android:id="@+id/config_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/createConfigTitle"
+                android:layout_below="@id/createConfigDesc"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
                 android:hint="Choose Configuration name (es. Home, Office, seaside)"
@@ -86,8 +103,7 @@
                 android:layout_margin="16dp"
                 android:layout_below="@id/config_name"
                 android:hint="Input private IP Address (optional)"
-                android:inputType="text"
-                android:text="Base IP"
+                android:inputType="number"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
         </RelativeLayout>
     </FrameLayout>

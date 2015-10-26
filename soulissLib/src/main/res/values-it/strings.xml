@@ -355,8 +355,13 @@
     <string name="addprogram_choosedelay">Ritardo esecuzione</string>
     <string name="scene_add_typical_to">Add device to...</string>
     <string name="action_settings">Settings</string>
-    <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
-    <string name="opt_restore_welcome_desc">Show welcome screen when App starts</string>
-    <string name="opt_restore_welcome">Restore Splash Screen</string>
+    <string name="config_choose_desc">E` possibile provare SoulissApp demo, oppure creare la propria configurazione. Le configurazioni permettono di utilizzare reti Souliss diverse.</string>
+    <string name="opt_restore_welcome_desc">Mostra la schermata di benvenuto, per selezionare le configurazioni</string>
+    <string name="opt_restore_welcome">Ripristina Benvenuto</string>
+    <string name="export_failed">Esportazione fallita</string>
+    <string name="imported_success">Imported successfully %1$d totNodes and %2$d devices</string>
+    <string name="config_mandatory">Il nome della configurazione è obbligatorio</string>
+    <string name="welcome_dontshow">Non mostrare più questa schermata</string>
+    <string name="welcome_tour_button">Inizia</string>
 
 </resources>

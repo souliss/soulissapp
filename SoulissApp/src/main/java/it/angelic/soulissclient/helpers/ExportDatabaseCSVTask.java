@@ -1,23 +1,19 @@
 package it.angelic.soulissclient.helpers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import junit.framework.Assert;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -50,7 +46,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         }
 
         Date now = new Date();
-        File file = new File(exportDir, yearFormat.format(now) + "_SoulissDB.csv");
+        File file = new File(exportDir, yearFormat.format(now) + "_" + SoulissApp.getCurrentConfig() + "_SoulissDB.csv");
         Log.d(TAG, "Creating export File: " + file.getAbsolutePath());
         try {
             saveToFile(file);
@@ -63,8 +59,8 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         }
 
         //ESPORTA PREFS
-        File filePrefs = new File(exportDir, yearFormat.format(now) + "_SoulissDB.csv.prefs");
-        saveSharedPreferencesToFile(context, filePrefs);
+        File filePrefs = new File(exportDir, yearFormat.format(now) + "_" + SoulissApp.getCurrentConfig() + "_SoulissApp.prefs");
+        Utils.saveSharedPreferencesToFile(context, filePrefs);
         return true;
 
     }
@@ -81,7 +77,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         if (success) {
             Toast.makeText(SoulissApp.getAppContext(), String.format(strMeatFormat, exportedNodes), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(SoulissApp.getAppContext(), "Export failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SoulissApp.getAppContext(), R.string.export_failed, Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Souliss DB export Failed");
         }
 
@@ -97,34 +93,6 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     }
 
     // can use UI thread here
-
-    /*
-     * Esporto tutte le pref utente, non quelle cached
-     * */
-    public static boolean saveSharedPreferencesToFile(Context context, File dst) {
-        boolean res = false;
-        ObjectOutputStream output = null;
-        try {
-            output = new ObjectOutputStream(new FileOutputStream(dst));
-            SharedPreferences pref =
-                    PreferenceManager.getDefaultSharedPreferences(context);
-            output.writeObject(pref.getAll());
-
-            res = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (output != null) {
-                    output.flush();
-                    output.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return res;
-    }
 
     private void saveToFile(File file) throws IOException {
         file.createNewFile();
