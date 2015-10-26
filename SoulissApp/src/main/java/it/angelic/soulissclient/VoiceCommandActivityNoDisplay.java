@@ -144,6 +144,8 @@ public class VoiceCommandActivityNoDisplay extends Activity {
         if (thingsYouSaid != null && thingsYouSaid.size() > 0) {
             Log.w(Constants.TAG, "GOT VOICE COMMAND: " + thingsYouSaid.get(0));
             interpretCommand(this, thingsYouSaid.get(0).toLowerCase());
+        } else {
+            //try to read command elsewhere
         }
         finish();
     }

@@ -112,6 +112,10 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         }
     };
 
+    public TextView getActionTitleTextView() {
+        return actionTitleTextView;
+    }
+
     void initDrawer(final Activity parentActivity, int activeSection) {
 
         // DRAWER
@@ -135,8 +139,10 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                 super.onDrawerOpened(drawerView);
                 ActivityCompat.invalidateOptionsMenu(parentActivity);
                 info2.setText(getString(R.string.app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline)));
-                info1.setText("Souliss is controlling " + opzioni
-                        .getCustomPref().getInt("numTipici", 0) + " Things");
+
+
+                info1.setText(String.format(getString(R.string.souliss_controlling), opzioni
+                        .getCustomPref().getInt("numTipici", 0)));
             }
         };
         //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -246,7 +252,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         opzioni.setBestAddress();
     }
 
-
     @Override
     protected void onStart() {
         actionBar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
@@ -277,10 +282,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public TextView getActionTitleTextView() {
-        return actionTitleTextView;
     }
 
     public void setActionBarInfo(String title) {

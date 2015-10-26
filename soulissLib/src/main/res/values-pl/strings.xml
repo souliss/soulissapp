@@ -352,4 +352,6 @@
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
     <string name="addprogram_choosedelay"/>
     <string name="scene_add_typical_to">Add device to...</string>
+    <string name="functions">Functions</string>
+    <string name="souliss_controlling">Souliss is controlling %1$d Things</string>
 </resources>
