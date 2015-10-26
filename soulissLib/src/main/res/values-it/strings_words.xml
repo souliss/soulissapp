@@ -53,5 +53,6 @@
     <string name="ok">OK</string>
     <string name="stale">OLD</string>
     <string name="synch">synch</string>
+    <string name="delete">Delete</string>
 
 </resources>

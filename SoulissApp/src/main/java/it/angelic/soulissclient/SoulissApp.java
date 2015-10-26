@@ -121,7 +121,16 @@ public class SoulissApp extends Application implements Serializable {
         Set<String> current = getConfigurations();
         current.add(newConfig);
         editor.putStringSet(Constants.SOULISS_CONFIGURATIONS_KEY, current);
-        editor.commit();
+        editor.apply();
+    }
+
+    public static void deleteConfiguration(String newConfig) {
+        SharedPreferences.Editor editor = soulissConfigurationPreference.edit();
+        Set<String> current = getConfigurations();
+        if (current.contains(newConfig))
+            current.remove(newConfig);
+        editor.putStringSet(Constants.SOULISS_CONFIGURATIONS_KEY, current);
+        editor.apply();
     }
 
     public static Set<String> getConfigurations() {

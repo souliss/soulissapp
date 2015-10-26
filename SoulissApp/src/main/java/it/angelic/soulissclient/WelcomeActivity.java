@@ -27,6 +27,7 @@ import java.util.Set;
 
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.Eula;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.util.SystemUiHider;
@@ -109,7 +110,7 @@ public class WelcomeActivity extends FragmentActivity {
         final FrameLayout welcomeContainer = (FrameLayout) findViewById(R.id.frame_welcome_container);
         welcomeContainer.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         welcomeContainer.getBackground().setDither(true);
-
+        Log.i(Constants.TAG, "onCreate: current config:" + SoulissApp.getCurrentConfig());
         welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
         welcomeEnableCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,13 +119,13 @@ public class WelcomeActivity extends FragmentActivity {
             }
         });
         final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         confSpinner.setAdapter(spinnerAdapter);
         Set<String> configs = SoulissApp.getConfigurations();
-        //quelli statici
+        //popola config, quelli statici
         String[] statiche = getResources().getStringArray(R.array.configChooserArray);
-        int selectedIdx = 0;
+        int selectedIdx = -1;
         int i = 0;
         for (String nconf : statiche) {
             if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
@@ -140,8 +141,34 @@ public class WelcomeActivity extends FragmentActivity {
             spinnerAdapter.add(nconf);
         }
         spinnerAdapter.notifyDataSetChanged();
+        if (selectedIdx < 0) {
+            //non c'e -> e` il default
+            SoulissApp.setCurrentConfig("default");
+            SoulissApp.addConfiguration("default");
+            spinnerAdapter.add("default");
+            spinnerAdapter.notifyDataSetChanged();
+            selectedIdx = spinnerAdapter.getCount() - 1;
+        }
         confSpinner.setSelection(selectedIdx, true);
 
+        final Button renameButton = (Button) findViewById(R.id.welcome_tour_rename);
+        final Button deleteButton = (Button) findViewById(R.id.welcome_tour_delete);
+
+        renameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialogHelper.renameConfigDialog(WelcomeActivity.this, confSpinner).create().show();
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialogHelper.deleteConfigDialog(WelcomeActivity.this, confSpinner).create().show();
+            }
+        });
+
+        //salva il vecchio prima di swappare sul nuovo
         confSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -150,6 +177,10 @@ public class WelcomeActivity extends FragmentActivity {
                 String previousConfig = SoulissApp.getCurrentConfig();
                 final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
                 SoulissApp.setCurrentConfig(confSpinner.getSelectedItem().toString());
+
+
+                renameButton.setVisibility(View.VISIBLE);
+                deleteButton.setVisibility(View.VISIBLE);
                 //SAVE PREVIOUS if old one is not "create new" or "import"
                 if (!previousConfig.equals("") && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1]))
                         && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[2]))) {
@@ -172,7 +203,8 @@ public class WelcomeActivity extends FragmentActivity {
                 String selVal = confSpinner.getSelectedItem().toString();
                 //Adesso carico la nuova
                 if (selVal.equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
-
+                    renameButton.setVisibility(View.INVISIBLE);
+                    deleteButton.setVisibility(View.INVISIBLE);
                     File filePrefs;
                     try {
                         filePrefs = new File(importDir, selVal + "_SoulissApp.prefs");
@@ -201,8 +233,12 @@ public class WelcomeActivity extends FragmentActivity {
 
 
                 } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                    renameButton.setVisibility(View.INVISIBLE);
+                    deleteButton.setVisibility(View.INVISIBLE);
                     Log.i(Constants.TAG, "TODO? forse non c'e da fare nulla qui...(crea nuovo)");
                 } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                    renameButton.setVisibility(View.INVISIBLE);
+                    deleteButton.setVisibility(View.INVISIBLE);
                     Log.i(Constants.TAG, "TODO? forse non c'e da fare nulla qui...(importa)");
                 } else {
                     //caso dinamico

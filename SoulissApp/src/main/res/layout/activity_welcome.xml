@@ -43,24 +43,60 @@
             android:layout_gravity="center_horizontal|top"
             android:src="@drawable/souliss_logo_512_trasp"/>
 
-        <Spinner
-            android:id="@+id/configSpinner"
-            style="@style/mySpinnerStyle"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="150dp"
-            android:entries="@array/configChooserArray"/>
+            android:animateLayoutChanges="true">
+
+            <Spinner
+                android:id="@+id/configSpinner"
+                style="@style/mySpinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="150dp"
+                android:entries="@array/configChooserArray"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/welcome_tour_rename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="80dp"
+                android:layout_toRightOf="@id/configSpinner"
+                android:background="@color/trans_black"
+                android:drawableRight="@drawable/ic_mode_edit_24dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="invisible"
+                />
+
+            <Button
+                android:id="@+id/welcome_tour_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="80dp"
+                android:layout_toRightOf="@id/welcome_tour_rename"
+                android:background="@color/trans_black"
+                android:drawableRight="@drawable/ic_cancel_24dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="invisible"
+                />
+        </RelativeLayout>
+
 
         <Button
             android:id="@+id/welcome_tour_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
+            android:layout_gravity="center|bottom"
             android:layout_marginBottom="80dp"
+
             android:text="@string/welcome_tour_button"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
+
 
         <CheckBox
             android:id="@+id/welcome_enable_checkbox"
@@ -89,18 +125,18 @@
             android:id="@+id/createConfigTitleSubTitle"
             android:layout_width="match_parent"
             android:layout_height="143dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="30dp"
             android:gravity="center"
+            android:padding="5pt"
             android:shadowColor="@color/black_overlay"
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="2"
-            android:textStyle="italic"
-            android:padding="5pt"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="55dp"
             android:singleLine="false"
             android:text="Open-source IoT"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="italic"/>
 
         <TextView
             android:id="@+id/textView"
