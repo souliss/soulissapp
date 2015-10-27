@@ -39,4 +39,5 @@ dependencies {
     compile project(':soulissLib')
     wearApp project(':soulisswear')
 
+    compile project(':taskerapi')
 }

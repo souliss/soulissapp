@@ -53,7 +53,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
         } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.blue).toLowerCase())) {
             comandToSend.append("" + Constants.Typicals.Souliss_T16_Blue);
         }
-        boolean nodeMatch = false;
+        SoulissNode nodeMatch = null;
         boolean typMatch = false;
         boolean cmdSent = false;
         if (comandToSend.length() > 0) {//se c'e un comando
@@ -62,7 +62,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             List<SoulissNode> nodes = db.getAllNodes();
             for (final SoulissNode premio : nodes) {
                 if (premio.getName() != null && yesMan.contains(premio.getName().toLowerCase()))
-                    nodeMatch = true;
+                    nodeMatch = premio;
             }
             for (final SoulissNode premio : nodes) {
                 List<SoulissTypical> tippi = premio.getTypicals();
@@ -80,13 +80,13 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                                 }
                             }).start();
                             break;//uno basta e avanza
-                        } else if (!nodeMatch || yesMan.contains(premio.getName().toLowerCase())) {
+                        } else if (nodeMatch == null || yesMan.contains(nodeMatch.getName().toLowerCase())) {
                             cmdSent = true;
                             new Thread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Looper.prepare();
-                                    UDPHelper.issueSoulissCommand("" + premio.getId(), "" + treppio.getSlot(), opzioni, comandToSend.toString());
+                                    UDPHelper.issueSoulissCommand("" + treppio.getNodeId(), "" + treppio.getSlot(), opzioni, comandToSend.toString());
                                     Log.i(Constants.TAG, "Voice Command SENT: " + treppio.getName());
                                 }
                             }).start();
@@ -104,8 +104,8 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                 //Error, doveva mandare
                 Log.e(Constants.TAG, "Potential match NOT found, has waited for the right node");
                 Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
-            } else if (nodeMatch) {
-                Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
+            } else if (nodeMatch != null) {
+                Toast.makeText(context, context.getString(R.string.command_typ_error) + ": " + yesMan, Toast.LENGTH_SHORT).show();
             } else {//command found, but not device
                 Toast.makeText(context, context.getString(R.string.command_typ_error) +": "+yesMan, Toast.LENGTH_LONG).show();
             }

@@ -18,7 +18,7 @@ import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
  *
  * @see VoiceCommandActivityNoDisplay
  */
-public class SoulissAutomateReceiver extends BroadcastReceiver {
+public class AutomateReceiver extends BroadcastReceiver {
 
     private static final String TAG = "SoulissWidget";
 

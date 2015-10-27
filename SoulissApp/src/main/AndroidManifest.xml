@@ -201,6 +201,24 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
+
+        </activity>
+
+        <activity
+            android:name=".TaskerEditActivity"
+            android:exported="true"
+            android:icon="@drawable/soulisslogo"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Locale.Dark"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="ExportedActivity">
+
+            <!-- this Intent filter allows the plug-in to be discovered by Locale -->
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING"/>
+            </intent-filter>
         </activity>
 
         <service
@@ -215,7 +233,17 @@
             android:process=":souliss_process"/>
 
         <receiver
-            android:name="it.angelic.receivers.SoulissAutomateReceiver"
+            android:name="it.angelic.receivers.TaskerFireReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+
+            <!-- this Intent filter allows the plug-in to discovered by Locale -->
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="it.angelic.receivers.AutomateReceiver"
             android:exported="true"
             android:label="Souliss Automate Integration Receiver">
             <intent-filter>
