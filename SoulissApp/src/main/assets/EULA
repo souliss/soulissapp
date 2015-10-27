@@ -7,6 +7,11 @@ Please refer to www.souliss.net for more information
 
 CHANGES:
 
+1.6.1
+Bugfixes #84
+Broadcast Receiver for Automate integration
+
+
 1.6.0
 Added Android wear support
 fixed #75, #69, #1, #80, #78, #79

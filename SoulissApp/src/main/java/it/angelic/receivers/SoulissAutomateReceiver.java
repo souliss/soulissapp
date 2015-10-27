@@ -1,4 +1,4 @@
-package it.angelic.soulissclient;
+package it.angelic.receivers;
 
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -10,6 +10,14 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
+
+/**
+ * This Activity can be used to send commands to Souliss framework, relaying
+ * on Souliss voice API
+ *
+ * @see VoiceCommandActivityNoDisplay
+ */
 public class SoulissAutomateReceiver extends BroadcastReceiver {
 
     private static final String TAG = "SoulissWidget";
@@ -17,14 +25,14 @@ public class SoulissAutomateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(@NonNull final Context context, final Intent intent) {
 
-        Log.w(TAG, "SoulissAutomateReceiver onReceive intent: " + intent.getAction());
-        Log.w(TAG, "SoulissAutomateReceiver onReceive URI: " + intent.getData());
+        Log.w(TAG, "SoulissAutomateReceiver onReceive intent action: " + intent.getAction());
         final AppWidgetManager awm = AppWidgetManager.getInstance(context);
         ArrayList<String> thingsYouSaid = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-        if (thingsYouSaid != null) {
-            Log.w(TAG, "Automate command from id:" + thingsYouSaid.get(0));
+        if (intent.getAction() != null) {
+            VoiceCommandActivityNoDisplay.interpretCommand(context, intent.getAction());
+        } else {
+            Log.w(TAG, "SoulissAutomateReceiver: empty Action Received");
         }
-
     }
 
 

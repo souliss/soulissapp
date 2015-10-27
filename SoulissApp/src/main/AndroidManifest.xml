@@ -215,7 +215,7 @@
             android:process=":souliss_process"/>
 
         <receiver
-            android:name="it.angelic.soulissclient.SoulissAutomateReceiver"
+            android:name="it.angelic.receivers.SoulissAutomateReceiver"
             android:exported="true"
             android:label="Souliss Automate Integration Receiver">
             <intent-filter>
