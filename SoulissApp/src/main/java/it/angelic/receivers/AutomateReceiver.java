@@ -9,7 +9,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
 
 /**
@@ -25,11 +27,18 @@ public class AutomateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(@NonNull final Context context, final Intent intent) {
 
-        Log.w(TAG, "SoulissAutomateReceiver onReceive intent action: " + intent.getAction());
+        if (!Constants.ACTION_SEND_COMMAND.equals(intent.getAction())) {
+            Log.e(Constants.TAG,
+                    String.format(Locale.US, "Received unexpected Intent action %s", intent.getAction())); //$NON-NLS-1$
+            return;
+        }
+        Log.d(TAG, "SoulissAutomateReceiver onReceive intent action: " + intent.getAction());
         final AppWidgetManager awm = AppWidgetManager.getInstance(context);
         ArrayList<String> thingsYouSaid = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-        if (intent.getAction() != null) {
-            VoiceCommandActivityNoDisplay.interpretCommand(context, intent.getAction());
+        if (intent.getData() != null) {
+            Log.w(TAG, "SoulissAutomateReceiver: activating command: " + intent.getData().toString());
+
+            VoiceCommandActivityNoDisplay.interpretCommand(context, intent.getData().toString());
         } else {
             Log.w(TAG, "SoulissAutomateReceiver: empty Action Received");
         }

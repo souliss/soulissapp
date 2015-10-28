@@ -260,7 +260,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
         if (collected.getTypicalDTO().isFavourite()) {
             infoFavs.setVisibility(View.VISIBLE);

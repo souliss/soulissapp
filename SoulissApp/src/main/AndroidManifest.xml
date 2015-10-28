@@ -243,9 +243,21 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name="it.angelic.receivers.TaskerQueryReceiver"
+            android:exported="true"
+            android:label="SoulissApp Tasker query receiver"
+            tools:ignore="ExportedReceiver">
+
+            <!-- this Intent filter allows the plug-in to discovered by Locale -->
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
             android:name="it.angelic.receivers.AutomateReceiver"
             android:exported="true"
-            android:label="Souliss Automate Integration Receiver">
+            android:label="SoulissApp Automate Integration Receiver">
             <intent-filter>
                 <action android:name="it.angelic.SoulissClient.sendCommand"/>
             </intent-filter>

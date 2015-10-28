@@ -506,7 +506,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         super.onResume();
         SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
     }
 

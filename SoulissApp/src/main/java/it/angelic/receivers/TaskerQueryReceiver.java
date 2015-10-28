@@ -24,19 +24,19 @@ import it.angelic.bundle.BundleScrubber;
 import it.angelic.bundle.PluginBundleManager;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.TaskerEditActivity;
-import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 
 /**
  * This is the "fire" BroadcastReceiver for a Locale Plug-in setting.
  *
- * @see com.twofortyfouram.locale.Intent#ACTION_FIRE_SETTING
+ * @see com.twofortyfouram.locale.Intent#ACTION_QUERY_CONDITION
  * @see com.twofortyfouram.locale.Intent#EXTRA_BUNDLE
  */
-public final class TaskerFireReceiver extends BroadcastReceiver {
+public final class TaskerQueryReceiver extends BroadcastReceiver {
 
     /**
      * @param context {@inheritDoc}.
-     * @param intent  the incoming {@link com.twofortyfouram.locale.Intent#ACTION_FIRE_SETTING} Intent. This
+     * @param intent  the incoming {@link com.twofortyfouram.locale.Intent#ACTION_QUERY_CONDITION} Intent. This
      *                should contain the {@link com.twofortyfouram.locale.Intent#EXTRA_BUNDLE} that was saved by
      *                {@link TaskerEditActivity} and later broadcast by Locale.
      */
@@ -48,10 +48,10 @@ public final class TaskerFireReceiver extends BroadcastReceiver {
          *
          */
         Log.i(Constants.TAG,
-                String.format(Locale.US, "Received Tasker intent action %s", intent.getAction()));
-        if (!com.twofortyfouram.locale.Intent.ACTION_FIRE_SETTING.equals(intent.getAction())) {
+                String.format(Locale.US, "Received Tasker QUERY intent action %s", intent.getAction()));
+        if (com.twofortyfouram.locale.Intent.ACTION_QUERY_CONDITION.equals(intent.getAction())) {
             Log.e(Constants.TAG,
-                    String.format(Locale.US, "Received unexpected Intent action %s", intent.getAction())); //$NON-NLS-1$
+                    String.format(Locale.US, "Received unexpected QUERY Intent action %s", intent.getAction())); //$NON-NLS-1$
             return;
         }
 
@@ -64,7 +64,10 @@ public final class TaskerFireReceiver extends BroadcastReceiver {
             final String message = bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE);
             Log.w(Constants.TAG,
                     String.format(Locale.US, "Activating Tasker command, message: %s", message));
-            VoiceCommandActivityNoDisplay.interpretCommand(context, message);
+            SoulissDBHelper database = new SoulissDBHelper(context);
+            SoulissDBHelper.open();
+
+
             //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         }
     }

@@ -353,7 +353,7 @@ public class NodesListFragment extends ListFragment {
 		super.onResume();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-		filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+		filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 		// timeout handler
 		//IntentFilter filtera = new IntentFilter();

@@ -463,7 +463,7 @@ public class UDPSoulissDecoder {
         // Qualcosa ho ricevuto, invia broadcast
         Intent i = new Intent();
         i.putExtra("MACACO", mac);
-        i.setAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        i.setAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         opzioni.getContx().sendBroadcast(i);
         // resetta backoff irraggiungibilit�
         opzioni.resetBackOff();

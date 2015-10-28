@@ -30,11 +30,11 @@ import java.util.Date;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -426,7 +426,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-		filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+		filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 	}
 

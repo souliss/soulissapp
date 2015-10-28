@@ -15,8 +15,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
@@ -136,7 +134,7 @@ public class PreferencesActivity extends PreferenceActivity {
     protected void onResume() {
         // IDEM, serve solo per reporting
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(macacoRawDataReceiver, filtere);
         super.onResume();
     }

@@ -371,7 +371,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             collected.issueRefresh();
         }
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
     }
 

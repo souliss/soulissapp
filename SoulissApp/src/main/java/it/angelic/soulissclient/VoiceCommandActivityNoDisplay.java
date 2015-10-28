@@ -21,13 +21,20 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 public class VoiceCommandActivityNoDisplay extends Activity {
 
-    public static void interpretCommand(final Context context,@NonNull final String yesMan) {
+    public static void interpretCommand(final Context context, @NonNull final String yesMan) {
         final StringBuilder comandToSend = new StringBuilder();
 
         //capisci scena, eseguila e ciao
         SoulissDBHelper db = new SoulissDBHelper(context);
         SoulissDBHelper.open();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
+        if (yesMan.toLowerCase().contains("PING")) {
+
+            opzioni.setBestAddress();
+            Log.i(Constants.TAG, "Voice PING Command SENT");
+
+            return;
+        }
         for (SoulissScene scenario : db.getScenes(context)) {
             if (yesMan.toLowerCase().contains(scenario.getName().toLowerCase())) {
                 Log.w(Constants.TAG, "Voice activated Scenario:!! :" + scenario.getName());
@@ -103,11 +110,11 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             } else if (typMatch) {
                 //Error, doveva mandare
                 Log.e(Constants.TAG, "Potential match NOT found, has waited for the right node");
-                Toast.makeText(context, context.getString(R.string.command_node_error)+": "+yesMan, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.command_node_error) + ": " + yesMan, Toast.LENGTH_SHORT).show();
             } else if (nodeMatch != null) {
                 Toast.makeText(context, context.getString(R.string.command_typ_error) + ": " + yesMan, Toast.LENGTH_SHORT).show();
             } else {//command found, but not device
-                Toast.makeText(context, context.getString(R.string.command_typ_error) +": "+yesMan, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getString(R.string.command_typ_error) + ": " + yesMan, Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(context, yesMan + " - " + context.getString(R.string.err_command_not_recognized), Toast.LENGTH_SHORT).show();
