@@ -347,7 +347,7 @@
     <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
     <string name="voice_command">Voice Command</string>
     <string name="opt_get_nodes">Get Souliss Nodes</string>
-    <string name="voice_command_help">Use scenes\' name or a command (ie turn on, turn off, open) followed by a device\'s name</string>
+    <string name="voice_command_help">Use scenes\' name or a command (ie turn on, turn off, open) followed by a device\'s name. Node name is optional</string>
     <string name="souliss_voice_command">Souliss Voice Command</string>
     <string name="command_typ_error">Command recognized, but device not found</string>
     <string name="command_node_error">Weird. Command and node recognized, but device not found</string>

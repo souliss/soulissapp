@@ -254,6 +254,14 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name=".TaskerEditQueryActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/soulisslogo">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION"/>
+            </intent-filter>
+        </activity>
         <receiver
             android:name="it.angelic.receivers.AutomateReceiver"
             android:exported="true"

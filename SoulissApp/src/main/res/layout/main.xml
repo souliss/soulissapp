@@ -26,4 +26,9 @@
         android:layout_marginTop="8dip"
         android:hint="@string/voice_command_help"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The command will be passed to SoulissApp in order to execute it"/>
+
 </LinearLayout>
