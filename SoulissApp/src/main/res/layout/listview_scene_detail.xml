@@ -20,7 +20,7 @@
             android:layout_marginRight="8dip"
             android:layout_marginTop="2dip"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/clock" />
+            android:src="@drawable/clock1"/>
 
         <TextView
             android:id="@+id/TextViewCommand"

@@ -140,7 +140,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                 }
                                 sendProgramNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
                                         unexnex.toString() + " " + unexnex.getParentTypical().toString(),
-                                        R.drawable.clock, unexnex);
+                                        R.drawable.clock1, unexnex);
                             } else if (unexnex.getType() != Constants.COMMAND_TIMED) {
                                 //this is only a check
                                 Log.e(TAG, "WTF? nt TIMED?? " + unexnex.getType());
