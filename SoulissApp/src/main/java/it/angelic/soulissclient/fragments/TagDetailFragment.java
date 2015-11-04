@@ -124,7 +124,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         SoulissDBHelper.open();
 
         try {
-            collectedTag = datasource.getTag(ctx, tagId);
+            collectedTag = datasource.getTag(tagId);
         } catch (SQLDataException e) {
             Log.e(Constants.TAG, "CANT LOAD tagId" + tagId);
         }
