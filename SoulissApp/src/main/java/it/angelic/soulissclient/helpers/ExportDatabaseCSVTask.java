@@ -63,7 +63,6 @@ private int exportedNodes;
 
 		if (!exportDir.exists())
 		{
-
 			exportDir.mkdirs();
 		}
 

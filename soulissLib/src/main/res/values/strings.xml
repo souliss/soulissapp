@@ -156,11 +156,11 @@
     <string name="opt_title_broadcast">Broadcast Discovery</string>
     <string name="opt_summary_broadcast">On local LANs Souliss can discover Gateway node automatically</string>
     <string name="opt_networkdesc">Home and remote network settings</string>
-    <string name="opt_dbexp">Export DB</string>
-    <string name="opt_dbexp_desc">Write a .csv file on sdcard containing current db</string>
+    <string name="opt_dbexp">Export</string>
+    <string name="opt_dbexp_desc">Write a .csv file on sdcard containing current model and settings</string>
     <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
     <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
-    <string name="opt_dbimp">Import DB</string>
+    <string name="opt_dbimp">Import</string>
     <string name="opt_dbimp_desc">Import a .csv file. Warning! Souliss Data will be ovewritten!</string>
     <string name="opt_dbopt_desc">Vacuum DB and remove logs older than a year</string>
     <string name="opt_dbopt">Optimize DB</string>
@@ -361,5 +361,7 @@
     <string name="souliss_controlling">Souliss is controlling %1$d Things</string>
     <string name="voice_command_query_help">Use a device name, followed by output status needed to verify condition</string>
     <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. <br/>Examples:<ul> <li>\'Dinner Spotlight ON\', </li>\'Bedroom window open\' </ul>]]></string>
+    <string name="opt_settingshare_desc">Save current  settings and share them</string>
+    <string name="opt_settingshare">Share settings</string>
     >
 </resources>

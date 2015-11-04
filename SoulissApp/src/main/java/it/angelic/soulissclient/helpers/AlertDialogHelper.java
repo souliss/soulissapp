@@ -313,7 +313,7 @@ public class AlertDialogHelper {
      * @param toRename
      * @return
      */
-    public static AlertDialog.Builder renameSoulissObjectDialog(final Context cont, final TextView tgt,
+    public static AlertDialog.Builder renameSoulissObjectDialog(final Context cont, final TextView textViewLabel,
                                                                 final ListView listV, final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
@@ -328,7 +328,6 @@ public class AlertDialogHelper {
         input.setText(toRename.getNiceName());
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString();
                         toRename.setName(value);
@@ -366,10 +365,6 @@ public class AlertDialogHelper {
                                 }
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            if (((SoulissTag) toRename).getTagId() < 2) {
-                                Toast.makeText(cont, cont.getString(R.string.nodeleteFav), Toast.LENGTH_SHORT).show();
-                                return;
-                            }
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (listV != null) {
@@ -390,7 +385,7 @@ public class AlertDialogHelper {
                                     Log.w(Constants.TAG, "rename didn't find proper view to refresh");
                                 }
                             }
-                        } else {
+                        } else {//Typical
                             if (listV != null) {
                                 ((SoulissTypical) toRename).getTypicalDTO().persist();
                                 TypicalsListAdapter ta = (TypicalsListAdapter) listV.getAdapter();
@@ -400,9 +395,9 @@ public class AlertDialogHelper {
                         }
                         if (cont instanceof Activity && !(toRename instanceof SoulissTypical))
                             ((Activity) cont).setTitle(toRename.getNiceName());
-                        if (tgt != null) {
-                            tgt.setText(value);
-                            tgt.setText(toRename.getNiceName());
+                        if (textViewLabel != null) {
+                            textViewLabel.setText(value);
+                            textViewLabel.setText(toRename.getNiceName());
                         }
 
                     }
