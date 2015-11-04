@@ -25,6 +25,7 @@ import java.util.Locale;
 import it.angelic.bundle.BundleScrubber;
 import it.angelic.bundle.PluginBundleManager;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TaskerEditActivity;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -59,6 +60,10 @@ public final class TaskerQueryReceiver extends BroadcastReceiver {
             Log.e(Constants.TAG,
                     String.format(Locale.US, "Received unexpected QUERY Intent action %s", intent.getAction())); //$NON-NLS-1$
             return;
+        }
+        /*Enable souliss receiver */
+        if (!SoulissApp.getOpzioni().isTaskerEnabled()) {
+            SoulissApp.getOpzioni().setTaskerEnabled(true);
         }
         /*
          * Ignore implicit intents, because they are not valid. It would be
@@ -124,11 +129,11 @@ public final class TaskerQueryReceiver extends BroadcastReceiver {
                 if (TaskerPlugin.Condition.hostSupportsVariableReturn(intent.getExtras())) {
                     Bundle varsBundle = new Bundle();
 
-                    varsBundle.putString("%numTipici", "" + opzioni.getCustomPref().getInt("numTipici", 0));
+                    varsBundle.putString("%numtipici", "" + opzioni.getCustomPref().getInt("numTipici", 0));
                     if (typMatch != null) {
-                        varsBundle.putString("%deviceName", typMatch.getNiceName());
+                        varsBundle.putString("%devicename", typMatch.getNiceName());
+                        varsBundle.putString("%devicestatus", typMatch.getOutputDesc());
                         // intent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_STRING_BLURB, typMatch.getOutputDesc());
-
                     }
                     Log.w(Constants.TAG, "Bundle added: " + varsBundle.toString());
 
