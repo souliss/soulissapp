@@ -356,5 +356,7 @@
     <string name="scene_add_typical_to">Add device to...</string>
     <string name="functions">Funzioni</string>
     <string name="souliss_controlling">Souliss controlla %1$d Dispositivi</string>
+    <string name="voice_command_query_help">Usa il nome di un dispositivo, seguito dallo stato necessario a verificare la condizione</string>
+    <string name="tasker_query_longexp"><![CDATA[La stringa viene passata a SoulissApp, che cerca il dispositivo relativo e verifica che lo stato sia quello specificato<br/>Ad esempio:<em>\'Luce soggiorno ON\', </em><em>\'Bedroom window open\'</em>]]></string>
 
 </resources>

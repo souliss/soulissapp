@@ -83,7 +83,7 @@ public final class TaskerQueryReceiver extends BroadcastReceiver {
             return;
         }
 
-        setResultCode(com.twofortyfouram.locale.Intent.RESULT_CONDITION_UNSATISFIED);
+        boolean satisfied = false;
         if (PluginBundleManager.isBundleValid(bundle)) {
             final String message = bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE);
             if (message != null && message.length() > 0) {
@@ -112,9 +112,8 @@ public final class TaskerQueryReceiver extends BroadcastReceiver {
                             Log.w(Constants.TAG,
                                     String.format(Locale.US, "Device found, looking for status: %s", message));
                             if (message.toLowerCase().contains(treppio.getOutputDesc().toLowerCase())) {
-                                setResultCode(com.twofortyfouram.locale.Intent.RESULT_CONDITION_SATISFIED);
-                                Log.w(Constants.TAG,
-                                        String.format(Locale.US, "Device found, STATUS MATCH: %s", treppio.getOutputDesc()));
+                                satisfied = true;
+
                             }
 
                         }
@@ -125,16 +124,25 @@ public final class TaskerQueryReceiver extends BroadcastReceiver {
                 if (TaskerPlugin.Condition.hostSupportsVariableReturn(intent.getExtras())) {
                     Bundle varsBundle = new Bundle();
 
-                    varsBundle.putInt("%numTipici", opzioni.getCustomPref().getInt("numTipici", 0));
+                    varsBundle.putString("%numTipici", "" + opzioni.getCustomPref().getInt("numTipici", 0));
                     if (typMatch != null) {
                         varsBundle.putString("%deviceName", typMatch.getNiceName());
-                        intent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_STRING_BLURB, typMatch.getOutputDesc());
+                        // intent.putExtra(com.twofortyfouram.locale.Intent.EXTRA_STRING_BLURB, typMatch.getOutputDesc());
 
                     }
                     Log.w(Constants.TAG, "Bundle added: " + varsBundle.toString());
+
                     TaskerPlugin.addVariableBundle(getResultExtras(true), varsBundle);
+                    Log.w(Constants.TAG, "To Bundle: " + getResultExtras(true).toString());
                 }
             }
         }
+
+        Log.w(Constants.TAG,
+                String.format(Locale.US, "REPLY TO TASKER: %s", satisfied));
+        if (satisfied)
+            setResultCode(com.twofortyfouram.locale.Intent.RESULT_CONDITION_SATISFIED);
+        else
+            setResultCode(com.twofortyfouram.locale.Intent.RESULT_CONDITION_UNSATISFIED);
     }
 }

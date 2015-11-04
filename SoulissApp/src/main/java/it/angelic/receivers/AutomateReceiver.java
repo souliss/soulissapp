@@ -1,14 +1,11 @@
 package it.angelic.receivers;
 
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import it.angelic.soulissclient.Constants;
@@ -33,8 +30,8 @@ public class AutomateReceiver extends BroadcastReceiver {
             return;
         }
         Log.d(TAG, "SoulissAutomateReceiver onReceive intent action: " + intent.getAction());
-        final AppWidgetManager awm = AppWidgetManager.getInstance(context);
-        ArrayList<String> thingsYouSaid = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+        //final AppWidgetManager awm = AppWidgetManager.getInstance(context);
+        // ArrayList<String> thingsYouSaid = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
         if (intent.getData() != null) {
             Log.w(TAG, "SoulissAutomateReceiver: activating command: " + intent.getData().toString());
 

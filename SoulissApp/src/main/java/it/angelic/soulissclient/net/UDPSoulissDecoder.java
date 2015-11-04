@@ -465,6 +465,12 @@ public class UDPSoulissDecoder {
         i.putExtra("MACACO", mac);
         i.setAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         opzioni.getContx().sendBroadcast(i);
+
+        //TODO sse tasker
+        Intent it = new Intent();
+        it.setAction(com.twofortyfouram.locale.Intent.ACTION_REQUEST_QUERY);
+        opzioni.getContx().sendBroadcast(it);
+
         // resetta backoff irraggiungibilit�
         opzioni.resetBackOff();
         //se era irraggiungibile, pinga

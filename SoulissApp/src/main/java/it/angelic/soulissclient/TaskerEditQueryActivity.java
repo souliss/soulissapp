@@ -15,7 +15,9 @@ package it.angelic.soulissclient;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import it.angelic.bundle.BundleScrubber;
 import it.angelic.bundle.PluginBundleManager;
@@ -47,6 +49,8 @@ public final class TaskerEditQueryActivity extends AbstractPluginActivity {
         BundleScrubber.scrub(localeBundle);
 
         setContentView(R.layout.main_tasker_query_config);
+        TextView longDesc = (TextView) findViewById(R.id.textLongQueryExpl);
+        longDesc.setText(Html.fromHtml(getString(R.string.tasker_query_longexp)));
 
         if (null == savedInstanceState) {
             if (PluginBundleManager.isBundleValid(localeBundle)) {
