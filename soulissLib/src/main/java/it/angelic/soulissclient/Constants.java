@@ -21,8 +21,13 @@ public class Constants {
 
     public static final String ACTION_DISMISS
             = "com.example.android.wearable.synchronizednotifications.DISMISS";
-    static final String ACTION_SEND_SOULISS_COMMAND =
-            "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
+    public static final String CUSTOM_INTENT_SOULISS_RAWDATA = "it.angelic.soulissclient.RAW_MACACO_DATA";
+    public static final String CUSTOM_INTENT_SOULISS_TIMEOUT = "it.angelic.soulissclient.RAW_TIMEOUT";
+    static final String ACTION_SEND_SOULISS_COMMAND = "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
+    public static final String ACTION_OPEN_SOULISS = "it.angelic.soulissclient.OPEN_SOULISSAPP";
+    public static final String ACTION_SEND_COMMAND = "it.angelic.soulissclient.SEND_COMMAND";
+
+
 	public static final int SEC_IN_A_MIN = 60;
 	public static final int MSEC_IN_A_SEC = 1000;
 	public static final int MIN_IN_A_HOUR = 60;
@@ -31,7 +36,8 @@ public class Constants {
 	public static final int MAX_HEALTH = 255;
 	public static final int ICON_REQUEST = 1;
 	public static final float[] roundedCorners = new float[] { 5,5,5,5,5,5,5,5 };
-	public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+    public static final int sdkVersionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+
 	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
 	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 	public static final int TAG_INSERT_POINT = 1;

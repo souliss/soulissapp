@@ -119,8 +119,21 @@ public class NetUtils {
         return d.gateway;
     }
 
-	/**
-	 * Se la and bit a bit del indirizzo IP da verificare con l'inversa della
+    public static String getDeviceGatewayString(Context ctx) {
+        byte[] bytes = BigInteger.valueOf(getDeviceGateway(ctx)).toByteArray();
+        NetUtils.reverse(bytes);
+        InetAddress address;
+        try {
+            address = InetAddress.getByAddress(bytes);
+            return address.getHostAddress();
+        } catch (UnknownHostException e) {
+            Log.e("getDeviceGateway: ", e.toString());
+            return null;
+        }
+    }
+
+    /**
+     * Se la and bit a bit del indirizzo IP da verificare con l'inversa della
 	 * subnet mask non ha almeno un byte diverso da zero, l'indirizzo IP non può
 	 * essere utilizzato.
 	 * 
@@ -139,56 +152,7 @@ public class NetUtils {
 		}
 		return false;
 	}
-    public static String getDeviceGatewayString(Context ctx) {
-        byte[] bytes = BigInteger.valueOf(getDeviceGateway(ctx)).toByteArray();
-        NetUtils.reverse(bytes);
-        InetAddress address;
-        try {
-            address = InetAddress.getByAddress(bytes);
-            return address.getHostAddress();
-        } catch (UnknownHostException e) {
-            Log.e("getDeviceGateway: ", e.toString());
-            return null;
-        }
-    }
 
-    /**
-     * Se la and bit a bit del indirizzo IP da verificare con l'inversa della
-     * subnet mask non ha almeno un byte diverso da zero, l'indirizzo IP non può
-     * essere utilizzato.
-     *
-     * @param toverify
-     */
-    public static boolean belongsToNode(InetAddress toverify, InetAddress subnetMask) {
-        // int sub = subnetMask.getAddress();//Constants.getSubnet(context);
-        // verificare inversione
-        // InetAddress subnet = intToInet(sub);
-        Log.d(Constants.Net.TAG, "testing belongsToNode subnetMask[]:" + subnetMask.getHostName() + " toverify[]:" + toverify.getHostName());
-        byte[] subnetAddr = subnetMask.getAddress();
-        byte[] actual = toverify.getAddress();
-        for (int i = 0; i < subnetAddr.length; i++) {
-            if ((subnetAddr[i] & ~actual[i]) != 0)
-                return true;
-        }
-        return false;
-    }
-
-		// byte[] bytes = BigInteger.valueOf(sub).toByteArray();
-		// InetAddress subnet = intToInet(sub);
-        Log.d(Constants.Net.TAG, "testing subnet[]:"+ subnetMask.getHostName()+" toverify[]:"+ toverify.getHostName()+" localH[]:"+ localH.getHostName());
-		byte[] subnetAddr = subnetMask.getAddress();
-		byte[] actual = toverify.getAddress();
-		byte[] local = localH.getAddress();
-		for (int i = 0; i < subnetAddr.length; i++) {
-
-        for (int i = 0; i < 8; i++) {
-            if (i >= low_bit) submask[3] += Math.pow(2, i);
-            if (i + 8 >= low_bit) submask[2] += Math.pow(2, i);
-            if (i + 16 >= low_bit) submask[1] += Math.pow(2, i);
-            if (i + 24 >= low_bit) submask[0] += Math.pow(2, i);
-        }
-        return submask;
-    }
 	/**
 	 * @param subnet
 	 * @return

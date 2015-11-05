@@ -59,7 +59,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         //TAG example
         LauncherElement tag = new LauncherElement(LauncherElementEnum.TAG);
         try {
-            tag.setLinkedObject(dbt.getTag(SoulissApp.getAppContext(),0L ));
+            tag.setLinkedObject(dbt.getTag(0L));
         } catch (SQLDataException e) {
             e.printStackTrace();
         }
