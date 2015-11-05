@@ -59,7 +59,7 @@ public class SendCommandActivityNoDisplay extends Activity {
             for (final SoulissNode premio : nodes) {
                 List<SoulissTypical> tippi = premio.getTypicals();
                 for (final SoulissTypical treppio : tippi) {
-                    if (treppio.getName() != null && yesMan.contains(treppio.getName().toLowerCase())) {
+                    if (treppio.getName() != null && yesMan.toLowerCase().contains(treppio.getName().toLowerCase())) {
                         typMatch = true;
                         if (yesMan.contains(context.getString(R.string.all))) {
                             cmdSent = true;
@@ -74,7 +74,14 @@ public class SendCommandActivityNoDisplay extends Activity {
                             break;//uno basta e avanza
                         } else if (!nodeMatch || yesMan.contains(premio.getName().toLowerCase())) {
                             cmdSent = true;
-
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Looper.prepare();
+                                    UDPHelper.issueSoulissCommand("" + premio.getId(), "" + treppio.getSlot(), opzioni, comandToSend.toString());
+                                    Log.i(Constants.TAG, "Voice Command SENT: " + treppio.getName());
+                                }
+                            }).start();
                         } else {
                             Log.i(Constants.TAG, "Potential match found, but waiting for the right node");
                         }

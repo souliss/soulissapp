@@ -1,7 +1,23 @@
 package it.angelic.soulissclient.helpers;
 
-import java.util.Calendar;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.util.Calendar;
+import java.util.Map;
+
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 
@@ -68,5 +84,91 @@ public class Utils {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
+    }
+
+    public static void fileCopy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);
+
+        // Transfer bytes from in to out
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
+    }
+
+    public static boolean loadSharedPreferencesFromFile(Context ctx, File src) {
+        boolean res = false;
+        ObjectInputStream input = null;
+        try {
+            input = new ObjectInputStream(new FileInputStream(src));
+            SharedPreferences.Editor prefEdit = PreferenceManager.getDefaultSharedPreferences(ctx).edit();
+            prefEdit.clear();
+            Map<String, ?> entries = (Map<String, ?>) input.readObject();
+            for (Map.Entry<String, ?> entry : entries.entrySet()) {
+                Object v = entry.getValue();
+                String key = entry.getKey();
+
+                if (v instanceof Boolean)
+                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+                else if (v instanceof Float)
+                    prefEdit.putFloat(key, ((Float) v).floatValue());
+                else if (v instanceof Integer)
+                    prefEdit.putInt(key, ((Integer) v).intValue());
+                else if (v instanceof Long)
+                    prefEdit.putLong(key, ((Long) v).longValue());
+                else if (v instanceof String)
+                    prefEdit.putString(key, ((String) v));
+
+                Log.d(Constants.TAG, "Restored pref:" + key + " Value:" + v);
+            }
+            prefEdit.commit();
+            SoulissApp.getOpzioni().reload();
+            res = true;
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (input != null) {
+                    input.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    /*
+         * Esporto tutte le pref utente, non quelle cached
+         * */
+    public static boolean saveSharedPreferencesToFile(Context context, File dst) {
+        boolean res = false;
+        ObjectOutputStream output = null;
+        try {
+            output = new ObjectOutputStream(new FileOutputStream(dst));
+            SharedPreferences pref =
+                    PreferenceManager.getDefaultSharedPreferences(context);
+            output.writeObject(pref.getAll());
+
+            res = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (output != null) {
+                    output.flush();
+                    output.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return res;
     }
 }

@@ -85,7 +85,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
             public void run() {
                 UDPHelper.healthRequest(opzioni, goer.size(), 0);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(500);//FIXME blocking
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

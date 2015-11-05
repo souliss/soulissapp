@@ -56,7 +56,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     ActionBarDrawerToggle mDrawerToggle;
     ListView mDrawerList;
     NavDrawerAdapter mDrawermAdapter;
-    TextView actionTitle;
+    TextView actionTitleTextView;
     int numTries = 0;
     private Toolbar actionBar;
     private boolean hasPosted;
@@ -112,6 +112,10 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         }
     };
 
+    public TextView getActionTitleTextView() {
+        return actionTitleTextView;
+    }
+
     void initDrawer(final Activity parentActivity, int activeSection) {
 
         // DRAWER
@@ -134,7 +138,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 ActivityCompat.invalidateOptionsMenu(parentActivity);
-                info2.setText(getString(R.string.app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline)));
+                info2.setText(getString(R.string.app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline)) + " - " + SoulissApp.getCurrentConfig());
                 info1.setText("Souliss is controlling " + opzioni
                         .getCustomPref().getInt("numTipici", 0) + " Things");
             }
@@ -234,18 +238,17 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         super.onResume();
         // this is only used for refresh UI
         IntentFilter filtera = new IntentFilter();
-        filtera.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
+        filtera.addAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
         registerReceiver(packetSentNotificationReceiver, filtera);
 
         // IDEM, serve solo per reporting
         IntentFilter filtere = new IntentFilter();
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(datareceiver, filtere);
 
         //DEVASTO TUTTO
         opzioni.setBestAddress();
     }
-
 
     @Override
     protected void onStart() {
@@ -284,8 +287,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
 
-            actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-            actionTitle.setText(title);
+            actionTitleTextView = (TextView) ds.findViewById(R.id.actionbar_title);
+            actionTitleTextView.setText(title);
             refreshStatusIcon();
         } catch (Exception e) {
             Log.e(Constants.TAG, "null bar? " + e.getMessage());

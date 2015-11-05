@@ -3,7 +3,7 @@
     android:id="@+id/tableRow43"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+          android:layout_marginTop="2dp"
     android:gravity="center"
     android:weightSum="4">
 

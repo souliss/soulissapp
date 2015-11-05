@@ -1,1 +1,2 @@
-include ':ecoGallery', ':soulissLib', 'SoulissApp', ':soulisswear'
+include ':ecoGallery', ':soulissLib', 'SoulissApp', ':soulisswear',':taskerapi'
+

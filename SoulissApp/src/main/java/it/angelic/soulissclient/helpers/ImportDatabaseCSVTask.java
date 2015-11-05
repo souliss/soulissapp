@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -15,16 +14,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.sql.SQLDataException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
@@ -64,7 +58,8 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     public ImportDatabaseCSVTask(Activity activity) {
         this.activity = activity;
-        customSharedPreference = activity.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //customSharedPreference = activity.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        customSharedPreference = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 
     /**
@@ -231,7 +226,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     default:
                         break;
                 }
-
             }
             editor.commit();
             csvReader.close();
@@ -255,8 +249,9 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             }
         });
         try {
-            File filePrefs = new File(importDir, file.getName() + ".prefs");
-            loadSharedPreferencesFromFile(filePrefs);
+            //uguale al dump tranne ultima parte
+            File filePrefs = new File(importDir, file.getName().substring(file.getName().lastIndexOf("_")) + "_SoulissApp.prefs");
+            Utils.loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
         } catch (Exception e) {
             Log.e(TAG, "Errore import prefs", e);
         }
@@ -271,7 +266,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
      */
     private void insertTagTyp(String[] temp) {
         try {
-            SoulissTag hero = database.getTag(SoulissApp.getAppContext(), Long.valueOf(temp[2]));
+            SoulissTag hero = database.getTag(Long.valueOf(temp[2]));
             SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]),Short.valueOf(temp[0]));
 
             database.createOrUpdateTagTypicalNode( polloTyp ,hero,Integer.valueOf(temp[3]));
@@ -327,7 +322,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             log.setLogTime(cal);
             log.persist();
         } catch (Exception e) {
-            Log.w("skipped log", e.getMessage());
+            Log.e("skipped log", e.getMessage());
         }
     }
 
@@ -408,8 +403,10 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     {
         if (success) {
+            String formatStr = activity.getString(R.string.imported_success);
+
             Toast.makeText(SoulissApp.getAppContext(),
-                    "Imported successfully " + totNodes + " and " + tottyp + " typicals", Toast.LENGTH_SHORT).show();
+                    String.format(formatStr, totNodes, tottyp), Toast.LENGTH_SHORT).show();
             final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
 
             preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
@@ -425,50 +422,6 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             Toast.makeText(SoulissApp.getAppContext(), "Import failed", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    private boolean loadSharedPreferencesFromFile(File src) {
-        boolean res = false;
-        ObjectInputStream input = null;
-        try {
-            input = new ObjectInputStream(new FileInputStream(src));
-            Editor prefEdit = PreferenceManager.getDefaultSharedPreferences(activity).edit();
-            prefEdit.clear();
-            Map<String, ?> entries = (Map<String, ?>) input.readObject();
-            for (Entry<String, ?> entry : entries.entrySet()) {
-                Object v = entry.getValue();
-                String key = entry.getKey();
-
-                if (v instanceof Boolean)
-                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
-                else if (v instanceof Float)
-                    prefEdit.putFloat(key, ((Float) v).floatValue());
-                else if (v instanceof Integer)
-                    prefEdit.putInt(key, ((Integer) v).intValue());
-                else if (v instanceof Long)
-                    prefEdit.putLong(key, ((Long) v).longValue());
-                else if (v instanceof String)
-                    prefEdit.putString(key, ((String) v));
-
-                Log.d(Constants.TAG, "Restored pref:" + key + " Value:" + v);
-            }
-            prefEdit.commit();
-            SoulissApp.getOpzioni().reload();
-            res = true;
-        } catch (FileNotFoundException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return res;
     }
 
 }

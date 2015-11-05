@@ -144,7 +144,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
                 alert2.show();
                 return true;
             case R.id.Rinomina:
-                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, null, null, database,
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, getActionTitleTextView(), null, database,
                         collected);
                 alert.show();
                 return true;

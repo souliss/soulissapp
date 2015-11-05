@@ -162,26 +162,16 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //LinkedList perche asList torna array non ridimensionabile
-                List<SoulissTag> goerBck = new LinkedList<>(Arrays.asList(tagAdapter.getTagArray()));
 
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
                 List<SoulissTag> goer = datasource.getTags(SoulissApp.getAppContext());
-                goer.removeAll(goerBck);
-                Assert.assertTrue(goer.size() == 1);
-                SoulissTag newTag = goer.get(0);//quello nuovo
-                goerBck.add(Constants.TAG_INSERT_POINT, newTag);
 
-                // goer.removeAll(goerBck);
-                tags = new SoulissTag[goerBck.size()];
-                tags = goerBck.toArray(tags);
-                //tagAdapter = new TagListAdapter(TagGridActivity.this, tags, opzioni);
-                // Adapter della lista
-                //SceneListAdapter t = listaTagsView.getAdapter();
+                tags = new SoulissTag[goer.size()];
+                tags = goer.toArray(tags);
                 tagAdapter.setTagArray(tags);
 
-                tagAdapter.notifyItemInserted(Constants.TAG_INSERT_POINT);
+                tagAdapter.notifyItemInserted(tagAdapter.getItemCount());
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     //fai finire l'animazione
@@ -268,7 +258,14 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         //   registerForContextMenu(mRecyclerView);
 
         //TODEBUG TRANSACTIONS
+        /*
         setExitSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:" + sharedElementNames.size());
+                super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
                 Log.d(Constants.TAG, "ExitSharedElementCallback.onMapSharedElements:"
@@ -290,6 +287,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementEnd");
                 super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
             }
+        });*/
+    }
 
             @Override
             public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {

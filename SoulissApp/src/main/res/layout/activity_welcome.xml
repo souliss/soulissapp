@@ -1,0 +1,153 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#0099cc"
+             tools:context="it.angelic.soulissclient.WelcomeActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:textColor="#33b5e5"
+        android:textSize="50sp"
+        android:textStyle="bold"/>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:id="@+id/frame_welcome_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_welcome"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?windowNoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical"
+            tools:ignore="UselessParent"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:src="@drawable/souliss_logo_512_trasp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:animateLayoutChanges="true">
+
+            <Spinner
+                android:id="@+id/configSpinner"
+                style="@style/mySpinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="150dp"
+                android:entries="@array/configChooserArray"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/welcome_tour_rename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="80dp"
+                android:layout_toRightOf="@id/configSpinner"
+                android:background="@color/trans_black"
+                android:drawableRight="@drawable/ic_mode_edit_24dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="invisible"
+                />
+
+            <Button
+                android:id="@+id/welcome_tour_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="80dp"
+                android:layout_toRightOf="@id/welcome_tour_rename"
+                android:background="@color/trans_black"
+                android:drawableRight="@drawable/ic_cancel_24dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="invisible"
+                />
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/welcome_tour_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="80dp"
+
+            android:text="@string/welcome_tour_button"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+        <CheckBox
+            android:id="@+id/welcome_enable_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="30dp"
+            android:text="@string/welcome_dontshow"/>
+
+        <TextView
+            android:id="@+id/createConfigTitle"
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:gravity="center"
+            android:padding="5pt"
+            android:shadowColor="@color/black_overlay"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="2"
+            android:singleLine="false"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="46dip"/>
+
+        <TextView
+            android:id="@+id/createConfigTitleSubTitle"
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:padding="5pt"
+            android:shadowColor="@color/black_overlay"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="2"
+            android:singleLine="false"
+            android:text="Open-source IoT"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="italic"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="143dp"
+            android:layout_gravity="center"
+            android:padding="5pt"
+            android:singleLine="false"
+            android:text="@string/config_choose_desc"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    </FrameLayout>
+
+</FrameLayout>

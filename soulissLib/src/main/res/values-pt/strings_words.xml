@@ -31,9 +31,9 @@
     <string name="ON">ON</string>
     <string name="power">Power</string>
     <string name="OFF">OFF</string>
-    <string name="open">Open</string>
+    <string name="open">Abrir</string>
     <string name="close">Fechar</string>
-    <string name="stop">Pare</string>
+    <string name="stop">Parar</string>
     <string name="toggle">Alternar</string>
     <string name="TurnON">Ligar</string>
     <string name="TurnOFF">Desligar</string>
@@ -47,12 +47,13 @@
     <string name="timer">Temporizador</string>
      <string name="is">é</string>
          <string name="meters">Metri</string>
-    <string name="service">Servizio</string>
-    <string name="position">Posizione</string>
+    <string name="service">Serviço</string>
+    <string name="position">Posição</string>
     <string name="ok">OK</string>
     <string name="stale">STALE</string>
     <string name="cancel">Cancel</string>
     <string name="synch">synch</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

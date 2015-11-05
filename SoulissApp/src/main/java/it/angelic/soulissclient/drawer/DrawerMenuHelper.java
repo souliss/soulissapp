@@ -46,8 +46,8 @@ public class DrawerMenuHelper {
 	public INavDrawerItem[] getStuff(){
 		
 		ArrayList<INavDrawerItem> tmp = new ArrayList<>();
-		
-		NavMenuSection it = NavMenuSection.create(-9, "FUNZIONI");
+
+		NavMenuSection it = NavMenuSection.create(-9, SoulissApp.getAppContext().getString(R.string.functions).toUpperCase());
 		tmp.add(it);
 
 		//if (apartFromMe != SCENE){
@@ -81,7 +81,7 @@ public class DrawerMenuHelper {
             item2.setUpdateActionBarTitle(false);
             tmp.add(item2);
         }
-		NavMenuSection it2 = NavMenuSection.create(-10, "OPZIONI");
+		NavMenuSection it2 = NavMenuSection.create(-10, SoulissApp.getAppContext().getString(R.string.menu_options).toUpperCase());
 		tmp.add(it2);
 		NavMenuItem op2 = new NavMenuItem(SETTINGS_NET, ctx.getString(R.string.opt_net_home),android.R.drawable.ic_menu_mylocation,
 				false, ctx);

@@ -68,7 +68,7 @@ public class UDPRunnable implements Runnable {
 				InetSocketAddress sa = new InetSocketAddress(Constants.Net.SERVERPORT);
 				socket.bind(sa);
 
-				// create a buffer to copy packet contents into
+				// create a buffer to fileCopy packet contents into
 				byte[] buf = new byte[200];
 				// create a packet to receive
 				final DatagramPacket packet = new DatagramPacket(buf, buf.length);

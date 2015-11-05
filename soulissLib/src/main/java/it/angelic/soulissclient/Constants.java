@@ -18,27 +18,25 @@ public class Constants {
     public static final String BOTH_PATH = "/both";
     public static final String WATCH_ONLY_PATH = "/watch-only";
     public static final String KEY_NOTIFICATION_ID = "notification-id";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_CONTENT = "content";
 
     public static final String ACTION_DISMISS
             = "com.example.android.wearable.synchronizednotifications.DISMISS";
     static final String ACTION_SEND_SOULISS_COMMAND =
             "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
-    public static final int SEC_IN_A_MIN = 60;
-    public static final int MSEC_IN_A_SEC = 1000;
-    public static final int MIN_IN_A_HOUR = 60;
-    public static final int MAX_USER_IDX = 0x64;
-    public static final int MAX_NODE_IDX = 0xFE;
-    public static final int MAX_HEALTH = 255;
-    public static final int ICON_REQUEST = 1;
-    public static final float[] roundedCorners = new float[]{5, 5, 5, 5, 5, 5, 5, 5};
-    public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
-    public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
-    public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-    public static final int TAG_INSERT_POINT = 1;
+	public static final int SEC_IN_A_MIN = 60;
+	public static final int MSEC_IN_A_SEC = 1000;
+	public static final int MIN_IN_A_HOUR = 60;
+	public static final int MAX_USER_IDX = 0x64;
+	public static final int MAX_NODE_IDX = 0xFE;
+	public static final int MAX_HEALTH = 255;
+	public static final int ICON_REQUEST = 1;
+	public static final float[] roundedCorners = new float[] { 5,5,5,5,5,5,5,5 };
+	public static final int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
+	public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH:mm:ss", Locale.US);
+	public static final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+	public static final int TAG_INSERT_POINT = 1;
     static final int NOTIFICATION_ID = 3113;
-    public static final String ACTION_OPEN_SOULISS = "it.angelic.soulissclient.OPEN_SOULISSAPP";
+    public static final String SOULISS_CONFIGURATIONS_KEY = "configArray";
 
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
@@ -372,8 +370,6 @@ public class Constants {
     public static class Net {
 
         public static final String TAG = "SoulissApp";
-        public static final String CUSTOM_INTENT_SOULISS_RAWDATA = "it.angelic.soulissclient.RAW_MACACO_DATA";
-        public static final String CUSTOM_INTENT_SOULISS_TIMEOUT = "it.angelic.soulissclient.RAW_TIMEOUT";
 
         public static final int DEFAULT_SOULISS_PORT = 230;
         public static final int SERVERPORT = 23000;

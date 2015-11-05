@@ -70,6 +70,8 @@ public class SoulissDBHelper {
     public static synchronized void open() throws SQLException {
         if (database == null || !database.isOpen())
             database = soulissDatabase.getWritableDatabase();
+
+
     }
 
     public void close() {

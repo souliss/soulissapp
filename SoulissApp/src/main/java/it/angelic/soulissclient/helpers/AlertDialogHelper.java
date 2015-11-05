@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -111,7 +112,7 @@ public class AlertDialogHelper {
             LinearLayout linearLayout = new LinearLayout(source);
             LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT);
-            lParams.setMargins(15,15,15,15);
+            lParams.setMargins(15, 15, 15, 15);
             linearLayout.setLayoutParams(lParams);
 
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -136,6 +137,13 @@ public class AlertDialogHelper {
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             source.startActivity(preferencesActivity);
+                            //visto che DB vuoto, anticipa
+                            new Thread() {
+                                public void run() {
+                                    Looper.prepare();
+                                    UDPHelper.dbStructRequest(opts);
+                                }
+                            }.start();
                         }
                     });
             alert.setNegativeButton(source.getResources().getString(android.R.string.cancel),
@@ -209,7 +217,9 @@ public class AlertDialogHelper {
         // alert = new AlertDialog.Builder(new ContextThemeWrapper(source,
         // R.style.AboutDialog));
         alert.setIcon(android.R.drawable.ic_dialog_alert);
-        final SharedPreferences soulissCust = source.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //final SharedPreferences soulissCust = source.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        final SharedPreferences soulissCust = PreferenceManager.getDefaultSharedPreferences(source);
+
         alert.setTitle(source.getResources().getString(R.string.dialog_warn_db));
         alert.setMessage(source.getResources().getString(R.string.dialog_drop_db));
 
@@ -306,7 +316,7 @@ public class AlertDialogHelper {
      * @param toRename
      * @return
      */
-    public static AlertDialog.Builder renameSoulissObjectDialog(final Context cont, final TextView tgt,
+    public static AlertDialog.Builder renameSoulissObjectDialog(final Context cont, final TextView textViewLabel,
                                                                 final ListView listV, final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
@@ -321,7 +331,6 @@ public class AlertDialogHelper {
         input.setText(toRename.getNiceName());
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
-
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString();
                         toRename.setName(value);
@@ -359,10 +368,6 @@ public class AlertDialogHelper {
                                 }
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            if (((SoulissTag) toRename).getTagId() < 2) {
-                                Toast.makeText(cont, cont.getString(R.string.nodeleteFav), Toast.LENGTH_SHORT).show();
-                                return;
-                            }
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (listV != null) {
@@ -383,7 +388,7 @@ public class AlertDialogHelper {
                                     Log.w(Constants.TAG, "rename didn't find proper view to refresh");
                                 }
                             }
-                        } else {
+                        } else {//Typical
                             if (listV != null) {
                                 ((SoulissTypical) toRename).getTypicalDTO().persist();
                                 TypicalsListAdapter ta = (TypicalsListAdapter) listV.getAdapter();
@@ -393,11 +398,79 @@ public class AlertDialogHelper {
                         }
                         if (cont instanceof Activity && !(toRename instanceof SoulissTypical))
                             ((Activity) cont).setTitle(toRename.getNiceName());
-                        if (tgt != null) {
-                            tgt.setText(value);
-                            tgt.setText(toRename.getNiceName());
+                        if (textViewLabel != null) {
+                            textViewLabel.setText(value);
+                            textViewLabel.setText(toRename.getNiceName());
                         }
 
+                    }
+                });
+
+        alert.setNegativeButton(cont.getResources().getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+        return alert;
+    }
+
+    public static AlertDialog.Builder deleteConfigDialog(final Context cont, final Spinner toUpdate) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
+        final String bckConfig = (String) toUpdate.getSelectedItem();
+        alert.setIcon(android.R.drawable.ic_delete);
+        alert.setTitle(cont.getString(R.string.delete) + " " + bckConfig);
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(cont);
+        alert.setView(input);
+        input.setText(bckConfig);
+        alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        SoulissApp.deleteConfiguration(bckConfig);
+                        SoulissApp.setCurrentConfig(toUpdate.getItemAtPosition(0).toString());
+                        ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) toUpdate.getAdapter();
+                        toUpdate.setSelection(0, false);
+                        spinnerAdapter.remove(bckConfig);
+                        spinnerAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        alert.setNegativeButton(cont.getResources().getString(android.R.string.cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+        return alert;
+    }
+
+    public static AlertDialog.Builder renameConfigDialog(final Context cont, final Spinner toUpdate) {
+        final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
+        final String bckConfig = (String) toUpdate.getSelectedItem();
+        alert.setIcon(android.R.drawable.ic_dialog_dialer);
+        alert.setTitle(cont.getString(R.string.rename) + " " + bckConfig);
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(cont);
+        alert.setView(input);
+        input.setText(bckConfig);
+        alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String value = input.getText().toString();
+                        SoulissApp.deleteConfiguration(bckConfig);
+                        SoulissApp.setCurrentConfig(value);
+                        SoulissApp.addConfiguration(value);
+                        ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) toUpdate.getAdapter();
+
+                        spinnerAdapter.remove(bckConfig);
+                        spinnerAdapter.add(value);
+                        spinnerAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -618,17 +691,17 @@ public class AlertDialogHelper {
      * Rebuilds a single node's devices
      *
      * @param preferencesActivity
-     * @param toRebuild node to request the refresh for
+     * @param toRebuild           node to request the refresh for
      * @return
      */
     public static AlertDialog.Builder rebuildNodeDialog(final Activity preferencesActivity, final SoulissNode toRebuild,
-                                                            final SoulissPreferenceHelper opts) {
+                                                        final SoulissPreferenceHelper opts) {
         AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity);
-        alert.setTitle(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild ));
+        alert.setTitle(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild));
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         if (opts.isSoulissReachable()) {
             // alert.setIcon()
-            alert.setMessage(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild_desc) );
+            alert.setMessage(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild_desc));
             alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
                     new DialogInterface.OnClickListener() {
 

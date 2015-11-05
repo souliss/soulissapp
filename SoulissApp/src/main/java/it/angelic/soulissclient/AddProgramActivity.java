@@ -407,7 +407,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
                 }
                 if (programToSave == null) {
-                    Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT);
+                    Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

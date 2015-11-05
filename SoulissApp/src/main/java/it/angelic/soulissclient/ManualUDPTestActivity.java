@@ -451,12 +451,12 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 	protected void onResume() {
 		// IDEM, serve solo per reporting
 		IntentFilter filtere = new IntentFilter();
-		filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+		filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		registerReceiver(macacoRawDataReceiver, filtere);
 
 		// this is only used for refresh UI
 		IntentFilter filtera = new IntentFilter();
-		filtera.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
+		filtera.addAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		registerReceiver(timeoutReceiver, filtera);
 
 		SoulissDBHelper.open();

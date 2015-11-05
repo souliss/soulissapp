@@ -6,13 +6,15 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion global_buildToolsVersion
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "it.angelic.soulissclient"
         minSdkVersion 11
         targetSdkVersion 23
+        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(project.VERSION_CODE)
     }
     buildTypes {
         release {
@@ -35,4 +37,6 @@ dependencies {
     compile files('libs/achartengine-1.2.0.jar')
     //compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile project(':soulissLib')
+    wearApp project(':soulisswear')
+    compile project(':taskerapi')
 }

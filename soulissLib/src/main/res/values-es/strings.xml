@@ -337,22 +337,37 @@
     <string name="opt_loghist">Historial activado</string>
     <string name="widget_cantupdate">Error al recuperar el dispositivo</string>
     <string name="opt_dbopt_desc">Vaciar base de datos y eliminar los registros de más de un año</string>
-    <string name="opt_dbopt">Obtimizar base de datos</string>
+    <string name="opt_dbopt">Optimizar base de datos</string>
     <string name="opt_voice_command">Comando de voz</string>
     <string name="opt_voice_command_desc">Ejecutar escenas y enviar comandos con tu voz. Pulse para más detalles</string>
     <string name="voice_command">Comando de voz</string>
-    <string name="opt_get_nodes">Obtener nodo Souliss</string>
+    <string name="opt_get_nodes">Obtener nodos Souliss</string>
     <string name="bytes_sent">Bytes enviados</string>
     <string name="voice_command_help">Utilice una de sus escenas\' nombre, o un comando (encender, apagar, etc.) seguido de un dispositivo\'s nombre</string>
     <string name="souliss_voice_command">Comando de voz Souliss</string>
     <string name="command_typ_error"/>
-    <string name="command_node_error">Weird. Command and node recognized, but device not found</string>
-    <string name="err_command_not_recognized">Command not recognized</string>
-    <string name="menu_changenodeRebuild">Rebuild Node</string>
-    <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
-    <string name="menu_addFav">Add to Favourites</string>
+    <string name="command_node_error">Error. Comando y nodo reconocido, pero el dispositivos no se ha encontrado</string>
+    <string name="err_command_not_recognized">Comando no reconocido</string>
+    <string name="menu_changenodeRebuild">Reconstruir nodo</string>
+    <string name="menu_changenodeRebuild_desc">Al reconstruir el nodo se borraran los nombres de los dispositivos</string>
+    <string name="menu_addFav">Añadir a Favoritos</string>
     <string name="addprogram_choosedelay"/>
-    <string name="scene_add_typical_to">Add device to...</string>
+    <string name="action_settings">Settings</string>
+    <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
+    <string name="opt_restore_welcome_desc">Show welcome screen when App starts</string>
+    <string name="opt_restore_welcome">Restore Splash Screen</string>
+    <string name="export_failed">Export failed</string>
+    <string name="imported_success">Imported successfully %1$d totNodes and %2$d devices</string>
+    <string name="config_mandatory">Configuration name is mandatory</string>
+    <string name="welcome_dontshow">Don\'t show welcome screen again</string>
+    <string name="welcome_tour_button">Start</string>
+    <string name="scene_add_typical_to">Añadir dispositivo a...</string>
+    <string name="functions">Funciones</string>
+    <string name="souliss_controlling">Souliss está controlando %1$d Dispositivos</string>
+    <string name="voice_command_query_help">Use a device name, followed by output status needed to verify condition</string>
+    <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. For example,<ul> <li>\'Dinner Spotlight ON\', </li></ul>\'Bedroom window open\']]></string>
+    <string name="opt_settingshare_desc">Save current  settings and share them</string>
+    <string name="opt_settingshare">Share settings</string>
 
 
 </resources>

@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.helpers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -70,10 +69,14 @@ public class SoulissPreferenceHelper implements Serializable {
     private boolean voiceCommandEnabled;
     private boolean webserverEnabled;
 
+    private boolean isTaskerEnabled;
+    private boolean isTaskerInterested;
+
     public SoulissPreferenceHelper(Context contx) {
         super();
         this.contx = contx;
-        customCachedPrefs = contx.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        //customCachedPrefs = contx.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+        customCachedPrefs = PreferenceManager.getDefaultSharedPreferences(contx);
         initializePrefs();
         // Log.d(TAG, "Constructing prefs");
     }
@@ -353,7 +356,8 @@ public class SoulissPreferenceHelper implements Serializable {
         userIndex = prefs.getInt("userIndex", -1);
         nodeIndex = prefs.getInt("nodeIndex", -1);
         UDPPort = prefs.getInt("udpport", Constants.Net.DEFAULT_SOULISS_PORT);
-
+        isTaskerEnabled = prefs.getBoolean("taskerEnabled", false);
+        isTaskerInterested = prefs.getBoolean("taskerInterested", false);
         animations = prefs.getBoolean("checkboxAnimazione", true);
         antitheftPresent = prefs.getBoolean("antitheft", false);
         antitheftNotify = prefs.getBoolean("antitheftNotify", false);
@@ -445,6 +449,28 @@ public class SoulissPreferenceHelper implements Serializable {
         this.rgbSendAllDefault = rgbSendAllDefault;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("rgbSendAllDefault", rgbSendAllDefault);
+        pesta.commit();
+    }
+
+    public boolean isTaskerEnabled() {
+        return isTaskerEnabled;
+    }
+
+    public void setTaskerEnabled(boolean isTaskerEnabled) {
+        this.isTaskerEnabled = isTaskerEnabled;
+        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        pesta.putBoolean("taskerEnabled", isTaskerEnabled);
+        pesta.commit();
+    }
+
+    public boolean isTaskerInterested() {
+        return isTaskerInterested;
+    }
+
+    public void setTaskerInterested(boolean isTaskerInterested) {
+        this.isTaskerInterested = isTaskerInterested;
+        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        pesta.putBoolean("taskerInterested", isTaskerEnabled);
         pesta.commit();
     }
 

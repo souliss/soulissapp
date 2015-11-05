@@ -26,16 +26,19 @@ import android.widget.Toast;
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
+import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
@@ -71,6 +74,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	private TextView infoTyp;
 	private SwitchCompat togMassive;
 	private TextView infoHistory;
+    private TextView textviewHistoryTags;
     private TableRow infoTags;
     private TableRow infoFavs;
 
@@ -173,7 +177,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
-		togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
+        textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
+        togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
@@ -311,7 +316,16 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
             if (collected.getTypicalDTO().isFavourite()) {
                 infoFavs.setVisibility(View.VISIBLE);
             }else if (collected.getTypicalDTO().isTagged()){
+                SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
+                List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
+
+                StringBuilder tagInfo = new StringBuilder();
+                tagInfo.append(getString(R.string.amongTags)).append("\n");
+                for (SoulissTag newT : tags) {
+                    tagInfo.append("-").append(newT.getNiceName()).append("\n");
+                }
                 infoTags.setVisibility(View.VISIBLE);
+                textviewHistoryTags.setText(tagInfo.toString());
             }
         }catch (Exception ie){
             Log.e(Constants.TAG,"cant refresh history:"+ie.getMessage());
@@ -426,7 +440,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		SoulissDBHelper.open();
 		IntentFilter filtere = new IntentFilter();
 		filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-		filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+		filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
 		getActivity().registerReceiver(datareceiver, filtere);
 	}
 

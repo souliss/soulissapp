@@ -25,13 +25,17 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.List;
+
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 
@@ -56,6 +60,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
     private Spinner functionSpinner;
     private Spinner fanSpiner;
+    private TextView textviewHistoryTags;
     private TextView textviewStatus;
     private Button buttOn;
     private Button buttOff;
@@ -139,6 +144,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
+        textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
 
         final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
         /**
@@ -260,7 +266,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         SoulissDBHelper.open();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
         if (collected.getTypicalDTO().isFavourite()) {
             infoFavs.setVisibility(View.VISIBLE);
@@ -292,7 +298,16 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 if (collected.getTypicalDTO().isFavourite()) {
                     infoFavs.setVisibility(View.VISIBLE);
                 } else if (collected.getTypicalDTO().isTagged()) {
+                    SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
+                    List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
+
+                    StringBuilder tagInfo = new StringBuilder();
+                    tagInfo.append(getString(R.string.amongTags)).append("\n");
+                    for (SoulissTag newT : tags) {
+                        tagInfo.append("-").append(newT.getNiceName()).append("\n");
+                    }
                     infoTags.setVisibility(View.VISIBLE);
+                    textviewHistoryTags.setText(tagInfo.toString());
                 }
                 Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
                 textviewStatus.setText(collected.getOutputLongDesc());

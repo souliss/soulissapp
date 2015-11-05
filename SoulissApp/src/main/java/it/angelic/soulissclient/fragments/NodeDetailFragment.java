@@ -546,7 +546,7 @@ public class NodeDetailFragment extends ListFragment {
         doBindService();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
 
 

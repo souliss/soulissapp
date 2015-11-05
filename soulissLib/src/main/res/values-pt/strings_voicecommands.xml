@@ -3,7 +3,7 @@
 
     <!-- add pertinent synonyms, to be used during voice recognition -->
     <string-array name="open_strarray">
-        <item>Open</item>
+        <item>Abrir</item>
     </string-array>
 
     <string-array name="close_strarray">
@@ -11,7 +11,7 @@
     </string-array>
 
     <string-array name="stop_strarray">
-        <item>Pare</item>
+        <item>Parar</item>
     </string-array>
 
     <string-array name="toggle_strarray">

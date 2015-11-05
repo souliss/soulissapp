@@ -22,7 +22,7 @@
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss non è configurato. Inserire l\'indirizzo locale di Souliss nelle impostazioni di rete</string>
     <string name="dialog_disabled_db">DB vuoto</string>
-    <string name="dialog_notinited_db">Il DB di Souliss è vuoto. Richiedi la struttura dei nodi nella schermata opzioni DB</string>
+    <string name="dialog_notinited_db">Il DB di Souliss è vuoto. Procedere con la ricostruzione del modello?</string>
     <string name="dialog_disabled_service">Servizio in background disabilitato</string>
     <string name="dialog_notinited_service">I Programmi non verranno eseguiti!\nAttiva il Servizio in background nelle opzioni</string>
     <string name="dialog_dontshowagain">Non mostrare più</string>
@@ -121,7 +121,7 @@
     <string name="manual_showing_typ">Dettaglio dispositivo </string>
     <string name="manual_desc">Invio manuale di comandi. Tap sulla lista per visualizzare il dettaglio, long-press per modificare</string>
         <string name="manual_litfrom">Acceso da %1$s</string>
-    <string name="manual_tyinf">Questo dispositivo è rimasto acceso per %1$s nell\'ultimo mese</string>
+    <string name="manual_tyinf">Rimasto acceso per %1$s nell\'ultimo mese</string>
     <string name="node_empty">Nodo Vuoto!</string>
     <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
     <!-- WIDGET -->
@@ -354,5 +354,20 @@
     <string name="menu_changenodeRebuild_desc">Ricostruendo il nodo verranno sovrascritti i suoi dispositivi</string>
     <string name="addprogram_choosedelay">Ritardo esecuzione</string>
     <string name="scene_add_typical_to">Add device to...</string>
+    <string name="functions">Funzioni</string>
+    <string name="souliss_controlling">Souliss controlla %1$d Dispositivi</string>
+    <string name="voice_command_query_help">Usa il nome di un dispositivo, seguito dallo stato necessario a verificare la condizione</string>
+    <string name="tasker_query_longexp"><![CDATA[La stringa viene passata a SoulissApp, che cerca il dispositivo relativo e verifica che lo stato sia quello specificato<br/>Ad esempio:<em>\'Luce soggiorno ON\', </em><em>\'Bedroom window open\'</em>]]></string>
+    <string name="opt_settingshare_desc">Salva e condividi le impostazioni correnti</string>
+    <string name="opt_settingshare">Esporta Opzioni</string>
+    <string name="action_settings">Settings</string>
+    <string name="config_choose_desc">E` possibile provare SoulissApp demo, oppure creare la propria configurazione. Le configurazioni permettono di utilizzare reti Souliss diverse.</string>
+    <string name="opt_restore_welcome_desc">Mostra la schermata di benvenuto, per selezionare le configurazioni</string>
+    <string name="opt_restore_welcome">Ripristina Benvenuto</string>
+    <string name="export_failed">Esportazione fallita</string>
+    <string name="imported_success">Imported successfully %1$d totNodes and %2$d devices</string>
+    <string name="config_mandatory">Il nome della configurazione è obbligatorio</string>
+    <string name="welcome_dontshow">Non mostrare più questa schermata</string>
+    <string name="welcome_tour_button">Inizia</string>
 
 </resources>

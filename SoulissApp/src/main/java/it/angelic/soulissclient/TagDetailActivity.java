@@ -118,7 +118,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             tagId = (long) extras.get("TAG");
 
         try {
-            collected = db.getTag(SoulissApp.getAppContext(), (int) tagId);
+            collected = db.getTag((int) tagId);
         } catch (SQLDataException sql) {
             Log.i(Constants.TAG, "TAGID NOT FOUND: " + tagId);
         }
@@ -189,7 +189,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 alert2.show();
                 return true;
             case R.id.rinominaTag:
-                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitle, null, db,
+                AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, actionTitleTextView, null, db,
                         collected);
                 alert.show();
                 return true;
