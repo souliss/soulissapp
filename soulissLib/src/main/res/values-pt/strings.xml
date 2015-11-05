@@ -362,5 +362,11 @@
     <string name="imported_success">"Imported successfully "</string>
     <string name="config_mandatory">Configuration name is mandatory</string>
     <string name="welcome_dontshow">Don\'t show welcome screen again</string>
+    <string name="functions">Functions</string>
+    <string name="souliss_controlling">Souliss is controlling %1$d Things</string>
+    <string name="voice_command_query_help">Use a device name, followed by output status needed to verify condition</string>
+    <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. For example,<ul> <li>\'Dinner Spotlight ON\', </li></ul>\'Bedroom window open\']]></string>
+    <string name="opt_settingshare_desc">Save current  settings and share them</string>
+    <string name="opt_settingshare">Share settings</string>
 
 </resources>

@@ -580,7 +580,7 @@ public class UDPHelper {
 		int it = SoulissApp.getOpzioni().getRemoteTimeoutPref() + SoulissApp.getOpzioni().getBackoff() * 1000;
 		Log.d(TAG, "Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
-		i.setAction(Constants.Net.CUSTOM_INTENT_SOULISS_TIMEOUT);
+		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		SoulissApp.getOpzioni().getContx().sendBroadcast(i);
 
 		return frame;

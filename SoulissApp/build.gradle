@@ -6,7 +6,7 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion global_buildToolsVersion
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
@@ -38,5 +38,5 @@ dependencies {
     //compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile project(':soulissLib')
     wearApp project(':soulisswear')
-
+    compile project(':taskerapi')
 }

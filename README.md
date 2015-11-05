@@ -10,10 +10,22 @@ More informations are available on <a href="https://github.com/souliss/souliss/w
 
 SoulissApp works on every Android devices from API 11 (HONEYCOMB) on.
 
+## Download
+
+SoulissApp is available for download on the Play store
+
 <a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient">
   <img alt="Get it on Google Play"
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
+
+##How to build and contribute
+
+The easiest way to contribute is using <a href="https://developer.android.com/sdk/index.html">Android Studio</a>. Once installed, Import new project from GitHub (New -> Project from Version control -> GitHub) using the following _Git Repository URL_
+
+    https://github.com/souliss/soulissapp.git
+    
+The project includes SoulissLib module, where you may want to edit <a href="https://github.com/souliss/soulissapp/blob/master/soulissLib/src/main/res/values">translation Files</a>. More info on how to use git and branching model is available on our <a href="https://github.com/souliss/souliss/wiki/Contribute">wiki</a>.
 
 ## Used Libraries
 * [android-parallax-recycleview](https://github.com/kanytu/android-parallax-recyclerview)

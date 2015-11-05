@@ -86,7 +86,7 @@ public class ProgramListAdapter extends BaseAdapter {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
             don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
-            holder.image.setImageResource(R.drawable.clock);
+            holder.image.setImageResource(R.drawable.clock1);
             holder.image.setColorFilter(context.getResources().getColor(color.aa_violet),
                     android.graphics.PorterDuff.Mode.SRC_ATOP);
 

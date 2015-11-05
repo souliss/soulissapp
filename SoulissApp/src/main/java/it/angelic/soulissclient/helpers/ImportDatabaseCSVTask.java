@@ -266,7 +266,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
      */
     private void insertTagTyp(String[] temp) {
         try {
-            SoulissTag hero = database.getTag(SoulissApp.getAppContext(), Long.valueOf(temp[2]));
+            SoulissTag hero = database.getTag(Long.valueOf(temp[2]));
             SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]),Short.valueOf(temp[0]));
 
             database.createOrUpdateTagTypicalNode( polloTyp ,hero,Integer.valueOf(temp[3]));

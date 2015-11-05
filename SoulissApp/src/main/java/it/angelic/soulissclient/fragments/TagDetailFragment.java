@@ -124,7 +124,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         SoulissDBHelper.open();
 
         try {
-            collectedTag = datasource.getTag(ctx, tagId);
+            collectedTag = datasource.getTag(tagId);
         } catch (SQLDataException e) {
             Log.e(Constants.TAG, "CANT LOAD tagId" + tagId);
         }
@@ -357,7 +357,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         super.onResume();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
-        filtere.addAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
         appBarLayout.addOnOffsetChangedListener(this);
     }

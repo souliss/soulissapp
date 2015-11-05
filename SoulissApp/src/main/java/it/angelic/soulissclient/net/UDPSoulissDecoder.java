@@ -464,8 +464,15 @@ public class UDPSoulissDecoder {
         // Qualcosa ho ricevuto, invia broadcast
         Intent i = new Intent();
         i.putExtra("MACACO", mac);
-        i.setAction(Constants.Net.CUSTOM_INTENT_SOULISS_RAWDATA);
+        i.setAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         opzioni.getContx().sendBroadcast(i);
+
+        //Segnala a Tasker
+        if (SoulissApp.getOpzioni().isTaskerEnabled()) {
+            Intent it = new Intent();
+            it.setAction(com.twofortyfouram.locale.Intent.ACTION_REQUEST_QUERY);
+            opzioni.getContx().sendBroadcast(it);
+        }
         // resetta backoff irraggiungibilit�
         opzioni.resetBackOff();
         //se era irraggiungibile, pinga
@@ -493,7 +500,7 @@ public class UDPSoulissDecoder {
                         if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
                                 && ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
                             sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
-                                    context.getString(R.string.antitheft_notify_desc), R.drawable.shield, ty);
+                                    context.getString(R.string.antitheft_notify_desc), R.drawable.shield1, ty);
                             break;
                         }
                     }

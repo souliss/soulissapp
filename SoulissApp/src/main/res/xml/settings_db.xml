@@ -43,6 +43,11 @@
             android:key="dbopt"
             android:summary="@string/opt_dbopt_desc"
             android:title="@string/opt_dbopt" />
+        <Preference
+            android:name="settingshare"
+            android:key="settingshare"
+            android:summary="@string/opt_settingshare_desc"
+            android:title="@string/opt_settingshare"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

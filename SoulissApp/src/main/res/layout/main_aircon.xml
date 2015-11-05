@@ -100,6 +100,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relativeLayoutFan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativeLayout1">
@@ -148,6 +149,27 @@
                 android:drawableTop="@drawable/fan"
                 android:textOff="Air Swing"
                 android:textOn="Air Swing"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relativeLayoutFan">
+
+            <TableLayout
+                android:id="@+id/containervermegame"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/textviewColours">
+
+                <include layout="@layout/tablerow_favinfo">
+
+                </include>
+
+                <include layout="@layout/tablerow_taginfo">
+
+                </include>
+            </TableLayout>
         </RelativeLayout>
 
         <View

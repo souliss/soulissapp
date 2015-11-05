@@ -110,6 +110,7 @@
     <orderEntry type="library" exported="" name="cardview-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.1.0" level="project" />
     <orderEntry type="module" module-name="soulissLib" exported="" />
+    <orderEntry type="module" module-name="taskerapi" exported="" />
     <orderEntry type="module" module-name="ecoGallery" exported="" />
     <orderEntry type="library" exported="" name="org.apache.http.legacy-android-23" level="project" />
   </component>

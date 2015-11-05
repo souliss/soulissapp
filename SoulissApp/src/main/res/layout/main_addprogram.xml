@@ -115,7 +115,7 @@
                         android:layout_alignParentRight="true"
                         android:alpha="0.5"
                         android:contentDescription="@string/addprogram_timed"
-                        android:src="@drawable/clock"/>
+                        android:src="@drawable/clock1"/>
 
                     <TextView
                         android:id="@+id/textviewtimed"

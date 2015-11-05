@@ -35,12 +35,14 @@ public class DbSettingsFragment extends PreferenceFragment {
 		Preference imortDBPref = findPreference("dbimp");
 		Preference optimDBPref = findPreference("dbopt");
 		Preference dbinfopref = findPreference("dbinfo");
+		Preference sharesettingspref = findPreference("settingshare");
 		/* listeners DB */
 		exportDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		imortDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		createDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		optimDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
+		sharesettingspref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
 		
 		String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
 		String nonode = getString(R.string.dialog_disabled_db);

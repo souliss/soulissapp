@@ -1,14 +1,11 @@
 package it.angelic.soulissclient;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.SharedElementCallback;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,12 +21,7 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import junit.framework.Assert;
-
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -95,26 +87,16 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //LinkedList perche asList torna array non ridimensionabile
-                List<SoulissTag> goerBck = new LinkedList<>(Arrays.asList(tagAdapter.getTagArray()));
 
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
                 List<SoulissTag> goer = datasource.getTags(SoulissApp.getAppContext());
-                goer.removeAll(goerBck);
-                Assert.assertTrue(goer.size() == 1);
-                SoulissTag newTag = goer.get(0);//quello nuovo
-                goerBck.add(Constants.TAG_INSERT_POINT, newTag);
 
-                // goer.removeAll(goerBck);
-                tags = new SoulissTag[goerBck.size()];
-                tags = goerBck.toArray(tags);
-                //tagAdapter = new TagListAdapter(TagGridActivity.this, tags, opzioni);
-                // Adapter della lista
-                //SceneListAdapter t = listaTagsView.getAdapter();
+                tags = new SoulissTag[goer.size()];
+                tags = goer.toArray(tags);
                 tagAdapter.setTagArray(tags);
 
-                tagAdapter.notifyItemInserted(Constants.TAG_INSERT_POINT);
+                tagAdapter.notifyItemInserted(tagAdapter.getItemCount());
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     //fai finire l'animazione

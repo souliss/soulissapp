@@ -143,7 +143,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         if (typical == Constants.Typicals.Souliss_T11)
             return R.drawable.light_on;
         else if (typical == Constants.Typicals.Souliss_T12)
-            return R.drawable.button;
+            return R.drawable.button1;
         else if (typical == Constants.Typicals.Souliss_T1A)
             return R.drawable.light_on;
         else if (typical == Constants.Typicals.Souliss_T13)
@@ -163,9 +163,9 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T31)
             return R.drawable.thermometer;
         else if (typical == Constants.Typicals.Souliss_T41_Antitheft_Main)
-            return R.drawable.shield;
+            return R.drawable.shield1;
         else if (typical == Constants.Typicals.Souliss_T42_Antitheft_Peer || typical == Constants.Typicals.Souliss_T43_Antitheft_LocalPeer)
-            return R.drawable.shield;
+            return R.drawable.shield1;
         else if (typical == Constants.Typicals.Souliss_T_TemperatureSensor)
             return R.drawable.thermometer;
         else if (typical == Constants.Typicals.Souliss_T_related)
@@ -173,11 +173,11 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T_HumiditySensor)
             return R.drawable.raindrop;
         else if (typical == Constants.Typicals.Souliss_T32_IrCom_AirCon)
-            return R.drawable.snow;
+            return R.drawable.snow1;
         else if (typical == Constants.Typicals.Souliss_T15_RGB)
             return R.drawable.remote;
         else if (typical == Constants.Typicals.Souliss_T51)
-            return R.drawable.analog;
+            return R.drawable.analog1;
         else if (typical == Constants.Typicals.Souliss_T52_TemperatureSensor)
             return R.drawable.thermometer;
         else if (typical == Constants.Typicals.Souliss_T53_HumiditySensor)

@@ -2,7 +2,9 @@
 <manifest
     package="it.angelic.soulissclient"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto">
+    android:installLocation="auto"
+
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -28,6 +30,33 @@
         android:icon="@drawable/soulisslogo"
         android:label="@string/app_name"
         android:process=":souliss_process">
+
+
+        <service android:name="it.angelic.receivers.SoulissWearDemandIntentReceiver"
+                 tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+        </service>
+
+        <activity
+        android:name=".VoiceCommandActivityNoDisplay"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.NoDisplay"/>
+        <activity
+            android:name=".SendCommandActivityNoDisplay"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoDisplay"/>
+        <activity
+            android:name=".LauncherActivity"
+            android:label="@string/app_name"
+            android:process=":souliss_process">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -197,6 +226,22 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".TaskerEditActivity"
+            android:exported="true"
+            android:icon="@drawable/soulisslogo"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Locale.Dark"
+            android:uiOptions="splitActionBarWhenNarrow"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="ExportedActivity">
+
+            <!-- this Intent filter allows the plug-in to be discovered by Locale -->
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING"/>
+            </intent-filter>
+        </activity>
+
         <service
             android:name="it.angelic.soulissclient.SoulissDataService"
             android:enabled="true"
@@ -209,7 +254,47 @@
             android:process=":souliss_process"/>
 
         <receiver
+            android:name="it.angelic.receivers.TaskerFireReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+
+            <!-- this Intent filter allows the plug-in to discovered by Locale -->
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="it.angelic.receivers.TaskerQueryReceiver"
+            android:exported="true"
+            android:label="SoulissApp Tasker query receiver"
+            tools:ignore="ExportedReceiver">
+
+            <!-- this Intent filter allows the plug-in to discovered by Locale -->
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".TaskerEditQueryActivity"
+            android:label="@string/app_name"
+            android:icon="@drawable/soulisslogo">
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION"/>
+            </intent-filter>
+        </activity>
+        <receiver
+            android:name="it.angelic.receivers.AutomateReceiver"
+            android:exported="true"
+            android:label="SoulissApp Automate Integration Receiver">
+            <intent-filter>
+                <action android:name="it.angelic.SoulissClient.sendCommand"/>
+            </intent-filter>
+
+        </receiver>
+        <receiver
             android:name="it.angelic.soulissclient.SoulissWidgetVoice"
+            android:exported="false"
             android:label="Souliss Voice Command">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

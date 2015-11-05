@@ -5,14 +5,21 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -54,6 +61,8 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
             return true;
         } else if ("createdb".equals(arg0.getKey())) {
             return createDbRequest();
+        } else if ("settingshare".equals(arg0.getKey())) {
+            return shareSettings();
         } else if ("dbopt".equals(arg0.getKey())) {
             try {
                 datasource.clean();
@@ -144,6 +153,63 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
         }
         dialog = builder.show();
         return dialog;
+    }
+
+    private boolean shareSettings() {
+        // File sharedDir = parent.getApplicationContext().getCacheDir();
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "//Souliss/export");
+        if (!exportDir.exists()) {
+            exportDir.mkdirs();
+        }
+        File sharedP = null;
+        try {
+            sharedP = File.createTempFile("Souliss", ".preferences", exportDir);
+            // File sharedP = new File(sharedDir, "exportSettings.tmp");
+            saveSharedPreferencesToFile(sharedP);
+            Uri uriToZip = Uri.fromFile(sharedP);
+
+            Log.w(Constants.TAG, "Exported preferences to: " + uriToZip.toString());
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uriToZip);
+            shareIntent.setType("*/*");
+            parent.startActivity(Intent.createChooser(shareIntent, parent.getString(R.string.command_send)));
+            Toast.makeText(parent, "Export complete", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(parent, "Sharing Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.e(Constants.TAG, "Share ERR:", e);
+        }
+
+
+        return true;
+    }
+
+    /*
+     * DA TOGLIRE DOPO LA 1.7.0
+	 * */
+    private boolean saveSharedPreferencesToFile(File dst) {
+        boolean res = false;
+        ObjectOutputStream output = null;
+        try {
+            output = new ObjectOutputStream(new FileOutputStream(dst));
+            SharedPreferences pref =
+                    PreferenceManager.getDefaultSharedPreferences(parent);
+            output.writeObject(pref.getAll());
+
+            res = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (output != null) {
+                    output.flush();
+                    output.close();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return res;
     }
 
     private boolean createDbRequest() {
