@@ -149,10 +149,10 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         } else {//brand new
             values.put(SoulissDB.COLUMN_TAG_ICONID, 0);
             // Inserisco e risetto il nome e l'ordine
-            values.put(SoulissDB.COLUMN_TAG_ORDER, Constants.TAG_INSERT_POINT);
             ret = (int) database.insert(SoulissDB.TABLE_TAGS, null, values);
             values.put(SoulissDB.COLUMN_TAG_NAME,
                     SoulissApp.getAppContext().getResources().getString(R.string.tag) + " " + ret);
+            values.put(SoulissDB.COLUMN_TAG_ORDER, ret);
             database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + ret, null);
             return ret;
         }
