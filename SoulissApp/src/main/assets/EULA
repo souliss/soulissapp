@@ -7,9 +7,14 @@ Please refer to www.souliss.net for more information
 
 CHANGES:
 
+1.7.0
+multiple souliss networks support
+Demo mode
+
 1.6.1
 Bugfixes #84
 Broadcast Receiver for Automate integration
+Tasker action&condition plugin
 
 
 1.6.0

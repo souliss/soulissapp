@@ -147,13 +147,12 @@ public class Utils {
     /*
          * Esporto tutte le pref utente, non quelle cached
          * */
-    public static boolean saveSharedPreferencesToFile(Context context, File dst) {
+    public static boolean saveSharedPreferencesToFile(SharedPreferences pref, Context context, File dst) {
         boolean res = false;
         ObjectOutputStream output = null;
         try {
             output = new ObjectOutputStream(new FileOutputStream(dst));
-            SharedPreferences pref =
-                    PreferenceManager.getDefaultSharedPreferences(context);
+            Log.w(Constants.TAG, "Persisting preferences, size:" + pref.getAll().size());
             output.writeObject(pref.getAll());
 
             res = true;

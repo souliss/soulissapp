@@ -96,6 +96,19 @@ public class WelcomeActivity extends FragmentActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
+    private void loadSoulissDbFromFile(String config, File importDir) throws IOException {
+
+        File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
+        SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
+        SoulissDBHelper.open();
+        String DbPath = SoulissDBHelper.getDatabase().getPath();
+        db.close();
+        File newDb = new File(DbPath);
+        Utils.fileCopy(bckDb, newDb);
+        Log.w(Constants.TAG, config + " DB loaded");
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,26 +191,27 @@ public class WelcomeActivity extends FragmentActivity {
                 final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
                 SoulissApp.setCurrentConfig(confSpinner.getSelectedItem().toString());
 
-
-                renameButton.setVisibility(View.VISIBLE);
-                deleteButton.setVisibility(View.VISIBLE);
                 //SAVE PREVIOUS if old one is not "create new" or "import"
                 if (!previousConfig.equals("") && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1]))
                         && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[2]))) {
                     //save Old DB and config
                     File filePrefs = new File(importDir, previousConfig + "_SoulissApp.prefs");
-                    Utils.saveSharedPreferencesToFile(WelcomeActivity.this, filePrefs);
+                    Log.w(Constants.TAG, "Saving old Preferences to: " + filePrefs.getPath());
+                    Utils.saveSharedPreferencesToFile(PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this), WelcomeActivity.this, filePrefs);
+
                     //locateDB
-                    SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
-                    SoulissDBHelper.open();
-                    String DbPath = SoulissDBHelper.getDatabase().getPath();
-                    File oldDb = new File(DbPath);
-                    File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
-                    Log.w(Constants.TAG, "Saving old DB: " + DbPath + " to: " + bckDb.getPath());
+                    // SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
                     try {
+                        SoulissDBHelper present = new SoulissDBHelper(WelcomeActivity.this);
+                        SoulissDBHelper.open();
+                        String DbPath = SoulissDBHelper.getDatabase().getPath();
+                        File oldDb = new File(DbPath);
+                        File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
+                        Log.w(Constants.TAG, "Saving old DB: " + DbPath + " to: " + bckDb.getPath());
+
                         Utils.fileCopy(oldDb, bckDb);
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.w(Constants.TAG, "ERROR Saving old DB to: " + previousConfig);
                     }
                 }
                 String selVal = confSpinner.getSelectedItem().toString();
@@ -207,30 +221,35 @@ public class WelcomeActivity extends FragmentActivity {
                     deleteButton.setVisibility(View.INVISIBLE);
                     File filePrefs;
                     try {
-                        filePrefs = new File(importDir, selVal + "_SoulissApp.prefs");
+                        filePrefs = new File(importDir, selVal.toLowerCase() + "_SoulissApp.prefs");
                         if (!filePrefs.exists())
                             throw new Resources.NotFoundException();
                     } catch (Resources.NotFoundException e) {
                         //MAI creato prima, inizializza
-                        filePrefs = new File(importDir, selVal + "_SoulissDB.csv.prefs");
+                        filePrefs = new File(importDir, selVal.toLowerCase() + "_SoulissApp.prefs");
                         try {
                             //se non esiste la demo, Crea & salva
                             filePrefs.createNewFile();
                             SharedPreferences newDefault = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
                             SharedPreferences.Editor demo = newDefault.edit();
+                            demo.clear();
                             demo.putString("edittext_IP_pubb", "demo.souliss.net");
                             demo.putString("edittext_IP", "10.14.10.77");
                             demo.commit();
-                            Utils.saveSharedPreferencesToFile(WelcomeActivity.this, filePrefs);
+                            Log.w(Constants.TAG, "new Demo prefs created to: " + filePrefs.getPath());
+                            Utils.saveSharedPreferencesToFile(newDefault, WelcomeActivity.this, filePrefs);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
-                        Log.e(Constants.TAG, "Errore import prefs", e);
+
                     }
                     Utils.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
                     Log.w(Constants.TAG, "DEMO prefs loaded");
-                    loadSoulissDbFromFile(selVal, importDir);
-
+                    try {
+                        loadSoulissDbFromFile(selVal, importDir);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
 
                 } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                     renameButton.setVisibility(View.INVISIBLE);
@@ -253,7 +272,14 @@ public class WelcomeActivity extends FragmentActivity {
                         //MAI creato prima? WTF
                         Log.e(Constants.TAG, "Errore import config " + selVal, e);
                     }
-                    loadSoulissDbFromFile(selVal, importDir);
+                    try {
+                        loadSoulissDbFromFile(selVal, importDir);
+                    } catch (Exception te) {
+                        //MAI creato prima? WTF
+                        Log.e(Constants.TAG, "Errore loadSoulissDbFromFile" + selVal, te);
+                    }
+                    renameButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.VISIBLE);
                 }
 
                 //dopo aver caricato opzioni, richiedo ping
@@ -347,21 +373,6 @@ public class WelcomeActivity extends FragmentActivity {
 
         /* show EULA if not accepted */
         Eula.show(this);
-    }
-
-    private void loadSoulissDbFromFile(String config, File importDir) {
-        try {
-            File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
-            SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
-            SoulissDBHelper.open();
-            String DbPath = SoulissDBHelper.getDatabase().getPath();
-            db.close();
-            File newDb = new File(DbPath);
-            Utils.fileCopy(bckDb, newDb);
-            Log.w(Constants.TAG, config + " DB loaded");
-        } catch (Exception demex) {
-            Log.e(Constants.TAG, "Can't load DB " + config + demex.getMessage());
-        }
     }
 
     @Override

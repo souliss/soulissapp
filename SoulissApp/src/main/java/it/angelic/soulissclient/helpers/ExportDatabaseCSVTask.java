@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -60,7 +61,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         //ESPORTA PREFS
         File filePrefs = new File(exportDir, yearFormat.format(now) + "_" + SoulissApp.getCurrentConfig() + "_SoulissApp.prefs");
-        Utils.saveSharedPreferencesToFile(context, filePrefs);
+        Utils.saveSharedPreferencesToFile(PreferenceManager.getDefaultSharedPreferences(context), context, filePrefs);
         return true;
 
     }

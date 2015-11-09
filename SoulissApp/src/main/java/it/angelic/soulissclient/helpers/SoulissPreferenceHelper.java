@@ -45,7 +45,7 @@ public class SoulissPreferenceHelper implements Serializable {
     private String chosenHtmlRootfile;
     private Context contx;
     // numNodes ed altri valori cached
-    private SharedPreferences customCachedPrefs;
+
     private boolean dataServiceEnabled;
     private int dataServiceInterval;
     private float eqHigh;
@@ -71,6 +71,8 @@ public class SoulissPreferenceHelper implements Serializable {
 
     private boolean isTaskerEnabled;
     private boolean isTaskerInterested;
+
+    private SharedPreferences customCachedPrefs;
 
     public SoulissPreferenceHelper(Context contx) {
         super();
