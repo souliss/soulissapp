@@ -1,6 +1,8 @@
 package it.angelic.soulissclient;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
@@ -12,11 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nononsenseapps.filepicker.FilePickerActivity;
-
 import java.io.File;
-import java.net.InetAddress;
+import java.net.URISyntaxException;
 
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.util.SystemUiHider;
 
 /**
@@ -27,11 +28,39 @@ import it.angelic.soulissclient.util.SystemUiHider;
  */
 public class WelcomeImportConfigActivity extends FragmentActivity {
 
-    private String[] mFileList;
-    private File mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
-    private String mChosenFile;
     private static final String FTYPE = ".preferences";
     private static final int DIALOG_LOAD_FILE = 1000;
+    private static final int FILE_SELECT_CODE = 0;
+    private TextView initialIp;
+    private String mChosenFile;
+    private String[] mFileList;
+    private File mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    Log.d(Constants.TAG, "File Uri: " + uri.toString());
+                    // Get the path
+                    String path = null;
+                    try {
+                        path = Utils.getPath(this, uri);
+                        Log.d(Constants.TAG, "File Path: " + path);
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    initialIp.setText(path);
+                    // Get the file instance
+                    // File file = new File(path);
+                    // Initiate the upload
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +72,14 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
         // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
         final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
         final EditText configName = (EditText) findViewById(R.id.config_name);
-        final TextView initialIp = (TextView) findViewById(R.id.config_ip);
-
+        initialIp = (TextView) findViewById(R.id.config_ip);
+        ContextWrapper c = new ContextWrapper(WelcomeImportConfigActivity.this);
+        final File importDir = c.getFilesDir();
         initialIp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // This always works
-                Intent i = new Intent(WelcomeImportConfigActivity.this, FilePickerActivity.class);
-                // This works if you defined the intent filter
-                // Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-
-                // Set these depending on your use case. These are the defaults.
-                i.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false);
-                i.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
-                i.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_FILE);
-
-                // Configure initial directory by specifying a String.
-                // You could specify a String like "/storage/emulated/0/", but that can
-                // dangerous. Always use Android's API calls to get paths to the SD-card or
-                // internal memory.
-                i.putExtra(FilePickerActivity.EXTRA_START_PATH, Environment.getExternalStorageDirectory().getPath());
-
-                startActivityForResult(i, 66);
+                showFileChooser();
             }
         });
         welcomeTourButton.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +94,11 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                 }
                 if (initialIp.getText() != null &&
                         initialIp.getText().toString().length() > 0) {
-                    //Setta Ip
-                    try {// sanity check
-                        final InetAddress checkIPt = InetAddress.getByName(initialIp.getText().toString());
-                        final String pars = " (" + checkIPt.getHostName() + ")";
-                        Log.w(Constants.TAG, "Valid IP inserted");
-                        SoulissApp.getOpzioni().setIPPreference(initialIp.getText().toString());
-
+                    //Setta Prefs
+                    try {
+                        File prefs = new File(importDir, initialIp.getText().toString());
+                        Utils.loadSharedPreferencesFromFile(WelcomeImportConfigActivity.this, prefs);
+                        Log.w(Constants.TAG, "IMPORTED prefs: " + prefs.getPath());
                     } catch (final Exception e) {
                         Log.e(Constants.TAG, "Error in address parsing: " + e.getMessage(), e);
                     }
@@ -108,6 +121,21 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
         });*/
     }
 
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File to Upload"),
+                    FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void startSoulissMainActivity() {
         Intent myIntent = new Intent(WelcomeImportConfigActivity.this, LauncherActivity.class);
