@@ -1,12 +1,12 @@
 package it.angelic.soulissclient;
 
 import android.annotation.TargetApi;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
@@ -188,8 +188,12 @@ public class WelcomeActivity extends FragmentActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.w(Constants.TAG, "Config spinner selected val:" + confSpinner.getSelectedItem());
                 String previousConfig = SoulissApp.getCurrentConfig();
-                final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+                //final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+                ContextWrapper c = new ContextWrapper(WelcomeActivity.this);
+                final File importDir = c.getFilesDir();
                 SoulissApp.setCurrentConfig(confSpinner.getSelectedItem().toString());
+
+
 
                 //SAVE PREVIOUS if old one is not "create new" or "import"
                 if (!previousConfig.equals("") && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1]))
@@ -239,7 +243,7 @@ public class WelcomeActivity extends FragmentActivity {
                             Log.w(Constants.TAG, "new Demo prefs created to: " + filePrefs.getPath());
                             Utils.saveSharedPreferencesToFile(newDefault, WelcomeActivity.this, filePrefs);
                         } catch (IOException e1) {
-                            e1.printStackTrace();
+                            Log.e(Constants.TAG, "Errore import prefs", e1);
                         }
 
                     }
@@ -299,6 +303,11 @@ public class WelcomeActivity extends FragmentActivity {
                 //here we've already chosen config and loaded right files
                 if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                     Intent createNewConfig = new Intent(WelcomeActivity.this, WelcomeCreateConfigActivity.class);
+                    startActivity(createNewConfig);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    supportFinishAfterTransition();
+                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                    Intent createNewConfig = new Intent(WelcomeActivity.this, WelcomeImportConfigActivity.class);
                     startActivity(createNewConfig);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     supportFinishAfterTransition();

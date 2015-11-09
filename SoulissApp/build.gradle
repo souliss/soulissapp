@@ -35,6 +35,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.1.0'
     compile 'com.android.support:recyclerview-v7:23.1.0'
     compile files('libs/achartengine-1.2.0.jar')
+    compile 'com.nononsenseapps:filepicker:2.4.2'
     //compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile project(':soulissLib')
     wearApp project(':soulisswear')
