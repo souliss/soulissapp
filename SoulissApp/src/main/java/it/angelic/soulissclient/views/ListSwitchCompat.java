@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.helpers;
+package it.angelic.soulissclient.views;
 
 import android.content.Context;
 import android.support.v7.widget.SwitchCompat;

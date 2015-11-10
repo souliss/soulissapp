@@ -57,15 +57,13 @@ import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
-import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.Eula;
-import it.angelic.soulissclient.helpers.ListButton;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.net.NetUtils;
 import it.angelic.soulissclient.net.webserver.HTTPService;
+import it.angelic.soulissclient.views.ListButton;
 
 import static it.angelic.soulissclient.Constants.TAG;
 

@@ -37,6 +37,7 @@ import it.angelic.soulissclient.T4nFragWrapper;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
+import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
@@ -305,6 +306,9 @@ public class UDPSoulissDecoder {
                         // togliere
                         Log.w(Constants.Net.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
                         opzioni.setIPPreference(opzioni.getCachedAddress());
+                        //lo aggiungo a dizionario
+                        SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(SoulissApp.getAppContext());
+                        gbPref.addWordToIpDictionary(opzioni.getCachedAddress());
                     }
                 } else {
                     throw new UnknownHostException("belongsToNode or belongsToSameSubnet = FALSE");

@@ -429,12 +429,16 @@ public class AlertDialogHelper {
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        SoulissApp.deleteConfiguration(bckConfig);
-                        SoulissApp.setCurrentConfig(toUpdate.getItemAtPosition(0).toString());
+                        //occhio all'ordine, sto rimuovendo
                         ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) toUpdate.getAdapter();
-                        toUpdate.setSelection(0, false);
+                        //FIXME con http://stackoverflow.com/questions/21747917/undesired-onitemselected-calls/21751327#21751327
                         spinnerAdapter.remove(bckConfig);
                         spinnerAdapter.notifyDataSetChanged();
+
+                        SoulissApp.setCurrentConfig(toUpdate.getItemAtPosition(0).toString());
+                        SoulissApp.deleteConfiguration(bckConfig);
+
+
                     }
                 });
 

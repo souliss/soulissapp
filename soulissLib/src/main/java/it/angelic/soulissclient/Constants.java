@@ -45,6 +45,7 @@ public class Constants {
 	public static final int TAG_INSERT_POINT = 1;
     static final int NOTIFICATION_ID = 3113;
     public static final String SOULISS_CONFIGURATIONS_KEY = "configArray";
+    public static final int AUTOCOMPLETE_THRESHOLD = 2;
 
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");

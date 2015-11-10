@@ -353,7 +353,7 @@
     <string name="menu_changenodeRebuild">Ricostruisci nodo</string>
     <string name="menu_changenodeRebuild_desc">Ricostruendo il nodo verranno sovrascritti i suoi dispositivi</string>
     <string name="addprogram_choosedelay">Ritardo esecuzione</string>
-    <string name="scene_add_typical_to">Add device to...</string>
+    <string name="scene_add_typical_to">Aggiungi a...</string>
     <string name="functions">Funzioni</string>
     <string name="souliss_controlling">Souliss controlla %1$d Dispositivi</string>
     <string name="voice_command_query_help">Usa il nome di un dispositivo, seguito dallo stato necessario a verificare la condizione</string>
@@ -365,9 +365,12 @@
     <string name="opt_restore_welcome_desc">Mostra la schermata di benvenuto, per selezionare le configurazioni</string>
     <string name="opt_restore_welcome">Ripristina Benvenuto</string>
     <string name="export_failed">Esportazione fallita</string>
-    <string name="imported_success">Imported successfully %1$d totNodes and %2$d devices</string>
+    <string name="imported_success">Importati %1$d nodi e %2$d dispositivi</string>
     <string name="config_mandatory">Il nome della configurazione è obbligatorio</string>
     <string name="welcome_dontshow">Non mostrare più questa schermata</string>
     <string name="welcome_tour_button">Inizia</string>
+    <string name="welcome_create_new_conf">Crea Nuova Configurazione</string>
+    <string name="welcome_create_new_conf_desc">Inserisci il nome della configurazione (casa, ufficio, ecc.) e opzionalmente l\'indirizzo IP locale</string>
+    <string name="welcome_insertIp">Indirizzo IP del gateway Souliss (opzionali)</string>
 
 </resources>

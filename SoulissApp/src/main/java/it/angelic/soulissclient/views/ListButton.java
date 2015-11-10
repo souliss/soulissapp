@@ -1,28 +1,27 @@
-package it.angelic.soulissclient.helpers;
+package it.angelic.soulissclient.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.Button;
 
 /**
- * Un bottone definito per essere utilizzato in una {@link ListView}.
+ * Un bottone definito per essere utilizzato in una {@link android.widget.ListView}.
  */
-public class ListSpinner extends Spinner {
+public class ListButton extends Button {
 
         /**
          * Costruttore di default, inizializza il bottone in base ad un contesto e ad un insieme di attributi.
          * @param context Contesto.
          * @param attrs Attributi della vista.
          */
-        public ListSpinner(Context context, AttributeSet attrs) {
+        public ListButton(Context context, AttributeSet attrs) {
                 super(context, attrs);
                 //Rendo forzatamente il bottone non selezionabile.
                 this.setFocusable(false);
         }
 
-        public ListSpinner(Context ctx) {
+        public ListButton(Context ctx) {
 			super(ctx);
 			this.setFocusable(false);
 		}

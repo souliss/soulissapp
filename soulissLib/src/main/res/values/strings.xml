@@ -371,5 +371,8 @@
     <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. <br/>Examples:<ul> <li>\'Dinner Spotlight ON\', </li>\'Bedroom window open\' </ul>]]></string>
     <string name="opt_settingshare_desc">Save current  settings and share them</string>
     <string name="opt_settingshare">Share settings</string>
+    <string name="welcome_create_new_conf">Create new Configuration</string>
+    <string name="welcome_create_new_conf_desc">Input configuration name and optionally set local IP address. Configuration\'s name is mandatory</string>
+    <string name="welcome_insertIp">Input private IP Address (optional)</string>
     >
 </resources>

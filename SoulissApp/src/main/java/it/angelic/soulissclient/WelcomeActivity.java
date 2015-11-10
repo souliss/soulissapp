@@ -125,14 +125,13 @@ public class WelcomeActivity extends FragmentActivity {
         welcomeContainer.getBackground().setDither(true);
         Log.i(Constants.TAG, "onCreate: current config:" + SoulissApp.getCurrentConfig());
         welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
-        welcomeEnableCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SoulissApp.saveWelcomeDisabledPreference(welcomeEnableCheckBox.isChecked());
-            }
-        });
+
         final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+
+        final Button renameButton = (Button) findViewById(R.id.welcome_tour_rename);
+        final Button deleteButton = (Button) findViewById(R.id.welcome_tour_delete);
+
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         confSpinner.setAdapter(spinnerAdapter);
         Set<String> configs = SoulissApp.getConfigurations();
@@ -161,12 +160,14 @@ public class WelcomeActivity extends FragmentActivity {
             spinnerAdapter.add("default");
             spinnerAdapter.notifyDataSetChanged();
             selectedIdx = spinnerAdapter.getCount() - 1;
+        } else if (selectedIdx > 2) {//user defined
+            renameButton.setVisibility(View.VISIBLE);
+            deleteButton.setVisibility(View.VISIBLE);
         }
         confSpinner.setSelection(selectedIdx, true);
 
-        final Button renameButton = (Button) findViewById(R.id.welcome_tour_rename);
-        final Button deleteButton = (Button) findViewById(R.id.welcome_tour_delete);
 
+        //RENAME CONFIGURATION
         renameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,10 +175,19 @@ public class WelcomeActivity extends FragmentActivity {
             }
         });
 
+        //DELETE CONFIGURATION
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialogHelper.deleteConfigDialog(WelcomeActivity.this, confSpinner).create().show();
+            }
+        });
+
+        //DISABLE WELCOME
+        welcomeEnableCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SoulissApp.saveWelcomeDisabledPreference(welcomeEnableCheckBox.isChecked());
             }
         });
 
@@ -188,12 +198,12 @@ public class WelcomeActivity extends FragmentActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.w(Constants.TAG, "Config spinner selected val:" + confSpinner.getSelectedItem());
                 String previousConfig = SoulissApp.getCurrentConfig();
-                //final File importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+                //load current settings
                 ContextWrapper c = new ContextWrapper(WelcomeActivity.this);
                 final File importDir = c.getFilesDir();
+
+                //change config
                 SoulissApp.setCurrentConfig(confSpinner.getSelectedItem().toString());
-
-
 
                 //SAVE PREVIOUS if old one is not "create new" or "import"
                 if (!previousConfig.equals("") && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1]))
@@ -207,12 +217,12 @@ public class WelcomeActivity extends FragmentActivity {
                     // SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
                     try {
                         SoulissDBHelper present = new SoulissDBHelper(WelcomeActivity.this);
+                        Log.d(Constants.TAG, "going to copy (bytes): " + present.getSize());
                         SoulissDBHelper.open();
                         String DbPath = SoulissDBHelper.getDatabase().getPath();
                         File oldDb = new File(DbPath);
                         File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
                         Log.w(Constants.TAG, "Saving old DB: " + DbPath + " to: " + bckDb.getPath());
-
                         Utils.fileCopy(oldDb, bckDb);
                     } catch (IOException e) {
                         Log.w(Constants.TAG, "ERROR Saving old DB to: " + previousConfig);
@@ -252,7 +262,7 @@ public class WelcomeActivity extends FragmentActivity {
                     try {
                         loadSoulissDbFromFile(selVal, importDir);
                     } catch (IOException e1) {
-                        e1.printStackTrace();
+                        Log.e(Constants.TAG, "DB non disponibile:" + selVal);
                     }
 
                 } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {

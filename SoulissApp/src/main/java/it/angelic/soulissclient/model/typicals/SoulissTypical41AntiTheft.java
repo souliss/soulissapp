@@ -11,15 +11,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.helpers.ListButton;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.views.ListButton;
 
 /**
  * Handle one digital output based on hardware and software commands, output can
