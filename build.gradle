@@ -24,7 +24,6 @@ allprojects {
 
 }
 
-
 subprojects {
     ext.global_buildToolsVersion = "23.0.1"
 }
