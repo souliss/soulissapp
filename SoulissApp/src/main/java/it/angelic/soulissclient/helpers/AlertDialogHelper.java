@@ -417,28 +417,27 @@ public class AlertDialogHelper {
 
     public static AlertDialog.Builder deleteConfigDialog(final Context cont, final Spinner toUpdate) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
-        final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         final String bckConfig = (String) toUpdate.getSelectedItem();
         alert.setIcon(android.R.drawable.ic_delete);
         alert.setTitle(cont.getString(R.string.delete) + " " + bckConfig);
 
         // Set an EditText view to get user input
-        final EditText input = new EditText(cont);
-        alert.setView(input);
-        input.setText(bckConfig);
+        //final EditText input = new EditText(cont);
+        //alert.setView(input);
+        //input.setText(bckConfig);
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //occhio all'ordine, sto rimuovendo
                         ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) toUpdate.getAdapter();
+                        toUpdate.setSelection(0);
+                        Log.w(Constants.TAG, "deleting:" + bckConfig);
                         //FIXME con http://stackoverflow.com/questions/21747917/undesired-onitemselected-calls/21751327#21751327
                         spinnerAdapter.remove(bckConfig);
                         spinnerAdapter.notifyDataSetChanged();
-
-                        SoulissApp.setCurrentConfig(toUpdate.getItemAtPosition(0).toString());
+                        if (SoulissApp.getCurrentConfig().equals(bckConfig))
+                            SoulissApp.setCurrentConfig("");//reset w/o saving
                         SoulissApp.deleteConfiguration(bckConfig);
-
-
                     }
                 });
 
@@ -468,7 +467,10 @@ public class AlertDialogHelper {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String value = input.getText().toString();
                         SoulissApp.deleteConfiguration(bckConfig);
-                        SoulissApp.setCurrentConfig(value);
+                        if (SoulissApp.getCurrentConfig().equals(bckConfig)) {
+                            Log.w(Constants.TAG, "Sobstitute current config:");
+                            SoulissApp.setCurrentConfig(value);
+                        }
                         SoulissApp.addConfiguration(value);
                         ArrayAdapter<String> spinnerAdapter = (ArrayAdapter<String>) toUpdate.getAdapter();
 
