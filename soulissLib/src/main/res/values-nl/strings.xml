@@ -363,4 +363,10 @@
     <string name="imported_success">"Imported successfully "</string>
     <string name="config_mandatory">Configuration name is mandatory</string>
     <string name="welcome_dontshow">Don\'t show welcome screen again</string>
+    <string name="welcome_create_new_conf">Create new Configuration</string>
+    <string name="welcome_create_new_conf_desc">Input configuration name and optionally set local IP address. Configuration\'s name is mandatory</string>
+    <string name="welcome_insertIp">Input private IP Address (optional)</string>
+    <string name="welcome_import_hints">Insert desired configuration name and specify .preferences file to import</string>
+    <string name="welcome_import_title">Import SoulissApp Configuration</string>
+    <string name="welcome_import_conf_name">Configuration name (ie. Home, Office, seaside)</string>
 </resources>

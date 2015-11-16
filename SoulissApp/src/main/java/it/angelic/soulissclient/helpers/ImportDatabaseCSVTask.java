@@ -99,7 +99,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         try {
             Looper.prepare();
 
-            importDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+            importDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
 
             if (!importDir.exists())
                 Toast.makeText(SoulissApp.getAppContext(), SoulissApp.getAppContext().getString(R.string.dialog_import_nofolder), Toast.LENGTH_SHORT).show();

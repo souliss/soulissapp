@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 public class IpChangerListener implements OnPreferenceChangeListener {
@@ -81,6 +82,9 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 				// trigger connection test se il valore pubblico e`
 				// ok e diverso dal vecchio
 				if (old.compareTo(newval) != 0) {
+                    //aggiungi alle pref globali
+                    SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(SoulissApp.getAppContext());
+					gbPref.addWordToIpDictionary(newval);
 
 					opzioni.clearCachedAddress();
 					opzioni.setBestAddress();

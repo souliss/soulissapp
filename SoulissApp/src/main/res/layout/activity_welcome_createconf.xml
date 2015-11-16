@@ -39,6 +39,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:alpha="0.5"
             android:layout_gravity="center_horizontal|top"
             android:src="@drawable/souliss_logo_512_trasp"/>
 
@@ -67,7 +68,7 @@
                 android:shadowDy="5"
                 android:shadowRadius="2"
                 android:singleLine="false"
-                android:text="Create new Configuration"
+                android:text="@string/welcome_create_new_conf"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="32dip"/>
 
@@ -79,7 +80,7 @@
                 android:gravity="left"
                 android:singleLine="false"
                 android:layout_margin="8dp"
-                android:text="Input configuration name and optionally set local IP address. Configuration's name is mandatory"
+                android:text="@string/welcome_create_new_conf_desc"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 />
 
@@ -94,7 +95,7 @@
                 android:inputType="text"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-            <EditText
+            <AutoCompleteTextView
 
                 android:id="@+id/config_ip"
                 android:layout_width="match_parent"
@@ -102,8 +103,8 @@
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
                 android:layout_below="@id/config_name"
-                android:hint="Input private IP Address (optional)"
-                android:inputType="number"
+                android:hint="@string/welcome_insertIp"
+                android:completionThreshold="3"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
         </RelativeLayout>
     </FrameLayout>

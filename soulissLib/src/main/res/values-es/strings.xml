@@ -368,6 +368,12 @@
     <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. For example,<ul> <li>\'Dinner Spotlight ON\', </li></ul>\'Bedroom window open\']]></string>
     <string name="opt_settingshare_desc">Save current  settings and share them</string>
     <string name="opt_settingshare">Share settings</string>
+    <string name="welcome_create_new_conf">Create new Configuration</string>
+    <string name="welcome_create_new_conf_desc">Input configuration name and optionally set local IP address. Configuration\'s name is mandatory</string>
+    <string name="welcome_insertIp">Input private IP Address (optional)</string>
+    <string name="welcome_import_hints">Insert desired configuration name and specify .preferences file to import</string>
+    <string name="welcome_import_title">Import SoulissApp Configuration</string>
+    <string name="welcome_import_conf_name">Configuration name (ie. Home, Office, seaside)</string>
 
 
 </resources>

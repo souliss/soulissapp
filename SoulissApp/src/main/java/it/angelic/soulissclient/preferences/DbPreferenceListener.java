@@ -48,7 +48,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
         this.parent = parent;
         opzioni = SoulissApp.getOpzioni();
         datasource = new SoulissDBHelper(parent);
-        mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
+        mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
     }
 
     @Override
@@ -157,11 +157,11 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 
     private boolean shareSettings() {
         // File sharedDir = parent.getApplicationContext().getCacheDir();
-        File exportDir = new File(Environment.getExternalStorageDirectory(), "//Souliss/export");
+        File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER + "/export");
         if (!exportDir.exists()) {
             exportDir.mkdirs();
         }
-        File sharedP = null;
+        File sharedP;
         try {
             sharedP = File.createTempFile("Souliss", ".preferences", exportDir);
             // File sharedP = new File(sharedDir, "exportSettings.tmp");

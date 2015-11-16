@@ -181,7 +181,7 @@
                         android:layout_alignParentRight="true"
                         android:alpha="0.5"
                         android:contentDescription="@string/addprogram_positional"
-                        android:src="@drawable/exit"/>
+                        android:src="@drawable/exit1"/>
 
                     <TextView
                         android:id="@+id/textViewInfoPos"
@@ -228,7 +228,7 @@
                         android:layout_alignParentRight="true"
                         android:alpha="0.5"
                         android:contentDescription="@string/addprogram_sensorial"
-                        android:src="@drawable/lighthouse"/>
+                        android:src="@drawable/lighthouse1"/>
 
                     <TextView
                         android:id="@+id/textViewInfoTrig"

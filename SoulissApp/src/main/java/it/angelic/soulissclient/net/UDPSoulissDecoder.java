@@ -37,6 +37,7 @@ import it.angelic.soulissclient.T4nFragWrapper;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.db.SoulissTypicalDTO;
+import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
@@ -305,6 +306,9 @@ public class UDPSoulissDecoder {
                         // togliere
                         Log.w(Constants.Net.TAG, "Auto-setting private IP: " + opzioni.getCachedAddress());
                         opzioni.setIPPreference(opzioni.getCachedAddress());
+                        //lo aggiungo a dizionario
+                        SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(SoulissApp.getAppContext());
+                        gbPref.addWordToIpDictionary(opzioni.getCachedAddress());
                     }
                 } else {
                     throw new UnknownHostException("belongsToNode or belongsToSameSubnet = FALSE");
@@ -532,7 +536,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
+                                R.drawable.lighthouse1, soulissTrigger);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
@@ -540,7 +544,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
+                                R.drawable.lighthouse1, soulissTrigger);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.execute();
@@ -548,7 +552,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
+                                R.drawable.lighthouse1, soulissTrigger);
                     }
                 }
                 // vedi se bisogna disattivare

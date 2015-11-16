@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDB;
@@ -39,7 +41,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     {
 
         //SoulissDBHelper DBob = new SoulissDBHelper(SoulissApp.getAppContext());
-        File exportDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+        File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
 
         if (!exportDir.exists()) {
             exportDir.mkdirs();
@@ -60,7 +62,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         //ESPORTA PREFS
         File filePrefs = new File(exportDir, yearFormat.format(now) + "_" + SoulissApp.getCurrentConfig() + "_SoulissApp.prefs");
-        Utils.saveSharedPreferencesToFile(context, filePrefs);
+        Utils.saveSharedPreferencesToFile(PreferenceManager.getDefaultSharedPreferences(context), context, filePrefs);
         return true;
 
     }

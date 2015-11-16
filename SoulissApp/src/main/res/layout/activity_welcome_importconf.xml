@@ -1,0 +1,112 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#0099cc"
+             tools:context="it.angelic.soulissclient.WelcomeActivity">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:textColor="#33b5e5"
+        android:textSize="50sp"
+        android:textStyle="bold"/>
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_welcome"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?windowNoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:orientation="vertical"
+            tools:ignore="UselessParent"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:layout_gravity="center_horizontal|top"
+            android:src="@drawable/souliss_logo_512_trasp"/>
+
+
+        <Button
+            android:id="@+id/welcome_tour_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginBottom="80dp"
+            android:text="@string/welcome_tour_button"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/createConfigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                android:gravity="center"
+                android:padding="5pt"
+                android:shadowColor="@color/black_overlay"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="2"
+                android:singleLine="false"
+                android:text="@string/welcome_import_title"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="32dip"/>
+
+            <TextView
+                android:id="@+id/createConfigDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/createConfigTitle"
+                android:gravity="left"
+                android:singleLine="false"
+                android:layout_margin="8dp"
+                android:text="@string/welcome_import_hints"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+
+            <EditText
+                android:id="@+id/config_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/createConfigDesc"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:hint="@string/welcome_import_conf_name"
+                android:inputType="text"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <TextView
+
+                android:id="@+id/config_ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="16dp"
+                android:layout_below="@id/config_name"
+                android:hint="Choose file"
+                android:inputType="number"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>

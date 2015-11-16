@@ -6,7 +6,7 @@
     android:title="@string/opt_network" >
 
     <PreferenceCategory android:title="@string/opt_net_home" >
-        <EditTextPreference
+        <it.angelic.soulissclient.views.AutoCompletePreference
             android:dialogTitle="@string/dialog_title_edittext_IP"
             android:key="edittext_IP"
             android:summary="@string/summary_edittext_IP"
@@ -20,9 +20,10 @@
             android:summary="@string/opt_timeout_pubb_desc"
             android:title="@string/opt_timeout_pubb" />
 
-        <EditTextPreference
+        <it.angelic.soulissclient.views.AutoCompletePreference
             android:dialogTitle="@string/dialog_title_edittext_IP_pubb"
             android:key="edittext_IP_pubb"
+
             android:summary="@string/summary_edittext_IP_pubb"
             android:title="@string/title_edittext_IP_pubb" />
     </PreferenceCategory>

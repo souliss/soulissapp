@@ -99,4 +99,10 @@
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
     </style>
 
+    <style name="FilePickerAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/std_blue</item>
+        <item name="colorPrimaryDark">@color/std_blue_shadow</item>
+        <item name="colorAccent">@color/aa_green</item>
+    </style>
+
 </resources>

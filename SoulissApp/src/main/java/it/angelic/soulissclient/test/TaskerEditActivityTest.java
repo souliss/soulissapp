@@ -115,7 +115,7 @@ public final class TaskerEditActivityTest extends ActivityInstrumentationTestCas
          * entry in the Android Manifest.
          */
 
-        assertEquals("it.angelic.soulissclient.EditActivity", TaskerEditActivity.class.getName()); //$NON-NLS-1$
+        assertEquals("it.angelic.soulissclient.TaskerEditActivity", TaskerEditActivity.class.getName()); //$NON-NLS-1$
     }
 
     /**

@@ -120,7 +120,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             else if (command == Constants.Typicals.Souliss_T1n_ToogleCmd)
                 resId = R.drawable.button1;
             else
-                resId = R.drawable.bell;
+                resId = R.drawable.bell1;
         } else if (typical == Constants.Typicals.Souliss_T12) {
             resId = R.drawable.sos;
         } else if (typical == Constants.Typicals.Souliss_T13) {
@@ -138,7 +138,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             else
                 resId = R.drawable.rgb;
         } else if (typical == Constants.Typicals.Souliss_T19)
-            resId = R.drawable.candle;
+            resId = R.drawable.candle1;
         else if (typical == Constants.Typicals.Souliss_T21)
             resId = R.drawable.sos;
         else if (typical == Constants.Typicals.Souliss_T22)

@@ -419,16 +419,19 @@ public class SoulissDataService extends Service implements LocationListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "Service onStartCommand()");
         opts = SoulissApp.getOpzioni();
-
+        startUDPListener();
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();
-        Log.i(TAG, "Service onStartCommand()");
+
         // delle opzioni
 
-        reschedule(false);
-
-        startUDPListener();
+        if (opts.isDataServiceEnabled()) {
+            reschedule(false);
+        } else {
+            Log.i(TAG, "Service disabled");
+        }
 
         return START_STICKY;
     }
@@ -465,7 +468,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             soulissCommand.execute();
                             soulissCommand.getCommandDTO().persistCommand();
                             sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
-                                    soulissCommand.toString() + " " + soulissCommand.getParentTypical().getNiceName(), R.drawable.exit, soulissCommand);
+                                    soulissCommand.toString() + " " + soulissCommand.getParentTypical().getNiceName(), R.drawable.exit1, soulissCommand);
                         }
                     }
                 }
@@ -487,7 +490,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             soulissCommand.execute();
                             soulissCommand.getCommandDTO().persistCommand();
                             sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
-                                    soulissCommand.getNiceName(), R.drawable.exit, soulissCommand);
+                                    soulissCommand.getNiceName(), R.drawable.exit1, soulissCommand);
                         }
                     }
                 }
