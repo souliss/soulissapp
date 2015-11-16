@@ -228,6 +228,7 @@ public class WelcomeActivity extends FragmentActivity {
         });
 
         //salva il vecchio prima di swappare sul nuovo
+        confSpinner.setOnTouchListener(mDelayHideTouchListener);
         confSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -303,8 +304,8 @@ public class WelcomeActivity extends FragmentActivity {
 
                     //Adesso carico la nuova
                     if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
+                        //DEMO
                         loadOrCreateDemoConfig(importDir, newConfig);
-
                         try {
                             loadSoulissDbFromFile(newConfig, importDir);
                         } catch (IOException e1) {

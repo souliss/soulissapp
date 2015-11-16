@@ -1,8 +1,10 @@
 package it.angelic.soulissclient;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -77,6 +79,13 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
                     }.start();
                 }
                 String adding = configName.getText().toString();
+                //crea conf vuota
+                SharedPreferences newDefault = PreferenceManager.getDefaultSharedPreferences(WelcomeCreateConfigActivity.this);
+                SharedPreferences.Editor demo = newDefault.edit();
+                demo.clear().apply();
+                //TODO crea DB vuoto?
+
+
                 Log.w(Constants.TAG, "Saving new Config:" + adding);
                 SoulissApp.setCurrentConfig(adding);
                 SoulissApp.addConfiguration(adding);

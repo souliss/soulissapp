@@ -84,7 +84,7 @@ public class IpChangerListener implements OnPreferenceChangeListener {
 				if (old.compareTo(newval) != 0) {
                     //aggiungi alle pref globali
                     SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(SoulissApp.getAppContext());
-                    gbPref.addWordToIpDictionary(newval);
+					gbPref.addWordToIpDictionary(newval);
 
 					opzioni.clearCachedAddress();
 					opzioni.setBestAddress();
