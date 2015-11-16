@@ -419,16 +419,19 @@ public class SoulissDataService extends Service implements LocationListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "Service onStartCommand()");
         opts = SoulissApp.getOpzioni();
-
+        startUDPListener();
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();
-        Log.i(TAG, "Service onStartCommand()");
+
         // delle opzioni
 
-        reschedule(false);
-
-        startUDPListener();
+        if (opts.isDataServiceEnabled()) {
+            reschedule(false);
+        } else {
+            Log.i(TAG, "Service disabled");
+        }
 
         return START_STICKY;
     }

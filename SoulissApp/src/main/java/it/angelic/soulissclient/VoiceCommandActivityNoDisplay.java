@@ -2,6 +2,7 @@ package it.angelic.soulissclient;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.PersistableBundle;
@@ -22,19 +23,19 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 public class VoiceCommandActivityNoDisplay extends Activity {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        // startService(new Intent(this, SoulissDataService.class));
-    }
 
     public static void interpretCommand(final Context context, @NonNull final String yesMan) {
         final StringBuilder comandToSend = new StringBuilder();
+        final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
+
+        if (opzioni.getCachedAddress() == null) {
+            context.startService(new Intent(context, SoulissDataService.class));
+            Log.w(Constants.TAG, "Started Emrg service");
+        }
 
         //capisci scena, eseguila e ciao
         SoulissDBHelper db = new SoulissDBHelper(context);
         SoulissDBHelper.open();
-        final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
         if (yesMan.toLowerCase().contains("ping")) {
 
             opzioni.setBestAddress();
@@ -127,9 +128,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             Toast.makeText(context, yesMan + " - " + context.getString(R.string.err_command_not_recognized), Toast.LENGTH_SHORT).show();
         }
 
-
     }
-
 
     /**
      * Compare input words with a serie of synonims
@@ -144,6 +143,12 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        // startService(new Intent(this, SoulissDataService.class));
     }
 
     /**
