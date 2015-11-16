@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDB;
@@ -40,7 +41,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     {
 
         //SoulissDBHelper DBob = new SoulissDBHelper(SoulissApp.getAppContext());
-        File exportDir = new File(Environment.getExternalStorageDirectory(), "//Souliss");
+        File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
 
         if (!exportDir.exists()) {
             exportDir.mkdirs();

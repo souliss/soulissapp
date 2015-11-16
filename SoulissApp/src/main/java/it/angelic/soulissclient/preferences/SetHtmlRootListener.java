@@ -37,7 +37,7 @@ public class SetHtmlRootListener implements OnPreferenceClickListener {
 		this.parent = parent;
 		opzioni = SoulissApp.getOpzioni();
 		//datasource = new SoulissDBHelper(parent);
-		mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
+		mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
 	}
 	
 	@Override

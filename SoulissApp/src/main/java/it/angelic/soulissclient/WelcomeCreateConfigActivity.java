@@ -64,8 +64,12 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
                             try {// sanity check
                                 final InetAddress checkIPt = InetAddress.getByName(initialIp.getText().toString());
                                 final String pars = " (" + checkIPt.getHostName() + ")";
-                                Log.w(Constants.TAG, "Valid IP inserted");
+                                Log.w(Constants.TAG, "Valid IP inserted " + pars);
                                 SoulissApp.getOpzioni().setIPPreference(initialIp.getText().toString());
+                                //save valid IP to cache
+                                SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(SoulissApp.getAppContext());
+                                gbPref.addWordToIpDictionary(initialIp.getText().toString());
+
                             } catch (final Exception e) {
                                 Log.e(Constants.TAG, "Error in address parsing: " + e.getMessage(), e);
                             }
@@ -76,7 +80,7 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
                 Log.w(Constants.TAG, "Saving new Config:" + adding);
                 SoulissApp.setCurrentConfig(adding);
                 SoulissApp.addConfiguration(adding);
-                //TODO Ask DB Struct
+                //TODO Ask DB Struct?
                 startSoulissMainActivity();
                 //close and don't go back here
                 supportFinishAfterTransition();

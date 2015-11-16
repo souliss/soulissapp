@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.net.URISyntaxException;
 
+import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.util.SystemUiHider;
 
@@ -34,7 +35,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
     private TextView initialIp;
     private String mChosenFile;
     private String[] mFileList;
-    private File mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
+    private File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -96,9 +97,25 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                         initialIp.getText().toString().length() > 0) {
                     //Setta Prefs
                     try {
-                        File prefs = new File(importDir, initialIp.getText().toString());
+                        File prefs = new File(initialIp.getText().toString());
                         Utils.loadSharedPreferencesFromFile(WelcomeImportConfigActivity.this, prefs);
                         Log.w(Constants.TAG, "IMPORTED prefs: " + prefs.getPath());
+
+                        try {
+                            //WelcomeActivity.loadSoulissDbFromFile(configName.getText().toString(), importDir);
+                            File bckDb = new File(importDir, prefs.getName().replaceAll(".prefs", ""));
+                            SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+                            SoulissDBHelper.open();
+                            String DbPath = SoulissDBHelper.getDatabase().getPath();
+                            db.close();
+                            File newDb = new File(DbPath);
+                            Utils.fileCopy(bckDb, newDb);
+                            Log.w(Constants.TAG, "Relative DB loaded " + bckDb.getPath());
+                        } catch (Exception te) {
+                            //MAI creato prima? WTF
+                            Log.w(Constants.TAG, "Errore import SoulissDbFromFile " + configName, te);
+                        }
+
                     } catch (final Exception e) {
                         Log.e(Constants.TAG, "Error in address parsing: " + e.getMessage(), e);
                     }
@@ -113,22 +130,18 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                 supportFinishAfterTransition();
             }
         });
-        /*welcomeSkipText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startSoulissMainActivity();
-            }
-        });*/
     }
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        Uri uri = Uri.parse(Environment.getExternalStorageDirectory().getPath()
+                + Constants.EXTERNAL_EXP_FOLDER);
+        intent.setDataAndType(uri, "*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         try {
             startActivityForResult(
-                    Intent.createChooser(intent, "Select a File to Upload"),
+                    Intent.createChooser(intent, "Select a File"),
                     FILE_SELECT_CODE);
         } catch (android.content.ActivityNotFoundException ex) {
             // Potentially direct the user to the Market with a Dialog

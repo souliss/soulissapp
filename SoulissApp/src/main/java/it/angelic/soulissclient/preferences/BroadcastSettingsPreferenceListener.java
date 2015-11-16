@@ -2,12 +2,9 @@ package it.angelic.soulissclient.preferences;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-
-import java.io.File;
 
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -30,7 +27,7 @@ public class BroadcastSettingsPreferenceListener implements OnPreferenceClickLis
 		this.parent = parent;
 		opzioni = SoulissApp.getOpzioni();
 		datasource = new SoulissDBHelper(parent);
-        File mPath = new File(Environment.getExternalStorageDirectory() + "//Souliss//");
+		//File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
 	}
 	private void fireBCastSubScreen(){
 		Intent inten = parent.getIntent();

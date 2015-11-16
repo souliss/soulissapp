@@ -87,6 +87,19 @@ public class WelcomeActivity extends FragmentActivity {
         }
     };
 
+    public static void loadSoulissDbFromFile(String config, File importDir) throws IOException {
+
+        File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
+        SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+        SoulissDBHelper.open();
+        String DbPath = SoulissDBHelper.getDatabase().getPath();
+        db.close();
+        File newDb = new File(DbPath);
+        Utils.fileCopy(bckDb, newDb);
+        Log.w(Constants.TAG, config + " DB loaded: " + bckDb.getPath());
+
+    }
+
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -96,17 +109,34 @@ public class WelcomeActivity extends FragmentActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    private void loadSoulissDbFromFile(String config, File importDir) throws IOException {
+    private void loadOrCreateDemoConfig(File importDir, String newConfig) {
+        //carica DEMO
+        File filePrefs;
+        try {
+            filePrefs = new File(importDir, newConfig + "_SoulissApp.prefs");
+            if (!filePrefs.exists())
+                throw new Resources.NotFoundException();
+        } catch (Resources.NotFoundException e) {
+            //MAI creato prima, inizializza
+            filePrefs = new File(importDir, newConfig + "_SoulissApp.prefs");
+            try {
+                //se non esiste la demo, Crea & salva
+                filePrefs.createNewFile();
+                SharedPreferences newDefault = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
+                SharedPreferences.Editor demo = newDefault.edit();
+                demo.clear();
+                demo.putString("edittext_IP_pubb", Constants.DEMO_PUBLIC_IP);
+                demo.putString("edittext_IP", "10.14.10.77");
+                demo.commit();
+                Log.w(Constants.TAG, "new Demo prefs created to: " + filePrefs.getPath());
+                Utils.saveSharedPreferencesToFile(newDefault, WelcomeActivity.this, filePrefs);
+            } catch (IOException e1) {
+                Log.e(Constants.TAG, "Errore GRAVE create DEMO prefs", e1);
+            }
 
-        File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
-        SoulissDBHelper db = new SoulissDBHelper(WelcomeActivity.this);
-        SoulissDBHelper.open();
-        String DbPath = SoulissDBHelper.getDatabase().getPath();
-        db.close();
-        File newDb = new File(DbPath);
-        Utils.fileCopy(bckDb, newDb);
-        Log.w(Constants.TAG, config + " DB loaded");
-
+        }
+        Utils.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
+        Log.w(Constants.TAG, "DEMO prefs loaded");
     }
 
     @Override
@@ -127,7 +157,7 @@ public class WelcomeActivity extends FragmentActivity {
         welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
 
         final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
-        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+
 
         final Button renameButton = (Button) findViewById(R.id.welcome_tour_rename);
         final Button deleteButton = (Button) findViewById(R.id.welcome_tour_delete);
@@ -135,8 +165,9 @@ public class WelcomeActivity extends FragmentActivity {
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
 
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        confSpinner.setAdapter(spinnerAdapter);
+
         Set<String> configs = SoulissApp.getConfigurations();
         //popola config, quelli statici
         String[] statiche = getResources().getStringArray(R.array.configChooserArray);
@@ -155,9 +186,11 @@ public class WelcomeActivity extends FragmentActivity {
             i++;
             spinnerAdapter.add(nconf);
         }
-        spinnerAdapter.notifyDataSetChanged();
+        confSpinner.setAdapter(spinnerAdapter);
+
         if (selectedIdx < 0) {
             //non c'e -> e` il default
+            Log.w(Constants.TAG, "Warning: no config for spinner:" + SoulissApp.getCurrentConfig());
             SoulissApp.setCurrentConfig("default");
             SoulissApp.addConfiguration("default");
             spinnerAdapter.add("default");
@@ -228,6 +261,10 @@ public class WelcomeActivity extends FragmentActivity {
 
             }
         });
+        // Upon interacting with UI controls, delay any scheduled hide()
+        // operations to prevent the jarring behavior of controls going away
+        // while interacting with the UI.
+        welcomeTourButton.setOnTouchListener(mDelayHideTouchListener);
         welcomeTourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -273,9 +310,11 @@ public class WelcomeActivity extends FragmentActivity {
                         } catch (IOException e1) {
                             Log.e(Constants.TAG, "DB DEMO non disponibile:" + newConfig);
                         }
-
-                    } else {
-                        //caso dinamico
+                    } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                        Log.i(Constants.TAG, "Nothing here");
+                    } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                        Log.i(Constants.TAG, "Nothing here");
+                    } else { //caso dinamico
                         File filePrefs;
                         try {
                             filePrefs = new File(importDir, newConfig + "_SoulissApp.prefs");
@@ -313,7 +352,7 @@ public class WelcomeActivity extends FragmentActivity {
 
                 //dopo aver caricato opzioni, richiedo ping
                 SoulissApp.getOpzioni().setBestAddress();
-                
+
                 //here we've already chosen config and loaded right files
                 if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                     Intent createNewConfig = new Intent(WelcomeActivity.this, WelcomeCreateConfigActivity.class);
@@ -388,36 +427,6 @@ public class WelcomeActivity extends FragmentActivity {
 
         /* show EULA if not accepted */
         Eula.show(this);
-    }
-
-    private void loadOrCreateDemoConfig(File importDir, String newConfig) {
-        //carica DEMO
-        File filePrefs;
-        try {
-            filePrefs = new File(importDir, newConfig.toLowerCase() + "_SoulissApp.prefs");
-            if (!filePrefs.exists())
-                throw new Resources.NotFoundException();
-        } catch (Resources.NotFoundException e) {
-            //MAI creato prima, inizializza
-            filePrefs = new File(importDir, newConfig.toLowerCase() + "_SoulissApp.prefs");
-            try {
-                //se non esiste la demo, Crea & salva
-                filePrefs.createNewFile();
-                SharedPreferences newDefault = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
-                SharedPreferences.Editor demo = newDefault.edit();
-                demo.clear();
-                demo.putString("edittext_IP_pubb", "demo.souliss.net");
-                demo.putString("edittext_IP", "10.14.10.77");
-                demo.commit();
-                Log.w(Constants.TAG, "new Demo prefs created to: " + filePrefs.getPath());
-                Utils.saveSharedPreferencesToFile(newDefault, WelcomeActivity.this, filePrefs);
-            } catch (IOException e1) {
-                Log.e(Constants.TAG, "Errore GRAVE create DEMO prefs", e1);
-            }
-
-        }
-        Utils.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
-        Log.w(Constants.TAG, "DEMO prefs loaded");
     }
 
     @Override

@@ -17,6 +17,8 @@ import it.angelic.soulissclient.Constants;
  * Gestione standard preferenze/opzioni Cntiene anche le shared preferences per
  * valori personalizzati. Va prelevata da SoulissClient
  *
+ * Da non cancellare mai, valutare cloud
+ *
  * @author shine
  */
 public class SoulissGlobalPreferenceHelper implements Serializable {
@@ -25,15 +27,12 @@ public class SoulissGlobalPreferenceHelper implements Serializable {
     private final Context contx;
     private SharedPreferences customCachedPrefs;
     private Set<String> ipDictionary;
-    private boolean webserverEnabled;
 
     public SoulissGlobalPreferenceHelper(Context contx) {
         super();
         this.contx = contx;
 
-        //customCachedPrefs = PreferenceManager.getDefaultSharedPreferences(contx);
         initializePrefs(contx);
-        // Log.d(TAG, "Constructing prefs");
     }
 
     public void addWordToIpDictionary(String word) {
@@ -52,8 +51,12 @@ public class SoulissGlobalPreferenceHelper implements Serializable {
     public void initializePrefs(Context contx) {
         // Get the xml/preferences.xml preferences
         customCachedPrefs = contx.getSharedPreferences("SoulissGlobalPrefs", Activity.MODE_PRIVATE);
-        webserverEnabled = customCachedPrefs.getBoolean("webserverEnabled", false);
-        ipDictionary = customCachedPrefs.getStringSet("ipDictionary", new HashSet<String>());
+
+        Set<String> newDefaults = new HashSet<>();
+        //autocomplete initial values
+        newDefaults.add(Constants.DEMO_PUBLIC_IP);
+        newDefaults.add("192.168.1.17");
+        ipDictionary = customCachedPrefs.getStringSet("ipDictionary", newDefaults);
 
     }
 

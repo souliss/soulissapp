@@ -67,7 +67,7 @@
                 android:shadowDy="5"
                 android:shadowRadius="2"
                 android:singleLine="false"
-                android:text="Import SoulissApp Configuration"
+                android:text="@string/welcome_import_title"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="32dip"/>
 
@@ -79,7 +79,7 @@
                 android:gravity="left"
                 android:singleLine="false"
                 android:layout_margin="8dp"
-                android:text="Insert desired configuration name and specify .preferences file to import"
+                android:text="@string/welcome_import_hints"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 />
 
@@ -90,7 +90,7 @@
                 android:layout_below="@id/createConfigDesc"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:hint="Choose Configuration name (es. Home, Office, seaside)"
+                android:hint="@string/welcome_import_conf_name"
                 android:inputType="text"
                 android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -104,7 +104,7 @@
                 android:layout_below="@id/config_name"
                 android:hint="Choose file"
                 android:inputType="number"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
         </RelativeLayout>
     </FrameLayout>
 
