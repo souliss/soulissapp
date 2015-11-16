@@ -149,7 +149,7 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public void setEqHigh(float eqHigh) {
         this.eqHigh = eqHigh;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        Editor pesta = customCachedPrefs.edit();
         pesta.putFloat("eqHigh", eqHigh);
         pesta.commit();
     }
@@ -204,7 +204,7 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public void setEqMedRange(float eqMedRange) {
         this.eqMedRange = eqMedRange;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        Editor pesta = customCachedPrefs.edit();
         pesta.putFloat("eqMedRange", eqMedRange);
         pesta.commit();
     }
@@ -251,7 +251,7 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public void setNodeIndex(int nodeIndex) {
         this.nodeIndex = nodeIndex;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        Editor pesta = customCachedPrefs.edit();
         pesta.putInt("nodeIndex", nodeIndex);
         pesta.commit();
     }
@@ -292,7 +292,7 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public void setRemoteTimeoutPref(int remoteTimeoutPref) {
         this.remoteTimeoutPref = remoteTimeoutPref;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        Editor pesta = customCachedPrefs.edit();
         pesta.putInt("remoteTimeout", userIndex);
         pesta.commit();
     }
@@ -315,7 +315,7 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public void setUDPPort(Integer UDPPort) {
         this.UDPPort = UDPPort;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        Editor pesta = customCachedPrefs.edit();
         pesta.putInt("udpport", this.UDPPort);
         pesta.commit();
     }
@@ -326,7 +326,7 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public void setUserIndex(int userIndex) {
         this.userIndex = userIndex;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        Editor pesta = customCachedPrefs.edit();
         pesta.putInt("userIndex", userIndex);
         pesta.commit();
 

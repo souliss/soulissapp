@@ -149,17 +149,17 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T13)
             return R.drawable.light_on;
         else if (typical == Constants.Typicals.Souliss_T14)
-            return R.drawable.locked;
+            return R.drawable.locked1;
         else if (typical == Constants.Typicals.Souliss_T16)
             return R.drawable.rgb;
         else if (typical == Constants.Typicals.Souliss_T18)
             return R.drawable.power;
         else if (typical == Constants.Typicals.Souliss_T19)
-            return R.drawable.candle;
+            return R.drawable.candle1;
         else if (typical == Constants.Typicals.Souliss_T21)
-            return R.drawable.limit;
+            return R.drawable.limit1;
         else if (typical == Constants.Typicals.Souliss_T22)
-            return R.drawable.limit;
+            return R.drawable.limit1;
         else if (typical == Constants.Typicals.Souliss_T31)
             return R.drawable.thermometer;
         else if (typical == Constants.Typicals.Souliss_T41_Antitheft_Main)
@@ -183,13 +183,13 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T53_HumiditySensor)
             return R.drawable.raindrop;
         else if (typical == Constants.Typicals.Souliss_T54_LuxSensor)
-            return R.drawable.home;
+            return R.drawable.home1;
         else if (typical == Constants.Typicals.Souliss_T55_VoltageSensor)
-            return R.drawable.lightning;
+            return R.drawable.lightning1;
         else if (typical == Constants.Typicals.Souliss_T56_CurrentSensor)
-            return R.drawable.lightning;
+            return R.drawable.lightning1;
         else if (typical == Constants.Typicals.Souliss_T57_PowerSensor)
-            return R.drawable.lightning;
+            return R.drawable.lightning1;
         else if (typical == Constants.Typicals.Souliss_T58_PressureSensor)
             return R.drawable.sun;
         else

@@ -33,7 +33,7 @@
                         android:layout_marginTop="4dip"
                         android:alpha="0.5"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/hand"/>
+                        android:src="@drawable/hand1"/>
 
                     <TextView
                         android:id="@+id/TextViewManualDesc"

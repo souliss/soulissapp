@@ -536,7 +536,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDTO().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
+                                R.drawable.lighthouse1, soulissTrigger);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
@@ -544,7 +544,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
+                                R.drawable.lighthouse1, soulissTrigger);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.execute();
@@ -552,7 +552,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getCommandDto().setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
-                                R.drawable.lighthouse, soulissTrigger);
+                                R.drawable.lighthouse1, soulissTrigger);
                     }
                 }
                 // vedi se bisogna disattivare

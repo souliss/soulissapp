@@ -408,6 +408,7 @@ public class Constants {
         public static final byte Souliss_UDP_function_broadcast_configure = 0x2D;
         public static final byte Souliss_UDP_function_broadcast_configure_wifissid = 0x2E;
         public static final byte Souliss_UDP_function_broadcast_configure_wifipass = 0x2F;
+        //public static final byte Souliss_UDP_function_notify_err = 0x83;
 
         public static final byte Souliss_UDP_function_ping_bcast = 0x28;
         public static final byte Souliss_UDP_function_ping_bcast_resp = 0x38;

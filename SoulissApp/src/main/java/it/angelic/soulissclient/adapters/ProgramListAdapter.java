@@ -109,7 +109,7 @@ public class ProgramListAdapter extends BaseAdapter {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
             don.setBackgroundResource(R.drawable.list_rect_blue);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
-            holder.image.setImageResource(R.drawable.exit);
+            holder.image.setImageResource(R.drawable.exit1);
             // holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
             // se gia eseguito, dico quando
             if (holder.data.getCommandDTO().getExecutedTime() != null) {
@@ -131,7 +131,7 @@ public class ProgramListAdapter extends BaseAdapter {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
             don.setBackgroundResource(R.drawable.list_rect_red);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_red_shadow));
-            holder.image.setImageResource(R.drawable.lighthouse);
+            holder.image.setImageResource(R.drawable.lighthouse1);
             holder.image.setColorFilter(context.getResources().getColor(color.aa_red), PorterDuff.Mode.SRC_ATOP);
 
             SoulissTriggerDTO intrig = triggers.get((int) holder.data.getCommandDTO().getCommandId());
