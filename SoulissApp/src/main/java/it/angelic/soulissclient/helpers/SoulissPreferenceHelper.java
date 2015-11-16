@@ -354,7 +354,7 @@ public class SoulissPreferenceHelper implements Serializable {
         dataServiceEnabled = prefs.getBoolean("checkboxService", false);
         fahrenheitChosen = prefs.getBoolean("checkboxFahrenheit", false);
         webserverEnabled = prefs.getBoolean("webserverEnabled", false);
-        voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", false);
+        voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", true);
         userIndex = prefs.getInt("userIndex", -1);
         nodeIndex = prefs.getInt("nodeIndex", -1);
         UDPPort = prefs.getInt("udpport", Constants.Net.DEFAULT_SOULISS_PORT);

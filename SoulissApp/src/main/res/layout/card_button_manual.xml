@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:drawableTop="@drawable/hand"
+        android:drawableTop="@drawable/hand1"
         android:elevation="2dp"
 
         android:maxLines="1"

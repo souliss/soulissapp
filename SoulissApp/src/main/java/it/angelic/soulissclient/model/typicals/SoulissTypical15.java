@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.T15RGBIrActivity;
-import it.angelic.soulissclient.helpers.ListButton;
-import it.angelic.soulissclient.T15RGBIrActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;

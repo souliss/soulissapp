@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:drawingCacheQuality="high"
             android:padding="8dp"
-            android:src="@drawable/home"
+            android:src="@drawable/home1"
             android:transitionName="MyTransition"/>
 
         <RelativeLayout
