@@ -17,10 +17,10 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.HalfFloatUtils;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;

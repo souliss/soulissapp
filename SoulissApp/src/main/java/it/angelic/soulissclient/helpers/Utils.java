@@ -25,7 +25,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 
 /**
- * Created by Ale on 10/10/2015.
+ * Created by shine@angelic.it on 10/10/2015.
  */
 public class Utils {
     /**
@@ -187,6 +187,9 @@ public class Utils {
                 }
             } catch (Exception e) {
                 // Eat it
+            } finally {
+                if (cursor != null)
+                    cursor.close();
             }
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();

@@ -13,12 +13,12 @@ import android.widget.TextView.BufferType;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.*;
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
-import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 /**

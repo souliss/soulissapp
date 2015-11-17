@@ -120,7 +120,7 @@
             android:singleLine="false"
             android:text="@string/app_name"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="46dip"/>
+            android:textSize="46sp"/>
 
         <TextView
             android:id="@+id/createConfigTitleSubTitle"

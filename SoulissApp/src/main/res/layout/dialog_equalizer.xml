@@ -40,8 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:paddingLeft="15dp" />
+        android:layout_below="@+id/textView1"/>
 
     <SeekBar
         android:id="@+id/seekBarMed"
@@ -100,8 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textViewRange1"
-        android:paddingLeft="15dp" />
+        android:layout_below="@+id/textViewRange1"/>
 
     <SeekBar
         android:id="@+id/seekBarRangeMed"

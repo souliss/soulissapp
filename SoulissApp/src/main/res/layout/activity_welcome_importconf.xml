@@ -70,7 +70,7 @@
                 android:singleLine="false"
                 android:text="@string/welcome_import_title"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="32dip"/>
+                android:textSize="32sp"/>
 
             <TextView
                 android:id="@+id/createConfigDesc"

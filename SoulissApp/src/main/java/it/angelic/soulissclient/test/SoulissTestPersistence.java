@@ -11,7 +11,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 
 /**
- * Created by pegoraro on 02/09/2015.
+ * Created by shine@angelic.it on 02/09/2015.
  */
 public class SoulissTestPersistence extends AndroidTestCase {
     private SoulissDBHelper db;

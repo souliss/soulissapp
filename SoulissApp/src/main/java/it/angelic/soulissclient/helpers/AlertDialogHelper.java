@@ -322,7 +322,7 @@ public class AlertDialogHelper {
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
                 || toRename instanceof SoulissScene || toRename instanceof SoulissTypical || toRename instanceof SoulissTag);
-        alert.setIcon(android.R.drawable.ic_dialog_dialer);
+        alert.setIcon(R.drawable.ic_mode_edit_24dp);
         alert.setTitle(cont.getString(R.string.rename) + " " + toRename.getNiceName());
 
         // Set an EditText view to get user input
@@ -418,7 +418,7 @@ public class AlertDialogHelper {
     public static AlertDialog.Builder deleteConfigDialog(final Context cont, final Spinner toUpdate) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final String bckConfig = (String) toUpdate.getSelectedItem();
-        alert.setIcon(android.R.drawable.ic_delete);
+        alert.setIcon(R.drawable.ic_cancel_24dp);
         alert.setTitle(cont.getString(R.string.delete) + " " + bckConfig);
 
         // Set an EditText view to get user input
@@ -454,7 +454,7 @@ public class AlertDialogHelper {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         final String bckConfig = (String) toUpdate.getSelectedItem();
-        alert.setIcon(android.R.drawable.ic_dialog_dialer);
+        alert.setIcon(R.drawable.ic_mode_edit_24dp);
         alert.setTitle(cont.getString(R.string.rename) + " " + bckConfig);
 
         // Set an EditText view to get user input
@@ -569,7 +569,7 @@ public class AlertDialogHelper {
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         alert2.setTitle(context.getString(R.string.dialog_choose_icon) + " " + toRename.getNiceName());
 
-        alert2.setIcon(android.R.drawable.ic_dialog_dialer);
+        alert2.setIcon(R.drawable.ic_mode_edit_24dp);
         // loads gallery and requires icon selection*/
         final EcoGallery gallery = new EcoGallery(context);
         gallery.setAdapter(new SoulissIconAdapter(context));

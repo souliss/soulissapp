@@ -253,7 +253,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 } else {
                     Log.i(Constants.TAG, "Close fragment");
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.remove(getFragmentManager().findFragmentById(R.id.detailPane));
+                    ft.remove(getFragmentManager().findFragmentById(R.id.detailPane)).commit();
                 }
                 return true;
         }

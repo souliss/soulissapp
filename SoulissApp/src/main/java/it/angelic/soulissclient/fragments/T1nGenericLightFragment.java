@@ -404,7 +404,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			} else {
 				Log.i(Constants.TAG, "Close fragment");
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane));
+				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane)).commit();
 				/*getActivity().supportFinishAfterTransition();
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);*/
