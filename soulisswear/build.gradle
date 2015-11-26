@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.global_buildToolsVersion
 
     defaultConfig {
         applicationId "it.angelic.soulissclient"
         minSdkVersion 20
-        targetSdkVersion 23
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionName VERSION_NAME
         versionCode VERSION_CODE
     }
