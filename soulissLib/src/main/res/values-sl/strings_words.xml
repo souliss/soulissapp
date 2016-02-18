@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+    <string name="all">vsi</string>
+    <string name="unavailable">Ni dosegljiv</string>
+    <string name="souliss_unavailable">Souliss ni na voljo!</string>
+    <string name="notconfigured">Souliss še <b>ni konfiguriran </b>, lokalni IP naslov je zahtevan</string>
+    <string name="health">ZDRAVJE:</string>
+    <string name="status">STATUS:</string>
+    <string name="update">POSODOBLJENO:</string>
+    <string name="actions">AKCIJE:</string>
+    <string name="node">Vozlišče</string>
+    <string name="nodes">Vozlišča</string>
+    <string name="slot">Slot</string>
+    <string name="sensors">Senzorji</string>
+    <string name="ping">Ping</string>
+    <string name="ago">pred</string>
+    <string name="multicast">Multicast</string>
+    <string name="multicast_desc">Pošlji vsem napravam tega tipa</string>
+    <string name="days">dni</string>
+    <string name="poll">Poll</string>
+    <string name="refresh">Osveži</string>
+    <string name="save">Shrani</string>
+    <string name="brightness">Svetlost</string>
+    <string name="proceed">Nadaljuj</string>
+    <string name="scene">Scena</string>
+    <string name="rename">Preimenuj</string>
+    <string name="reset">Resetiraj</string>
+    <string name="typical">Typical</string>
+    <string name="ON">ON</string>
+    <string name="power">Moč</string>
+    <string name="OFF">OFF</string>
+    <string name="open">Odpri</string>
+    <string name="close">Zapri</string>
+    <string name="stop">Stop</string>
+    <string name="toggle">Preklopi</string>
+    <string name="TurnON">Vklopi</string>
+    <string name="TurnOFF">Izkopi</string>
+    <string name="mode">Način</string>
+    <string name="fan">Ventilator</string>
+    <string name="red">Rdeča</string>
+    <string name="green">Zelena</string>
+    <string name="blue">Modra</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="timer">Timer</string>
+    <string name="is">je</string>
+    <string name="equalizer">Equalizer</string>
+    <string name="meters">Meters</string>
+    <string name="service">Storitev</string>
+    <string name="position">Položaj</string>
+    <string name="Online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="ok">OK</string>
+    <string name="stale">STALE</string>
+    <string name="synch">sync</string>
+    <string name="delete">Delete</string>
+
+
+</resources>
