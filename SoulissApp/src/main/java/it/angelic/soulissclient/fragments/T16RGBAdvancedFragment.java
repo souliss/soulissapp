@@ -1,12 +1,15 @@
 package it.angelic.soulissclient.fragments;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,45 +52,22 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 import static junit.framework.Assert.assertTrue;
 
 public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
-    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
-    private SoulissPreferenceHelper opzioni;
-
-    private Button buttPlus;
-    private Button buttMinus;
-
+    private TextView blueChanabel;
+    private Button btFlash;
     private Button btOff;
     private Button btOn;
-    private Button btWhite;
-    private Button btFlash;
     private Button btSleep;
-
-    private TableRow infoTags;
-    private TableRow infoFavs;
+    private Button btWhite;
+    private Button buttMinus;
+    private Button buttPlus;
+    private SoulissTypical16AdvancedRGB collected;
     private int color = 0;
-    // Color change listener.
-    private OnColorChangedListener dialogColorChangedListener = null;
     private RelativeLayout colorSwitchRelativeLayout;
-    // private CheckBox checkMusic;
-    private VisualizerView mVisualizerView;
-    private FrameLayout mVisualizerViewFrame;
-    private boolean continueIncrementing;
     // private Runnable senderThread;
     private boolean continueDecrementing;
+    private boolean continueIncrementing;
     private ColorPickerView cpv;
-    private TextView textviewHistoryTags;
-    private SwitchCompat togMulticast;
-    private TableRow tableRowVis;
-    private TableRow tableRowChannel;
-    private Spinner modeSpinner;
-    private SeekBar seekChannelRed;
-    private SeekBar seekChannelGreen;
-    private SeekBar seekChannelBlue;
-    private TextView redChanabel;
-    private TextView eqText;
-    private TextView blueChanabel;
-    private TextView greenChanabel;
-
-    private SoulissTypical16AdvancedRGB collected;
+    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     // private SoulissTypical related;
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
@@ -119,8 +99,26 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             refreshStatusIcon();
         }
     };
+    // Color change listener.
+    private OnColorChangedListener dialogColorChangedListener = null;
+    private TextView eqText;
+    private TextView greenChanabel;
+    private TableRow infoFavs;
+    private TableRow infoTags;
+    // private CheckBox checkMusic;
+    private VisualizerView mVisualizerView;
+    private FrameLayout mVisualizerViewFrame;
+    private Spinner modeSpinner;
+    private SoulissPreferenceHelper opzioni;
+    private TextView redChanabel;
+    private SeekBar seekChannelBlue;
+    private SeekBar seekChannelGreen;
+    private SeekBar seekChannelRed;
+    private TableRow tableRowChannel;
     private TableRow tableRowEq;
-
+    private TableRow tableRowVis;
+    private TextView textviewHistoryTags;
+    private SwitchCompat togMulticast;
 
     public static T16RGBAdvancedFragment newInstance(int index, SoulissTypical content) {
         T16RGBAdvancedFragment f = new T16RGBAdvancedFragment();
@@ -137,32 +135,26 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         return f;
     }
 
+    // Methods for adding renderers to visualizer
+    private void addBarGraphRenderers() {
+        Paint paint = new Paint();
+        paint.setStrokeWidth(50f);
+        paint.setAntiAlias(false);
+        paint.setColor(Color.argb(255, 156, 138, 252));
+        BarGraphRenderer barGraphRendererBottom = new BarGraphRenderer(32, paint, false);
+        mVisualizerView.addRenderer(barGraphRendererBottom);
 
-    /**
-     * Serve per poter tenuto il bottone brightness
-     *
-     * @param cmd
-     */
-    private void startIncrementing(final Short cmd) {
-        setIsIncrementing(true);
-        new Thread(new Runnable() {
-            public void run() {
-                while (isIncrementing()) {
-                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
-                            togMulticast.isChecked());
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        Log.e(Constants.TAG, "Error Thread.sleep:");
-                    }
-                }
-            }
-        }).start();
+        // TOP
+        Paint paint2 = new Paint();
+        paint2.setStrokeWidth(12f);
+        paint2.setAntiAlias(false);
+        paint2.setColor(Color.argb(255, 181, 11, 233));
+        BarGraphRenderer barGraphRendererTop = new BarGraphRenderer(4, paint2, true);
+        mVisualizerView.addRenderer(barGraphRendererTop);
     }
 
-    synchronized private void stopIncrementing() {
-        setIsIncrementing(false);
-        collected.issueRefresh();
+    synchronized private boolean isDecrementing() {
+        return continueDecrementing;
     }
 
     synchronized private boolean isIncrementing() {
@@ -170,47 +162,15 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     }
 
     /**
-     * Serve per poter tenuto il bottone brightness
-     *
-     * @param cmd
+     * ***********************************************************************
+     * Souliss RGB light command Souliss OUTPUT Data is:
+     * <p/>
+     * <p/>
+     * INPUT data 'read' from GUI
+     * ************************************************************************
      */
-    private void startDecrementing(final Short cmd) {
-        setIsDecrementing(true);
-        new Thread(new Runnable() {
-            public void run() {
-                while (isDecrementing()) {
-                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
-                            togMulticast.isChecked());
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        Log.e(Constants.TAG, "Error Thread.sleep:");
-                    }
-                }
-            }
-        }).start();
-    }
-
-    synchronized private void stopDecrementing() {
-        setIsDecrementing(false);
-        collected.issueRefresh();
-    }
-
-    /**
-     * Per gestire tasto premuto
-     *
-     * @param newSetting
-     */
-    synchronized void setIsIncrementing(boolean newSetting) {
-        continueIncrementing = newSetting;
-    }
-
-    synchronized private boolean isDecrementing() {
-        return continueDecrementing;
-    }
-
-    synchronized void setIsDecrementing(boolean newSetting) {
-        continueDecrementing = newSetting;
+    public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
+        collected.issueRGBCommand(val, r, g, b, multicast);
     }
 
     @Override
@@ -227,6 +187,14 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         }
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.t16_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -254,7 +222,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         refreshStatusIcon();
 
-
         buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
         buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
         togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
@@ -269,9 +236,28 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
-        mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+
+
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
-        mVisualizerView.setOpz(opzioni);
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    Constants.MY_PERMISSIONS_RECORD_AUDIO);
+            mVisualizerView = null;
+        } else {
+            inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
+            mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
+            //mVisualizerViewFrame.addView(mVisualizerView);
+            mVisualizerView.setOpz(opzioni);
+        }
         colorSwitchRelativeLayout = (RelativeLayout) ret.findViewById(R.id.colorSwitch);
 
         seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
@@ -324,21 +310,27 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {// cerchio RGB
                     tableRowVis.setVisibility(View.GONE);
-                    mVisualizerView.setVisibility(View.GONE);
+
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
-                    mVisualizerView.setEnabled(false);
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setVisibility(View.GONE);
+                        mVisualizerView.setEnabled(false);
+                    }
                     colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
                     eqText.setVisibility(View.GONE);
                     cpv.setCenterColor(Color.argb(255, Color.red(color),
                             Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
                     tableRowVis.setVisibility(View.GONE);
-                    mVisualizerView.setVisibility(View.GONE);
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setVisibility(View.GONE);
+                        mVisualizerView.setEnabled(false);
+                    }
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.VISIBLE);
-                    mVisualizerView.setEnabled(false);
+
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
                     eqText.setVisibility(View.GONE);
@@ -355,15 +347,20 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
                     tableRowChannel.invalidate();
                 } else {// music
-                    mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
-                    mVisualizerView.link(togMulticast.isChecked());
-                    addBarGraphRenderers();
-                    mVisualizerView.setVisibility(View.VISIBLE);
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
+                        mVisualizerView.link(togMulticast.isChecked());
+                        mVisualizerView.setVisibility(View.VISIBLE);
+                        mVisualizerView.setEnabled(true);
+                        mVisualizerView.link(togMulticast.isChecked());
+                        addBarGraphRenderers();
+                    }
+
+
                     mVisualizerViewFrame.setVisibility(View.VISIBLE);
                     tableRowVis.setVisibility(View.VISIBLE);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
-                    mVisualizerView.setEnabled(true);
-                    mVisualizerView.link(togMulticast.isChecked());
+
                     eqText.setVisibility(View.VISIBLE);
                     tableRowEq.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
@@ -498,54 +495,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         return ret;
     }
 
-    // Methods for adding renderers to visualizer
-    private void addBarGraphRenderers() {
-        Paint paint = new Paint();
-        paint.setStrokeWidth(50f);
-        paint.setAntiAlias(false);
-        paint.setColor(Color.argb(255, 156, 138, 252));
-        BarGraphRenderer barGraphRendererBottom = new BarGraphRenderer(32, paint, false);
-        mVisualizerView.addRenderer(barGraphRendererBottom);
-
-        // TOP
-        Paint paint2 = new Paint();
-        paint2.setStrokeWidth(12f);
-        paint2.setAntiAlias(false);
-        paint2.setColor(Color.argb(255, 181, 11, 233));
-        BarGraphRenderer barGraphRendererTop = new BarGraphRenderer(4, paint2, true);
-        mVisualizerView.addRenderer(barGraphRendererTop);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        SoulissDBHelper.open();
-        IntentFilter filtere = new IntentFilter();
-        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
-        getActivity().registerReceiver(datareceiver, filtere);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(datareceiver);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         // datasource.close();
         if (mVisualizerView != null)
             mVisualizerView.release();
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Rinomina nodo e scelta icona
-        inflater.inflate(R.menu.t16_ctx_menu, menu);
-        Log.i(Constants.TAG, "Inflated Equalizer menu");
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -562,17 +517,86 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         return false;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SoulissDBHelper.open();
+        IntentFilter filtere = new IntentFilter();
+        filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
+        getActivity().registerReceiver(datareceiver, filtere);
+    }
+
+    synchronized void setIsDecrementing(boolean newSetting) {
+        continueDecrementing = newSetting;
+    }
 
     /**
-     * ***********************************************************************
-     * Souliss RGB light command Souliss OUTPUT Data is:
-     * <p/>
-     * <p/>
-     * INPUT data 'read' from GUI
-     * ************************************************************************
+     * Per gestire tasto premuto
+     *
+     * @param newSetting
      */
-    public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-        collected.issueRGBCommand(val, r, g, b, multicast);
+    synchronized void setIsIncrementing(boolean newSetting) {
+        continueIncrementing = newSetting;
+    }
+
+    /**
+     * Serve per poter tenuto il bottone brightness
+     *
+     * @param cmd
+     */
+    private void startDecrementing(final Short cmd) {
+        setIsDecrementing(true);
+        new Thread(new Runnable() {
+            public void run() {
+                while (isDecrementing()) {
+                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+                            togMulticast.isChecked());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Log.e(Constants.TAG, "Error Thread.sleep:");
+                    }
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Serve per poter tenuto il bottone brightness
+     *
+     * @param cmd
+     */
+    private void startIncrementing(final Short cmd) {
+        setIsIncrementing(true);
+        new Thread(new Runnable() {
+            public void run() {
+                while (isIncrementing()) {
+                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+                            togMulticast.isChecked());
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        Log.e(Constants.TAG, "Error Thread.sleep:");
+                    }
+                }
+            }
+        }).start();
+    }
+
+    synchronized private void stopDecrementing() {
+        setIsDecrementing(false);
+        collected.issueRefresh();
+    }
+
+    synchronized private void stopIncrementing() {
+        setIsIncrementing(false);
+        collected.issueRefresh();
     }
 
     /**

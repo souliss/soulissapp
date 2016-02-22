@@ -6,7 +6,6 @@
  */
 package com.pheelicks.visualizer;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -70,7 +69,6 @@ public class VisualizerView extends View {
         parent = par;
     }
 
-    @SuppressLint("NewApi")
     private void init() {
         mBytes = null;
         mFFTBytes = null;
@@ -93,7 +91,6 @@ public class VisualizerView extends View {
      * - MediaPlayer instance to link to
      */
 
-    @SuppressLint("NewApi")
     public void link(final boolean multicast) {
         // Create the Visualizer object and attach it to our media player.
 

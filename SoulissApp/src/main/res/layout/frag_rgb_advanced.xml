@@ -230,14 +230,8 @@
                         android:layout_width="0dip"
                         android:layout_height="150dp"
                         android:layout_weight="1"
-                        android:background="@color/std_green"
+                        android:background="@color/trans_black"
                         android:visibility="gone">
-
-                        <com.pheelicks.visualizer.VisualizerView
-                            android:id="@+id/visualizerView"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:visibility="gone"/>
                     </FrameLayout>
                 </TableRow>
 
