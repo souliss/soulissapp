@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -33,16 +34,16 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close
 				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Close)
-			return "CLOSED";
+			return SoulissApp.getAppContext().getString(R.string.close);
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Open
 				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
-			return "OPENED";
+			return SoulissApp.getAppContext().getString(R.string.open);
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
-			return "STOP";
+			return SoulissApp.getAppContext().getString(R.string.stop);
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_NoLimSwitch)
 			return "MIDDLE";
 		else
-			return "UNKNOWN";
+			return "ERR";
 	}
 
 	@Override
