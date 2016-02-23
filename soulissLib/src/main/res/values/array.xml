@@ -105,6 +105,10 @@
         <item>Fan</item>
         <item>Heat</item>
     </string-array>
+    <string-array name="inputChan">
+        <item>Auto</item>
+        <item>Mic</item>
+    </string-array>
     
     <string-array name="HeatingFunction">
         <item>Cool</item>

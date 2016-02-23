@@ -521,6 +521,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
+        // mVisualizerView.release();
     }
 
     @Override
