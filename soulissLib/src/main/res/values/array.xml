@@ -109,6 +109,11 @@
         <item>Auto</item>
         <item>Mic</item>
     </string-array>
+    <!-- see MediaRecorder.AudioSource.MIC -->
+    <string-array name="inputChanValues">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
     
     <string-array name="HeatingFunction">
         <item>Cool</item>

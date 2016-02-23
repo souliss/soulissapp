@@ -241,17 +241,11 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.RECORD_AUDIO},
                     Constants.MY_PERMISSIONS_RECORD_AUDIO);
             mVisualizerView = null;
+
         } else {
             inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
             mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
@@ -508,7 +502,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.equalizer:
-                AlertDialogHelper.equalizerDialog(getActivity(), eqText).show();
+                AlertDialogHelper.equalizerDialog(getActivity(), eqText, this, getActivity()).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

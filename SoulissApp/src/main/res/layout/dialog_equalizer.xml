@@ -5,11 +5,20 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
 
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Audio source"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
     <Spinner
         android:id="@+id/spinnerInputChannel"
         android:layout_width="match_parent"
-        android:layout_alignParentTop="true"
-        android:entries="@array/AirConFunction"
+        android:layout_below="@+id/textView12"
+        android:entries="@array/inputChan"
+        android:padding="8dp"
         android:layout_height="wrap_content"/>
 
     <TextView
@@ -121,5 +130,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewRange3" />
+
 
 </RelativeLayout>

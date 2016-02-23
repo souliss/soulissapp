@@ -11,6 +11,8 @@ import android.os.Looper;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -489,14 +491,14 @@ public class AlertDialogHelper {
         return alert;
     }
 
-    public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate) {
+    public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate, final Fragment canvas, final FragmentActivity act) {
         final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder equalizerBuilder = new AlertDialog.Builder(context);
 
         LayoutInflater factory = LayoutInflater.from(context);
         final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null, false);
-
+        final Spinner aufioChan = (Spinner) deleteDialogView.findViewById(R.id.spinnerInputChannel);
         final SeekBar low = (SeekBar) deleteDialogView.findViewById(R.id.seekBarLow);
         final SeekBar med = (SeekBar) deleteDialogView.findViewById(R.id.seekBarMed);
         final SeekBar hi = (SeekBar) deleteDialogView.findViewById(R.id.seekBarHigh);
@@ -519,6 +521,11 @@ public class AlertDialogHelper {
         equalizerBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        final int[] spinnerFunVal = context.getResources().getIntArray(R.array.inputChanValues);
+                        Log.w(Constants.TAG, "Setting input channel:" + spinnerFunVal[aufioChan.getSelectedItemPosition()] + "pos:" + aufioChan.getSelectedItemPosition());
+                        //spinnerFunVal[aufioChan.getSelectedItemPosition() non funziona? faccio cosi, va ben lo stesso
+                        //perche 1 e` il mic, e 0 il default audio session
+                        opzioni.setAudioInputChannel(aufioChan.getSelectedItemPosition());
                         opzioni.setEqLow(low.getProgress() / 100f);
                         opzioni.setEqMed((float) med.getProgress() / 100f);
                         opzioni.setEqHigh(hi.getProgress() / 100f);
@@ -530,8 +537,14 @@ public class AlertDialogHelper {
                         opzioni.setEqLowRange(lowRange.getProgress() / 100f);
                         opzioni.setEqMedRange(medRange.getProgress() / 100f);
                         opzioni.setEqHighRange(hiRange.getProgress() / 100f);
-                        if (toUpdate != null)
+                        if (toUpdate != null) {
+                            act.getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .detach(canvas)
+                                    .attach(canvas)
+                                    .commit();
                             toUpdate.setText(strDisease2Msg);
+                        }
                     }
                 });
 

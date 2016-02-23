@@ -39,13 +39,14 @@ public class SoulissPreferenceHelper implements Serializable {
     private boolean animations;
     private boolean antitheftNotify;
     private boolean antitheftPresent;
+    private int audioInputChannel;
     private int backoff = 1;
     private boolean broadCastEnabled;
-    private String cachedAddr;
+
     private String chosenHtmlRootfile;
     private Context contx;
     // numNodes ed altri valori cached
-
+    private String cachedAddr;
     private boolean dataServiceEnabled;
     private int dataServiceInterval;
     private float eqHigh;
@@ -111,6 +112,10 @@ public class SoulissPreferenceHelper implements Serializable {
         return cachedAddr;
     }
 
+    public int getAudioInputChannel() {
+        return audioInputChannel;
+    }
+
     public Long getBackedOffServiceIntervalMsec() {
         return (long) (getDataServiceIntervalMsec() * backoff);
     }
@@ -145,6 +150,13 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public float getEqHigh() {
         return eqHigh;
+    }
+
+    public void setAudioInputChannel(int audioInputChannel) {
+        this.audioInputChannel = audioInputChannel;
+        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        pesta.putInt("audioChan", audioInputChannel);
+        pesta.commit();
     }
 
     public void setEqHigh(float eqHigh) {
@@ -366,7 +378,7 @@ public class SoulissPreferenceHelper implements Serializable {
         broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
         rgbSendAllDefault = prefs.getBoolean("rgbSendAllDefault", true);
         logHistoryEnabled = prefs.getBoolean("checkboxLogHistory", true);
-
+        audioInputChannel = prefs.getInt("audioChan", 0);//0 default, 1 MIC
         eqLow = prefs.getFloat("eqLow", 1f);
         eqMed = prefs.getFloat("eqMed", 1f);
         eqHigh = prefs.getFloat("eqHigh", 1f);

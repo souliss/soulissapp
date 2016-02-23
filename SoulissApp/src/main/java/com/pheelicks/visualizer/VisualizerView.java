@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.MediaRecorder;
 import android.media.audiofx.Visualizer;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -122,41 +123,42 @@ public class
 
     public void link(final boolean multicast) {
         // Create the Visualizer object and attach it to our media player.
+        if (opz.getAudioInputChannel() == MediaRecorder.AudioSource.MIC) {
+            Log.w(Constants.TAG, "MIC input selected");
+            // recordingSampler.setVolumeListener(this);  // for custom implements
+            recordingSampler.setSamplingInterval(100); // voice sampling interval
+            recordingSampler.link(this, multicast);// link to visualizer
 
 
-        // recordingSampler.setVolumeListener(this);  // for custom implements
-        recordingSampler.setSamplingInterval(100); // voice sampling interval
-        recordingSampler.link(this, multicast);     // link to visualizer
-
-
-        // mVisualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
-/*
-        // Pass through Visualizer data to VisualizerView
-        Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener() {
-            @Override
-            public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-                updateVisualizer(bytes);
-                Log.w(Constants.TAG, "should not run this");
-            }
-
-            @Override
-            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-                byte[] copy = new byte[bytes.length / 2];
-                System.arraycopy(bytes, 0, copy, 0, copy.length);
-                updateVisualizerFFT(copy);
-                sendSoulissPlinio(copy, multicast);
-            }
-        };
-        int dcRate = Visualizer.getMaxCaptureRate();
-        if (dcRate < 30000) {
-            Log.w(Constants.TAG, "MAXDCRATE invalid, defaulting to:" + dcRate);
+            // mVisualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
         } else {
-            dcRate = 30000; // 15kHz
-        }
-        mVisualizer.setDataCaptureListener(captureListener, dcRate, false, true);*/
-        // Enabled Visualizer and disable when we're done with the stream
-        mVisualizer.setEnabled(true);
+            Log.w(Constants.TAG, "default audio input selected");
+            // Pass through Visualizer data to VisualizerView
+            Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener() {
+                @Override
+                public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+                    byte[] copy = new byte[bytes.length / 2];
+                    System.arraycopy(bytes, 0, copy, 0, copy.length);
+                    updateVisualizerFFT(copy);
+                    sendSoulissPlinio(copy, multicast);
+                }
 
+                @Override
+                public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+                    updateVisualizer(bytes);
+                    Log.w(Constants.TAG, "should not run this");
+                }
+            };
+            int dcRate = Visualizer.getMaxCaptureRate();
+            if (dcRate < 30000) {
+                Log.w(Constants.TAG, "MAXDCRATE invalid, defaulting to:" + dcRate);
+            } else {
+                dcRate = 30000; // 15kHz
+            }
+            mVisualizer.setDataCaptureListener(captureListener, dcRate, false, true);
+            // Enabled Visualizer and disable when we're done with the stream
+            mVisualizer.setEnabled(true);
+        }
     }
 
     @Override
@@ -292,7 +294,8 @@ public class
         } catch (Exception e) {
             Log.e(Constants.TAG, "Errore setEnabled:" + e.getMessage());
         }
-        if (recordingSampler != null) {
+        //gestione microfono
+        if (recordingSampler != null && opz.getAudioInputChannel() == MediaRecorder.AudioSource.MIC) {
             if (!in && recordingSampler.isRecording())
                 recordingSampler.stopRecording();
             else if (!recordingSampler.isRecording())

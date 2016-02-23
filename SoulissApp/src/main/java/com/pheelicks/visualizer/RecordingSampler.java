@@ -51,6 +51,8 @@ public class RecordingSampler {
         }
         this.mTimer = new Timer();
 
+        audioPlayer = new AudioTrack(AudioManager.STREAM_MUSIC, RECORDING_SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO,
+                AudioFormat.ENCODING_PCM_16BIT, mBufSize, AudioTrack.MODE_STREAM);
     }
 
     public boolean isRecording() {
@@ -72,10 +74,6 @@ public class RecordingSampler {
 
     private void runRecording() {
 
-        audioPlayer = new AudioTrack(AudioManager.STREAM_MUSIC, RECORDING_SAMPLE_RATE, AudioFormat.CHANNEL_OUT_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, mBufSize, AudioTrack.MODE_STREAM);
-
-
         final byte[] buf = new byte[this.mBufSize];
         this.mTimer.schedule(new TimerTask() {
             public void run() {
@@ -83,15 +81,11 @@ public class RecordingSampler {
                     RecordingSampler.this.mAudioRecord.stop();
                 } else {
                     int readBytes = RecordingSampler.this.mAudioRecord.read(buf, 0, RecordingSampler.this.mBufSize);
-
-
                     final int decibel = RecordingSampler.this.calculateDecibel(buf);
 
                     if (readBytes > 0) {
                         Log.i(Constants.TAG, "decibel " + decibel + "size:" + readBytes);
                         // audioPlayer.write(buf, 0, readBytes);
-
-
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
@@ -100,7 +94,6 @@ public class RecordingSampler {
                                         RecordingSampler.this.mVisualizerViews.get(i).updateVisualizerFFT(buf);
                                         //  ((VisualizerView) RecordingSampler.this.mVisualizerViews.get(i)).updateVisualizer(buf);
                                         RecordingSampler.this.mVisualizerViews.get(i).sendSoulissPlinio(buf, mulicat);
-
                                     }
                                 }
                             }
@@ -109,7 +102,8 @@ public class RecordingSampler {
                         RecordingSampler.this.mVolumeListener.onCalculateVolume(decibel);
                     }*/
 
-                        audioPlayer.play();
+                        //TODO feedback
+                        //   audioPlayer.play();
                     }
                 }
             }
@@ -140,7 +134,6 @@ public class RecordingSampler {
                 ((VisualizerView) this.mVisualizerViews.get(i)).clearRenderers();
             }
         }*/
-        audioPlayer.stop();
     }
 
     public interface CalculateVolumeListener {
