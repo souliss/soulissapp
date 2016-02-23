@@ -97,6 +97,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     // can use UI thread here
 
     private void saveToFile(File file) throws IOException {
+
         file.createNewFile();
         CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 

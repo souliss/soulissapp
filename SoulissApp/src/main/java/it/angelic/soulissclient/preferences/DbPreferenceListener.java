@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.preferences;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -7,11 +8,14 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -82,18 +86,28 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
 
     }
 
-    private boolean exportDb() {
-        Toast.makeText(parent, "Exporting Data", Toast.LENGTH_SHORT).show();
-        try {
-            ExportDatabaseCSVTask t = new ExportDatabaseCSVTask();
-            t.loadContext(parent);
-            t.execute("");
-        } catch (Exception ex) {
-            Log.e(Constants.TAG, ex.toString());
-            ex.printStackTrace();
+
+    protected boolean exportDb() {
+        if ((ContextCompat.checkSelfPermission(parent, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            Toast.makeText(parent, "Exporting Data", Toast.LENGTH_SHORT).show();
+            try {
+                ExportDatabaseCSVTask t = new ExportDatabaseCSVTask();
+                t.loadContext(parent);
+                t.execute("");
+            } catch (Exception ex) {
+                Log.e(Constants.TAG, ex.toString());
+                ex.printStackTrace();
+                return false;
+            }
+            return true;
+        } else {
+
+            ActivityCompat.requestPermissions(parent, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
+            //Toast.makeText(parent, "Descarc noi actualizari!", Toast.LENGTH_SHORT).show();
             return false;
         }
-        return true;
+
     }
 
     private void loadFileList() {

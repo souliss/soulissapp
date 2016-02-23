@@ -264,11 +264,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     }
 
                 } else {
-
                     // quello stronzo.
                     if (cardViewPositionInfo != null)
                         cardViewPositionInfo.setVisibility(View.GONE);
-
                 }
                 return;
             }
