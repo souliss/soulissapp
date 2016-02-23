@@ -11,7 +11,6 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -86,7 +85,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private CardView cardViewPositionInfo;
     private CardView cardViewServiceInfo;
     private TextView coordinfo;
-    private Criteria criteria;
     private TextView dbwarn;
     private View dbwarnline;
     private Geocoder geocoder;
@@ -211,41 +209,75 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(criteria, true);
+        provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-        if (enabled && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
-                    + "</b>)"));
-            // ogni minuto, minimo 100 metri
-
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-
-            locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                    Constants.POSITION_UPDATE_MIN_DIST, this);
-            Location location = locationManager.getLastKnownLocation(provider);
-            // Initialize the location fields
-            if (location != null) {
-                onLocationChanged(location);
+            if (enabled) {
+                coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
+                        + "</b>)"));
+                // ogni minuto, minimo 100 metri
+                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                        Constants.POSITION_UPDATE_MIN_DIST, this);
+                Location location = locationManager.getLastKnownLocation(provider);
+                // Initialize the location fields
+                if (location != null) {
+                    onLocationChanged(location);
+                }
+            } else if (opzioni.getHomeLatitude() != 0) {
+                coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
+                homedist.setVisibility(View.GONE);
+                posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+            } else {
+                coordinfo.setVisibility(View.GONE);
+                homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
+                posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
             }
-        } else if (opzioni.getHomeLatitude() != 0) {
-            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
-            homedist.setVisibility(View.GONE);
-            posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
-        } else {
-            coordinfo.setVisibility(View.GONE);
-            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-            posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+        } else//permesso mancante
+        {
+            ActivityCompat.requestPermissions(LauncherActivity.this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+
         }
     }
 
-	/*
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
+                    Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
+//fucking lint
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    }
+                    locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                            Constants.POSITION_UPDATE_MIN_DIST, this);
+                    Location location = locationManager.getLastKnownLocation(provider);
+                    // Initialize the location fields
+                    if (location != null) {
+                        onLocationChanged(location);
+                    }
+
+                } else {
+
+                    // quello stronzo.
+                    if (cardViewPositionInfo != null)
+                        cardViewPositionInfo.setVisibility(View.GONE);
+
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+    /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
 	 * getActionBar().setTitle(mTitle); }
 	 */
@@ -300,13 +332,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         cardViewFav = (CardView) findViewById(R.id.TagsCard);
         scrollView = (ObservableScrollView) findViewById(R.id.launcherScrollView);
         // previously invisible view
-
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Get the location manager
-        // Define the criteria how to select the locatioin provider
-        criteria = new Criteria();
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
 
         // DRAWER
         initDrawer(this, DrawerMenuHelper.MANUAL);
@@ -328,7 +354,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 try {
                     Thread.sleep(150);
                     runOnUiThread(new Runnable() {
@@ -589,14 +614,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         if (provider != null) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                //return;
+                //   non chiamo request perche c'e altrove
             } else
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                         Constants.POSITION_UPDATE_MIN_DIST, this);

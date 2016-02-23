@@ -139,7 +139,7 @@
     <string name="status_souliss_notreachable">Souliss non raggiungibile, errore di rete</string>
     <string name="status_geoprovider_enabled">Geo provider <b>abilitato</b>, acquisizione posizione in corso</string>
     <string name="status_provider_selected"> selezionato</string>
-    <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b></string>
+    <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b> o permesso mancante</string>
 
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>

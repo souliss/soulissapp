@@ -49,6 +49,7 @@ public class Constants {
     public static final String EXTERNAL_EXP_FOLDER = "//Souliss";
     public static final String DEMO_PUBLIC_IP = "demo.souliss.net";
     public static final int MY_PERMISSIONS_RECORD_AUDIO = 17;
+    public static final int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 18;
 
 
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");

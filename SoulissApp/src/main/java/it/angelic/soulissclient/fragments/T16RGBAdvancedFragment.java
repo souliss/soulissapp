@@ -239,7 +239,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
 
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
-
+        //permesso per la visualizer connessa all'audio o mic
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.RECORD_AUDIO},

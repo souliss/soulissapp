@@ -3,6 +3,7 @@ package it.angelic.soulissclient.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.location.Criteria;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -28,6 +29,8 @@ import it.angelic.soulissclient.SoulissApp;
  * Created by shine@angelic.it on 10/10/2015.
  */
 public class Utils {
+    private static Criteria criteria;
+
     /**
      * utility minutes
      *
@@ -145,6 +148,15 @@ public class Utils {
             }
         }
         return res;
+    }
+
+    public static Criteria getGeoCriteria() {
+
+        if (criteria == null)
+            criteria = new Criteria();
+        // criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        return criteria;
     }
 
     /*

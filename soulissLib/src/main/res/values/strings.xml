@@ -143,7 +143,7 @@
     <string name="status_souliss_notreachable">Souliss not reachable, network error</string>
     <string name="status_geoprovider_enabled">Geo provider <b>enabled</b>, but no data received yet</string>
     <string name="status_provider_selected"> has been selected.</string>
-    <string name="status_geoprovider_disabled">Geo providers <b>disabled</b></string>
+    <string name="status_geoprovider_disabled">Geo providers <b>disabled</b> or permission missing</string>
 
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>

@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -34,6 +33,7 @@ import java.util.Map;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -338,11 +338,11 @@ public class SoulissDataService extends Service implements LocationListener {
         startUDPListener();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria crit = new Criteria();
-        crit.setPowerRequirement(Criteria.POWER_LOW);
+
+
         // riporta exec precedenti, non usare ora attuale
         lastupd.setTimeInMillis(opts.getServiceLastrun());
-        provider = locationManager.getBestProvider(crit, true);
+        provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
         db = new SoulissDBHelper(this);
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
