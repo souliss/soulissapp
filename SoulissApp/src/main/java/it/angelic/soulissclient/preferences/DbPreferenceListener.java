@@ -111,23 +111,25 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
     }
 
     private void loadFileList() {
-        try {
+        if ((ContextCompat.checkSelfPermission(parent, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
             mPath.mkdirs();
-        } catch (SecurityException e) {
-            Log.e(Constants.TAG, "unable to write on the sd card " + e.toString());
-        }
-        //TODO filtrare anche per config
-        if (mPath.exists()) {
-            FilenameFilter filter = new FilenameFilter() {
-                public boolean accept(File dir, String filename) {
-                    File sel = new File(dir, filename);
-                    return filename.endsWith(DB_BACKUP_FORMAT) || sel.isDirectory();
-                }
-            };
-            mFileList = mPath.list(filter);
+            //TODO filtrare anche per config
+            if (mPath.exists()) {
+                FilenameFilter filter = new FilenameFilter() {
+                    public boolean accept(File dir, String filename) {
+                        File sel = new File(dir, filename);
+                        return filename.endsWith(DB_BACKUP_FORMAT) || sel.isDirectory();
+                    }
+                };
+                mFileList = mPath.list(filter);
+            } else {
+                mFileList = new String[0];
+            }
         } else {
-            mFileList = new String[0];
+            ActivityCompat.requestPermissions(parent, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE);
         }
+
     }
 
     protected Dialog onCreateDialog(int id) {
