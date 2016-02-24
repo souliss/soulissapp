@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissExecutable;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -240,11 +241,11 @@ public class SoulissWidgetConfig extends Activity {
     private void fillCommandSpinner(Spinner tgt, SoulissTypical ref) {
         tgt.setVisibility(View.VISIBLE);
         textViewCommand.setVisibility(View.VISIBLE);
-        SoulissCommand[] strArray = new SoulissCommand[ref.getCommands(this).size()];
+        ISoulissCommand[] strArray = new SoulissCommand[ref.getCommands(this).size()];
         ref.getCommands(this).toArray(strArray);
         // SoulissCommand[] etichette = new SoulissCommand[strArray.length];
 
-        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(this,
+        ArrayAdapter<ISoulissCommand> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, strArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
