@@ -20,9 +20,9 @@ import android.widget.TextView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class NodesListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
@@ -110,7 +110,7 @@ public class NodesListAdapter extends BaseAdapter {
 		// holder.textTyp.setTextAppearance(context, R.style.CodeFontMain);
 
         holder.textTyp.setText(  context.getResources().getQuantityString(R.plurals.Devices,
-				nodi[position].getActiveTypicals().size(), nodi[position].getActiveTypicals().size())  + " - " + context.getString(R.string.update) + " " + Utils.getTimeAgo(nodi[position].getRefreshedAt()));
+				nodi[position].getActiveTypicals().size(), nodi[position].getActiveTypicals().size()) + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodi[position].getRefreshedAt()));
 
 		if (opzioni.isLightThemeSelected()) {
 			holder.textTyp.setTextColor(ContextCompat.getColor(context, R.color.black));

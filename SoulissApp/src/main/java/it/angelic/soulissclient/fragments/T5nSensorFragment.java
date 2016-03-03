@@ -38,13 +38,13 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
 import it.angelic.soulissclient.helpers.GraphsHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static junit.framework.Assert.assertTrue;
@@ -179,7 +179,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		par.setMax(Constants.MAX_HEALTH);
 		par.setProgress(collected.getParentNode().getHealth());
 		upda.setText(getResources().getString(R.string.update) + " "
-				+ Utils.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
+				+ SoulissUtils.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
 
 		icon.setImageResource(collected.getIconResourceId());
 		/**

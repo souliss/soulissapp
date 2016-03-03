@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 /**
  * Typical 31 : Temperature control with cooling and heating mode
@@ -107,7 +108,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         // ora ho i due bytes, li converto
         int shifted = TemperatureMeasuredValue2 << 8;
         float celsius = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
-        TemperatureMeasuredVal = prefs.isFahrenheitChosen() ? it.angelic.soulissclient.helpers.Utils.celsiusToFahrenheit(celsius) : celsius;
+        TemperatureMeasuredVal = prefs.isFahrenheitChosen() ? SoulissUtils.celsiusToFahrenheit(celsius) : celsius;
 
         Log.i(Constants.TAG,
                 "first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"

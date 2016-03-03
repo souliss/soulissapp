@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.helpers;
+package it.angelic.soulissclient.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,11 +24,13 @@ import java.util.Map;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 
 /**
  * Created by shine@angelic.it on 10/10/2015.
  */
-public class Utils {
+public class SoulissUtils {
     private static Criteria criteria;
 
     /**
@@ -159,6 +161,19 @@ public class Utils {
         return criteria;
     }
 
+
+    public static void loadSoulissDbFromFile(String config, File importDir) throws IOException {
+
+        File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
+        SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+        SoulissDBHelper.open();
+        String DbPath = SoulissDBHelper.getDatabase().getPath();
+        db.close();
+        File newDb = new File(DbPath);
+        SoulissUtils.fileCopy(bckDb, newDb);
+        Log.w(Constants.TAG, config + " DB loaded: " + bckDb.getPath());
+
+    }
     /*
          * Esporto tutte le pref utente, non quelle cached
          * */

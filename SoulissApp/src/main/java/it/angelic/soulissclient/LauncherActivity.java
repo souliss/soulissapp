@@ -58,11 +58,11 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.net.NetUtils;
 import it.angelic.soulissclient.net.webserver.HTTPService;
+import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.views.ListButton;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -210,7 +210,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
+        provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
@@ -251,7 +251,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
+                    provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
                     Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
 //fucking lint
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -906,9 +906,9 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         } else {
             if (mIsBound && mBoundService != null) {
-                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(Utils.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
+                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(SoulissUtils.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
                 sb.append(getString(R.string.opt_serviceinterval)).append(":</b> ")
-                        .append(Utils.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
+                        .append(SoulissUtils.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
             } else {
                 sb.append(getString(R.string.service_warnbound));
                 Intent serviceIntent = new Intent(this, SoulissDataService.class);

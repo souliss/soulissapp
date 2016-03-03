@@ -21,7 +21,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 @TargetApi(11)
 public class ServiceSettingsFragment extends PreferenceFragment {
@@ -60,8 +60,8 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				try {
-                    String provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
-                    //Location luogo = locationManager.getLastKnownLocation(provider);
+					String provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
+					//Location luogo = locationManager.getLastKnownLocation(provider);
 
                     // faccio sto schifo per trigger di SecurityException.
                     Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);

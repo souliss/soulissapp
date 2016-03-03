@@ -33,12 +33,12 @@ import java.util.Map;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class SoulissDataService extends Service implements LocationListener {
     // LOGGA a parte
@@ -342,7 +342,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
         // riporta exec precedenti, non usare ora attuale
         lastupd.setTimeInMillis(opts.getServiceLastrun());
-        provider = locationManager.getBestProvider(Utils.getGeoCriteria(), true);
+        provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
         db = new SoulissDBHelper(this);
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 

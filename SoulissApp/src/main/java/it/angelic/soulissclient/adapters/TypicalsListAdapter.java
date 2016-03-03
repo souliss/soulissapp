@@ -17,9 +17,9 @@ import java.util.Locale;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class TypicalsListAdapter extends BaseAdapter {
     Intent parentIntent;
@@ -117,7 +117,7 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder.textslot.setTextColor(context.getResources().getColor(R.color.black));
             holder.textUpdated.setTextColor(context.getResources().getColor(R.color.black));
             holder.textStatus.setTextColor(context.getResources().getColor(R.color.black));
-            holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha));
+            holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abc_ic_menu_overflow_material));
             holder.expand.setColorFilter(R.color.black);
         }
 		/* Nodo vuota */
@@ -133,7 +133,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		/* INFO slot e Alias Name */
         holder.textslot.setText(tipici[position].getNiceName());
         holder.textUpdated.setText(context.getString(R.string.update) + " "
-                + Utils.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
+                + SoulissUtils.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
                 + context.getString(R.string.manual_slot) + ": " + tipici[position].getSlot());
         holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
                 + ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "

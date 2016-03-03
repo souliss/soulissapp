@@ -56,7 +56,6 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
@@ -70,6 +69,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -424,7 +424,7 @@ public class NodeDetailFragment extends ListFragment {
         par.setProgress(20);
         par.setProgress(0); // <-- BUG Android
         par.setProgress(collected.getHealth());
-        upda.setText(getResources().getString(R.string.update) + " " + Utils.getTimeAgo(collected.getRefreshedAt()));
+        upda.setText(getResources().getString(R.string.update) + " " + SoulissUtils.getTimeAgo(collected.getRefreshedAt()));
 
     }
 
