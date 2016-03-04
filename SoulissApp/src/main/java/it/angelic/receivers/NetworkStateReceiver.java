@@ -17,8 +17,6 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
 	public void onReceive(Context context, Intent intent) {
 		// super.onReceive(context, intent);
-		// final SharedPreferences customSharedPreference = context
-		// .getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
 		if (opzioni == null)
 			opzioni = SoulissApp.getOpzioni();
 		//solo if UDP?

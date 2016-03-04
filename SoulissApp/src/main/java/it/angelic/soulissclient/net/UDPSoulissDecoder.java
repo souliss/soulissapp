@@ -14,7 +14,6 @@ import android.graphics.BitmapFactory;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -67,7 +66,7 @@ public class UDPSoulissDecoder {
         this.context = ctx;
         database = new SoulissDBLowHelper(ctx);
         //soulissSharedPreference = opts.getContx().getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
-        soulissSharedPreference = PreferenceManager.getDefaultSharedPreferences(ctx);
+        soulissSharedPreference = opzioni.getCustomPref();
         SoulissDBHelper.open();
         try {
             localHost = NetUtils.getInetLocalIpAddress();
@@ -128,8 +127,8 @@ public class UDPSoulissDecoder {
         SoulissDBHelper.open();
         database.createOrUpdateStructure(nodes, maxTypicalXnode);
         // Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
-
-        SharedPreferences.Editor editor = soulissSharedPreference.edit();
+        SharedPreferences.Editor editor = opzioni.getCustomPref().edit();
+        // SharedPreferences.Editor editor = soulissSharedPreference.edit();
         // sistema configurato
         if (soulissSharedPreference.contains("numNodi"))
             editor.remove("numNodi");

@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -521,6 +520,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.webserverEnabled = webserverEnabled;
     }
 
+    static Random r = new Random(Calendar.getInstance().getTimeInMillis());
     public void reload() {
         Log.i(TAG, "Going thru preference reload()" );
         // SharedPreferences prefs =
@@ -528,7 +528,7 @@ public class SoulissPreferenceHelper implements Serializable {
         initializePrefs();
         if (userIndex == -1) {// MAI inizializzato, lo calcolo
             /* USER INDEX, statico */
-            Random r = new Random(Calendar.getInstance().getTimeInMillis());
+
             int casual = r.nextInt(Constants.MAX_USER_IDX - 1);// 100
             setUserIndex(casual);
             Log.i(Constants.TAG, "automated userIndex-index Using: " + casual);
@@ -536,19 +536,16 @@ public class SoulissPreferenceHelper implements Serializable {
         if (nodeIndex == -1) {// MAI inizializzato, lo calcolo
             /* PHONE ID diventa node index */
             try {
-                final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
-                if (tm.getDeviceId() != null)
-                    nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % (Constants.MAX_NODE_IDX - 1));
-                else
+
                     nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % (Constants.MAX_NODE_IDX - 1));
                 nodeIndex = Math.abs(nodeIndex);
                 if (nodeIndex == 0)
                     nodeIndex++;
-                Log.w(TAG, "Pref init END. Node index hash = " + userIndex);
+                Log.w(TAG, "Pref init END. Node index = " + nodeIndex);
                 setNodeIndex(nodeIndex);
             } catch (Exception e) {// fallito il computo, uso random e lo salvo
-                Random r = new Random(Calendar.getInstance().getTimeInMillis());
-                int casual = r.nextInt(98) + 1;
+                //Random r = new Random(Calendar.getInstance().getTimeInMillis());
+                int casual = r.nextInt(Constants.MAX_NODE_IDX);
                 setNodeIndex(casual);
                 Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage() + ". Using " + casual);
             }
