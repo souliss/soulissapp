@@ -1,6 +1,7 @@
 package it.angelic.soulissclient;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -114,8 +115,9 @@ public class WelcomeActivity extends FragmentActivity {
                 SharedPreferences newDefault = PreferenceManager.getDefaultSharedPreferences(WelcomeActivity.this);
                 SharedPreferences.Editor demo = newDefault.edit();
                 demo.clear();
+                //95.241.222.134
                 demo.putString("edittext_IP_pubb", Constants.DEMO_PUBLIC_IP);
-                demo.putString("edittext_IP", "10.14.10.77");
+                demo.putString("edittext_IP", Constants.DEMO_LOCAL_IP);
                 demo.commit();
                 Log.w(Constants.TAG, "new Demo prefs created to: " + filePrefs.getPath());
                 SoulissUtils.saveSharedPreferencesToFile(newDefault, WelcomeActivity.this, filePrefs);
@@ -146,8 +148,6 @@ public class WelcomeActivity extends FragmentActivity {
         welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
 
         final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
-
-
         final Button renameButton = (Button) findViewById(R.id.welcome_tour_rename);
         final Button deleteButton = (Button) findViewById(R.id.welcome_tour_delete);
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
@@ -165,6 +165,22 @@ public class WelcomeActivity extends FragmentActivity {
             SoulissApp.setCurrentConfig("default");
             SoulissApp.addConfiguration("default");
             spinnerAdapter.add("default");
+
+            //we're loading from a old soulissapp
+            try {
+                ContextWrapper c = new ContextWrapper(WelcomeActivity.this);
+                final File importDir = c.getFilesDir();
+                File filePrefs = new File(importDir, "PORTING_SoulissApp.prefs");
+                //salvataggio dei vecchi valori
+                filePrefs.createNewFile();
+                SharedPreferences customCachedPrefs = WelcomeActivity.this.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
+                SoulissUtils.saveSharedPreferencesToFile(customCachedPrefs, WelcomeActivity.this, filePrefs);
+                //li includo nella conf corrente che verra` poi salvata in startup
+                SoulissUtils.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
+            } catch (Exception ee) {
+                Log.e(Constants.TAG, "Impossibile eseguire porting da files precedenti: " + ee.getMessage());
+            }
+
             spinnerAdapter.notifyDataSetChanged();
             selectedIdx = spinnerAdapter.getCount() - 1;
         } else if (selectedIdx > 2) {//user defined
@@ -279,7 +295,16 @@ public class WelcomeActivity extends FragmentActivity {
                         try {
                             SoulissUtils.loadSoulissDbFromFile(newConfig, importDir);
                         } catch (IOException e1) {
-                            Log.e(Constants.TAG, "DB DEMO non disponibile:" + newConfig);
+                            Log.w(Constants.TAG, "DB DEMO non disponibile: " + newConfig);
+                            String DbPath = SoulissDBHelper.getDatabase().getPath();
+                            SoulissDBHelper.getDatabase().close();
+                            File newDb = new File(DbPath);
+                            if (!newDb.exists())
+                                try {
+                                    newDb.createNewFile();
+                                } catch (IOException e) {
+                                    Log.e(Constants.TAG, "SERIO DB DEMO non generabile:" + newConfig);
+                                }
                         }
                     } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                         Log.i(Constants.TAG, "Nothing here");

@@ -536,7 +536,6 @@ public class SoulissPreferenceHelper implements Serializable {
         if (nodeIndex == -1) {// MAI inizializzato, lo calcolo
             /* PHONE ID diventa node index */
             try {
-
                     nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % (Constants.MAX_NODE_IDX - 1));
                 nodeIndex = Math.abs(nodeIndex);
                 if (nodeIndex == 0)
