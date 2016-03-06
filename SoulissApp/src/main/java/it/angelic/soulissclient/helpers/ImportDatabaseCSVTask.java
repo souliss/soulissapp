@@ -228,7 +228,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                         break;
                 }
             }
-            editor.commit();
+            editor.apply();
             csvReader.close();
             database.close();
             Log.i(TAG, "Import finished");

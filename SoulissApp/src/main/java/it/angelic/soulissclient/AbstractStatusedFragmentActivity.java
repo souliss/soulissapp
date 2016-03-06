@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.PersistableBundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -268,11 +269,11 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
 
                 if (!opzioni.isSoulissReachable()) {
                     online.setBackgroundResource(R.drawable.red);
-                    statusOnline.setTextColor(getResources().getColor(R.color.std_red));
+                    statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_red));
                     statusOnline.setText(R.string.offline);
                 } else {
                     online.setBackgroundResource(R.drawable.green);
-                    statusOnline.setTextColor(getResources().getColor(R.color.std_green));
+                    statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_green));
                     statusOnline.setText(R.string.Online);
                 }
                 statusOnline.invalidate();
@@ -311,7 +312,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                     online.setBackgroundResource(R.drawable.red3);
                     break;
             }
-            statusOnline.setTextColor(getResources().getColor(R.color.std_yellow));
+            statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_yellow));
             statusOnline.setText(R.string.synch);
         }
     }

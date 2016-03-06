@@ -377,5 +377,8 @@
     <string name="welcome_import_hints">Insert desired configuration name and specify existing .preferences file to import previous settings. If you used SoulissApp \"Export\" feature, this process should load Model as well</string>
     <string name="welcome_import_title">Import SoulissApp Configuration</string>
     <string name="welcome_import_conf_name">Configuration name (ie. Home, Office, seaside)</string>
+    <string name="command_hint">The command will be passed to SoulissApp in order to execute it</string>
+    <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
+    <string name="as_measured">As measured</string>
     >
 </resources>

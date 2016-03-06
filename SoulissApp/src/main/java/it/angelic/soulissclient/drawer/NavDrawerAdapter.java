@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.drawer;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         navMenuItemHolder.labelView = labelView;
         navMenuItemHolder.iconView = iconView;
         if (menuItem.getId() == activeSection)
-            convertView.setBackgroundColor(convertView.getResources().getColor(R.color.grey_alpha));
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.grey_alpha));
 
         convertView.setTag(navMenuItemHolder);
         //  }

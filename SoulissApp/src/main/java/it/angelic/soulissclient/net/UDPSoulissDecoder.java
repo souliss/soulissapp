@@ -170,7 +170,7 @@ public class UDPSoulissDecoder {
 
         try {
             numberOf = database.refreshNodeHealths(healths, tgtnode);
-            Log.d(Constants.Net.TAG, "Refreshed " + numberOf + " nodes' health");
+            Log.i(Constants.Net.TAG, "Health request refreshed " + numberOf + " nodes' health");
         } catch (IllegalStateException e) {
             Log.e(Constants.Net.TAG, "DB connection closed! Can't update healths");
             return;
@@ -268,16 +268,15 @@ public class UDPSoulissDecoder {
         if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
             opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
             editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
-            Log.w(Constants.Net.TAG, "Set cached address: " + opzioni.getIPPreferencePublic());
+            Log.w(Constants.Net.TAG, "decodePing Set cached address: " + opzioni.getIPPreferencePublic());
         } else if (putIn == 0xF) {// PRIVATO
             opzioni.setCachedAddr(opzioni.getPrefIPAddress());
             editor.putString("cachedAddress", opzioni.getPrefIPAddress());
-            Log.w(Constants.Net.TAG, "Set cached address: " + opzioni.getPrefIPAddress());
+            Log.w(Constants.Net.TAG, "decodePing Set cached address: " + opzioni.getPrefIPAddress());
         } else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
-
             try {// sanity check
                 final InetAddress toverify = NetUtils.extractTargetAddress(mac);
-                Log.i(Constants.Net.TAG, "Parsed private IP: " + toverify.getHostAddress());
+                Log.i(Constants.Net.TAG, "decodePing Parsed private IP: " + toverify.getHostAddress());
                 /**
                  * deve essere determinato se l'indirizzo appartiene ad un nodo
                  * e se è all'interno della propria subnet. Se entrambe le
@@ -338,15 +337,15 @@ public class UDPSoulissDecoder {
     private void decodeStateRequest(ArrayList<Short> mac) {
         try {
             List<SoulissNode> nodes = database.getAllNodes();
-            Log.d(Constants.Net.TAG, "---Nodes on DB: " + nodes.size());
+            Log.i(Constants.Net.TAG, "decodeStateRequest received: " + mac.size());
             int tgtnode = mac.get(3);
             int numberOf = mac.get(4);
             int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 8);
-            Log.d(Constants.Net.TAG, "---DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
+            Log.d(Constants.Net.TAG, "--DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
             SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
-                Log.v(Constants.Net.TAG, "---REFRESHING NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
+                Log.d(Constants.Net.TAG, "---REFRESHING NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
                     SoulissTypical temp = it.getTypical((short) (j % typXnodo));
@@ -359,6 +358,7 @@ public class UDPSoulissDecoder {
                     // skipping unexistent typical");
                     //OK, può succedere
                 } catch (Exception e) {
+                    Log.w(Constants.Net.TAG, "Errore di calcolo??" + e.getMessage());
                     // FIXME nodes.get(((int) j / typXnodo) + tgtnode) è SBAGLIATO
                 }
             }
@@ -387,7 +387,7 @@ public class UDPSoulissDecoder {
             int done = 0;
             // SoulissNode node = database.getSoulissNode(tgtnode);
             int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
-            Log.i(Constants.Net.TAG, "--DECODE MACACO TypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
+            Log.i(Constants.Net.TAG, "decodeTypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
                     + typXnodo);
             // creates Souliss nodes
             for (int j = 0; j < numberOf; j++) {
@@ -422,7 +422,7 @@ public class UDPSoulissDecoder {
             if (soulissSharedPreference.contains("numTipici"))
                 editor.remove("numTipici");// unused
             editor.putInt("numTipici", database.countTypicals());
-            editor.commit();
+            editor.apply();
             Log.i(Constants.Net.TAG, "Refreshed " + numberOf + " typicals for node " + tgtnode);
         } catch (Exception uy) {
             Log.e(Constants.Net.TAG, "decodeTypRequest ERROR", uy);
@@ -489,7 +489,7 @@ public class UDPSoulissDecoder {
 
             List<SoulissNode> ref = database.getAllNodes();
             List<SoulissTrigger> triggers = database.getAllTriggers(context);
-            Log.i(Constants.Net.TAG, "checked triggers: " + triggers.size());
+            Log.i(Constants.Net.TAG, "processTriggers triggersize: " + triggers.size());
             // logThings(refreshedNodes);
 
             Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
@@ -571,7 +571,6 @@ public class UDPSoulissDecoder {
                         soulissTrigger.persist(database);
                     }
                 }
-
             }
         } catch (IllegalStateException e) {
             Log.e(Constants.Net.TAG, "DB connection was closed, check trigger impossible");

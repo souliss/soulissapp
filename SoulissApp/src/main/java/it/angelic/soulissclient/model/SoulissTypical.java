@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -266,7 +267,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         cmd.setText(/*SoulissClient.getAppContext().getString(R.string.actions)*/"");
         // cmd.setTextSize(ctx.getResources().getDimension(R.dimen.text_size));
         if (prefs != null && prefs.isLightThemeSelected())
-            cmd.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.black));
+            cmd.setTextColor(ContextCompat.getColor(SoulissApp.getAppContext(), R.color.black));
 
         cmd.setLayoutParams(lp);
         return cmd;

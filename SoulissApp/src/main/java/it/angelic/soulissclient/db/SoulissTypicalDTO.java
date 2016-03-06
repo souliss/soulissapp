@@ -125,8 +125,6 @@ public class SoulissTypicalDTO implements Serializable {
                         SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
                                 + " = " + getSlot(), null);
             }
-
-
         }
         if (upd == 0) {
             //Se ancora 0, qualcosa è storto di sicuro
@@ -183,7 +181,7 @@ public class SoulissTypicalDTO implements Serializable {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             if (dto.getOutput() != getOutput()) {
                 parent.logTypical();// logga il nuovo
-                Log.i(Constants.TAG, "logging "+parent.getNiceName()+" new state from: " + dto.getOutput() + " to " + getOutput());
+                Log.i(Constants.TAG, "logging node " + this.getNodeId() + " - slot " + parent.getSlot() + " - " + parent.getNiceName() + " new state from: " + dto.getOutput() + " to " + getOutput());
             }
             cursor.close();
         }

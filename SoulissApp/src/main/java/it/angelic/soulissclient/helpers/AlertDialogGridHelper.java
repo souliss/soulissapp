@@ -169,14 +169,10 @@ public class AlertDialogGridHelper {
                         toRename.setIconResourceId(ad.getItemResId(pos));
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
-                            if (list != null) {
 
-                            }
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
-                            if (list != null) {
 
-                            }
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);

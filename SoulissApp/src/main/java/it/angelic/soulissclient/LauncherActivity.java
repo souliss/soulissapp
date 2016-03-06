@@ -253,8 +253,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
                     Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
-//fucking lint
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Log.wtf(TAG, "boh. permesso negato su risposta permesso");
+                        return;
                     }
                     locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                             Constants.POSITION_UPDATE_MIN_DIST, this);
@@ -451,7 +454,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                             Log.e(TAG, "Geocoder ERROR", e);
                             homedist.setVisibility(View.VISIBLE);
                             homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
-                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_red));
                         }
                     });
                     loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
@@ -543,13 +546,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // timeoutHandler.removeCallbacks(timeExpired);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
+            //...e amen
             return;
         }
         locationManager.removeUpdates(this);
@@ -914,7 +911,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 Intent serviceIntent = new Intent(this, SoulissDataService.class);
                 Log.w(TAG, "Service not bound yet, restarting");
                 startService(serviceIntent);
-                serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+                serviceinfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
             }
         }
         serviceInfo.setText(Html.fromHtml(sb.toString()));
@@ -936,13 +933,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 sb.append(getString(R.string.webservice_enabled));
                 sb.append(NetUtils.getLocalIpAddress()).append(":");
                 sb.append(mBoundWebService.getPort());
-                webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+                webServiceInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_green));
             } else {
                 sb.append(getString(R.string.service_warnbound));
                 Intent serviceIntent = new Intent(this, HTTPService.class);
                 Log.w(TAG, "WEB Service not bound yet, restarting");
                 startService(serviceIntent);
-                webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+                webServiceInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
             }
         }
         webserviceInfo.setText(Html.fromHtml(sb.toString()));

@@ -32,7 +32,7 @@
                 android:id="@+id/textViewFavTit"
                 style="@style/CodeFontTitle"
                 android:layout_marginLeft="5dip"
-                android:text="Tags" />
+                android:text="@string/tags"/>
 
             <View
                 android:id="@+id/FavLine"

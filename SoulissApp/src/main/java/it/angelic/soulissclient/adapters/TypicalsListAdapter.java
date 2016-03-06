@@ -2,6 +2,7 @@ package it.angelic.soulissclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -114,16 +115,17 @@ public class TypicalsListAdapter extends BaseAdapter {
 
 
         if (opzioni.isLightThemeSelected()) {
-            holder.textslot.setTextColor(context.getResources().getColor(R.color.black));
-            holder.textUpdated.setTextColor(context.getResources().getColor(R.color.black));
-            holder.textStatus.setTextColor(context.getResources().getColor(R.color.black));
-            holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abc_ic_menu_overflow_material));
+
+            holder.textslot.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textUpdated.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textStatus.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.expand.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.overflow_dots));
             holder.expand.setColorFilter(R.color.black);
         }
 		/* Nodo vuota */
         if (tipici.length == 0) {
             holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
-            holder.image.setColorFilter(context.getResources().getColor(R.color.aa_yellow),
+            holder.image.setColorFilter(ContextCompat.getColor(context, R.color.aa_yellow),
                     android.graphics.PorterDuff.Mode.SRC_ATOP);
             holder.textslot.setText(context.getResources().getString(R.string.node_empty));
             holder.textStatus.setText(context.getResources().getString(R.string.node_empty_desc));

@@ -237,6 +237,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     }
 
     private void dropCreate(SQLiteDatabase db) {
+        Log.w(SoulissDB.class.getName(), "DB dropCreate " + db.getPath());
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIGGERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGS);
@@ -250,6 +251,7 @@ public class SoulissDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
+        Log.w(SoulissDB.class.getName(), "DB on create " + database.getPath());
         database.execSQL(DATABASE_CREATE_NODES);
         database.execSQL(DATABASE_CREATE_TYPICALS);
         database.execSQL(DATABASE_CREATE_COMMANDS);

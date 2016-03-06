@@ -628,7 +628,6 @@ public class SoulissDBHelper {
 
     public int truncateImportTables() {
         int ret;
-
         ret = database.delete(SoulissDB.TABLE_LOGS, null, null);
         ret += database.delete(SoulissDB.TABLE_TYPICALS, null, null);
         ret += database.delete(SoulissDB.TABLE_NODES, null, null);
@@ -676,6 +675,11 @@ public class SoulissDBHelper {
         return comments;
     }
 
+    /**
+     * Conta i non vuoti diversi da Souliss_T_related
+     *
+     * @return
+     */
     public int countTypicals() {
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
                 + SoulissDB.COLUMN_TYPICAL + " <> "

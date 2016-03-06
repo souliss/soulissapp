@@ -1,25 +1,25 @@
 package it.angelic.soulissclient.test;
 
+import android.os.Environment;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import java.util.List;
+import java.io.File;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.SoulissTypicalFactory;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 
 /**
  * Created by shine@angelic.it on 02/09/2015.
  */
-public class SoulissTestPersistence extends AndroidTestCase {
+public class SoulissTestExport extends AndroidTestCase {
     private static final short fakeNodeId = 1;
     private static final short fakeSlotId = 1;
     private SoulissDBHelper db;
@@ -70,55 +70,32 @@ public class SoulissTestPersistence extends AndroidTestCase {
         addFakeSensor();
     }
 
+
     @Override
     public void tearDown() throws Exception {
         getContext().deleteDatabase(SoulissDB.DATABASE_NAME);
 
         Log.i(Constants.TAG, "tearDown test DB");
         db.close();
+        File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
+        exportDir.deleteOnExit();
         super.tearDown();
 
     }
 
-    public void testGetAllNodes() {
-        List<SoulissNode> testList = db.getAllNodes();
-        assertEquals(testList.size(), db.countNodes());
+    public void testExport() {
+        ExportDatabaseCSVTask tas = new ExportDatabaseCSVTask();
+
+        tas.loadContext(getContext());
+        tas.execute("");
+
+        File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
+
+        assertTrue(exportDir.exists());
+
+        assertTrue(exportDir.isDirectory());
+        assertTrue(exportDir.listFiles().length > 0);
     }
 
-    public void testLogging() {
-        SoulissTypical11DigitalOutput testTypical = (SoulissTypical11DigitalOutput) db.getTypical(fakeNodeId, fakeSlotId);
 
-        testTypical.getTypicalDTO().setOutput(Constants.Typicals.Souliss_T1n_OnCoil);
-
-        testTypical.getTypicalDTO().refresh(testTypical);
-
-        assertTrue(db.getTypicalLogs(testTypical).size() > 0);
-
-    }
-
-    public void testGetSize() {
-        assertTrue(db.getSize() > 0);
-    }
-
-    public void testGetNodeTypicals() {
-
-        SoulissNode father = db.getSoulissNode(fakeNodeId);
-        List<SoulissTypical> testTypical = db.getNodeTypicals(father);
-
-        assertEquals(2, db.countTypicals());//siam sicuri che solo lui
-        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(Constants.Typicals.Souliss_T51, father, testTypical.get(1).getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
-
-        assertEquals(copy.getTypicalDTO(), testTypical.get(1).getTypicalDTO());
-    }
-
-    public void testGetTypical() {
-        SoulissTypical51AnalogueSensor testTypical = (SoulissTypical51AnalogueSensor) db.getTypical(fakeNodeId, (short) (fakeSlotId + 1));
-
-        SoulissNode father = db.getSoulissNode(fakeNodeId);
-        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(Constants.Typicals.Souliss_T51, father, testTypical.getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
-
-        assertEquals(true, testTypical.isSensor());
-        assertEquals(copy.getTypicalDTO(), testTypical.getTypicalDTO());
-
-    }
 }

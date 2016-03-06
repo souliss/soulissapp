@@ -87,7 +87,7 @@ public class SoulissPreferenceHelper implements Serializable {
         SharedPreferences.Editor editor = customCachedPrefs.edit();
         if (customCachedPrefs.contains("cachedAddress"))
             editor.remove("cachedAddress");
-        editor.commit();
+        editor.apply();
         cachedAddr = null;
     }
 
@@ -162,7 +162,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqHigh = eqHigh;
         Editor pesta = customCachedPrefs.edit();
         pesta.putFloat("eqHigh", eqHigh);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqHighRange() {
@@ -173,7 +173,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqHighRange = eqHighRange;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqHighRange", eqHighRange);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqLow() {
@@ -184,7 +184,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqLow = eqLow;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqLow", eqLow);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqLowRange() {
@@ -195,7 +195,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqLowRange = eqLowRange;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqLowRange", eqLowRange);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqMed() {
@@ -206,7 +206,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqMed = eqMed;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqMed", eqMed);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqMedRange() {
@@ -217,7 +217,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqMedRange = eqMedRange;
         Editor pesta = customCachedPrefs.edit();
         pesta.putFloat("eqMedRange", eqMedRange);
-        pesta.commit();
+        pesta.apply();
     }
 
     public double getHomeLatitude() {
@@ -227,7 +227,7 @@ public class SoulissPreferenceHelper implements Serializable {
     public void setHomeLatitude(double lat) {
         Editor pesta = customCachedPrefs.edit();
         pesta.putString("homelatitude", String.valueOf(lat));
-        pesta.commit();
+        pesta.apply();
     }
 
     public double getHomeLongitude() {
@@ -237,7 +237,7 @@ public class SoulissPreferenceHelper implements Serializable {
     public void setHomeLongitude(double lat) {
         Editor pesta = customCachedPrefs.edit();
         pesta.putString("homelongitude", String.valueOf(lat));
-        pesta.commit();
+        pesta.apply();
     }
 
     public int getHomeThresholdDistance() {
@@ -264,7 +264,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.nodeIndex = nodeIndex;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("nodeIndex", nodeIndex);
-        pesta.commit();
+        pesta.apply();
     }
 
     public String getPrefFont() {
@@ -294,7 +294,7 @@ public class SoulissPreferenceHelper implements Serializable {
     public void setPrevDistance(float in) {
         SharedPreferences.Editor editor = customCachedPrefs.edit();
         editor.putFloat("lastDistance", in);
-        editor.commit();
+        editor.apply();
     }
 
     public int getRemoteTimeoutPref() {
@@ -305,7 +305,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.remoteTimeoutPref = remoteTimeoutPref;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("remoteTimeout", userIndex);
-        pesta.commit();
+        pesta.apply();
     }
 
     public long getServiceLastrun() {
@@ -328,7 +328,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.UDPPort = UDPPort;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("udpport", this.UDPPort);
-        pesta.commit();
+        pesta.apply();
     }
 
     public int getUserIndex() {
@@ -339,7 +339,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.userIndex = userIndex;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("userIndex", userIndex);
-        pesta.commit();
+        pesta.apply();
 
     }
 
@@ -409,7 +409,7 @@ public class SoulissPreferenceHelper implements Serializable {
         antitheftNotify = antith;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("antitheftNotify", antitheftNotify);
-        pesta.commit();
+        pesta.apply();
 
     }
 
@@ -421,7 +421,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.antitheftPresent = antitheftPresent;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("antitheft", antitheftPresent);
-        pesta.commit();
+        pesta.apply();
     }
 
     public boolean isBroadCastEnabled() {
@@ -462,7 +462,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.rgbSendAllDefault = rgbSendAllDefault;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("rgbSendAllDefault", rgbSendAllDefault);
-        pesta.commit();
+        pesta.apply();
     }
 
     public boolean isTaskerEnabled() {
@@ -473,7 +473,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.isTaskerEnabled = isTaskerEnabled;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("taskerEnabled", isTaskerEnabled);
-        pesta.commit();
+        pesta.apply();
     }
 
     public boolean isTaskerInterested() {
@@ -615,7 +615,7 @@ public class SoulissPreferenceHelper implements Serializable {
         // chiamata fuori da prefs
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putString("edittext_IP", newIP);
-        pesta.commit();
+        pesta.apply();
         this.IPPreference = newIP;
     }
 

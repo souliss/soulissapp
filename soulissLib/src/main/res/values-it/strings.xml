@@ -370,11 +370,14 @@
     <string name="welcome_dontshow">Non mostrare più questa schermata</string>
     <string name="welcome_tour_button">Inizia</string>
     <string name="welcome_create_new_conf">Crea Nuova Configurazione</string>
-    <string name="welcome_create_new_conf_desc">Inserisci il nome della configurazione (casa, ufficio, ecc.) e opzionalmente l\'indirizzo IP locale</string>
-    <string name="welcome_insertIp">Indirizzo IP del gateway Souliss (opzionali)</string>
+    <string name="welcome_create_new_conf_desc">Inserisci il nome della configurazione (casa, ufficio, ecc.) e l\'indirizzo IP locale (non obbligatorio)</string>
+    <string name="welcome_insertIp">Indirizzo IP del gateway Souliss (opzionale)</string>
     <string name="welcome_import_hints">Inserire il nome della configurazione e specificare il file .preferences da importare. Se l\'esportazione è stata eseguita tramite SoulissApp, anche il modello dati verrà importato automaticamente</string>
     <string name="welcome_import_title">Importa Configurazione SoulissApp</string>
-    <string name="welcome_import_conf_name">Nome della configurazione (es. Casa, Ufficio, Mare)</string>
+    <string name="welcome_import_conf_name">Nome della configurazione</string>
+    <string name="command_hint">Il comando verrà passato a SoulissApp che tenterà di eseguirlo</string>
+    <string name="conf_name_hint">Inserisci nome configurazione (es. casa, ufficio, campagna)</string>
+    <string name="as_measured">Come misurato</string>
 
 
 </resources>

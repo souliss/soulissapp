@@ -120,9 +120,8 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    // nothing to do here...
-                } else {
+                if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+
                     if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
                         mDrawerLayout.closeDrawer(mDrawerLinear);
                     } else {
