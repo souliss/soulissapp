@@ -21,9 +21,7 @@ import android.app.RemoteInput;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.wearable.activity.ConfirmationActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;

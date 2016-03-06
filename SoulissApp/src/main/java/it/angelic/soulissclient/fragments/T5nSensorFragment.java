@@ -300,7 +300,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		}
 		
 		renderer.setFitLegend(true);
-		renderer.setLegendTextSize(12);
+		//renderer.setLegendTextSize(12);
 
 		XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 		TimeSeries avgSeries = new TimeSeries("Average");
@@ -377,14 +377,14 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			Log.d(TAG, "Adding serie " + (k ) + ": min=" + logs.get(k).min + " max="
 					+ logs.get(k).max
 					 + " AVG=" + logs.get(k).average);
-			
+
 			if (logs.get(k ).min != 0) {
 				minmaxserie.add(logs.get(k ).min,
 						logs.get(k ).max);
 			} else {
 				minmaxserie.add(0, 0);
 			}
-			sunSeries.add(k+1, logs.get(k).average);
+			sunSeries.add(k + 1, logs.get(k).average);
 			Log.d(TAG, "Adding serie " + (k) + " AVG=" + logs.get(k).average);
 		}
 

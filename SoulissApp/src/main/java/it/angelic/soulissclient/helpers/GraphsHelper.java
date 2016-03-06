@@ -32,32 +32,36 @@ public class GraphsHelper {
 		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();
 
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
-		
-		lightRenderer.setDisplayChartValues(false);
+        XYSeriesRenderer aRenderer = new XYSeriesRenderer();
+        XYSeriesRenderer mRenderer = new XYSeriesRenderer();
+
+        lightRenderer.setDisplayChartValues(false);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.CIRCLE);
         lightRenderer.setChartValuesTextSize(16);
-		XYSeriesRenderer aRenderer = new XYSeriesRenderer();
+
 		//aRenderer.setChartValuesSpacing(1.0f);
 		aRenderer.setDisplayChartValues(false);
 		aRenderer.setFillPoints(false);
 		aRenderer.setPointStyle(PointStyle.DIAMOND);
 
-		XYSeriesRenderer mRenderer = new XYSeriesRenderer();
+
 		mRenderer.setDisplayChartValues(false);
 		mRenderer.setFillPoints(false);
 		mRenderer.setPointStyle(PointStyle.DIAMOND);
+
+        lightRenderer.setLineWidth(4);
+        aRenderer.setLineWidth(2);
+        mRenderer.setLineWidth(2);
+
 		if (opzioni.isLightThemeSelected()){
-			lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow_shadow));
-			aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue_shadow));
+            lightRenderer.setColor(ctx.getResources().getColor(R.color.grey_lalpha));
+            aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue_shadow));
 			mRenderer.setColor(ctx.getResources().getColor(R.color.std_red_shadow));
-			lightRenderer.setLineWidth(4);
-			aRenderer.setLineWidth(2);
-			mRenderer.setLineWidth(2);
 		}
 		else{
-		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
-		aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue));
+            lightRenderer.setColor(ctx.getResources().getColor(R.color.grey_alpha));
+            aRenderer.setColor(ctx.getResources().getColor(R.color.std_blue));
 		mRenderer.setColor(ctx.getResources().getColor(R.color.std_red));
 		}
 		renderer.addSeriesRenderer(lightRenderer);
@@ -68,8 +72,8 @@ public class GraphsHelper {
 		renderer.setXLabels(10);
 		renderer.setYLabels(10);
 		renderer.setShowGrid(true);
-		renderer.setMargins(new int[] { 10, 30, 20, 0 });
-		renderer.setYLabelsAlign(Align.RIGHT);
+        renderer.setMargins(new int[]{10, 80, 20, 20});
+        renderer.setYLabelsAlign(Align.RIGHT);
 		// Background fix
 		renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 
@@ -93,14 +97,14 @@ public class GraphsHelper {
 		renderer.setZoomEnabled(true, false);
 		
 		DisplayMetrics metrics = new DisplayMetrics();
-		((Activity) ctx).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        ((Activity) ctx).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        float val = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, metrics);
 
-		renderer.setAxisTitleTextSize(12);
-		renderer.setChartTitleTextSize(16);
-		renderer.setLabelsTextSize(12);
-		renderer.setLegendTextSize(12);
-		//renderer.setLegendHeight(20);
-		
+        renderer.setAxisTitleTextSize(val);
+        renderer.setChartTitleTextSize(val);
+        renderer.setLabelsTextSize(val);
+        renderer.setLegendTextSize(val);
+        //renderer.setLegendHeight(20);
 		return renderer;
 	}
 
@@ -116,15 +120,15 @@ public class GraphsHelper {
 		rangeRenderer.setGradientStop(40, ctx.getResources().getColor(R.color.std_red));
 		
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
-		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
-		lightRenderer.setDisplayChartValues(true);
+        lightRenderer.setColor(ctx.getResources().getColor(R.color.grey_lalpha));
+        lightRenderer.setDisplayChartValues(true);
 		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
         lightRenderer.setChartValuesTextSize(16);
 		// lightRenderer.setGradientEnabled(true);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.DIAMOND);
-        lightRenderer.setLineWidth(4);
-		renderer.addSeriesRenderer(rangeRenderer);
+        lightRenderer.setLineWidth(8);
+        renderer.addSeriesRenderer(rangeRenderer);
 		renderer.addSeriesRenderer(1, lightRenderer);
 		
 		renderer.setShowLegend(false);
@@ -138,8 +142,8 @@ public class GraphsHelper {
 		renderer.addXTextLabel(24, "23:00");
 		renderer.setPanEnabled(true, false);
 		renderer.setShowGrid(true);
-		renderer.setMargins(new int[] { 10, 30, 5, 0 });
-		renderer.setYLabelsAlign(Align.RIGHT);
+        renderer.setMargins(new int[]{10, 80, 20, 20});
+        renderer.setYLabelsAlign(Align.RIGHT);
 		// Background fix
 		renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 
@@ -162,14 +166,14 @@ public class GraphsHelper {
 		renderer.addSeriesRenderer(rangeRenderer);
 		
 		XYSeriesRenderer lightRenderer = new XYSeriesRenderer();
-		lightRenderer.setColor(ctx.getResources().getColor(R.color.std_yellow));
-		lightRenderer.setDisplayChartValues(true);
+        lightRenderer.setColor(ctx.getResources().getColor(R.color.grey_lalpha));
+        lightRenderer.setDisplayChartValues(true);
 		lightRenderer.setChartValuesFormat(new DecimalFormat("#.##"));
         lightRenderer.setChartValuesTextSize(16);
 		lightRenderer.setFillPoints(true);
 		lightRenderer.setPointStyle(PointStyle.DIAMOND);
-		lightRenderer.setLineWidth(4);
-		renderer.addSeriesRenderer(lightRenderer);
+        lightRenderer.setLineWidth(8);
+        renderer.addSeriesRenderer(lightRenderer);
 		
 		renderer.setShowLegend(false);
 		renderer.setBarSpacing(1.5);
@@ -179,32 +183,32 @@ public class GraphsHelper {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MONTH, 0);
 		//renderer.addXTextLabel(2, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-		renderer.addXTextLabel(2,String.format( Locale.getDefault(),"%tB",cal));
-		// cal.set(Calendar.MONTH, 1);
+        renderer.addXTextLabel(2, String.format(Locale.getDefault(), "%tb", cal));
+        // cal.set(Calendar.MONTH, 1);
 		// renderer.addXTextLabel(2, cal.getDisplayName(Calendar.MONTH,
 		// Calendar.SHORT, Locale.getDefault()));
 		cal.set(Calendar.MONTH, 2);
 		//renderer.addXTextLabel(4, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-		renderer.addXTextLabel(4,String.format( Locale.getDefault(),"%tB",cal));
-		// cal.set(Calendar.MONTH, 3);
+        renderer.addXTextLabel(4, String.format(Locale.getDefault(), "%tb", cal));
+        // cal.set(Calendar.MONTH, 3);
 		// renderer.addXTextLabel(4, cal.getDisplayName(Calendar.MONTH,
 		// Calendar.SHORT, Locale.getDefault()));
 		cal.set(Calendar.MONTH, 4);
 		//renderer.addXTextLabel(6, cal.getDisplayName(Calendar.MONTH,  java.util.Calendar.SHORT, Locale.getDefault()));
-		renderer.addXTextLabel(6,String.format( Locale.getDefault(),"%tB",cal));
-		// cal.set(Calendar.MONTH, 5);
+        renderer.addXTextLabel(6, String.format(Locale.getDefault(), "%tb", cal));
+        // cal.set(Calendar.MONTH, 5);
 		// renderer.addXTextLabel(6, cal.getDisplayName(Calendar.MONTH,
 		// Calendar.SHORT, Locale.getDefault()));
 		cal.set(Calendar.MONTH, 6);
 		//renderer.addXTextLabel(8, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-		renderer.addXTextLabel(8,String.format( Locale.getDefault(),"%tB",cal));
-		// cal.set(Calendar.MONTH, 7);
+        renderer.addXTextLabel(8, String.format(Locale.getDefault(), "%tb", cal));
+        // cal.set(Calendar.MONTH, 7);
 		// renderer.addXTextLabel(8, cal.getDisplayName(Calendar.MONTH,
 		// Calendar.SHORT, Locale.getDefault()));
 		cal.set(Calendar.MONTH, 8);
 	//	renderer.addXTextLabel(10, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-		renderer.addXTextLabel(10,String.format( Locale.getDefault(),"%tB",cal));
-		// cal.set(Calendar.MONTH, 9);
+        renderer.addXTextLabel(10, String.format(Locale.getDefault(), "%tb", cal));
+        // cal.set(Calendar.MONTH, 9);
 		// renderer.addXTextLabel(10, cal.getDisplayName(Calendar.MONTH,
 		// Calendar.SHORT, Locale.getDefault()));
 		// cal.set(Calendar.MONTH, 10);
@@ -212,17 +216,17 @@ public class GraphsHelper {
 		// Calendar.SHORT, Locale.getDefault()));
 		cal.set(Calendar.MONTH, 11);
 		//renderer.addXTextLabel(13, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
-		renderer.addXTextLabel(13,String.format( Locale.getDefault(),"%tB",cal));
-		renderer.setPanEnabled(true, false);
+        renderer.addXTextLabel(13, String.format(Locale.getDefault(), "%tb", cal));
+        renderer.setPanEnabled(true, false);
 		renderer.setShowGrid(true);
 		renderer.setAntialiasing(true);
-		renderer.setMargins(new int[] { 10, 30, 5, 0 });
-		renderer.setYLabelsAlign(Align.RIGHT);
+        renderer.setMargins(new int[]{10, 80, 20, 20});
+        renderer.setYLabelsAlign(Align.RIGHT);
 		// Background fix
 		renderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 
-		setChartSettings(ctx, renderer, "Month", "Celsius degrees", 0, 13, Color.GRAY, Color.LTGRAY);
-		return renderer;
+        setChartSettings(ctx, renderer, "", "Celsius degrees", -1, 13, Color.GRAY, Color.LTGRAY);
+        return renderer;
 	}
 
 	/**
