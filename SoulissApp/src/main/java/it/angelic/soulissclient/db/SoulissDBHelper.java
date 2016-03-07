@@ -479,7 +479,6 @@ public class SoulissDBHelper {
         String limitCause = "";
         Calendar now = Calendar.getInstance();
         switch (range) {
-
             case 0:
                 // tutti i dati
                 break;
@@ -498,6 +497,8 @@ public class SoulissDBHelper {
         int tot;
         if (groupBy.compareTo("%m") == 0)
             tot = 12;
+        else if (groupBy.compareTo("%w") == 0)
+            tot = 7;
         else
             tot = 24;
         for (int i = 0; i < tot; i++) {

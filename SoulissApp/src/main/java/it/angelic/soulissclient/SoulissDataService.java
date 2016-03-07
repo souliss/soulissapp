@@ -432,7 +432,7 @@ public class SoulissDataService extends Service implements LocationListener {
         // delle opzioni
 
         if (opts.isDataServiceEnabled()) {
-            reschedule(false);
+            reschedule(true);
         } else {
             Log.i(TAG, "Service disabled");
         }
