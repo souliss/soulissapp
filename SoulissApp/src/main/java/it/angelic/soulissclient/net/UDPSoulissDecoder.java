@@ -342,13 +342,14 @@ public class UDPSoulissDecoder {
             int numberOf = mac.get(4);
             int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 8);
             Log.d(Constants.Net.TAG, "--DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
-            SoulissTypicalDTO dto = new SoulissTypicalDTO();
+            // SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
                 Log.d(Constants.Net.TAG, "---REFRESHING NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
                     SoulissTypical temp = it.getTypical((short) (j % typXnodo));
+                    SoulissTypicalDTO dto = temp.getTypicalDTO();
                     dto.setOutput(mac.get(5 + j));
                     dto.setSlot(((short) (j % typXnodo)));
                     dto.setNodeId((short) (j / typXnodo + tgtnode));
