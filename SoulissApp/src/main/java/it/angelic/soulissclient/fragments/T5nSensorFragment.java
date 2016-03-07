@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.dacer.androidcharts.LineView;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.CombinedXYChart;
@@ -30,6 +32,7 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
@@ -47,6 +50,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 import static it.angelic.soulissclient.Constants.TAG;
+import static it.angelic.soulissclient.Constants.yearFormat;
 import static junit.framework.Assert.assertTrue;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
@@ -54,9 +58,10 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 	private GraphicalView BarChartView;
 	private SoulissTypical collected;
 	private SoulissDBHelper datasource;
+    private LineView lineView;
 
-	private TextView upda;
-	private SoulissPreferenceHelper opzioni;
+    private TextView upda;
+    private SoulissPreferenceHelper opzioni;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -156,6 +161,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		final Spinner graphtSpinner = (Spinner) getActivity().findViewById(R.id.spinnerGraphType);
 		final Spinner rangeSpinner = (Spinner) getActivity().findViewById(R.id.spinnerGraphRange);
 		ImageView icon = (ImageView) getActivity().findViewById(R.id.typ_icon);
+        lineView = (LineView) getActivity().findViewById(R.id.line_view);
 
 		super.refreshStatusIcon();
 
@@ -233,8 +239,8 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 			if (collected.isSensor()) {// STORIA
 				HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
 				tinfo.setText(getString(R.string.historyof) + " " + collected.getNiceName());
-				drawHistoryGraph(layout, logs, collected.getTypicalDTO().getTypical());
-			}
+                drawHistoryGraphAndroChart(layout, logs, collected.getTypicalDTO().getTypical());
+            }
 		} else if (graphType == 2) {
 			if (collected.isSensor()) {// GIORNALIERO
 				SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
@@ -336,7 +342,71 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
 	}
 
-	private void drawGroupedGraph(LinearLayout layout, SparseArray<SoulissGraphData> logs, int bymonth, int type) {
+    /**
+     * @param layout
+     * @param logs
+     * @param type   temp. hum, ecc.
+     */
+    private void drawHistoryGraphAndroChart(LinearLayout layout, HashMap<Date, SoulissHistoryGraphData> logs, int type) {
+        //must*
+        ArrayList<String> test = new ArrayList<String>();
+        ArrayList<Integer> dataList = new ArrayList<Integer>();
+        ArrayList<Integer> dataListMin = new ArrayList<Integer>();
+        ArrayList<Integer> dataListMax = new ArrayList<Integer>();
+
+        Set<Date> dates = logs.keySet();
+        for (Date date2 : dates) {
+            test.add(yearFormat.format(date2));
+            dataList.add((int) logs.get(date2).average);
+            dataListMin.add((int) logs.get(date2).min);
+            dataListMax.add((int) logs.get(date2).max);
+            Log.d(TAG, "Adding serie " + date2 + ": min=" + logs.get(date2).min
+                    + " max=" + logs.get(date2).max);
+        }
+        for (Date date2 : dates) {
+            test.add(yearFormat.format(date2));
+            dataList.add((int) logs.get(date2).average);
+            dataListMin.add((int) logs.get(date2).min);
+            dataListMax.add((int) logs.get(date2).max);
+            Log.d(TAG, "Adding serie " + date2 + ": min=" + logs.get(date2).min
+                    + " max=" + logs.get(date2).max);
+        }
+        for (Date date2 : dates) {
+            test.add(yearFormat.format(date2));
+            dataList.add((int) logs.get(date2).average);
+            dataListMin.add((int) logs.get(date2).min);
+            dataListMax.add((int) logs.get(date2).max);
+            Log.d(TAG, "Adding serie " + date2 + ": min=" + logs.get(date2).min
+                    + " max=" + logs.get(date2).max);
+        }
+        for (Date date2 : dates) {
+            test.add(yearFormat.format(date2));
+            dataList.add((int) logs.get(date2).average);
+            dataListMin.add((int) logs.get(date2).min);
+            dataListMax.add((int) logs.get(date2).max);
+            Log.d(TAG, "Adding serie " + date2 + ": min=" + logs.get(date2).min
+                    + " max=" + logs.get(date2).max);
+        }
+        lineView.setBottomTextList(test);
+        ArrayList<ArrayList<Integer>> dataLists = new ArrayList<>();
+
+        dataLists.add(dataListMax);
+        dataLists.add(dataListMin);
+        dataLists.add(dataList);
+
+        assertTrue(test.size() == dataList.size());
+        lineView.setDataList(dataLists);
+
+        lineView.setDrawDotLine(true);
+        lineView.setShowPopup(LineView.SHOW_POPUPS_NONE);
+
+        layout.setVisibility(View.GONE);
+        lineView.setVisibility(View.VISIBLE);
+        //layout.addView(lineView);
+
+    }
+
+    private void drawGroupedGraph(LinearLayout layout, SparseArray<SoulissGraphData> logs, int bymonth, int type) {
 
 		XYMultipleSeriesRenderer renderer;
 		// sceglie tra ora del giorno e anno
@@ -397,6 +467,9 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 		BarChartView = ChartFactory.getCombinedXYChartView(getActivity(), dataset, renderer, types);
 		layout.removeAllViews();
 		layout.addView(BarChartView);
-	}
+        layout.setVisibility(View.VISIBLE);
+        if (lineView != null)
+            lineView.setVisibility(View.GONE);
+    }
 
 }

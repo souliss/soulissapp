@@ -109,8 +109,6 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                             Log.i(Constants.TAG, "Potential match found, but waiting for the right node");
                         }
                     }
-
-
                 }
             }
             if (cmdSent) {

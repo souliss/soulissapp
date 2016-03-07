@@ -89,6 +89,11 @@ public class SoulissTestExport extends AndroidTestCase {
         tas.loadContext(getContext());
         tas.execute("");
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
 
         assertTrue(exportDir.exists());
