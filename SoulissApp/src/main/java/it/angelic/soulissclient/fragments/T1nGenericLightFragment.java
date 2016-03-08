@@ -302,8 +302,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
     private void refreshHistoryInfo() {
         try {
             StringBuilder str = new StringBuilder();
-            int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
-            if (collected.getOutput() != 0) {
+			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_WEEK);
+			if (collected.getOutput() != 0) {
                 Date when = collected.getTypicalDTO().getLastStatusChange();
                 long swap = new Date().getTime() - when.getTime();
                 msecOn += swap;

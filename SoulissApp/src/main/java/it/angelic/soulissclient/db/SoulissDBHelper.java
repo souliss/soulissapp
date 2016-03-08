@@ -429,8 +429,10 @@ public class SoulissDBHelper {
                 Calendar stop = Calendar.getInstance();
                 start.setTime(accStart);
                 stop.setTime(cur);
-                clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR), start.get(Calendar.MINUTE),
-                        stop.get(Calendar.HOUR), stop.get(Calendar.MINUTE)));
+                Log.d(Constants.TAG, "Aggiungo fetta dalle " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE)
+                        + " alle " + stop.get(Calendar.HOUR_OF_DAY) + ":" + stop.get(Calendar.MINUTE));
+                clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE),
+                        stop.get(Calendar.HOUR_OF_DAY), stop.get(Calendar.MINUTE)));
                 firstGo = true;
             }
         }
