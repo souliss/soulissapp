@@ -73,11 +73,13 @@
         <item>History</item>
         <item>Grouped by Month</item>
         <item>Grouped by Hour</item>
+        <item>Grouped by day</item>
     </string-array>
     <string-array name="graphTypeValues">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
     <string-array name="graphRange">
         <item>All Data</item>

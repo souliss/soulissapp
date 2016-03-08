@@ -14,6 +14,9 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
  */
 public class DbSettingsFragment extends PreferenceFragment {
 
+    private DbPreferenceListener dbPrefListener;
+    private Preference exportDBPref;
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -31,20 +34,21 @@ public class DbSettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.settings_db);
 		Preference createDbPref = findPreference("createdb");
 		Preference dropDbPref = findPreference("dropdb");
-		Preference exportDBPref = findPreference("dbexp");
-		Preference imortDBPref = findPreference("dbimp");
+        exportDBPref = findPreference("dbexp");
+        Preference imortDBPref = findPreference("dbimp");
 		Preference optimDBPref = findPreference("dbopt");
 		Preference dbinfopref = findPreference("dbinfo");
 		Preference sharesettingspref = findPreference("settingshare");
 		/* listeners DB */
-		exportDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-		imortDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-		createDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-		dropDbPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-		optimDBPref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-		sharesettingspref.setOnPreferenceClickListener(new DbPreferenceListener(getActivity()));
-		
-		String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
+        dbPrefListener = new DbPreferenceListener(getActivity());
+        exportDBPref.setOnPreferenceClickListener(dbPrefListener);
+        imortDBPref.setOnPreferenceClickListener(dbPrefListener);
+        createDbPref.setOnPreferenceClickListener(dbPrefListener);
+        dropDbPref.setOnPreferenceClickListener(dbPrefListener);
+        optimDBPref.setOnPreferenceClickListener(dbPrefListener);
+        sharesettingspref.setOnPreferenceClickListener(dbPrefListener);
+
+        String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
 		String nonode = getString(R.string.dialog_disabled_db);
 		final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(
 				strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
@@ -52,5 +56,5 @@ public class DbSettingsFragment extends PreferenceFragment {
 		dbinfopref.setSummary(strMeatMsg);
 
 	}
-	
+
 }

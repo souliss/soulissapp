@@ -18,7 +18,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.helpers.Utils;
+import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.util.SystemUiHider;
 
 /**
@@ -48,7 +48,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                     // Get the path
                     String path = null;
                     try {
-                        path = Utils.getPath(this, uri);
+                        path = SoulissUtils.getPath(this, uri);
                         Log.d(Constants.TAG, "File Path: " + path);
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
@@ -98,7 +98,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                     //Setta Prefs
                     try {
                         File prefs = new File(initialIp.getText().toString());
-                        Utils.loadSharedPreferencesFromFile(WelcomeImportConfigActivity.this, prefs);
+                        SoulissUtils.loadSharedPreferencesFromFile(WelcomeImportConfigActivity.this, prefs);
                         Log.w(Constants.TAG, "IMPORTED prefs: " + prefs.getPath());
 
                         try {
@@ -109,7 +109,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                             String DbPath = SoulissDBHelper.getDatabase().getPath();
                             db.close();
                             File newDb = new File(DbPath);
-                            Utils.fileCopy(bckDb, newDb);
+                            SoulissUtils.fileCopy(bckDb, newDb);
                             Log.w(Constants.TAG, "Relative DB loaded " + bckDb.getPath());
                         } catch (Exception te) {
                             //MAI creato prima? WTF

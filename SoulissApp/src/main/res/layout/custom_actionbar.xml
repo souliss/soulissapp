@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
-    android:id="@+id/my_awesome_toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:elevation="2dp"
-    android:gravity="top"
-
-    android:minHeight="?attr/actionBarSize"
-    app:layout_collapseMode="pin"
-    app:layout_scrollFlags="enterAlways">
+<android.support.v7.widget.Toolbar android:id="@+id/my_awesome_toolbar"
+                                   xmlns:android="http://schemas.android.com/apk/res/android"
+                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                   xmlns:tools="http://schemas.android.com/tools"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="?attr/actionBarSize"
+                                   android:background="?attr/colorPrimary"
+                                   android:elevation="2dp"
+                                   android:gravity="top"
+                                   android:minHeight="?attr/actionBarSize"
+                                   app:layout_collapseMode="pin"
+                                   app:layout_scrollFlags="enterAlways">
 
     <RelativeLayout
         android:id="@+id/actionbar_container"

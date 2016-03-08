@@ -24,6 +24,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDB;
 import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
@@ -62,7 +63,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         //ESPORTA PREFS
         File filePrefs = new File(exportDir, yearFormat.format(now) + "_" + SoulissApp.getCurrentConfig() + "_SoulissApp.prefs");
-        Utils.saveSharedPreferencesToFile(PreferenceManager.getDefaultSharedPreferences(context), context, filePrefs);
+        SoulissUtils.saveSharedPreferencesToFile(PreferenceManager.getDefaultSharedPreferences(context), context, filePrefs);
         return true;
 
     }
@@ -97,6 +98,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     // can use UI thread here
 
     private void saveToFile(File file) throws IOException {
+
         file.createNewFile();
         CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
 

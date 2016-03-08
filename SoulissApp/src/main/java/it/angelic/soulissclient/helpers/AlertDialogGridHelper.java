@@ -94,7 +94,7 @@ public class AlertDialogGridHelper {
                                 tagRecyclerAdapter.setTagArray(tagArray);
                                 try {
                                     for (int i = 0; i < tagArray.length; i++) {
-                                        if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
+                                        if (tagArray[i].getTagId().equals(((SoulissTag) toRename).getTagId())) {
                                             tgtPos = i;
                                             tagRecyclerAdapter.notifyItemChanged(tgtPos);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + tgtPos);
@@ -169,14 +169,10 @@ public class AlertDialogGridHelper {
                         toRename.setIconResourceId(ad.getItemResId(pos));
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
-                            if (list != null) {
 
-                            }
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
-                            if (list != null) {
 
-                            }
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);
@@ -187,8 +183,8 @@ public class AlertDialogGridHelper {
                                 //list.setTagArray(tagArray);
                                 try {
                                     for (int i = 0; i < tagArray.length; i++) {
-                                        if (tagArray[i].getTagId() == ((SoulissTag) toRename).getTagId()) {
-                                            list.getTag(i).setIconResourceId(toRename.getIconResourceId());
+                                        if (tagArray[i].getTagId().equals(((SoulissTag) toRename).getTagId())) {
+                                            ((SoulissTag)list.getTag(i)).setIconResourceId(toRename.getIconResourceId());
                                             list.notifyItemChanged(i);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
                                         }
@@ -246,7 +242,7 @@ public class AlertDialogGridHelper {
                         if (ctx != null) {
                             SoulissTag[] tagArrBck = ctx.getTagArray();
                             for (int i = 0; i < tagArrBck.length; i++) {
-                                if (tagArrBck[i].getTagId() == toRename.getTagId())
+                                if (tagArrBck[i].getTagId().equals(toRename.getTagId()))
                                     tgtPos = i;
                             }
 

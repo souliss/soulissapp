@@ -29,6 +29,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="The command will be passed to SoulissApp in order to execute it"/>
+        android:text="@string/command_hint"/>
 
 </LinearLayout>

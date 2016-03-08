@@ -160,6 +160,22 @@
 
                 </include>
 
+                <TableRow
+                    android:id="@+id/tableRowClock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center"
+                    android:weightSum="4">
+
+                    <view
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        class="com.dacer.androidcharts.ClockPieView"
+                        android:id="@+id/pie_view"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"/>
+                </TableRow>
 
             </TableLayout>
         </RelativeLayout>

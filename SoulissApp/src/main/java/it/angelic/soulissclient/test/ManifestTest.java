@@ -17,16 +17,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
-import android.content.res.XmlResourceParser;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import com.twofortyfouram.locale.PackageUtilities;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -133,60 +128,7 @@ public final class ManifestTest extends AndroidTestCase {
         }
     }
 
-    /**
-     * Verifies the package is configured to be installed to internal memory
-     */
-    @SmallTest
-    public void testManifestInstallLocation() {
-        /*
-         * There are two cases: if the installLocation attribute is present in the Android Manifest, then it
-         * should be explicitly set to internalOnly. If installLocation is missing, then it is assumed the
-         * package is installed to internal memory.
-         */
 
-        /*
-         * There isn't a public API to check the installLocation of an APK, so this is a hacky implementation
-         * to read the value directly from the package's AndroidManifest.
-         */
-
-        /*
-         * Note that in addition to this test, Locale will also check that a plug-in is actually on internal
-         * memory at runtime. This primarily affects custom ROMs that permit moving apps to external memory
-         * even if the app specifies internalOnly.
-         */
-
-        XmlResourceParser xml = null;
-        try {
-            final int internalOnly = 1;
-            xml = getContext().getAssets().openXmlResourceParser("AndroidManifest.xml"); //$NON-NLS-1$
-            for (int eventType = xml.getEventType(); eventType != XmlPullParser.END_DOCUMENT; eventType = xml.nextToken()) {
-                switch (eventType) {
-                    case XmlPullParser.START_TAG: {
-                        if (xml.getName().matches("manifest")) //$NON-NLS-1$
-                        {
-                            for (int x = 0; x < xml.getAttributeCount(); x++) {
-                                if (xml.getAttributeName(x).matches("installLocation")) //$NON-NLS-1$
-                                {
-                                    assertEquals("Install location is incorrect.  Install location must be internalOnly", Integer.parseInt(xml.getAttributeValue(x)), internalOnly); //$NON-NLS-1$
-                                    return;
-                                }
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            }
-        } catch (final IOException e) {
-            throw new RuntimeException(e);
-        } catch (final XmlPullParserException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (null != xml) {
-                xml.close();
-            }
-        }
-    }
 
     /**
      * Helper to get a Locale-compatible host package.

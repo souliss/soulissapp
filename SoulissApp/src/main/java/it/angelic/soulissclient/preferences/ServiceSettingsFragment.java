@@ -3,7 +3,6 @@ package it.angelic.soulissclient.preferences;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
@@ -22,6 +21,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 @TargetApi(11)
 public class ServiceSettingsFragment extends PreferenceFragment {
@@ -38,12 +38,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 		final LocationManager locationManager;
 		// EXPORT
 
-		final String provider;
 		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-		Criteria criteria = new Criteria();
-		// criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		provider = locationManager.getBestProvider(criteria, true);
 		// datasource = new SoulissDBHelper(getActivity());
 
 		addPreferencesFromResource(R.xml.settings_dataservice);
@@ -65,24 +60,31 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
 				try {
-					Location luogo = locationManager.getLastKnownLocation(provider);
-					opzioni.setHomeLatitude(luogo.getLatitude());
-					opzioni.setHomeLongitude(luogo.getLongitude());
-					opzioni.initializePrefs();
+					String provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
+					//Location luogo = locationManager.getLastKnownLocation(provider);
+
+                    // faccio sto schifo per trigger di SecurityException.
+                    Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if (location == null) {
+                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    }
+
+                    opzioni.setHomeLatitude(location.getLatitude());
+                    opzioni.setHomeLongitude(location.getLongitude());
+                    opzioni.initializePrefs();
 					resetMesg(setHomeLocation);
 					Toast.makeText(getActivity(), getString(R.string.opt_homepos_set), Toast.LENGTH_SHORT).show();
 				} catch (SecurityException xe) {
 					Log.e(Constants.TAG, "PERMISSION DENIED", xe);
-					Toast.makeText(getActivity(), "locationManager PERMISSION DENIED FROM USER", Toast.LENGTH_SHORT).show();
-				} catch (Exception e) {
-					Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
+                    Toast.makeText(getActivity(), "location permission denied from user", Toast.LENGTH_SHORT).show();
+                } catch (IllegalArgumentException e) {
+                    Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
 					Toast.makeText(getActivity(), getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();
 				}
 				return true;
 			}
 		});
 
-		
 
 		// Setta home location
 		resetMesg(setHomeLocation);

@@ -33,6 +33,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
@@ -227,7 +228,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                         break;
                 }
             }
-            editor.commit();
+            editor.apply();
             csvReader.close();
             database.close();
             Log.i(TAG, "Import finished");
@@ -251,7 +252,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         try {
             //uguale al dump tranne ultima parte
             File filePrefs = new File(importDir, file.getName().substring(file.getName().lastIndexOf("_")) + "_SoulissApp.prefs");
-            Utils.loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
+            SoulissUtils.loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
         } catch (Exception e) {
             Log.e(TAG, "Errore import prefs", e);
         }

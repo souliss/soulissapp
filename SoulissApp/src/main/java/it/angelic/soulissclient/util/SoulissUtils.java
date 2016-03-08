@@ -1,8 +1,9 @@
-package it.angelic.soulissclient.helpers;
+package it.angelic.soulissclient.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.location.Criteria;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -23,11 +24,15 @@ import java.util.Map;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.db.SoulissDB;
+import it.angelic.soulissclient.db.SoulissDBHelper;
 
 /**
- * Created by Ale on 10/10/2015.
+ * Created by shine@angelic.it on 10/10/2015.
  */
-public class Utils {
+public class SoulissUtils {
+    private static Criteria criteria;
+
     /**
      * utility minutes
      *
@@ -147,6 +152,28 @@ public class Utils {
         return res;
     }
 
+    public static Criteria getGeoCriteria() {
+
+        if (criteria == null)
+            criteria = new Criteria();
+        // criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        return criteria;
+    }
+
+
+    public static void loadSoulissDbFromFile(String config, File importDir) throws IOException {
+
+        File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
+        SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+        SoulissDBHelper.open();
+        String DbPath = SoulissDBHelper.getDatabase().getPath();
+        db.close();
+        File newDb = new File(DbPath);
+        SoulissUtils.fileCopy(bckDb, newDb);
+        Log.w(Constants.TAG, config + " DB loaded: " + bckDb.getPath());
+
+    }
     /*
          * Esporto tutte le pref utente, non quelle cached
          * */
@@ -187,6 +214,9 @@ public class Utils {
                 }
             } catch (Exception e) {
                 // Eat it
+            } finally {
+                if (cursor != null)
+                    cursor.close();
             }
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             return uri.getPath();

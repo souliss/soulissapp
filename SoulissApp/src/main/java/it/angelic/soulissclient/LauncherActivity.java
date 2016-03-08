@@ -1,7 +1,6 @@
 package it.angelic.soulissclient;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,11 +20,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
-import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -58,11 +56,11 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.net.NetUtils;
 import it.angelic.soulissclient.net.webserver.HTTPService;
+import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.views.ListButton;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -75,9 +73,6 @@ import static it.angelic.soulissclient.Constants.TAG;
  */
 public class LauncherActivity extends AbstractStatusedFragmentActivity implements LocationListener {
 
-    protected PendingIntent netListenerPendingIntent;
-    ConnectivityManager mConnectivity;
-    TelephonyManager mTelephony;
     private Timer autoUpdate;
     private TextView basinfo;
     private View basinfoLine;
@@ -86,7 +81,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private CardView cardViewPositionInfo;
     private CardView cardViewServiceInfo;
     private TextView coordinfo;
-    private Criteria criteria;
     private TextView dbwarn;
     private View dbwarnline;
     private Geocoder geocoder;
@@ -97,6 +91,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private boolean mIsBound;
     private boolean mIsWebBound;
     private SoulissPreferenceHelper opzioni;
+
+
     private View posInfoLine;
     private Button programsActivity;
     private String provider;
@@ -211,41 +207,76 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(criteria, true);
+        provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-        if (enabled && (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
-                    + "</b>)"));
-            // ogni minuto, minimo 100 metri
-
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
-
-            locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                    Constants.POSITION_UPDATE_MIN_DIST, this);
-            Location location = locationManager.getLastKnownLocation(provider);
-            // Initialize the location fields
-            if (location != null) {
-                onLocationChanged(location);
+            if (enabled) {
+                coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
+                        + "</b>)"));
+                // ogni minuto, minimo 100 metri
+                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                        Constants.POSITION_UPDATE_MIN_DIST, this);
+                Location location = locationManager.getLastKnownLocation(provider);
+                // Initialize the location fields
+                if (location != null) {
+                    onLocationChanged(location);
+                }
+            } else if (opzioni.getHomeLatitude() != 0) {
+                coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
+                homedist.setVisibility(View.GONE);
+                posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+            } else {
+                coordinfo.setVisibility(View.GONE);
+                homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
+                posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
             }
-        } else if (opzioni.getHomeLatitude() != 0) {
-            coordinfo.setText(Html.fromHtml(getString(R.string.status_geoprovider_disabled)));
-            homedist.setVisibility(View.GONE);
-            posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
-        } else {
-            coordinfo.setVisibility(View.GONE);
-            homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-            posInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+        } else//permesso mancante
+        {
+            ActivityCompat.requestPermissions(LauncherActivity.this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+
         }
     }
 
-	/*
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull
+    String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
+                    Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Log.wtf(TAG, "boh. permesso negato su risposta permesso");
+                        return;
+                    }
+                    locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                            Constants.POSITION_UPDATE_MIN_DIST, this);
+                    Location location = locationManager.getLastKnownLocation(provider);
+                    // Initialize the location fields
+                    if (location != null) {
+                        onLocationChanged(location);
+                    }
+
+                } else {
+                    // quello stronzo.
+                    if (cardViewPositionInfo != null)
+                        cardViewPositionInfo.setVisibility(View.GONE);
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+    /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
 	 * getActionBar().setTitle(mTitle); }
 	 */
@@ -299,14 +330,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
         cardViewFav = (CardView) findViewById(R.id.TagsCard);
         scrollView = (ObservableScrollView) findViewById(R.id.launcherScrollView);
+
+
         // previously invisible view
-
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Get the location manager
-        // Define the criteria how to select the locatioin provider
-        criteria = new Criteria();
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
+
 
         // DRAWER
         initDrawer(this, DrawerMenuHelper.MANUAL);
@@ -328,7 +356,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 try {
                     Thread.sleep(150);
                     runOnUiThread(new Runnable() {
@@ -427,7 +454,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                             Log.e(TAG, "Geocoder ERROR", e);
                             homedist.setVisibility(View.VISIBLE);
                             homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
-                            posInfoLine.setBackgroundColor(getResources().getColor(R.color.std_red));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_red));
                         }
                     });
                     loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
@@ -519,13 +546,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         // timeoutHandler.removeCallbacks(timeExpired);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for Activity#requestPermissions for more details.
+            //...e amen
             return;
         }
         locationManager.removeUpdates(this);
@@ -589,14 +610,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         if (provider != null) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    public void requestPermissions(@NonNull String[] permissions, int requestCode)
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                //return;
+                //   non chiamo request perche c'e altrove
             } else
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                         Constants.POSITION_UPDATE_MIN_DIST, this);
@@ -736,6 +750,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         setServiceInfo();
         setWebServiceInfo();
         setAntiTheftInfo();
+
+
+
+
         if (opzioni.isSoulissIpConfigured() && opzioni.isDataServiceEnabled())
             serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.waiting) + "</b> "));
 
@@ -889,15 +907,15 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
         } else {
             if (mIsBound && mBoundService != null) {
-                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(Utils.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
+                sb.append("<b>").append(getString(R.string.service_lastexec)).append("</b> ").append(SoulissUtils.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
                 sb.append(getString(R.string.opt_serviceinterval)).append(":</b> ")
-                        .append(Utils.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
+                        .append(SoulissUtils.getScaledTime(opzioni.getDataServiceIntervalMsec() / 1000));
             } else {
                 sb.append(getString(R.string.service_warnbound));
                 Intent serviceIntent = new Intent(this, SoulissDataService.class);
                 Log.w(TAG, "Service not bound yet, restarting");
                 startService(serviceIntent);
-                serviceinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+                serviceinfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
             }
         }
         serviceInfo.setText(Html.fromHtml(sb.toString()));
@@ -919,13 +937,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 sb.append(getString(R.string.webservice_enabled));
                 sb.append(NetUtils.getLocalIpAddress()).append(":");
                 sb.append(mBoundWebService.getPort());
-                webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+                webServiceInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_green));
             } else {
                 sb.append(getString(R.string.service_warnbound));
                 Intent serviceIntent = new Intent(this, HTTPService.class);
                 Log.w(TAG, "WEB Service not bound yet, restarting");
                 startService(serviceIntent);
-                webServiceInfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+                webServiceInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
             }
         }
         webserviceInfo.setText(Html.fromHtml(sb.toString()));

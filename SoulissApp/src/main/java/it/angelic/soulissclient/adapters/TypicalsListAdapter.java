@@ -2,6 +2,7 @@ package it.angelic.soulissclient.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +21,7 @@ import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class TypicalsListAdapter extends BaseAdapter {
     Intent parentIntent;
@@ -114,16 +116,17 @@ public class TypicalsListAdapter extends BaseAdapter {
 
 
         if (opzioni.isLightThemeSelected()) {
-            holder.textslot.setTextColor(context.getResources().getColor(R.color.black));
-            holder.textUpdated.setTextColor(context.getResources().getColor(R.color.black));
-            holder.textStatus.setTextColor(context.getResources().getColor(R.color.black));
-            holder.expand.setImageDrawable(context.getResources().getDrawable(R.drawable.abc_ic_menu_moreoverflow_mtrl_alpha));
+
+            holder.textslot.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textUpdated.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textStatus.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.expand.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.overflow_dots));
             holder.expand.setColorFilter(R.color.black);
         }
 		/* Nodo vuota */
         if (tipici.length == 0) {
             holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
-            holder.image.setColorFilter(context.getResources().getColor(R.color.aa_yellow),
+            holder.image.setColorFilter(ContextCompat.getColor(context, R.color.aa_yellow),
                     android.graphics.PorterDuff.Mode.SRC_ATOP);
             holder.textslot.setText(context.getResources().getString(R.string.node_empty));
             holder.textStatus.setText(context.getResources().getString(R.string.node_empty_desc));
@@ -133,7 +136,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		/* INFO slot e Alias Name */
         holder.textslot.setText(tipici[position].getNiceName());
         holder.textUpdated.setText(context.getString(R.string.update) + " "
-                + Utils.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
+                + SoulissUtils.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
                 + context.getString(R.string.manual_slot) + ": " + tipici[position].getSlot());
         holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
                 + ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "

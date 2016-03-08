@@ -10,9 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
     }
-
 }
-
 
 allprojects {
     repositories {
@@ -21,9 +19,13 @@ allprojects {
             url "https://jitpack.io"
         }
     }
-
 }
 
-subprojects {
-    ext.global_buildToolsVersion = "23.0.2"
+project.ext {
+    global_buildToolsVersion = "23.0.2"
+    global_supportLibVersion = "23.2.0"
+    VERSION_NAME = "1.8.0"
+    VERSION_CODE = 173
+    compileSdkVersion = 23
+    targetSdkVersion = 23
 }

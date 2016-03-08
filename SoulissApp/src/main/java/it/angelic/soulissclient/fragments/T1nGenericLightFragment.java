@@ -23,6 +23,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dacer.androidcharts.ClockPieView;
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
@@ -36,13 +37,13 @@ import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_AutoCmd;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCmd;
@@ -55,7 +56,8 @@ import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_Timed;
 import static junit.framework.Assert.assertTrue;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
-	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
+    private ClockPieView clockPieView;
+    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
 	private Button buttPlus;
@@ -181,6 +183,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
         togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
+        clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
+
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
 		if (opzioni.isLogHistoryEnabled()) {
@@ -298,21 +302,24 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
     private void refreshHistoryInfo() {
         try {
             StringBuilder str = new StringBuilder();
-            int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_MONTH);
-            if (collected.getOutput() != 0) {
+			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_WEEK);
+			if (collected.getOutput() != 0) {
                 Date when = collected.getTypicalDTO().getLastStatusChange();
                 long swap = new Date().getTime() - when.getTime();
                 msecOn += swap;
                 String strMeatFormat = getResources().getString(R.string.manual_litfrom);
-				String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(swap));
+				String strMeatMsg = String.format(strMeatFormat, SoulissUtils.getDuration(swap));
 				str.append(strMeatMsg);
-
             }
             str.append("\n");
             String strMeatFormat = getResources().getString(R.string.manual_tyinf);
-			String strMeatMsg = String.format(strMeatFormat, Utils.getDuration(msecOn));
+			String strMeatMsg = String.format(strMeatFormat, SoulissUtils.getDuration(msecOn));
 			str.append(strMeatMsg);
-			infoHistory.setText(str.toString());
+            infoHistory.setText(str.toString());
+
+            //bella questa eh
+            clockPieView.setDate(datasource.getTypicalOnClockPie(collected, TimeRangeEnum.LAST_WEEK));
+
             if (collected.getTypicalDTO().isFavourite()) {
                 infoFavs.setVisibility(View.VISIBLE);
             }else if (collected.getTypicalDTO().isTagged()){
@@ -404,7 +411,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			} else {
 				Log.i(Constants.TAG, "Close fragment");
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane));
+				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane)).commit();
 				/*getActivity().supportFinishAfterTransition();
 				if (opzioni.isAnimationsEnabled())
 					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);*/

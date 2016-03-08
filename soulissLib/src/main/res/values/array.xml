@@ -82,11 +82,13 @@
         <item>History</item>
         <item>Grouped by Month</item>
         <item>Grouped by Hour</item>
+        <item>Day of Week</item>
     </string-array>
     <string-array name="graphTypeValues">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
     <string-array name="graphRange">
         <item>All Data</item>
@@ -104,6 +106,15 @@
         <item>Dry</item>
         <item>Fan</item>
         <item>Heat</item>
+    </string-array>
+    <string-array name="inputChan">
+        <item>Auto</item>
+        <item>Mic</item>
+    </string-array>
+    <!-- see MediaRecorder.AudioSource.MIC -->
+    <string-array name="inputChanValues">
+        <item>0</item>
+        <item>1</item>
     </string-array>
     
     <string-array name="HeatingFunction">

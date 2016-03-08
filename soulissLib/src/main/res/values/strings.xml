@@ -125,7 +125,7 @@
     <string name="manual_showing_typ">Showing Typical Detail: </string>
     <string name="manual_desc">Send commands to hardware Souliss Nodes manually. Tap on a Node to open Detail, long-press to edit it</string>
     <string name="manual_litfrom">Turned on %1$s ago</string>
-    <string name="manual_tyinf">This device has been turned on for %1$s in the last month</string>
+    <string name="manual_tyinf">This device has been turned on for %1$s in the last week</string>
     <string name="node_empty">Node is Empty!</string>
     <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
     <!-- WIDGET -->
@@ -143,7 +143,7 @@
     <string name="status_souliss_notreachable">Souliss not reachable, network error</string>
     <string name="status_geoprovider_enabled">Geo provider <b>enabled</b>, but no data received yet</string>
     <string name="status_provider_selected"> has been selected.</string>
-    <string name="status_geoprovider_disabled">Geo providers <b>disabled</b></string>
+    <string name="status_geoprovider_disabled">Geo providers <b>disabled</b> or permission missing</string>
 
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>
@@ -377,5 +377,8 @@
     <string name="welcome_import_hints">Insert desired configuration name and specify existing .preferences file to import previous settings. If you used SoulissApp \"Export\" feature, this process should load Model as well</string>
     <string name="welcome_import_title">Import SoulissApp Configuration</string>
     <string name="welcome_import_conf_name">Configuration name (ie. Home, Office, seaside)</string>
+    <string name="command_hint">The command will be passed to SoulissApp in order to execute it</string>
+    <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
+    <string name="as_measured">As measured</string>
     >
 </resources>

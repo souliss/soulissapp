@@ -24,6 +24,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 /**
  * Occupa DUE slot, quindi l'output viene dal suo e dal suo fratello destro (related)
@@ -67,7 +68,7 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 		return Constants.twoDecimalFormat.format(getOutputFloat() )+"°C";
 	}
 	public String getOutputFahrenheit() {
-		return Constants.twoDecimalFormat.format(it.angelic.soulissclient.helpers.Utils.celsiusToFahrenheit(getOutputFloat())) + "°F";
+		return Constants.twoDecimalFormat.format(SoulissUtils.celsiusToFahrenheit(getOutputFloat())) + "°F";
 
 	}
 

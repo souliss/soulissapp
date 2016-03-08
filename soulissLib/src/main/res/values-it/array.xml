@@ -73,11 +73,13 @@
         <item>Storia</item>
         <item>Raggruppamento per Mese</item>
         <item>Raggruppamento per Ora</item>
+        <item>Giorno della settimana</item>
     </string-array>
     <string-array name="graphTypeValues">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
     <string-array name="graphRange">
         <item>Tutto</item>

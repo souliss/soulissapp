@@ -219,7 +219,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingLeft="10dip">
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip">
 
                     <TextView
                         android:id="@+id/textOutput1"

@@ -27,6 +27,7 @@ import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -345,11 +346,11 @@ public class ScenesDialogHelper {
      * @param ref tipico da cui ottenere i comandi
      */
     private static void fillCommandSpinner(Spinner tgt, SoulissTypical ref, Context ctx) {
-        SoulissCommand[] strArray = new SoulissCommand[ref.getCommands(ctx).size()];
+        ISoulissCommand[] strArray = new SoulissCommand[ref.getCommands(ctx).size()];
         ref.getCommands(ctx).toArray(strArray);
         // SoulissCommand[] etichette = new SoulissCommand[strArray.length];
 
-        ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(ctx,
+        ArrayAdapter<ISoulissCommand> adapter = new ArrayAdapter<>(ctx,
                 android.R.layout.simple_spinner_item, strArray);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

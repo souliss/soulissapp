@@ -33,6 +33,18 @@ public class ColorPickerView extends View {
     private RelativeLayout colorSwitchRelativeLayout;
     private T16RGBAdvancedFragment.OnColorChangedListener dialogColorChangedListener;
 
+    //Solo per tools
+    ColorPickerView(Context context) {
+        super(context);
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setShader(new SweepGradient(0, 0, colors, null));
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(STROKE_WIDTH);
+
+        centerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        centerPaint.setStrokeWidth(5);
+
+    }
     /**
      * @param context
      * @param listener

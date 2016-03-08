@@ -44,7 +44,6 @@ public class SoulissLogDTO {
         long upd;
         if (logId != null) {
             upd = SoulissDBHelper.getDatabase().update(SoulissDB.TABLE_LOGS, values,
-
                     SoulissDB.COLUMN_LOG_ID + " = " + logId, null);
             if (upd == 0) {
                 upd = SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);

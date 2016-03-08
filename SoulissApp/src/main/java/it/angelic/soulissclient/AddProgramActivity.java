@@ -619,8 +619,8 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             tvcommand.setVisibility(View.VISIBLE);
             tgt.setVisibility(View.VISIBLE);
             SoulissCommand[] strArray = new SoulissCommand[cmds.size()];
-            cmds.toArray(strArray);
-            Log.d(Constants.TAG, "Filled commandspinner, nodeId :" + strArray[0].getCommandDTO().getNodeId());
+            strArray = cmds.toArray(strArray);
+            Log.d(Constants.TAG, "Filled commandspinner, with commands :" + strArray.length);
             ArrayAdapter<SoulissCommand> adapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, strArray);
 

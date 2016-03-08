@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -39,13 +38,14 @@ public class SoulissPreferenceHelper implements Serializable {
     private boolean animations;
     private boolean antitheftNotify;
     private boolean antitheftPresent;
+    private int audioInputChannel;
     private int backoff = 1;
     private boolean broadCastEnabled;
-    private String cachedAddr;
+
     private String chosenHtmlRootfile;
     private Context contx;
     // numNodes ed altri valori cached
-
+    private String cachedAddr;
     private boolean dataServiceEnabled;
     private int dataServiceInterval;
     private float eqHigh;
@@ -87,7 +87,7 @@ public class SoulissPreferenceHelper implements Serializable {
         SharedPreferences.Editor editor = customCachedPrefs.edit();
         if (customCachedPrefs.contains("cachedAddress"))
             editor.remove("cachedAddress");
-        editor.commit();
+        editor.apply();
         cachedAddr = null;
     }
 
@@ -109,6 +109,10 @@ public class SoulissPreferenceHelper implements Serializable {
             setBestAddress();
         }
         return cachedAddr;
+    }
+
+    public int getAudioInputChannel() {
+        return audioInputChannel;
     }
 
     public Long getBackedOffServiceIntervalMsec() {
@@ -147,11 +151,18 @@ public class SoulissPreferenceHelper implements Serializable {
         return eqHigh;
     }
 
+    public void setAudioInputChannel(int audioInputChannel) {
+        this.audioInputChannel = audioInputChannel;
+        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
+        pesta.putInt("audioChan", audioInputChannel);
+        pesta.commit();
+    }
+
     public void setEqHigh(float eqHigh) {
         this.eqHigh = eqHigh;
         Editor pesta = customCachedPrefs.edit();
         pesta.putFloat("eqHigh", eqHigh);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqHighRange() {
@@ -162,7 +173,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqHighRange = eqHighRange;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqHighRange", eqHighRange);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqLow() {
@@ -173,7 +184,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqLow = eqLow;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqLow", eqLow);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqLowRange() {
@@ -184,7 +195,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqLowRange = eqLowRange;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqLowRange", eqLowRange);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqMed() {
@@ -195,7 +206,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqMed = eqMed;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putFloat("eqMed", eqMed);
-        pesta.commit();
+        pesta.apply();
     }
 
     public float getEqMedRange() {
@@ -206,7 +217,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.eqMedRange = eqMedRange;
         Editor pesta = customCachedPrefs.edit();
         pesta.putFloat("eqMedRange", eqMedRange);
-        pesta.commit();
+        pesta.apply();
     }
 
     public double getHomeLatitude() {
@@ -216,7 +227,7 @@ public class SoulissPreferenceHelper implements Serializable {
     public void setHomeLatitude(double lat) {
         Editor pesta = customCachedPrefs.edit();
         pesta.putString("homelatitude", String.valueOf(lat));
-        pesta.commit();
+        pesta.apply();
     }
 
     public double getHomeLongitude() {
@@ -226,7 +237,7 @@ public class SoulissPreferenceHelper implements Serializable {
     public void setHomeLongitude(double lat) {
         Editor pesta = customCachedPrefs.edit();
         pesta.putString("homelongitude", String.valueOf(lat));
-        pesta.commit();
+        pesta.apply();
     }
 
     public int getHomeThresholdDistance() {
@@ -253,7 +264,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.nodeIndex = nodeIndex;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("nodeIndex", nodeIndex);
-        pesta.commit();
+        pesta.apply();
     }
 
     public String getPrefFont() {
@@ -283,7 +294,7 @@ public class SoulissPreferenceHelper implements Serializable {
     public void setPrevDistance(float in) {
         SharedPreferences.Editor editor = customCachedPrefs.edit();
         editor.putFloat("lastDistance", in);
-        editor.commit();
+        editor.apply();
     }
 
     public int getRemoteTimeoutPref() {
@@ -294,7 +305,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.remoteTimeoutPref = remoteTimeoutPref;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("remoteTimeout", userIndex);
-        pesta.commit();
+        pesta.apply();
     }
 
     public long getServiceLastrun() {
@@ -317,7 +328,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.UDPPort = UDPPort;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("udpport", this.UDPPort);
-        pesta.commit();
+        pesta.apply();
     }
 
     public int getUserIndex() {
@@ -328,7 +339,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.userIndex = userIndex;
         Editor pesta = customCachedPrefs.edit();
         pesta.putInt("userIndex", userIndex);
-        pesta.commit();
+        pesta.apply();
 
     }
 
@@ -366,7 +377,7 @@ public class SoulissPreferenceHelper implements Serializable {
         broadCastEnabled = prefs.getBoolean("checkboxBroadcast", true);
         rgbSendAllDefault = prefs.getBoolean("rgbSendAllDefault", true);
         logHistoryEnabled = prefs.getBoolean("checkboxLogHistory", true);
-
+        audioInputChannel = prefs.getInt("audioChan", 0);//0 default, 1 MIC
         eqLow = prefs.getFloat("eqLow", 1f);
         eqMed = prefs.getFloat("eqMed", 1f);
         eqHigh = prefs.getFloat("eqHigh", 1f);
@@ -398,7 +409,7 @@ public class SoulissPreferenceHelper implements Serializable {
         antitheftNotify = antith;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("antitheftNotify", antitheftNotify);
-        pesta.commit();
+        pesta.apply();
 
     }
 
@@ -410,7 +421,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.antitheftPresent = antitheftPresent;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("antitheft", antitheftPresent);
-        pesta.commit();
+        pesta.apply();
     }
 
     public boolean isBroadCastEnabled() {
@@ -451,7 +462,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.rgbSendAllDefault = rgbSendAllDefault;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("rgbSendAllDefault", rgbSendAllDefault);
-        pesta.commit();
+        pesta.apply();
     }
 
     public boolean isTaskerEnabled() {
@@ -462,7 +473,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.isTaskerEnabled = isTaskerEnabled;
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putBoolean("taskerEnabled", isTaskerEnabled);
-        pesta.commit();
+        pesta.apply();
     }
 
     public boolean isTaskerInterested() {
@@ -509,6 +520,7 @@ public class SoulissPreferenceHelper implements Serializable {
         this.webserverEnabled = webserverEnabled;
     }
 
+    static Random r = new Random(Calendar.getInstance().getTimeInMillis());
     public void reload() {
         Log.i(TAG, "Going thru preference reload()");
         // SharedPreferences prefs =
@@ -516,7 +528,7 @@ public class SoulissPreferenceHelper implements Serializable {
         initializePrefs();
         if (userIndex == -1) {// MAI inizializzato, lo calcolo
             /* USER INDEX, statico */
-            Random r = new Random(Calendar.getInstance().getTimeInMillis());
+
             int casual = r.nextInt(Constants.MAX_USER_IDX - 1);// 100
             setUserIndex(casual);
             Log.i(Constants.TAG, "automated userIndex-index Using: " + casual);
@@ -524,19 +536,15 @@ public class SoulissPreferenceHelper implements Serializable {
         if (nodeIndex == -1) {// MAI inizializzato, lo calcolo
             /* PHONE ID diventa node index */
             try {
-                final TelephonyManager tm = (TelephonyManager) contx.getSystemService(Context.TELEPHONY_SERVICE);
-                if (tm.getDeviceId() != null)
-                    nodeIndex = (int) (Long.parseLong(tm.getDeviceId()) % (Constants.MAX_NODE_IDX - 1));
-                else
                     nodeIndex = ((Secure.getString(contx.getContentResolver(), Secure.ANDROID_ID)).hashCode() % (Constants.MAX_NODE_IDX - 1));
                 nodeIndex = Math.abs(nodeIndex);
                 if (nodeIndex == 0)
                     nodeIndex++;
-                Log.w(TAG, "Pref init END. Node index hash = " + userIndex);
+                Log.w(TAG, "Pref init END. Node index = " + nodeIndex);
                 setNodeIndex(nodeIndex);
             } catch (Exception e) {// fallito il computo, uso random e lo salvo
-                Random r = new Random(Calendar.getInstance().getTimeInMillis());
-                int casual = r.nextInt(98) + 1;
+                //Random r = new Random(Calendar.getInstance().getTimeInMillis());
+                int casual = r.nextInt(Constants.MAX_NODE_IDX);
                 setNodeIndex(casual);
                 Log.e(Constants.TAG, "automated Node-index fail " + e.getMessage() + ". Using " + casual);
             }
@@ -607,7 +615,7 @@ public class SoulissPreferenceHelper implements Serializable {
         // chiamata fuori da prefs
         Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
         pesta.putString("edittext_IP", newIP);
-        pesta.commit();
+        pesta.apply();
         this.IPPreference = newIP;
     }
 

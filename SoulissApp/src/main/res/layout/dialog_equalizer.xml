@@ -5,13 +5,29 @@
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
 
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Audio source"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    <Spinner
+        android:id="@+id/spinnerInputChannel"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/textView12"
+        android:entries="@array/inputChan"
+        android:padding="8dp"
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+
+        android:layout_below="@+id/spinnerInputChannel"
         android:text="Low"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -40,8 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:paddingLeft="15dp" />
+        android:layout_below="@+id/textView1"/>
 
     <SeekBar
         android:id="@+id/seekBarMed"
@@ -100,8 +115,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textViewRange1"
-        android:paddingLeft="15dp" />
+        android:layout_below="@+id/textViewRange1"/>
 
     <SeekBar
         android:id="@+id/seekBarRangeMed"
@@ -116,5 +130,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewRange3" />
+
 
 </RelativeLayout>

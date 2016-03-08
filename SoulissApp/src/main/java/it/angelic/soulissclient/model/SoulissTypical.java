@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -266,7 +267,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         cmd.setText(/*SoulissClient.getAppContext().getString(R.string.actions)*/"");
         // cmd.setTextSize(ctx.getResources().getDimension(R.dimen.text_size));
         if (prefs != null && prefs.isLightThemeSelected())
-            cmd.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.black));
+            cmd.setTextColor(ContextCompat.getColor(SoulissApp.getAppContext(), R.color.black));
 
         cmd.setLayoutParams(lp);
         return cmd;
@@ -333,8 +334,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
         values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
         if (isSensor()) {
+            Log.d(it.angelic.soulissclient.Constants.TAG, "saving sensor loggi: " + ((ISoulissTypicalSensor) this).getOutputFloat());
             values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
         } else {
+            Log.d(it.angelic.soulissclient.Constants.TAG, "saving loggi: " + getOutput());
             values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
         }
         try {

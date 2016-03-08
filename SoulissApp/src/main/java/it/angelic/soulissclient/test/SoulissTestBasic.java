@@ -7,7 +7,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 
 /**
- * Created by pegoraro on 02/09/2015.
+ * Created by shine@angelic.it on 02/09/2015.
  */
 public class SoulissTestBasic extends InstrumentationTestCase {
 

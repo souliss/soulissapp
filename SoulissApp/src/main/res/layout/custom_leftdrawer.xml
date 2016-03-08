@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/left_drawer_linear"
-    android:layout_width="280dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="left|start"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              xmlns:fab="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/left_drawer_linear"
+              android:layout_width="280dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="left|start"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <!-- Your drawer content -->
     <RelativeLayout
@@ -36,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Long Souliss Things info text"
+            tools:text="Long Souliss Things info text"
             android:textStyle="bold"
             android:layout_marginLeft="4dp"
             android:id="@+id/textViewDrawerInfo1"

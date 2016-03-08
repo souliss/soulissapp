@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -39,6 +38,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class SoulissDataService extends Service implements LocationListener {
     // LOGGA a parte
@@ -70,6 +70,7 @@ public class SoulissDataService extends Service implements LocationListener {
             opts = SoulissApp.getOpzioni();
             if (!opts.isDbConfigured()) {
                 Log.w(TAG, "Database empty, closing service");
+                setLastupd(Calendar.getInstance());
                 // mHandler.removeCallbacks(mUpdateSoulissRunnable);
                 reschedule(false);
                 // SoulissDataService.this.stopSelf();
@@ -77,6 +78,7 @@ public class SoulissDataService extends Service implements LocationListener {
             }
             if (!opts.getCustomPref().contains("numNodi")) {
                 Log.w(TAG, "Souliss didn't answer yet, rescheduling");
+                setLastupd(Calendar.getInstance());
                 // mHandler.removeCallbacks(mUpdateSoulissRunnable);
                 reschedule(false);
                 return;
@@ -95,6 +97,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 if (cached.compareTo("") == 0
                         || cached.compareTo(SoulissDataService.this.getResources().getString(R.string.unavailable)) == 0) {
                     Log.e(TAG, "Souliss Unavailable, rescheduling");
+                    setLastupd(Calendar.getInstance());
                     reschedule(false);
                     // SoulissDataService.this.stopSelf();
                     return;
@@ -191,6 +194,7 @@ public class SoulissDataService extends Service implements LocationListener {
                         // spostato per consentire comandi manuali
                         if (!opts.isDataServiceEnabled()) {
                             Log.w(TAG, "Service disabled, is not going to be re-scheduled");
+                            setLastupd(Calendar.getInstance());
                             mHandler.removeCallbacks(mUpdateSoulissRunnable);
                             // SoulissDataService.this.stopSelf();
                             return;
@@ -338,11 +342,11 @@ public class SoulissDataService extends Service implements LocationListener {
         startUDPListener();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria crit = new Criteria();
-        crit.setPowerRequirement(Criteria.POWER_LOW);
+
+
         // riporta exec precedenti, non usare ora attuale
         lastupd.setTimeInMillis(opts.getServiceLastrun());
-        provider = locationManager.getBestProvider(crit, true);
+        provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
         db = new SoulissDBHelper(this);
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -428,7 +432,7 @@ public class SoulissDataService extends Service implements LocationListener {
         // delle opzioni
 
         if (opts.isDataServiceEnabled()) {
-            reschedule(false);
+            reschedule(true);
         } else {
             Log.i(TAG, "Service disabled");
         }

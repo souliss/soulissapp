@@ -70,7 +70,7 @@
                 android:singleLine="false"
                 android:text="@string/welcome_create_new_conf"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="32dip"/>
+                android:textSize="32sp"/>
 
             <TextView
                 android:id="@+id/createConfigDesc"
@@ -91,9 +91,9 @@
                 android:layout_below="@id/createConfigDesc"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:hint="Choose Configuration name (es. Home, Office, seaside)"
+                android:hint="@string/conf_name_hint"
                 android:inputType="text"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <AutoCompleteTextView
 
@@ -105,7 +105,7 @@
                 android:layout_below="@id/config_name"
                 android:hint="@string/welcome_insertIp"
                 android:completionThreshold="3"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
         </RelativeLayout>
     </FrameLayout>
 

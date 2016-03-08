@@ -121,7 +121,7 @@
     <string name="manual_showing_typ">Dettaglio dispositivo </string>
     <string name="manual_desc">Invio manuale di comandi. Tap sulla lista per visualizzare il dettaglio, long-press per modificare</string>
         <string name="manual_litfrom">Acceso da %1$s</string>
-    <string name="manual_tyinf">Rimasto acceso per %1$s nell\'ultimo mese</string>
+    <string name="manual_tyinf">Rimasto acceso per %1$s nell\'ultima settimana</string>
     <string name="node_empty">Nodo Vuoto!</string>
     <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
     <!-- WIDGET -->
@@ -139,7 +139,7 @@
     <string name="status_souliss_notreachable">Souliss non raggiungibile, errore di rete</string>
     <string name="status_geoprovider_enabled">Geo provider <b>abilitato</b>, acquisizione posizione in corso</string>
     <string name="status_provider_selected"> selezionato</string>
-    <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b></string>
+    <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b> o permesso mancante</string>
 
     <!-- OPZIONI -->
     <string name="opt_credits">Credits</string>
@@ -370,11 +370,14 @@
     <string name="welcome_dontshow">Non mostrare più questa schermata</string>
     <string name="welcome_tour_button">Inizia</string>
     <string name="welcome_create_new_conf">Crea Nuova Configurazione</string>
-    <string name="welcome_create_new_conf_desc">Inserisci il nome della configurazione (casa, ufficio, ecc.) e opzionalmente l\'indirizzo IP locale</string>
-    <string name="welcome_insertIp">Indirizzo IP del gateway Souliss (opzionali)</string>
+    <string name="welcome_create_new_conf_desc">Inserisci il nome della configurazione (casa, ufficio, ecc.) e l\'indirizzo IP locale (non obbligatorio)</string>
+    <string name="welcome_insertIp">Indirizzo IP del gateway Souliss (opzionale)</string>
     <string name="welcome_import_hints">Inserire il nome della configurazione e specificare il file .preferences da importare. Se l\'esportazione è stata eseguita tramite SoulissApp, anche il modello dati verrà importato automaticamente</string>
     <string name="welcome_import_title">Importa Configurazione SoulissApp</string>
-    <string name="welcome_import_conf_name">Nome della configurazione (es. Casa, Ufficio, Mare)</string>
+    <string name="welcome_import_conf_name">Nome della configurazione</string>
+    <string name="command_hint">Il comando verrà passato a SoulissApp che tenterà di eseguirlo</string>
+    <string name="conf_name_hint">Inserisci nome configurazione (es. casa, ufficio, campagna)</string>
+    <string name="as_measured">Come misurato</string>
 
 
 </resources>

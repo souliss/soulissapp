@@ -22,6 +22,7 @@ import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 /**
  * solo per implementare la posizione e passare  gli eventi
@@ -54,15 +55,15 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         onBindViewHolderImpl(holder, position);
     }
 
-    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, final int i) {
-        Log.d(Constants.TAG, "Element " + i + " set: last upd: " + Utils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
+    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder,final int i) {
+        Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
         ((TypicalCardViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
         ((TypicalCardViewHolder) viewHolder).getTextView().setTag(i);
         mDataset.get(i).setOutputDescView(((TypicalCardViewHolder) viewHolder).getTextViewInfo1());
         ((TypicalCardViewHolder) viewHolder).getTextViewInfo2().setText(SoulissApp.getAppContext().getString(R.string.update) + " "
-                + Utils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
+                + SoulissUtils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         ((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
         LinearLayout sghembo = ((TypicalCardViewHolder) viewHolder).getLinearActionsLayout();
         sghembo.removeAllViews();

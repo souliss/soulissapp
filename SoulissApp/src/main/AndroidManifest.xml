@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 
@@ -38,6 +37,29 @@
                 <action android:name="com.google.android.gms.wearable.BIND_LISTENER"/>
             </intent-filter>
         </service>
+        <service
+            android:name="it.angelic.soulissclient.SoulissDataService"
+            android:enabled="true"
+            android:process=":souliss_process">
+        </service>
+
+        <service
+            android:name="it.angelic.soulissclient.net.webserver.HTTPService"
+            android:enabled="true"
+            android:process=":souliss_process"/>
+
+
+        <activity
+            android:name=".LauncherActivity"
+            android:label="@string/app_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".VoiceCommandActivityNoDisplay"
@@ -86,16 +108,7 @@
                 <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LauncherActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
-            </intent-filter>
-        </activity>
+
         <activity
             android:name="ManualUDPTestActivity"
             android:exported="false"
@@ -251,16 +264,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="it.angelic.soulissclient.SoulissDataService"
-            android:enabled="true"
-            android:process=":souliss_process">
-        </service>
-
-        <service
-            android:name="it.angelic.soulissclient.net.webserver.HTTPService"
-            android:enabled="true"
-            android:process=":souliss_process"/>
 
         <receiver
             android:name="it.angelic.receivers.TaskerFireReceiver"

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.dacer.androidcharts.ClockPieHelper;
+
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -252,7 +254,7 @@ public class SoulissDBHelper {
         //TAG? no join, perche 1 a n
         Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
                 SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
-                        + " AND "+SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
+                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
                 null, null, null, null);
         typTags.moveToFirst();
         while (!typTags.isAfterLast()) {
@@ -404,6 +406,45 @@ public class SoulissDBHelper {
     }
 
     /**
+     * TO TEST
+     *
+     * @param tgt
+     * @param range
+     * @return
+     */
+    public ArrayList<ClockPieHelper> getTypicalOnClockPie(SoulissTypical tgt, TimeRangeEnum range) {
+        ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<ClockPieHelper>();
+        LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
+        boolean firstGo = true;
+        Date accStart = new Date();
+        for (Date cur : comments.keySet()) {
+            Short val = comments.get(cur);
+            if (val != 0) {
+                //spento, inizia nuovo per
+                accStart = cur;
+                firstGo = false;
+            } else if (!firstGo) {
+                Calendar start = Calendar.getInstance();
+                Calendar stop = Calendar.getInstance();
+                start.setTime(accStart);
+                stop.setTime(cur);
+                //aggiungo fetta sse piu di un minuto
+                if (!(start.get(Calendar.HOUR_OF_DAY) == stop.get(Calendar.HOUR_OF_DAY) &&
+                        (start.get(Calendar.MINUTE) == stop.get(Calendar.MINUTE)))) {
+                    Log.d(Constants.TAG, "Aggiungo fetta dalle " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE)
+                            + " alle " + stop.get(Calendar.HOUR_OF_DAY) + ":" + stop.get(Calendar.MINUTE));
+                    clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE),
+                            stop.get(Calendar.HOUR_OF_DAY), stop.get(Calendar.MINUTE)));
+                }
+                firstGo = true;
+            }
+        }
+
+        return clockPieHelperArrayList;
+    }
+
+
+    /**
      * torna la storia di uno slot, raggruppata per giorno
      *
      * @param tgt
@@ -479,7 +520,6 @@ public class SoulissDBHelper {
         String limitCause = "";
         Calendar now = Calendar.getInstance();
         switch (range) {
-
             case 0:
                 // tutti i dati
                 break;
@@ -498,6 +538,8 @@ public class SoulissDBHelper {
         int tot;
         if (groupBy.compareTo("%m") == 0)
             tot = 12;
+        else if (groupBy.compareTo("%w") == 0)
+            tot = 7;
         else
             tot = 24;
         for (int i = 0; i < tot; i++) {
@@ -628,7 +670,6 @@ public class SoulissDBHelper {
 
     public int truncateImportTables() {
         int ret;
-
         ret = database.delete(SoulissDB.TABLE_LOGS, null, null);
         ret += database.delete(SoulissDB.TABLE_TYPICALS, null, null);
         ret += database.delete(SoulissDB.TABLE_NODES, null, null);
@@ -676,6 +717,11 @@ public class SoulissDBHelper {
         return comments;
     }
 
+    /**
+     * Conta i non vuoti diversi da Souliss_T_related
+     *
+     * @return
+     */
     public int countTypicals() {
         Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
                 + SoulissDB.COLUMN_TYPICAL + " <> "

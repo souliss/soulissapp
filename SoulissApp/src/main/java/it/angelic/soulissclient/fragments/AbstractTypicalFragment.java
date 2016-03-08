@@ -2,11 +2,13 @@ package it.angelic.soulissclient.fragments;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -58,7 +60,7 @@ public class AbstractTypicalFragment extends Fragment {
 				statusOnline.invalidate();
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(Constants.TAG, "FAIL refresh status icon: " + e.getMessage());
 		}
 	}
 	public SoulissTypical getCollected() {
