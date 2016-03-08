@@ -121,7 +121,7 @@
     <string name="manual_showing_typ">Dettaglio dispositivo </string>
     <string name="manual_desc">Invio manuale di comandi. Tap sulla lista per visualizzare il dettaglio, long-press per modificare</string>
         <string name="manual_litfrom">Acceso da %1$s</string>
-    <string name="manual_tyinf">Rimasto acceso per %1$s nell\'ultimo mese</string>
+    <string name="manual_tyinf">Rimasto acceso per %1$s nell\'ultima settimana</string>
     <string name="node_empty">Nodo Vuoto!</string>
     <string name="node_empty_desc">Questo nodo non contiene alcun dispositivo. Per aggiornarlo, richiedi la struttura di rete nelle opzioni del DB</string>
     <!-- WIDGET -->

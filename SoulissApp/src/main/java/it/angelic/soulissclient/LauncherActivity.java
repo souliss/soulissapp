@@ -39,8 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dacer.androidcharts.PieHelper;
-import com.dacer.androidcharts.PieView;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 
@@ -82,7 +80,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private CardView cardViewFav;
     private CardView cardViewPositionInfo;
     private CardView cardViewServiceInfo;
-    private CardView cardViewTypicalsInfo;
     private TextView coordinfo;
     private TextView dbwarn;
     private View dbwarnline;
@@ -94,8 +91,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private boolean mIsBound;
     private boolean mIsWebBound;
     private SoulissPreferenceHelper opzioni;
-    private TextView pieChartDesc;
-    private PieView pieView;
+
+
     private View posInfoLine;
     private Button programsActivity;
     private String provider;
@@ -331,12 +328,10 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         cardViewBasicInfo = (CardView) findViewById(R.id.BasicInfoCard);
         cardViewPositionInfo = (CardView) findViewById(R.id.dbAndPositionCard);
         cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
-        cardViewTypicalsInfo = (CardView) findViewById(R.id.TypicalsInfoCard);
         cardViewFav = (CardView) findViewById(R.id.TagsCard);
         scrollView = (ObservableScrollView) findViewById(R.id.launcherScrollView);
 
-        pieView = (PieView) findViewById(R.id.pie_view);
-        pieChartDesc = (TextView) findViewById(R.id.TextViewTypicalsActions);
+
         // previously invisible view
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -355,7 +350,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             cardViewPositionInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
             cardViewServiceInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
             cardViewFav.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
-            cardViewTypicalsInfo.setCardBackgroundColor(ContextCompat.getColor(this, R.color.background_floating_material_light));
         }
 
 
@@ -379,12 +373,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     runOnUiThread(new Runnable() {
                         public void run() {
                             cardViewBasicInfo.setVisibility(View.VISIBLE);
-                        }
-                    });
-                    Thread.sleep(500);
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            cardViewTypicalsInfo.setVisibility(View.VISIBLE);
                         }
                     });
                 } catch (InterruptedException e) {
@@ -763,17 +751,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         setWebServiceInfo();
         setAntiTheftInfo();
 
-        final ArrayList<PieHelper> prappero = tagDb.getTypicalsPie();
 
-        pieView.setOnPieClickListener(new PieView.OnPieClickListener() {
-            @Override
-            public void onPieClick(int index) {
-                if (index != PieView.NO_SELECTED_INDEX)
-                    pieChartDesc.setText(prappero.get(index).getTitle() + " " + getResources().getQuantityString(R.plurals.Devices, (int) (prappero.get(index).getSweep()), (int) (prappero.get(index).getSweep())));
-            }
-        }); //optional
-        pieView.setDate(prappero);
-        pieView.showPercentLabel(true); //optional
 
 
         if (opzioni.isSoulissIpConfigured() && opzioni.isDataServiceEnabled())

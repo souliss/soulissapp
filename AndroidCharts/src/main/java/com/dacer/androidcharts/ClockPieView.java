@@ -41,7 +41,8 @@ public class ClockPieView extends View {
 
     private final int TEXT_COLOR = Color.parseColor("#9B9A9B");
     private final int GRAY_COLOR = Color.parseColor("#D4D3D4");
-    private final int RED_COLOR = Color.argb(50, 255, 0, 51);
+    //40 perche su 7 giorni fa 280, in teoria rosso pieno
+    private final int RED_COLOR = Color.argb(40, 255, 0, 51);
 
     private Runnable animator = new Runnable() {
         @Override

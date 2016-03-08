@@ -125,7 +125,7 @@
     <string name="manual_showing_typ">Showing Typical Detail: </string>
     <string name="manual_desc">Send commands to hardware Souliss Nodes manually. Tap on a Node to open Detail, long-press to edit it</string>
     <string name="manual_litfrom">Turned on %1$s ago</string>
-    <string name="manual_tyinf">This device has been turned on for %1$s in the last month</string>
+    <string name="manual_tyinf">This device has been turned on for %1$s in the last week</string>
     <string name="node_empty">Node is Empty!</string>
     <string name="node_empty_desc">This node contains no typical. If it should, try refreshing DB structure on options</string>
     <!-- WIDGET -->

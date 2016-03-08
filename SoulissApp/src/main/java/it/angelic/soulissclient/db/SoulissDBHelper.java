@@ -9,7 +9,6 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.dacer.androidcharts.ClockPieHelper;
-import com.dacer.androidcharts.PieHelper;
 
 import java.io.File;
 import java.text.ParseException;
@@ -429,43 +428,22 @@ public class SoulissDBHelper {
                 Calendar stop = Calendar.getInstance();
                 start.setTime(accStart);
                 stop.setTime(cur);
-                Log.d(Constants.TAG, "Aggiungo fetta dalle " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE)
-                        + " alle " + stop.get(Calendar.HOUR_OF_DAY) + ":" + stop.get(Calendar.MINUTE));
-                clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE),
-                        stop.get(Calendar.HOUR_OF_DAY), stop.get(Calendar.MINUTE)));
+                //aggiungo fetta sse piu di un minuto
+                if (!(start.get(Calendar.HOUR_OF_DAY) == stop.get(Calendar.HOUR_OF_DAY) &&
+                        (start.get(Calendar.MINUTE) == stop.get(Calendar.MINUTE)))) {
+                    Log.d(Constants.TAG, "Aggiungo fetta dalle " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE)
+                            + " alle " + stop.get(Calendar.HOUR_OF_DAY) + ":" + stop.get(Calendar.MINUTE));
+                    clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE),
+                            stop.get(Calendar.HOUR_OF_DAY), stop.get(Calendar.MINUTE)));
+                }
                 firstGo = true;
             }
         }
+
         return clockPieHelperArrayList;
     }
 
-    /**
-     * TO TEST
-     *
-     * @return
-     */
-    public ArrayList<PieHelper> getTypicalsPie() {
-        int totalInt = 0;
-        ArrayList<PieHelper> clockPieHelperArrayList = new ArrayList<>();
-        HashMap<Short, Integer> typCount = new HashMap<>();
-        List<SoulissNode> nodes = getAllNodes();
-        for (SoulissNode node : nodes) {
-            for (SoulissTypical typ : node.getTypicals()) {
-                int prtt = typCount.get(typ.getTypical()) == null ? 0 : typCount.get(typ.getTypical());
-                typCount.put(typ.getTypical(), prtt + 1);
-                totalInt++;
-            }
-        }
-        Log.i(TAG, "totalInt FETTA:" + totalInt);
-        for (Short chiave : typCount.keySet()) {
-            SoulissTypical ff = new SoulissTypical(opts);
-            ff.getTypicalDTO().setTypical(chiave);
-            Log.i(TAG, "getTypicalsPie FETTA:" + ff.getNiceName() + "val:" + typCount.get(chiave));
-            PieHelper fetta = new PieHelper(100f * typCount.get(chiave) / totalInt, ff.getNiceName());
-            clockPieHelperArrayList.add(fetta);
-        }
-        return clockPieHelperArrayList;
-    }
+
     /**
      * torna la storia di uno slot, raggruppata per giorno
      *

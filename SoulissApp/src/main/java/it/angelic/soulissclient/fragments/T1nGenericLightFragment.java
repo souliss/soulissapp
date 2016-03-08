@@ -310,7 +310,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                 String strMeatFormat = getResources().getString(R.string.manual_litfrom);
 				String strMeatMsg = String.format(strMeatFormat, SoulissUtils.getDuration(swap));
 				str.append(strMeatMsg);
-
             }
             str.append("\n");
             String strMeatFormat = getResources().getString(R.string.manual_tyinf);
