@@ -23,6 +23,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dacer.androidcharts.ClockPieView;
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
@@ -55,7 +56,8 @@ import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_Timed;
 import static junit.framework.Assert.assertTrue;
 
 public class T1nGenericLightFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
-	private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
+    private ClockPieView clockPieView;
+    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
 	private SoulissPreferenceHelper opzioni;
 
 	private Button buttPlus;
@@ -180,6 +182,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
         textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
         togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+
+        clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
@@ -313,6 +317,10 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			String strMeatMsg = String.format(strMeatFormat, SoulissUtils.getDuration(msecOn));
 			str.append(strMeatMsg);
             infoHistory.setText(str.toString());
+
+            //bella questa eh
+            clockPieView.setDate(datasource.getTypicalOnClockPie(collected, TimeRangeEnum.LAST_WEEK));
+
             if (collected.getTypicalDTO().isFavourite()) {
                 infoFavs.setVisibility(View.VISIBLE);
             }else if (collected.getTypicalDTO().isTagged()){

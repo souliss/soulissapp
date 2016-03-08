@@ -334,8 +334,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
         values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
         if (isSensor()) {
+            Log.d(it.angelic.soulissclient.Constants.TAG, "saving sensor loggi: " + ((ISoulissTypicalSensor) this).getOutputFloat());
             values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
         } else {
+            Log.d(it.angelic.soulissclient.Constants.TAG, "saving loggi: " + getOutput());
             values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
         }
         try {

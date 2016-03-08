@@ -170,7 +170,7 @@ public class SoulissTypicalDTO implements Serializable {
      * @return
      */
     public int refresh(@NonNull SoulissTypical parent) {
-        if (SoulissApp.getOpzioni().isLogHistoryEnabled() && !(this instanceof ISoulissTypicalSensor)) {
+        if (SoulissApp.getOpzioni().isLogHistoryEnabled() && !(parent instanceof ISoulissTypicalSensor)) {
             // se e` un sensore viene loggato altrove
             Cursor cursor = SoulissDBHelper.getDatabase().query(
                     SoulissDB.TABLE_TYPICALS,
@@ -181,7 +181,7 @@ public class SoulissTypicalDTO implements Serializable {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             if (dto.getOutput() != getOutput()) {
                 parent.logTypical();// logga il nuovo
-                Log.i(Constants.TAG, "logging node " + this.getNodeId() + " - slot " + parent.getSlot() + " - " + parent.getNiceName() + " new state from: " + dto.getOutput() + " to " + getOutput());
+                Log.i(Constants.TAG, "logging node " + this.getNodeId() + " - slot " + parent.getSlot() + " - " + parent.getNiceName() + " new state from: " + dto.getOutput() + " to " + parent.getOutput());
             }
             cursor.close();
         }

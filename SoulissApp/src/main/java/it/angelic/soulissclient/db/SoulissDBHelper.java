@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.dacer.androidcharts.ClockPieHelper;
+
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -401,6 +403,37 @@ public class SoulissDBHelper {
             }
         }
         return accumulator;
+    }
+
+    /**
+     * TO TEST
+     *
+     * @param tgt
+     * @param range
+     * @return
+     */
+    public ArrayList<ClockPieHelper> getTypicalOnClockPie(SoulissTypical tgt, TimeRangeEnum range) {
+        ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<ClockPieHelper>();
+        LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
+        boolean firstGo = true;
+        Date accStart = new Date();
+        for (Date cur : comments.keySet()) {
+            Short val = comments.get(cur);
+            if (val != 0) {
+                //spento, inizia nuovo per
+                accStart = cur;
+                firstGo = false;
+            } else if (!firstGo) {
+                Calendar start = Calendar.getInstance();
+                Calendar stop = Calendar.getInstance();
+                start.setTime(accStart);
+                stop.setTime(cur);
+                clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR), start.get(Calendar.MINUTE),
+                        stop.get(Calendar.HOUR), stop.get(Calendar.MINUTE)));
+                firstGo = true;
+            }
+        }
+        return clockPieHelperArrayList;
     }
 
     /**
