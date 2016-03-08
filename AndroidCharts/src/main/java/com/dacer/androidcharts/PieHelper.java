@@ -31,7 +31,7 @@ public class PieHelper {
      * @param percent from 0 to 100
      * @param title
      */
-    PieHelper(float percent, String title) {
+    public PieHelper(float percent, String title) {
         this(percent, title, 0);
     }
 

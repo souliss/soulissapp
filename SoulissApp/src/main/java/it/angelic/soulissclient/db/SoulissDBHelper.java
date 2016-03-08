@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.dacer.androidcharts.ClockPieHelper;
+import com.dacer.androidcharts.PieHelper;
 
 import java.io.File;
 import java.text.ParseException;
@@ -254,7 +255,7 @@ public class SoulissDBHelper {
         //TAGS? no join, perche 1 a n
         Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
                 SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
-                        + " AND "+SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
+                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
                 null, null, null, null);
         typTags.moveToFirst();
         while (!typTags.isAfterLast()) {
@@ -436,6 +437,33 @@ public class SoulissDBHelper {
         return clockPieHelperArrayList;
     }
 
+    /**
+     * TO TEST
+     *
+     * @return
+     */
+    public ArrayList<PieHelper> getTypicalsPie() {
+        int totalInt = 0;
+        ArrayList<PieHelper> clockPieHelperArrayList = new ArrayList<>();
+        HashMap<Short, Integer> typCount = new HashMap<>();
+        List<SoulissNode> nodes = getAllNodes();
+        for (SoulissNode node : nodes) {
+            for (SoulissTypical typ : node.getTypicals()) {
+                int prtt = typCount.get(typ.getTypical()) == null ? 0 : typCount.get(typ.getTypical());
+                typCount.put(typ.getTypical(), prtt + 1);
+                totalInt++;
+            }
+        }
+        Log.i(TAG, "totalInt FETTA:" + totalInt);
+        for (Short chiave : typCount.keySet()) {
+            SoulissTypical ff = new SoulissTypical(opts);
+            ff.getTypicalDTO().setTypical(chiave);
+            Log.i(TAG, "getTypicalsPie FETTA:" + ff.getNiceName() + "val:" + typCount.get(chiave));
+            PieHelper fetta = new PieHelper(100f * typCount.get(chiave) / totalInt, ff.getNiceName());
+            clockPieHelperArrayList.add(fetta);
+        }
+        return clockPieHelperArrayList;
+    }
     /**
      * torna la storia di uno slot, raggruppata per giorno
      *
