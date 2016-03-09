@@ -1,8 +1,6 @@
 package it.angelic.soulissclient.preferences;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -28,7 +26,6 @@ public class VisualSettingsFragment extends PreferenceFragment {
 		//final Preference lightThemeCheckBox = (Preference) findPreference("checkboxHoloLight");
 
 		// Rimette i dialogs
-
 		restoreWarns.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 			@Override
@@ -44,15 +41,12 @@ public class VisualSettingsFragment extends PreferenceFragment {
 		restoreWelcome.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
-				SharedPreferences soulissConfigurationPreference = getActivity().getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
 				SoulissApp.saveWelcomeDisabledPreference(false);
 				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
 						Toast.LENGTH_SHORT).show();
 				return true;
 			}
 		});
-
-
 	}
 
 }

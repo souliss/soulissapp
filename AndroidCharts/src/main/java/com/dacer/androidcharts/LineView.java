@@ -53,20 +53,20 @@ public class LineView extends View {
     private Dot pointToSelect;
     private Dot selectedDot;
 
-    private int topLineLength = MyUtils.dip2px(getContext(), 12); // | | ←this
+    private int topLineLength = ChartUtils.dip2px(getContext(), 12); // | | ←this
     //-+-+-
-    private int sideLineLength = MyUtils.dip2px(getContext(), 45) / 3 * 2;// --+--+--+--+--+--+--
+    private int sideLineLength = ChartUtils.dip2px(getContext(), 45) / 3 * 2;// --+--+--+--+--+--+--
     //  ↑this
-    private int backgroundGridWidth = MyUtils.dip2px(getContext(), 45);
+    private int backgroundGridWidth = ChartUtils.dip2px(getContext(), 45);
 
     //Constants
-    private final int popupTopPadding = MyUtils.dip2px(getContext(), 2);
-    private final int popupBottomMargin = MyUtils.dip2px(getContext(), 5);
-    private final int bottomTextTopMargin = MyUtils.sp2px(getContext(), 5);
-    private final int bottomLineLength = MyUtils.sp2px(getContext(), 22);
-    private final int DOT_INNER_CIR_RADIUS = MyUtils.dip2px(getContext(), 2);
-    private final int DOT_OUTER_CIR_RADIUS = MyUtils.dip2px(getContext(), 5);
-    private final int MIN_TOP_LINE_LENGTH = MyUtils.dip2px(getContext(), 12);
+    private final int popupTopPadding = ChartUtils.dip2px(getContext(), 2);
+    private final int popupBottomMargin = ChartUtils.dip2px(getContext(), 5);
+    private final int bottomTextTopMargin = ChartUtils.sp2px(getContext(), 5);
+    private final int bottomLineLength = ChartUtils.sp2px(getContext(), 22);
+    private final int DOT_INNER_CIR_RADIUS = ChartUtils.dip2px(getContext(), 2);
+    private final int DOT_OUTER_CIR_RADIUS = ChartUtils.dip2px(getContext(), 5);
+    private final int MIN_TOP_LINE_LENGTH = ChartUtils.dip2px(getContext(), 12);
     private final int MIN_VERTICAL_GRID_NUM = 4;
     private final int MIN_HORIZONTAL_GRID_NUM = 1;
     private final int BACKGROUND_LINE_COLOR = Color.parseColor("#EEEEEE");
@@ -123,12 +123,12 @@ public class LineView extends View {
         super(context, attrs);
         popupTextPaint.setAntiAlias(true);
         popupTextPaint.setColor(Color.WHITE);
-        popupTextPaint.setTextSize(MyUtils.sp2px(getContext(), 13));
+        popupTextPaint.setTextSize(ChartUtils.sp2px(getContext(), 13));
         popupTextPaint.setStrokeWidth(5);
         popupTextPaint.setTextAlign(Paint.Align.CENTER);
 
         bottomTextPaint.setAntiAlias(true);
-        bottomTextPaint.setTextSize(MyUtils.sp2px(getContext(), 12));
+        bottomTextPaint.setTextSize(ChartUtils.sp2px(getContext(), 12));
         bottomTextPaint.setTextAlign(Paint.Align.CENTER);
         bottomTextPaint.setStyle(Paint.Style.FILL);
         bottomTextPaint.setColor(BOTTOM_TEXT_COLOR);
@@ -338,9 +338,9 @@ public class LineView extends View {
      */
     private void drawPopup(Canvas canvas, String num, Point point, int PopupColor) {
         boolean singularNum = (num.length() == 1);
-        int sidePadding = MyUtils.dip2px(getContext(), singularNum ? 8 : 5);
+        int sidePadding = ChartUtils.dip2px(getContext(), singularNum ? 8 : 5);
         int x = point.x;
-        int y = point.y - MyUtils.dip2px(getContext(), 5);
+        int y = point.y - ChartUtils.dip2px(getContext(), 5);
         Rect popupTextRect = new Rect();
         popupTextPaint.getTextBounds(num, 0, num.length(), popupTextRect);
         Rect r = new Rect(x - popupTextRect.width() / 2 - sidePadding,
@@ -385,7 +385,7 @@ public class LineView extends View {
     private void drawLines(Canvas canvas) {
         Paint linePaint = new Paint();
         linePaint.setAntiAlias(true);
-        linePaint.setStrokeWidth(MyUtils.dip2px(getContext(), 2));
+        linePaint.setStrokeWidth(ChartUtils.dip2px(getContext(), 2));
         for (int k = 0; k < drawDotLists.size(); k++) {
             linePaint.setColor(Color.parseColor(colorArray[k % 3]));
             for (int i = 0; i < drawDotLists.get(k).size() - 1; i++) {
@@ -402,7 +402,7 @@ public class LineView extends View {
     private void drawBackgroundLines(Canvas canvas) {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(MyUtils.dip2px(getContext(), 1f));
+        paint.setStrokeWidth(ChartUtils.dip2px(getContext(), 1f));
         paint.setColor(BACKGROUND_LINE_COLOR);
         PathEffect effects = new DashPathEffect(
                 new float[]{10, 5, 10, 5}, 1);
@@ -526,7 +526,7 @@ public class LineView extends View {
         int targetX;
         int targetY;
         int linenumber;
-        int velocity = MyUtils.dip2px(getContext(), 18);
+        int velocity = ChartUtils.dip2px(getContext(), 18);
 
         Dot(int x, int y, int targetX, int targetY, Integer data, int linenumber) {
             this.x = x;

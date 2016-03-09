@@ -6,7 +6,7 @@ import android.content.Context;
 /**
  * Created by Dacer on 10/8/13.
  */
-public class MyUtils {
+public class ChartUtils {
 
     public static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;

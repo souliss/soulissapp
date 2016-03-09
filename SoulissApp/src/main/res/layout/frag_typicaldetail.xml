@@ -130,5 +130,19 @@
             android:id="@+id/line_view"/>
     </HorizontalScrollView>
 
+    <TableLayout
+        android:id="@+id/containervermegame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/horizontalScrollView">
 
+        <include
+            layout="@layout/tablerow_favinfo">
+
+        </include>
+
+        <include layout="@layout/tablerow_taginfo">
+
+        </include>
+    </TableLayout>
 </RelativeLayout>

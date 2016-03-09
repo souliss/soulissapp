@@ -13,14 +13,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_weight="1"
+        android:layout_margin="4dp"
         android:src="@android:drawable/ic_input_get" />
 
-    <TextView
-        android:id="@+id/textviewHistoryTags"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dip"
-        android:singleLine="false"
+
+    <cuneyt.example.com.tagview.Tag.TagView
+        android:id="@+id/tag_group"
         android:layout_weight="3"
-        android:text="@string/amongTags" />
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"/>
 </TableRow>

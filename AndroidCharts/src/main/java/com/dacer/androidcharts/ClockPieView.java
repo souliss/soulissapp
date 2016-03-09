@@ -67,9 +67,9 @@ public class ClockPieView extends View {
 
     public ClockPieView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        textSize = MyUtils.sp2px(context, 15);
-        lineThickness = MyUtils.dip2px(context, 1);
-        lineLength = MyUtils.dip2px(context, 10);
+        textSize = ChartUtils.sp2px(context, 15);
+        lineThickness = ChartUtils.dip2px(context, 1);
+        lineLength = ChartUtils.dip2px(context, 10);
 
         textPaint = new Paint();
         textPaint.setAntiAlias(true);

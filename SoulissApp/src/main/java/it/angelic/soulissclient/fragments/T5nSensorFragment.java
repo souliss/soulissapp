@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.dacer.androidcharts.LineView;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
+import cuneyt.example.com.tagview.Tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -35,7 +37,6 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -45,13 +46,11 @@ import static junit.framework.Assert.assertTrue;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
 
-    private SoulissTypical collected;
     private SoulissDBHelper datasource;
     private Spinner graphtSpinner;
     private ImageView icon;
     private LineView lineView;
     private TextView nodeinfo;
-    private SoulissPreferenceHelper opzioni;
     private ProgressBar par;
     private Spinner rangeSpinner;
     private TextView upda;
@@ -209,7 +208,12 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         lineView = (LineView) ret.findViewById(R.id.line_view);
         upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
         par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
+        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
+        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
+        tagView = (TagView) ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);
+
+        refreshTagsInfo(tagView);
 
         //Setta STATUS BAR
         super.setCollected(collected);

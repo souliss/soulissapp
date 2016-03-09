@@ -6,6 +6,7 @@
 
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -23,6 +24,8 @@
         android:required="false"/>
 
     <application
+        tools:replace="android:allowBackup"
+
         android:name=".SoulissApp"
         android:allowBackup="false"
         android:hardwareAccelerated="true"

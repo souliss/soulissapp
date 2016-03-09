@@ -137,6 +137,14 @@
 
                 <include layout="@layout/tablerow_toolongwarn"/>
 
+                <include layout="@layout/tablerow_favinfo">
+
+                </include>
+
+                <include layout="@layout/tablerow_taginfo">
+
+                </include>
+
                 <TableRow
                     android:id="@+id/tableRow3"
                     android:layout_width="wrap_content"
@@ -151,14 +159,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"/>
                 </TableRow>
-
-                <include layout="@layout/tablerow_favinfo">
-
-                </include>
-
-                <include layout="@layout/tablerow_taginfo">
-
-                </include>
 
                 <TableRow
                     android:id="@+id/tableRowClock"
