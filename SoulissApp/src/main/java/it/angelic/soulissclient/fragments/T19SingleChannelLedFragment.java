@@ -226,7 +226,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         tagView = (TagView) ret.findViewById(R.id.tag_group);
-        refreshTagsInfo(tagView);
+        refreshTagsInfo();
         // CHANNEL Listeners
         seekChannelIntensity.setOnSeekBarChangeListener(new channelInputListener());
 

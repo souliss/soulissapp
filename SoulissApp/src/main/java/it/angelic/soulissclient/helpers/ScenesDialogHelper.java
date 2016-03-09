@@ -149,11 +149,11 @@ public class ScenesDialogHelper {
                                        final SoulissTag toRename, final SoulissPreferenceHelper opts) {
         Log.w(Constants.TAG, "Removing TAG:" + toRename.getNiceName() + " ID:" + toRename.getTagId());
         if (toRename.getTagId() < 2) {
-            Toast.makeText(cont, "Can't remove default Favourite Tag", Toast.LENGTH_SHORT).show();
+            Toast.makeText(cont, "Can't remove default Favourite cuneyt.Tag", Toast.LENGTH_SHORT).show();
             return;
         }
         AlertDialog.Builder alert = new AlertDialog.Builder(cont);
-        alert.setTitle("Remove Tag");
+        alert.setTitle("Remove cuneyt.Tag");
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         alert.setMessage("Are you sure you want to delete this tag ?");
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),

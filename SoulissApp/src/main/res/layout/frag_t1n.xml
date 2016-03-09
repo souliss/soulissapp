@@ -135,15 +135,10 @@
                         android:text="@string/multicast_desc"/>
                 </TableRow>
 
+                <include layout="@layout/tablerow_taginfo"/>
                 <include layout="@layout/tablerow_toolongwarn"/>
 
-                <include layout="@layout/tablerow_favinfo">
 
-                </include>
-
-                <include layout="@layout/tablerow_taginfo">
-
-                </include>
 
                 <TableRow
                     android:id="@+id/tableRow3"
@@ -178,6 +173,9 @@
                 </TableRow>
 
             </TableLayout>
+
         </RelativeLayout>
+
     </RelativeLayout>
+
 </android.support.v4.widget.NestedScrollView>

@@ -39,5 +39,5 @@ dependencies {
     wearApp project(":soulisswear")
     compile project(':taskerapi')
     compile project(':AndroidCharts')
-    compile project(':app')
+    compile project(':tagView')
 }

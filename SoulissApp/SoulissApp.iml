@@ -96,7 +96,6 @@
     <orderEntry type="library" exported="" name="design-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.2.0" level="project" />
-    <orderEntry type="library" exported="" name="butterknife-6.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.2.0" level="project" />
     <orderEntry type="library" exported="" name="animated-vector-drawable-23.2.0" level="project" />
@@ -105,8 +104,8 @@
     <orderEntry type="module" module-name="taskerapi" exported="" />
     <orderEntry type="module" module-name="soulissLib" exported="" />
     <orderEntry type="module" module-name="ecoGallery" exported="" />
+    <orderEntry type="module" module-name="tagView" exported="" />
     <orderEntry type="module" module-name="AndroidCharts" exported="" />
-    <orderEntry type="module" module-name="app" exported="" />
     <orderEntry type="library" exported="" name="org.apache.http.legacy-android-23" level="project" />
   </component>
 </module>

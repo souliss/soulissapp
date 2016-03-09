@@ -184,8 +184,6 @@
                 </FrameLayout>
             </TableRow>
 
-            <include layout="@layout/tablerow_favinfo"/>
-
             <include layout="@layout/tablerow_taginfo"/>
         </TableLayout>
     </RelativeLayout>

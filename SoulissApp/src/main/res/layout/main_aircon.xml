@@ -5,7 +5,7 @@
                 android:padding="@dimen/external_margin"
                 android:fitsSystemWindows="true">
 
-    <include layout="@layout/custom_actionbar"/>
+
 
     <RelativeLayout
         android:id="@+id/Cont01"
@@ -152,24 +152,16 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/relativeLayoutFan">
 
-            <TableLayout
-                android:id="@+id/containervermegame"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@id/textviewColours">
-
-                <include layout="@layout/tablerow_favinfo">
-
-                </include>
-
-                <include layout="@layout/tablerow_taginfo">
-
-                </include>
-            </TableLayout>
+            <cuneyt.example.com.tagview.Tag.TagView
+                android:id="@+id/tag_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/horizontalScrollView"
+                android:layout_margin="2dp"/>
         </RelativeLayout>
 
         <View

@@ -145,11 +145,10 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
 
-		infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
 		infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         tagView = (TagView) ret.findViewById(R.id.tag_group);
 
-        refreshTagsInfo(tagView);
+		refreshTagsInfo();
 
 		// upcast
 		Integer status = Integer.valueOf(collected.getTypicalDTO().getOutput());

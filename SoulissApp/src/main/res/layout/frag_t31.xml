@@ -111,9 +111,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/asMeasured">
 
-            <include layout="@layout/tablerow_favinfo">
-
-            </include>
 
             <include layout="@layout/tablerow_taginfo">
 

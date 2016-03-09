@@ -138,12 +138,12 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
 
             ret = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + tagIN.getTagId(),
                     null);
-            Log.i(Constants.TAG, "UPD TAG " + tagIN.getTagId());
+            Log.i(Constants.TAG, "UPD TAG " + tagIN.getTagId() + " just updated rows:" + ret);
 
             List<SoulissTypical> typs = tagIN.getAssignedTypicals();
             for (SoulissTypical nowT : typs) {
                 createOrUpdateTagTypicalNode(nowT, tagIN, 0);
-                Log.i(Constants.TAG, "INSERTED TAG->TYP" + nowT.getNiceName() + " TO " + tagIN.getNiceName());
+                Log.i(Constants.TAG, "INSERTED TAG->TYP" + nowT.toString() + " TO " + tagIN.getNiceName());
             }
             return ret;
         } else {//brand new
@@ -184,6 +184,20 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return upd;
     }
 
+    /**
+     * relazione coi typ
+     *
+     * @param nodeIN
+     * @return
+     */
+    public int deleteTagTypicalNode(SoulissTypical nodeIN, SoulissTag toAssoc) {
+
+        int upd = database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
+                + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot()
+                + " AND " + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toAssoc.getTagId(), null);
+        Log.w(Constants.TAG, "DELETE TAG->TYP" + nodeIN.toString() + " TO " + toAssoc.getNiceName());
+        return upd;
+    }
     public List<SoulissTag> getTagsByTypicals(SoulissTypical parent) {
 
         List<SoulissTag> comments = new ArrayList<>();

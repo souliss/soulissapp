@@ -263,7 +263,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         buttMinus.setTag(Constants.Typicals.Souliss_T1n_BrightDown);
         btFlash.setTag(Constants.Typicals.Souliss_T1n_Flash);
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 
         eqText = (TextView) ret.findViewById(R.id.textEqualizer);
@@ -279,7 +278,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         });
 
 
-        refreshTagsInfo(tagView);
+        refreshTagsInfo();
 
         final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

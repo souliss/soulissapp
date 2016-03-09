@@ -28,8 +28,6 @@ import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
-import cuneyt.example.com.tagview.Tag.OnTagDeleteListener;
-import cuneyt.example.com.tagview.Tag.Tag;
 import cuneyt.example.com.tagview.Tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -44,7 +42,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
-import me.drakeet.materialdialog.MaterialDialog;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_AutoCmd;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCmd;
@@ -171,7 +168,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
 		btSleep = (Button) ret.findViewById(R.id.sleep);
 		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
         togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
@@ -182,32 +178,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
 
-        refreshTagsInfo(tagView);
-        tagView.setOnTagDeleteListener(new OnTagDeleteListener() {
+        refreshTagsInfo();
 
-            @Override
-            public void onTagDeleted(final TagView view, final Tag tag, final int position) {
-
-                final MaterialDialog dialog = new MaterialDialog(getActivity());
-                dialog.setMessage("\"" + tag.text + "\" will be delete. Are you sure?");
-                dialog.setPositiveButton("Yes", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        view.remove(position);
-                        //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-                dialog.setNegativeButton("No", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
-
-            }
-        });
         refreshHistoryInfo();
         // datasource.getHistoryTypicalHashMap(collected, 0);
 		//warner.setMinValue(5);

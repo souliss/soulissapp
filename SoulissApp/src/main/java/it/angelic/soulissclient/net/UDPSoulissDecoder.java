@@ -360,7 +360,7 @@ public class UDPSoulissDecoder {
                     //OK, può succedere
                 } catch (Exception e) {
                     Log.w(Constants.Net.TAG, "Errore di calcolo??" + e.getMessage());
-                    // FIXME nodes.get(((int) j / typXnodo) + tgtnode) è SBAGLIATO
+                    // FIXME nodes.get(((int) j / typXnodo) + tgtnode) è SBAGLIATO l'ha detto Dario
                 }
             }
             // Log.d(Constants.TAG, "Refreshed " + refreshed +
