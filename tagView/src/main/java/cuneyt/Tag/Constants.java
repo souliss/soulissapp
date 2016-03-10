@@ -1,4 +1,4 @@
-package cuneyt.example.com.tagview.Tag;
+package cuneyt.tag;
 
 import android.graphics.Color;
 
