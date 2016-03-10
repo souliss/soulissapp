@@ -135,10 +135,8 @@
                         android:text="@string/multicast_desc"/>
                 </TableRow>
 
-                <include layout="@layout/tablerow_taginfo"/>
+
                 <include layout="@layout/tablerow_toolongwarn"/>
-
-
 
                 <TableRow
                     android:id="@+id/tableRow3"
@@ -162,7 +160,6 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:weightSum="4">
-
                     <view
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -172,6 +169,7 @@
                         android:layout_centerHorizontal="true"/>
                 </TableRow>
 
+                <include layout="@layout/tablerow_taginfo"/>
             </TableLayout>
 
         </RelativeLayout>

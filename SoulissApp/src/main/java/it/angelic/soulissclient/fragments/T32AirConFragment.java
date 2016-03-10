@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cuneyt.example.com.tagview.Tag.TagView;
+import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;

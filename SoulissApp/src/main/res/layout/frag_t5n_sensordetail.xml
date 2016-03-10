@@ -109,7 +109,7 @@
                 android:layout_below="@id/spinnerGraphType"/>
         </HorizontalScrollView>
 
-        <cuneyt.example.com.tagview.Tag.TagView
+        <cuneyt.tag.TagView
             android:id="@+id/tag_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

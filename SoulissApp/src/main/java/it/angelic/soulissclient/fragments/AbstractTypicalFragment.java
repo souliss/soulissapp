@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cuneyt.example.com.tagview.Tag.OnTagDeleteListener;
-import cuneyt.example.com.tagview.Tag.Tag;
-import cuneyt.example.com.tagview.Tag.TagView;
+import cuneyt.tag.OnTagDeleteListener;
+import cuneyt.tag.Tag;
+import cuneyt.tag.TagView;
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -90,7 +90,7 @@ public class AbstractTypicalFragment extends Fragment {
                     if (collected.getTypicalDTO().isTagged() || collected.getTypicalDTO().isFavourite()) {
                         SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
                         List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
-
+                        tagView.removeAll();
                         StringBuilder tagInfo = new StringBuilder();
                         tagInfo.append(getString(R.string.amongTags)).append("\n");
                         for (SoulissTag newT : tags) {

@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -136,6 +137,9 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
+        tagView = (TagView) ret.findViewById(R.id.tag_group);
+
+        refreshTagsInfo();
 
         final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
         /**
@@ -259,9 +263,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
-        if (collected.getTypicalDTO().isTagged()) {
-            infoTags.setVisibility(View.VISIBLE);
-        }
+        refreshTagsInfo();
         tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
         //Ask first refresh
         collected.issueRefresh();
@@ -284,7 +286,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
                 collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
                 refreshStatusIcon();
-                refreshTagsInfo();
+                //refreshTagsInfo();
                 Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
                 textviewStatus.setText(collected.getOutputLongDesc());
 
