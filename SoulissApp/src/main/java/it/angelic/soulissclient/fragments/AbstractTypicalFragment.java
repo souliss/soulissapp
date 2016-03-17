@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cuneyt.tag.OnTagDeleteListener;
-import cuneyt.tag.Tag;
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -22,10 +19,13 @@ import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.tagviewlib.OnSimpleTagDeleteListener;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
+import it.angelic.tagviewlib.SimpleTagView;
 
 public class AbstractTypicalFragment extends Fragment {
     protected TableRow infoTags;
-    protected TagView tagView;
+    protected SimpleTagRelativeLayout tagView;
     protected SoulissPreferenceHelper opzioni;
     protected SoulissTypical collected;
     Toolbar actionBar;
@@ -94,11 +94,11 @@ public class AbstractTypicalFragment extends Fragment {
                         StringBuilder tagInfo = new StringBuilder();
                         tagInfo.append(getString(R.string.amongTags)).append("\n");
                         for (SoulissTag newT : tags) {
-                            Tag nuovoTag = new Tag(newT.getNiceName());
-                            nuovoTag.radius = 3f;
-                            nuovoTag.layoutColor = ContextCompat.getColor(getContext(), R.color.grey_alpha);
-                            nuovoTag.isDeletable = true;
-                            Log.w(Constants.TAG, "adding tag to view: " + nuovoTag.text);
+                            SimpleTagView nuovoTag = new SimpleTagView(getContext(), newT.getNiceName());
+                            nuovoTag.setRadius(8);
+                            nuovoTag.setColor(ContextCompat.getColor(getContext(), R.color.black_overlay));
+                            nuovoTag.setDeletable(true);
+                            Log.w(Constants.TAG, "adding tag to view: " + nuovoTag.getText());
                             tagView.addTag(nuovoTag);
                             //badgeView.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.grey_alpha));
                             //tagInfo.append("-").append(newT.getNiceName()).append("\n");
@@ -110,15 +110,15 @@ public class AbstractTypicalFragment extends Fragment {
                     Log.e(Constants.TAG, "FAIL refreshTagsInfo: " + e.getMessage());
                 }
 
-                tagView.setOnTagDeleteListener(new OnTagDeleteListener() {
+                tagView.setOnSimpleTagDeleteListener(new OnSimpleTagDeleteListener() {
 
                     @Override
-                    public void onTagDeleted(final TagView view, final Tag tag, final int position) {
+                    public void onTagDeleted(final SimpleTagRelativeLayout view, final SimpleTagView tag, final int position) {
                         final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
 
                         List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
                         for (SoulissTag tr : toRemoveL) {
-                            if (tr.getName().equals(tag.text)) {
+                            if (tr.getName().equals(tag.getText())) {
                                 Log.w(Constants.TAG, "Removing " + tr.getName() + " from " + collected.toString());
                                 List<SoulissTypical> temp = tr.getAssignedTypicals();
                                 //necessaria sta roba perche non ce equals?

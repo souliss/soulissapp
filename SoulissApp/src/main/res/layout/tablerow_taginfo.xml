@@ -1,12 +1,12 @@
 <TableRow
     android:id="@+id/tableRowTagInfo"
     xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
     android:gravity="left">
 
-    <cuneyt.tag.TagView
+    <it.angelic.tagviewlib.SimpleTagRelativeLayout
         android:id="@+id/tag_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

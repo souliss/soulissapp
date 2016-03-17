@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -39,6 +38,7 @@ import it.angelic.soulissclient.db.SoulissGraphData;
 import it.angelic.soulissclient.db.SoulissHistoryGraphData;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.SoulissUtils;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static it.angelic.soulissclient.Constants.yearFormat;
@@ -205,7 +205,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
         par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        tagView = (TagView) ret.findViewById(R.id.tag_group);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);
 
         refreshTagsInfo();

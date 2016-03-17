@@ -28,7 +28,6 @@ import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -42,6 +41,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_AutoCmd;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCmd;
@@ -172,8 +172,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
         togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-        tagView = (TagView) ret.findViewById(R.id.tag_group);
-        clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
+		tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+		clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());

@@ -25,7 +25,6 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -35,6 +34,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_AsMeasured;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_Cooling;
@@ -137,7 +137,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
-        tagView = (TagView) ret.findViewById(R.id.tag_group);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
 
         refreshTagsInfo();
 

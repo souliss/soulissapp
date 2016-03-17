@@ -36,7 +36,6 @@ import android.widget.TextView;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -45,6 +44,7 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -230,7 +230,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
-        tagView = (TagView) ret.findViewById(R.id.tag_group);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
 
 
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);

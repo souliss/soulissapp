@@ -26,7 +26,6 @@ import android.widget.TextView;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -34,6 +33,7 @@ import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -225,7 +225,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        tagView = (TagView) ret.findViewById(R.id.tag_group);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         refreshTagsInfo();
         // CHANNEL Listeners
         seekChannelIntensity.setOnSeekBarChangeListener(new channelInputListener());

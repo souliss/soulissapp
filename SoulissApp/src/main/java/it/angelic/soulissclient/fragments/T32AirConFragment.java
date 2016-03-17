@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cuneyt.tag.TagView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -32,6 +31,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -146,7 +146,7 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
 
 		infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        tagView = (TagView) ret.findViewById(R.id.tag_group);
+		tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
 
 		refreshTagsInfo();
 

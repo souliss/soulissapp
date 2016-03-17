@@ -122,7 +122,7 @@
             android:layout_below="@id/TagDiv"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <cuneyt.tag.TagView
+        <it.angelic.tagviewlib.SimpleTagRelativeLayout
             android:id="@+id/tag_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
