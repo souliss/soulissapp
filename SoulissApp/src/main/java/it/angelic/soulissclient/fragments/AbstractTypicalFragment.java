@@ -59,7 +59,7 @@ public class AbstractTypicalFragment extends Fragment {
             if (ds != null) {
                 TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
                 TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
-                ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+                ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
                 TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 
                 TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
