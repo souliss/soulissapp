@@ -111,9 +111,8 @@ public class AbstractTypicalFragment extends Fragment {
                 }
 
                 tagView.setOnSimpleTagDeleteListener(new OnSimpleTagDeleteListener() {
-
                     @Override
-                    public void onTagDeleted(final SimpleTagRelativeLayout view, final SimpleTagView tag, final int position) {
+                    public void onTagDeleted(SimpleTagView tag) {
                         final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
 
                         List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
@@ -129,9 +128,10 @@ public class AbstractTypicalFragment extends Fragment {
                                 Log.w(Constants.TAG, "Removed TAG from typical");
                             }
                         }
-                        view.remove(position);
+                        tagView.remove(tag);
                         //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
                     }
+
                 });
 
             }
