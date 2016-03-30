@@ -418,6 +418,7 @@ public class AlertDialogHelper {
     }
 
     public static AlertDialog.Builder deleteConfigDialog(final Context cont, final Spinner toUpdate) {
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final String bckConfig = (String) toUpdate.getSelectedItem();
         alert.setIcon(R.drawable.ic_cancel_24dp);

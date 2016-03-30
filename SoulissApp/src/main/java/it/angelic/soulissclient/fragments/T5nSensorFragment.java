@@ -13,10 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.dacer.androidcharts.LineView;
@@ -39,6 +40,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.SoulissUtils;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static it.angelic.soulissclient.Constants.yearFormat;
@@ -46,13 +48,11 @@ import static junit.framework.Assert.assertTrue;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
 
-    private SoulissTypical collected;
     private SoulissDBHelper datasource;
     private Spinner graphtSpinner;
     private ImageView icon;
     private LineView lineView;
     private TextView nodeinfo;
-    private SoulissPreferenceHelper opzioni;
     private ProgressBar par;
     private Spinner rangeSpinner;
     private TextView upda;
@@ -72,28 +72,26 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
     }
 
 
-    private void drawGroupedGraphAndroChart(LinearLayout layout, SparseArray<SoulissGraphData> logs, int bymonth) {
+    private void drawGroupedGraphAndroChart(SparseArray<SoulissGraphData> logs, ChartTypeEnum bymonth) {
         //must*
         ArrayList<String> test = new ArrayList<>();
         ArrayList<Integer> dataList = new ArrayList<>();
         ArrayList<Integer> dataListMin = new ArrayList<>();
         ArrayList<Integer> dataListMax = new ArrayList<>();
 
-        if (bymonth == 1) {
+        if (bymonth == ChartTypeEnum.GROUP_MONTH) {
+            Calendar cal = Calendar.getInstance();
             for (int k = 0; k < logs.size(); k++) {
-                Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.MONTH, k);
-                //renderer.addXTextLabel(2, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
                 test.add(String.format(Locale.getDefault(), "%tb", cal));
             }
-        } else if (bymonth == 2) {//DAY OF W
+        } else if (bymonth == ChartTypeEnum.GROUP_WEEK) {//DAY OF W
+            Calendar cal = Calendar.getInstance();
             for (int k = 0; k < logs.size(); k++) {
-                Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.DAY_OF_WEEK, k + 1);//+1 perche Calendar.DAY_OF_WEEK parte da 1, domenica
-                //renderer.addXTextLabel(2, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
                 test.add(String.format(Locale.getDefault(), "%ta", cal));
             }
-        } else {
+        } else if (bymonth == ChartTypeEnum.GROUP_HOUR) {
             for (int k = 0; k < logs.size(); k++) {
                 test.add(k + ":00");
             }
@@ -120,17 +118,14 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         lineView.setDataList(dataLists);
         lineView.setDrawDotLine(true);
         lineView.setShowPopup(LineView.SHOW_POPUPS_NONE);
-
-        layout.setVisibility(View.GONE);
         lineView.setVisibility(View.VISIBLE);
 
     }
     /**
-     * @param layout
      * @param logs
      *
      */
-    private void drawHistoryGraphAndroChart(LinearLayout layout, HashMap<Date, SoulissHistoryGraphData> logs) {
+    private void drawHistoryGraphAndroChart(HashMap<Date, SoulissHistoryGraphData> logs) {
         //must*
         ArrayList<String> test = new ArrayList<String>();
         ArrayList<Integer> dataList = new ArrayList<Integer>();
@@ -158,7 +153,6 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         lineView.setDrawDotLine(true);
         lineView.setShowPopup(LineView.SHOW_POPUPS_NONE);
 
-        layout.setVisibility(View.GONE);
         lineView.setVisibility(View.VISIBLE);
         //layout.addView(lineView);
 
@@ -202,7 +196,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
             Log.e(Constants.TAG, "Error retriving Typical Detail:");
 
         }
-        View ret = inflater.inflate(R.layout.frag_typicaldetail, container, false);
+        View ret = inflater.inflate(R.layout.frag_t5n_sensordetail, container, false);
         nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
         graphtSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphType);
         rangeSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphRange);
@@ -210,20 +204,17 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         lineView = (LineView) ret.findViewById(R.id.line_view);
         upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
         par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
+        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);
+
+        refreshTagsInfo();
 
         //Setta STATUS BAR
         super.setCollected(collected);
-            /*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-            super.actionBar.setCustomView(R.layout.custom_actionbar); // load
-			super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-			super.actionBar.setDisplayHomeAsUpEnabled(true);*/
+
         refreshStatusIcon();
 
-			/* SFONDO */
-        // SoulissClient.setBackground((RelativeLayout)
-        // getActivity().findViewById(R.id.containerlista),
-        // getActivity().getWindowManager());
         nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
                 + " " + collected.getTypicalDTO().getSlot());
 
@@ -234,38 +225,9 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
             logs = datasource.getGroupedTypicalLogs(collected, "%H", 0);
             tinfo.setText("Daily temperature range");
 
-		switch (type) {
-		case Constants.Typicals.Souliss_T_TemperatureSensor:
-			renderer.setYAxisMin(-15);
-			renderer.setYAxisMax(50);
-			renderer.setYTitle("Celsius degrees");
-			break;
-		case Constants.Typicals.Souliss_T_HumiditySensor:
-			renderer.setYAxisMin(0);
-			renderer.setYAxisMax(100);
-			renderer.setYTitle("Humidity %");
-			break;
-		case Constants.Typicals.Souliss_T51:// generic
-																			// analog
-			renderer.setYAxisMin(0);
-			renderer.setYAxisMax(100);
-			break;
-		case Constants.Typicals.Souliss_T54_LuxSensor:
-			renderer.setYAxisMin(0);
-			renderer.setYAxisMax(1024);
-			renderer.setYTitle("Lux");
-			break;
-		case Constants.Typicals.Souliss_T58_PressureSensor:
-			renderer.setYAxisMin(0);
-			renderer.setYAxisMax(1024);
-			renderer.setYTitle("hPa");
-			break;
-		default:
-			break;
-		}
-		
-		renderer.setFitLegend(true);
-		renderer.setLegendTextSize(12);
+            drawGroupedGraphAndroChart(layout, logs, 1, collected.getTypicalDTO().getTypical());
+        }*/
+        par.setMax(Constants.MAX_HEALTH);
 
         // ProgressBar sfumata
         final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
@@ -367,34 +329,39 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
     }
 
     private void redrawGraph(int graphType, int timeFilter) {
-        final LinearLayout layout = (LinearLayout) getActivity().findViewById(R.id.trendchart);
-        final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
+        final HorizontalScrollView layout = (HorizontalScrollView) getActivity().findViewById(R.id.horizontalScrollView);
+        //final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
         // Log.i(TAG, selectedVal);
-        if (graphType == 0) {
-            if (collected.isSensor()) {// STORIA
-                HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
-                tinfo.setText(getString(R.string.historyof) + " " + collected.getNiceName());
-                drawHistoryGraphAndroChart(layout, logs);
-            }
-        } else if (graphType == 2) {
-            if (collected.isSensor()) {// HEUR
-                SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
-                tinfo.setText(getString(R.string.daily));
-                drawGroupedGraphAndroChart(layout, logs, 0);
-            }
-        } else if (graphType == 1) {
-            if (collected.isSensor()) {
-                SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
-                tinfo.setText(getString(R.string.monthly));
-                drawGroupedGraphAndroChart(layout, logs, 1);
-            }
-        } else {
-            //%w		day of week 0-6 with Sunday==0
-            if (collected.isSensor()) {
-                SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
-                tinfo.setText(getString(R.string.monthly));
-                drawGroupedGraphAndroChart(layout, logs, 2);
-            }
+        ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
+        switch (tipoGrafico) {
+            case HISTORY:
+                if (collected.isSensor()) {// STORIA
+                    //TODO se vuoto skippa
+                    HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
+                    drawHistoryGraphAndroChart(logs);
+                }
+                break;
+            case GROUP_HOUR://fallback
+                if (collected.isSensor()) {// HEUR
+                    //TODO se vuoto skippa
+                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
+                    drawGroupedGraphAndroChart(logs, tipoGrafico);
+                }
+                break;
+            case GROUP_MONTH:
+                if (collected.isSensor()) {// HEUR
+                    //TODO se vuoto skippa
+                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
+                    drawGroupedGraphAndroChart(logs, tipoGrafico);
+                }
+                break;
+            case GROUP_WEEK:
+                if (collected.isSensor()) {// HEUR
+                    //TODO se vuoto skippa
+                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
+                    drawGroupedGraphAndroChart(logs, tipoGrafico);
+                }
+                break;
         }
     }
 

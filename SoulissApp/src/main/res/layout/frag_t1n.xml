@@ -135,6 +135,7 @@
                         android:text="@string/multicast_desc"/>
                 </TableRow>
 
+
                 <include layout="@layout/tablerow_toolongwarn"/>
 
                 <TableRow
@@ -152,14 +153,6 @@
                         android:layout_weight="3"/>
                 </TableRow>
 
-                <include layout="@layout/tablerow_favinfo">
-
-                </include>
-
-                <include layout="@layout/tablerow_taginfo">
-
-                </include>
-
                 <TableRow
                     android:id="@+id/tableRowClock"
                     android:layout_width="wrap_content"
@@ -167,7 +160,6 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:weightSum="4">
-
                     <view
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -177,7 +169,11 @@
                         android:layout_centerHorizontal="true"/>
                 </TableRow>
 
+                <include layout="@layout/tablerow_taginfo"/>
             </TableLayout>
+
         </RelativeLayout>
+
     </RelativeLayout>
+
 </android.support.v4.widget.NestedScrollView>

@@ -26,24 +26,19 @@ import android.widget.TextView;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-import java.util.List;
-
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
 public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
     private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
-    private SoulissPreferenceHelper opzioni;
 
     private Button buttPlus;
     private Button buttMinus;
@@ -230,21 +225,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
         infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
-        if (collected.getTypicalDTO().isFavourite()) {
-            infoFavs.setVisibility(View.VISIBLE);
-        } else if (collected.getTypicalDTO().isTagged()) {
-            SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
-            List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
-
-            StringBuilder tagInfo = new StringBuilder();
-            tagInfo.append(getString(R.string.amongTags)).append("\n");
-            for (SoulissTag newT : tags) {
-                tagInfo.append("-").append(newT.getNiceName()).append("\n");
-            }
-            infoTags.setVisibility(View.VISIBLE);
-            textviewHistoryTags.setText(tagInfo.toString());
-        }
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+        refreshTagsInfo();
         // CHANNEL Listeners
         seekChannelIntensity.setOnSeekBarChangeListener(new channelInputListener());
 

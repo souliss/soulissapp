@@ -77,9 +77,9 @@ public class TagListAdapter extends BaseAdapter {
 		// if (name == null || "".compareTo(name) == 0)
 		// name = context.getString(appoggio.getAliasNameResId());
 		holder.textCmd.setText(soulissTags[position].getName());
-		
-		
-		String strMeatFormat = "This Tag contains %1$d devices";
+
+
+		String strMeatFormat = "This cuneyt.Tag contains %1$d devices";
 		holder.textCmdWhen.setText(String.format(strMeatFormat, appoggio.size()));
 		
 		//EMPTY space for info

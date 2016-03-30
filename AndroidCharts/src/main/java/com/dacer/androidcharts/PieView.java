@@ -81,7 +81,7 @@ public class PieView extends View {
         textPaint = new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setColor(Color.WHITE);
-        textPaint.setTextSize(MyUtils.sp2px(getContext(), 13));
+        textPaint.setTextSize(ChartUtils.sp2px(getContext(), 13));
         textPaint.setStrokeWidth(5);
         textPaint.setTextAlign(Paint.Align.CENTER);
         pieCenterPoint = new Point();

@@ -26,22 +26,18 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
 
 public class T32AirConFragment extends AbstractTypicalFragment {
 	private SoulissDBHelper datasource;
-	private TableRow infoFavs;
-	private TableRow infoTags;
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -68,8 +64,6 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 	Button btOn;
 	private SoulissTypical collected;
 	private SoulissTypical related;
-	private SoulissPreferenceHelper opzioni;
-	private TextView textviewHistoryTags;
 
 	public static T32AirConFragment newInstance(int index, SoulissTypical content) {
 		T32AirConFragment f = new T32AirConFragment();
@@ -151,24 +145,10 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
 		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
 
-		infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
 		infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-		textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
+		tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
 
-		if (collected.getTypicalDTO().isFavourite()) {
-			infoFavs.setVisibility(View.VISIBLE);
-		} else if (collected.getTypicalDTO().isTagged()) {
-			SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
-			List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
-
-			StringBuilder tagInfo = new StringBuilder();
-			tagInfo.append(getString(R.string.amongTags)).append("\n");
-			for (SoulissTag newT : tags) {
-				tagInfo.append("-").append(newT.getNiceName()).append("\n");
-			}
-			infoTags.setVisibility(View.VISIBLE);
-			textviewHistoryTags.setText(tagInfo.toString());
-		}
+		refreshTagsInfo();
 
 		// upcast
 		Integer status = Integer.valueOf(collected.getTypicalDTO().getOutput());

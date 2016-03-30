@@ -264,7 +264,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         try {
             View ds = actionBar.getRootView();
             if (ds != null) {
-                ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+                ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
                 TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 
                 if (!opzioni.isSoulissReachable()) {
@@ -299,7 +299,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     public void setSynching() {
         View ds = actionBar.getRootView();
         if (ds != null) {
-            ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
+            ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
             TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
             switch (numTries) {//sempre piu verso il rosso
                 case 0:

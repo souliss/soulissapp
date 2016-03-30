@@ -25,19 +25,16 @@ import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.List;
-
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_AsMeasured;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_Cooling;
@@ -60,12 +57,9 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
     private Spinner functionSpinner;
     private Spinner fanSpiner;
-    private TextView textviewHistoryTags;
     private TextView textviewStatus;
     private Button buttOn;
     private Button buttOff;
-    private TableRow infoFavs;
-    private TableRow infoTags;
     private Button asMeasuredButton;
     private NumberPicker tempSlider;
     private ImageView imageFan3;
@@ -138,13 +132,14 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         tempSlider = (NumberPicker) ret.findViewById(R.id.tempSlider);
         functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
         fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         asMeasuredButton = (Button) ret.findViewById(R.id.asMeasuredButton);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
-        textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+
+        refreshTagsInfo();
 
         final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
         /**
@@ -268,11 +263,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
-        if (collected.getTypicalDTO().isFavourite()) {
-            infoFavs.setVisibility(View.VISIBLE);
-        } else if (collected.getTypicalDTO().isTagged()) {
-            infoTags.setVisibility(View.VISIBLE);
-        }
+        refreshTagsInfo();
         tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
         //Ask first refresh
         collected.issueRefresh();
@@ -295,20 +286,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
                 collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
                 refreshStatusIcon();
-                if (collected.getTypicalDTO().isFavourite()) {
-                    infoFavs.setVisibility(View.VISIBLE);
-                } else if (collected.getTypicalDTO().isTagged()) {
-                    SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
-                    List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
-
-                    StringBuilder tagInfo = new StringBuilder();
-                    tagInfo.append(getString(R.string.amongTags)).append("\n");
-                    for (SoulissTag newT : tags) {
-                        tagInfo.append("-").append(newT.getNiceName()).append("\n");
-                    }
-                    infoTags.setVisibility(View.VISIBLE);
-                    textviewHistoryTags.setText(tagInfo.toString());
-                }
+                //refreshTagsInfo();
                 Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
                 textviewStatus.setText(collected.getOutputLongDesc());
 

@@ -185,7 +185,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     loopMode = 4;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            mProgressDialog.setMessage("Importing Tag Data, please be patient");
+                            mProgressDialog.setMessage("Importing cuneyt.Tag Data, please be patient");
                         }
                     });
                     continue;
@@ -195,7 +195,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     loopMode = 5;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            mProgressDialog.setMessage("Importing Tag Data, please be patient");
+                            mProgressDialog.setMessage("Importing cuneyt.Tag Data, please be patient");
                         }
                     });
                     continue;

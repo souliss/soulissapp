@@ -97,7 +97,8 @@ public class SoulissDataService extends Service implements LocationListener {
                 if (cached.compareTo("") == 0
                         || cached.compareTo(SoulissDataService.this.getResources().getString(R.string.unavailable)) == 0) {
                     Log.e(TAG, "Souliss Unavailable, rescheduling");
-                    setLastupd(Calendar.getInstance());
+                    //DONT REFRESH last exec. We want a re-schedule soon
+                    //setLastupd(Calendar.getInstance());
                     reschedule(false);
                     // SoulissDataService.this.stopSelf();
                     return;

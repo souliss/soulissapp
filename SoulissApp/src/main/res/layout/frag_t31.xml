@@ -105,26 +105,36 @@
                 android:text="@string/as_measured"/>
         </RelativeLayout>
 
-        <TableLayout
-            android:id="@+id/containerfavtag"
+        <View
+            android:id="@+id/TagDiv"
             android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_below="@id/asMeasured"
+            android:background="#FFCCCCCC"/>
+
+        <TextView
+            android:id="@+id/TextViewTagDescgroup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/asMeasured">
+            android:capitalize="words"
+            android:layout_marginLeft="5dip"
+            android:text="@string/tag"
+            android:layout_below="@id/TagDiv"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-            <include layout="@layout/tablerow_favinfo">
+        <it.angelic.tagviewlib.SimpleTagRelativeLayout
+            android:id="@+id/tag_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextViewTagDescgroup"
+            android:layout_margin="2dp"/>
 
-            </include>
-
-            <include layout="@layout/tablerow_taginfo">
-
-            </include>
-        </TableLayout>
 
         <RelativeLayout
             android:id="@+id/fanContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/containerfavtag">
+            android:layout_below="@id/tag_group">
 
             <View
                 android:layout_width="fill_parent"

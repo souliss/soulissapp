@@ -345,7 +345,6 @@ public class UDPSoulissDecoder {
             // SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
-                Log.d(Constants.Net.TAG, "---REFRESHING NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
                 try {
                     SoulissNode it = nodes.get(((int) j / typXnodo) + tgtnode);
                     SoulissTypical temp = it.getTypical((short) (j % typXnodo));
@@ -355,12 +354,13 @@ public class UDPSoulissDecoder {
                     dto.setNodeId((short) (j / typXnodo + tgtnode));
                     // sufficiente una refresh
                     dto.refresh(temp);
+                    Log.d(Constants.Net.TAG, "---REFRESHED NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
                 } catch (NotFoundException e) {
                     // skipping unexistent typical");
                     //OK, può succedere
                 } catch (Exception e) {
                     Log.w(Constants.Net.TAG, "Errore di calcolo??" + e.getMessage());
-                    // FIXME nodes.get(((int) j / typXnodo) + tgtnode) è SBAGLIATO
+                    // FIXME nodes.get(((int) j / typXnodo) + tgtnode) è SBAGLIATO l'ha detto Dario
                 }
             }
             // Log.d(Constants.TAG, "Refreshed " + refreshed +

@@ -36,18 +36,15 @@ import android.widget.TextView;
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 
-import java.util.List;
-
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -103,8 +100,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private OnColorChangedListener dialogColorChangedListener = null;
     private TextView eqText;
     private TextView greenChanabel;
-    private TableRow infoFavs;
-    private TableRow infoTags;
     // private CheckBox checkMusic;
     private VisualizerView mVisualizerView;
     private FrameLayout mVisualizerViewFrame;
@@ -117,7 +112,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private TableRow tableRowChannel;
     private TableRow tableRowEq;
     private TableRow tableRowVis;
-    private TextView textviewHistoryTags;
     private SwitchCompat togMulticast;
 
     public static T16RGBAdvancedFragment newInstance(int index, SoulissTypical content) {
@@ -236,6 +230,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
+        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
 
 
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
@@ -268,9 +263,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         buttMinus.setTag(Constants.Typicals.Souliss_T1n_BrightDown);
         btFlash.setTag(Constants.Typicals.Souliss_T1n_Flash);
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
 
         eqText = (TextView) ret.findViewById(R.id.textEqualizer);
 
@@ -285,20 +278,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         });
 
 
-        if (collected.getTypicalDTO().isFavourite()) {
-            infoFavs.setVisibility(View.VISIBLE);
-        } else if (collected.getTypicalDTO().isTagged()) {
-            SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
-            List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
-
-            StringBuilder tagInfo = new StringBuilder();
-            tagInfo.append(getString(R.string.amongTags)).append("\n");
-            for (SoulissTag newT : tags) {
-                tagInfo.append("-").append(newT.getNiceName()).append("\n");
-            }
-            infoTags.setVisibility(View.VISIBLE);
-            textviewHistoryTags.setText(tagInfo.toString());
-        }
+        refreshTagsInfo();
 
         final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

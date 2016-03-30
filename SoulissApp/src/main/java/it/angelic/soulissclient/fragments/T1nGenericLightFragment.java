@@ -27,23 +27,21 @@ import com.dacer.androidcharts.ClockPieView;
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
-import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.TimeHourSpinnerUtils;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
+import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_AutoCmd;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCmd;
@@ -76,9 +74,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	private TextView infoTyp;
 	private SwitchCompat togMassive;
 	private TextView infoHistory;
-    private TextView textviewHistoryTags;
-    private TableRow infoTags;
-    private TableRow infoFavs;
 
 	public static T1nGenericLightFragment newInstance(int index, SoulissTypical content) {
 		T1nGenericLightFragment f = new T1nGenericLightFragment();
@@ -163,9 +158,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		super.actionBar.setDisplayHomeAsUpEnabled(true);*/
 		//((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-
         //super.actionBar.setTitle(collected.getNiceName());
 		warnerCheck = (CheckBox) ret.findViewById(R.id.checkBoxWarn);
 		warner = (NumberPicker) ret.findViewById(R.id.warnTimer);
@@ -176,21 +168,20 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
 		btSleep = (Button) ret.findViewById(R.id.sleep);
 		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
-        textviewHistoryTags = (TextView) ret.findViewById(R.id.textviewHistoryTags);
         togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
 		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-
-        clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
+		tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+		clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
-		if (opzioni.isLogHistoryEnabled()) {
-            refreshHistoryInfo();
-		}
-		// datasource.getHistoryTypicalHashMap(collected, 0);
+
+        refreshTagsInfo();
+
+        refreshHistoryInfo();
+        // datasource.getHistoryTypicalHashMap(collected, 0);
 		//warner.setMinValue(5);
 		//warner.setMaxValue(120);
 
@@ -299,7 +290,14 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		return ret;
 	}
 
+
     private void refreshHistoryInfo() {
+        if (!opzioni.isLogHistoryEnabled()) {
+            //nascondi roba
+            infoHistory.setVisibility(View.GONE);
+            clockPieView.setVisibility(View.GONE);
+            return;
+        }
         try {
             StringBuilder str = new StringBuilder();
 			int msecOn = datasource.getTypicalOnDurationMsec(collected, TimeRangeEnum.LAST_WEEK);
@@ -320,20 +318,6 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
             //bella questa eh
             clockPieView.setDate(datasource.getTypicalOnClockPie(collected, TimeRangeEnum.LAST_WEEK));
 
-            if (collected.getTypicalDTO().isFavourite()) {
-                infoFavs.setVisibility(View.VISIBLE);
-            }else if (collected.getTypicalDTO().isTagged()){
-                SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
-                List<SoulissTag> tags = tagDb.getTagsByTypicals(collected);
-
-                StringBuilder tagInfo = new StringBuilder();
-                tagInfo.append(getString(R.string.amongTags)).append("\n");
-                for (SoulissTag newT : tags) {
-                    tagInfo.append("-").append(newT.getNiceName()).append("\n");
-                }
-                infoTags.setVisibility(View.VISIBLE);
-                textviewHistoryTags.setText(tagInfo.toString());
-            }
         }catch (Exception ie){
             Log.e(Constants.TAG,"cant refresh history:"+ie.getMessage());
         }

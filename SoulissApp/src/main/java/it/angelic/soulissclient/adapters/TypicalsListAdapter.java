@@ -157,24 +157,13 @@ public class TypicalsListAdapter extends BaseAdapter {
         } else {
             holder.imageTag.setVisibility(View.GONE);
         }
-        // nascondi gli slot slave
-        //if (!tipici[position].isRelated() && !tipici[position].isEmpty()) {
-        // holder.textStatusVal.setText(tipici[position].getOutputLongDesc());
-        // TODO remove following
-        //holder.textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
+
         tipici[position].setOutputDescView(holder.textStatusVal);
         holder.linearActionsLayout.removeAllViews();
-        if (opzioni.isSoulissReachable()) {
-            // richiama l'overloaded del tipico relativo
-            tipici[position].getActionsLayout(context, holder.linearActionsLayout);
-        } else {
-            TextView na = new TextView(context);
-            na.setText(context.getString(R.string.souliss_unavailable));
-            if (opzioni.isLightThemeSelected()) {
-                na.setTextColor(context.getResources().getColor(R.color.black));
-            }
-            holder.linearActionsLayout.addView(na);
-        }
+
+        // richiama l'overloaded del tipico relativo
+        tipici[position].getActionsLayout(context, holder.linearActionsLayout);
+
         // linearActionsLayout.setVisibility(View.VISIBLE);
 
         if (opzioni.getTextFx()) {
