@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- SINGLE WORDS -->
+ 
+
+    <string-array name="open_strarray">
+        <item>odpri</item>
+        <item>vklopi</item>
+        <item>prižgi</item>
+        <item>dvigni</item>
+    </string-array>
+
+    <string-array name="close_strarray">
+        <item>zapri</item>
+        <item>ugasni</item>
+        <item>izklopi</item>
+    </string-array>
+
+    <string-array name="stop_strarray">
+        <item>ustavi</item>
+        <item>zaustavi</item>
+        <item>stop</item>
+    </string-array>
+
+    <string-array name="toggle_strarray">
+        <item>preklopi</item>
+        <item>obrni</item>
+    </string-array>
+
+    <string-array name="TurnON_strarray">
+        <item>vklopi</item>
+        <item>prižgi</item>
+    </string-array>
+
+    <string-array name="TurnOFF_strarray">
+        <item>ugasni</item>
+        <item>izklopi</item>
+
+
+        <item>ubij</item>
+    </string-array>
+</resources>
