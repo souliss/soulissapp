@@ -1,6 +1,6 @@
 # soulissapp
 
-[![](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/orgs/souliss/rooms#)
+[![gitter chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/orgs/souliss/rooms#)
 
 You can find it published on <a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient">Play store</a>; please note that the app itself is useless unless a souliss run-time is found on a local or remote network. Have a look at the <a href="http://souliss.github.io/welcome/">documentation</a> to get started with Souliss.
 
@@ -14,10 +14,8 @@ SoulissApp works on every Android devices from API 11 (HONEYCOMB) on.
 
 SoulissApp is available for download on the Play store
 
-<a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient">
-  <img alt="Get it on Google Play"
-       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
-</a>
+<a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+<img alt="Get it on Google Play"   src="http://steverichey.github.io/google-play-badge-svg/img/en_get.svg" /></a>
 
 ##How to build and contribute
 
