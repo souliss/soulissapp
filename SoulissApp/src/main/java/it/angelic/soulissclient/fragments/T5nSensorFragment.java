@@ -212,27 +212,12 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
         //Setta STATUS BAR
         super.setCollected(collected);
-            /*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-            super.actionBar.setCustomView(R.layout.custom_actionbar); // load
-			super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-			super.actionBar.setDisplayHomeAsUpEnabled(true);*/
+
         refreshStatusIcon();
 
-			/* SFONDO */
-        // SoulissClient.setBackground((RelativeLayout)
-        // getActivity().findViewById(R.id.containerlista),
-        // getActivity().getWindowManager());
         nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
                 + " " + collected.getTypicalDTO().getSlot());
 
-      /*  if (collected.isSensor()) {
-            TextView tinfo = (TextView) ret.findViewById(R.id.TextViewGraphName);
-            SparseArray<SoulissGraphData> logs = new SparseArray<>();
-            logs = datasource.getGroupedTypicalLogs(collected, "%H", 0);
-            tinfo.setText("Daily temperature range");
-
-            drawGroupedGraphAndroChart(layout, logs, 1, collected.getTypicalDTO().getTypical());
-        }*/
         par.setMax(Constants.MAX_HEALTH);
 
         // ProgressBar sfumata
@@ -329,29 +314,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
                     drawGroupedGraphAndroChart(logs, tipoGrafico);
                 }
                 break;
-        }/*
-        if (graphType == 0) {
-            if (collected.isSensor()) {// STORIA
-                HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
-                drawHistoryGraphAndroChart( logs);
-            }
-        } else if (graphType == ChartTypeEnum.GROUP_HOUR) {
-            if (collected.isSensor()) {// HEUR
-                SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
-                drawGroupedGraphAndroChart( logs, 0);
-            }
-        } else if (graphType == ChartTypeEnum.GROUP_MONTH) {
-            if (collected.isSensor()) {//MONTH
-                SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
-                drawGroupedGraphAndroChart( logs, 1);
-            }
-        } else {
-            //%w		day of week 0-6 with Sunday==0
-            if (collected.isSensor()) {
-                SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
-                drawGroupedGraphAndroChart( logs, 2);
-            }
-        }*/
+        }
     }
 
 }
