@@ -78,17 +78,15 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         ArrayList<Integer> dataListMax = new ArrayList<>();
 
         if (bymonth == ChartTypeEnum.GROUP_MONTH) {
+            Calendar cal = Calendar.getInstance();
             for (int k = 0; k < logs.size(); k++) {
-                Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.MONTH, k);
-                //renderer.addXTextLabel(2, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
                 test.add(String.format(Locale.getDefault(), "%tb", cal));
             }
         } else if (bymonth == ChartTypeEnum.GROUP_WEEK) {//DAY OF W
+            Calendar cal = Calendar.getInstance();
             for (int k = 0; k < logs.size(); k++) {
-                Calendar cal = Calendar.getInstance();
                 cal.set(Calendar.DAY_OF_WEEK, k + 1);//+1 perche Calendar.DAY_OF_WEEK parte da 1, domenica
-                //renderer.addXTextLabel(2, cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault()));
                 test.add(String.format(Locale.getDefault(), "%ta", cal));
             }
         } else if (bymonth == ChartTypeEnum.GROUP_HOUR) {
@@ -302,15 +300,29 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         switch (tipoGrafico) {
             case HISTORY:
                 if (collected.isSensor()) {// STORIA
+                    //TODO se vuoto skippa
                     HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
                     drawHistoryGraphAndroChart(logs);
                 }
                 break;
-            case GROUP_HOUR:
+            case GROUP_HOUR://fallback
+                if (collected.isSensor()) {// HEUR
+                    //TODO se vuoto skippa
+                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
+                    drawGroupedGraphAndroChart(logs, tipoGrafico);
+                }
+                break;
             case GROUP_MONTH:
+                if (collected.isSensor()) {// HEUR
+                    //TODO se vuoto skippa
+                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
+                    drawGroupedGraphAndroChart(logs, tipoGrafico);
+                }
+                break;
             case GROUP_WEEK:
                 if (collected.isSensor()) {// HEUR
-                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
+                    //TODO se vuoto skippa
+                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
                     drawGroupedGraphAndroChart(logs, tipoGrafico);
                 }
                 break;

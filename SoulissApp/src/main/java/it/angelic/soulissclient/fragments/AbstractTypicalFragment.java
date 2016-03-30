@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.fragments;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -95,8 +94,9 @@ public class AbstractTypicalFragment extends Fragment {
                         tagInfo.append(getString(R.string.amongTags)).append("\n");
                         for (SoulissTag newT : tags) {
                             SimpleTagView nuovoTag = new SimpleTagView(getContext(), newT.getNiceName());
-                            nuovoTag.setRadius(8);
-                            nuovoTag.setColor(ContextCompat.getColor(getContext(), R.color.black_overlay));
+
+                            //nuovoTag.setColor(ContextCompat.getColor(getContext(), R.color.black_overlay));
+                            nuovoTag.setFontAwesome("fa-tag");
                             nuovoTag.setDeletable(true);
                             Log.w(Constants.TAG, "adding tag to view: " + nuovoTag.getText());
                             tagView.addTag(nuovoTag);

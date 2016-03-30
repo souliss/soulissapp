@@ -18,15 +18,14 @@ allprojects {
         maven {
             url "https://jitpack.io"
         }
-
     }
 }
 
 project.ext {
     global_buildToolsVersion = "23.0.2"
     global_supportLibVersion = "23.2.0"
-    VERSION_NAME = "1.8.0"
-    VERSION_CODE = 173
+    VERSION_NAME = "1.8.1"
+    VERSION_CODE = 174
     compileSdkVersion = 23
     targetSdkVersion = 23
 }
