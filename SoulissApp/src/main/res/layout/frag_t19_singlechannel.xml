@@ -176,11 +176,14 @@
                     android:layout_weight="1"
                     android:background="@color/std_green">
 
-                    <com.pheelicks.visualizer.VisualizerView
-                        android:id="@+id/visualizerView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-                    </com.pheelicks.visualizer.VisualizerView>
+                    <FrameLayout
+                        android:id="@+id/visualizerViewFrame"
+                        android:layout_width="0dip"
+                        android:layout_height="150dp"
+                        android:layout_weight="1"
+                        android:background="@color/trans_black"
+                        android:visibility="gone">
+                    </FrameLayout>
                 </FrameLayout>
             </TableRow>
 

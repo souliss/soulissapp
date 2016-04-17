@@ -1,12 +1,15 @@
 package it.angelic.soulissclient.fragments;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TableRow;
@@ -54,7 +58,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     private int intensityReal = 0;
     // Color change listener.
     private VisualizerView mVisualizerView;
-
+    private FrameLayout mVisualizerViewFrame;
     private boolean continueIncrementing;
     private boolean continueDecrementing;
     private TextView textviewHistoryTags;
@@ -210,8 +214,21 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
-        mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-        mVisualizerView.setOpz(opzioni);
+
+
+        mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
+        //permesso per la visualizer connessa all'audio o mic
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    Constants.MY_PERMISSIONS_RECORD_AUDIO);
+            mVisualizerView = null;
+        } else {
+            inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
+            mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
+            //mVisualizerViewFrame.addView(mVisualizerView);
+            mVisualizerView.setOpz(opzioni);
+        }
 
         seekChannelIntensity = (SeekBar) ret.findViewById(R.id.channelRed);
 

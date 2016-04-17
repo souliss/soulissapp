@@ -240,7 +240,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     new String[]{Manifest.permission.RECORD_AUDIO},
                     Constants.MY_PERMISSIONS_RECORD_AUDIO);
             mVisualizerView = null;
-
         } else {
             inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
             mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
