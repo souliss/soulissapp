@@ -12,11 +12,14 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.drawable.NinePatchDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -219,6 +222,7 @@ public class LineView extends View {
         canvas.drawText(num, x, y - bottomTriangleHeight - popupBottomMargin, popupTextPaint);
     }
 
+
     private Dot findPointAt(int x, int y) {
         if (drawDotLists.isEmpty()) {
             return null;
@@ -308,26 +312,38 @@ public class LineView extends View {
         drawLines(canvas);
         drawDots(canvas);
 
-
-        for (int k = 0; k < drawDotLists.size(); k++) {
-            int MaxValue = Collections.max(dataLists.get(k));
-            int MinValue = Collections.min(dataLists.get(k));
-            for (Dot d : drawDotLists.get(k)) {
-                if (showPopupType == SHOW_POPUPS_All)
-                    drawPopup(canvas, String.valueOf(d.data), d.setupPoint(tmpPoint), popupColorArray[k % 3]);
-                else if (showPopupType == SHOW_POPUPS_MAXMIN_ONLY) {
-                    if (d.data == MaxValue)
+        try {
+            for (int k = 0; k < drawDotLists.size(); k++) {
+                int MaxValue = Collections.max(dataLists.get(k));
+                int MinValue = Collections.min(dataLists.get(k));
+                for (Dot d : drawDotLists.get(k)) {
+                    if (showPopupType == SHOW_POPUPS_All)
                         drawPopup(canvas, String.valueOf(d.data), d.setupPoint(tmpPoint), popupColorArray[k % 3]);
-                    if (d.data == MinValue)
-                        drawPopup(canvas, String.valueOf(d.data), d.setupPoint(tmpPoint), popupColorArray[k % 3]);
+                    else if (showPopupType == SHOW_POPUPS_MAXMIN_ONLY) {
+                        if (d.data == MaxValue)
+                            drawPopup(canvas, String.valueOf(d.data), d.setupPoint(tmpPoint), popupColorArray[k % 3]);
+                        if (d.data == MinValue)
+                            drawPopup(canvas, String.valueOf(d.data), d.setupPoint(tmpPoint), popupColorArray[k % 3]);
+                    }
                 }
             }
-        }
-        // 선택한 dot 만 popup 이 뜨게 한다.
-        if (showPopup && selectedDot != null) {
-            drawPopup(canvas,
-                    String.valueOf(selectedDot.data),
-                    selectedDot.setupPoint(tmpPoint), popupColorArray[selectedDot.linenumber % 3]);
+            // 선택한 dot 만 popup 이 뜨게 한다.
+            if (showPopup && selectedDot != null) {
+                drawPopup(canvas,
+                        String.valueOf(selectedDot.data),
+                        selectedDot.setupPoint(tmpPoint), popupColorArray[selectedDot.linenumber % 3]);
+            }
+        } catch (NoSuchElementException nsu) {
+            Log.w(ChartUtils.LOG_TAG, "Skipping draw");
+
+            Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+            textPaint.setColor(Color.GRAY);
+            textPaint.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics()));
+            textPaint.setTextAlign(Paint.Align.LEFT);
+            Paint.FontMetrics metric = textPaint.getFontMetrics();
+            int textHeight = (int) Math.ceil(metric.descent - metric.ascent);
+            int y = (int) (textHeight - metric.descent);
+            canvas.drawText("NO", 0, y, textPaint);
         }
     }
 

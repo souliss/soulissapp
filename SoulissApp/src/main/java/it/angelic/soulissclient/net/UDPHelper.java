@@ -67,7 +67,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "Command sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "Command " + cmd + " sent to: " + serverAddr);
 
 			return "UDP command OK";
 		} catch (UnknownHostException ed) {
