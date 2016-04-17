@@ -10,7 +10,7 @@ CHANGES:
 1.8.0
 new chart lib
 new Tag lib used to show tag icons around the app
-Slovenian by
+Slovenian by marksev1
 
 1.7.0
 multiple souliss networks support
@@ -21,7 +21,6 @@ autocomplete some options
 Bugfixes #84
 Broadcast Receiver for Automate integration
 Tasker action&condition plugin
-
 
 1.6.0
 Added Android wear support

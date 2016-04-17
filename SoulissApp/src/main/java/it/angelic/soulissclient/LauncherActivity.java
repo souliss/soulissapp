@@ -684,7 +684,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //VOICE SEARCH
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (opzioni.isVoiceCommandEnabled()) {
+        if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
             fab.setVisibility(View.VISIBLE);
             fab.attachToScrollView(scrollView);
             fab.setOnClickListener(new View.OnClickListener() {

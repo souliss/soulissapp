@@ -44,14 +44,9 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.settings_dataservice);
 		final Preference serviceActive = findPreference("checkboxService");
 		final Preference setHomeLocation = findPreference("setHomeLocation");
-		final Preference setHtmlRoot = findPreference("setHtmlRoot");
 		/* START STOP SoulissDataService */
 		serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(getActivity()));
 
-
-		setHtmlRoot.setOnPreferenceClickListener(new SetHtmlRootListener(getActivity()));
-		
-		
 		// Setta home location
 		setHomeLocation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 

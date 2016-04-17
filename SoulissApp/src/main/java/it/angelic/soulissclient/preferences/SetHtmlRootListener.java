@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.util.Log;
@@ -15,7 +14,6 @@ import java.io.FilenameFilter;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 public class SetHtmlRootListener implements OnPreferenceClickListener {
@@ -32,14 +30,7 @@ public class SetHtmlRootListener implements OnPreferenceClickListener {
 	// EXPORT
 	private SoulissPreferenceHelper opzioni;
 
-	public SetHtmlRootListener(Activity parent) {
-		super();
-		this.parent = parent;
-		opzioni = SoulissApp.getOpzioni();
-		//datasource = new SoulissDBHelper(parent);
-		mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
-	}
-	
+
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		Dialog dialog = null;
