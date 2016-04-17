@@ -187,6 +187,21 @@
                 </FrameLayout>
             </TableRow>
 
+            <TableRow
+                android:id="@+id/tableRowEqualizer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:background="@color/trans_black">
+
+                <TextView
+                    android:id="@+id/textEqualizer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:visibility="gone"/>
+            </TableRow>
             <include layout="@layout/tablerow_taginfo"/>
         </TableLayout>
     </RelativeLayout>

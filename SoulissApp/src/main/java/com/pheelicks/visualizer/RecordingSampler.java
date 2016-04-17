@@ -128,6 +128,7 @@ public class RecordingSampler {
     public void stopRecording() {
         this.mIsRecording = false;
         //this.mAudioRecord.stop();
+
         this.mTimer.cancel();
        /* if (this.mVisualizerViews != null && !this.mVisualizerViews.isEmpty()) {
             for (int i = 0; i < this.mVisualizerViews.size(); ++i) {

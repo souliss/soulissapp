@@ -68,7 +68,7 @@ public class SoulissTypical13DigitalInput extends SoulissTypical implements ISou
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
 			return "OFF";
 		else
-			return "UNKNOWN";
+			return "" + typicalDTO.getOutput();
 	}
 
 }

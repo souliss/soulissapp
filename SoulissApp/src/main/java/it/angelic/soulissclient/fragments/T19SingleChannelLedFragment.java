@@ -13,6 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,7 +53,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     private Button btOff;
     private Button btOn;
     private SoulissTypical19AnalogChannel collected;
-
+    private TextView eqText;
     private Button btFlash;
     private Button btSleep;
 
@@ -209,7 +212,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
         tableRowLamp = ret.findViewById(R.id.tableRowLamp);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
-
+        eqText = (TextView) ret.findViewById(R.id.textEqualizer);
         btFlash = (Button) ret.findViewById(R.id.flash);
         btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
@@ -255,6 +258,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
                     tableRowLamp.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.VISIBLE);
                     mVisualizerView.setEnabled(false);
+                    eqText.setVisibility(View.GONE);
                     // TODO questi non vanno
                     seekChannelIntensity.setProgress(intensity);
                 } else {// music
@@ -266,7 +270,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
                     tableRowVis.setVisibility(View.VISIBLE);
                     mVisualizerView.setEnabled(true);
                     mVisualizerView.link(togMulticast.isChecked());
-
+                    eqText.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
                 }
             }
@@ -338,7 +342,21 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btFlash.setOnClickListener(plus);
         btSleep.setOnClickListener(plus);
 
+        String strDisease2Format = getResources().getString(R.string.Souliss_TRGB_eq);
+        String strDisease2Msg = String.format(strDisease2Format, Constants.twoDecimalFormat.format(opzioni.getEqLow()),
+                Constants.twoDecimalFormat.format(opzioni.getEqMed()),
+                Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
+        eqText.setText(strDisease2Msg);
+
         return ret;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.t16_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     // Methods for adding renderers to visualizer
@@ -374,6 +392,19 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         return f;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.equalizer:
+                AlertDialogHelper.equalizerDialog(getActivity(), eqText, this, getActivity()).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return false;
+    }
 
     @Override
     public void onResume() {

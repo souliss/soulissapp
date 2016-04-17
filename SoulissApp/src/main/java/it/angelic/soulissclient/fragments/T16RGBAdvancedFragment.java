@@ -325,11 +325,9 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                         mVisualizerView.link(togMulticast.isChecked());
                         mVisualizerView.setVisibility(View.VISIBLE);
                         mVisualizerView.setEnabled(true);
-                        mVisualizerView.link(togMulticast.isChecked());
+                        //mVisualizerView.link(togMulticast.isChecked());
                         addBarGraphRenderers();
                     }
-
-
                     mVisualizerViewFrame.setVisibility(View.VISIBLE);
                     tableRowVis.setVisibility(View.VISIBLE);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
@@ -494,7 +492,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
-        // mVisualizerView.release();
+        //if (mVisualizerView != null)
+        //    mVisualizerView.setEnabled(false);
     }
 
     @Override
@@ -504,6 +503,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
+
     }
 
     synchronized void setIsDecrementing(boolean newSetting) {

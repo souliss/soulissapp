@@ -510,6 +510,7 @@ public class AlertDialogHelper {
         low.setProgress(Float.valueOf(opzioni.getEqLow() * 100f).intValue());
         med.setProgress(Float.valueOf(opzioni.getEqMed() * 100f).intValue());
         hi.setProgress(Float.valueOf(opzioni.getEqHigh() * 100f).intValue());
+        aufioChan.setSelection(opzioni.getAudioInputChannel());
         //Range wideness
         lowRange.setProgress(Float.valueOf(opzioni.getEqLowRange() * 100f).intValue());
         medRange.setProgress(Float.valueOf(opzioni.getEqMedRange() * 100f).intValue());
