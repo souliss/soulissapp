@@ -8,7 +8,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.0.0'
     }
 }
 
@@ -23,7 +23,7 @@ allprojects {
 
 project.ext {
     global_buildToolsVersion = "23.0.2"
-    global_supportLibVersion = "23.2.0"
+    global_supportLibVersion = "23.3.0"
     VERSION_NAME = "1.8.1"
     VERSION_CODE = 174
     compileSdkVersion = 23

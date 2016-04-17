@@ -72,8 +72,6 @@ public class SoulissDBHelper {
     public static synchronized void open() throws SQLException {
         if (database == null || !database.isOpen())
             database = soulissDatabase.getWritableDatabase();
-
-
     }
 
     public void close() {
@@ -675,6 +673,13 @@ public class SoulissDBHelper {
         ret += database.delete(SoulissDB.TABLE_NODES, null, null);
         return ret;
 
+    }
+
+    public void truncateAll() {
+        if (soulissDatabase != null) {
+            Log.w(TAG, "DB dropCreate !!!");
+            soulissDatabase.dropCreate(database);
+        }
     }
 
     public int deleteScene(SoulissScene toRename) {
