@@ -67,7 +67,6 @@ public class SoulissPreferenceHelper implements Serializable {
     // private InetAddress cachedInet;
     private int userIndex;
     private boolean voiceCommandEnabled;
-    private boolean webserverEnabled;
 
     private boolean isTaskerEnabled;
     private boolean isTaskerInterested;
@@ -364,7 +363,6 @@ public class SoulissPreferenceHelper implements Serializable {
         homeThold = prefs.getInt("distanceThold", 150);
         dataServiceEnabled = prefs.getBoolean("checkboxService", false);
         fahrenheitChosen = prefs.getBoolean("checkboxFahrenheit", false);
-        webserverEnabled = prefs.getBoolean("webserverEnabled", false);
         voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", false);
         userIndex = prefs.getInt("userIndex", -1);
         nodeIndex = prefs.getInt("nodeIndex", -1);
@@ -510,14 +508,6 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public boolean isVoiceCommandEnabled() {
         return voiceCommandEnabled;
-    }
-
-    public boolean isWebserverEnabled() {
-        return webserverEnabled;
-    }
-
-    public void setWebserverEnabled(boolean webserverEnabled) {
-        this.webserverEnabled = webserverEnabled;
     }
 
     static Random r = new Random(Calendar.getInstance().getTimeInMillis());
