@@ -426,6 +426,7 @@ public class SoulissDataService extends Service implements LocationListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "Service onStartCommand()");
         opts = SoulissApp.getOpzioni();
+        opts.initializePrefs();//forse cambiate,ricarica
         startUDPListener();
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();

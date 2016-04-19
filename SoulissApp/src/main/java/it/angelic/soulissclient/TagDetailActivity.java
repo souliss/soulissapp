@@ -43,6 +43,7 @@ import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
 import it.angelic.soulissclient.fragments.T31HeatingFragment;
 import it.angelic.soulissclient.fragments.T4nFragment;
 import it.angelic.soulissclient.fragments.T5nSensorFragment;
+import it.angelic.soulissclient.fragments.T6nAnalogueFragment;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissTag;
@@ -55,6 +56,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 
 
 public class TagDetailActivity extends AbstractStatusedFragmentActivity {
@@ -229,6 +231,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             NewFrag = T1nGenericLightFragment.newInstance(pos, typicalList.get(pos));
         else if (typicalList.get(pos) instanceof SoulissTypical41AntiTheft || typicalList.get(pos) instanceof SoulissTypical42AntiTheftPeer || typicalList.get(pos) instanceof SoulissTypical43AntiTheftLocalPeer)
             NewFrag = T4nFragment.newInstance(pos, typicalList.get(pos));
+        else if (typicalList.get(pos) instanceof SoulissTypical6nAnalogue)
+            NewFrag = T6nAnalogueFragment.newInstance(pos, typicalList.get(pos));
         FragmentTransaction ft = manager.beginTransaction();
 
         if (NewFrag != null) {

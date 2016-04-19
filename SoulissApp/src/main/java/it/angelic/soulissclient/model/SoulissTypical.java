@@ -125,6 +125,22 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             id = R.string.Souliss_T57_desc;
         else if (typical == Constants.Typicals.Souliss_T58_PressureSensor)
             id = R.string.Souliss_T58_desc;
+        else if (typical == Constants.Typicals.Souliss_T61)
+            id = R.string.Souliss_T61_desc;
+        else if (typical == Constants.Typicals.Souliss_T62)
+            id = R.string.Souliss_T62_desc;
+        else if (typical == Constants.Typicals.Souliss_T63)
+            id = R.string.Souliss_T63_desc;
+        else if (typical == Constants.Typicals.Souliss_T64)
+            id = R.string.Souliss_T64_desc;
+        else if (typical == Constants.Typicals.Souliss_T65)
+            id = R.string.Souliss_T65_desc;
+        else if (typical == Constants.Typicals.Souliss_T66)
+            id = R.string.Souliss_T66_desc;
+        else if (typical == Constants.Typicals.Souliss_T67)
+            id = R.string.Souliss_T67_desc;
+        else if (typical == Constants.Typicals.Souliss_T68)
+            id = R.string.Souliss_T68_desc;
         else
             id = R.string.unknown_typical;
 
@@ -184,7 +200,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T53_HumiditySensor)
             return R.drawable.raindrop;
         else if (typical == Constants.Typicals.Souliss_T54_LuxSensor)
-            return R.drawable.home1;
+            return R.drawable.sun;
         else if (typical == Constants.Typicals.Souliss_T55_VoltageSensor)
             return R.drawable.lightning1;
         else if (typical == Constants.Typicals.Souliss_T56_CurrentSensor)
@@ -193,6 +209,22 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return R.drawable.lightning1;
         else if (typical == Constants.Typicals.Souliss_T58_PressureSensor)
             return R.drawable.sun;
+        else if (typical == Constants.Typicals.Souliss_T61)
+            return R.drawable.setpoint;
+        else if (typical == Constants.Typicals.Souliss_T62)
+            return R.drawable.thermometer;
+        else if (typical == Constants.Typicals.Souliss_T63)
+            return R.drawable.raindrop;
+        else if (typical == Constants.Typicals.Souliss_T64)
+            return R.drawable.sun;
+        else if (typical == Constants.Typicals.Souliss_T65)
+            return R.drawable.plug;
+        else if (typical == Constants.Typicals.Souliss_T66)
+            return R.drawable.plug;
+        else if (typical == Constants.Typicals.Souliss_T67)
+            return R.drawable.plug;
+        else if (typical == Constants.Typicals.Souliss_T67)
+            return R.drawable.gauge1;
         else
             return R.drawable.empty_narrow;
     }
@@ -334,10 +366,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
         values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
         if (isSensor()) {
-            Log.d(it.angelic.soulissclient.Constants.TAG, "saving sensor loggi: " + ((ISoulissTypicalSensor) this).getOutputFloat());
+            Log.d(it.angelic.soulissclient.Constants.TAG, getDefaultName() + " saving sensor loggi: " + ((ISoulissTypicalSensor) this).getOutputFloat());
             values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
         } else {
-            Log.d(it.angelic.soulissclient.Constants.TAG, "saving loggi: " + getOutput());
+            Log.d(it.angelic.soulissclient.Constants.TAG, getDefaultName() + " saving loggi: " + getOutput());
             values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
         }
         try {

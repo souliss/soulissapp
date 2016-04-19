@@ -26,6 +26,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -129,6 +130,10 @@ public class SoulissTypicalFactory {
 			rest = new SoulissTypical58PressureSensor(opts);
 			//rest.setSensor(true);
 			break;
+			case Constants.Typicals.Souliss_T61:
+				rest = new SoulissTypical6nAnalogue(opts);
+				//rest.setSensor(true);
+				break;
 		default:
 			Log.w(Constants.Typicals.TAG, "warning, unknown typical");
 			rest = new SoulissTypical(opts);

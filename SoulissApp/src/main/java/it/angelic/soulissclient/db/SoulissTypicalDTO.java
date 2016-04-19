@@ -13,7 +13,6 @@ import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -170,7 +169,8 @@ public class SoulissTypicalDTO implements Serializable {
      * @return
      */
     public int refresh(@NonNull SoulissTypical parent) {
-        if (SoulissApp.getOpzioni().isLogHistoryEnabled() && !(parent instanceof ISoulissTypicalSensor)) {
+        //log di àbasso livelloà sse no sensor ne related
+        if (SoulissApp.getOpzioni().isLogHistoryEnabled() && !(parent.isSensor() || parent.isRelated())) {
             // se e` un sensore viene loggato altrove
             Cursor cursor = SoulissDBHelper.getDatabase().query(
                     SoulissDB.TABLE_TYPICALS,

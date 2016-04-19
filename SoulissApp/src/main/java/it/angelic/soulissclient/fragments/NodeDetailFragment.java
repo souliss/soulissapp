@@ -68,6 +68,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -336,7 +337,9 @@ public class NodeDetailFragment extends ListFragment {
 
         Fragment NewFrag = null;
         // Istanzia e ci mette l'indice
-        if (target.isSensor())
+        if (target instanceof SoulissTypical6nAnalogue)
+            NewFrag = T6nAnalogueFragment.newInstance(index, target);
+        else if (target.isSensor())
             NewFrag = T5nSensorFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical16AdvancedRGB)
             NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
