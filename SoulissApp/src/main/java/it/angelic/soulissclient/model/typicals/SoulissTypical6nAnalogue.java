@@ -1,16 +1,10 @@
 package it.angelic.soulissclient.model.typicals;
 
 import android.content.Context;
-import android.graphics.LinearGradient;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.Html;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -84,30 +78,6 @@ public class SoulissTypical6nAnalogue extends SoulissTypical implements ISouliss
         lp.setMargins(2, 0, 0, 2);
         //cmd.setGravity(Gravity.TOP);
         contLinear.addView(cmd);
-
-        ProgressBar par = new ProgressBar(ctx, null, android.R.attr.progressBarStyleHorizontal);
-        // ProgressBar sfumata
-        final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-        final LinearGradient gradient = new LinearGradient(0, 0, displayWidth / 2, 0, ctx.getResources().getColor(
-                color.black), ctx.getResources().getColor(color.white), android.graphics.Shader.TileMode.CLAMP);
-        pgDrawable.getPaint().setStrokeWidth(3);
-        pgDrawable.getPaint().setDither(true);
-        pgDrawable.getPaint().setShader(gradient);
-
-        ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-        par.setProgressDrawable(progress);
-        par.setBackgroundDrawable(ctx.getResources().getDrawable(android.R.drawable.progress_horizontal));
-
-        RelativeLayout.LayoutParams lp2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT);
-        par.setLayoutParams(lp2);
-        par.setMax(50);
-        par.setProgress(20);
-        par.setProgress(0);
-        par.setMax(255);
-        par.setProgress((int) getTypicalDTO().getOutput());
-
-        contLinear.addView(par);
 
     }
 }

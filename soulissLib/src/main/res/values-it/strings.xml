@@ -378,6 +378,7 @@
     <string name="command_hint">Il comando verrà passato a SoulissApp che tenterà di eseguirlo</string>
     <string name="conf_name_hint">Inserisci nome configurazione (es. casa, ufficio, campagna)</string>
     <string name="as_measured">Come misurato</string>
+    <string name="setpoint">setpoint</string>
 
 
 </resources>

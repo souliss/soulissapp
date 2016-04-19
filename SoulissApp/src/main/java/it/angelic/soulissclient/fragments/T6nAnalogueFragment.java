@@ -9,6 +9,8 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -58,8 +61,27 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
     private SoulissDBHelper datasource;
     private Spinner graphtSpinner;
     private ImageView icon;
+    private EditText incrementText;
     private LineView lineView;
     private TextView nodeinfo;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
+                SoulissDBHelper.open();
+                SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
+                collected = coll.getTypical(collected.getTypicalDTO().getSlot());
+                nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
+                        + " " + collected.getTypicalDTO().getSlot() + " - " + ((SoulissTypical6nAnalogue) collected).getOutputFloat());
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
+            }
+
+
+        }
+    };
     private ProgressBar par;
     private Spinner rangeSpinner;
     private NumberPickerT6 tempSlider;
@@ -208,6 +230,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
         graphtSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphType);
         rangeSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphRange);
+        incrementText = (EditText) ret.findViewById(R.id.editTextIncrement);
         icon = (ImageView) ret.findViewById(R.id.typ_icon);
         lineView = (LineView) ret.findViewById(R.id.line_view);
         tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSliderPicker);
@@ -251,7 +274,33 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         icon.setImageResource(collected.getIconResourceId());
 
         tempSlider.setModel(collected.getTypical());
-        tempSlider.setRealVal(((SoulissTypical6nAnalogue) collected).getOutputFloat());
+        incrementText.setText(String.valueOf(tempSlider.getIncrement()));
+        incrementText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    tempSlider.setIncrement(Float.valueOf(s.toString()));
+                    int sel = tempSlider.generateDisplayValues(tempSlider.getRealVal());
+                    tempSlider.setValue(sel);
+                    tempSlider.invalidate();
+                } catch (Exception er) {
+                    incrementText.setError("Invalid format");
+                }
+            }
+        });
+        float vai = ((SoulissTypical6nAnalogue) collected).getOutputFloat();
+        //consider NaN as 0, ie upon board start
+        if (!Float.isNaN(vai))
+            tempSlider.setRealVal(vai);
+        else
+            tempSlider.setRealVal(0);
         tempSlider.setWrapSelectorWheel(false);
 
         tempSlider.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -309,18 +358,18 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         IntentFilter filtere = new IntentFilter();
         filtere.addAction("it.angelic.soulissclient.GOT_DATA");
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(datareceiver);
     }
 
     @Override
@@ -358,7 +407,6 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
 
     }
 
-
     private void redrawGraph(int graphType, int timeFilter) {
         final HorizontalScrollView layout = (HorizontalScrollView) getActivity().findViewById(R.id.horizontalScrollView);
         //final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
@@ -395,23 +443,4 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
                 break;
         }
     }
-
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
-                SoulissDBHelper.open();
-                SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
-                collected = coll.getTypical(collected.getTypicalDTO().getSlot());
-                nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
-                        + " " + collected.getTypicalDTO().getSlot() + " - " + ((SoulissTypical6nAnalogue) collected).getOutputFloat());
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
-            }
-
-
-        }
-    };
 }

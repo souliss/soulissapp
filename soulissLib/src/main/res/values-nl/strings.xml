@@ -372,4 +372,5 @@
     <string name="command_hint">The command will be passed to SoulissApp in order to execute it</string>
     <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
     <string name="as_measured">Sto bene cosi</string>
+    <string name="setpoint">setpoint</string>
 </resources>

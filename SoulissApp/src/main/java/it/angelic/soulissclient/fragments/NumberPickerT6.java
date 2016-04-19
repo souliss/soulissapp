@@ -16,41 +16,21 @@ public class NumberPickerT6 extends NumberPicker {
     private final int pivotIdx = 51;
     private final int WINDOW_SIZE = 100;
     private String[] dispVal;
+    private float increment;
+    private int max;
+    private int min;
     private int model;
     private float realVal;
 
     public NumberPickerT6(Context context) {
         super(context);
+        init();
+    }
+
+    private void init() {
         setMinValue(0);
         setMaxValue(WINDOW_SIZE - 1);
         dispVal = new String[WINDOW_SIZE];
-    }
-
-    public NumberPickerT6(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setMinValue(0);
-        setMaxValue(WINDOW_SIZE - 1);
-        dispVal = new String[WINDOW_SIZE];
-    }
-
-    public NumberPickerT6(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setMinValue(0);
-        setMaxValue(WINDOW_SIZE - 1);
-        dispVal = new String[WINDOW_SIZE];
-    }
-
-    /*
-    * GENERA i valori dello spinner da mostrare
-    * sono 100
-    * */
-    private int generateDisplayValues(float curVal) {
-        int min, max;
-        float increment;
-        int selIdx = dispVal.length;
-        float winIdxIn;
-        float winIdxOut = curVal;
-
         // float wkVal = curVal;
         if (model == Constants.Typicals.Souliss_T62) {
             min = -20;
@@ -61,6 +41,29 @@ public class NumberPickerT6 extends NumberPicker {
             max = 65519;
             increment = 1;
         }
+    }
+
+    public NumberPickerT6(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public NumberPickerT6(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    /*
+    * GENERA i valori dello spinner da mostrare
+    * sono 100
+    * */
+    public int generateDisplayValues(float curVal) {
+
+        int selIdx = dispVal.length;
+        float winIdxIn;
+        float winIdxOut = curVal;
+
+
         //finestra di selezione
         winIdxIn = winIdxOut - (dispVal.length * increment);
         //Float tempArray[] = new Float[100];
@@ -84,6 +87,14 @@ public class NumberPickerT6 extends NumberPicker {
         }
         setDisplayedValues(dispVal);
         return selIdx;
+    }
+
+    public float getIncrement() {
+        return increment;
+    }
+
+    public void setIncrement(float increment) {
+        this.increment = increment;
     }
 
     public int getModel() {
