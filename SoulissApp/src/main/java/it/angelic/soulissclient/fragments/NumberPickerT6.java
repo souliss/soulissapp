@@ -2,6 +2,7 @@ package it.angelic.soulissclient.fragments;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.NumberPicker;
 
 import it.angelic.soulissclient.Constants;
@@ -27,22 +28,6 @@ public class NumberPickerT6 extends NumberPicker {
         init();
     }
 
-    private void init() {
-        setMinValue(0);
-        setMaxValue(WINDOW_SIZE - 1);
-        dispVal = new String[WINDOW_SIZE];
-        // float wkVal = curVal;
-        if (model == Constants.Typicals.Souliss_T62) {
-            min = -20;
-            max = +50;
-            increment = 0.5f;
-        } else {//T61
-            min = -65519;
-            max = 65519;
-            increment = 1;
-        }
-    }
-
     public NumberPickerT6(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -58,12 +43,10 @@ public class NumberPickerT6 extends NumberPicker {
     * sono 100
     * */
     public int generateDisplayValues(float curVal) {
-
         int selIdx = dispVal.length;
         float winIdxIn;
         float winIdxOut = curVal;
-
-
+        Log.i(Constants.Typicals.TAG, "generateDisplayValues, min=" + min + " max=" + max + " Typical" + model);
         //finestra di selezione
         winIdxIn = winIdxOut - (dispVal.length * increment);
         //Float tempArray[] = new Float[100];
@@ -82,7 +65,7 @@ public class NumberPickerT6 extends NumberPicker {
 
         //a questo punto crea
         for (int j = 0; j < dispVal.length; j++) {
-            dispVal[j] = String.valueOf(winIdxIn);
+            dispVal[j] = String.format(java.util.Locale.US, "%.2f", winIdxIn);
             winIdxIn += increment;
         }
         setDisplayedValues(dispVal);
@@ -103,7 +86,7 @@ public class NumberPickerT6 extends NumberPicker {
 
     public void setModel(int model) {
         this.model = model;
-
+        init();
     }
 
     public float getRealVal() {
@@ -114,6 +97,22 @@ public class NumberPickerT6 extends NumberPicker {
         this.realVal = realVal;
         int sel = generateDisplayValues(realVal);
         setValue(sel);
+    }
+
+    private void init() {
+        setMinValue(0);
+        setMaxValue(WINDOW_SIZE - 1);
+        dispVal = new String[WINDOW_SIZE];
+        // float wkVal = curVal;
+        if (model == Constants.Typicals.Souliss_T62) {
+            min = -20;
+            max = +50;
+            increment = 0.5f;
+        } else {//T61
+            min = -65519;
+            max = 65519;
+            increment = 1;
+        }
     }
 
 

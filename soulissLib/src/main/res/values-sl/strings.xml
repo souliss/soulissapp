@@ -377,5 +377,6 @@
     <string name="welcome_import_hints">Vnesi izbrano konfiguracijo ime in specificiraj obstoječo .preferences datoteko da uvoziš prejšnje nastavitve. Če si uporabljal SoulissApp \"Uvozi\", ta proces naj bi naložil tudi Model</string>
     <string name="welcome_import_title">Uvozi SoulissApp Konfiguracijo</string>
     <string name="welcome_import_conf_name">Ime konfiguracije (npr. Dom, Pisarna, Zunaj)</string>
+    <string name="reading">Reading</string>
     >
 </resources>

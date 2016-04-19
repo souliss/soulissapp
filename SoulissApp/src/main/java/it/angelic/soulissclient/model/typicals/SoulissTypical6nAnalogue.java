@@ -69,7 +69,7 @@ public class SoulissTypical6nAnalogue extends SoulissTypical implements ISouliss
         int displayWidth = mWinMgr.getDefaultDisplay().getWidth();
         contLinear.removeAllViews();
         final TextView cmd = new TextView(ctx);
-        cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputFloat()));
+        cmd.setText(Html.fromHtml(ctx.getString(R.string.reading) + ": " + getOutputFloat()));
         if (prefs.isLightThemeSelected())
             cmd.setTextColor(ctx.getResources().getColor(color.black));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

@@ -389,5 +389,6 @@
     <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
     <string name="as_measured">As measured</string>
     <string name="setpoint">setpoint</string>
+    <string name="reading">Reading</string>
     >
 </resources>

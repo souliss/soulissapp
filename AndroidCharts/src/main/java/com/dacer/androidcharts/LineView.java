@@ -388,9 +388,15 @@ public class LineView extends View {
             for (int k = 0; k < dataLists.size(); k++) {
                 int drawDotSize = drawDotLists.get(k).isEmpty() ? 0 : drawDotLists.get(k).size();
 
+
                 for (int i = 0; i < dataLists.get(k).size(); i++) {
                     int x = xCoordinateList.get(i);
-                    int y = yCoordinateList.get(verticalGridNum - dataLists.get(k).get(i));
+                    int y;
+                    try {
+                        y = yCoordinateList.get(verticalGridNum - dataLists.get(k).get(i));
+                    } catch (IndexOutOfBoundsException boh) {
+                        y = 0;
+                    }
                     if (i > drawDotSize - 1) {
                         //도트리스트를 추가한다.
                         drawDotLists.get(k).add(new Dot(x, 0, x, y, dataLists.get(k).get(i), k));

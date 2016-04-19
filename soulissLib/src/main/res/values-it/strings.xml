@@ -379,6 +379,7 @@
     <string name="conf_name_hint">Inserisci nome configurazione (es. casa, ufficio, campagna)</string>
     <string name="as_measured">Come misurato</string>
     <string name="setpoint">setpoint</string>
+    <string name="reading">Lettura</string>
 
 
 </resources>

@@ -179,6 +179,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         dataLists.add(dataList);
 
         assertTrue(test.size() == dataList.size());
+        Log.d(TAG, "Dataseries size: " + dataList.size());
         lineView.setDataList(dataLists);
         lineView.setDrawDotLine(true);
         lineView.setShowPopup(LineView.SHOW_POPUPS_NONE);
@@ -248,7 +249,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         refreshStatusIcon();
 
         nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
-                + " " + collected.getTypicalDTO().getSlot() + " - " + ((SoulissTypical6nAnalogue) collected).getOutputFloat());
+                + " " + collected.getTypicalDTO().getSlot() + " - " + getContext().getString(R.string.reading) + " " + ((SoulissTypical6nAnalogue) collected).getOutputFloat());
 
         par.setMax(Constants.MAX_HEALTH);
 
@@ -377,7 +378,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         Thread t = new Thread() {
             public void run() {
                 // collected.issueCommand(Souliss_T3n_Set, Float.valueOf(tempSlider.getValue()));
-                Float work = Float.valueOf(tempSlider.getDisplayedValues()[tempSlider.getValue()]);
+                Float work = Float.parseFloat(tempSlider.getDisplayedValues()[tempSlider.getValue()]);
                 int re = HalfFloatUtils.fromFloat(work);
                 String first, second;
                 String pars = Long.toHexString(re);
@@ -411,36 +412,40 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         final HorizontalScrollView layout = (HorizontalScrollView) getActivity().findViewById(R.id.horizontalScrollView);
         //final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
         // Log.i(TAG, selectedVal);
-        ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
-        switch (tipoGrafico) {
-            case HISTORY:
-                if (collected.isSensor()) {// STORIA
-                    //TODO se vuoto skippa
-                    HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
-                    drawHistoryGraphAndroChart(logs);
-                }
-                break;
-            case GROUP_HOUR://fallback
-                if (collected.isSensor()) {// HEUR
-                    //TODO se vuoto skippa
-                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
-                    drawGroupedGraphAndroChart(logs, tipoGrafico);
-                }
-                break;
-            case GROUP_MONTH:
-                if (collected.isSensor()) {// HEUR
-                    //TODO se vuoto skippa
-                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
-                    drawGroupedGraphAndroChart(logs, tipoGrafico);
-                }
-                break;
-            case GROUP_WEEK:
-                if (collected.isSensor()) {// HEUR
-                    //TODO se vuoto skippa
-                    SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
-                    drawGroupedGraphAndroChart(logs, tipoGrafico);
-                }
-                break;
+        try {
+            ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
+            switch (tipoGrafico) {
+                case HISTORY:
+                    if (collected.isSensor()) {// STORIA
+                        //TODO se vuoto skippa
+                        HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
+                        drawHistoryGraphAndroChart(logs);
+                    }
+                    break;
+                case GROUP_HOUR://fallback
+                    if (collected.isSensor()) {// HEUR
+                        //TODO se vuoto skippa
+                        SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
+                        drawGroupedGraphAndroChart(logs, tipoGrafico);
+                    }
+                    break;
+                case GROUP_MONTH:
+                    if (collected.isSensor()) {// HEUR
+                        //TODO se vuoto skippa
+                        SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
+                        drawGroupedGraphAndroChart(logs, tipoGrafico);
+                    }
+                    break;
+                case GROUP_WEEK:
+                    if (collected.isSensor()) {// HEUR
+                        //TODO se vuoto skippa
+                        SparseArray<SoulissGraphData> logs = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
+                        drawGroupedGraphAndroChart(logs, tipoGrafico);
+                    }
+                    break;
+            }
+        } catch (Exception graphExc) {
+            Log.e(Constants.TAG, "Cant draw chart: " + graphExc.getMessage());
         }
     }
 }
