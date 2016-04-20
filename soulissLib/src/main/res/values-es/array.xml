@@ -73,7 +73,7 @@
         <item>Historial</item>
         <item>Agrupado por mes</item>
         <item>Agrupado por hora</item>
-        <item>Agrupado por die</item>
+        <item>Agrupado por dia</item>
     </string-array>
     <string-array name="graphTypeValues">
         <item>0</item>
