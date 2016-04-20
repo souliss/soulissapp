@@ -224,8 +224,8 @@
     <string name="Souliss_StopCmd_desc">Stop</string>
     <string name="Souliss_T11_desc">ON/OFF Salida digital con timer</string>
     <string name="Souliss_T12_desc">ON/OFF Salida con modo AUT</string>
-    <string name="Souliss_T13_desc">Valor de la entrada digital</string>
-    <string name="Souliss_T14_desc">Pulso de la salida digital</string>
+    <string name="Souliss_T13_desc">Valor de entrada digital</string>
+    <string name="Souliss_T14_desc">Pulso de salida digital</string>
     <string name="Souliss_T16_desc">Tira de LED RGB</string>
     <string name="Souliss_T18_desc">ON/OFF Salida Digital</string>
     <string name="Souliss_T19_desc">Luz Regulable</string>
@@ -353,7 +353,7 @@
     <string name="menu_addFav">Añadir a Favoritos</string>
     <string name="addprogram_choosedelay"/>
     <string name="action_settings">Settings</string>
-    <string name="config_choose_desc">Try SoulissApp con modo Demo, Crea tu configuracion o carga una existente.</string>
+    <string name="config_choose_desc">SoulissApp en modo Demo, Crea tu configuracion o carga una existente.</string>
     <string name="opt_restore_welcome_desc">Muestra la ventana de Bienvenida al iniciar la App</string>
     <string name="opt_restore_welcome">Restaurar Pantalla de Inicio</string>
     <string name="export_failed">Fallo al Exportar</string>
