@@ -474,6 +474,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             mVisualizerView.release();
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

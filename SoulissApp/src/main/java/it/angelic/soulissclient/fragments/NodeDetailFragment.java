@@ -25,6 +25,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -503,6 +504,28 @@ public class NodeDetailFragment extends ListFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.rebuildnode_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.Ricostruisci:
+                AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(getActivity(), collected, opzioni);
+                alertt.show();
+                return true;
+        }
+
+        return false;
+    }
+
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         TypicalsListAdapter ada = (TypicalsListAdapter) listaTypicalsView.getAdapter();
@@ -524,7 +547,7 @@ public class NodeDetailFragment extends ListFragment {
                         datasource, todoItem);
                 alert2.show();
                 break;
-            case R.id.addFav:
+            case R.id.addTo:
                 SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
                 AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, todoItem, getListView());
                 AlertDialog built = alert4.create();
