@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.fragments;
+package it.angelic.soulissclient.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -40,7 +40,7 @@ public class NumberPickerT6 extends NumberPicker {
 
     /*
     * GENERA i valori dello spinner da mostrare
-    * sono 100
+    * sono 100, uso una finestra di calcolo
     * */
     public int generateDisplayValues(float curVal) {
         int selIdx = dispVal.length;
@@ -104,7 +104,31 @@ public class NumberPickerT6 extends NumberPicker {
         setMaxValue(WINDOW_SIZE - 1);
         dispVal = new String[WINDOW_SIZE];
         // float wkVal = curVal;
-        if (model == Constants.Typicals.Souliss_T62) {
+        if (model == Constants.Typicals.Souliss_T68) {
+            min = 10;
+            max = 1500;
+            increment = 0.5f;
+        } else if (model == Constants.Typicals.Souliss_T67) {
+            min = 0;
+            max = 6500;
+            increment = 25f;
+        } else if (model == Constants.Typicals.Souliss_T66) {
+            min = 0;
+            max = 25;
+            increment = 0.25f;
+        } else if (model == Constants.Typicals.Souliss_T65) {
+            min = 0;
+            max = 400;
+            increment = 10f;
+        } else if (model == Constants.Typicals.Souliss_T64) {
+            min = 0;
+            max = 40;
+            increment = 0.2f;
+        } else if (model == Constants.Typicals.Souliss_T63) {
+            min = 0;
+            max = 100;
+            increment = 0.5f;
+        } else if (model == Constants.Typicals.Souliss_T62) {
             min = -20;
             max = +50;
             increment = 0.5f;

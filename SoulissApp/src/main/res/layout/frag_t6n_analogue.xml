@@ -99,7 +99,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp">
 
-            <it.angelic.soulissclient.fragments.NumberPickerT6
+            <it.angelic.soulissclient.views.NumberPickerT6
                 android:id="@+id/tempSliderPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
