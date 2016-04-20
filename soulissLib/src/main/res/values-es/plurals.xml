@@ -2,9 +2,9 @@
 <resources>
     <plurals
         name="Devices">
-        <item quantity="zero">No Device</item>
-        <item quantity="one">one Device</item>
-        <item quantity="other">%d  Devices</item>
+        <item quantity="zero">Cero Dispositivos</item>
+        <item quantity="one">Un Dispositivo</item>
+        <item quantity="other">%d  Dispositivos</item>
     </plurals>
 
     <plurals
@@ -14,8 +14,8 @@
         <item quantity="other">%d  Bytes</item>
     </plurals>
     <plurals name="seconds">
-        <item quantity="zero">0 Seconds</item>
-        <item quantity="one">1 Second</item>
-        <item quantity="other">%s  Seconds</item>
+        <item quantity="zero">0 Segundos</item>
+        <item quantity="one">1 Segundo</item>
+        <item quantity="other">%s  Segundos</item>
     </plurals>
 </resources>
