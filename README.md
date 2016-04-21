@@ -29,4 +29,5 @@ The project includes *SoulissLib* and other necessary modules. You may want to e
 * [android-parallax-recycleview](https://github.com/kanytu/android-parallax-recyclerview)
 * [AChartEngine ](http://www.achartengine.org/)
 * [FloatingActionButton](https://github.com/makovkastar/FloatingActionButton)
+* [ColorCrossfade](https://github.com/noties/ColorCrossFade)
 

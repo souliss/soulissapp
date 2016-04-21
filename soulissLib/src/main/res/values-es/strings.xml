@@ -379,6 +379,8 @@
     <string name="as_measured">Esta bien asi</string>
     <string name="setpoint">Ajuste</string>
     <string name="reading">Lectura</string>
+    <string name="from_color">From color</string>
+    <string name="to_color">To color</string>
 
 
 </resources>

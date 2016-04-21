@@ -55,5 +55,7 @@
     <string name="synch">Sinc</string>
     <string name="delete">Borrar</string>
     <string name="tags">Etiquetas</string>
+    <string name="speed">Speed</string>
+    <string name="play">Play</string>
 
 </resources>

@@ -378,5 +378,7 @@
     <string name="welcome_import_title">Uvozi SoulissApp Konfiguracijo</string>
     <string name="welcome_import_conf_name">Ime konfiguracije (npr. Dom, Pisarna, Zunaj)</string>
     <string name="reading">Reading</string>
+    <string name="from_color">From color</string>
+    <string name="to_color">To color</string>
     >
 </resources>

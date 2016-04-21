@@ -318,7 +318,10 @@
 
     <array name="pattern_colors">
         <item>#FF0000</item>
+        <item>#ffd740</item>
         <item>#00FF00</item>
+        <item>#20FFD7</item>
         <item>#0000FF</item>
+        <item>#AA20FF</item>
     </array>
 </resources>

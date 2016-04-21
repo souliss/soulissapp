@@ -98,7 +98,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 }
                 cpv.invalidate();
             } catch (Exception e) {
-                Log.e(Constants.TAG, "Errore broadcast Receive!", e);
+                Log.e(Constants.TAG, "Errore broadcast Receive! " + e.getMessage());
             }
             refreshStatusIcon();
         }
@@ -219,13 +219,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         } else if (getArguments() != null) {
             collected = (SoulissTypical16AdvancedRGB) getArguments().get("TIPICO");
         } else {
-            Log.e(Constants.TAG, "Error retriving node:");
+            Log.e(Constants.TAG, "Error retriving node!");
             return ret;
         }
         assertTrue("TIPICO NULLO", collected != null);
         collected.setPrefs(opzioni);
         super.setCollected(collected);
-
 
         refreshStatusIcon();
 
@@ -372,15 +371,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
                     eqText.setVisibility(View.GONE);
-
-                  /*  colorSeekBar.setMaxValue(100);
-                    colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
-                    colorSeekBar.setColorBarValue(10); //0 - maxValue
-                    colorSeekBar.setBarHeight(5); //5dpi
-                    colorSeekBar.setThumbHeight(30); //30dpi
-                    colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
-*/
-
                 }
             }
 
@@ -405,7 +395,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     public void run() {
                         while (isIncrementing()) {
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(250);
                                 collected.issueRefresh();
                             } catch (InterruptedException e) {
                                 Log.e(Constants.TAG, "Error Thread.sleep:");
@@ -414,7 +404,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     }
                 }).start();
             }
-
         };
 
 
@@ -503,6 +492,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             }
         };
 
+        //pattern animator
         btStartPattern.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -526,13 +516,14 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                                         Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
                                 Log.d(Constants.TAG, "dialogColorChangedListener, pattern color asc: " + goinUp
                                         + " cnt=" + cnt);
-                                getActivity().runOnUiThread(new Runnable() {
-                                    public void run() {
-                                        btFeedBackPatern
-                                                .setBackgroundColor(color);
-                                    }
-                                });
-
+                                if (getActivity() != null) {//could be detached
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            btFeedBackPatern
+                                                    .setBackgroundColor(color);
+                                        }
+                                    });
+                                }
                                 if (cnt >= 1)
                                     goinUp = false;
                                 else if (cnt <= 0)
@@ -556,7 +547,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             }
         });
 
-
         //la prima volta prendo il colore dal typ
         color = (Color.argb(255, Color.red(collected.getColor()),
                 Color.green(collected.getColor()), Color.blue(collected.getColor())));
@@ -570,11 +560,9 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // datasource.close();
         if (mVisualizerView != null)
             mVisualizerView.release();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -586,7 +574,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
         return false;
     }
 
@@ -709,16 +696,13 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
-
         }
 
         // solo per sicurezza
         public void onStopTrackingTouch(SeekBar seekBar) {
 
             collected.issueRefresh();
-            // issueIrCommand(it.angelic.soulissclient.Constants.Constants.Souliss_T1n_Set,
-            // Color.red(color),
-            // Color.green(color), Color.blue(color), togMulticast.isChecked());
+
         }
 
     }

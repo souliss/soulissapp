@@ -380,6 +380,8 @@
     <string name="as_measured">Come misurato</string>
     <string name="setpoint">setpoint</string>
     <string name="reading">Lettura</string>
+    <string name="from_color">From color</string>
+    <string name="to_color">To color</string>
 
 
 </resources>
