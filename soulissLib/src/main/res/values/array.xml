@@ -148,6 +148,7 @@
         <item>RGB circle</item>
         <item>RGB channels</item>
         <item>Music sync</item>
+        <item>Pattern</item>
     </string-array>
 
     <string-array name="singleChannelModes">

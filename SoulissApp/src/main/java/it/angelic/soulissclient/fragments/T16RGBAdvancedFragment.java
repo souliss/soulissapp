@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
+import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -59,6 +60,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private Button buttPlus;
     private SoulissTypical16AdvancedRGB collected;
     private int color = 0;
+    private ColorSeekBar colorSeekBar;
     private RelativeLayout colorSwitchRelativeLayout;
     // private Runnable senderThread;
     private boolean continueDecrementing;
@@ -111,6 +113,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private SeekBar seekChannelRed;
     private TableRow tableRowChannel;
     private TableRow tableRowEq;
+    private TableRow tableRowPatterns;
     private TableRow tableRowVis;
     private SwitchCompat togMulticast;
 
@@ -224,6 +227,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
         // checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
+        tableRowPatterns = (TableRow) ret.findViewById(R.id.tableRowPatterns);
         tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
         btWhite = (Button) ret.findViewById(R.id.white);
         btFlash = (Button) ret.findViewById(R.id.flash);
@@ -256,6 +260,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
         greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
 
+        colorSeekBar = (ColorSeekBar) ret.findViewById(R.id.colorSlider);
+
         btOff.setTag(Constants.Typicals.Souliss_T1n_OffCmd);
         btOn.setTag(Constants.Typicals.Souliss_T1n_OnCmd);
         buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
@@ -283,7 +289,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {// cerchio RGB
                     tableRowVis.setVisibility(View.GONE);
-
+                    tableRowPatterns.setVisibility(View.GONE);
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
@@ -296,6 +302,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     cpv.setCenterColor(Color.argb(255, Color.red(color),
                             Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
+                    tableRowPatterns.setVisibility(View.GONE);
                     tableRowVis.setVisibility(View.GONE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
@@ -319,7 +326,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     seekChannelBlue.setProgress(Color.blue(color));
                     Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
                     tableRowChannel.invalidate();
-                } else {// music
+                } else if (pos == 2) {// music
+                    tableRowPatterns.setVisibility(View.GONE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
                         mVisualizerView.link(togMulticast.isChecked());
@@ -335,6 +343,27 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     eqText.setVisibility(View.VISIBLE);
                     tableRowEq.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
+                } else {// patterns
+                    tableRowPatterns.setVisibility(View.VISIBLE);
+                    tableRowChannel.setVisibility(View.GONE);
+                    tableRowVis.setVisibility(View.GONE);
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setVisibility(View.GONE);
+                        mVisualizerView.setEnabled(false);
+                    }
+                    mVisualizerViewFrame.setVisibility(View.GONE);
+
+                    colorSwitchRelativeLayout.setVisibility(View.GONE);
+                    tableRowEq.setVisibility(View.INVISIBLE);
+                    eqText.setVisibility(View.GONE);
+
+                  /*  colorSeekBar.setMaxValue(100);
+                    colorSeekBar.setColors(R.array.material_colors); // material_colors is defalut included in res/color,just use it.
+                    colorSeekBar.setColorBarValue(10); //0 - maxValue
+                    colorSeekBar.setBarHeight(5); //5dpi
+                    colorSeekBar.setThumbHeight(30); //30dpi
+                    colorSeekBar.setBarMargin(10); //set the margin between colorBar and alphaBar 10dpi
+*/
                 }
             }
 
@@ -456,6 +485,19 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                         + " G" + Color.green(color) + " B" + Color.blue(color));
             }
         };
+
+        colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+            @Override
+            public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
+                T16RGBAdvancedFragment.this.color = color;
+                collected.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set,
+                        Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+                Log.d(Constants.TAG, "dialogColorChangedListener, color change to: R" + Color.red(color)
+                        + " G" + Color.green(color) + " B" + Color.blue(color));
+            }
+        });
+
+
         //la prima volta prendo il colore dal typ
         color = (Color.argb(255, Color.red(collected.getColor()),
                 Color.green(collected.getColor()), Color.blue(collected.getColor())));
