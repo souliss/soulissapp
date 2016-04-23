@@ -74,8 +74,10 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
                 SoulissDBHelper.open();
                 SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
                 collected = coll.getTypical(collected.getTypicalDTO().getSlot());
-                nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
-                        + " " + collected.getTypicalDTO().getSlot() + " - " + ((SoulissTypical6nAnalogue) collected).getOutputFloat());
+                nodeinfo.setText(collected.getParentNode().getNiceName()
+                        + " - " + getResources().getString(R.string.slot) + " " + collected.getTypicalDTO().getSlot()
+                        + " - " + getContext().getString(R.string.reading) + " " + String.format(java.util.Locale.US, "%.2f", ((SoulissTypical6nAnalogue) collected).getOutputFloat()));
+
             } catch (Exception e) {
                 Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
             }
@@ -249,8 +251,10 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
 
         refreshStatusIcon();
 
-        nodeinfo.setText(collected.getParentNode().getNiceName() + " - " + getResources().getString(R.string.slot)
-                + " " + collected.getTypicalDTO().getSlot() + " - " + getContext().getString(R.string.reading) + " " + ((SoulissTypical6nAnalogue) collected).getOutputFloat());
+        nodeinfo.setText(collected.getParentNode().getNiceName()
+                + " - " + getResources().getString(R.string.slot) + " " + collected.getTypicalDTO().getSlot()
+
+                + " - " + getContext().getString(R.string.reading) + " " + String.format(java.util.Locale.US, "%.2f", ((SoulissTypical6nAnalogue) collected).getOutputFloat()));
 
         par.setMax(Constants.MAX_HEALTH);
 
@@ -288,12 +292,15 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
+                    if (Float.valueOf(s.toString()) < 0.1f || Float.valueOf(s.toString()) > 10f)
+                        throw new Exception();
                     tempSlider.setIncrement(Float.valueOf(s.toString()));
+
                     int sel = tempSlider.generateDisplayValues(tempSlider.getRealVal());
                     tempSlider.setValue(sel);
                     tempSlider.invalidate();
                 } catch (Exception er) {
-                    incrementText.setError("Invalid format");
+                    incrementText.setError(getContext().getString(R.string.increment_input_err));
                 }
             }
         });

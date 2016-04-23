@@ -381,5 +381,6 @@
     <string name="reading">Reading</string>
     <string name="from_color">From color</string>
     <string name="to_color">To color</string>
+    <string name="increment_input_err">Input a number between 0.1 and 10</string>
 
 </resources>

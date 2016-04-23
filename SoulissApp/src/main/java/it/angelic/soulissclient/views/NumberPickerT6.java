@@ -43,10 +43,12 @@ public class NumberPickerT6 extends NumberPicker {
     * sono 100, uso una finestra di calcolo
     * */
     public int generateDisplayValues(float curVal) {
+
+        Log.i(Constants.Typicals.TAG, "generateDisplayValues, min=" + min + " max=" + max + " Typical" + Long.toHexString(model));
+
         int selIdx = dispVal.length;
         float winIdxIn;
         float winIdxOut = curVal;
-        Log.i(Constants.Typicals.TAG, "generateDisplayValues, min=" + min + " max=" + max + " Typical" + model);
         //finestra di selezione
         winIdxIn = winIdxOut - (dispVal.length * increment);
         //Float tempArray[] = new Float[100];
@@ -61,6 +63,12 @@ public class NumberPickerT6 extends NumberPicker {
             winIdxOut += increment;
             winIdxIn += increment;
             selIdx--;
+        }//impedisce sforamento
+        while (winIdxOut > max) {
+            winIdxOut -= increment;
+            //riduci array
+            dispVal = new String[dispVal.length - 1];
+            setMaxValue(dispVal.length - 1);
         }
 
         //a questo punto crea
@@ -101,8 +109,9 @@ public class NumberPickerT6 extends NumberPicker {
 
     private void init() {
         setMinValue(0);
-        setMaxValue(WINDOW_SIZE - 1);
         dispVal = new String[WINDOW_SIZE];
+        setMaxValue(WINDOW_SIZE - 1);
+
         // float wkVal = curVal;
         if (model == Constants.Typicals.Souliss_T68) {
             min = 10;
