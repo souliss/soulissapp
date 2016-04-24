@@ -213,8 +213,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return R.drawable.plug;
         else if (typical == Constants.Typicals.Souliss_T67)
             return R.drawable.plug;
-        else if (typical == Constants.Typicals.Souliss_T67)
-            return R.drawable.gauge1;
         else
             return R.drawable.empty_narrow;
     }

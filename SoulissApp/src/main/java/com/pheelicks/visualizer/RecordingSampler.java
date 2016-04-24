@@ -25,7 +25,6 @@ public class RecordingSampler {
     private int mSamplingInterval = 100;
     private Timer mTimer;
     private List<VisualizerView> mVisualizerViews = new ArrayList();
-    private RecordingSampler.CalculateVolumeListener mVolumeListener;
     private boolean mulicat;
 
     public RecordingSampler() {
@@ -114,9 +113,6 @@ public class RecordingSampler {
         this.mSamplingInterval = samplingInterval;
     }
 
-    public void setVolumeListener(RecordingSampler.CalculateVolumeListener volumeListener) {
-        this.mVolumeListener = volumeListener;
-    }
 
     public void startRecording() {
         this.mTimer = new Timer();

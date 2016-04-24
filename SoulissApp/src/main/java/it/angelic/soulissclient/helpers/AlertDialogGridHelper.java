@@ -295,7 +295,7 @@ public class AlertDialogGridHelper {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
                         toUpdate.setTagOrder(low.getValue());//sempre
-                        if (toUpdate != null && adapter != null) {
+                        if (adapter != null) {
                             int newPosition = low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue();
                             //swap elements
                             SoulissTag[] temp = adapter.getTagArray();

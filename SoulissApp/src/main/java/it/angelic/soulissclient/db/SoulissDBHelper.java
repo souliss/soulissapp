@@ -764,10 +764,10 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissCommandDTO cmd = new SoulissCommandDTO(cursor);
             SoulissTypical tgt = getTypical(cmd.getNodeId(), cmd.getSlot());
-            SoulissTrigger cols = new SoulissTrigger(context, cmd, tgt);
+            SoulissTrigger cols = new SoulissTrigger(cmd, tgt);
             SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
 
-            cols.setTriggerDto(comment);
+            cols.setTriggerDTO(comment);
 
             ret.add(cols);
             cursor.moveToNext();
@@ -788,7 +788,7 @@ public class SoulissDBHelper {
             throw new RuntimeException("cursor.getColumnCount() != 1");
         SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
 
-       // cols.setTriggerDto(comment);
+        // cols.setTriggerDTO(comment);
         // Make sure to close the cursor
         cursor.close();
         return comment;

@@ -73,7 +73,6 @@
                 android:layout_marginRight="4dp"
                 android:layout_toLeftOf="@id/typ_icon"
                 android:layout_toRightOf="@id/TextViewHealth"/>
-
         </RelativeLayout>
 
         <View

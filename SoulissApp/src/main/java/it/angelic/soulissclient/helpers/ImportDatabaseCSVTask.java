@@ -267,7 +267,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
      */
     private void insertTagTyp(String[] temp) {
         try {
-            SoulissTag hero = database.getTag(Long.valueOf(temp[2]));
+            SoulissTag hero = database.getTag(Long.parseLong(temp[2]));
             SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]),Short.valueOf(temp[0]));
 
             database.createOrUpdateTagTypicalNode( polloTyp ,hero,Integer.valueOf(temp[3]));
@@ -282,7 +282,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
      */
     private void insertTag(String[] temp) {
         SoulissTag tIns = new SoulissTag();
-        tIns.setTagId(Long.valueOf(temp[0]));
+        tIns.setTagId(Long.parseLong(temp[0]));
 
         try {
             if (temp[1].length() > 0)
@@ -319,7 +319,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             log.setSlot(Short.valueOf(temp[2]));
             log.setLogValue(Float.valueOf(temp[3]));
             Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date(Long.valueOf(temp[4])));
+            cal.setTime(new Date(Long.parseLong(temp[4])));
             log.setLogTime(cal);
             log.persist();
         } catch (Exception e) {

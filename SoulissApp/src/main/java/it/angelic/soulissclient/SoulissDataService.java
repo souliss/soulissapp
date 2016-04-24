@@ -318,8 +318,8 @@ public class SoulissDataService extends Service implements LocationListener {
 
     private void logThings(Map<Short, SoulissNode> refreshedNodes) {
         Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
-        for (Short index : refreshedNodes.keySet()) {
-            SoulissNode pirt = refreshedNodes.get(index);
+        for (SoulissNode pirt : refreshedNodes.values()) {
+            //SoulissNode pirt = refreshedNodes.get(index);
             List<SoulissTypical> tips = pirt.getTypicals();
             for (SoulissTypical soulissTypical : tips) {
                 if (soulissTypical.isSensor()) {

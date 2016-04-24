@@ -56,8 +56,8 @@ public class AbstractTypicalFragment extends Fragment {
         try {
             View ds = actionBar.getRootView();
             if (ds != null) {
-                TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
-                TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
+                //TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
+                //  TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
                 ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
                 TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 
@@ -103,37 +103,39 @@ public class AbstractTypicalFragment extends Fragment {
                             //badgeView.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.grey_alpha));
                             //tagInfo.append("-").append(newT.getNiceName()).append("\n");
                         }
-                        infoTags.setVisibility(View.VISIBLE);
+                        if (infoTags != null)
+                            infoTags.setVisibility(View.VISIBLE);
                         //textviewHistoryTags.setText(tagInfo.toString());
                     }
                 } catch (Exception e) {
                     Log.e(Constants.TAG, "FAIL refreshTagsInfo: " + e.getMessage());
                 }
 
-                tagView.setOnSimpleTagDeleteListener(new OnSimpleTagDeleteListener() {
-                    @Override
-                    public void onTagDeleted(SimpleTagView tag) {
-                        final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
+                if (tagView != null) {
+                    tagView.setOnSimpleTagDeleteListener(new OnSimpleTagDeleteListener() {
+                        @Override
+                        public void onTagDeleted(SimpleTagView tag) {
+                            final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
 
-                        List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
-                        for (SoulissTag tr : toRemoveL) {
-                            if (tr.getName().equals(tag.getText())) {
-                                Log.w(Constants.TAG, "Removing " + tr.getName() + " from " + collected.toString());
-                                List<SoulissTypical> temp = tr.getAssignedTypicals();
-                                //necessaria sta roba perche non ce equals?
-                                //no, perche il DB fa da se. Ci sarebbe considerazione
-                                //filosofica sul fatto che in realta equals e` quella,
-                                //e in questo caso la terna nodeid:slot:tagId
-                                tagDb.deleteTagTypicalNode(collected, tr);
-                                Log.w(Constants.TAG, "Removed TAG from typical");
+                            List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
+                            for (SoulissTag tr : toRemoveL) {
+                                if (tr.getName().equals(tag.getText())) {
+                                    Log.w(Constants.TAG, "Removing " + tr.getName() + " from " + collected.toString());
+                                    List<SoulissTypical> temp = tr.getAssignedTypicals();
+                                    //necessaria sta roba perche non ce equals?
+                                    //no, perche il DB fa da se. Ci sarebbe considerazione
+                                    //filosofica sul fatto che in realta equals e` quella,
+                                    //e in questo caso la terna nodeid:slot:tagId
+                                    tagDb.deleteTagTypicalNode(collected, tr);
+                                    Log.w(Constants.TAG, "Removed TAG from typical");
+                                }
                             }
+                            tagView.remove(tag);
+                            //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
                         }
-                        tagView.remove(tag);
-                        //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
-                    }
 
-                });
-
+                    });
+                }
             }
         }, 500);//con calma
     }
