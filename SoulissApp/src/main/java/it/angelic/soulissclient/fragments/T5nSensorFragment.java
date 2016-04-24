@@ -99,8 +99,6 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
 
         android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
-        //Fragment details = manager.findFragmentById(R.id.hvacChart);
-
         ChartFragment NewFrag = ChartFragment.newInstance((ISoulissTypicalSensor) collected);
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.hvacChart, NewFrag);
