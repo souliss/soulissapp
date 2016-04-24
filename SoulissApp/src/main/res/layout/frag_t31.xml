@@ -143,7 +143,7 @@
                 android:background="#FFCCCCCC"/>
 
             <TextView
-                android:id="@+id/textviewOptions"
+                android:id="@+id/textviewChartHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -154,7 +154,7 @@
                 android:id="@+id/ImageFan2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewOptions"
+                android:layout_below="@id/textviewChartHeader"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/fan"
                 android:drawableTop="@drawable/fan"
@@ -164,7 +164,7 @@
                 android:id="@+id/ImageFan1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewOptions"
+                android:layout_below="@id/textviewChartHeader"
                 android:layout_marginRight="15dip"
                 android:layout_toLeftOf="@id/ImageFan2"
                 android:background="@drawable/fan"
@@ -174,7 +174,7 @@
                 android:id="@+id/ImageFan3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewOptions"
+                android:layout_below="@id/textviewChartHeader"
                 android:layout_marginLeft="15dip"
                 android:layout_toRightOf="@id/ImageFan2"
                 android:background="@drawable/fan"

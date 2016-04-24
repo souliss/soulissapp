@@ -128,7 +128,7 @@
             android:background="#FFCCCCCC"/>
 
         <TextView
-            android:id="@+id/textviewOptions"
+            android:id="@+id/textviewChartHeader"
             android:layout_width="wrap_content"
             android:layout_below="@id/relativeLayoutPicker"
             android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayout3"
-            android:layout_below="@id/textviewOptions"
+            android:layout_below="@id/textviewChartHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">

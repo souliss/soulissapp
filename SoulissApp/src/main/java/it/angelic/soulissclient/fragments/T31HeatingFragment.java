@@ -59,6 +59,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
     private Spinner functionSpinner;
     private Spinner fanSpiner;
+    private TextView textViewTagDescgroup;
     private TextView textviewStatus;
     private Button buttOn;
     private Button buttOff;
@@ -131,6 +132,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         buttOn = (Button) ret.findViewById(R.id.buttonTurnOn);
         buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         textviewStatus = (TextView) ret.findViewById(R.id.textviewStatus);
+        textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
         tempSlider = (NumberPicker) ret.findViewById(R.id.tempSlider);
         functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
         fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
@@ -153,7 +155,9 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         //ft.add(NewFrag,"BOH");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
-
+        if (!collected.getTypicalDTO().isTagged()
+                )
+            textViewTagDescgroup.setVisibility(View.GONE);
         refreshTagsInfo();
 
         final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
@@ -163,9 +167,9 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         final OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {//fa cagare
-                    collected.issueCommand(Souliss_T3n_Heating, null);
-                } else {
                     collected.issueCommand(Souliss_T3n_Cooling, null);
+                } else {
+                    collected.issueCommand(Souliss_T3n_Heating, null);
                 }
             }
 
@@ -190,12 +194,13 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
             }
         };
         // avoid auto call upon Creation with runnable
-       /* functionSpinner.post(new Runnable() {
+        functionSpinner.post(new Runnable() {
             public void run() {
+                functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1, false);
                 functionSpinner.setOnItemSelectedListener(lit);
                 fanSpiner.setOnItemSelectedListener(lib);
             }
-        });*/
+        });
 
         tempSlider.setMaxValue(100);
         tempSlider.setMinValue(0);
@@ -318,7 +323,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 else
                     imageFan3.setVisibility(View.INVISIBLE);
 
-                functionSpinner.setSelection(collected.isCoolMode()?0:1);
+
             } catch (Exception e) {
                 Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
             }
