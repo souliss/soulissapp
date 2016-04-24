@@ -253,7 +253,6 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
 
         nodeinfo.setText(collected.getParentNode().getNiceName()
                 + " - " + getResources().getString(R.string.slot) + " " + collected.getTypicalDTO().getSlot()
-
                 + " - " + getContext().getString(R.string.reading) + " " + String.format(java.util.Locale.US, "%.2f", ((SoulissTypical6nAnalogue) collected).getOutputFloat()));
 
         par.setMax(Constants.MAX_HEALTH);

@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import junit.framework.Assert;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -40,8 +39,15 @@ import it.angelic.soulissclient.util.SoulissUtils;
  * <p/>
  * all values shall be in half-precision floating point, automatic conversion is
  * done if using Souliss_AnalogIn
- *
- * @author Ale
+ *BIT 0	(0 System  OFF,  1 System  ON)
+ BIT 1	(0 Heating OFF , 1 Heating ON)
+ BIT 2	(0 Cooling OFF , 1 Cooling ON)
+ BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
+ BIT 4	(0 Fan 2 OFF   , 1 Fan 2 ON)
+ BIT 5	(0 Fan 3 OFF   , 1 Fan 3 ON)
+ BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
+ BIT 7	(0 Heating Mode, 1 Cooling Mode)
+ * @author shine@angelic.it
  */
 public class SoulissTypical31Heating extends SoulissTypical implements ISoulissTypical, ISoulissTypicalSensor {
 
@@ -138,8 +144,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         StringBuilder strout = new StringBuilder();
         // int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
         Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(statusByte));
-        final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
-        buf.putInt(statusByte);
+        //final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
+        // buf.putInt(statusByte);
 /*
             BIT 0	(0 System  OFF,  1 System  ON)
 			BIT 1	(0 Heating OFF , 1 Heating ON)

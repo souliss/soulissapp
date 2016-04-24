@@ -28,6 +28,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.fragments.TimeRangeEnum;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -330,7 +331,7 @@ public class SoulissDBHelper {
      * @param tgt
      * @return
      */
-    public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(SoulissTypical tgt, int range) {
+    public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(ISoulissTypical tgt, int range) {
         HashMap<Date, SoulissHistoryGraphData> comments = new HashMap<>();
 
         Date dff;
@@ -513,7 +514,7 @@ public class SoulissDBHelper {
      * @param range   dei log da selezionare
      * @return
      */
-    public SparseArray<SoulissGraphData> getGroupedTypicalLogs(SoulissTypical tgt, String groupBy, int range) {
+    public SparseArray<SoulissGraphData> getGroupedTypicalLogs(ISoulissTypical tgt, String groupBy, int range) {
         SparseArray<SoulissGraphData> comments = new SparseArray<>();
         String limitCause = "";
         Calendar now = Calendar.getInstance();

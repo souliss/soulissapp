@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:id="@+id/Cont01"
@@ -179,6 +180,12 @@
                 android:background="@drawable/fan"
                 android:visibility="visible"/>
 
+            <FrameLayout
+                android:id="@+id/hvacChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ImageFan1"
+                tools:layout="@layout/frag_t5n_sensordetail"/>
 
             <View
                 android:id="@+id/strut2"

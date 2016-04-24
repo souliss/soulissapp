@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
@@ -50,6 +51,7 @@ import static junit.framework.Assert.assertTrue;
 
 public class T31HeatingFragment extends AbstractTypicalFragment  implements NumberPicker.OnValueChangeListener{
     private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
+    private FrameLayout hvacChart;
     private SoulissPreferenceHelper opzioni;
 
 
@@ -138,6 +140,19 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+        //hvacChart = (FrameLayout) ret.findViewById(R.id.hvacChart);
+
+        android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
+        //Fragment details = manager.findFragmentById(R.id.hvacChart);
+
+        ChartFragment NewFrag = ChartFragment.newInstance(collected);
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.replace(R.id.hvacChart, NewFrag);
+        ft.addToBackStack(null);
+        // ft.remove(details);
+        //ft.add(NewFrag,"BOH");
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
 
         refreshTagsInfo();
 
@@ -175,12 +190,12 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
             }
         };
         // avoid auto call upon Creation with runnable
-        functionSpinner.post(new Runnable() {
+       /* functionSpinner.post(new Runnable() {
             public void run() {
                 functionSpinner.setOnItemSelectedListener(lit);
                 fanSpiner.setOnItemSelectedListener(lib);
             }
-        });
+        });*/
 
         tempSlider.setMaxValue(100);
         tempSlider.setMinValue(0);

@@ -246,6 +246,14 @@
     <string name="Souliss_T56_desc">Sensore Corrente</string>
     <string name="Souliss_T57_desc">Sensore Potenza</string>
     <string name="Souliss_T58_desc">Sensore Pressione Atmosferica</string>
+    <string name="Souliss_T61_desc">Analog setpoint</string>
+    <string name="Souliss_T62_desc">Setpoint Temperatura(-20, +50)°C</string>
+    <string name="Souliss_T63_desc">Setpoint umidità(0, 100)%</string>
+    <string name="Souliss_T64_desc">Setpoint Luminosità(0, 40) kLux</string>
+    <string name="Souliss_T65_desc">Setpoint Tensione(0, 400) V</string>
+    <string name="Souliss_T66_desc">Setpoint Corrente(0, 25) A</string>
+    <string name="Souliss_T67_desc">Setpoint Potenza(0, 6500) W</string>
+    <string name="Souliss_T68_desc">Setpoint Pressione Atmosferica(0, 1500) hPa</string>
     <string name="Souliss_TCurrentSensor_desc">Sensore Corrente</string>
     <string name="Souliss_TTemperature_desc">Sensore Temperatura</string>
     <string name="Souliss_THumidity_desc">Sensore umidità</string>

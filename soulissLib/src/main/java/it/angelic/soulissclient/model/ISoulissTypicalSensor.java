@@ -1,7 +1,9 @@
 package it.angelic.soulissclient.model;
 
 
-public interface ISoulissTypicalSensor extends ISoulissTypical {
+import java.io.Serializable;
+
+public interface ISoulissTypicalSensor extends ISoulissTypical, Serializable {
 	/**
 	 * Lettura del sensore
 	 */

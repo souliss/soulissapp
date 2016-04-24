@@ -144,12 +144,6 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         else if (typical == Constants.Typicals.Souliss_T31){
             resId = R.drawable.sos;
         }
-        else if (typical == Constants.Typicals.Souliss_T_CurrentSensor)
-            resId = R.drawable.sos;
-        else if (typical == Constants.Typicals.Souliss_T_TemperatureSensor)
-            resId = R.drawable.sos;
-        else if (typical == Constants.Typicals.Souliss_T_HumiditySensor)
-            resId = R.drawable.sos;
         else
             resId = R.drawable.empty;
 
@@ -302,12 +296,6 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 resId = R.string.Souliss_UndefinedCmd_desc;
         } else if (typical == Constants.Typicals.Souliss_T31)
             resId = R.string.Souliss_T31_desc;
-        else if (typical == Constants.Typicals.Souliss_T_CurrentSensor)
-            resId = R.string.Souliss_TCurrentSensor_desc;
-        else if (typical == Constants.Typicals.Souliss_T_TemperatureSensor)
-            resId = R.string.Souliss_TTemperature_desc;
-        else if (typical == Constants.Typicals.Souliss_T_HumiditySensor)
-            resId = R.string.Souliss_THumidity_desc;
         else if (typical == Constants.Typicals.Souliss_T32_IrCom_AirCon) {
             if (command == Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_20)
                 resId = R.string.Souliss_T_IrCom_AirCon_Pow_Auto_20_desc;

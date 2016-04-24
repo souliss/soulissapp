@@ -95,12 +95,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             id = R.string.Souliss_T22_desc;
         else if (typical == Constants.Typicals.Souliss_T31)
             id = R.string.Souliss_T31_desc;
-        else if (typical == Constants.Typicals.Souliss_T_CurrentSensor)
-            id = R.string.Souliss_TCurrentSensor_desc;
-        else if (typical == Constants.Typicals.Souliss_T_TemperatureSensor)
-            id = R.string.Souliss_TTemperature_desc;
-        else if (typical == Constants.Typicals.Souliss_T_HumiditySensor)
-            id = R.string.Souliss_THumidity_desc;
         else if (typical == Constants.Typicals.Souliss_T32_IrCom_AirCon)
             id = R.string.Souliss_TAircon_desc;
         else if (typical == Constants.Typicals.Souliss_T15_RGB)
@@ -183,12 +177,8 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return R.drawable.shield1;
         else if (typical == Constants.Typicals.Souliss_T42_Antitheft_Peer || typical == Constants.Typicals.Souliss_T43_Antitheft_LocalPeer)
             return R.drawable.shield1;
-        else if (typical == Constants.Typicals.Souliss_T_TemperatureSensor)
-            return R.drawable.thermometer;
         else if (typical == Constants.Typicals.Souliss_T_related)
             return R.drawable.empty;
-        else if (typical == Constants.Typicals.Souliss_T_HumiditySensor)
-            return R.drawable.raindrop;
         else if (typical == Constants.Typicals.Souliss_T32_IrCom_AirCon)
             return R.drawable.snow1;
         else if (typical == Constants.Typicals.Souliss_T15_RGB)

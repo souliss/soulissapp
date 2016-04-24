@@ -343,7 +343,7 @@ public class LineView extends View {
             Paint.FontMetrics metric = textPaint.getFontMetrics();
             int textHeight = (int) Math.ceil(metric.descent - metric.ascent);
             int y = (int) (textHeight - metric.descent);
-            canvas.drawText("NO", 0, y, textPaint);
+            canvas.drawText("NO DATA", 0, y, textPaint);
         }
     }
 

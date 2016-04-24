@@ -12,73 +12,8 @@
         android:padding="2dp">
 
         <RelativeLayout
-            android:id="@+id/RelativeLayoutNodeDetail"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:padding="4dp">
-
-            <ImageView
-                android:id="@+id/typ_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="2dip"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/soulisslogo"/>
-
-            <TextView
-                android:id="@+id/TextViewTypNodeInfo"
-                style="@style/CodeFontMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="4dp"
-                android:ellipsize="end"
-                android:textIsSelectable="false">
-            </TextView>
-
-            <TextView
-                android:id="@+id/TextViewTypUpdate"
-                style="@style/CodeFontMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/TextViewTypNodeInfo"
-                android:layout_marginLeft="4dp"
-                android:ellipsize="end"
-                android:text="@string/update">
-            </TextView>
-
-            <TextView
-                android:id="@+id/TextViewHealth"
-                style="@style/CodeFontMain"
-                android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/TextViewTypUpdate"
-                android:layout_marginLeft="4dp"
-                android:text="@string/health">
-            </TextView>
-
-            <ProgressBar
-                android:id="@+id/progressBarTypNodo"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/TextViewTypUpdate"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_toLeftOf="@id/typ_icon"
-                android:layout_toRightOf="@id/TextViewHealth"/>
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
+            android:padding="4dp"
             android:id="@+id/relativeLayout3"
-            android:layout_below="@id/RelativeLayoutNodeDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
@@ -122,7 +57,6 @@
                 android:layout_alignLeft="@id/strut"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textView1"
-                android:layout_toRightOf="@id/spinnerFunction"
                 android:entries="@array/graphRange"
                 android:entryValues="@array/graphRangeValues"/>
 

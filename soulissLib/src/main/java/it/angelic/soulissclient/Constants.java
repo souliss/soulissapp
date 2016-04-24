@@ -319,13 +319,7 @@ public class Constants {
         public static final short Souliss_RstCmd = 0x00;
         public static final short Souliss_NOTTRIGGED = 0x00;
         public static final short Souliss_TRIGGED = 0x01;
-        // Defines for current sensor
-        public static final short Souliss_T_CurrentSensor = 0x65;
-        // REMOVE THESE
-        public static final short Souliss_T_TemperatureSensor = 0x67;
-        public static final byte Souliss_T_TemperatureSensor_refresh = 0x02;
-        public static final short Souliss_T_HumiditySensor = 0x69;
-        public static final byte Souliss_T_HumiditySensor_refresh = 0x03;
+
 
         /**
          * @author Ale
