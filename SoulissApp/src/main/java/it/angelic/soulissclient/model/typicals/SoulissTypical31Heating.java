@@ -17,6 +17,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
@@ -42,7 +43,7 @@ import it.angelic.soulissclient.util.SoulissUtils;
  *
  * @author Ale
  */
-public class SoulissTypical31Heating extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical31Heating extends SoulissTypical implements ISoulissTypical, ISoulissTypicalSensor {
 
     // SoulissNode parentd = getParentNode();
     // SoulissTypical TemperatureMeasuredValue =
@@ -90,6 +91,11 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         }
         else
             return SoulissApp.getAppContext().getString(R.string.stale);
+    }
+
+    @Override
+    public float getOutputFloat() {
+        return TemperatureMeasuredVal;
     }
 
     public String getOutputLongDesc() {

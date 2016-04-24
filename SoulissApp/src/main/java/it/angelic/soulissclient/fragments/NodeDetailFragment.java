@@ -288,6 +288,7 @@ public class NodeDetailFragment extends ListFragment {
             SoulissTypical[] typs = new SoulissTypical[goer.size()];
             typs = goer.toArray(typs);
 
+
             ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(),
                     opzioni);
             listaTypicalsView = getListView();
@@ -303,8 +304,7 @@ public class NodeDetailFragment extends ListFragment {
             });
             //serve per back da dettaglio
             ((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(collected.getNiceName());
-            // gestureListener = new SwipeGestureListener(getActivity());
-            // listaTypicalsView.setOnTouchListener(gestureListener);
+
         }
     }
 
@@ -340,14 +340,14 @@ public class NodeDetailFragment extends ListFragment {
         // Istanzia e ci mette l'indice
         if (target instanceof SoulissTypical6nAnalogue)
             NewFrag = T6nAnalogueFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(index, target);
         else if (target.isSensor())
             NewFrag = T5nSensorFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical16AdvancedRGB)
             NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical19AnalogChannel)
             NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical31Heating)
-            NewFrag = T31HeatingFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
             NewFrag = T1nGenericLightFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer || target instanceof SoulissTypical43AntiTheftLocalPeer)

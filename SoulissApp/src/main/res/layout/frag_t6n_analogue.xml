@@ -136,21 +136,57 @@
             android:text="@string/historyof"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <Spinner
-            android:id="@+id/spinnerGraphType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textviewOptions"
-            android:entries="@array/graphType"
-            android:entryValues="@array/graphTypeValues"/>
 
-        <Spinner
-            android:id="@+id/spinnerGraphRange"
+        <RelativeLayout
+            android:id="@+id/relativeLayout3"
+            android:layout_below="@id/textviewOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerGraphType"
-            android:entries="@array/graphRange"
-            android:entryValues="@array/graphRangeValues"/>
+            android:gravity="center">
+
+            <View
+                android:id="@+id/strut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut"
+                android:text="@string/mode"/>
+
+            <TextView
+                android:id="@+id/textView1dx"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut"
+                android:layout_alignParentRight="true"
+                android:text="@string/range"/>
+
+            <Spinner
+                android:id="@+id/spinnerGraphType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut"
+                android:layout_below="@id/textView1"
+                android:entries="@array/graphType"
+                android:entryValues="@array/graphTypeValues"/>
+
+            <Spinner
+                android:id="@+id/spinnerGraphRange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/textView1"
+                android:layout_toRightOf="@id/spinnerFunction"
+                android:entries="@array/graphRange"
+                android:entryValues="@array/graphRangeValues"/>
+        </RelativeLayout>
 
 
         <HorizontalScrollView
@@ -158,7 +194,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/spinnerGraphRange">
+            android:layout_below="@id/relativeLayout3">
 
             <view
                 android:id="@+id/line_view"
