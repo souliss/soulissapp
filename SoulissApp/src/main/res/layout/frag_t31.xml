@@ -68,13 +68,27 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp">
 
-            <NumberPicker
+            <it.angelic.soulissclient.views.NumberPickerT6
                 android:id="@+id/tempSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="4dp"
                 android:layout_weight="1"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/editTextIncrementCont"
+                android:layout_width="match_parent"
+                android:layout_below="@id/tempSlider"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editTextIncrement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="increment"
+                    android:inputType="numberDecimal"/>
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -200,7 +214,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut2"
-                android:layout_below="@+id/ImageFan3"
+                android:layout_below="@+id/hvacChart"
                 android:width="0dip"
                 android:text="@string/ON"/>
 
@@ -213,7 +227,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignStart="@id/strut2"
-                android:layout_below="@+id/ImageFan3"
+                android:layout_below="@+id/hvacChart"
                 android:text="@string/OFF"/>
         </RelativeLayout>
 

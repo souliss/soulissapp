@@ -170,8 +170,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             strout.append(" - Fan Manual");
 
 
-        strout.append(" ").append(TemperatureMeasuredVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C")
-                .append(" (").append(TemperatureSetpointVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C").append(")");
+        strout.append(" ").append(String.format("%.2f", TemperatureMeasuredVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C")
+                .append(" (").append(String.format("%.2f", TemperatureSetpointVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C").append(")");
         return strout.toString();
     }
 

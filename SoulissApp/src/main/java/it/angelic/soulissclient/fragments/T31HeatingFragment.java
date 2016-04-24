@@ -8,6 +8,8 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -35,6 +38,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.soulissclient.views.NumberPickerT6;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_AsMeasured;
@@ -52,6 +56,7 @@ import static junit.framework.Assert.assertTrue;
 public class T31HeatingFragment extends AbstractTypicalFragment  implements NumberPicker.OnValueChangeListener{
     private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     private FrameLayout hvacChart;
+    private EditText incrementText;
     private SoulissPreferenceHelper opzioni;
 
 
@@ -64,7 +69,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
     private Button buttOn;
     private Button buttOff;
     private Button asMeasuredButton;
-    private NumberPicker tempSlider;
+    private NumberPickerT6 tempSlider;
     private ImageView imageFan3;
     private ImageView imageFan2;
     private ImageView imageFan1;
@@ -123,7 +128,10 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
             Log.e(Constants.TAG, "Error retriving node:");
             return ret;
         }
-        assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
+        SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
+        collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
+
+        assertTrue("TIPICO NULLO", collected instanceof SoulissTypical31Heating);
         collected.setPrefs(opzioni);
 
         super.setCollected(collected);
@@ -133,7 +141,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         textviewStatus = (TextView) ret.findViewById(R.id.textviewStatus);
         textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
-        tempSlider = (NumberPicker) ret.findViewById(R.id.tempSlider);
+        tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSlider);
         functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
         fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
         asMeasuredButton = (Button) ret.findViewById(R.id.asMeasuredButton);
@@ -141,6 +149,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
         imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
+        incrementText = (EditText) ret.findViewById(R.id.editTextIncrement);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         //hvacChart = (FrameLayout) ret.findViewById(R.id.hvacChart);
 
@@ -150,17 +159,13 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         ChartFragment NewFrag = ChartFragment.newInstance(collected);
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.hvacChart, NewFrag);
-        ft.addToBackStack(null);
-        // ft.remove(details);
-        //ft.add(NewFrag,"BOH");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commit();
-        if (!collected.getTypicalDTO().isTagged()
-                )
+        if (!collected.getTypicalDTO().isTagged())
             textViewTagDescgroup.setVisibility(View.GONE);
         refreshTagsInfo();
 
-        final int[] spinnerFunVal = getResources().getIntArray(R.array.AirConFunctionValues);
+
         /**
          * LISTENER SPINNER DESTINATARIO, IN TESTATA
          */
@@ -196,14 +201,39 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         // avoid auto call upon Creation with runnable
         functionSpinner.post(new Runnable() {
             public void run() {
+
                 functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1, false);
                 functionSpinner.setOnItemSelectedListener(lit);
                 fanSpiner.setOnItemSelectedListener(lib);
             }
         });
 
-        tempSlider.setMaxValue(100);
-        tempSlider.setMinValue(0);
+        incrementText.setText(String.valueOf("1"));
+        incrementText.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    if (Float.valueOf(s.toString()) < 0.1f || Float.valueOf(s.toString()) > 10f)
+                        throw new Exception();
+                    tempSlider.setIncrement(Float.valueOf(s.toString()));
+
+                    int sel = tempSlider.generateDisplayValues(tempSlider.getRealVal());
+                    tempSlider.setValue(sel);
+                    tempSlider.invalidate();
+                } catch (Exception er) {
+                    incrementText.setError(getContext().getString(R.string.increment_input_err));
+                }
+            }
+        });
+        tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
+
         tempSlider.setWrapSelectorWheel(false);
         //tempSlider.setDisplayedValues(nums);
         tempSlider.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
@@ -234,7 +264,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
         buttOff.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-
                 collected.issueCommand(Souliss_T3n_ShutOff, null);
             }
         });
@@ -275,6 +304,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -307,8 +337,8 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
                 refreshStatusIcon();
                 //refreshTagsInfo();
-                Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
                 textviewStatus.setText(collected.getOutputLongDesc());
+                Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
 
                 if (collected.isFannTurnedOn(1))
                     imageFan1.setVisibility(View.VISIBLE);
