@@ -326,8 +326,8 @@
     <string name="udpport_summary">Выбрать исходящие датаграммы\'порт</string>
     <string name="advbroadcast_summary">Удаленно конфигурировать Узел Souliss</string>
     <string name="Souliss_T19_Max_desc" >Maximum intensity</string>
-    <string name="Souliss_T19_Med_desc" />
-    <string name="Souliss_T19_Min_desc" />
+    <string name="Souliss_T19_Med_desc">Medium intensity</string>
+    <string name="Souliss_T19_Min_desc">Minimum intensity</string>
     <string name="sureToRemoveTag">Вы уверены, что хотите удалить этот Tag?</string>
     <string name="cantRemoveDefault">Невозможно удалить предпочитаемый Tag по умолчанию</string>
     <string name="removeTag">RemoveУдалить Tag</string>
@@ -350,7 +350,7 @@
     <string name="err_command_not_recognized">Command not recognized</string>
     <string name="menu_changenodeRebuild">Rebuild Node</string>
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
-    <string name="addprogram_choosedelay"/>
+    <string name="addprogram_choosedelay">Command\'s delay</string>
     <string name="scene_add_typical_to">Add device to...</string>
     <string name="action_settings">Settings</string>
     <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
@@ -374,11 +374,17 @@
     <string name="welcome_import_conf_name">Configuration name (ie. Home, Office, seaside)</string>
     <string name="command_hint">The command will be passed to SoulissApp in order to execute it</string>
     <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
-    <string name="as_measured">Sto bene cosi</string>
+    <string name="as_measured">As measured</string>
     <string name="setpoint">setpoint</string>
     <string name="reading">Reading</string>
     <string name="from_color">From color</string>
     <string name="to_color">To color</string>
     <string name="increment_input_err">Input a number between 0.1 and 10</string>
     <string name="range">Range</string>
+    <string name="Souliss_T61_desc">Analog setpoint, half-precision floating point</string>
+    <string name="Souliss_T62_desc">Temperature setpoint (-20, +50)°C</string>
+    <string name="Souliss_T63_desc">Humidity setpoint (0, 100)%</string>
+    <string name="welcome_tour_button">Start</string>
+    <string name="Souliss_T64_desc">Light setpoint (0, 40) kLux</string>
+    <string name="Souliss_T65_desc">Voltage setpoint(0, 400) V</string>
 </resources>

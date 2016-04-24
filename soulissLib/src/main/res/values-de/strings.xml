@@ -348,7 +348,7 @@
     <string name="bytes_sent">Bytes sent</string>
     <string name="dbstruct_req">DB Structure received</string>
     <string name="souliss_voice_command">Souliss Voice Command</string>
-    <string name="addprogram_choosedelay"/>
+    <string name="addprogram_choosedelay">Command\'s delay</string>
     <string name="scene_add_typical_to">Add device to...</string>
     <string name="action_settings">Settings</string>
     <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
@@ -373,11 +373,16 @@
     <string name="welcome_import_conf_name">Configuration name (ie. Home, Office, seaside)</string>
     <string name="command_hint">The command will be passed to SoulissApp in order to execute it</string>
     <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
-    <string name="as_measured">Sto bene cosi</string>
+    <string name="as_measured">As measured</string>
     <string name="setpoint">setpoint</string>
     <string name="reading">Reading</string>
     <string name="from_color">From color</string>
     <string name="to_color">To color</string>
     <string name="increment_input_err">Input a number between 0.1 and 10</string>
     <string name="range">Range</string>
+    <string name="Souliss_T61_desc">Analog setpoint, half-precision floating point</string>
+    <string name="Souliss_T62_desc">Temperature setpoint (-20, +50)°C</string>
+    <string name="Souliss_T63_desc">Humidity setpoint (0, 100)%</string>
+    <string name="Souliss_T64_desc">Light setpoint (0, 40) kLux</string>
+    <string name="Souliss_T65_desc">Voltage setpoint(0, 400) V</string>
 </resources>

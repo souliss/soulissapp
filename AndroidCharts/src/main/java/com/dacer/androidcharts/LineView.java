@@ -46,6 +46,7 @@ public class LineView extends View {
     private final int BOTTOM_TEXT_COLOR = Color.parseColor("#9B9A9B");
     // onDraw optimisations
     private final Point tmpPoint = new Point();
+    private final Paint textPaint;
     public boolean showPopup = true;
     //drawBackground
     private boolean autoSetDataOfGird = true;
@@ -103,6 +104,7 @@ public class LineView extends View {
 
     public LineView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
         popupTextPaint.setAntiAlias(true);
         popupTextPaint.setColor(Color.WHITE);
         popupTextPaint.setTextSize(ChartUtils.sp2px(getContext(), 13));
@@ -336,7 +338,7 @@ public class LineView extends View {
         } catch (NoSuchElementException nsu) {
             Log.w(ChartUtils.LOG_TAG, "Skipping draw");
 
-            Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DITHER_FLAG);
+
             textPaint.setColor(Color.GRAY);
             textPaint.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 18, getResources().getDisplayMetrics()));
             textPaint.setTextAlign(Paint.Align.LEFT);

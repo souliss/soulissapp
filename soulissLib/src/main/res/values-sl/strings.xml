@@ -382,5 +382,13 @@
     <string name="to_color">To color</string>
     <string name="increment_input_err">Input a number between 0.1 and 10</string>
     <string name="range">Range</string>
+    <string name="Souliss_T61_desc">Analog setpoint, half-precision floating point</string>
+    <string name="Souliss_T62_desc">Temperature setpoint (-20, +50)°C</string>
+    <string name="Souliss_T63_desc">Humidity setpoint (0, 100)%</string>
+    <string name="as_measured">As measured</string>
+    <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
+    <string name="setpoint">setpoint</string>
+    <string name="Souliss_T64_desc">Light setpoint (0, 40) kLux</string>
+    <string name="Souliss_T65_desc">Voltage setpoint(0, 400) V</string>
     >
 </resources>

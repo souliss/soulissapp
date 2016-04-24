@@ -359,7 +359,7 @@
     <string name="menu_changenodeRebuild">Reconstruir nodo</string>
     <string name="menu_changenodeRebuild_desc">Al reconstruir el nodo se borraran los nombres de los dispositivos</string>
     <string name="menu_addFav">Añadir a Favoritos</string>
-    <string name="addprogram_choosedelay"/>
+    <string name="addprogram_choosedelay">Command\'s delay</string>
     <string name="action_settings">Settings</string>
     <string name="config_choose_desc">SoulissApp en modo Demo, Crea tu configuracion o carga una existente.</string>
     <string name="opt_restore_welcome_desc">Muestra la ventana de Bienvenida al iniciar la App</string>
@@ -384,7 +384,7 @@
     <string name="welcome_import_conf_name">Nombre de Configuracion (ej. Casa, Oficina, ...)</string>
     <string name="command_hint">El comando sera enviado a SoulissApp para ser ejecutado</string>
     <string name="conf_name_hint">Seleccione Nombre de Configuracion(es. Casa, Oficina, ...)</string>
-    <string name="as_measured">Esta bien asi</string>
+    <string name="as_measured">As measured</string>
     <string name="setpoint">Ajuste</string>
     <string name="reading">Lectura</string>
     <string name="from_color">From color</string>
