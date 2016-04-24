@@ -84,13 +84,13 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
             @Override
             public void run() {
                 UDPHelper.healthRequest(opzioni, goer.size(), 0);
-                try {
-                    Thread.sleep(500);//FIXME blocking
+               /* try {
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                // subscribe a tutti i nodi
-                UDPHelper.stateRequest(opzioni, goer.size(), 0);
+                // subscribe a tutti i nodi, in teoria non serve
+                UDPHelper.stateRequest(opzioni, goer.size(), 0);*/
             }
         }).start();
 

@@ -25,6 +25,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +69,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
+import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -286,6 +288,7 @@ public class NodeDetailFragment extends ListFragment {
             SoulissTypical[] typs = new SoulissTypical[goer.size()];
             typs = goer.toArray(typs);
 
+
             ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(),
                     opzioni);
             listaTypicalsView = getListView();
@@ -301,8 +304,7 @@ public class NodeDetailFragment extends ListFragment {
             });
             //serve per back da dettaglio
             ((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(collected.getNiceName());
-            // gestureListener = new SwipeGestureListener(getActivity());
-            // listaTypicalsView.setOnTouchListener(gestureListener);
+
         }
     }
 
@@ -336,14 +338,16 @@ public class NodeDetailFragment extends ListFragment {
 
         Fragment NewFrag = null;
         // Istanzia e ci mette l'indice
-        if (target.isSensor())
+        if (target instanceof SoulissTypical6nAnalogue)
+            NewFrag = T6nAnalogueFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(index, target);
+        else if (target.isSensor())
             NewFrag = T5nSensorFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical16AdvancedRGB)
             NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical19AnalogChannel)
             NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical31Heating)
-            NewFrag = T31HeatingFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
             NewFrag = T1nGenericLightFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer || target instanceof SoulissTypical43AntiTheftLocalPeer)
@@ -378,45 +382,6 @@ public class NodeDetailFragment extends ListFragment {
         ft.commit();
 
 
-			/*Intent nodeDatail = null;
-            if (target.isSensor()) {
-				Log.d(Constants.TAG, getResources().getString(R.string.manual_showing_typ) + index);
-				// Activity Dettaglio nodo
-				nodeDatail = new Intent(getActivity(), T5nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == it.angelic.soulissclient.Constants.Constants.Souliss_T32_IrCom_AirCon) {
-				nodeDatail = new Intent(getActivity(), T32AirConFragment.class);
-				nodeDatail.putExtra("TIPICO", target);
-				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getSlot() + 1)));
-			} else if (target.getTypical() == it.angelic.soulissclient.Constants.Constants.Souliss_T15_RGB) {
-				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == Souliss_T16) {
-				nodeDatail = new Intent(getActivity(), T16RGBFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == Souliss_T19) {
-				nodeDatail = new Intent(getActivity(), T19SingleChannelFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			}  else if (target.getTypical() == Souliss_T31) {
-				nodeDatail = new Intent(getActivity(), T31FragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if ((target.getTypical() == Souliss_T11)
-                    || (target.getTypical() == Souliss_T12)) {
-				nodeDatail = new Intent(getActivity(), T1nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == Souliss_T41_Antitheft_Main
-					|| target.getTypical() == Souliss_T42_Antitheft_Peer
-					|| target.getTypical() == Souliss_T43_Antitheft_LocalPeer) {
-				nodeDatail = new Intent(getActivity(), T4nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			}
-
-			if (nodeDatail != null) {// se ho fatto uno degli if precedente
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-			}*/
-
     }
 
     private void refreshHeader() {
@@ -428,30 +393,6 @@ public class NodeDetailFragment extends ListFragment {
 
     }
 
-    /*private void refreshStatusIcon() {
-        try {
-            View ds = actionBar.getRootView();
-            if (ds != null) {
-                ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-                TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-                TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-                actionTitle.setText(collected.getNiceName());
-
-                if (!opzioni.isSoulissReachable()) {
-                    online.setBackgroundResource(R.drawable.red);
-                    statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-                    statusOnline.setText(R.string.offline);
-                } else {
-                    online.setBackgroundResource(R.drawable.green);
-                    statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-                    statusOnline.setText(R.string.Online);
-                }
-                statusOnline.invalidate();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     /**
      * Riga grigia cra spazio
@@ -500,6 +441,28 @@ public class NodeDetailFragment extends ListFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.rebuildnode_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.Ricostruisci:
+                AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(getActivity(), collected, opzioni);
+                alertt.show();
+                return true;
+        }
+
+        return false;
+    }
+
+
+    @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         TypicalsListAdapter ada = (TypicalsListAdapter) listaTypicalsView.getAdapter();
@@ -521,15 +484,12 @@ public class NodeDetailFragment extends ListFragment {
                         datasource, todoItem);
                 alert2.show();
                 break;
-            case R.id.addFav:
+            case R.id.addTo:
                 SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
                 AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, todoItem, getListView());
                 AlertDialog built = alert4.create();
                 built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 built.show();
-
-                //InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 break;
             default:
                 return super.onContextItemSelected(item);

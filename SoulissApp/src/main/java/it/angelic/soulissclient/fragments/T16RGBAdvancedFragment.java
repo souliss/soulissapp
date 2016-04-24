@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.pheelicks.visualizer.VisualizerView;
 import com.pheelicks.visualizer.renderer.BarGraphRenderer;
+import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -44,21 +45,27 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.util.CCFAnimator;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
 public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private TextView blueChanabel;
+    private Button btFeedBackPatern;
     private Button btFlash;
     private Button btOff;
     private Button btOn;
     private Button btSleep;
+    private Button btStartPattern;
+    private Button btStopPattern;
     private Button btWhite;
     private Button buttMinus;
     private Button buttPlus;
     private SoulissTypical16AdvancedRGB collected;
     private int color = 0;
+    private ColorSeekBar colorSeekBar;
+    private ColorSeekBar colorSeekBarStop;
     private RelativeLayout colorSwitchRelativeLayout;
     // private Runnable senderThread;
     private boolean continueDecrementing;
@@ -91,7 +98,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 }
                 cpv.invalidate();
             } catch (Exception e) {
-                Log.e(Constants.TAG, "Errore broadcast Receive!", e);
+                Log.e(Constants.TAG, "Errore broadcast Receive! " + e.getMessage());
             }
             refreshStatusIcon();
         }
@@ -105,12 +112,17 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private FrameLayout mVisualizerViewFrame;
     private Spinner modeSpinner;
     private SoulissPreferenceHelper opzioni;
+    private CCFAnimator patternAnimator;
+    private Thread patternRunner;
+    private boolean patternRunning;
     private TextView redChanabel;
     private SeekBar seekChannelBlue;
     private SeekBar seekChannelGreen;
     private SeekBar seekChannelRed;
+    private SeekBar sliderSpeed;
     private TableRow tableRowChannel;
     private TableRow tableRowEq;
+    private TableRow tableRowPatterns;
     private TableRow tableRowVis;
     private SwitchCompat togMulticast;
 
@@ -163,7 +175,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
      * INPUT data 'read' from GUI
      * ************************************************************************
      */
-    public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
+    public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
         collected.issueRGBCommand(val, r, g, b, multicast);
     }
 
@@ -180,6 +192,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         }
+        patternAnimator = CCFAnimator.rgb(Color.RED, Color.BLUE);
         setHasOptionsMenu(true);
     }
 
@@ -206,13 +219,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         } else if (getArguments() != null) {
             collected = (SoulissTypical16AdvancedRGB) getArguments().get("TIPICO");
         } else {
-            Log.e(Constants.TAG, "Error retriving node:");
+            Log.e(Constants.TAG, "Error retriving node!");
             return ret;
         }
         assertTrue("TIPICO NULLO", collected != null);
         collected.setPrefs(opzioni);
         super.setCollected(collected);
-
 
         refreshStatusIcon();
 
@@ -222,8 +234,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         togMulticast.setChecked(opzioni.isRgbSendAllDefault());
         btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+        btStartPattern = (Button) ret.findViewById(R.id.buttonStartPattern);
+        btStopPattern = (Button) ret.findViewById(R.id.buttonStopPattern);
+        btFeedBackPatern = (Button) ret.findViewById(R.id.buttonPatternFeedback);
         // checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
+        tableRowPatterns = (TableRow) ret.findViewById(R.id.tableRowPatterns);
         tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
         btWhite = (Button) ret.findViewById(R.id.white);
         btFlash = (Button) ret.findViewById(R.id.flash);
@@ -231,7 +247,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
-
+        sliderSpeed = (SeekBar) ret.findViewById(R.id.sliderSpeed);
 
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
         //permesso per la visualizer connessa all'audio o mic
@@ -240,7 +256,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     new String[]{Manifest.permission.RECORD_AUDIO},
                     Constants.MY_PERMISSIONS_RECORD_AUDIO);
             mVisualizerView = null;
-
         } else {
             inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
             mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
@@ -257,6 +272,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
         greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
 
+        colorSeekBar = (ColorSeekBar) ret.findViewById(R.id.colorSlider);
+        colorSeekBarStop = (ColorSeekBar) ret.findViewById(R.id.colorSliderStop);
         btOff.setTag(Constants.Typicals.Souliss_T1n_OffCmd);
         btOn.setTag(Constants.Typicals.Souliss_T1n_OnCmd);
         buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
@@ -284,9 +301,10 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {// cerchio RGB
                     tableRowVis.setVisibility(View.GONE);
-
+                    tableRowPatterns.setVisibility(View.GONE);
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.GONE);
+                    patternRunning = false;
                     tableRowEq.setVisibility(View.INVISIBLE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
@@ -297,6 +315,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     cpv.setCenterColor(Color.argb(255, Color.red(color),
                             Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
+                    tableRowPatterns.setVisibility(View.GONE);
                     tableRowVis.setVisibility(View.GONE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
@@ -304,7 +323,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     }
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.VISIBLE);
-
+                    patternRunning = false;
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
                     eqText.setVisibility(View.GONE);
@@ -320,17 +339,17 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     seekChannelBlue.setProgress(Color.blue(color));
                     Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
                     tableRowChannel.invalidate();
-                } else {// music
+                } else if (pos == 2) {// music
+                    tableRowPatterns.setVisibility(View.GONE);
+                    patternRunning = false;
                     if (mVisualizerView != null) {
                         mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
                         mVisualizerView.link(togMulticast.isChecked());
                         mVisualizerView.setVisibility(View.VISIBLE);
                         mVisualizerView.setEnabled(true);
-                        mVisualizerView.link(togMulticast.isChecked());
+                        //mVisualizerView.link(togMulticast.isChecked());
                         addBarGraphRenderers();
                     }
-
-
                     mVisualizerViewFrame.setVisibility(View.VISIBLE);
                     tableRowVis.setVisibility(View.VISIBLE);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
@@ -338,6 +357,20 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     eqText.setVisibility(View.VISIBLE);
                     tableRowEq.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
+                } else {// patterns
+                    tableRowPatterns.setVisibility(View.VISIBLE);
+                    tableRowChannel.setVisibility(View.GONE);
+                    tableRowVis.setVisibility(View.GONE);
+                    patternRunning = true;
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setVisibility(View.GONE);
+                        mVisualizerView.setEnabled(false);
+                    }
+                    mVisualizerViewFrame.setVisibility(View.GONE);
+
+                    colorSwitchRelativeLayout.setVisibility(View.GONE);
+                    tableRowEq.setVisibility(View.INVISIBLE);
+                    eqText.setVisibility(View.GONE);
                 }
             }
 
@@ -356,13 +389,13 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             public void onClick(View v) {
                 Short cmd = (Short) v.getTag();
                 assertTrue(cmd != null);
-                issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+                issueRGBCommand(cmd, Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
 
                 new Thread(new Runnable() {
                     public void run() {
                         while (isIncrementing()) {
                             try {
-                                Thread.sleep(500);
+                                Thread.sleep(250);
                                 collected.issueRefresh();
                             } catch (InterruptedException e) {
                                 Log.e(Constants.TAG, "Error Thread.sleep:");
@@ -371,7 +404,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     }
                 }).start();
             }
-
         };
 
 
@@ -441,7 +473,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         // bianco manuale
         btWhite.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                issueIrCommand(Constants.Typicals.Souliss_T1n_Set, 254, 254, 254,
+                issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, 254, 254, 254,
                         togMulticast.isChecked());
             }
         });
@@ -459,6 +491,62 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                         + " G" + Color.green(color) + " B" + Color.blue(color));
             }
         };
+
+        //pattern animator
+        btStartPattern.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                patternRunning = true;
+                patternAnimator = CCFAnimator.rgb(colorSeekBar.getColor(), colorSeekBarStop.getColor());
+                patternRunner = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        float cnt = 0f;
+                        float step = 0.05f;
+                        boolean goinUp = true;
+                        while (patternRunning) {
+                            try {
+                                color = patternAnimator.getColor(cnt);
+                                if (goinUp)
+                                    cnt += step;
+                                else
+                                    cnt -= step;
+
+                                collected.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set,
+                                        Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+                                Log.d(Constants.TAG, "dialogColorChangedListener, pattern color asc: " + goinUp
+                                        + " cnt=" + cnt);
+                                if (getActivity() != null) {//could be detached
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        public void run() {
+                                            btFeedBackPatern
+                                                    .setBackgroundColor(color);
+                                        }
+                                    });
+                                }
+                                if (cnt >= 1)
+                                    goinUp = false;
+                                else if (cnt <= 0)
+                                    goinUp = true;
+                                //slider max = 255
+                                Thread.sleep(150 - sliderSpeed.getProgress());
+                            } catch (InterruptedException e) {
+                                Log.e(Constants.TAG, "Error Thread.sleep:");
+                            }
+                        }
+                    }
+                });
+                patternRunner.start();
+            }
+        });
+
+        btStopPattern.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                patternRunning = false;
+            }
+        });
+
         //la prima volta prendo il colore dal typ
         color = (Color.argb(255, Color.red(collected.getColor()),
                 Color.green(collected.getColor()), Color.blue(collected.getColor())));
@@ -472,7 +560,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // datasource.close();
         if (mVisualizerView != null)
             mVisualizerView.release();
     }
@@ -487,7 +574,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
         return false;
     }
 
@@ -495,7 +581,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
-        // mVisualizerView.release();
+        //if (mVisualizerView != null)
+        //    mVisualizerView.setEnabled(false);
     }
 
     @Override
@@ -505,6 +592,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
+
     }
 
     synchronized void setIsDecrementing(boolean newSetting) {
@@ -530,7 +618,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         new Thread(new Runnable() {
             public void run() {
                 while (isDecrementing()) {
-                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+                    issueRGBCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
                             togMulticast.isChecked());
                     try {
                         Thread.sleep(500);
@@ -552,7 +640,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         new Thread(new Runnable() {
             public void run() {
                 while (isIncrementing()) {
-                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+                    issueRGBCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
                             togMulticast.isChecked());
                     try {
                         Thread.sleep(500);
@@ -602,22 +690,19 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 color = Color.argb(255, seekChannelRed.getProgress(), seekChannelGreen.getProgress(),
                         seekChannelBlue.getProgress());
 
-                issueIrCommand(Constants.Typicals.Souliss_T1n_Set, Color.red(color),
+                issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, Color.red(color),
                         Color.green(color), Color.blue(color), togMulticast.isChecked());
             }
         }
 
         public void onStartTrackingTouch(SeekBar seekBar) {
-
         }
 
         // solo per sicurezza
         public void onStopTrackingTouch(SeekBar seekBar) {
 
             collected.issueRefresh();
-            // issueIrCommand(it.angelic.soulissclient.Constants.Constants.Souliss_T1n_Set,
-            // Color.red(color),
-            // Color.green(color), Color.blue(color), togMulticast.isChecked());
+
         }
 
     }

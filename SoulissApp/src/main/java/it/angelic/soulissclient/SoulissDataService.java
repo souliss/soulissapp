@@ -318,8 +318,8 @@ public class SoulissDataService extends Service implements LocationListener {
 
     private void logThings(Map<Short, SoulissNode> refreshedNodes) {
         Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
-        for (Short index : refreshedNodes.keySet()) {
-            SoulissNode pirt = refreshedNodes.get(index);
+        for (SoulissNode pirt : refreshedNodes.values()) {
+            //SoulissNode pirt = refreshedNodes.get(index);
             List<SoulissTypical> tips = pirt.getTypicals();
             for (SoulissTypical soulissTypical : tips) {
                 if (soulissTypical.isSensor()) {
@@ -426,6 +426,7 @@ public class SoulissDataService extends Service implements LocationListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "Service onStartCommand()");
         opts = SoulissApp.getOpzioni();
+        opts.initializePrefs();//forse cambiate,ricarica
         startUDPListener();
         requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();

@@ -283,6 +283,9 @@ public class WelcomeActivity extends FragmentActivity {
                             File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
                             Log.w(Constants.TAG, "Saving old DB: " + DbPath + " to: " + bckDb.getPath());
                             SoulissUtils.fileCopy(oldDb, bckDb);
+
+                            Log.w(Constants.TAG, "Deleting saved DB: " + oldDb.getPath());
+                            present.truncateAll();
                         } catch (IOException e) {
                             Log.w(Constants.TAG, "ERROR Saving old DB to: " + previousConfig);
                         }

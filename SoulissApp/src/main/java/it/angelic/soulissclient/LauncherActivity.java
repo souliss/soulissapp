@@ -58,8 +58,6 @@ import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
-import it.angelic.soulissclient.net.NetUtils;
-import it.angelic.soulissclient.net.webserver.HTTPService;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.views.ListButton;
 
@@ -87,7 +85,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private TextView homedist;
     private LocationManager locationManager;
     private SoulissDataService mBoundService;
-    private HTTPService mBoundWebService;
     private boolean mIsBound;
     private boolean mIsWebBound;
     private SoulissPreferenceHelper opzioni;
@@ -133,8 +130,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     //private Handler timeoutHandler;
     // meccanismo per network detection
 
-    private View webServiceInfoLine;
-    private TextView webserviceInfo;
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -152,7 +147,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
                 setHeadInfo();
                 setServiceInfo();
-                setWebServiceInfo();
                 setAntiTheftInfo();
                 serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.last_update) + "</b> "
                         + Constants.hourFormat.format(new Date()) + " - " + vers.size() + " " + context.getString(R.string.bytes_received)));
@@ -163,22 +157,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         }
     };
-    private ServiceConnection mWebConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mBoundWebService = ((HTTPService.LocalBinder) service).getService();
-            Log.i(TAG, "WEBSERVER connected");
-            mIsWebBound = true;
-            setWebServiceInfo();
-        }
 
-        public void onServiceDisconnected(ComponentName className) {
-            // Because it is running in our same process, we should never
-            // see this happen.
-            mBoundWebService = null;
-            Toast.makeText(LauncherActivity.this, "WEBSERVER disconnected", Toast.LENGTH_SHORT).show();
-            mIsWebBound = false;
-        }
-    };
 
 
     void doBindService() {
@@ -186,10 +165,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
     }
 
-    void doBindWebService() {
-        Log.d(TAG, "doBindWebService(), BIND_NOT_FOREGROUND.");
-        bindService(new Intent(LauncherActivity.this, HTTPService.class), mWebConnection, BIND_AUTO_CREATE);
-    }
 
     void doUnbindService() {
         if (mIsBound) {
@@ -198,12 +173,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         }
     }
 
-    void doUnbindWebService() {
-        if (mIsWebBound) {
-            Log.d(TAG, "UNBIND WEB, Detach our existing connection.");
-            unbindService(mWebConnection);
-        }
-    }
 
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
@@ -317,9 +286,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         dbwarn = (TextView) findViewById(R.id.textViewDBWarn);
         dbwarnline = findViewById(R.id.textViewDBWarnLine);
         posInfoLine = findViewById(R.id.PositionWarnLine);
-        webServiceInfoLine = findViewById(R.id.TextViewWebServiceLine);
         serviceInfo = (TextView) findViewById(R.id.TextViewServiceActions);
-        webserviceInfo = (TextView) findViewById(R.id.TextViewWebService);
         coordinfo = (TextView) findViewById(R.id.TextViewCoords);
         homedist = (TextView) findViewById(R.id.TextViewFromHome);
         serviceInfoFoot = (TextView) findViewById(R.id.TextViewNodes);
@@ -340,8 +307,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         initDrawer(this, DrawerMenuHelper.MANUAL);
 
         doBindService();
-        if (opzioni.isWebserverEnabled())
-            doBindWebService();
 
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call end, bindService() called");
         // Log.w(TAG, "WARNTEST");
@@ -409,7 +374,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     protected void onDestroy() {
         doUnbindService();
-        doUnbindWebService();
         // Muovo i log su file
         Log.w(TAG, "Closing app, moving logs");
         try {
@@ -625,7 +589,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                         setHeadInfo();
                         //setDbAndFavouritesInfo();
                         setServiceInfo();
-                        setWebServiceInfo();
                         setAntiTheftInfo();
                     }
                 });
@@ -721,7 +684,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //VOICE SEARCH
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (opzioni.isVoiceCommandEnabled()) {
+        if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
             fab.setVisibility(View.VISIBLE);
             fab.attachToScrollView(scrollView);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -748,7 +711,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
 
         setServiceInfo();
-        setWebServiceInfo();
         setAntiTheftInfo();
 
 
@@ -921,31 +883,5 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         serviceInfo.setText(Html.fromHtml(sb.toString()));
     }
 
-    private void setWebServiceInfo() {
-        StringBuilder sb = new StringBuilder();
-        // webserviceInfo.setBackgroundColor(this.getResources().getColor(R.color.std_green));
-        /* SERVICE MANAGEMENT */
-        if (!opzioni.isWebserverEnabled()) {
-            if (mIsWebBound && mBoundWebService != null) {
-                // in esecuzione? strano
-                mBoundWebService.stopSelf();
-            }
-            webserviceInfo.setVisibility(View.GONE);
-        } else {
-            webserviceInfo.setVisibility(View.VISIBLE);
-            if (mIsWebBound && mBoundWebService != null) {
-                sb.append(getString(R.string.webservice_enabled));
-                sb.append(NetUtils.getLocalIpAddress()).append(":");
-                sb.append(mBoundWebService.getPort());
-                webServiceInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_green));
-            } else {
-                sb.append(getString(R.string.service_warnbound));
-                Intent serviceIntent = new Intent(this, HTTPService.class);
-                Log.w(TAG, "WEB Service not bound yet, restarting");
-                startService(serviceIntent);
-                webServiceInfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
-            }
-        }
-        webserviceInfo.setText(Html.fromHtml(sb.toString()));
-    }
+
 }

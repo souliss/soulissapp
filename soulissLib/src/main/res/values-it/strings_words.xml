@@ -56,5 +56,7 @@
     <string name="synch">synch</string>
     <string name="delete">Delete</string>
     <string name="tags">Tags</string>
+    <string name="speed">Speed</string>
+    <string name="play">Play</string>
 
 </resources>

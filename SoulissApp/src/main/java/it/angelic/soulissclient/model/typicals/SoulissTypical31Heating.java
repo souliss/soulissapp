@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import junit.framework.Assert;
 
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -17,6 +16,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
+import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
@@ -39,10 +39,17 @@ import it.angelic.soulissclient.util.SoulissUtils;
  * <p/>
  * all values shall be in half-precision floating point, automatic conversion is
  * done if using Souliss_AnalogIn
- *
- * @author Ale
+ *BIT 0	(0 System  OFF,  1 System  ON)
+ BIT 1	(0 Heating OFF , 1 Heating ON)
+ BIT 2	(0 Cooling OFF , 1 Cooling ON)
+ BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
+ BIT 4	(0 Fan 2 OFF   , 1 Fan 2 ON)
+ BIT 5	(0 Fan 3 OFF   , 1 Fan 3 ON)
+ BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
+ BIT 7	(0 Heating Mode, 1 Cooling Mode)
+ * @author shine@angelic.it
  */
-public class SoulissTypical31Heating extends SoulissTypical implements ISoulissTypical {
+public class SoulissTypical31Heating extends SoulissTypical implements ISoulissTypical, ISoulissTypicalSensor {
 
     // SoulissNode parentd = getParentNode();
     // SoulissTypical TemperatureMeasuredValue =
@@ -92,6 +99,11 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             return SoulissApp.getAppContext().getString(R.string.stale);
     }
 
+    @Override
+    public float getOutputFloat() {
+        return TemperatureMeasuredVal;
+    }
+
     public String getOutputLongDesc() {
         statusByte = getTypicalDTO().getOutput();
         short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
@@ -132,8 +144,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         StringBuilder strout = new StringBuilder();
         // int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
         Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(statusByte));
-        final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
-        buf.putInt(statusByte);
+        //final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
+        // buf.putInt(statusByte);
 /*
             BIT 0	(0 System  OFF,  1 System  ON)
 			BIT 1	(0 Heating OFF , 1 Heating ON)
@@ -158,8 +170,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             strout.append(" - Fan Manual");
 
 
-        strout.append(" ").append(TemperatureMeasuredVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C")
-                .append(" (").append(TemperatureSetpointVal).append("°").append(prefs.isFahrenheitChosen()?"F":"C").append(")");
+        strout.append(" ").append(String.format("%.2f", TemperatureMeasuredVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C")
+                .append(" (").append(String.format("%.2f", TemperatureSetpointVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C").append(")");
         return strout.toString();
     }
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <RelativeLayout
+        android:id="@+id/containerlista"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="2dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#FFCCCCCC"/>
+
+        <TextView
+            android:id="@+id/textviewChartHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:inputType="textCapSentences"
+            android:text="@string/historyof"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false"/>
+
+        <RelativeLayout
+            android:padding="4dp"
+            android:id="@+id/relativeLayout3"
+            android:layout_below="@id/textviewChartHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <View
+                android:id="@+id/strut"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut"
+                android:text="@string/mode"/>
+
+            <TextView
+                android:id="@+id/textView1dx"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut"
+                android:layout_alignParentRight="true"
+                android:text="@string/range"/>
+
+            <Spinner
+                android:id="@+id/spinnerGraphType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@id/strut"
+                android:layout_below="@id/textView1"
+                android:entries="@array/graphType"
+                android:entryValues="@array/graphTypeValues"/>
+
+            <Spinner
+                android:id="@+id/spinnerGraphRange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/strut"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/textView1"
+                android:entries="@array/graphRange"
+                android:entryValues="@array/graphRangeValues"/>
+
+
+        </RelativeLayout>
+
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/relativeLayout3">
+
+            <view
+                android:id="@+id/line_view"
+                class="com.dacer.androidcharts.LineView"
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"/>
+        </HorizontalScrollView>
+
+        <it.angelic.tagviewlib.SimpleTagRelativeLayout
+            android:id="@+id/tag_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/horizontalScrollView"
+            android:layout_margin="2dp"/>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

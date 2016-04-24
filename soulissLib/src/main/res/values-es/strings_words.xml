@@ -53,8 +53,10 @@
     <string name="ok">OK</string>
     <string name="stale">STALE</string>
     <string name="cancel">Cancel</string>
-    <string name="synch">synch</string>
-    <string name="delete">Delete</string>
-    <string name="tags">Tags</string>
+    <string name="synch">Sinc</string>
+    <string name="delete">Borrar</string>
+    <string name="tags">Etiquetas</string>
+    <string name="speed">Speed</string>
+    <string name="play">Play</string>
 
 </resources>

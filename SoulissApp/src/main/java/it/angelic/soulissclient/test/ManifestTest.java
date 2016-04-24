@@ -136,7 +136,7 @@ public final class ManifestTest extends AndroidTestCase {
      * @param manager PackageManager cannot be null.
      * @return Package name of the Locale-compatible host. May be null if no host is present.
      */
-    private static final String getHostPackage(final PackageManager manager) {
+    private static String getHostPackage(final PackageManager manager) {
         return PackageUtilities.getCompatiblePackage(manager, "com.twofortyfouram.locale"); //$NON-NLS-1$
     }
 

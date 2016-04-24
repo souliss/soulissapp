@@ -8,6 +8,8 @@ import android.content.Context;
  */
 public class ChartUtils {
 
+    public static final String LOG_TAG = "AndroidCharts";
+
     public static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -236,6 +237,98 @@
                 </TableRow>
 
 
+                <TableRow
+                    android:id="@+id/tableRowPatterns"
+                    android:layout_width="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4">
+
+                        <TextView
+                            android:id="@+id/startFromLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/from_color"/>
+
+                        <com.rtugeek.android.colorseekbar.ColorSeekBar
+                            android:id="@+id/colorSlider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/startFromLabel"
+                            app:colors="@array/pattern_colors"
+                            />
+
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:id="@+id/stopLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_below="@id/colorSlider"
+                            android:layout_height="wrap_content"
+                            android:text="@string/to_color"/>
+
+                        <com.rtugeek.android.colorseekbar.ColorSeekBar
+                            android:id="@+id/colorSliderStop"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/stopLabel"
+                            app:colors="@array/pattern_colors"
+                            />
+
+                        <TextView
+                            android:layout_marginTop="8dp"
+                            android:id="@+id/speedLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_below="@id/colorSliderStop"
+                            android:layout_height="wrap_content"
+                            android:text="@string/speed"/>
+
+                        <SeekBar
+                            android:id="@+id/sliderSpeed"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/speedLabel"
+                            />
+
+                        <LinearLayout
+                            style="?android:attr/buttonBarStyle"
+                            android:layout_marginTop="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_below="@id/sliderSpeed"
+                            android:orientation="horizontal">
+
+                            <Button
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:id="@+id/buttonStartPattern"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/play">
+                            </Button>
+
+                            <Button
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:id="@+id/buttonStopPattern"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/stop">
+                            </Button>
+
+                            <Button
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:id="@+id/buttonPatternFeedback"
+                                android:layout_margin="6dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            </Button>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </TableRow>
 
                 <include layout="@layout/tablerow_taginfo">
 

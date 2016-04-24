@@ -316,4 +316,12 @@
     <color name="md_blue_grey_800">#37474f</color>
     <color name="md_blue_grey_900">#263238</color>
 
+    <array name="pattern_colors">
+        <item>#FF0000</item>
+        <item>#ffd740</item>
+        <item>#00FF00</item>
+        <item>#20FFD7</item>
+        <item>#0000FF</item>
+        <item>#AA20FF</item>
+    </array>
 </resources>

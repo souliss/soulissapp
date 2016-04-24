@@ -128,8 +128,6 @@ public class
             // recordingSampler.setVolumeListener(this);  // for custom implements
             recordingSampler.setSamplingInterval(100); // voice sampling interval
             recordingSampler.link(this, multicast);// link to visualizer
-
-
             // mVisualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
         } else {
             Log.w(Constants.TAG, "default audio input selected");
@@ -281,13 +279,11 @@ public class
         dbValue_high *= opz.getEqHigh();
         Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
 
-        parent.issueIrCommand(Constants.Typicals.Souliss_T1n_Set, (int) dbValue_low,
-
+        parent.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, (int) dbValue_low,
                 (int) dbValue_medium, (int) dbValue_high, multicast);
 
     }
 
-    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void setEnabled(boolean in) {
         try {
             mVisualizer.setEnabled(in);
@@ -295,11 +291,14 @@ public class
             Log.e(Constants.TAG, "Errore setEnabled:" + e.getMessage());
         }
         //gestione microfono
-        if (recordingSampler != null && opz.getAudioInputChannel() == MediaRecorder.AudioSource.MIC) {
-            if (!in && recordingSampler.isRecording())
+        if (recordingSampler != null) {
+            if (!in) {
                 recordingSampler.stopRecording();
-            else if (!recordingSampler.isRecording())
+                //recordingSampler.release();
+            } else if (in && opz.getAudioInputChannel() == MediaRecorder.AudioSource.MIC && !recordingSampler.isRecording()) {
+                //recordingSampler = new RecordingSampler();
                 recordingSampler.startRecording();
+            }
         }
 
     }

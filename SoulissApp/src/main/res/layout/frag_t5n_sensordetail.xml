@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
                                             android:layout_width="wrap_content"
-
                                             android:layout_height="wrap_content"
+                                            xmlns:tools="http://schemas.android.com/tools"
                                             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
@@ -77,43 +76,19 @@
 
         </RelativeLayout>
 
-        <Spinner
-            android:id="@+id/spinnerGraphType"
+
+        <FrameLayout
+            android:id="@+id/hvacChart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/RelativeLayoutNodeDetail"
-            android:entries="@array/graphType"
-            android:entryValues="@array/graphTypeValues"/>
-
-        <Spinner
-            android:id="@+id/spinnerGraphRange"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerGraphType"
-            android:entries="@array/graphRange"
-            android:entryValues="@array/graphRangeValues"/>
-
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/spinnerGraphRange">
-
-            <view
-                android:id="@+id/line_view"
-                class="com.dacer.androidcharts.LineView"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_below="@id/spinnerGraphType"/>
-        </HorizontalScrollView>
+            tools:layout="@layout/frag_t5n_sensordetail"/>
 
         <it.angelic.tagviewlib.SimpleTagRelativeLayout
             android:id="@+id/tag_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/horizontalScrollView"
+            android:layout_below="@id/hvacChart"
             android:layout_margin="2dp"/>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

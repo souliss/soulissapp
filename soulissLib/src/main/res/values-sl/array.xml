@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string-array name="func_array">
+       <item>@string/scenes_title</item>
+       <item>@string/programs_title</item>
+       <item>@string/manual_title</item>
+       <item>Impostazioni Rete</item>
+       <item>@string/unknown_typical</item>
+       <item>5</item>
+       <item>6</item>
+       <item>7</item>
+   </string-array> -->
+    <string-array name="slot_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <string-array name="nodes_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+    <string-array name="textsiz_array">
+        <item>Zelo majhen</item>
+        <item>majhen</item>
+        <item>srednji</item>
+        <item>velik</item>
+    </string-array>
+    <string-array name="textsiz_values">
+        <item>-1</item>
+        <item>0</item>
+        <item>2</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="font_array">
+        <item>Standard</item>
+        <item>Futura</item>
+        <item>Robotics</item>
+    </string-array>
+    <string-array name="font_values">
+        <item>def</item>
+        <item>Futura.ttf</item>
+        <item>Robotics.ttf</item>
+    </string-array>
+    <string-array name="updateInterval">
+        <item name="3000">3 sekunde</item>
+        <item name="5000">5 sekund</item>
+        <item name="10000">10 sekund</item>
+    </string-array>
+    <string-array name="updateIntervalValues">
+        <item name="3000">1000</item>
+        <item name="5000">3000</item>
+        <item name="10000">5000</item>
+    </string-array>
+    <string-array name="scheduleInterval">
+        <item name="1800">pol ure</item>
+        <item name="3600">ura</item>
+        <item name="21600">6 ur</item>
+        <item name="86400">dan</item>
+    </string-array>
+
+    <integer-array name="scheduleIntervalValues">
+        <item name="1800">1800</item>
+        <item name="3600">3600</item>
+        <item name="21600">21600</item>
+        <item name="86400">86400</item>
+    </integer-array>
+
+    <string-array name="graphType">
+        <item>Zgodovina</item>
+        <item>Razvrščeno po mesecih</item>
+        <item>Razvrščeno po urah</item>
+    </string-array>
+    <string-array name="graphTypeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="graphRange">
+        <item>Vsi podatki</item>
+        <item>Zadnji mesec</item>
+        <item>Zadnji teden</item>
+    </string-array>
+    <string-array name="graphRangeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="AirConFunction">
+        <item>Avtomatsko</item>
+        <item>Hladno</item>
+        <item>Suho</item>
+        <item>Ventilator</item>
+        <item>Toplo</item>
+    </string-array>
+    
+    <string-array name="HeatingFunction">
+        <item>Hladno</item>
+        <item>Toplo</item>
+    </string-array>
+
+    <integer-array name="AirConFunctionValues">
+        <item>15</item>
+        <item>7</item>
+        <item>11</item>
+        <item>3</item>
+        <item>13</item>
+    </integer-array>
+
+    <string-array name="AirConFan">
+        <item>Avtomatsko</item>
+        <item>Visoko</item>
+        <item>Srednje</item>
+        <item>Nizko</item>
+    </string-array>
+
+    <integer-array name="AirConFanValues">
+        <item>7</item>
+        <item>2</item>
+        <item>6</item>
+        <item>5</item>
+    </integer-array>
+    
+    <string-array name="rgbModes">
+        <item>RGB krog</item>
+        <item>RGB kanali</item>
+        <item>Sinhronizacija glasbe</item>
+    </string-array>
+
+    <string-array name="singleChannelModes">
+        <item>Ročno</item>
+        <item>Sinhronizacija glasbe</item>
+    </string-array>
+
+    <string-array name="delayInterval">
+        <item name="0">Brez zakasnitve</item>
+        <item name="500">Pol sekunde</item>
+        <item name="1000">1 sekunda</item>
+        <item name="3000">3 sekunde</item>
+        <item name="5000">5 sekund</item>
+        <item name="10000">10 sekund</item>
+    </string-array>
+    <integer-array name="delayIntervalValues">
+        <item name="0">0</item>
+        <item name="500">500</item>
+        <item name="1000">1000</item>
+        <item name="3000">3000</item>
+        <item name="5000">5000</item>
+        <item name="10000">10000</item>
+    </integer-array>
+    <string-array name="configChooserArray">
+        <item>Demonstracija</item>
+        <item>Ustvari novo</item>
+        <item>Uvozi</item>
+        <!-- other dynamic configs -->
+    </string-array>
+</resources>

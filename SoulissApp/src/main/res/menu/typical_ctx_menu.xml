@@ -4,7 +4,8 @@
           android:title="@string/rename_typical" />
     <item android:id="@+id/sceglicona"
           android:title="@string/menu_changetypicon" />
-    <item android:id="@+id/addFav"
-          android:title="@string/scene_add_typical_to"/>
+    <item
+        android:id="@+id/addTo"
+        android:title="@string/scene_add_typical_to" />
    
 </menu>

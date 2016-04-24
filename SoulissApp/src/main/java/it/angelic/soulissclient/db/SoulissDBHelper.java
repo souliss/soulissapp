@@ -28,6 +28,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.fragments.TimeRangeEnum;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissTypical;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -72,8 +73,6 @@ public class SoulissDBHelper {
     public static synchronized void open() throws SQLException {
         if (database == null || !database.isOpen())
             database = soulissDatabase.getWritableDatabase();
-
-
     }
 
     public void close() {
@@ -332,7 +331,7 @@ public class SoulissDBHelper {
      * @param tgt
      * @return
      */
-    public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(SoulissTypical tgt, int range) {
+    public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(ISoulissTypical tgt, int range) {
         HashMap<Date, SoulissHistoryGraphData> comments = new HashMap<>();
 
         Date dff;
@@ -515,7 +514,7 @@ public class SoulissDBHelper {
      * @param range   dei log da selezionare
      * @return
      */
-    public SparseArray<SoulissGraphData> getGroupedTypicalLogs(SoulissTypical tgt, String groupBy, int range) {
+    public SparseArray<SoulissGraphData> getGroupedTypicalLogs(ISoulissTypical tgt, String groupBy, int range) {
         SparseArray<SoulissGraphData> comments = new SparseArray<>();
         String limitCause = "";
         Calendar now = Calendar.getInstance();
@@ -677,6 +676,13 @@ public class SoulissDBHelper {
 
     }
 
+    public void truncateAll() {
+        if (soulissDatabase != null) {
+            Log.w(TAG, "DB dropCreate !!!");
+            soulissDatabase.dropCreate(database);
+        }
+    }
+
     public int deleteScene(SoulissScene toRename) {
         database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_SCENEID + " = " + toRename.getId(), null);
         return database.delete(SoulissDB.TABLE_SCENES, SoulissDB.COLUMN_SCENE_ID + " = " + toRename.getId(), null);
@@ -758,10 +764,10 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissCommandDTO cmd = new SoulissCommandDTO(cursor);
             SoulissTypical tgt = getTypical(cmd.getNodeId(), cmd.getSlot());
-            SoulissTrigger cols = new SoulissTrigger(context, cmd, tgt);
+            SoulissTrigger cols = new SoulissTrigger(cmd, tgt);
             SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
 
-            cols.setTriggerDto(comment);
+            cols.setTriggerDTO(comment);
 
             ret.add(cols);
             cursor.moveToNext();
@@ -782,7 +788,7 @@ public class SoulissDBHelper {
             throw new RuntimeException("cursor.getColumnCount() != 1");
         SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
 
-       // cols.setTriggerDto(comment);
+        // cols.setTriggerDTO(comment);
         // Make sure to close the cursor
         cursor.close();
         return comment;

@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:id="@+id/Cont01"
@@ -67,13 +68,27 @@
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp">
 
-            <NumberPicker
+            <it.angelic.soulissclient.views.NumberPickerT6
                 android:id="@+id/tempSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="4dp"
                 android:layout_weight="1"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/editTextIncrementCont"
+                android:layout_width="match_parent"
+                android:layout_below="@id/tempSlider"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/editTextIncrement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="increment"
+                    android:inputType="numberDecimal"/>
+            </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -142,7 +157,7 @@
                 android:background="#FFCCCCCC"/>
 
             <TextView
-                android:id="@+id/textviewOptions"
+                android:id="@+id/textviewChartHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -153,7 +168,7 @@
                 android:id="@+id/ImageFan2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewOptions"
+                android:layout_below="@id/textviewChartHeader"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/fan"
                 android:drawableTop="@drawable/fan"
@@ -163,7 +178,7 @@
                 android:id="@+id/ImageFan1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewOptions"
+                android:layout_below="@id/textviewChartHeader"
                 android:layout_marginRight="15dip"
                 android:layout_toLeftOf="@id/ImageFan2"
                 android:background="@drawable/fan"
@@ -173,12 +188,18 @@
                 android:id="@+id/ImageFan3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewOptions"
+                android:layout_below="@id/textviewChartHeader"
                 android:layout_marginLeft="15dip"
                 android:layout_toRightOf="@id/ImageFan2"
                 android:background="@drawable/fan"
                 android:visibility="visible"/>
 
+            <FrameLayout
+                android:id="@+id/hvacChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ImageFan1"
+                tools:layout="@layout/frag_t5n_sensordetail"/>
 
             <View
                 android:id="@+id/strut2"
@@ -193,7 +214,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut2"
-                android:layout_below="@+id/ImageFan3"
+                android:layout_below="@+id/hvacChart"
                 android:width="0dip"
                 android:text="@string/ON"/>
 
@@ -206,7 +227,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignStart="@id/strut2"
-                android:layout_below="@+id/ImageFan3"
+                android:layout_below="@+id/hvacChart"
                 android:text="@string/OFF"/>
         </RelativeLayout>
 

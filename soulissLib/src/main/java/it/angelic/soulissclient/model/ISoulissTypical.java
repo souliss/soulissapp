@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public interface ISoulissTypical extends ISoulissObject {
 
 
+    short getNodeId();
+
     ISoulissNode getParentNode();
 
     //void setParentNode(ISoulissNode parentNode);
@@ -22,6 +24,7 @@ public interface ISoulissTypical extends ISoulissObject {
 	
 	//every typical should have one ..
     int getIconResourceId();
-	
-	
+
+
+    short getSlot();
 }

@@ -118,7 +118,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         private ImageView iconView;
     }
 
-    private class NavMenuSectionHolder {
+    private static class NavMenuSectionHolder {
         private TextView labelView;
     }
 }

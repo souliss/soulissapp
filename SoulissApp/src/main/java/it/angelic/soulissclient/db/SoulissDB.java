@@ -236,7 +236,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    private void dropCreate(SQLiteDatabase db) {
+    protected void dropCreate(SQLiteDatabase db) {
         Log.w(SoulissDB.class.getName(), "DB dropCreate " + db.getPath());
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIGGERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);

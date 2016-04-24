@@ -1,9 +1,15 @@
 package it.angelic.soulissclient.fragments;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,10 +20,13 @@ import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.tagviewlib.OnSimpleTagClickListener;
 import it.angelic.tagviewlib.OnSimpleTagDeleteListener;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 import it.angelic.tagviewlib.SimpleTagView;
@@ -43,6 +52,31 @@ public class AbstractTypicalFragment extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.addto_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.addTo:
+                SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
+                AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, collected, null);
+                AlertDialog built = alert4.create();
+                built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                built.show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
     public void onStart() {
         super.onStart();
         actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
@@ -56,8 +90,8 @@ public class AbstractTypicalFragment extends Fragment {
         try {
             View ds = actionBar.getRootView();
             if (ds != null) {
-                TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
-                TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
+                //TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
+                //  TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
                 ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
                 TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
 
@@ -103,37 +137,58 @@ public class AbstractTypicalFragment extends Fragment {
                             //badgeView.setBackgroundColor(ContextCompat.getColor(getContext(),R.color.grey_alpha));
                             //tagInfo.append("-").append(newT.getNiceName()).append("\n");
                         }
-                        infoTags.setVisibility(View.VISIBLE);
+                        if (infoTags != null)
+                            infoTags.setVisibility(View.VISIBLE);
                         //textviewHistoryTags.setText(tagInfo.toString());
                     }
                 } catch (Exception e) {
                     Log.e(Constants.TAG, "FAIL refreshTagsInfo: " + e.getMessage());
                 }
 
-                tagView.setOnSimpleTagDeleteListener(new OnSimpleTagDeleteListener() {
-                    @Override
-                    public void onTagDeleted(SimpleTagView tag) {
-                        final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
+                if (tagView != null) {
+                    tagView.setOnSimpleTagDeleteListener(new OnSimpleTagDeleteListener() {
+                        @Override
+                        public void onTagDeleted(SimpleTagView tag) {
+                            final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
 
-                        List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
-                        for (SoulissTag tr : toRemoveL) {
-                            if (tr.getName().equals(tag.getText())) {
-                                Log.w(Constants.TAG, "Removing " + tr.getName() + " from " + collected.toString());
-                                List<SoulissTypical> temp = tr.getAssignedTypicals();
-                                //necessaria sta roba perche non ce equals?
-                                //no, perche il DB fa da se. Ci sarebbe considerazione
-                                //filosofica sul fatto che in realta equals e` quella,
-                                //e in questo caso la terna nodeid:slot:tagId
-                                tagDb.deleteTagTypicalNode(collected, tr);
-                                Log.w(Constants.TAG, "Removed TAG from typical");
+                            List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
+                            for (SoulissTag tr : toRemoveL) {
+                                if (tr.getName().equals(tag.getText())) {
+                                    Log.w(Constants.TAG, "Removing " + tr.getName() + " from " + collected.toString());
+                                    List<SoulissTypical> temp = tr.getAssignedTypicals();
+                                    //necessaria sta roba perche non ce equals?
+                                    //no, perche il DB fa da se. Ci sarebbe considerazione
+                                    //filosofica sul fatto che in realta equals e` quella,
+                                    //e in questo caso la terna nodeid:slot:tagId
+                                    tagDb.deleteTagTypicalNode(collected, tr);
+                                    Log.w(Constants.TAG, "Removed TAG from typical");
+                                }
                             }
+                            tagView.remove(tag);
+                            //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
                         }
-                        tagView.remove(tag);
-                        //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
-                    }
 
-                });
+                    });
+                    tagView.setOnSimpleTagClickListener(new OnSimpleTagClickListener() {
+                        @Override
+                        public void onSimpleTagClick(SimpleTagView tag) {
+                            final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
 
+                            Intent myIntent = new Intent(getActivity(), TagDetailActivity.class);
+                            List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
+                            for (SoulissTag tr : toRemoveL) {
+                                if (tr.getName().equals(tag.getText())) {
+                                    Log.w(Constants.TAG, "Selected " + tr.getName() + " from " + collected.toString());
+                                    myIntent.putExtra("TAG", tr.getTagId());
+
+                                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    getActivity().startActivity(myIntent);
+                                }
+                            }
+
+                        }
+                    });
+                }
             }
         }, 500);//con calma
     }

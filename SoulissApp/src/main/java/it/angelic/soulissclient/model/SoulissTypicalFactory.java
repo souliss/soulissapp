@@ -26,19 +26,20 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 
 import static junit.framework.Assert.assertTrue;
 
 public class SoulissTypicalFactory {
-	/**
-	 * get the concrete typical and instantiate it
-	 * 
-	 * @param typ
-	 * @param parent
-	 * @return
-	 */
-	public static SoulissTypical getTypical(short typ, SoulissNode parent, SoulissTypicalDTO dto,
-			SoulissPreferenceHelper opts) {
+    /**
+     * get the concrete typical and instantiate it
+     *
+     * @param typ
+     * @param parent
+     * @return
+     */
+    public static SoulissTypical getTypical(short typ, SoulissNode parent, SoulissTypicalDTO dto,
+                                            SoulissPreferenceHelper opts) {
 
 		SoulissTypical rest = null;
 		assertTrue(opts != null);
@@ -137,7 +138,7 @@ public class SoulissTypicalFactory {
 		rest.setTypicalDTO(dto);
 		rest.setParentNode(parent);
 
-		rest.setPrefs(opts);
-		return rest;
-	}
+        rest.setPrefs(opts);
+        return rest;
+    }
 }

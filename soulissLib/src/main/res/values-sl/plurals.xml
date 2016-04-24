@@ -16,6 +16,6 @@
     <plurals name="seconds">
         <item quantity="zero">0 Seconds</item>
         <item quantity="one">1 Second</item>
-        <item quantity="other">%s Seconds</item>
+        <item quantity="other">%s  Seconds</item>
     </plurals>
 </resources>

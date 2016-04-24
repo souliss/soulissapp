@@ -67,33 +67,24 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "Command sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "Command " + cmd[0] + " sent to: " + serverAddr);
 
 			return "UDP command OK";
 		} catch (UnknownHostException ed) {
-			ed.printStackTrace();
-			return ed.getLocalizedMessage();
+            Log.e(Constants.Net.TAG, "***UnknownHostException: " + ed.getMessage());
+            return ed.getLocalizedMessage();
 		} catch (SocketException et) {
-			et.printStackTrace();
-			return et.getLocalizedMessage();
+            Log.e(Constants.Net.TAG, "***SocketException: " + et.getMessage());
+            return et.getLocalizedMessage();
 		} catch (Exception e) {
-			Log.e(Constants.Net.TAG, "***Fail", e);
-			return e.getLocalizedMessage();
+            Log.e(Constants.Net.TAG, "***issueSoulissCommand Failure:", e);
+            return e.getLocalizedMessage();
 		} finally {
 			if (sender != null && !sender.isClosed())
 				sender.close();
 		}
 	}
 
-	/*
-	public static String issueSoulissCommand(SoulissCommand in, SoulissPreferenceHelper prefs) {
-		SoulissCommandDTO dto = in.getCommandDTO();
-
-		String ret = issueSoulissCommand(String.valueOf(dto.getNodeId()), String.valueOf(dto.getSlot()), prefs,
-				 String.valueOf(dto.getCommand()));
-		return ret;
-
-	}*/
 
 	public static void issueBroadcastConfigure(SoulissPreferenceHelper prefs, int functional, List<Byte> bcastPayload,@Nullable Boolean isGw, Boolean useDhcp) {
 		InetAddress serverAddr;
@@ -367,8 +358,8 @@ public class UDPHelper {
 
 		try {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			Log.w(TAG, "Poll request, numberof=" + numberOf);
-			sender = getSenderSocket(serverAddr);
+            Log.w(TAG, "Poll request, numberof=" + numberOf + " offset=" + startOffset);
+            sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
 			macaco.add(Constants.Net.Souliss_UDP_function_poll);

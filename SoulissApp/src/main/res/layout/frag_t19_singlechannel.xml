@@ -176,14 +176,32 @@
                     android:layout_weight="1"
                     android:background="@color/std_green">
 
-                    <com.pheelicks.visualizer.VisualizerView
-                        android:id="@+id/visualizerView"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-                    </com.pheelicks.visualizer.VisualizerView>
+                    <FrameLayout
+                        android:id="@+id/visualizerViewFrame"
+                        android:layout_width="0dip"
+                        android:layout_height="150dp"
+                        android:layout_weight="1"
+                        android:background="@color/trans_black"
+                        android:visibility="gone">
+                    </FrameLayout>
                 </FrameLayout>
             </TableRow>
 
+            <TableRow
+                android:id="@+id/tableRowEqualizer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:background="@color/trans_black">
+
+                <TextView
+                    android:id="@+id/textEqualizer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:visibility="gone"/>
+            </TableRow>
             <include layout="@layout/tablerow_taginfo"/>
         </TableLayout>
     </RelativeLayout>

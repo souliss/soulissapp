@@ -510,6 +510,7 @@ public class AlertDialogHelper {
         low.setProgress(Float.valueOf(opzioni.getEqLow() * 100f).intValue());
         med.setProgress(Float.valueOf(opzioni.getEqMed() * 100f).intValue());
         hi.setProgress(Float.valueOf(opzioni.getEqHigh() * 100f).intValue());
+        aufioChan.setSelection(opzioni.getAudioInputChannel());
         //Range wideness
         lowRange.setProgress(Float.valueOf(opzioni.getEqLowRange() * 100f).intValue());
         medRange.setProgress(Float.valueOf(opzioni.getEqMedRange() * 100f).intValue());
@@ -567,13 +568,13 @@ public class AlertDialogHelper {
      * Sceglie nuova icona
      *
      * @param context
-     * @param ctx
+     * @param iconImageView
      * @param list
      * @param datasource
      * @param toRename   puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder chooseIconDialog(final Context context, final ImageView ctx, final ListView list,
+    public static AlertDialog.Builder chooseIconDialog(final Context context, @Nullable final ImageView iconImageView, final ListView list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
@@ -638,8 +639,10 @@ public class AlertDialogHelper {
                                 list.invalidateViews();
                             }
                         }
-                        ctx.setImageResource(toRename.getIconResourceId());
-                        ctx.invalidate();
+                        if (iconImageView != null) {
+                            iconImageView.setImageResource(toRename.getIconResourceId());
+                            iconImageView.invalidate();
+                        }
 
                     }
                 });

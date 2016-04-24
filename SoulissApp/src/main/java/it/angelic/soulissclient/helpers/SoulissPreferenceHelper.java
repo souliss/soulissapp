@@ -42,7 +42,6 @@ public class SoulissPreferenceHelper implements Serializable {
     private int backoff = 1;
     private boolean broadCastEnabled;
 
-    private String chosenHtmlRootfile;
     private Context contx;
     // numNodes ed altri valori cached
     private String cachedAddr;
@@ -67,7 +66,6 @@ public class SoulissPreferenceHelper implements Serializable {
     // private InetAddress cachedInet;
     private int userIndex;
     private boolean voiceCommandEnabled;
-    private boolean webserverEnabled;
 
     private boolean isTaskerEnabled;
     private boolean isTaskerInterested;
@@ -125,10 +123,6 @@ public class SoulissPreferenceHelper implements Serializable {
 
     public String getCachedAddress() {
         return cachedAddr;
-    }
-
-    public String getChosenHtmlRootfile() {
-        return chosenHtmlRootfile;
     }
 
     public Context getContx() {
@@ -364,7 +358,6 @@ public class SoulissPreferenceHelper implements Serializable {
         homeThold = prefs.getInt("distanceThold", 150);
         dataServiceEnabled = prefs.getBoolean("checkboxService", false);
         fahrenheitChosen = prefs.getBoolean("checkboxFahrenheit", false);
-        webserverEnabled = prefs.getBoolean("webserverEnabled", false);
         voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", true);
         userIndex = prefs.getInt("userIndex", -1);
         nodeIndex = prefs.getInt("nodeIndex", -1);
@@ -385,7 +378,6 @@ public class SoulissPreferenceHelper implements Serializable {
         eqMedRange = prefs.getFloat("eqMedRange", 0.66f);
         eqHighRange = prefs.getFloat("eqHighRange", 1f);
 
-        chosenHtmlRootfile = prefs.getString("mChosenFile", "");
         Calendar fake = Calendar.getInstance();
         fake.add(Calendar.MONTH, -2);// Default value in the past
         serviceLastrun = prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
@@ -512,14 +504,6 @@ public class SoulissPreferenceHelper implements Serializable {
         return voiceCommandEnabled;
     }
 
-    public boolean isWebserverEnabled() {
-        return webserverEnabled;
-    }
-
-    public void setWebserverEnabled(boolean webserverEnabled) {
-        this.webserverEnabled = webserverEnabled;
-    }
-
     static Random r = new Random(Calendar.getInstance().getTimeInMillis());
     public void reload() {
         Log.i(TAG, "Going thru preference reload()");
@@ -603,13 +587,6 @@ public class SoulissPreferenceHelper implements Serializable {
         in.setTypeface(font);
     }
 
-    public void setHtmlRoot(String mChosenFile) {
-        chosenHtmlRootfile = mChosenFile;
-        Editor pesta = PreferenceManager.getDefaultSharedPreferences(contx).edit();
-        pesta.putString("mChosenFile", mChosenFile);
-        pesta.commit();
-
-    }
 
     public void setIPPreference(String newIP) {// serve anche commit perche`
         // chiamata fuori da prefs

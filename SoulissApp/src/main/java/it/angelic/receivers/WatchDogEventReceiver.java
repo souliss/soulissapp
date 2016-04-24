@@ -1,7 +1,6 @@
 package it.angelic.receivers;
 
 import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.net.webserver.HTTPService;
 
 /**
  * Receive per controllo esecuzione servizio. Viene invocato dopo il boot, e
@@ -35,14 +33,7 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 			//	Log.w(Constants.TAG + ":WatchDog", "Service restarted");
 			//}
 		}
-		if (opzioni.isWebserverEnabled()) {
-			Intent eventService = new Intent(ctx, HTTPService.class);
-			if (!isWebServiceRunning(ctx, manager)) {
-				ctx.startService(eventService);
-				Log.w(Constants.TAG + ":WatchDog", "WEBService restarted");
-			} else
-				Log.d(Constants.TAG + ":WatchDog", "WEBService already running");
-		}
+
 	}
 
 	/*
@@ -57,14 +48,5 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 		return false;
 	}*/
 
-	// FIXME or error checks
-	private boolean isWebServiceRunning(final Context ctx, ActivityManager manager) {
-		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-			if (HTTPService.class.getName().equals(service.service.getClassName())) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 }

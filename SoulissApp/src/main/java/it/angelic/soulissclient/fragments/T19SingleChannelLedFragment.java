@@ -1,15 +1,21 @@
 package it.angelic.soulissclient.fragments;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TableRow;
@@ -46,7 +53,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     private Button btOff;
     private Button btOn;
     private SoulissTypical19AnalogChannel collected;
-
+    private TextView eqText;
     private Button btFlash;
     private Button btSleep;
 
@@ -54,7 +61,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     private int intensityReal = 0;
     // Color change listener.
     private VisualizerView mVisualizerView;
-
+    private FrameLayout mVisualizerViewFrame;
     private boolean continueIncrementing;
     private boolean continueDecrementing;
     private TextView textviewHistoryTags;
@@ -205,13 +212,26 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
         tableRowLamp = ret.findViewById(R.id.tableRowLamp);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
-
+        eqText = (TextView) ret.findViewById(R.id.textEqualizer);
         btFlash = (Button) ret.findViewById(R.id.flash);
         btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
-        mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-        mVisualizerView.setOpz(opzioni);
+
+
+        mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
+        //permesso per la visualizer connessa all'audio o mic
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    Constants.MY_PERMISSIONS_RECORD_AUDIO);
+            mVisualizerView = null;
+        } else {
+            inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
+            mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
+            //mVisualizerViewFrame.addView(mVisualizerView);
+            mVisualizerView.setOpz(opzioni);
+        }
 
         seekChannelIntensity = (SeekBar) ret.findViewById(R.id.channelRed);
 
@@ -238,6 +258,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
                     tableRowLamp.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.VISIBLE);
                     mVisualizerView.setEnabled(false);
+                    eqText.setVisibility(View.GONE);
                     // TODO questi non vanno
                     seekChannelIntensity.setProgress(intensity);
                 } else {// music
@@ -249,7 +270,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
                     tableRowVis.setVisibility(View.VISIBLE);
                     mVisualizerView.setEnabled(true);
                     mVisualizerView.link(togMulticast.isChecked());
-
+                    eqText.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
                 }
             }
@@ -321,7 +342,21 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         btFlash.setOnClickListener(plus);
         btSleep.setOnClickListener(plus);
 
+        String strDisease2Format = getResources().getString(R.string.Souliss_TRGB_eq);
+        String strDisease2Msg = String.format(strDisease2Format, Constants.twoDecimalFormat.format(opzioni.getEqLow()),
+                Constants.twoDecimalFormat.format(opzioni.getEqMed()),
+                Constants.twoDecimalFormat.format(opzioni.getEqHigh()));
+        eqText.setText(strDisease2Msg);
+
         return ret;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.t16_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     // Methods for adding renderers to visualizer
@@ -357,6 +392,19 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         return f;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.equalizer:
+                AlertDialogHelper.equalizerDialog(getActivity(), eqText, this, getActivity()).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+        return false;
+    }
 
     @Override
     public void onResume() {
@@ -439,8 +487,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
      * <p/>
      * INPUT data 'read' from GUI
      */
-    public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-        collected.issueSingleChannelCommand(val, r, multicast);
+    public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
+        collected.issueSingleChannelCommand(val, (r + g + b) / 3, multicast);
     }
 
 }
