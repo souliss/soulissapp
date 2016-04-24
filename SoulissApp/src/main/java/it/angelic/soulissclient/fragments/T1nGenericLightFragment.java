@@ -59,7 +59,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	private SoulissPreferenceHelper opzioni;
 
 	private Button buttPlus;
-	private  NumberPicker warner;
+	private NumberPicker warner;
 	private CheckBox warnerCheck;
 	private SoulissTypical collected;
 	// private SoulissTypical related;

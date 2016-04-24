@@ -568,13 +568,13 @@ public class AlertDialogHelper {
      * Sceglie nuova icona
      *
      * @param context
-     * @param ctx
+     * @param iconImageView
      * @param list
      * @param datasource
      * @param toRename   puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder chooseIconDialog(final Context context, final ImageView ctx, final ListView list,
+    public static AlertDialog.Builder chooseIconDialog(final Context context, @Nullable final ImageView iconImageView, final ListView list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
@@ -639,8 +639,10 @@ public class AlertDialogHelper {
                                 list.invalidateViews();
                             }
                         }
-                        ctx.setImageResource(toRename.getIconResourceId());
-                        ctx.invalidate();
+                        if (iconImageView != null) {
+                            iconImageView.setImageResource(toRename.getIconResourceId());
+                            iconImageView.invalidate();
+                        }
 
                     }
                 });

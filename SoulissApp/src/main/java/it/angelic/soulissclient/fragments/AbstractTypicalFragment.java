@@ -1,9 +1,15 @@
 package it.angelic.soulissclient.fragments;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,10 +20,13 @@ import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.tagviewlib.OnSimpleTagClickListener;
 import it.angelic.tagviewlib.OnSimpleTagDeleteListener;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 import it.angelic.tagviewlib.SimpleTagView;
@@ -41,6 +50,31 @@ public class AbstractTypicalFragment extends Fragment {
     void setCollected(SoulissTypical collected) {
         this.collected = collected;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.addto_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.addTo:
+                SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
+                AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, collected, null);
+                AlertDialog built = alert4.create();
+                built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                built.show();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     public void onStart() {
@@ -134,6 +168,25 @@ public class AbstractTypicalFragment extends Fragment {
                             //Toast.makeText(MainActivity.this, "\"" + tag.text + "\" deleted", Toast.LENGTH_SHORT).show();
                         }
 
+                    });
+                    tagView.setOnSimpleTagClickListener(new OnSimpleTagClickListener() {
+                        @Override
+                        public void onSimpleTagClick(SimpleTagView tag) {
+                            final SoulissDBTagHelper tagDb = new SoulissDBTagHelper(getContext());
+
+                            Intent myIntent = new Intent(getActivity(), TagDetailActivity.class);
+                            List<SoulissTag> toRemoveL = tagDb.getTagsByTypicals(collected);
+                            for (SoulissTag tr : toRemoveL) {
+                                if (tr.getName().equals(tag.getText())) {
+                                    Log.w(Constants.TAG, "Selected " + tr.getName() + " from " + collected.toString());
+                                    myIntent.putExtra("TAG", tr.getTagId());
+
+                                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                    getActivity().startActivity(myIntent);
+                                }
+                            }
+
+                        }
                     });
                 }
             }

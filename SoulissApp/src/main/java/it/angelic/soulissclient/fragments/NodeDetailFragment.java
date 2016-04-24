@@ -382,45 +382,6 @@ public class NodeDetailFragment extends ListFragment {
         ft.commit();
 
 
-			/*Intent nodeDatail = null;
-			if (target.isSensor()) {
-				Log.d(Constants.TAG, getResources().getString(R.string.manual_showing_typ) + index);
-				// Activity Dettaglio nodo
-				nodeDatail = new Intent(getActivity(), T5nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == it.angelic.soulissclient.Constants.Constants.Souliss_T32_IrCom_AirCon) {
-				nodeDatail = new Intent(getActivity(), T32AirConFragment.class);
-				nodeDatail.putExtra("TIPICO", target);
-				nodeDatail.putExtra("RELATO", collected.getTypical((short) (target.getSlot() + 1)));
-			} else if (target.getTypical() == it.angelic.soulissclient.Constants.Constants.Souliss_T15_RGB) {
-				nodeDatail = new Intent(getActivity(), T15RGBIrActivity.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == Souliss_T16) {
-				nodeDatail = new Intent(getActivity(), T16RGBFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == Souliss_T19) {
-				nodeDatail = new Intent(getActivity(), T19SingleChannelFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			}  else if (target.getTypical() == Souliss_T31) {
-				nodeDatail = new Intent(getActivity(), T31FragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if ((target.getTypical() == Souliss_T11)
-                    || (target.getTypical() == Souliss_T12)) {
-				nodeDatail = new Intent(getActivity(), T1nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			} else if (target.getTypical() == Souliss_T41_Antitheft_Main
-					|| target.getTypical() == Souliss_T42_Antitheft_Peer
-					|| target.getTypical() == Souliss_T43_Antitheft_LocalPeer) {
-				nodeDatail = new Intent(getActivity(), T4nFragWrapper.class);
-				nodeDatail.putExtra("TIPICO", target);
-			}
-
-			if (nodeDatail != null) {// se ho fatto uno degli if precedente
-				NodeDetailFragment.this.startActivity(nodeDatail);
-				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-			}*/
-
     }
 
     private void refreshHeader() {
@@ -432,30 +393,6 @@ public class NodeDetailFragment extends ListFragment {
 
     }
 
-    /*private void refreshStatusIcon() {
-        try {
-            View ds = actionBar.getRootView();
-            if (ds != null) {
-                ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-                TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-                TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-                actionTitle.setText(collected.getNiceName());
-
-                if (!opzioni.isSoulissReachable()) {
-                    online.setBackgroundResource(R.drawable.red);
-                    statusOnline.setTextColor(getResources().getColor(R.color.std_red));
-                    statusOnline.setText(R.string.offline);
-                } else {
-                    online.setBackgroundResource(R.drawable.green);
-                    statusOnline.setTextColor(getResources().getColor(R.color.std_green));
-                    statusOnline.setText(R.string.Online);
-                }
-                statusOnline.invalidate();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     /**
      * Riga grigia cra spazio
@@ -553,9 +490,6 @@ public class NodeDetailFragment extends ListFragment {
                 AlertDialog built = alert4.create();
                 built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 built.show();
-
-                //InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                 break;
             default:
                 return super.onContextItemSelected(item);

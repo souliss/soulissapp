@@ -14,7 +14,7 @@ public abstract class AbstractMusicVisualizerFragment  extends AbstractTypicalFr
 	 * @param b
 	 * @param multicast
 	 */
-	public abstract void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) ;
+	public abstract void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast);
 	protected int getShownIndex() {
 		if (getArguments() != null)
 			return getArguments().getInt("index", 0);

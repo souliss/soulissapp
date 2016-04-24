@@ -279,7 +279,7 @@ public class
         dbValue_high *= opz.getEqHigh();
         Log.v(Constants.TAG, "LOW:" + dbValue_low + " MED:" + dbValue_medium + " HI:" + dbValue_high);
 
-        parent.issueIrCommand(Constants.Typicals.Souliss_T1n_Set, (int) dbValue_low,
+        parent.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, (int) dbValue_low,
                 (int) dbValue_medium, (int) dbValue_high, multicast);
 
     }

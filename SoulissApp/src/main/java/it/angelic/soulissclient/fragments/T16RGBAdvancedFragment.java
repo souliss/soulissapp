@@ -175,7 +175,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
      * INPUT data 'read' from GUI
      * ************************************************************************
      */
-    public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
+    public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
         collected.issueRGBCommand(val, r, g, b, multicast);
     }
 
@@ -389,7 +389,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             public void onClick(View v) {
                 Short cmd = (Short) v.getTag();
                 assertTrue(cmd != null);
-                issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+                issueRGBCommand(cmd, Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
 
                 new Thread(new Runnable() {
                     public void run() {
@@ -473,7 +473,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         // bianco manuale
         btWhite.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                issueIrCommand(Constants.Typicals.Souliss_T1n_Set, 254, 254, 254,
+                issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, 254, 254, 254,
                         togMulticast.isChecked());
             }
         });
@@ -618,7 +618,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         new Thread(new Runnable() {
             public void run() {
                 while (isDecrementing()) {
-                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+                    issueRGBCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
                             togMulticast.isChecked());
                     try {
                         Thread.sleep(500);
@@ -640,7 +640,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         new Thread(new Runnable() {
             public void run() {
                 while (isIncrementing()) {
-                    issueIrCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
+                    issueRGBCommand(cmd, Color.red(color), Color.green(color), Color.blue(color),
                             togMulticast.isChecked());
                     try {
                         Thread.sleep(500);
@@ -690,7 +690,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 color = Color.argb(255, seekChannelRed.getProgress(), seekChannelGreen.getProgress(),
                         seekChannelBlue.getProgress());
 
-                issueIrCommand(Constants.Typicals.Souliss_T1n_Set, Color.red(color),
+                issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, Color.red(color),
                         Color.green(color), Color.blue(color), togMulticast.isChecked());
             }
         }

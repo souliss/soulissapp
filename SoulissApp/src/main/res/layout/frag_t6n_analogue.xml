@@ -87,7 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:text="@string/setpoint"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false"/>
         <RelativeLayout
             android:id="@+id/relativeLayoutPicker"
             android:layout_width="match_parent"

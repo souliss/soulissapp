@@ -487,8 +487,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
      * <p/>
      * INPUT data 'read' from GUI
      */
-    public void issueIrCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-        collected.issueSingleChannelCommand(val, r, multicast);
+    public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
+        collected.issueSingleChannelCommand(val, (r + g + b) / 3, multicast);
     }
 
 }
