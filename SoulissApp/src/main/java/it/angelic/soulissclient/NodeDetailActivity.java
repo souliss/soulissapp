@@ -147,10 +147,10 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
                         collected);
                 alert.show();
                 return true;
-            case R.id.Ricostruisci:
+           /* case R.id.Ricostruisci:
                 AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(this,  collected, opzioni);
                 alertt.show();
-                return true;
+                return true;*/
         }
 
         return super.onOptionsItemSelected(item);
