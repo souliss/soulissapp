@@ -156,7 +156,7 @@ public class SoulissUtils {
 
         if (criteria == null)
             criteria = new Criteria();
-        // criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
         criteria.setPowerRequirement(Criteria.POWER_LOW);
         return criteria;
     }
