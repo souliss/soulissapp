@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -129,11 +130,17 @@ public class WelcomeActivity extends FragmentActivity {
         SoulissUtils.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
         Log.w(Constants.TAG, "DEMO prefs loaded");
     }
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Window window = getWindow();
+        window.setFormat(PixelFormat.RGBA_8888);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getWindow().setFormat(PixelFormat.RGBA_8888);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_welcome);
@@ -142,8 +149,8 @@ public class WelcomeActivity extends FragmentActivity {
         final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
         final CheckBox welcomeEnableCheckBox = (CheckBox) findViewById(R.id.welcome_enable_checkbox);
         final FrameLayout welcomeContainer = (FrameLayout) findViewById(R.id.frame_welcome_container);
-        welcomeContainer.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        welcomeContainer.getBackground().setDither(true);
+        //welcomeContainer.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+        //welcomeContainer.getBackground().setDither(true);
         Log.i(Constants.TAG, "onCreate: current config:" + SoulissApp.getCurrentConfig());
         welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
 
