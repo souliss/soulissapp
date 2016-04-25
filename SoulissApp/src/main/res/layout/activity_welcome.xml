@@ -118,7 +118,7 @@
             android:shadowDy="5"
             android:shadowRadius="2"
             android:singleLine="false"
-            android:text="@string/app_name"
+            android:text="@string/souliss_app_name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="46sp"/>
 

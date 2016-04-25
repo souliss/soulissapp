@@ -4,7 +4,7 @@
     <string name="welcome_tour_button">Start</string>
 
     <!-- MANUAL_SECTION -->
-    <string name="app_name">SoulissApp</string>
+    <string name="souliss_app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Options</string>
     <string name="app_addprog">Add Program</string>
     <string name="opt_network">Network</string>
@@ -116,7 +116,7 @@
     <string name="manual_force">Force execution of commands. Must indicate target node and slot</string>
     <string name="manual_cmd_hint">CMD</string>
     <string name="manual_slot">SLOT</string>
-    <string name="manual_typicals">Typicals</string>
+    <string name="manual_typicals">Devices</string>
     <string name="inserire_almeno">Choose the node ID, slot and insert a Command</string>
     <string name="db_notempty">DB not empty. Drop DB first</string>
     <string name="manual_id_prompt">Choose a NODE ID</string>
@@ -244,7 +244,7 @@
     <string name="Souliss_UndefinedCmd_desc">Undefined</string>
     <string name="Souliss_T21_desc">Motorized Device (w/ lim switch)</string>
     <string name="Souliss_T22_desc">Motorized Device</string>
-    <string name="Souliss_T31_desc">Thermomether</string>
+    <string name="Souliss_T31_desc">Heating/Conditioning</string>
     <string name="Souliss_T41_desc">AntiTheft System</string>
     <string name="Souliss_T42_desc">AntiTheft Peer</string>
     <string name="Souliss_T51_desc">Analog input</string>
@@ -388,11 +388,12 @@
     <string name="command_hint">The command will be passed to SoulissApp in order to execute it</string>
     <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
     <string name="as_measured">As measured</string>
-    <string name="setpoint">setpoint</string>
+    <string name="setpoint">Setpoint</string>
     <string name="reading">Reading</string>
     <string name="from_color">From color</string>
     <string name="to_color">To color</string>
     <string name="increment_input_err">Input a number between 0.1 and 10</string>
     <string name="range">Range</string>
+    <string name="charts">Charts</string>
     >
 </resources>

@@ -26,7 +26,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="2dip"
-                android:contentDescription="@string/app_name"
+                android:contentDescription="@string/souliss_app_name"
                 android:src="@drawable/soulisslogo"/>
 
             <TextView
@@ -75,11 +75,6 @@
                 android:layout_toRightOf="@id/TextViewHealth"/>
         </RelativeLayout>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_below="@id/RelativeLayoutNodeDetail"
-            android:layout_height="2dip"
-            android:background="#FFCCCCCC"/>
         <TextView
             android:id="@+id/textviewSetpointDiv"
             android:layout_width="wrap_content"
@@ -132,7 +127,7 @@
             android:id="@+id/tag_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/horizontalScrollView"
+            android:layout_below="@id/hvacChart"
             android:layout_margin="2dp"/>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

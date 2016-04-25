@@ -2,7 +2,7 @@
 <resources>
 
     <!-- MANUAL_SECTION -->
-    <string name="app_name">SoulissApp</string>
+    <string name="souliss_app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Opzioni</string>
     <string name="app_addprog">Aggiungi Programma</string>
     <string name="opt_network">Rete</string>
@@ -386,12 +386,13 @@
     <string name="command_hint">Il comando verrà passato a SoulissApp che tenterà di eseguirlo</string>
     <string name="conf_name_hint">Inserisci nome configurazione (es. casa, ufficio, campagna)</string>
     <string name="as_measured">Come misurato</string>
-    <string name="setpoint">setpoint</string>
+    <string name="setpoint">Setpoint</string>
     <string name="reading">Lettura</string>
-    <string name="from_color">From color</string>
-    <string name="to_color">To color</string>
-    <string name="increment_input_err">Input a number between 0.1 and 10</string>
-    <string name="range">Range</string>
+    <string name="from_color">Dal colore</string>
+    <string name="to_color">Al colore</string>
+    <string name="increment_input_err">Decimale compreso tra 0.1 e 10</string>
+    <string name="range">Intervallo</string>
+    <string name="charts">Grafici</string>
 
 
 </resources>

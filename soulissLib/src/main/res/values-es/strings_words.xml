@@ -57,5 +57,6 @@
     <string name="tags">Etiquetas</string>
     <string name="speed">Speed</string>
     <string name="play">Play</string>
+    <string name="scatter">Scatter</string>
 
 </resources>

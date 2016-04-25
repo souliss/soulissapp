@@ -2,7 +2,7 @@
 <resources>
 
     <!-- MANUAL_SECTION -->
-    <string name="app_name">SoulissApp</string>
+    <string name="souliss_app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Optionen</string>
     <string name="app_addprog">Programm hinzufügen</string>
     <string name="opt_network">Netzwerk Optionen</string>
@@ -385,4 +385,5 @@
     <string name="Souliss_T63_desc">Humidity setpoint (0, 100)%</string>
     <string name="Souliss_T64_desc">Light setpoint (0, 40) kLux</string>
     <string name="Souliss_T65_desc">Voltage setpoint(0, 400) V</string>
+    <string name="charts">Charts</string>
 </resources>

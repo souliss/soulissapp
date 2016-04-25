@@ -11,18 +11,12 @@
         android:layout_height="match_parent"
         android:padding="2dp">
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#FFCCCCCC"/>
-
         <TextView
             android:id="@+id/textviewChartHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
-            android:inputType="textCapSentences"
-            android:text="@string/historyof"
+            android:text="@string/charts"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false"/>
 

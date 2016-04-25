@@ -278,7 +278,7 @@ public final class TaskerEditActivityTest extends ActivityInstrumentationTestCas
      * Asserts the Activity title equals expected values.
      */
     private void assertTitle() {
-        final CharSequence expected = BreadCrumber.generateBreadcrumb(mTargetContext, getActivity().getIntent(), mTargetContext.getString(R.string.app_name));
+        final CharSequence expected = BreadCrumber.generateBreadcrumb(mTargetContext, getActivity().getIntent(), mTargetContext.getString(R.string.souliss_app_name));
         final CharSequence actual = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? getTitleHoneycomb()
                 : getActivity().getTitle();
 

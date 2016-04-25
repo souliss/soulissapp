@@ -32,7 +32,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="4dip"
                         android:alpha="0.5"
-                        android:contentDescription="@string/app_name"
+                        android:contentDescription="@string/souliss_app_name"
                         android:src="@drawable/hand1"/>
 
                     <TextView

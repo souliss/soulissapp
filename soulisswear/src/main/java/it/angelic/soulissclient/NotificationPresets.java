@@ -140,7 +140,7 @@ public class NotificationPresets {
     private static Notification.Builder buildBasicNotification(Context context) {
 
         return new Notification.Builder(context)
-                .setContentTitle(context.getString(R.string.app_name))
+                .setContentTitle(context.getString(R.string.souliss_app_name))
                 .setContentText("Swipe right to see available actions")
                         // Set a content intent to return to this sample
                         //.setContentIntent(PendingIntent.getActivity(context, 0,servicependingIntent, 0))

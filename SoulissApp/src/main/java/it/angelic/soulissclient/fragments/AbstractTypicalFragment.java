@@ -140,6 +140,9 @@ public class AbstractTypicalFragment extends Fragment {
                         if (infoTags != null)
                             infoTags.setVisibility(View.VISIBLE);
                         //textviewHistoryTags.setText(tagInfo.toString());
+                    } else {
+                        if (infoTags != null)
+                            infoTags.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     Log.e(Constants.TAG, "FAIL refreshTagsInfo: " + e.getMessage());

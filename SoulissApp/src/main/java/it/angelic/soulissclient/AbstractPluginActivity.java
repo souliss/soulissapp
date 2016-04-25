@@ -46,7 +46,7 @@ public abstract class AbstractPluginActivity extends Activity {
             setupTitleApi11();
         } else {
             setTitle(BreadCrumber.generateBreadcrumb(getApplicationContext(), getIntent(),
-                    getString(R.string.app_name)));
+                    getString(R.string.souliss_app_name)));
         }
     }
 
@@ -87,7 +87,7 @@ public abstract class AbstractPluginActivity extends Activity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setupActionBarApi11() {
         getActionBar().setSubtitle(BreadCrumber.generateBreadcrumb(getApplicationContext(), getIntent(),
-                getString(R.string.app_name)));
+                getString(R.string.souliss_app_name)));
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)

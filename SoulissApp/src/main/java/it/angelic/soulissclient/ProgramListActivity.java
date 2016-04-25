@@ -67,7 +67,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.main_programs);
-		setTitle(getString(R.string.app_name) + " - " + getString(R.string.programs_title));
+		setTitle(getString(R.string.souliss_app_name) + " - " + getString(R.string.programs_title));
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
 
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);

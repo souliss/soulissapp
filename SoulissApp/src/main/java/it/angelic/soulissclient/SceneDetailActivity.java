@@ -105,7 +105,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         else
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.app_name) + " - " + getString(R.string.scene) + " "
+        setTitle(getString(R.string.souliss_app_name) + " - " + getString(R.string.scene) + " "
                 + Constants.int2roman(collected.getId()));
         setContentView(R.layout.main_scenedetail);
 
