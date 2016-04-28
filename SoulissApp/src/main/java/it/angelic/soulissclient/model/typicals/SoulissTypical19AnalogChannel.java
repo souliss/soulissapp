@@ -192,7 +192,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 if (togMulticast)//a tutti i nodi
                     UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T19, prefs, "" + command, "" + intensity);
                 else
-                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getNodeId(), ""
                             + getTypicalDTO().getSlot(), prefs, "" + command, "" + intensity);
             }
         };
@@ -216,7 +216,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
                 if (togMulticast)//a tutti i nodi
                     UDPHelper.issueMassiveCommand("" + Constants.Typicals.Souliss_T19, prefs, "" + command );
                 else
-                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getNodeId(), ""
                             + getTypicalDTO().getSlot(), prefs, "" + command );
             }
         };
@@ -230,7 +230,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
             public void run() {
                 Looper.prepare();
                 //refresh data for typical's node
-                UDPHelper.pollRequest(prefs, 1, getParentNode().getId());
+                UDPHelper.pollRequest(prefs, 1, getParentNode().getNodeId());
             }
         };
 

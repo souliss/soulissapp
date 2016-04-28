@@ -238,7 +238,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 			public void run() {
 				Looper.prepare();
 
-				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
+				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getNodeId(), ""
 						+ collected.getTypicalDTO().getSlot(), opzioni,  "" + val);
 			}
 		};
@@ -263,7 +263,7 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 			while (temp >= 0) {
 				SoulissNode temrp = (SoulissNode) vers.getSerializable("" + temp);
 				temp--;
-				if (coll.getId() == temrp.getId()) {
+				if (coll.getNodeId() == temrp.getNodeId()) {
 					// rinfresca padre
 					coll.setHealth(temrp.getHealth());
 					coll.setRefreshedAt(temrp.getRefreshedAt());

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -68,6 +69,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
     private ImageView imageFan2;
     private ImageView imageFan3;
     private EditText incrementText;
+    private Handler mHandler;
     private SoulissPreferenceHelper opzioni;
     private NumberPickerT6 tempSlider;
     private TextView textViewTagDescgroup;
@@ -84,7 +86,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
                 refreshStatusIcon();
                 //refreshTagsInfo();
                 textviewStatus.setText(collected.getOutputLongDesc());
-                Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
+                Log.e(Constants.TAG, "Setting Temp Slider:" + collected.getTemperatureSetpointVal());
 
                 if (collected.isFannTurnedOn(1))
                     imageFan1.setVisibility(View.VISIBLE);
@@ -107,6 +109,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
 
         }
     };
+    private View viewTagDescgroup;
 
     public static T31HeatingFragment newInstance(int index, SoulissTypical content) {
         T31HeatingFragment f = new T31HeatingFragment();
@@ -166,7 +169,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
             return ret;
         }
         //refresh forzato
-        SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
+        final SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
         collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
 
         assertTrue("TIPICO NULLO", collected instanceof SoulissTypical31Heating);
@@ -179,6 +182,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         textviewStatus = (TextView) ret.findViewById(R.id.textviewStatus);
         textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
+        viewTagDescgroup = ret.findViewById(R.id.TagDiv);
         tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSlider);
         functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
         fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
@@ -191,16 +195,26 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         //hvacChart = (FrameLayout) ret.findViewById(R.id.hvacChart);
 
-        android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
+        final android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
         //Fragment details = manager.findFragmentById(R.id.hvacChart);
 
-        ChartFragment NewFrag = ChartFragment.newInstance(collected);
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.hvacChart, NewFrag);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-        if (!collected.getTypicalDTO().isTagged())
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ChartFragment NewFrag = ChartFragment.newInstance(collected);
+                FragmentTransaction ft = manager.beginTransaction();
+                ft.replace(R.id.hvacChart, NewFrag);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+            }
+        }, 1000);
+
+
+        if (!collected.getTypicalDTO().isTagged()) {
             textViewTagDescgroup.setVisibility(View.GONE);
+            viewTagDescgroup.setVisibility(View.GONE);
+        }
         refreshTagsInfo();
 
 
@@ -211,8 +225,10 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {//fa cagare
                     collected.issueCommand(Souliss_T3n_Cooling, null);
-                } else {
+                } else if (pos == 1) {
                     collected.issueCommand(Souliss_T3n_Heating, null);
+                } else {
+                    collected.issueCommand(Souliss_T3n_ShutOff, null);
                 }
             }
 
@@ -239,17 +255,26 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         // avoid auto call upon Creation with runnable
         functionSpinner.post(new Runnable() {
             public void run() {
-                functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1, false);
+                if (!collected.isTurnedOn())
+                    functionSpinner.setSelection(2);
+                else
+                    functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1, false);
                 functionSpinner.setOnItemSelectedListener(lit);
                 fanSpiner.setOnItemSelectedListener(lib);
             }
         });
         tempSlider.setModel(Souliss_T31);
-        incrementText.setText(String.valueOf("1"));
         incrementText.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-
+                tempSlider.invalidate();
+                // visto che non fa lui, faccio io
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UDPHelper.pollRequest(opzioni, 1, coll.getNodeId());
+                    }
+                }).start();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -276,7 +301,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         tempSlider.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         tempSlider.setOnValueChangedListener(this);
 
-
         // Listener generico
         OnClickListener asMeasuredListener = new OnClickListener() {
             public void onClick(View v) {
@@ -291,9 +315,10 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
             public void onClick(View v) {
                 //int act = Integer.parseInt(textviewTemperature.getText().toString());
                 if (functionSpinner.getSelectedItemPosition() == 0)
-                    collected.issueCommand(Souliss_T3n_Heating, Float.valueOf(tempSlider.getValue()));
-                else
                     collected.issueCommand(Souliss_T3n_Cooling, Float.valueOf(tempSlider.getValue()));
+                else if (functionSpinner.getSelectedItemPosition() == 1)
+                    collected.issueCommand(Souliss_T3n_Heating, Float.valueOf(tempSlider.getValue()));
+                //else OFF, non fare nulla
             }
         });
 
@@ -374,14 +399,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
                     first = "0";
                 }
                 //INVERTITI? Occhio
-                String[] cmd = {"" + Souliss_T3n_Set, "0", "0", first, second};
+                final String[] cmd = {"" + Souliss_T3n_Set, "0", "0", first, second};
                 //verifyCommand(temp, first, second);
-                //FIXME
-                //XXX
-                Log.i(Constants.TAG, "ISSUE COMMAND:" + first + " " + second);
+
                 UDPHelper.issueSoulissCommand("" + collected.getNodeId(), "" + collected.getSlot(),
                         SoulissApp.getOpzioni(), cmd);
-                // collected.issueCommand(Souliss_T3n_Set, Float.valueOf(tempSlider.getValue()));
             }
         };
         t.start();

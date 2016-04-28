@@ -125,7 +125,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 			BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
 			BIT 7	(0 Heating Mode, 1 Cooling Mode)
  */
-        if (isStatusByteSet(getTypicalDTO().getOutput(), 0)) {
+        if (isTurnedOn()) {
             if (isCoolMode())
                 strout.append("COOL");
             else
@@ -142,6 +142,10 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         strout.append(" ").append(String.format("%.2f", TemperatureMeasuredVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C")
                 .append(" (").append(String.format("%.2f", TemperatureSetpointVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C").append(")");
         return strout.toString();
+    }
+
+    public boolean isTurnedOn() {
+        return isStatusByteSet(getTypicalDTO().getOutput(), 0);
     }
 
     private void computeTempValues() {
@@ -212,7 +216,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
             public void run() {
                 if (temp == null) {
                     Log.i(Constants.TAG, "ISSUE COMMAND W/O TEMP:" + String.valueOf((float) function));
-                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getNodeId(), "" + getTypicalDTO().getSlot(),
                             SoulissApp.getOpzioni(), "" + function);
 
                 } else {
@@ -235,7 +239,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
                     String[] cmd = {String.valueOf(function), "0", "0", first, second};
                     //verifyCommand(temp, first, second);
                     Log.i(Constants.TAG, "ISSUE COMMAND:" + String.valueOf(function) + " 0 0 " + first + " " + second);
-                    UDPHelper.issueSoulissCommand("" + getParentNode().getId(), "" + getTypicalDTO().getSlot(),
+                    UDPHelper.issueSoulissCommand("" + getParentNode().getNodeId(), "" + getTypicalDTO().getSlot(),
                             SoulissApp.getOpzioni(), cmd);
                 }
             }
@@ -246,7 +250,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     @Override
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
-        if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1)
+        if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1) || !isTurnedOn()
                 || "UNKNOWN".compareTo(getOutputLongDesc()) == 0 || "NA".compareTo(getOutputLongDesc()) == 0) {
             textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);

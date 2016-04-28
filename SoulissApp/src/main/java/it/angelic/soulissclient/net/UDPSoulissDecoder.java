@@ -501,7 +501,7 @@ public class UDPSoulissDecoder {
 
 			/* Check antifurto */
             for (SoulissNode soulissNode : ref) {
-                refreshedNodes.put(soulissNode.getId(), soulissNode);
+                refreshedNodes.put(soulissNode.getNodeId(), soulissNode);
                 if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {
                     for (SoulissTypical ty : soulissNode.getTypicals()) {
                         // check Antitheft

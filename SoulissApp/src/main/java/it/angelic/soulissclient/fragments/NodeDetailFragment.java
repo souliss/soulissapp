@@ -123,7 +123,7 @@ public class NodeDetailFragment extends ListFragment {
                 }
                 SoulissDBHelper.open();
 
-                collected = datasource.getSoulissNode(collected.getId());
+                collected = datasource.getSoulissNode(collected.getNodeId());
                 refreshHeader();
 
                 List<SoulissTypical> goer = collected.getActiveTypicals();
@@ -291,9 +291,9 @@ public class NodeDetailFragment extends ListFragment {
                     public void run() {
                         Looper.prepare();
                         if (collected != null) {
-                            //  UDPHelper.pollRequest(opzioni, 1, collected.getId());
+                            //  UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
                             // state req. meglio, fa subscribe
-                            UDPHelper.stateRequest(opzioni, 1, collected.getId());
+                            UDPHelper.stateRequest(opzioni, 1, collected.getNodeId());
 
                         }
 
@@ -441,7 +441,7 @@ public class NodeDetailFragment extends ListFragment {
         if (opzioni.isDbConfigured()) {
             SoulissDBHelper.open();
             // per il refresh dal dettaglio
-            collected = datasource.getSoulissNode(collected.getId());
+            collected = datasource.getSoulissNode(collected.getNodeId());
             doBindService();
 
             // poll 1 node
@@ -449,12 +449,12 @@ public class NodeDetailFragment extends ListFragment {
                 @Override
                 public void run() {
 					/*
-					 * UDPHelper.healthRequest(opzioni, 1, collected.getId());
+                     * UDPHelper.healthRequest(opzioni, 1, collected.getNodeId());
 					 * try { Thread.sleep(500); } catch (InterruptedException e)
 					 * { e.printStackTrace(); }
 					 */
-                    //UDPHelper.pollRequest(opzioni, 1, collected.getId());
-                    UDPHelper.stateRequest(opzioni, 1, collected.getId());
+                    //UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
+                    UDPHelper.stateRequest(opzioni, 1, collected.getNodeId());
                 }
             }).start();
 

@@ -188,7 +188,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 					UDPHelper.issueMassiveCommand(""+ Constants.Typicals.Souliss_T16, prefs,""+val, "" + r, ""
 							+ g, "" + b);
 				else
-				UDPHelper.issueSoulissCommand("" + getParentNode().getId(), ""
+					UDPHelper.issueSoulissCommand("" + getParentNode().getNodeId(), ""
 						+ getTypicalDTO().getSlot(), prefs,  "" + val, "" + r, ""
 						+ g, "" + b);
 			}
@@ -202,7 +202,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 			public void run() {
 				Looper.prepare();
 					//refresh data for typical's node
-					UDPHelper.pollRequest(prefs, 1, getParentNode().getId());
+				UDPHelper.pollRequest(prefs, 1, getParentNode().getNodeId());
 			}
 		};
 

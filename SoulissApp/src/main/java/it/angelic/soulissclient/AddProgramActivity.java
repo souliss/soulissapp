@@ -150,7 +150,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             for (selIdx = 0; selIdx < toti; selIdx++) {
                 SoulissNode now = (SoulissNode) outputNodeSpinner.getItemAtPosition(selIdx);
 
-                if (nodeId == now.getId()) {
+                if (nodeId == now.getNodeId()) {
                     Log.i(Constants.TAG, "SELECTED NODEID:" + nodeId);
                     outputNodeSpinner.setSelection(selIdx);
                     break;//selIdx ok
@@ -265,8 +265,8 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     // if (pos > 0) {
                     SoulissNode mynode = nodiArrayWithExtra[(int) outputNodeSpinner.getSelectedItemId()];
-                    Log.d(Constants.TAG, "mynode nodeId:" + mynode.getId());
-                    if (mynode.getId() > Constants.COMMAND_FAKE_SCENE) {
+                Log.d(Constants.TAG, "mynode nodeId:" + mynode.getNodeId());
+                if (mynode.getNodeId() > Constants.COMMAND_FAKE_SCENE) {
                         //le scene non hanno comandi
                     /*List<SoulissTypical> re = mynode
                             .getActiveTypicals(AddProgramActivity.this);
@@ -577,7 +577,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
      * popola spinner tipici in base al nodo
      */
     private void setTypicalSpinner(Spinner tgt, SoulissNode ref) {
-        if (ref.getId() > Constants.COMMAND_FAKE_SCENE) {
+        if (ref.getNodeId() > Constants.COMMAND_FAKE_SCENE) {
             try {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
                 ref.getActiveTypicals().toArray(strArray);
@@ -591,7 +591,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             } catch (Exception e) {
                 Log.e(Constants.TAG, "Errore in setTypicalSpinner:" + e.getMessage(), e);
             }
-        } else if (ref.getId() == Constants.COMMAND_FAKE_SCENE) {
+        } else if (ref.getNodeId() == Constants.COMMAND_FAKE_SCENE) {
 
             SoulissScene[] strArray = new SoulissScene[scenes.size()];
             strArray = scenes.toArray(strArray);

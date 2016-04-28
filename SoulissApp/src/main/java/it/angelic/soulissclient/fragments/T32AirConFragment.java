@@ -335,7 +335,7 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 				par1 = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
 				par2 = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
 
-				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
+				UDPHelper.issueSoulissCommand("" + collected.getParentNode().getNodeId(), ""
 						+ collected.getTypicalDTO().getSlot(), opzioni,  par1, par2);
 			}
 		};
@@ -363,7 +363,7 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 			while (temp >= 0) {
 				SoulissNode temrp = (SoulissNode) vers.getSerializable("" + temp);
 				temp--;
-				if (coll.getId() == temrp.getId()) {
+				if (coll.getNodeId() == temrp.getNodeId()) {
 					// rinfresca padre
 					coll.setHealth(temrp.getHealth());
 					coll.setRefreshedAt(temrp.getRefreshedAt());

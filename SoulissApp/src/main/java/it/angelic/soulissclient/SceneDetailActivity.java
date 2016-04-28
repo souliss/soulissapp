@@ -56,7 +56,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         upda = (TextView) findViewById(R.id.TextViewNodeUpdate);
         ImageView icon = (ImageView) findViewById(R.id.scene_icon);
         // titolo.setText(getString(R.string.scene) + " " +
-        // Constants.int2roman(collected.getId()));
+        // Constants.int2roman(collected.getNodeId()));
         icon.setImageResource(collected.getIconResourceId());
         // Animazione icona nodo
         if (opzioni.getTextFx()) {

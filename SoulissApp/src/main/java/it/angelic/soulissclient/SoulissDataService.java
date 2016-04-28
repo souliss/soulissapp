@@ -218,7 +218,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
                                 List<SoulissNode> ref = db.getAllNodes();
                                 for (SoulissNode soulissNode : ref) {
-                                    refreshedNodes.put(soulissNode.getId(), soulissNode);
+                                    refreshedNodes.put(soulissNode.getNodeId(), soulissNode);
                                 }
                                 Log.v(TAG, "logging nodes:" + nodesNum);
                                 // issueRefreshSensors(ref, refreshedNodes);
