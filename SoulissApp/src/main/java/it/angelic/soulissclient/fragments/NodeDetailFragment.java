@@ -77,47 +77,20 @@ import static junit.framework.Assert.assertTrue;
 
 
 public class NodeDetailFragment extends ListFragment {
-    private SoulissNode collected;
-    private SoulissPreferenceHelper opzioni;
-    private ListView listaTypicalsView;
-    private SoulissDBHelper datasource;
     private Timer autoUpdate;
+    private SoulissNode collected;
+    private SoulissDBHelper datasource;
+    private ListView listaTypicalsView;
+    private SoulissDataService mBoundService;
+    private boolean mDualPane;
+    private boolean mIsBound;
+    private ImageView nodeic;
+    private SoulissPreferenceHelper opzioni;
     private ProgressBar par;
+    private SwipeRefreshLayout swipeLayout;
+    //private ActionBar actionBar;
     //private TextView tt;
     private TypicalsListAdapter ta;
-    private TextView upda;
-    private ImageView nodeic;
-    private Handler timeoutHandler;
-    private boolean mDualPane;
-    //private ActionBar actionBar;
-
-    private SoulissDataService mBoundService;
-    private boolean mIsBound;
-    private SwipeRefreshLayout swipeLayout;
-   // private Toolbar actionBar;
-
-    protected int getShownIndex() {
-        if (getArguments() != null)
-            return getArguments().getInt("index", 0);
-        else
-            return 0;
-    }
-
-    public static NodeDetailFragment newInstance(int index, SoulissNode content) {
-        NodeDetailFragment f = new NodeDetailFragment();
-
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("index", index);
-        // Ci metto il nodo dentro
-        if (content != null) {
-            args.putSerializable("NODO", content);
-        }
-        f.setArguments(args);
-
-        return f;
-    }
-
     /* SOULISS DATA SERVICE BINDING */
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -134,8 +107,100 @@ public class NodeDetailFragment extends ListFragment {
             ta.setmBoundService(null);
         }
     };
+    private Handler timeoutHandler;
+    // private Toolbar actionBar;
+    private TextView upda;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                Log.d(Constants.TAG, "Detected data arrival, refresh from DB");
+                // cancel timeout
+                swipeLayout.setRefreshing(false);
+                if (listaTypicalsView == null) {
+                    return;
+                }
+                SoulissDBHelper.open();
+
+                collected = datasource.getSoulissNode(collected.getId());
+                refreshHeader();
+
+                List<SoulissTypical> goer = collected.getActiveTypicals();
+                SoulissTypical[] typs = new SoulissTypical[goer.size()];
+                typs = goer.toArray(typs);
+
+                ta.setTypicals(typs);
+                ta.notifyDataSetChanged();
+
+                // save index and top position
+                int index = listaTypicalsView.getFirstVisiblePosition();
+                View v = listaTypicalsView.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
+                // Adapter della lista
+                //listaTypicalsView.setAdapter(ta);
+                listaTypicalsView.invalidateViews();
+                listaTypicalsView.setSelectionFromTop(index, top);
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Error in data receival, connection closed?" + e.getMessage());
+            }
+        }
+    };
+
+    public static NodeDetailFragment newInstance(int index, SoulissNode content) {
+        NodeDetailFragment f = new NodeDetailFragment();
+
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+        // Ci metto il nodo dentro
+        if (content != null) {
+            args.putSerializable("NODO", content);
+        }
+        f.setArguments(args);
+
+        return f;
+    }
 
     // private SwipeGestureListener gestureListener;
+
+    /**
+     * Riga grigia cra spazio
+     */
+    private void createHeader() {
+
+        if (collected.getIconResourceId() != 0)
+            nodeic.setImageResource(collected.getIconResourceId());
+
+        // Animazione icona nodo
+        /*
+		 * if (opzioni.getTextFx()) { Animation a =
+		 * AnimationUtils.loadAnimation(getApplicationContext(),
+		 * R.anim.scalerotale); a.reset(); nodeic.startAnimation(a); }
+		 */
+
+        par.setMax(Constants.MAX_HEALTH);
+
+        // ProgressBar sfumata
+        final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
+        final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, getResources().getColor(color.aa_red),
+                getResources().getColor(color.aa_green), android.graphics.Shader.TileMode.CLAMP);
+        // pgDrawable.getPaint().setStrokeWidth(3);
+        pgDrawable.getPaint().setDither(true);
+        pgDrawable.getPaint().setShader(gradient);
+
+        ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.START, ClipDrawable.HORIZONTAL);
+        par.setBackgroundResource(android.R.drawable.progress_horizontal);
+        par.setProgressDrawable(progress);
+        par.setMax(50);
+        par.setProgress(20);
+        par.setProgress(0); // <-- BUG Android
+        par.setMax(Constants.MAX_HEALTH);
+        refreshHeader();
+
+        Log.d(Constants.TAG,
+                "Setting bar at " + collected.getHealth() + " win width=" + SoulissApp.getDisplayWidth() / 2);
+    }
 
     void doBindService() {
         if (!mIsBound) {
@@ -152,9 +217,11 @@ public class NodeDetailFragment extends ListFragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frag_nodedetail, container, false);
+    protected int getShownIndex() {
+        if (getArguments() != null)
+            return getArguments().getInt("index", 0);
+        else
+            return 0;
     }
 
     @Override
@@ -165,13 +232,7 @@ public class NodeDetailFragment extends ListFragment {
             getActivity().setTheme(R.style.LightThemeSelector);
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
-        //actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
-       // ((AbstractStatusedFragmentActivity) getActivity()).setSupportActionBar(actionBar);
-        //((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /*actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-		actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-		actionBar.setDisplayHomeAsUpEnabled(true);*/
+
         super.onActivityCreated(savedInstanceState);
         timeoutHandler = new Handler();
         setHasOptionsMenu(true);
@@ -230,7 +291,10 @@ public class NodeDetailFragment extends ListFragment {
                     public void run() {
                         Looper.prepare();
                         if (collected != null) {
-                            UDPHelper.pollRequest(opzioni, 1, collected.getId());
+                            //  UDPHelper.pollRequest(opzioni, 1, collected.getId());
+                            // state req. meglio, fa subscribe
+                            UDPHelper.stateRequest(opzioni, 1, collected.getId());
+
                         }
 
                         if (!opzioni.isSoulissReachable()) {
@@ -254,213 +318,12 @@ public class NodeDetailFragment extends ListFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (collected == null || upda == null) {
-            Log.w(Constants.TAG, "Empty Typical!!");
-            return;// no detail selected
-        }
-        //refreshStatusIcon();
-
-        if (opzioni.isDbConfigured()) {
-            SoulissDBHelper.open();
-            // per il refresh dal dettaglio
-            collected = datasource.getSoulissNode(collected.getId());
-            doBindService();
-
-            // poll 1 node
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-					/*
-					 * UDPHelper.healthRequest(opzioni, 1, collected.getId());
-					 * try { Thread.sleep(500); } catch (InterruptedException e)
-					 * { e.printStackTrace(); }
-					 */
-                    UDPHelper.pollRequest(opzioni, 1, collected.getId());
-                }
-            }).start();
-
-            createHeader();
-            // tipici dal DB
-            List<SoulissTypical> goer = collected.getActiveTypicals();
-
-            SoulissTypical[] typs = new SoulissTypical[goer.size()];
-            typs = goer.toArray(typs);
-
-
-            ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(),
-                    opzioni);
-            listaTypicalsView = getListView();
-            // Adapter della lista
-            listaTypicalsView.setAdapter(ta);
-
-            listaTypicalsView.setOnItemClickListener(new OnItemClickListener() {
-                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    TypicalViewHolder holder = (TypicalViewHolder) arg1.getTag();
-                    //Log.i(getTag(), "Showing typical idx:"+arg2+" holder slot: "+holder.data.getTypicalDTO().getSlot());
-                    showDetails(arg2, holder.data);
-                }
-            });
-            //serve per back da dettaglio
-            ((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(collected.getNiceName());
-
-        }
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         View detailsFrame = getActivity().findViewById(R.id.detailPane);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
         Log.i(Constants.TAG, "DUALPANE:" + mDualPane);
         super.onConfigurationChanged(newConfig);
     }
-
-    /**
-     * Helper function to show the details of a selected item, either by
-     * displaying a fragment in-place in the current UI, or starting a whole new
-     * activity in which it is displayed.
-     */
-    private void showDetails(int index, SoulissTypical target) {
-        // mCurCheckPosition = index;
-        if (target == null)
-            return;//capita con lista vuota
-        if (mDualPane) {
-            ListView li = getListView();
-            li.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            // listaNodiView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            // We can display everything in-place with fragments, so update
-            // the list to highlight the selected item and show the data.
-            li.setItemChecked(index, true);
-        } else {
-          //  ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        Fragment NewFrag = null;
-        // Istanzia e ci mette l'indice
-        if (target instanceof SoulissTypical6nAnalogue)
-            NewFrag = T6nAnalogueFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical31Heating)
-            NewFrag = T31HeatingFragment.newInstance(index, target);
-        else if (target.isSensor())
-            NewFrag = T5nSensorFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical16AdvancedRGB)
-            NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical19AnalogChannel)
-            NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
-            NewFrag = T1nGenericLightFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer || target instanceof SoulissTypical43AntiTheftLocalPeer)
-            NewFrag = T4nFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical32AirCon)
-            NewFrag = T32AirConFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical14PulseOutput) {
-            //no detail, notice user and return
-            Toast.makeText(getActivity(),
-                    getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        } else {
-            //last resort, TWrapper
-            // Activity Dettaglio nodo
-            //TODO transform in frags
-            Intent nodeDatail = new Intent(getActivity(), TypicalDetailFragWrapper.class);
-            nodeDatail.putExtra("TIPICO", target);
-            getActivity().startActivity(nodeDatail);
-           // getActivity().supportFinishAfterTransition();
-            return;//launched wrapper activity
-        }
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (opzioni.isAnimationsEnabled())
-            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-        ft.replace(R.id.detailPane, NewFrag);
-        ft.addToBackStack(null);
-
-        // ft.remove(details);
-        //ft.add(NewFrag,"BOH");
-        //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-        ft.commit();
-
-
-    }
-
-    private void refreshHeader() {
-        par.setProgress(collected.getHealth());
-        par.setProgress(20);
-        par.setProgress(0); // <-- BUG Android
-        par.setProgress(collected.getHealth());
-        upda.setText(getResources().getString(R.string.update) + " " + SoulissUtils.getTimeAgo(collected.getRefreshedAt()));
-
-    }
-
-
-    /**
-     * Riga grigia cra spazio
-     */
-    private void createHeader() {
-
-        if (collected.getIconResourceId() != 0)
-            nodeic.setImageResource(collected.getIconResourceId());
-
-        // Animazione icona nodo
-		/*
-		 * if (opzioni.getTextFx()) { Animation a =
-		 * AnimationUtils.loadAnimation(getApplicationContext(),
-		 * R.anim.scalerotale); a.reset(); nodeic.startAnimation(a); }
-		 */
-
-        par.setMax(Constants.MAX_HEALTH);
-
-        // ProgressBar sfumata
-        final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-        final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, getResources().getColor(color.aa_red),
-                getResources().getColor(color.aa_green), android.graphics.Shader.TileMode.CLAMP);
-        // pgDrawable.getPaint().setStrokeWidth(3);
-        pgDrawable.getPaint().setDither(true);
-        pgDrawable.getPaint().setShader(gradient);
-
-        ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.START, ClipDrawable.HORIZONTAL);
-        par.setBackgroundResource(android.R.drawable.progress_horizontal);
-        par.setProgressDrawable(progress);
-        par.setMax(50);
-        par.setProgress(20);
-        par.setProgress(0); // <-- BUG Android
-        par.setMax(Constants.MAX_HEALTH);
-        refreshHeader();
-
-        Log.d(Constants.TAG,
-                "Setting bar at " + collected.getHealth() + " win width=" + SoulissApp.getDisplayWidth() / 2);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        // Rinomina nodo e scelta icona
-        inflater.inflate(R.menu.typical_ctx_menu, menu);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Rinomina nodo e scelta icona
-        inflater.inflate(R.menu.rebuildnode_ctx_menu, menu);
-        Log.i(Constants.TAG, "Inflated Equalizer menu");
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.Ricostruisci:
-                AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(getActivity(), collected, opzioni);
-                alertt.show();
-                return true;
-        }
-
-        return false;
-    }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -499,6 +362,48 @@ public class NodeDetailFragment extends ListFragment {
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.typical_ctx_menu, menu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.rebuildnode_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.frag_nodedetail, container, false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.Ricostruisci:
+                AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(getActivity(), collected, opzioni);
+                alertt.show();
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        autoUpdate.cancel();
+        getActivity().unregisterReceiver(datareceiver);
+        doUnbindService();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         // pezza
@@ -524,50 +429,137 @@ public class NodeDetailFragment extends ListFragment {
         }, 100, Constants.GUI_UPDATE_INTERVAL); // updates GUI each 40 secs
     }
 
-
     @Override
-    public void onPause() {
-        super.onPause();
-        autoUpdate.cancel();
-        getActivity().unregisterReceiver(datareceiver);
-        doUnbindService();
+    public void onStart() {
+        super.onStart();
+        if (collected == null || upda == null) {
+            Log.w(Constants.TAG, "Empty Typical!!");
+            return;// no detail selected
+        }
+        //refreshStatusIcon();
+
+        if (opzioni.isDbConfigured()) {
+            SoulissDBHelper.open();
+            // per il refresh dal dettaglio
+            collected = datasource.getSoulissNode(collected.getId());
+            doBindService();
+
+            // poll 1 node
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+					/*
+					 * UDPHelper.healthRequest(opzioni, 1, collected.getId());
+					 * try { Thread.sleep(500); } catch (InterruptedException e)
+					 * { e.printStackTrace(); }
+					 */
+                    //UDPHelper.pollRequest(opzioni, 1, collected.getId());
+                    UDPHelper.stateRequest(opzioni, 1, collected.getId());
+                }
+            }).start();
+
+            createHeader();
+            // tipici dal DB
+            List<SoulissTypical> goer = collected.getActiveTypicals();
+
+            SoulissTypical[] typs = new SoulissTypical[goer.size()];
+            typs = goer.toArray(typs);
+
+
+            ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(),
+                    opzioni);
+            listaTypicalsView = getListView();
+            // Adapter della lista
+            listaTypicalsView.setAdapter(ta);
+
+            listaTypicalsView.setOnItemClickListener(new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    TypicalViewHolder holder = (TypicalViewHolder) arg1.getTag();
+                    //Log.i(getTag(), "Showing typical idx:"+arg2+" holder slot: "+holder.data.getTypicalDTO().getSlot());
+                    showDetails(arg2, holder.data);
+                }
+            });
+            //serve per back da dettaglio
+            ((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(collected.getNiceName());
+
+        }
     }
 
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                Log.d(Constants.TAG, "Detected data arrival, refresh from DB");
-                // cancel timeout
-                swipeLayout.setRefreshing(false);
-                if (listaTypicalsView == null) {
-                    return;
-                }
-                SoulissDBHelper.open();
+    private void refreshHeader() {
+        par.setProgress(collected.getHealth());
+        par.setProgress(20);
+        par.setProgress(0); // <-- BUG Android
+        par.setProgress(collected.getHealth());
+        upda.setText(getResources().getString(R.string.update) + " " + SoulissUtils.getTimeAgo(collected.getRefreshedAt()));
 
-                collected = datasource.getSoulissNode(collected.getId());
-                refreshHeader();
+    }
 
-                List<SoulissTypical> goer = collected.getActiveTypicals();
-                SoulissTypical[] typs = new SoulissTypical[goer.size()];
-                typs = goer.toArray(typs);
-
-                ta.setTypicals(typs);
-                ta.notifyDataSetChanged();
-
-                // save index and top position
-                int index = listaTypicalsView.getFirstVisiblePosition();
-                View v = listaTypicalsView.getChildAt(0);
-                int top = (v == null) ? 0 : v.getTop();
-                // Adapter della lista
-                //listaTypicalsView.setAdapter(ta);
-                listaTypicalsView.invalidateViews();
-                listaTypicalsView.setSelectionFromTop(index, top);
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Error in data receival, connection closed?" + e.getMessage());
-            }
+    /**
+     * Helper function to show the details of a selected item, either by
+     * displaying a fragment in-place in the current UI, or starting a whole new
+     * activity in which it is displayed.
+     */
+    private void showDetails(int index, SoulissTypical target) {
+        // mCurCheckPosition = index;
+        if (target == null)
+            return;//capita con lista vuota
+        if (mDualPane) {
+            ListView li = getListView();
+            li.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            // listaNodiView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            // We can display everything in-place with fragments, so update
+            // the list to highlight the selected item and show the data.
+            li.setItemChecked(index, true);
+        } else {
+            //  ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    };
+
+        Fragment NewFrag = null;
+        // Istanzia e ci mette l'indice
+        if (target instanceof SoulissTypical6nAnalogue)
+            NewFrag = T6nAnalogueFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(index, target);
+        else if (target.isSensor())
+            NewFrag = T5nSensorFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical16AdvancedRGB)
+            NewFrag = T16RGBAdvancedFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical19AnalogChannel)
+            NewFrag = T19SingleChannelLedFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical11DigitalOutput || target instanceof SoulissTypical12DigitalOutputAuto)
+            NewFrag = T1nGenericLightFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical41AntiTheft || target instanceof SoulissTypical42AntiTheftPeer || target instanceof SoulissTypical43AntiTheftLocalPeer)
+            NewFrag = T4nFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical32AirCon)
+            NewFrag = T32AirConFragment.newInstance(index, target);
+        else if (target instanceof SoulissTypical14PulseOutput) {
+            //no detail, notice user and return
+            Toast.makeText(getActivity(),
+                    getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        } else {
+            //last resort, TWrapper
+            // Activity Dettaglio nodo
+            //TODO transform in frags
+            Intent nodeDatail = new Intent(getActivity(), TypicalDetailFragWrapper.class);
+            nodeDatail.putExtra("TIPICO", target);
+            getActivity().startActivity(nodeDatail);
+            // getActivity().supportFinishAfterTransition();
+            return;//launched wrapper activity
+        }
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (opzioni.isAnimationsEnabled())
+            ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+        ft.replace(R.id.detailPane, NewFrag);
+        ft.addToBackStack(null);
+
+        // ft.remove(details);
+        //ft.add(NewFrag,"BOH");
+        //ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        ft.commit();
+
+
+    }
 
 }

@@ -59,7 +59,6 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
      *
      */
     private static final long serialVersionUID = 1113488985342542012L;
-    private int statusByte;
     // private SoulissNode parentd;
     // Context ctx;
     private SoulissTypical TemperatureSetpointValue;
@@ -86,8 +85,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
         if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
         {
-            statusByte = getTypicalDTO().getOutput();
-            if (isStatusByteSet(statusByte, 0)) {
+            if (isStatusByteSet(getTypicalDTO().getOutput(), 0)) {
                 if (isCoolMode())
                     return(SoulissApp.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[0]);
                 else
@@ -105,7 +103,48 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     }
 
     public String getOutputLongDesc() {
-        statusByte = getTypicalDTO().getOutput();
+        computeTempValues();
+        /*
+         * Log.d(Constants.TAG, "AirCon State: 0x" +
+		 * Integer.toHexString(typicalDTO.getOutput()) + " " +
+		 * Integer.toHexString
+		 * (TemperatureMeasuredValue.getTypicalDTO().getOutput()));
+		 */
+        StringBuilder strout = new StringBuilder();
+        // int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
+        Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(getTypicalDTO().getOutput()));
+        //final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
+        // buf.putInt(statusByte);
+/*
+            BIT 0	(0 System  OFF,  1 System  ON)
+			BIT 1	(0 Heating OFF , 1 Heating ON)
+			BIT 2	(0 Cooling OFF , 1 Cooling ON)
+			BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
+			BIT 4	(0 Fan 2 OFF   , 1 Fan 2 ON)
+			BIT 5	(0 Fan 3 OFF   , 1 Fan 3 ON)
+			BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
+			BIT 7	(0 Heating Mode, 1 Cooling Mode)
+ */
+        if (isStatusByteSet(getTypicalDTO().getOutput(), 0)) {
+            if (isCoolMode())
+                strout.append("COOL");
+            else
+                strout.append("HEAT");
+        } else
+            strout.append("OFF");
+
+        if (isStatusByteSet(getTypicalDTO().getOutput(), 6))
+            strout.append(" - Fan Auto");
+        else
+            strout.append(" - Fan Manual");
+
+
+        strout.append(" ").append(String.format("%.2f", TemperatureMeasuredVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C")
+                .append(" (").append(String.format("%.2f", TemperatureSetpointVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C").append(")");
+        return strout.toString();
+    }
+
+    private void computeTempValues() {
         short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
                 .getTypicalDTO().getOutput();
         short TemperatureMeasuredValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 2))
@@ -135,64 +174,20 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
                 "first:" + Long.toHexString((long) TemperatureSetpointValue) + " second:"
                         + Long.toHexString((long) TemperatureSetpointValue2) + "SENSOR Setpoint:"
                         + TemperatureSetpointVal);
-        /*
-         * Log.d(Constants.TAG, "AirCon State: 0x" +
-		 * Integer.toHexString(typicalDTO.getOutput()) + " " +
-		 * Integer.toHexString
-		 * (TemperatureMeasuredValue.getTypicalDTO().getOutput()));
-		 */
-        StringBuilder strout = new StringBuilder();
-        // int fun = TemperatureMeasuredValue.getTypicalDTO().getOutput() >> 4;
-        Log.i(Constants.TAG, "HEATING status: " + Integer.toBinaryString(statusByte));
-        //final ByteBuffer buf = ByteBuffer.allocate(4); // sizeof(int)
-        // buf.putInt(statusByte);
-/*
-            BIT 0	(0 System  OFF,  1 System  ON)
-			BIT 1	(0 Heating OFF , 1 Heating ON)
-			BIT 2	(0 Cooling OFF , 1 Cooling ON)
-			BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
-			BIT 4	(0 Fan 2 OFF   , 1 Fan 2 ON)
-			BIT 5	(0 Fan 3 OFF   , 1 Fan 3 ON)
-			BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
-			BIT 7	(0 Heating Mode, 1 Cooling Mode)
- */
-        if (isStatusByteSet(statusByte, 0)) {
-            if (isCoolMode())
-                strout.append("COOL");
-            else
-                strout.append("HEAT");
-        } else
-            strout.append("OFF");
-
-        if (isStatusByteSet(statusByte, 6))
-            strout.append(" - Fan Auto");
-        else
-            strout.append(" - Fan Manual");
-
-
-        strout.append(" ").append(String.format("%.2f", TemperatureMeasuredVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C")
-                .append(" (").append(String.format("%.2f", TemperatureSetpointVal)).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C").append(")");
-        return strout.toString();
     }
 
     public float getTemperatureMeasuredVal() {
+        computeTempValues();
         return TemperatureMeasuredVal;
     }
 
-    public void setTemperatureMeasuredVal(float temperatureMeasuredVal) {
-        TemperatureMeasuredVal = temperatureMeasuredVal;
-    }
-
     public float getTemperatureSetpointVal() {
+        computeTempValues();
         return TemperatureSetpointVal;
     }
 
-    public void setTemperatureSetpointVal(float temperatureSetpointVal) {
-        TemperatureSetpointVal = temperatureSetpointVal;
-    }
-
     public boolean isCoolMode() {
-        return isStatusByteSet(statusByte, 7);
+        return isStatusByteSet(getTypicalDTO().getOutput(), 7);
 
     }
 
@@ -200,7 +195,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         if (fan < 1 || fan > 3)
             return false;
         //fan start from
-        return isStatusByteSet(statusByte, 2 + fan);
+        return isStatusByteSet(getTypicalDTO().getOutput(), 2 + fan);
     }
 
     private boolean isHeatMode() {
