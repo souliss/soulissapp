@@ -20,7 +20,7 @@
             android:layout_marginRight="8dip"
             android:layout_marginTop="2dip"
             android:padding="2dp"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/souliss_app_name"
             android:src="@drawable/clock1"/>
 
         <TextView

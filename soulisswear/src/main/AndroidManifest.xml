@@ -7,12 +7,12 @@
     <application
         android:allowBackup="false"
         android:icon="@mipmap/soulisslogo"
-        android:label="@string/app_name"
+        android:label="@string/souliss_app_name"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <activity
             android:name=".SoulissWearActivity"
-            android:label="@string/app_name">
+            android:label="@string/souliss_app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

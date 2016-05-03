@@ -600,7 +600,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     @Override
     protected void onStart() {
         super.onStart();
-        setActionBarInfo(getString(R.string.app_name));
+        setActionBarInfo(getString(R.string.souliss_app_name));
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();

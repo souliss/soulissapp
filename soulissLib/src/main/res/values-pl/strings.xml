@@ -2,7 +2,7 @@
 <resources>
 
     <!-- MANUAL_SECTION -->
-    <string name="app_name">SoulissApp</string>
+    <string name="souliss_app_name">SoulissApp</string>
     <string name="app_opt">SoulissApp - Opcje</string>
     <string name="app_addprog">Dodaj program</string>
     <string name="opt_network">Opcje sieciowe</string>
@@ -390,4 +390,5 @@
     <string name="increment_input_err">Input a number between 0.1 and 10</string>
     <string name="range">Range</string>
     <string name="welcome_tour_button">Start</string>
+    <string name="charts">Charts</string>
 </resources>

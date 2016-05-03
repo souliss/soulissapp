@@ -96,7 +96,7 @@ public class SoulissDBHelper {
         // wrap values from object
         values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
         values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
-        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getId(),
+        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
                 null);
 
         assertEquals(upd, 1);
@@ -123,7 +123,7 @@ public class SoulissDBHelper {
         // wrap values from object
         values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
         values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
-        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getId(),
+        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
                 null);
 
         assertEquals(upd, 1);
@@ -148,10 +148,10 @@ public class SoulissDBHelper {
         // wrap values from object
         values.put(SoulissDB.COLUMN_NODE_NAME, nodeIN.getName());
         values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
-        values.put(SoulissDB.COLUMN_NODE_ID, nodeIN.getId());
+        values.put(SoulissDB.COLUMN_NODE_ID, nodeIN.getNodeId());
         values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
         values.put(SoulissDB.COLUMN_NODE_ICON, nodeIN.getIconResourceId());
-        int upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getId(),
+        int upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
                 null);
         if (upd == 0) {
             long insertId = database.insert(SoulissDB.TABLE_NODES, null, values);
@@ -197,7 +197,7 @@ public class SoulissDBHelper {
         List<SoulissTypical> cod = getNodeTypicals(ret);
         // come sono grezzo, 'sta riga fa schifo
         for (SoulissTypical soulissTypical : cod) {
-            // if (soulissTypical.getNodeId() == comment.getId())
+            // if (soulissTypical.getNodeId() == comment.getNodeId())
             ret.addTypical(soulissTypical);
         }
         cursor.close();
@@ -218,9 +218,9 @@ public class SoulissDBHelper {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
             newTyp.setParentNode(parent);
-            if (parent.getId() == Constants.MASSIVE_NODE_ID) {
+            if (parent.getNodeId() == Constants.MASSIVE_NODE_ID) {
                 //hack dto ID, could be different if parent is massive
-                newTyp.getTypicalDTO().setNodeId(parent.getId());
+                newTyp.getTypicalDTO().setNodeId(parent.getNodeId());
                 newTyp.getTypicalDTO().setSlot(dto.getTypical());
             }
             // if (newTyp.getTypical() !=
@@ -275,7 +275,7 @@ public class SoulissDBHelper {
 
         List<SoulissTypical> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getId(), null, null, null, null);
+                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getNodeId(), null, null, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
@@ -297,7 +297,7 @@ public class SoulissDBHelper {
             }
             typTags.close();
             //hack dto ID, could be different if parent is massive
-            newTyp.getTypicalDTO().setNodeId(parent.getId());
+            newTyp.getTypicalDTO().setNodeId(parent.getNodeId());
             newTyp.setParentNode(parent);
             // if (newTyp.getTypical() !=
             // Constants.Souliss_T_CurrentSensor_slave)
@@ -658,7 +658,7 @@ public class SoulissDBHelper {
 
     /*
      * public void deleteTypical(int nodeid, SoulissTypical comment) { // long
-     * id = comment.getId(); // System.out.println("Comment deleted with id: " +
+     * id = comment.getNodeId(); // System.out.println("Comment deleted with id: " +
      * id); database.delete(SoulissDB.TABLE_TYPICALS, SoulissDB.COLUMN_ID +
      * " = " + nodeid, null); }
      */
@@ -712,7 +712,7 @@ public class SoulissDBHelper {
             List<SoulissTypical> cod = getNodeTypicals(comment);
             // come sono grezzo, 'sta riga fa schifo
             for (SoulissTypical soulissTypical : cod) {
-                // if (soulissTypical.getNodeId() == comment.getId())
+                // if (soulissTypical.getNodeId() == comment.getNodeId())
                 comment.addTypical(soulissTypical);
             }
             comments.add(comment);

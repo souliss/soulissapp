@@ -268,7 +268,7 @@ public class ScenesDialogHelper {
                         // collega il comando alla scena
                         tull.getCommandDTO().setSceneId(targetScene.getId());
 
-                        if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getId() == Constants.MASSIVE_NODE_ID) {// MASSIVE
+                        if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getNodeId() == Constants.MASSIVE_NODE_ID) {// MASSIVE
                             SoulissTypical model = (SoulissTypical) outputTypicalSpinner.getSelectedItem();
                             if (model == null) {
                                 Toast.makeText(context, "Typical not selected", Toast.LENGTH_SHORT).show();

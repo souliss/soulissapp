@@ -32,8 +32,8 @@ public class DrawerMenuHelper {
 		// Aggiungi nodi
         for (SoulissNode object : nodes) {
             NavMenuItem item2 = new NavMenuItem();
-            item2.setId(object.getId());
-            item2.setLabel(object.getNiceName());
+			item2.setId(object.getNodeId());
+			item2.setLabel(object.getNiceName());
             item2.setIcon(object.getIconResourceId());
             item2.setUpdateActionBarTitle(false);
             tmp.add(item2);
@@ -75,8 +75,8 @@ public class DrawerMenuHelper {
 		//Aggiungi nodi
         for (SoulissNode object : nodes) {
             NavMenuItem item2 = new NavMenuItem();
-            item2.setId(object.getId());
-            item2.setLabel(object.getNiceName());
+			item2.setId(object.getNodeId());
+			item2.setLabel(object.getNiceName());
             item2.setIcon(object.getIconResourceId());
             item2.setUpdateActionBarTitle(false);
             tmp.add(item2);

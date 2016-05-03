@@ -66,7 +66,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		
 		// GOOGLE PLUS link
 		Preference creditsPref = findPreference("credits");
-		creditsPref.setTitle(getResources().getString(R.string.app_name) + " Version " + strVersionName);
+		creditsPref.setTitle(getResources().getString(R.string.souliss_app_name) + " Version " + strVersionName);
 		creditsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			public boolean onPreferenceClick(Preference preference) {
 				// open browser or intent here

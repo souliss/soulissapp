@@ -38,17 +38,17 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         super();
         this.commandDTO = new SoulissCommandDTO();
         commandDTO.setSlot(parentTypical.getTypicalDTO().getSlot());
-        commandDTO.setNodeId(parentTypical.getParentNode().getId());
+        commandDTO.setNodeId(parentTypical.getParentNode().getNodeId());
         this.parentTypical = parentTypical;
         if (parentTypical.getParentNode() != null)
-            assertEquals(commandDTO.getNodeId(), parentTypical.getParentNode().getId());
+            assertEquals(commandDTO.getNodeId(), parentTypical.getParentNode().getNodeId());
     }
 
     public SoulissCommand(SoulissCommandDTO dto, SoulissTypical parentTypical) {
         this(dto);
         this.parentTypical = parentTypical;
         if (parentTypical.getParentNode() != null)
-            assertEquals(dto.getNodeId(), parentTypical.getParentNode().getId());
+            assertEquals(dto.getNodeId(), parentTypical.getParentNode().getNodeId());
 
     }
 

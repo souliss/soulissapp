@@ -6,7 +6,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 public class Constants {
     public static final String TAG = "SoulissApp";
@@ -97,6 +99,7 @@ public class Constants {
     public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
     public static final int POSITION_DEADZONE_METERS = 27;
 
+    public static Random random = new Random(new Date().getTime());
 
     /**
      * Utility per numeri Romani

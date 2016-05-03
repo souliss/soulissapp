@@ -28,10 +28,6 @@ public class WatchDogEventReceiver extends BroadcastReceiver {
 		if (opzioni.isDataServiceEnabled()) {
 			Intent eventService = new Intent(ctx, SoulissDataService.class);
             ctx.startService(eventService);//sempre, ci pensa poi lui
-			//if (!isMyServiceRunning(ctx, manager)) {
-			//	ctx.startService(eventService);
-			//	Log.w(Constants.TAG + ":WatchDog", "Service restarted");
-			//}
 		}
 
 	}

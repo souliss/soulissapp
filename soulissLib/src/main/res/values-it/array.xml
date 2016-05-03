@@ -114,6 +114,12 @@
         <item>Low</item>
     </string-array>
 
+    <string-array name="HeatingFunction">
+        <item>Cool</item>
+        <item>Heat</item>
+        <item>Spento</item>
+    </string-array>
+
     <integer-array name="AirConFanValues">
         <item>7</item>
         <item>2</item>

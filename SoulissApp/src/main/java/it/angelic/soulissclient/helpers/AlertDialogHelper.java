@@ -732,7 +732,7 @@ public class AlertDialogHelper {
                             new Thread() {
                                 public void run() {
                                     Looper.prepare();
-                                    UDPHelper.typicalRequest(opts, 1, toRebuild.getId());
+                                    UDPHelper.typicalRequest(opts, 1, toRebuild.getNodeId());
                                 }
                             }.start();
                         }

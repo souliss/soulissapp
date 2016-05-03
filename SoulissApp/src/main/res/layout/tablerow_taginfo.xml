@@ -6,9 +6,24 @@
     android:layout_marginTop="2dp"
     android:gravity="left">
 
-    <it.angelic.tagviewlib.SimpleTagRelativeLayout
-        android:id="@+id/tag_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textviewChartHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:text="@string/tag"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false"/>
+
+        <it.angelic.tagviewlib.SimpleTagRelativeLayout
+            android:id="@+id/tag_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textviewChartHeader"
+            android:layout_margin="8dp"/>
+    </RelativeLayout>
 </TableRow>

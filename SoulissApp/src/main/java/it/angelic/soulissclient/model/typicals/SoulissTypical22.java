@@ -34,12 +34,12 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close
 				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Close)
-			return SoulissApp.getAppContext().getString(R.string.close);
+			return SoulissApp.getAppContext().getString(R.string.close).toUpperCase();
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Open
 				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
-			return SoulissApp.getAppContext().getString(R.string.open);
+			return SoulissApp.getAppContext().getString(R.string.open).toUpperCase();
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
-			return SoulissApp.getAppContext().getString(R.string.stop);
+			return SoulissApp.getAppContext().getString(R.string.stop).toUpperCase();
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_NoLimSwitch)
 			return "MIDDLE";
 		else

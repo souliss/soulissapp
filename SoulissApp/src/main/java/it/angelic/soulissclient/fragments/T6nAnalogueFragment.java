@@ -63,8 +63,6 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
             } catch (Exception e) {
                 Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
             }
-
-
         }
     };
     private ProgressBar par;

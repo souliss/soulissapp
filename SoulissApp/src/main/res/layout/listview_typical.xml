@@ -30,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="8dip"
             android:layout_marginTop="4dip"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/souliss_app_name"
             android:src="@drawable/soulisslogo" />
         <ImageView
             android:id="@+id/imageButtonFav"

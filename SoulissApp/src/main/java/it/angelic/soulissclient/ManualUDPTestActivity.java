@@ -104,8 +104,8 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 ActivityCompat.invalidateOptionsMenu(ManualUDPTestActivity.this);
-                info2.setText(getString(R.string.app_name)+" "+(opzioni.isSoulissReachable()?getString(R.string.Online):getString(R.string.offline)));
-                info1.setText("Souliss can control "+opzioni
+				info2.setText(getString(R.string.souliss_app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline)));
+				info1.setText("Souliss can control "+opzioni
                         .getCustomPref().getInt("numTipici", 0)+" Things");
             }
         };

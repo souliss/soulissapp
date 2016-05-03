@@ -86,7 +86,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("NODO") != null) {
             collected = (SoulissNode) extras.get("NODO");
-            initDrawer(NodeDetailActivity.this, collected.getId());
+            initDrawer(NodeDetailActivity.this, collected.getNodeId());
             setActionBarInfo(collected.getNiceName());
         }
         if (savedInstanceState == null) {

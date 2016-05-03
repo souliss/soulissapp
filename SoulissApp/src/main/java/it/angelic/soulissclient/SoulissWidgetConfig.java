@@ -105,7 +105,7 @@ public class SoulissWidgetConfig extends Activity {
                 // if (pos > 0) {
                 SoulissNode re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()];
 
-                if (re.getId() > Constants.COMMAND_FAKE_SCENE) {
+                if (re.getNodeId() > Constants.COMMAND_FAKE_SCENE) {
                     //le scene non hanno comandi
                     List<SoulissTypical> rer = re.getActiveTypicals();
                     fillCommandSpinner(outputCommandSpinner, rer.get(pos));
@@ -139,7 +139,7 @@ public class SoulissWidgetConfig extends Activity {
             //	return;
             //}
             //se massivo -1, se scena -2
-            editor.putInt(mAppWidgetId + "_NODE", ((SoulissNode) outputNodeSpinner.getSelectedItem()).getId());
+            editor.putInt(mAppWidgetId + "_NODE", ((SoulissNode) outputNodeSpinner.getSelectedItem()).getNodeId());
             ISoulissExecutable IToSave = (ISoulissExecutable) outputCommandSpinner.getSelectedItem();
             if (IToSave instanceof SoulissScene) {
                 SoulissScene toExec = (SoulissScene) IToSave;
@@ -204,7 +204,7 @@ public class SoulissWidgetConfig extends Activity {
      */
     private void setTypicalSpinner(Spinner tgt, SoulissNode ref) {
         try {
-            if (ref.getId() > Constants.COMMAND_FAKE_SCENE) {
+            if (ref.getNodeId() > Constants.COMMAND_FAKE_SCENE) {
                 SoulissTypical[] strArray = new SoulissTypical[ref.getActiveTypicals().size()];
                 ref.getActiveTypicals().toArray(strArray);
 
@@ -214,7 +214,7 @@ public class SoulissWidgetConfig extends Activity {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 tgt.setAdapter(adapter);
 
-            } else if (ref.getId() == Constants.COMMAND_FAKE_SCENE) {
+            } else if (ref.getNodeId() == Constants.COMMAND_FAKE_SCENE) {
 
                 SoulissScene[] strArray = new SoulissScene[scenes.size()];
                 strArray = scenes.toArray(strArray);

@@ -139,19 +139,36 @@
                 <include layout="@layout/tablerow_toolongwarn"/>
 
                 <TableRow
+                    android:id="@+id/tableRowClockHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="left">
+
+                    <TextView
+                        android:id="@+id/textviewChartHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:text="@string/charts"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textIsSelectable="false"/>
+                </TableRow>
+
+                <TableRow
                     android:id="@+id/tableRow3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:weightSum="4">
-
                     <TextView
                         android:id="@+id/textviewHistoryInfo"
                         android:layout_width="0dip"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"/>
                 </TableRow>
+
 
                 <TableRow
                     android:id="@+id/tableRowClock"
@@ -160,11 +177,12 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:weightSum="4">
+
                     <view
+                        android:id="@+id/pie_view"
+                        class="com.dacer.androidcharts.ClockPieView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        class="com.dacer.androidcharts.ClockPieView"
-                        android:id="@+id/pie_view"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"/>
                 </TableRow>

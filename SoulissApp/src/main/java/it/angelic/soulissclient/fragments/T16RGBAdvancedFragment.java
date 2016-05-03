@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
@@ -62,6 +63,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private Button btWhite;
     private Button buttMinus;
     private Button buttPlus;
+    private CheckBox checkBoxScatter;
     private SoulissTypical16AdvancedRGB collected;
     private int color = 0;
     private ColorSeekBar colorSeekBar;
@@ -209,7 +211,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         if (container == null)
             return null;
         opzioni = SoulissApp.getOpzioni();
-        View ret = inflater.inflate(R.layout.frag_rgb_advanced, container, false);
+        View ret = inflater.inflate(R.layout.frag_t16_rgb, container, false);
         datasource = new SoulissDBHelper(getActivity());
         SoulissDBHelper.open();
 
@@ -248,7 +250,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         sliderSpeed = (SeekBar) ret.findViewById(R.id.sliderSpeed);
-
+        checkBoxScatter = (CheckBox) ret.findViewById(R.id.checkBoxScatter);
         mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
         //permesso per la visualizer connessa all'audio o mic
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -491,7 +493,18 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                         + " G" + Color.green(color) + " B" + Color.blue(color));
             }
         };
-
+        colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+            @Override
+            public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
+                patternAnimator = CCFAnimator.rgb(colorSeekBar.getColor(), colorSeekBarStop.getColor());
+            }
+        });
+        colorSeekBarStop.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+            @Override
+            public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
+                patternAnimator = CCFAnimator.rgb(colorSeekBar.getColor(), colorSeekBarStop.getColor());
+            }
+        });
         //pattern animator
         btStartPattern.setOnClickListener(new OnClickListener() {
             @Override
@@ -506,6 +519,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                         boolean goinUp = true;
                         while (patternRunning) {
                             try {
+                                if (checkBoxScatter.isChecked())
+                                    cnt = Constants.random.nextFloat();
                                 color = patternAnimator.getColor(cnt);
                                 if (goinUp)
                                     cnt += step;

@@ -120,6 +120,7 @@
     <string-array name="HeatingFunction">
         <item>Cool</item>
         <item>Heat</item>
+        <item>Off</item>
     </string-array>
 
     <integer-array name="AirConFunctionValues">

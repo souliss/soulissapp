@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="4dip"
         android:layout_marginTop="8dip"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/souliss_app_name"
         android:src="@drawable/square" />
 
     <TextView

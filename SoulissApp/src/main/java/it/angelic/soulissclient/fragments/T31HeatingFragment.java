@@ -1,12 +1,12 @@
 package it.angelic.soulissclient.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +30,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
@@ -38,9 +39,11 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
+import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.views.NumberPickerT6;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
+import static it.angelic.soulissclient.Constants.Typicals.Souliss_T31;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_AsMeasured;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_Cooling;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_FanAuto;
@@ -53,27 +56,60 @@ import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_ShutOff;
 import static junit.framework.Assert.assertTrue;
 
 
-public class T31HeatingFragment extends AbstractTypicalFragment  implements NumberPicker.OnValueChangeListener{
-    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
-    private FrameLayout hvacChart;
-    private EditText incrementText;
-    private SoulissPreferenceHelper opzioni;
-
-
+public class T31HeatingFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
+    private Button asMeasuredButton;
+    private Button buttOff;
+    private Button buttOn;
     private SoulissTypical31Heating collected;
-
-    private Spinner functionSpinner;
+    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     private Spinner fanSpiner;
+    private Spinner functionSpinner;
+    private FrameLayout hvacChart;
+    private ImageView imageFan1;
+    private ImageView imageFan2;
+    private ImageView imageFan3;
+    private EditText incrementText;
+    private Handler mHandler;
+    private SoulissPreferenceHelper opzioni;
+    private NumberPickerT6 tempSlider;
     private TextView textViewTagDescgroup;
     private TextView textviewStatus;
-    private Button buttOn;
-    private Button buttOff;
-    private Button asMeasuredButton;
-    private NumberPickerT6 tempSlider;
-    private ImageView imageFan3;
-    private ImageView imageFan2;
-    private ImageView imageFan1;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
+                SoulissDBHelper.open();
+                SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
+                collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
+                refreshStatusIcon();
+                //refreshTagsInfo();
+                textviewStatus.setText(collected.getOutputLongDesc());
+                Log.e(Constants.TAG, "Setting Temp Slider:" + collected.getTemperatureSetpointVal());
 
+                if (collected.isFannTurnedOn(1))
+                    imageFan1.setVisibility(View.VISIBLE);
+                else
+                    imageFan1.setVisibility(View.INVISIBLE);
+                if (collected.isFannTurnedOn(2))
+                    imageFan2.setVisibility(View.VISIBLE);
+                else
+                    imageFan2.setVisibility(View.INVISIBLE);
+                if (collected.isFannTurnedOn(3))
+                    imageFan3.setVisibility(View.VISIBLE);
+                else
+                    imageFan3.setVisibility(View.INVISIBLE);
+
+
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
+            }
+
+
+        }
+    };
+    private View viewTagDescgroup;
 
     public static T31HeatingFragment newInstance(int index, SoulissTypical content) {
         T31HeatingFragment f = new T31HeatingFragment();
@@ -90,7 +126,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
         return f;
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -109,7 +144,12 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
     }
 
-    @SuppressLint("NewApi")
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // inflater.inflate(R.menu.queue_options, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
@@ -128,7 +168,8 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
             Log.e(Constants.TAG, "Error retriving node:");
             return ret;
         }
-        SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
+        //refresh forzato
+        final SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
         collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
 
         assertTrue("TIPICO NULLO", collected instanceof SoulissTypical31Heating);
@@ -141,6 +182,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         textviewStatus = (TextView) ret.findViewById(R.id.textviewStatus);
         textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
+        viewTagDescgroup = ret.findViewById(R.id.TagDiv);
         tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSlider);
         functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
         fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
@@ -153,16 +195,26 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         //hvacChart = (FrameLayout) ret.findViewById(R.id.hvacChart);
 
-        android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
+        final android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
         //Fragment details = manager.findFragmentById(R.id.hvacChart);
 
-        ChartFragment NewFrag = ChartFragment.newInstance(collected);
-        FragmentTransaction ft = manager.beginTransaction();
-        ft.replace(R.id.hvacChart, NewFrag);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commit();
-        if (!collected.getTypicalDTO().isTagged())
+        mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ChartFragment NewFrag = ChartFragment.newInstance(collected);
+                FragmentTransaction ft = manager.beginTransaction();
+                ft.replace(R.id.hvacChart, NewFrag);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+            }
+        }, 1000);
+
+
+        if (!collected.getTypicalDTO().isTagged()) {
             textViewTagDescgroup.setVisibility(View.GONE);
+            viewTagDescgroup.setVisibility(View.GONE);
+        }
         refreshTagsInfo();
 
 
@@ -173,8 +225,10 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {//fa cagare
                     collected.issueCommand(Souliss_T3n_Cooling, null);
-                } else {
+                } else if (pos == 1) {
                     collected.issueCommand(Souliss_T3n_Heating, null);
+                } else {
+                    collected.issueCommand(Souliss_T3n_ShutOff, null);
                 }
             }
 
@@ -201,18 +255,26 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         // avoid auto call upon Creation with runnable
         functionSpinner.post(new Runnable() {
             public void run() {
-
-                functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1, false);
+                if (!collected.isTurnedOn())
+                    functionSpinner.setSelection(2);
+                else
+                    functionSpinner.setSelection(collected.isCoolMode() ? 0 : 1, false);
                 functionSpinner.setOnItemSelectedListener(lit);
                 fanSpiner.setOnItemSelectedListener(lib);
             }
         });
-
-        incrementText.setText(String.valueOf("1"));
+        tempSlider.setModel(Souliss_T31);
         incrementText.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-
+                tempSlider.invalidate();
+                // visto che non fa lui, faccio io
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UDPHelper.pollRequest(opzioni, 1, coll.getNodeId());
+                    }
+                }).start();
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -223,7 +285,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                     if (Float.valueOf(s.toString()) < 0.1f || Float.valueOf(s.toString()) > 10f)
                         throw new Exception();
                     tempSlider.setIncrement(Float.valueOf(s.toString()));
-
                     int sel = tempSlider.generateDisplayValues(tempSlider.getRealVal());
                     tempSlider.setValue(sel);
                     tempSlider.invalidate();
@@ -232,13 +293,13 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
                 }
             }
         });
-        tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
-
+        // int sel = tempSlider.generateDisplayValues(collected.getTemperatureSetpointVal());
+        tempSlider.setRealVal(collected.getTemperatureSetpointVal());
+        // tempSlider.setValue(( collected.getTemperatureSetpointVal()));
         tempSlider.setWrapSelectorWheel(false);
         //tempSlider.setDisplayedValues(nums);
         tempSlider.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         tempSlider.setOnValueChangedListener(this);
-
 
         // Listener generico
         OnClickListener asMeasuredListener = new OnClickListener() {
@@ -250,15 +311,14 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         };
         asMeasuredButton.setOnClickListener(asMeasuredListener);
 
-
         buttOn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 //int act = Integer.parseInt(textviewTemperature.getText().toString());
-
                 if (functionSpinner.getSelectedItemPosition() == 0)
-                    collected.issueCommand(Souliss_T3n_Heating, Float.valueOf(tempSlider.getValue()));
-                else
                     collected.issueCommand(Souliss_T3n_Cooling, Float.valueOf(tempSlider.getValue()));
+                else if (functionSpinner.getSelectedItemPosition() == 1)
+                    collected.issueCommand(Souliss_T3n_Heating, Float.valueOf(tempSlider.getValue()));
+                //else OFF, non fare nulla
             }
         });
 
@@ -270,13 +330,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
 
 
         return ret;
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // inflater.inflate(R.menu.queue_options, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -304,6 +357,11 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
 
     @Override
     public void onResume() {
@@ -314,56 +372,41 @@ public class T31HeatingFragment extends AbstractTypicalFragment  implements Numb
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
         refreshTagsInfo();
-        tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
+        //tempSlider.setValue(((int) collected.getTemperatureSetpointVal()));
         //Ask first refresh
         collected.issueRefresh();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(datareceiver);
-    }
-
-
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                Log.i(Constants.TAG, "Broadcast received, TODO change Spinners status intent" + intent.toString());
-                SoulissDBHelper.open();
-                SoulissNode coll = datasource.getSoulissNode(collected.getTypicalDTO().getNodeId());
-                collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
-                refreshStatusIcon();
-                //refreshTagsInfo();
-                textviewStatus.setText(collected.getOutputLongDesc());
-                Log.e(Constants.TAG, "Setting Temp Slider:" + (int) collected.getTemperatureSetpointVal());
-
-                if (collected.isFannTurnedOn(1))
-                    imageFan1.setVisibility(View.VISIBLE);
-                else
-                    imageFan1.setVisibility(View.INVISIBLE);
-                if (collected.isFannTurnedOn(2))
-                    imageFan2.setVisibility(View.VISIBLE);
-                else
-                    imageFan2.setVisibility(View.INVISIBLE);
-                if (collected.isFannTurnedOn(3))
-                    imageFan3.setVisibility(View.VISIBLE);
-                else
-                    imageFan3.setVisibility(View.INVISIBLE);
-
-
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
-            }
-
-
-        }
-    };
-
-    @Override
     public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-        collected.issueCommand(Souliss_T3n_Set, Float.valueOf(tempSlider.getValue()));
+        Thread t = new Thread() {
+            public void run() {
+                // collected.issueCommand(Souliss_T3n_Set, Float.valueOf(tempSlider.getValue()));
+                Float work = Float.parseFloat(tempSlider.getDisplayedValues()[tempSlider.getValue()]);
+                int re = HalfFloatUtils.fromFloat(work);
+                String first, second;
+                String pars = Long.toHexString(re);
+                Log.i(Constants.TAG, "PARSED SETPOINT TEMP: 0x" + pars);
+
+                try {
+                    second = Integer.toString(Integer.parseInt(pars.substring(0, 2), 16));
+                } catch (StringIndexOutOfBoundsException sie) {
+                    second = "0";
+                }
+                try {
+                    first = Integer.toString(Integer.parseInt(pars.substring(2, 4), 16));
+                } catch (StringIndexOutOfBoundsException sie) {
+                    first = "0";
+                }
+                //INVERTITI? Occhio
+                final String[] cmd = {"" + Souliss_T3n_Set, "0", "0", first, second};
+                //verifyCommand(temp, first, second);
+
+                UDPHelper.issueSoulissCommand("" + collected.getNodeId(), "" + collected.getSlot(),
+                        SoulissApp.getOpzioni(), cmd);
+            }
+        };
+        t.start();
+
     }
 }

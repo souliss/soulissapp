@@ -241,6 +241,7 @@
                     android:id="@+id/tableRowPatterns"
                     android:layout_width="match_parent"
                     android:layout_margin="10dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:weightSum="4">
 
@@ -303,6 +304,11 @@
                             android:layout_below="@id/sliderSpeed"
                             android:orientation="horizontal">
 
+                            <CheckBox
+                                android:id="@+id/checkBoxScatter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/scatter"/>
                             <Button
                                 style="?android:attr/buttonBarButtonStyle"
                                 android:id="@+id/buttonStartPattern"

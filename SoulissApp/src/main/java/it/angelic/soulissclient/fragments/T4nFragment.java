@@ -244,7 +244,7 @@ public class T4nFragment extends Fragment {
         Thread t = new Thread() {
             public void run() {
                 Looper.prepare();
-                UDPHelper.issueSoulissCommand("" + senseiMaster.getParentNode().getId(), ""
+                UDPHelper.issueSoulissCommand("" + senseiMaster.getParentNode().getNodeId(), ""
                         + senseiMaster.getTypicalDTO().getSlot(), opzioni, ""
                         + (Souliss_T4n_NotArmed));
             }
@@ -279,7 +279,7 @@ public class T4nFragment extends Fragment {
         Thread t = new Thread() {
             public void run() {
                 Looper.prepare();
-                UDPHelper.issueSoulissCommand("" + senseiMaster.getParentNode().getId(), ""
+                UDPHelper.issueSoulissCommand("" + senseiMaster.getParentNode().getNodeId(), ""
                         + senseiMaster.getTypicalDTO().getSlot(), opzioni, ""
                         + Souliss_T4n_Armed);
             }

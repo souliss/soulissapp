@@ -141,6 +141,10 @@ public class NumberPickerT6 extends NumberPicker {
             min = -20;
             max = +50;
             increment = 0.5f;
+        } else if (model == Constants.Typicals.Souliss_T31) {
+            min = -20;
+            max = +200;
+            increment = 0.5f;
         } else {//T61
             min = -65519;
             max = 65519;

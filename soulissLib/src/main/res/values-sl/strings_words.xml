@@ -58,6 +58,7 @@
     <string name="delete">Delete</string>
     <string name="speed">Speed</string>
     <string name="play">Play</string>
+    <string name="scatter">Scatter</string>
 
 
 </resources>

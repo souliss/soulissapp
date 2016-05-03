@@ -88,7 +88,7 @@ public class SoulissNode implements Serializable, ISoulissNode {
         iconId = itemResId;
     }
 
-    public short getId() {
+    public short getNodeId() {
         return id;
     }
 
@@ -106,9 +106,9 @@ public class SoulissNode implements Serializable, ISoulissNode {
 
     public String getNiceName() {
         if (name != null && "".compareToIgnoreCase(name) != 0)
-            return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getId() + ")";
+            return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getNodeId() + ")";
         else if (id > Constants.MASSIVE_NODE_ID)
-            return SoulissApp.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getId());
+            return SoulissApp.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getNodeId());
         else
             return SoulissApp.getAppContext().getString(R.string.allnodes);
     }
@@ -126,7 +126,7 @@ public class SoulissNode implements Serializable, ISoulissNode {
             if (soulissTypical.getSlot() == slot)
                 return soulissTypical;
         }
-        throw new NotFoundException("Slot " + slot + " not found on node " + getId());
+        throw new NotFoundException("Slot " + slot + " not found on node " + getNodeId());
 
     }
 

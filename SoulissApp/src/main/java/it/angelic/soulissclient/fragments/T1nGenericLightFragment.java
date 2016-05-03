@@ -331,7 +331,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 					UDPHelper.issueMassiveCommand("" + collected.getTypical(), opzioni, ""
 							+ (Souliss_T1n_OffCmd));
 				else
-					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
+					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getNodeId(), ""
 							+ collected.getSlot(), opzioni,""
 							+ (Souliss_T1n_OffCmd));
 
@@ -354,7 +354,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 					UDPHelper.issueMassiveCommand("" + collected.getTypical(), opzioni, ""
 							+ (Souliss_T1n_OnCmd + i));
 				else
-					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getId(), ""
+					UDPHelper.issueSoulissCommand("" + collected.getParentNode().getNodeId(), ""
 							+ collected.getSlot(), opzioni, ""
 							+ (Souliss_T1n_OnCmd + i));
 

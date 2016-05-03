@@ -265,8 +265,8 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     public void setParentNode(@NonNull SoulissNode parentNode) {
-        if (typicalDTO != null && parentNode.getId() != it.angelic.soulissclient.Constants.MASSIVE_NODE_ID)
-            assertEquals(parentNode.getId(), typicalDTO.getNodeId());
+        if (typicalDTO != null && parentNode.getNodeId() != it.angelic.soulissclient.Constants.MASSIVE_NODE_ID)
+            assertEquals(parentNode.getNodeId(), typicalDTO.getNodeId());
         this.parentNode = parentNode;
     }
 

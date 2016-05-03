@@ -16,6 +16,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -235,12 +236,15 @@ public class UDPSoulissDecoder {
                 break;
             case 0x83:
                 Log.e(Constants.Net.TAG, "** (Functional code not supported)");
+                Toast.makeText(context, "Functional code not supported", Toast.LENGTH_SHORT).show();
                 break;
             case 0x84:
                 Log.e(Constants.Net.TAG, "** (Data out of range)");
+                Toast.makeText(context, "Data out of range", Toast.LENGTH_SHORT).show();
                 break;
             case 0x85:
                 Log.e(Constants.Net.TAG, "** (Subscription refused)");
+                Toast.makeText(context, "Subscription refused", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Log.e(Constants.Net.TAG, "** Unknown functional code: " + functionalCode);
@@ -497,7 +501,7 @@ public class UDPSoulissDecoder {
 
 			/* Check antifurto */
             for (SoulissNode soulissNode : ref) {
-                refreshedNodes.put(soulissNode.getId(), soulissNode);
+                refreshedNodes.put(soulissNode.getNodeId(), soulissNode);
                 if (opzioni.isAntitheftPresent() && opzioni.isAntitheftNotify()) {
                     for (SoulissTypical ty : soulissNode.getTypicals()) {
                         // check Antitheft
