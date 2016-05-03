@@ -24,8 +24,8 @@ allprojects {
 project.ext {
     global_buildToolsVersion = "23.0.3"
     global_supportLibVersion = "23.3.0"
-    VERSION_NAME = "1.8.3"
-    VERSION_CODE = 176
+    VERSION_NAME = "2.0"
+    VERSION_CODE = 200
     compileSdkVersion = 23
     targetSdkVersion = 23
 }

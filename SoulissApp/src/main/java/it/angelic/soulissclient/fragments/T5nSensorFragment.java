@@ -21,10 +21,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissGraphData;
-import it.angelic.soulissclient.db.SoulissHistoryGraphData;
-import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.SoulissUtils;
@@ -122,15 +118,6 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
                 + " - " + getContext().getString(R.string.reading) + " " + String.format(java.util.Locale.US, "%.2f", ((ISoulissTypicalSensor) collected).getOutputFloat()));
 
 
-        LinearLayout layout = (LinearLayout) ret.findViewById(R.id.trendchart);
-      /*  if (collected.isSensor()) {
-            TextView tinfo = (TextView) ret.findViewById(R.id.TextViewGraphName);
-            SparseArray<SoulissGraphData> logs = new SparseArray<>();
-            logs = datasource.getGroupedTypicalLogs(collected, "%H", 0);
-            tinfo.setText("Daily temperature range");
-
-            drawGroupedGraphAndroChart(layout, logs, 1, collected.getTypicalDTO().getTypical());
-        }*/
         par.setMax(Constants.MAX_HEALTH);
 
         // ProgressBar sfumata

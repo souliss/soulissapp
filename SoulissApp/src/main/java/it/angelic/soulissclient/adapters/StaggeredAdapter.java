@@ -30,11 +30,11 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.ViewHolder> {
 
@@ -92,7 +92,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             case TYPICAL:
 
                 SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
-                Log.d(Constants.TAG, "Element " + position + " set: last upd: " + Utils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+                Log.d(Constants.TAG, "Element " + position + " set: last upd: " + SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
 
                 TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
                 ImageView imageView = (ImageView) holder.container.findViewById(R.id.card_thumbnail_image2);
@@ -103,7 +103,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 textView.setText(tipico.getNiceName());
                 textView.setTag(position);
                 tipico.setOutputDescView(textViewInfo1);
-                textViewInfo2.setText(Utils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+                textViewInfo2.setText(SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
                 imageView.setImageResource(tipico.getIconResourceId());
 
                 linearActionsLayout.removeAllViews();

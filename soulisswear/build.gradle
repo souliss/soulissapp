@@ -9,8 +9,8 @@ android {
         applicationId "it.angelic.soulissclient"
         minSdkVersion 20
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName VERSION_NAME
-        versionCode VERSION_CODE
+        versionName rootProject.ext.VERSION_NAME
+        versionCode rootProject.ext.VERSION_CODE
     }
     buildTypes {
         release {

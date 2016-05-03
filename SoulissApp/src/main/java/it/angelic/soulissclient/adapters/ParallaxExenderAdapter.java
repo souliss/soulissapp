@@ -20,7 +20,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.helpers.Utils;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.SoulissUtils;
 

@@ -64,30 +64,13 @@ public class Constants {
     //public static final int COMMAND_MASSIVE = 5;
 
 
-    public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
-    public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
-    //public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
-    public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
-    public static final long POSITION_UPDATE_MIN_DIST = 25;
-    public static final int GUI_UPDATE_INTERVAL = 5000;
-    public static final int VOICE_REQUEST_OK = 9876;
-    //public static final int   CHECK_STATUS_PAUSE_MSEC = 250;
 
-    //public static final long TEXT_SIZE_TITLE_OFFSET = 10;
-
-    public static final int COMMAND_TIMED = 0;
     // Interpretati come Calendar
-    public static final int COMMAND_COMEBACK_CODE = 1;
-    public static final int COMMAND_GOAWAY_CODE = 2;
-    public static final int COMMAND_TRIGGERED = 3;
-    public static final int COMMAND_SINGLE = 4;
-    //public static final int COMMAND_MASSIVE = 5;
     public static final short COMMAND_FAKE_SCENE = -2;
     public static final short MASSIVE_NODE_ID = -1;
     public static final int CONNECTION_NONE = -1;
     //Souliss Data Intent
     public static final String CUSTOM_INTENT = "it.angelic.soulissclient.GOT_DATA";
-    public static final int POSITION_DEADZONE_METERS = 27;
     static final String ACTION_SEND_SOULISS_COMMAND = "it.angelic.soulissclient.WEAR_VOICE_COMMAND";
     static final int NOTIFICATION_ID = 3113;
     private static final String[] ROM = {"X\u0305", "V\u0305", "M", "D", "C", "L", "X", "V", "I"};
@@ -368,26 +351,6 @@ public class Constants {
         public static final short Souliss_TRIGGED = 0x01;
 
 
-        /**
-         * @author Ale
-         */
-        @Override
-        public String toString() {
-            StringBuilder ret = new StringBuilder();
-            Field[] consts = getClass().getDeclaredFields();
-            for (Field aConst : consts) {
-                if ((aConst.getModifiers() & (Modifier.FINAL | Modifier.STATIC)) != 0) {
-                    try {
-                        ret.append(aConst.getName());
-                        ret.append(" = ");
-                        ret.append(aConst.get(null)).append("<br/>");
-                    } catch (Exception e) {
-                        Log.e(it.angelic.soulissclient.Constants.TAG, "Can't build parameter's list" + e);
-                    }
-                }
-            }
-            return ret.toString();
-        }
 
     }
 
