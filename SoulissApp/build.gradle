@@ -35,6 +35,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
     compile 'it.angelic:tagView:1.2.2'
     compile 'com.github.rtugeek:ColorSeekBar:1.0.2'
+    compile 'com.google.code.gson:gson:2.6.2'
     compile project(':soulissLib')
     wearApp project(":soulisswear")
     compile project(':taskerapi')

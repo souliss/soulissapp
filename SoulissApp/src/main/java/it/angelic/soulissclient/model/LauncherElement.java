@@ -3,12 +3,14 @@ package it.angelic.soulissclient.model;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.io.Serializable;
+
 /**
  * Created by shine@angelic.it on 06/10/2015.
  */
-public class LauncherElement implements ILauncherTile {
+public class LauncherElement implements ILauncherTile, Serializable {
     private LauncherElementEnum componentEnum;
-    private short id;
+    private int id;
     private boolean isFullSpan;
     private ISoulissObject linkedObject;
     private short order;
@@ -26,11 +28,11 @@ public class LauncherElement implements ILauncherTile {
         this.componentEnum = componentEnum;
     }
 
-    public short getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull short id) {
+    public void setId(@NonNull int id) {
         this.id = id;
     }
 

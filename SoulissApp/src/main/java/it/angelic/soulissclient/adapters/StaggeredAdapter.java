@@ -62,6 +62,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         return launcherElements[position].getComponentEnum().ordinal();
     }
 
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final LauncherElement item = launcherElements[position];
