@@ -93,6 +93,7 @@
             android:layout_below="@id/textViewStatus"
             android:layout_alignParentRight="true"
             android:gravity="end"
+
             android:orientation="horizontal" >
         </LinearLayout>
     </RelativeLayout>

@@ -15,17 +15,17 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/card_thumbnail_image3"
+        <TextView
+            android:id="@+id/card_thumbnail_fa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawingCacheQuality="high"
-            android:src="@drawable/side3" />
+            android:layout_centerVertical="true"
+            android:padding="2dp"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/card_thumbnail_image3"
+            android:layout_toRightOf="@id/card_thumbnail_fa"
             android:padding="8dp">
 
             <View

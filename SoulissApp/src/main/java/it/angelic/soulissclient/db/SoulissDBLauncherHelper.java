@@ -50,7 +50,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         file = new File(path, "SoulissHome");
 
         createFakedMap();
-        saveMap(myMap);
+        ///saveMap(myMap);
     }
 
     public int countTags() {

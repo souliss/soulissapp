@@ -22,7 +22,6 @@ import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
@@ -69,7 +68,7 @@ import static it.angelic.soulissclient.Constants.TAG;
  *
  * @author Ale
  */
-public class LauncherActivity extends AbstractStatusedFragmentActivity implements LocationListener {
+public class OldLauncherActivity extends AbstractStatusedFragmentActivity implements LocationListener {
 
     private Timer autoUpdate;
     private TextView basinfo;
@@ -86,7 +85,6 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     private LocationManager locationManager;
     private SoulissDataService mBoundService;
     private boolean mIsBound;
-    private boolean mIsWebBound;
     private SoulissPreferenceHelper opzioni;
 
 
@@ -119,7 +117,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             // Because it is running in our same process, we should never
             // see this happen.
             mBoundService = null;
-            Toast.makeText(LauncherActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(OldLauncherActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
             mIsBound = false;
         }
     };
@@ -159,14 +157,13 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
     };
 
 
-
-    void doBindService() {
+    private void doBindService() {
         Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
-        bindService(new Intent(LauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
+        bindService(new Intent(OldLauncherActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
     }
 
 
-    void doUnbindService() {
+    private void doUnbindService() {
         if (mIsBound) {
             Log.d(TAG, "UNBIND, Detach our existing connection.");
             unbindService(mConnection);
@@ -202,7 +199,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
             }
         } else//permesso mancante
         {
-            ActivityCompat.requestPermissions(LauncherActivity.this,
+            ActivityCompat.requestPermissions(OldLauncherActivity.this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
 
@@ -418,7 +415,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                             Log.e(TAG, "Geocoder ERROR", e);
                             homedist.setVisibility(View.VISIBLE);
                             homedist.setText(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage()));
-                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_red));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(OldLauncherActivity.this, R.color.std_red));
                         }
                     });
                     loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
@@ -451,7 +448,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                             homedist.setText(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
                                     + (int) res[0] + unit
                                     + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")")));
-                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_green));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(OldLauncherActivity.this, R.color.std_green));
                         }
                     });
                 } else {
@@ -459,7 +456,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                         @Override
                         public void run() {
                             homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-                            posInfoLine.setBackgroundColor(ContextCompat.getColor(LauncherActivity.this, R.color.std_yellow));
+                            posInfoLine.setBackgroundColor(ContextCompat.getColor(OldLauncherActivity.this, R.color.std_yellow));
                         }
                     });
                 }
@@ -486,8 +483,8 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 startActivity(preferencesActivity);
                 return true;
             case R.id.TestUDP:
-                Intent myIntents = new Intent(LauncherActivity.this, ManualUDPTestActivity.class);
-                LauncherActivity.this.startActivity(myIntents);
+                Intent myIntents = new Intent(OldLauncherActivity.this, ManualUDPTestActivity.class);
+                OldLauncherActivity.this.startActivity(myIntents);
                 return true;
             case R.id.Esci:
                 super.finish();
@@ -612,26 +609,26 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
         setDbAndFavouritesInfo();
 
         /*TAG*/
-        OnClickListener ssc = new OnClickListener() {
+       /*passaggio V2 OnClickListener ssc = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, MainActivity.class);
+                Intent myIntent = new Intent(OldLauncherActivity.this, MainActivity.class);
                 ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(OldLauncherActivity.this,
                                 cardViewFav,   // The view which starts the transition
                                 "helloTags"    // The transitionName of the view we’re transitioning to
                         );
 
-                ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
-
+                //ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());
+                OldLauncherActivity.this.startActivity(myIntent);
                 // myIntent.putExtra("TAG", ()1);
                 return;
             }
         };
-        cardViewFav.setOnClickListener(ssc);
+        cardViewFav.setOnClickListener(ssc);*/
         /* SCENE */
         OnClickListener simpleOnClickListener2 = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, SceneListActivity.class);
+                Intent myIntent = new Intent(OldLauncherActivity.this, SceneListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                /* ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
@@ -641,7 +638,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                 ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
 
 
-                LauncherActivity.this.startActivity(myIntent);
+                OldLauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -650,7 +647,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		/* PROGRAMS */
         OnClickListener simpleOnClickListenerProgr = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, ProgramListActivity.class);
+                Intent myIntent = new Intent(OldLauncherActivity.this, ProgramListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 /*ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
@@ -658,7 +655,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                 "helloPrograms"    // The transitionName of the view we’re transitioning to
                         );
                 ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
-                LauncherActivity.this.startActivity(myIntent);
+                OldLauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -667,7 +664,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 		/* MANUAL */
         OnClickListener simpleOnClickListener = new OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(LauncherActivity.this, NodesListActivity.class);
+                Intent myIntent = new Intent(OldLauncherActivity.this, NodesListActivity.class);
                 myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                /* ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(LauncherActivity.this,
@@ -675,7 +672,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                 "helloManual"    // The transitionName of the view we’re transitioning to
                         );
                 ActivityCompat.startActivity(LauncherActivity.this, myIntent, options.toBundle());*/
-                LauncherActivity.this.startActivity(myIntent);
+                OldLauncherActivity.this.startActivity(myIntent);
                 return;
             }
         };
@@ -693,11 +690,11 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
 
                     Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                     i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, LauncherActivity.this.getString(R.string.voice_command_help));
+                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, OldLauncherActivity.this.getString(R.string.voice_command_help));
                     try {
                         startActivityForResult(i, Constants.VOICE_REQUEST_OK);
                     } catch (Exception e) {
-                        Toast.makeText(LauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(OldLauncherActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -773,7 +770,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                     final TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
                     final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
                     final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);
-                    tags = tagDb.getTags(LauncherActivity.this);
+                    tags = tagDb.getTags(OldLauncherActivity.this);
                     if (tags.size() > 1 || favCount > 0) {//1 di sicuro
 
                         try {
@@ -782,7 +779,7 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                                 public void run() {
                                     cardViewFav.setVisibility(View.VISIBLE);
                                     tagCont.removeAllViews();
-                                    String strMeatFormat = LauncherActivity.this.getString(R.string.tag_info_format);
+                                    String strMeatFormat = OldLauncherActivity.this.getString(R.string.tag_info_format);
                                     textViewFav.setText(String.format(strMeatFormat, tagDb.countTypicalTags(), tagDb.countTags()));
                                     textViewFav2.setText(getString(R.string.typical) + " Marked as Favourites:" + tagDb.countFavourites());
                                 }
@@ -791,15 +788,15 @@ public class LauncherActivity extends AbstractStatusedFragmentActivity implement
                             e.printStackTrace();
                         }
                         for (final SoulissTag tag : tags) {
-                            final ListButton turnOffButton = new ListButton(LauncherActivity.this);
+                            final ListButton turnOffButton = new ListButton(OldLauncherActivity.this);
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     turnOffButton.setText(tag.getName());
                                     OnClickListener ssc = new OnClickListener() {
                                         public void onClick(View v) {
-                                            Intent myIntent = new Intent(LauncherActivity.this, TagDetailActivity.class);
+                                            Intent myIntent = new Intent(OldLauncherActivity.this, TagDetailActivity.class);
                                             myIntent.putExtra("TAG", (long) tag.getTagId());
-                                            LauncherActivity.this.startActivity(myIntent);
+                                            OldLauncherActivity.this.startActivity(myIntent);
                                             return;
                                         }
                                     };

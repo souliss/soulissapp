@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
@@ -35,6 +36,11 @@ import static junit.framework.Assert.assertTrue;
 public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
     private SoulissTypical collected;
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,56 +64,77 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
             collected = (SoulissTypical) extras.get("TIPICO");
         assertTrue("TIPICO NULLO", collected != null);
 
-
-
-            Fragment NewFrag = null;
-            Log.w(Constants.TAG, "TypicalDetailFragWrapper should not be used like this: Legacy support");
-            if (collected.isSensor())
-                NewFrag = T5nSensorFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical16AdvancedRGB)
-                NewFrag = T16RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical19AnalogChannel)
-                NewFrag = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical31Heating)
-                NewFrag = T31HeatingFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical11DigitalOutput || collected instanceof SoulissTypical12DigitalOutputAuto)
-                NewFrag = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical41AntiTheft || collected instanceof SoulissTypical42AntiTheftPeer || collected instanceof SoulissTypical43AntiTheftLocalPeer)
-                NewFrag = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical32AirCon)
-                NewFrag = T32AirConFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-            else if (collected instanceof SoulissTypical14PulseOutput) {
-                //no detail, notice user and return
-                Toast.makeText(this,
-                        getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)
-                        .show();
-                return;
+// DRAWER gabola
+        initDrawer(this, collected.getNodeId());
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        Fragment NewFrag = null;
+        Log.w(Constants.TAG, "TypicalDetailFragWrapper should not be used like this: Legacy support");
+        if (collected.isSensor())
+            NewFrag = T5nSensorFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical16AdvancedRGB)
+            NewFrag = T16RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical19AnalogChannel)
+            NewFrag = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical11DigitalOutput || collected instanceof SoulissTypical12DigitalOutputAuto)
+            NewFrag = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical41AntiTheft || collected instanceof SoulissTypical42AntiTheftPeer || collected instanceof SoulissTypical43AntiTheftLocalPeer)
+            NewFrag = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical32AirCon)
+            NewFrag = T32AirConFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+        else if (collected instanceof SoulissTypical14PulseOutput) {
+            //no detail, notice user and return
+            Toast.makeText(this,
+                    getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        } else {
+            //TODO transform these in Frags
+            if (collected instanceof SoulissTypical15) {
+                Intent nodeDatail = new Intent(this, T15RGBIrActivity.class);
+                nodeDatail.putExtra("TIPICO", collected);
+                startActivity(nodeDatail);
             } else {
-                //TODO transform these in Frags
-                 if (collected instanceof SoulissTypical15) {
-                    Intent nodeDatail = new Intent(this, T15RGBIrActivity.class);
-                    nodeDatail.putExtra("TIPICO", collected);
-                    startActivity(nodeDatail);
-                }else{
-                    Log.e(Constants.TAG, "SERIOUS: Unknowsn typical");
-                }
-                supportFinishAfterTransition();
-                return;
+                Log.e(Constants.TAG, "SERIOUS: Unknowsn typical");
             }
-            // During initial setup, plug in the details fragment.
-            //T1nGenericLightFragment details = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(),
-            //		collected);
-            NewFrag.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(R.id.detailPane, NewFrag).commit();
-        
+            supportFinishAfterTransition();
+            return;
+        }
+        // During initial setup, plug in the details fragment.
+        //T1nGenericLightFragment details = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(),
+        //		collected);
+        NewFrag.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(R.id.detailPane, NewFrag).commit();
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+
+            if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
+                mDrawerLayout.closeDrawer(mDrawerLinear);
+            } else {
+                mDrawerLayout.openDrawer(mDrawerLinear);
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setActionBarInfo(collected == null ? getString(R.string.status_souliss_nodetail) : collected.getNiceName());
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
+
     }
-
-
 }

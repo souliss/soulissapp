@@ -44,22 +44,28 @@ public class PreferencesActivity extends PreferenceActivity {
                     case Constants.Net.Souliss_UDP_function_typreq_resp:
                         // fallthrought x refresh dicitura tipici
                     case Constants.Net.Souliss_UDP_function_db_struct_resp:
-                        Log.w(TAG, "DB STRUCT: " + currentScreen);
-                        //if (currentScreen != null && currentScreen.equals("db_setup")) {
-                       /* Intent inten = PreferencesActivity.this.getIntent();
-                        inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                        PreferencesActivity.this.finish();
-                        PreferencesActivity.this.overridePendingTransition(0, 0);
-                        inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
-                        inten.setAction("db_setup");
-                        inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        Toast.makeText(PreferencesActivity.this,
-                                PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
-                                Toast.LENGTH_SHORT).show();
-                        PreferencesActivity.this.startActivity(inten);*/
+                        String curScr = PreferencesActivity.this.getIntent().getExtras().getString(PreferenceActivity.EXTRA_SHOW_FRAGMENT);
+                        if (DbSettingsFragment.class.getName().equals(curScr)) {
+                           /* Log.w(TAG, "refreshing pref screen: " + currentScreen);
+                            //if (currentScreen != null && currentScreen.equals("db_setup")) {
+                            Intent inten = PreferencesActivity.this.getIntent();
+                            inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            PreferencesActivity.this.finish();
+                            PreferencesActivity.this.overridePendingTransition(0, 0);
+                            inten.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
+                            inten.setAction("db_setup");
+                            inten.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            Toast.makeText(PreferencesActivity.this,
+                                    PreferencesActivity.this.getResources().getString(R.string.dbstruct_req),
+                                    Toast.LENGTH_SHORT).show();
+                            PreferencesActivity.this.startActivity(inten);*/
+
+                            // .replace(android.R.id.content, new DbSettingsFragment()).commit();
+                        }
+
                         getFragmentManager().beginTransaction()
                                 .replace(android.R.id.content, new DbSettingsFragment()).commit();
-                        //}
+
                         break;
                 /*case Constants.Souliss_UDP_function_ping_resp:// restart
                     if (currentScreen != null && currentScreen.equals("network_setup")) {

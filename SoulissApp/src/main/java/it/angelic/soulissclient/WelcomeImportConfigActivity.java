@@ -151,7 +151,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
     }
 
     private void startSoulissMainActivity() {
-        Intent myIntent = new Intent(WelcomeImportConfigActivity.this, LauncherActivity.class);
+        Intent myIntent = new Intent(WelcomeImportConfigActivity.this, OldLauncherActivity.class);
         startActivity(myIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();

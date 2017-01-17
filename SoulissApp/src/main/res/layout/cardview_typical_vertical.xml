@@ -21,21 +21,22 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-        <ImageView
+        <TextView
             android:id="@+id/card_thumbnail_image2"
+            android:transitionName="MyTransition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawingCacheQuality="high"
-            android:padding="8dp"
-            android:src="@drawable/home1"
-            android:transitionName="MyTransition"/>
+            android:padding="8dp"/>
+
 
         <RelativeLayout
             android:id="@+id/relCont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/card_thumbnail_image2"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:paddingLeft="0dp">
 
             <TextView
                 android:id="@+id/TextViewInfoStatus"

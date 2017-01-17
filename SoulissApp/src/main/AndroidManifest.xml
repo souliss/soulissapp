@@ -47,7 +47,7 @@
 
 
         <activity
-            android:name=".LauncherActivity"
+            android:name=".OldLauncherActivity"
             android:label="@string/souliss_app_name"
             android:exported="true">
             <intent-filter>
@@ -176,13 +176,13 @@
             android:name="ProgramListActivity"
             android:icon="@drawable/remote"
             android:label="@string/souliss_app_name"
-            android:parentActivityName=".LauncherActivity"
+            android:parentActivityName=".MainActivity"
             android:uiOptions="splitActionBarWhenNarrow"/>
         <activity
             android:name="SceneListActivity"
             android:icon="@drawable/lamp"
             android:label="@string/souliss_app_name"
-            android:parentActivityName=".LauncherActivity"
+            android:parentActivityName=".MainActivity"
             android:uiOptions="splitActionBarWhenNarrow"/>
         <activity
             android:name="SceneDetailActivity"
@@ -195,7 +195,7 @@
             android:name="TagGridActivity"
             android:icon="@drawable/warn"
             android:label="@string/souliss_app_name"
-            android:parentActivityName=".LauncherActivity"
+            android:parentActivityName=".MainActivity"
             android:uiOptions="splitActionBarWhenNarrow"/>
 
         <activity

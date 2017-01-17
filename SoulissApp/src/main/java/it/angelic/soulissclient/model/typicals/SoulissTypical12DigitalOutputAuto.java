@@ -98,6 +98,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     @Override
     public void getActionsLayout(Context ctx, LinearLayout cont) {
         cont.removeAllViews();
+
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
 

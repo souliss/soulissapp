@@ -22,50 +22,61 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.TypicalDetailFragWrapper;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.ViewHolder> {
 
 
-    private LauncherElement[] launcherElements;
+    private List<LauncherElement> launcherElements;
     private Activity context;
 
-    public StaggeredAdapter(Activity context, LauncherElement[] launcherElements) {
+    public StaggeredAdapter(Activity context, List<LauncherElement> launcherElements) {
         this.launcherElements = launcherElements;
         this.context = context;
     }
 
     public List getList(){
-        return Arrays.asList(launcherElements);
+        return launcherElements;
     }
     @Override
     public int getItemCount() {
-        return launcherElements.length;
+        return launcherElements.size();
     }
 
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
         // Note that unlike in ListView adapters, types don't have to be contiguous
-        return launcherElements[position].getComponentEnum().ordinal();
+        return launcherElements.get(position).getComponentEnum().ordinal();
     }
 
+    public void removeAt(int position) {
+        launcherElements.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, launcherElements.size());
+    }
+
+    public void setLauncherElements(List<LauncherElement> in) {
+        launcherElements = in;
+        notifyDataSetChanged();
+    }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final LauncherElement item = launcherElements[position];
+        final LauncherElement item = launcherElements.get(position);
 
         //holder.container.removeAllViews();
         //holder.textView.setText(item.title);
@@ -82,6 +93,8 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         switch (item.getComponentEnum()) {
             case SCENE:
                 Button sce = (Button) holder.container.findViewById(R.id.ButtonManual);
+                TextView txtAwesome = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesome, "fa-moon-o");
                 break;
             case MANUAL:
                 Button man = (Button) holder.container.findViewById(R.id.ButtonManual);
@@ -92,11 +105,11 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 break;
             case TYPICAL:
 
-                SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
+                final SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
                 Log.d(Constants.TAG, "Element " + position + " set: last upd: " + SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
 
                 TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
-                ImageView imageView = (ImageView) holder.container.findViewById(R.id.card_thumbnail_image2);
+                TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
                 LinearLayout linearActionsLayout = (LinearLayout) holder.container.findViewById(R.id.linearLayoutButtons);
                 TextView textViewInfo1 = (TextView)holder.container.findViewById(R.id.TextViewInfoStatus);
                 TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
@@ -105,10 +118,27 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 textView.setTag(position);
                 tipico.setOutputDescView(textViewInfo1);
                 textViewInfo2.setText(SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
-                imageView.setImageResource(tipico.getIconResourceId());
-
+                // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
+                FontAwesomeUtil.prepareFontAweTextView(context, imageView, FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
                 linearActionsLayout.removeAllViews();
                 tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
+
+                //linearActionsLayout.removeAllViews();
+                // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
+
+
+                holder.container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.w(Constants.TAG, "Activating TYP" + tipico.getNiceName());
+                        Intent nodeDatail = new Intent(SoulissApp.getAppContext(), TypicalDetailFragWrapper.class);
+                        // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                        nodeDatail.putExtra("TIPICO", tipico);
+                        context.startActivity(nodeDatail);
+                    }
+
+
+                });
 
                 break;
             case TAG:
@@ -195,6 +225,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
     }
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LauncherElementEnum enumVal = LauncherElementEnum.values()[viewType];
@@ -246,4 +277,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
 
     }
+
+
 }

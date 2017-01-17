@@ -484,7 +484,7 @@ public class WelcomeActivity extends FragmentActivity {
 
 
     private void startSoulissMainActivity() {
-        Intent myIntent = new Intent(WelcomeActivity.this, LauncherActivity.class);
+        Intent myIntent = new Intent(WelcomeActivity.this, MainActivity.class);
         startActivity(myIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         supportFinishAfterTransition();
