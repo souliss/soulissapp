@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -61,7 +62,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     public void getActionsLayout(final Context ctx, LinearLayout convertView) {
     }
 
-    public ArrayList<ISoulissCommand> getCommands(Context ctx) {
+    public List<ISoulissCommand> getCommands(Context ctx) {
         // to be overridden
         return new ArrayList<>();
     }
@@ -241,6 +242,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 
     }
 
+
     public short getNodeId() {
         return typicalDTO.getNodeId();
     }
@@ -368,6 +370,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         }
 
     }
+
 
     public void refresh() {
         typicalDTO.refresh(this);

@@ -43,6 +43,8 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
     /**
      * Catena rimappaggio vecchie icone
      *
+     * @author asfodel
+     *
      * @param oldResId
      * @return
      */

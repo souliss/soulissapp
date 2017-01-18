@@ -27,21 +27,15 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
 
     @Override
     public void execute() {
-        new Thread() {
-            public void run() {
-                for (final SoulissCommand soulissCommand : commandArray) {
-                    Log.w(Constants.TAG, "EXECUTING SCENE Command:" + soulissCommand.toString() + " DELAY FROM NOW: " + soulissCommand.getCommandDTO().getInterval());
-                    try {
-                        Thread.sleep(soulissCommand.getCommandDTO().getInterval());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    soulissCommand.execute();
-                }
-
+        for (final SoulissCommand soulissCommand : commandArray) {
+            Log.w(Constants.TAG, "EXECUTING SCENE Command:" + soulissCommand.toString() + " DELAY FROM NOW: " + soulissCommand.getCommandDTO().getInterval());
+            try {
+                Thread.sleep(soulissCommand.getCommandDTO().getInterval());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }.start();
-
+            soulissCommand.execute();
+        }
     }
 
     public ArrayList<SoulissCommand> getCommandArray() {

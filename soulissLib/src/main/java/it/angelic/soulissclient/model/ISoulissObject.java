@@ -16,4 +16,5 @@ public interface ISoulissObject {
     String getName();
 	
 	String getNiceName();
+
 }

@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -30,6 +31,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
 import it.angelic.soulissclient.model.SoulissTag;
@@ -40,17 +42,14 @@ import it.angelic.soulissclient.util.SoulissUtils;
 public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.ViewHolder> {
 
 
-    private List<LauncherElement> launcherElements;
     private Activity context;
+    private List<LauncherElement> launcherElements;
 
     public StaggeredAdapter(Activity context, List<LauncherElement> launcherElements) {
         this.launcherElements = launcherElements;
         this.context = context;
     }
 
-    public List getList(){
-        return launcherElements;
-    }
     @Override
     public int getItemCount() {
         return launcherElements.size();
@@ -63,15 +62,8 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
         return launcherElements.get(position).getComponentEnum().ordinal();
     }
 
-    public void removeAt(int position) {
-        launcherElements.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, launcherElements.size());
-    }
-
-    public void setLauncherElements(List<LauncherElement> in) {
-        launcherElements = in;
-        notifyDataSetChanged();
+    public List getList() {
+        return launcherElements;
     }
 
     @Override
@@ -80,13 +72,13 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
         //holder.container.removeAllViews();
         //holder.textView.setText(item.title);
-       // holder.container = launcherElements[position].inflateCardView();
+        // holder.container = launcherElements[position].inflateCardView();
 
         final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
         if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
             StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
             sglp.setFullSpan(item.isFullSpan());
-            Log.w(Constants.TAG, "Full span for element?"+holder.getItemViewType() );
+            Log.w(Constants.TAG, "Full span for element?" + holder.getItemViewType());
             holder.itemView.setLayoutParams(sglp);
         }
         //qui la view c'e` gia
@@ -111,7 +103,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
                 TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
                 LinearLayout linearActionsLayout = (LinearLayout) holder.container.findViewById(R.id.linearLayoutButtons);
-                TextView textViewInfo1 = (TextView)holder.container.findViewById(R.id.TextViewInfoStatus);
+                TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoStatus);
                 TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
 
                 textView.setText(tipico.getNiceName());
@@ -121,12 +113,28 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
                 FontAwesomeUtil.prepareFontAweTextView(context, imageView, FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
                 linearActionsLayout.removeAllViews();
-                tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
+                //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
 
+                List<ISoulissCommand> pi = tipico.getCommands(context);
+                for (final ISoulissCommand cmd : pi) {
+                    //  LinearLayout view = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.button_flat, null);
+                    // or LinearLayout buttonView = (LinearLayout)this.getLayoutInflater().inflate(R.layout.my_button, null);
+                    Button myButton = (AppCompatButton) LayoutInflater.from(context).inflate(R.layout.button_flat, linearActionsLayout, false);
+                    //myButton.setId(myButton.getId());
+                    myButton.setText(cmd.getName());
+                    // view.removeView(myButton);
+                    myButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            cmd.execute();
+                        }
+                    });
+                    linearActionsLayout.addView(myButton);
+                    linearActionsLayout.forceLayout();
+                    //context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
+                }
                 //linearActionsLayout.removeAllViews();
                 // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
-
-
                 holder.container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -157,14 +165,14 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                 } catch (Exception ce) {
                     Log.w(Constants.TAG, "TAG Empty? ");
                 }
-                 textCmd.setText(soulissTag.getName());
-                 textCmdWhen.setText(quantityString);
+                textCmd.setText(soulissTag.getName());
+                textCmdWhen.setText(quantityString);
                 if (soulissTag.getIconResourceId() != 0) {
-                     imageTag.setImageResource(soulissTag.getIconResourceId());
+                    imageTag.setImageResource(soulissTag.getIconResourceId());
                     imageTag.setVisibility(View.VISIBLE);
                 } else {
-                     imageTag.setImageResource(R.drawable.window);//avoid exc
-                     imageTag.setVisibility(View.INVISIBLE);
+                    imageTag.setImageResource(R.drawable.window);//avoid exc
+                    imageTag.setVisibility(View.INVISIBLE);
                 }
                 // Here you apply the animation when the view is bound
                 //setAnimation(holder.container, position);
@@ -181,9 +189,9 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                                 ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                                         //holder.image,   // The view which starts the transition
                                         //"photo_hero"    // The transitionName of the view we’re transitioning to
-                                        Pair.create((View)  image, "photo_hero"),
-                                        Pair.create((View)  shadowbar, "shadow_hero"),
-                                        Pair.create((View)  imageTag, "tag_icon")
+                                        Pair.create((View) image, "photo_hero"),
+                                        Pair.create((View) shadowbar, "shadow_hero"),
+                                        Pair.create((View) imageTag, "tag_icon")
                                 );
 
                         ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
@@ -191,7 +199,6 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
 
                 });
-
 
 
                 holder.container.setOnLongClickListener(new View.OnLongClickListener() {
@@ -203,7 +210,7 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
 
                 //holder.image.setImageResource(soulissTags[position].getIconResourceId());
                 try {
-                    File picture = new File(TagDetailFragment.getRealPathFromURI(Uri.parse( soulissTag.getImagePath())));
+                    File picture = new File(TagDetailFragment.getRealPathFromURI(Uri.parse(soulissTag.getImagePath())));
 
                     // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
                     if (picture.exists()) {
@@ -213,23 +220,22 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
                         options.inPreferQualityOverSpeed = false;
                         Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
                         Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
-                         image.setImageBitmap(myBitmap);
+                        image.setImageBitmap(myBitmap);
                     }
 
                 } catch (Exception io) {
                     Log.i(Constants.TAG, "cant load image " + soulissTag.getImagePath());
-                     image.setImageDrawable(ContextCompat.getDrawable(SoulissApp.getAppContext(), R.drawable.home_automation));
+                    image.setImageDrawable(ContextCompat.getDrawable(SoulissApp.getAppContext(), R.drawable.home_automation));
                 }
                 break;
         }
 
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LauncherElementEnum enumVal = LauncherElementEnum.values()[viewType];
-        View itemView =  LayoutInflater.
+        View itemView = LayoutInflater.
                 from(parent.getContext()).
                 inflate(R.layout.cardview_launcher2, parent, false);
         switch (enumVal) {
@@ -257,12 +263,23 @@ public class StaggeredAdapter extends RecyclerView.Adapter<StaggeredAdapter.View
             case TAG:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
-                        inflate(R.layout.cardview_tag , parent, false);
+                        inflate(R.layout.cardview_tag, parent, false);
                 break;
 
 
         }
         return new ViewHolder(itemView);
+    }
+
+    public void removeAt(int position) {
+        launcherElements.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, launcherElements.size());
+    }
+
+    public void setLauncherElements(List<LauncherElement> in) {
+        launcherElements = in;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -94,8 +94,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 @SuppressWarnings("unchecked")
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 // FIXME TEMPORARY
+                dbLauncher.refreshMap();
                 List launcherItems = dbLauncher.getLauncherItems(MainActivity.this);
-                dbLauncher = new SoulissDBLauncherHelper(MainActivity.this);
 
                 launcherMainAdapter.setLauncherElements(launcherItems);
 

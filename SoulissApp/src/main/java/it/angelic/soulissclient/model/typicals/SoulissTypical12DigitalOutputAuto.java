@@ -91,6 +91,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
         }
     }
 
+
     /**
      * Ottiene il layout del pannello comandi
      *

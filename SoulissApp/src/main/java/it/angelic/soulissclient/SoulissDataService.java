@@ -465,10 +465,8 @@ public class SoulissDataService extends Service implements LocationListener {
             final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
             Log.i(TAG, "processing positional programs: " + unexecuted.size());
             // tornato a casa
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (SoulissCommand soulissCommand : unexecuted) {
+
+            for (SoulissCommand soulissCommand : unexecuted) {
                         if (soulissCommand.getType() == Constants.COMMAND_COMEBACK_CODE) {
                             Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
                             soulissCommand.execute();
@@ -477,8 +475,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                     soulissCommand.toString() + " " + soulissCommand.getParentTypical().getNiceName(), R.drawable.exit1, soulissCommand);
                         }
                     }
-                }
-            }).start();
+
             opts.setPrevDistance(homeDist);
         } else if (homeDistPrev < (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance() / 10)
                 && homeDist > (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance() / 10)) {
@@ -486,10 +483,8 @@ public class SoulissDataService extends Service implements LocationListener {
             final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
             Log.i(TAG, "activating positional programs: " + unexecuted.size());
             // uscito di casa
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (SoulissCommand soulissCommand : unexecuted) {
+
+            for (SoulissCommand soulissCommand : unexecuted) {
                         if (soulissCommand.getType() == Constants.COMMAND_GOAWAY_CODE) {
                             Log.w(TAG, "issuing AWAY command: " + soulissCommand.toString());
 
@@ -499,8 +494,7 @@ public class SoulissDataService extends Service implements LocationListener {
                                     soulissCommand.getNiceName(), R.drawable.exit1, soulissCommand);
                         }
                     }
-                }
-            }).start();
+
         } else {// gestione BACKOFF sse e` cambiata la fascia
             if ((homeDist > 25000 && distPrevCache <= 25000) || (homeDist < 25000 && homeDist > 5000 && distPrevCache >= 25000)) {
                 Log.w(TAG, "FASCIA 25 " + homeDist);

@@ -2,7 +2,6 @@ package it.angelic.soulissclient;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Log;
 
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -25,15 +24,11 @@ public class SendCommandActivityNoDisplay extends Activity {
             finishActivity(-1);
         }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                toExec.execute();
-                // UDPHelper.issueSoulissCommand("" + toExec.getNodeId(), "" + toExec.getSlot(), SoulissApp.getOpzioni(), toExec.toString());
-                Log.i(Constants.TAG, "Voice Command SENT: " + toExec.getName());
-            }
-        }).start();
+
+        toExec.execute();
+        // UDPHelper.issueSoulissCommand("" + toExec.getNodeId(), "" + toExec.getSlot(), SoulissApp.getOpzioni(), toExec.toString());
+        Log.i(Constants.TAG, "Voice Command SENT: " + toExec.getName());
+
         finish();
     }
 }

@@ -3,7 +3,7 @@ package it.angelic.soulissclient.model;
 import android.content.Context;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ISoulissTypical extends ISoulissObject {
 
@@ -15,7 +15,7 @@ public interface ISoulissTypical extends ISoulissObject {
     //void setParentNode(ISoulissNode parentNode);
 
 
-    ArrayList<ISoulissCommand> getCommands(Context ctx);
+    List<ISoulissCommand> getCommands(Context ctx);
 
     void getActionsLayout (Context ctx,
                            LinearLayout convertView);

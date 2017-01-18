@@ -63,34 +63,57 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         }
     }
 
-    /**
-     * puo capitare che parentScene non sia nulla e nel DTO invece scene_ID sia null
-     * infatti se nel DB SECENEID e` diverso da null, si tratta di comandi che definiscono uno
-     * scenario. qui invece ParentScene
-     *
-     * @return
-     */
-    public SoulissScene getTargetScene() {
-        return targetScene;
+    @Override
+    public void execute() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoulissCommandDTO dto = getCommandDTO();
+                Calendar now = Calendar.getInstance();
+                if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
+                    //in realta devo eseguire una scena, non questo comando
+                    //salvato adalla Addprogram activity
+                    targetScene.execute();
+                    return;
+                } else if (dto.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
+                    String intero = Long.toHexString(dto.getCommand());
+                    String[] laCosa = ScenesDialogHelper.splitStringEvery(intero, 2);
+                    //codice che funziona ma non so perche`
+                    for (int i = 0; i < laCosa.length; i++) {
+                        laCosa[i] = "0x" + laCosa[i];
+                    }
+                    //split the command if longer
+                    UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(), laCosa);
+                } else {// COMANDO SINGOLO
+                    String start = Long.toHexString(dto.getCommand());
+                    String[] laCosa = ScenesDialogHelper.splitStringEvery(start, 2);
+                    // String[] laCosa = start.split("(?<=\\G..)");
+                    for (int i = 0; i < laCosa.length; i++) {
+                        laCosa[i] = "0x" + laCosa[i];
+                    }
+                    //codice che funziona ma non so perche`
+                    UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
+                            String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(),
+                            // pura magia della decode
+                            laCosa);
+                }
+                //in base al tipo, segno ultima esecuzione
+                if (getType() == it.angelic.soulissclient.Constants.COMMAND_TIMED
+                        && now.after(getCommandDTO().getScheduledTime())) {
+                    getCommandDTO().setExecutedTime(now);
+                } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_COMEBACK_CODE) {
+                    getCommandDTO().setExecutedTime(now);
+                    getCommandDTO().setSceneId(null);
+                } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_GOAWAY_CODE) {
+                    getCommandDTO().setExecutedTime(now);
+                    getCommandDTO().setSceneId(null);
+                }
+            }
+        }).start();
     }
 
-    public void setTargetScene(SoulissScene parentScene) {
-        this.targetScene = parentScene;
-
-    }
-
-    /*Quando targetScene non e` nullo, lo e` parentTypical, e nodeId nel DTO vale -2
-    * In pratica targetScene e typical sono mutuali, in base a cosa controlla il comando */
-    public SoulissTypical getParentTypical() {
-        return parentTypical;
-    }
-
-    public void setParentTypical(SoulissTypical parentTypical) {
-        this.parentTypical = parentTypical;
-    }
-
-    public int getType() {
-        return commandDTO.getType();
+    public long getCommand() {
+        return commandDTO.getCommand();
     }
 
     public SoulissCommandDTO getCommandDTO() {
@@ -145,72 +168,10 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             resId = R.drawable.sos;
         else if (typical == Constants.Typicals.Souliss_T31) {
             resId = R.drawable.sos;
-        }
-        else
+        } else
             resId = R.drawable.empty;
 
         return resId;
-    }
-
-
-    @Override
-    public void execute() {
-        SoulissCommandDTO dto = getCommandDTO();
-        Calendar now = Calendar.getInstance();
-        if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
-            //in realta devo eseguire una scena, non questo comando
-            //salvato adalla Addprogram activity
-            targetScene.execute();
-            return;
-        } else if (dto.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
-            String intero = Long.toHexString(dto.getCommand());
-            String[] laCosa = ScenesDialogHelper.splitStringEvery(intero, 2);
-            //codice che funziona ma non so perche`
-            for (int i = 0; i < laCosa.length; i++) {
-                laCosa[i] = "0x" + laCosa[i];
-            }
-            //split the command if longer
-            UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(), laCosa);
-        } else {// COMANDO SINGOLO
-            String start = Long.toHexString(dto.getCommand());
-            String[] laCosa = ScenesDialogHelper.splitStringEvery(start, 2);
-            // String[] laCosa = start.split("(?<=\\G..)");
-            for (int i = 0; i < laCosa.length; i++) {
-                laCosa[i] = "0x" + laCosa[i];
-            }
-            //codice che funziona ma non so perche`
-            UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
-                    String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(),
-                    // pura magia della decode
-                    laCosa);
-        }
-        //in base al tipo, segno ultima esecuzione
-        if (getType() == it.angelic.soulissclient.Constants.COMMAND_TIMED
-                && now.after(getCommandDTO().getScheduledTime())) {
-            getCommandDTO().setExecutedTime(now);
-        } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_COMEBACK_CODE) {
-            getCommandDTO().setExecutedTime(now);
-            getCommandDTO().setSceneId(null);
-        } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_GOAWAY_CODE) {
-            getCommandDTO().setExecutedTime(now);
-            getCommandDTO().setSceneId(null);
-        }
-    }
-
-    public short getNodeId() {
-        return commandDTO.getNodeId();
-    }
-
-    public short getSlot() {
-        return commandDTO.getSlot();
-    }
-
-    public long getCommand() {
-        return commandDTO.getCommand();
-    }
-
-    @Override
-    public void setIconResourceId(@DrawableRes int resId) {
     }
 
     @Override
@@ -221,8 +182,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     }
 
     @Override
-    public String toString() {
-        return getName();
+    public void setIconResourceId(@DrawableRes int resId) {
     }
 
     @Override
@@ -360,6 +320,49 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             return getName();
         }
         return info.toString();
+    }
+
+    public short getNodeId() {
+        return commandDTO.getNodeId();
+    }
+
+    /*Quando targetScene non e` nullo, lo e` parentTypical, e nodeId nel DTO vale -2
+    * In pratica targetScene e typical sono mutuali, in base a cosa controlla il comando */
+    public SoulissTypical getParentTypical() {
+        return parentTypical;
+    }
+
+    public void setParentTypical(SoulissTypical parentTypical) {
+        this.parentTypical = parentTypical;
+    }
+
+    public short getSlot() {
+        return commandDTO.getSlot();
+    }
+
+    /**
+     * puo capitare che parentScene non sia nulla e nel DTO invece scene_ID sia null
+     * infatti se nel DB SECENEID e` diverso da null, si tratta di comandi che definiscono uno
+     * scenario. qui invece ParentScene
+     *
+     * @return
+     */
+    public SoulissScene getTargetScene() {
+        return targetScene;
+    }
+
+    public void setTargetScene(SoulissScene parentScene) {
+        this.targetScene = parentScene;
+
+    }
+
+    public int getType() {
+        return commandDTO.getType();
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
     /*

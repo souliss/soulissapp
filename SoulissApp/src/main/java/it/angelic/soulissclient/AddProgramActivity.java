@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -613,7 +612,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
      * @param ref tipico da cui ottenere i comandi
      */
     private void fillCommandSpinner(@NonNull Spinner tgt, SoulissTypical ref) {
-        ArrayList<ISoulissCommand> cmds = ref.getCommands(this);
+        List<ISoulissCommand> cmds = ref.getCommands(this);
         //maledetto bastardo
         if (cmds!=null&&cmds.size() > 0) {
             tvcommand.setVisibility(View.VISIBLE);

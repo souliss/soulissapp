@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,9 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
+import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -89,7 +92,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         myMap.put(prop.getId(), prop);
 
         LauncherElement prot = new LauncherElement(LauncherElementEnum.TYPICAL);
-        prot.setLinkedObject(super.getTypical(0, (short) 0));
+        SoulissTypical tip = super.getTypical(0, (short) 0);
+        Log.i(Constants.TAG, "ricaricato tipico farlocco, value=" + tip.getOutput());
+        prot.setLinkedObject(tip);
         prot.setId(4);
         myMap.put(prot.getId(), prot);
 
@@ -130,6 +135,12 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         JSONArray array = new JSONArray();
     }
 */
+
+
+    //FIXME questo deve morire
+    public void refreshMap() {
+        createFakedMap();
+    }
 
     public List<LauncherElement> getLauncherItems(Context context) {
         //Set chiavi= myMap.keySet();
