@@ -27,21 +27,22 @@ public class UDPRunnable implements Runnable {
 
     // implements Runnable so it can be created as a new thread
     private static final String TAG = "Souliss:UDP";
-    final int maxThreads = 8;
+    final int MAX_THREADS = 8;
     private SoulissPreferenceHelper opzioni;
     private DatagramSocket socket;
     // private Context context;
-    private ThreadPoolExecutor tpe;
+    private ThreadPoolExecutor threadExecutor;
 
     public UDPRunnable(SoulissPreferenceHelper opzioni) {
         super();
         this.opzioni = opzioni;
+        Log.d("UDP", "***UDPRunnable Created");
         // this.context = ctx;
-        tpe = new ThreadPoolExecutor(
-                maxThreads / 2, // core thread pool size
-                maxThreads, // maximum thread pool size
+        threadExecutor = new ThreadPoolExecutor(
+                MAX_THREADS / 2, // core thread pool size
+                MAX_THREADS, // maximum thread pool size
                 53, // time to wait before resizing pool
-                TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(maxThreads, true),
+                TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(MAX_THREADS, true),
                 new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
@@ -76,16 +77,16 @@ public class UDPRunnable implements Runnable {
                 // wait to receive the packet
                 socket.receive(packet);
                 // spawn a decoder and go on
-                tpe.execute(new Runnable() {
+                threadExecutor.execute(new Runnable() {
                     @Override
                     public void run() {
                         UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissApp.getAppContext());
-                        Log.d("UDP", "***Created decoder:" + decoder.toString());
+                        Log.d(TAG, "***Created decoder:" + decoder.toString());
                         decoder.decodeVNetDatagram(packet);
 
                     }
                 });
-                Log.d(TAG, "***ThreadPool, active=" + tpe.getActiveCount() + ", completed:" + tpe.getCompletedTaskCount() + ", poolsize:" + tpe.getPoolSize());
+                Log.d(TAG, "***ThreadPool, active=" + threadExecutor.getActiveCount() + ", completed:" + threadExecutor.getCompletedTaskCount() + ", poolsize:" + threadExecutor.getPoolSize());
                 socket.close();
 
             } catch (BindException e) {

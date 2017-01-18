@@ -259,8 +259,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-
-
         opzioni.reload();
         Log.d(Constants.TAG, Constants.TAG + " onCreate() call start, cached address reset");
         //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -499,7 +497,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
      */
     @Override
     protected void onPause() {
-        // unregisterReceiver(connectivityReceiver);
         unregisterReceiver(datareceiver);
         super.onPause();
         autoUpdate.cancel();

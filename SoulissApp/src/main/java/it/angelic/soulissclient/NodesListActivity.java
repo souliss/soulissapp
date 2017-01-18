@@ -89,9 +89,6 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                // subscribe a tutti i nodi, in teoria non serve*/
-                UDPHelper.stateRequest(opzioni, goer.size(), 0);
-
             }
         }).start();
 
