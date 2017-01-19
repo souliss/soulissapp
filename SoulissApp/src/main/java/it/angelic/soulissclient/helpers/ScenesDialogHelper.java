@@ -197,16 +197,17 @@ public class ScenesDialogHelper {
     public static AlertDialog.Builder addSceneCommandDialog(final Context context, final ListView list,
                                                             final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni) {
         // prendo tipici dal DB
-        List<SoulissNode> goer = datasource.getAllNodes();
-        final SoulissNode[] nodiArray = new SoulissNode[goer.size() + 1];
-        int q = 0;
-        for (SoulissNode object : goer) {
-            nodiArray[q++] = object;
-        }
+        final List<SoulissNode> allNodes = datasource.getAllNodes();
+        //final SoulissNode[] nodiArray = new SoulissNode[allNodes.size() + 1];
+        //int q = 0;
+        //for (SoulissNode object : allNodes) {
+        //    nodiArray[q++] = object;
+        //}
         SoulissNode fake = new SoulissNode(Constants.MASSIVE_NODE_ID);// MASSIVO
         fake.setName(context.getString(R.string.allnodes));
         fake.setTypicals(datasource.getUniqueTypicals(fake));
-        nodiArray[q] = fake;
+        //nodiArray[q] = fake;
+        allNodes.add(fake);
 
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
 
@@ -217,7 +218,7 @@ public class ScenesDialogHelper {
         alert2.setView(dialoglayout);
         final Spinner outputNodeSpinner = (Spinner) dialoglayout.findViewById(R.id.spinner2);
         ArrayAdapter<SoulissNode> adapter = new ArrayAdapter<>(context,
-                android.R.layout.simple_spinner_item, nodiArray);
+                android.R.layout.simple_spinner_item, allNodes);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         outputNodeSpinner.setAdapter(adapter);
@@ -229,7 +230,7 @@ public class ScenesDialogHelper {
 		/* Cambiando nodo, cambia i tipici */
         OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                setTypicalSpinner(outputTypicalSpinner, nodiArray[pos], context);
+                setTypicalSpinner(outputTypicalSpinner, allNodes.get(pos), context);
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -239,8 +240,7 @@ public class ScenesDialogHelper {
         /* Cambiando tipico, cambia i comandi */
         OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                List<SoulissTypical> re = nodiArray[(int) outputNodeSpinner.getSelectedItemId()]
-                        .getActiveTypicals();
+                List<SoulissTypical> re = allNodes.get((int) outputNodeSpinner.getSelectedItemId()).getActiveTypicals();
                 if (re.size() > 0) { // node could be empty
                     fillCommandSpinner(outputCommandSpinner, re.get(pos), context);
                 } else {
@@ -266,7 +266,7 @@ public class ScenesDialogHelper {
                             return;
                         }
                         // collega il comando alla scena
-                        tull.getCommandDTO().setSceneId(targetScene.getId());
+                        tull.setSceneId(targetScene.getId());
 
                         if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getNodeId() == Constants.MASSIVE_NODE_ID) {// MASSIVE
                             SoulissTypical model = (SoulissTypical) outputTypicalSpinner.getSelectedItem();
@@ -274,15 +274,17 @@ public class ScenesDialogHelper {
                                 Toast.makeText(context, "Typical not selected", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            tull.getCommandDTO().setNodeId(Constants.MASSIVE_NODE_ID);
+                            tull.setNodeId(Constants.MASSIVE_NODE_ID);
                             //tull.getCommandDTO().setType(Constants.COMMAND_MASSIVE);
-                            tull.getCommandDTO().setSlot(model.getTypicalDTO().getTypical());
-                        } else
+                            tull.setSlot(model.getTypicalDTO().getTypical());
+                        } else {
                             tull.getCommandDTO().setType(Constants.COMMAND_SINGLE);
+                        }
                         // lo metto dopo l'ultimo inserito
                         int[] mefisto = context.getResources().getIntArray(R.array.delayIntervalValues);
                         tull.getCommandDTO().setInterval(mefisto[outputDelaySpinner.getSelectedItemPosition()]  );
                         Log.w(Constants.TAG,"Saving new command with delay:"+ context.getResources().getIntArray(R.array.delayIntervalValues)[outputDelaySpinner.getSelectedItemPosition()]  );
+                        tull.setStep(targetScene.getCommandArray().size() + 1);
                         tull.getCommandDTO().persistCommand();
 
                         if (list != null) {//refresh

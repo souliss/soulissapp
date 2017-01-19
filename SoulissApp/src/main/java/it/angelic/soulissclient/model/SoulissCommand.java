@@ -2,9 +2,11 @@ package it.angelic.soulissclient.model;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -112,13 +114,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         }).start();
     }
 
-    public long getCommand() {
-        return commandDTO.getCommand();
-    }
 
-    public SoulissCommandDTO getCommandDTO() {
-        return commandDTO;
-    }
 
     // FIXME ritorna alla cazzo, rivedere le icone dei comandi
     public
@@ -322,22 +318,21 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         return info.toString();
     }
 
-    public short getNodeId() {
-        return commandDTO.getNodeId();
+
+    @Override
+    public String toString() {
+        return getName();
     }
 
-    /*Quando targetScene non e` nullo, lo e` parentTypical, e nodeId nel DTO vale -2
-    * In pratica targetScene e typical sono mutuali, in base a cosa controlla il comando */
-    public SoulissTypical getParentTypical() {
-        return parentTypical;
-    }
 
-    public void setParentTypical(SoulissTypical parentTypical) {
-        this.parentTypical = parentTypical;
-    }
+    public void setStep(int size) {
+        if (!(parentTypical == null)) {
+            Log.e(Constants.TAG, "ERRORE strutturale, setStep con parent non nullo");
+        }
 
-    public short getSlot() {
-        return commandDTO.getSlot();
+        Calendar fakeDate = Calendar.getInstance();
+        fakeDate.setTime(new Date(size));
+        commandDTO.setScheduledTime(fakeDate);
     }
 
     /**
@@ -353,16 +348,61 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
 
     public void setTargetScene(SoulissScene parentScene) {
         this.targetScene = parentScene;
+    }
 
+    public void setParentTypical(SoulissTypical parentTypical) {
+        this.parentTypical = parentTypical;
+    }
+
+    /**
+     * Quando targetScene non e` nullo, lo e` parentTypical, e nodeId nel DTO vale -2
+     * In pratica targetScene e typical sono mutuali, in base a cosa controlla il comando
+     *
+     * @return
+     */
+    public SoulissTypical getParentTypical() {
+        return parentTypical;
+    }
+
+    /*
+     *
+     *
+     *
+     *  DTO WRAPPERS
+     *
+     *
+     */
+
+    public short getNodeId() {
+        return commandDTO.getNodeId();
+    }
+
+    public void setNodeId(short id) {
+        commandDTO.setNodeId(id);
+    }
+
+    public short getSlot() {
+        return commandDTO.getSlot();
+    }
+
+    public void setSlot(short typical) {
+        commandDTO.setSlot(typical);
+    }
+
+    public void setSceneId(int id) {
+        commandDTO.setSceneId(id);
+    }
+
+    public long getCommand() {
+        return commandDTO.getCommand();
+    }
+
+    public SoulissCommandDTO getCommandDTO() {
+        return commandDTO;
     }
 
     public int getType() {
         return commandDTO.getType();
-    }
-
-    @Override
-    public String toString() {
-        return getName();
     }
 
     /*

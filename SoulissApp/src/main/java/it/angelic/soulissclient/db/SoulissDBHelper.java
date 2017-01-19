@@ -866,7 +866,7 @@ public class SoulissDBHelper {
         ArrayList<SoulissCommand> ret = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS,
                 SoulissDB.COLUMN_COMMAND_SCENEID + " =" + sceneId, null, null, null,
-                SoulissDB.COLUMN_COMMAND_SCHEDTIME_INTERVAL);
+                SoulissDB.COLUMN_COMMAND_SCHEDTIME);//se scenario, e` lo step
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
