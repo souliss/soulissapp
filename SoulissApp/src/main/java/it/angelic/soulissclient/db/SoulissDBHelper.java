@@ -664,7 +664,7 @@ public class SoulissDBHelper {
      */
     public int deleteCommand(SoulissCommand toRename) {
         return database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_ID + " = "
-                + toRename.getCommandDTO().getCommandId(), null);
+                + toRename.getCommandId(), null);
     }
 
     public int truncateImportTables() {
@@ -956,7 +956,7 @@ public class SoulissDBHelper {
             } else {
                 adding = new SoulissCommand(comment);
             }
-            adding.getCommandDTO().setSceneId(null);
+            adding.setSceneId(null);
             ret.add(adding);
         }
         cursor.close();

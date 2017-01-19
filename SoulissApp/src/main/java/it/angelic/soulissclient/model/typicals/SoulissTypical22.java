@@ -52,21 +52,21 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_CloseCmd);
-		t.getCommandDTO().setSlot(typicalDTO.getSlot());
-		t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+		t.setCommand(Constants.Typicals.Souliss_T2n_CloseCmd);
+		t.setSlot(typicalDTO.getSlot());
+		t.setNodeId(typicalDTO.getNodeId());
 		ret.add(t);
 
 		SoulissCommand rset = new SoulissCommand(this);
-		rset.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_OpenCmd);
-		rset.getCommandDTO().setSlot(typicalDTO.getSlot());
-		rset.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+		rset.setCommand(Constants.Typicals.Souliss_T2n_OpenCmd);
+		rset.setSlot(typicalDTO.getSlot());
+		rset.setNodeId(typicalDTO.getNodeId());
 		ret.add(rset);
 
 		SoulissCommand rsest = new SoulissCommand(this);
-		rsest.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_StopCmd);
-		rsest.getCommandDTO().setSlot(typicalDTO.getSlot());
-		rsest.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+		rsest.setCommand(Constants.Typicals.Souliss_T2n_StopCmd);
+		rsest.setSlot(typicalDTO.getSlot());
+		rsest.setNodeId(typicalDTO.getNodeId());
 		ret.add(rsest);
 
 		return ret;

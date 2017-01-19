@@ -30,6 +30,7 @@ import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.TagViewHolder> {
     SoulissTag[] soulissTags;
@@ -90,10 +91,12 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         holder.textCmdWhen.setText(quantityString);
         holder.data = soulissTags[position];
         if (soulissTags[position].getIconResourceId() != 0) {
-            holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeUtil.remapIconResId(soulissTags[position].getIconResourceId()));
+            // holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
-            holder.imageTag.setImageResource(R.drawable.window);//avoid exc
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeUtil.remapIconResId(R.drawable.window));
+            //holder.imageTag.setImageResource(R.drawable.window);//avoid exc
             holder.imageTag.setVisibility(View.INVISIBLE);
         }
         // Here you apply the animation when the view is bound
@@ -176,7 +179,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
      */
     public static class TagViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView imageTag;
+        private final TextView imageTag;
         public SoulissTag data;
         public CardView container;
         TextView textCmd;
@@ -190,7 +193,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             textCmdWhen = (TextView) itemView.findViewById(R.id.TextViewTagDesc);
             image = (ImageView) itemView.findViewById(R.id.imageViewTag);
             container = (CardView) itemView.findViewById(R.id.TagCard);
-            imageTag = (ImageView) itemView.findViewById(R.id.imageTagIcon);
+            imageTag = (TextView) itemView.findViewById(R.id.imageTagIconFa);
             shadowbar = (ImageView) itemView.findViewById(R.id.infoTagAlpha);
         }
 

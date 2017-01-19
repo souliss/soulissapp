@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
@@ -49,8 +48,8 @@ import static it.angelic.soulissclient.Constants.TAG;
  * 
  */
 public class ProgramListActivity extends AbstractStatusedFragmentActivity {
-	private SoulissCommand[] programsArray;
-	private ListView listaProgrammiView;
+    private List<SoulissCommand> programsArray;
+    private ListView listaProgrammiView;
 	private SoulissDBHelper datasource;
 	private ProgramListAdapter progsAdapter;
 	private TextView tt;
@@ -86,7 +85,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 Log.w(TAG, "Activating SCENE " + arg2);
                 Intent nodeDatail = new Intent(ProgramListActivity.this, AddProgramActivity.class);
-                nodeDatail.putExtra("PROG", programsArray[arg2] );
+                nodeDatail.putExtra("PROG", programsArray.get(arg2));
                 ProgramListActivity.this.startActivity(nodeDatail);
                 if (opzioni.isAnimationsEnabled())
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -114,17 +113,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		if (!opzioni.isDataServiceEnabled()) {
 			AlertDialogHelper.serviceNotActiveDialog(this);
 		}
-		// prendo comandi dal DB, setto adapter
-		LinkedList<SoulissCommand> goer = datasource.getUnexecutedCommands(this);
-		if (goer.size() == 0)
-			tt.setText(getString(R.string.programs_no));
-		programsArray = new SoulissCommand[goer.size()];
-		programsArray = goer.toArray(programsArray);
-		progsAdapter = new ProgramListAdapter(this.getApplicationContext(), programsArray,
-				datasource.getTriggerMap(this), opzioni);
-		// Adapter della lista
-		listaProgrammiView.setAdapter(progsAdapter);
-		listaProgrammiView.invalidateViews();
+
 		// forza refresh drawer
 		mDrawermAdapter = new NavDrawerAdapter(ProgramListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.PROGRAMS);
 		mDrawerList.setAdapter(mDrawermAdapter);
@@ -139,6 +128,17 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
                 ProgramListActivity.this.startActivityForResult(myIntentt, 12);
             }
         });
+
+        // prendo comandi dal DB, setto adapter
+        programsArray = datasource.getUnexecutedCommands(this);
+        if (programsArray.size() == 0)
+            tt.setText(getString(R.string.programs_no));
+
+        progsAdapter = new ProgramListAdapter(this, programsArray,
+                datasource.getTriggerMap(this), opzioni);
+        // Adapter della lista
+        listaProgrammiView.setAdapter(progsAdapter);
+        listaProgrammiView.invalidateViews();
 
 	}
 
@@ -204,12 +204,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 	private BroadcastReceiver datareceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			List<SoulissCommand> goer = datasource.getUnexecutedCommands(ProgramListActivity.this);
-			programsArray = new SoulissCommand[goer.size()];
-			int q = 0;
-			for (SoulissCommand object : goer) {
-				programsArray[q++] = object;
-			}
+            programsArray = datasource.getUnexecutedCommands(ProgramListActivity.this);
 
 			progsAdapter = new ProgramListAdapter(ProgramListActivity.this.getApplicationContext(), programsArray,
 					datasource.getTriggerMap(ProgramListActivity.this), opzioni);

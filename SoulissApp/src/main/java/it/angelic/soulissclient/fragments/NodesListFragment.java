@@ -58,7 +58,7 @@ import static it.angelic.soulissclient.Constants.TAG;
  * 
  */
 public class NodesListFragment extends ListFragment {
-	private SoulissNode[] nodiArray;
+	private List<SoulissNode> nodiArray;
 	private SoulissPreferenceHelper opzioni;
 	private SoulissDBHelper datasource;
 	private NodesListAdapter nodesAdapter;
@@ -129,8 +129,8 @@ public class NodesListFragment extends ListFragment {
                     public void run() {
                         Looper.prepare();
                         if (nodiArray != null)
-                            UDPHelper.healthRequest(opzioni, nodiArray.length, 0);
-                        if (!opzioni.isSoulissReachable()) {
+							UDPHelper.healthRequest(opzioni, nodiArray.size(), 0);
+						if (!opzioni.isSoulissReachable()) {
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText(getActivity(),
@@ -164,9 +164,7 @@ public class NodesListFragment extends ListFragment {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());
 		} else {
 
-			final List<SoulissNode> goer = datasource.getAllNodes();
-			nodiArray = new SoulissNode[goer.size()];
-			nodiArray = goer.toArray(nodiArray);
+			final List<SoulissNode> nodiArray = datasource.getAllNodes();
 
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				getListView().setNestedScrollingEnabled(true);
@@ -184,8 +182,8 @@ public class NodesListFragment extends ListFragment {
 			registerForContextMenu(getListView());
 			if (mDualPane) {
 				// Capita arrayOutofbound con size 0
-				if (mCurCheckPosition < nodiArray.length)
-					showDetails(mCurCheckPosition, nodiArray[mCurCheckPosition]);
+				if (mCurCheckPosition < nodiArray.size())
+					showDetails(mCurCheckPosition, nodiArray.get(mCurCheckPosition));
 				if (textHeadListInfo != null)
 				textHeadListInfo.setVisibility(View.GONE);
 				if (nodeic != null)
@@ -253,13 +251,11 @@ public class NodesListFragment extends ListFragment {
 		SoulissDBHelper.open();
 
 		// prendo tipici dal DB
-		final List<SoulissNode> goer = datasource.getAllNodes();
-		nodiArray = new SoulissNode[goer.size()];
-		nodiArray = goer.toArray(nodiArray);
+		final List<SoulissNode> nodiArray = datasource.getAllNodes();
 		//timeoutHandler = new Handler();
-		Log.i(TAG, "mostro numnodi:" + goer.size());
-		
-		nodesAdapter = new NodesListAdapter(getActivity().getApplicationContext(), nodiArray, opzioni);
+		Log.i(TAG, "mostro numnodi:" + nodiArray.size());
+
+		nodesAdapter = new NodesListAdapter(getActivity(), nodiArray, opzioni);
 		// Adapter della lista
 		// setListAdapter(nodesAdapter);
 		getListView().setAdapter(nodesAdapter);
@@ -285,9 +281,7 @@ public class NodesListFragment extends ListFragment {
 			try {
                 // prendo tipici dal DB
 				List<SoulissNode> goer = datasource.getAllNodes();
-				nodiArray = new SoulissNode[goer.size()];
-				nodiArray = goer.toArray(nodiArray);
-				nodesAdapter.setNodes(nodiArray);
+				nodesAdapter.setNodes(goer);
 				nodesAdapter.notifyDataSetChanged();
 				getListView().invalidateViews();
 			} catch (IllegalStateException e) {
@@ -309,12 +303,12 @@ public class NodesListFragment extends ListFragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		//BUG?
-		if (info.position >= nodiArray.length){
+		if (info.position >= nodiArray.size()) {
 			Log.e(TAG, "info.position >= nodiArray.length");
 			return super.onContextItemSelected(item);
 		}
-			
-		final SoulissNode todoItem = nodiArray[info.position];
+
+		final SoulissNode todoItem = nodiArray.get(info.position);
 
 		switch (item.getItemId()) {
 		case R.id.rinominaNodo:

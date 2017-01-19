@@ -33,9 +33,9 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T2n_ToogleCmd);
-		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		t.setCommand(Constants.Typicals.Souliss_T2n_ToogleCmd);
+		t.setSlot(getTypicalDTO().getSlot());
+		t.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		return ret;

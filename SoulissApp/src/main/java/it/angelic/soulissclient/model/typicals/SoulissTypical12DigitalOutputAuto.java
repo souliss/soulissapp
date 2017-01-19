@@ -39,27 +39,27 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
         ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
         SoulissCommand t = new SoulissCommand(this);
-        t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
-        t.getCommandDTO().setSlot(typicalDTO.getSlot());
-        t.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        t.setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
+        t.setSlot(typicalDTO.getSlot());
+        t.setNodeId(typicalDTO.getNodeId());
         ret.add(t);
 
         SoulissCommand tr = new SoulissCommand(this);
-        tr.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
-        tr.getCommandDTO().setSlot(typicalDTO.getSlot());
-        tr.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        tr.setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
+        tr.setSlot(typicalDTO.getSlot());
+        tr.setNodeId(typicalDTO.getNodeId());
         ret.add(tr);
 
         SoulissCommand tj = new SoulissCommand(this);
-        tj.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
-        tj.getCommandDTO().setSlot(typicalDTO.getSlot());
-        tj.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        tj.setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
+        tj.setSlot(typicalDTO.getSlot());
+        tj.setNodeId(typicalDTO.getNodeId());
         ret.add(tj);
 
         SoulissCommand td = new SoulissCommand(this);
-        td.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_AutoCmd);
-        td.getCommandDTO().setSlot(typicalDTO.getSlot());
-        td.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+        td.setCommand(Constants.Typicals.Souliss_T1n_AutoCmd);
+        td.setSlot(typicalDTO.getSlot());
+        td.setNodeId(typicalDTO.getNodeId());
         ret.add(td);
 
         return ret;

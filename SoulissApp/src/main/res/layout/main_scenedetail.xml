@@ -62,13 +62,16 @@
                          xmlns:fab="http://schemas.android.com/apk/res-auto"
                          android:layout_width="match_parent"
                          android:layout_height="match_parent"
-                         android:layout_below="@id/TextViewTypicals">
+                         android:layout_below="@id/TextViewTypicals"
+                >
 
                 <ListView
                     android:id="@+id/ListViewListaScene"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="6dip"
+
+                    android:background="@drawable/item_selector"
+                    android:cacheColorHint="@color/trans_black"
                     android:divider="@android:color/transparent"
                     android:fadeScrollbars="true"
                     android:fadingEdge="vertical"

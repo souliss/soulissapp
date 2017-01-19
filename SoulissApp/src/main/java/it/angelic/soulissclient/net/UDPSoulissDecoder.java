@@ -537,7 +537,7 @@ public class UDPSoulissDecoder {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.execute();
-                        soulissTrigger.getCommandDTO().setExecutedTime(now);
+                        soulissTrigger.setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse1, soulissTrigger);
@@ -545,7 +545,7 @@ public class UDPSoulissDecoder {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.execute();
-                        soulissTrigger.getCommandDTO().setExecutedTime(now);
+                        soulissTrigger.setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse1, soulissTrigger);
@@ -553,7 +553,7 @@ public class UDPSoulissDecoder {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
                         soulissTrigger.execute();
                         soulissTrigger.getTriggerDto().setActive(true);
-                        soulissTrigger.getCommandDTO().setExecutedTime(now);
+                        soulissTrigger.setExecutedTime(now);
                         soulissTrigger.persist(database);
                         SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse1, soulissTrigger);

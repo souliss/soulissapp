@@ -16,76 +16,74 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.views.ListButton;
+
 /**
- * 
  * Typical 14 : Pulse Digital Output
- * 
- * One way trigger switch. The only command available will turn it on. 
+ * <p>
+ * One way trigger switch. The only command available will turn it on.
  * Souliss will turn it off after some cycle individually
- * 
- * @author shine@angelic.it
  *
+ * @author shine@angelic.it
  */
 public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoulissTypical {
 
-	private static final long serialVersionUID = 4553488325062232092L;
+    private static final long serialVersionUID = 4553488325062232092L;
 
 
-	public SoulissTypical14PulseOutput(SoulissPreferenceHelper fg) {
-		super(fg);
-	}
+    public SoulissTypical14PulseOutput(SoulissPreferenceHelper fg) {
+        super(fg);
+    }
 
-	@Override
-	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
-		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		ArrayList<ISoulissCommand> ret = new ArrayList<>();
+    /**
+     * Ottiene il layout del pannello comandi
+     */
+    @Override
+    public void getActionsLayout(Context ctx, LinearLayout cont) {
+        cont.removeAllViews();
 
-		SoulissCommand t = new SoulissCommand( this);
-		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
-		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
-		ret.add(t);
+        //RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+        //	RelativeLayout.LayoutParams.MATCH_PARENT);
+        // cmd.setGravity(Gravity.TOP);
+        cont.addView(getQuickActionTitle());
 
-		return ret;
-	}
+        final ListButton turnOnButton = new ListButton(ctx);
+        turnOnButton.setText(ctx.getString(R.string.open));
 
-	/**
-	 * Ottiene il layout del pannello comandi
-	 * 
-	 */
-	@Override
-	public void getActionsLayout( Context ctx, LinearLayout cont) {
-		cont.removeAllViews();
-		
-		//RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-			//	RelativeLayout.LayoutParams.MATCH_PARENT);
-		// cmd.setGravity(Gravity.TOP);
-		cont.addView(getQuickActionTitle());
+        cont.addView(turnOnButton);
 
-		final ListButton turnOnButton = new ListButton(ctx);
-		turnOnButton.setText(ctx.getString(R.string.open));
+        turnOnButton.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                //turnOnButton.setEnabled(false);
+                Thread t = new Thread() {
+                    public void run() {
+                        UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
+                                prefs, String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
 
-		cont.addView(turnOnButton);
+                    }
+                };
+                t.start();
+            }
 
-		turnOnButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				//turnOnButton.setEnabled(false);
-				Thread t = new Thread() {
-					public void run() {
-						UDPHelper.issueSoulissCommand("" + getTypicalDTO().getNodeId(), "" + typicalDTO.getSlot(),
-								prefs, String.valueOf(Constants.Typicals.Souliss_T1n_OnCmd));
+        });
+    }
 
-					}
-				};
-				t.start();
-			}
+    @Override
+    public ArrayList<ISoulissCommand> getCommands(Context ctx) {
+        // ritorna le bozze dei comandi, da riempire con la schermata addProgram
+        ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
-		});
-	}
+        SoulissCommand t = new SoulissCommand(this);
+        t.setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
+        t.setSlot(getTypicalDTO().getSlot());
+        t.setNodeId(getTypicalDTO().getNodeId());
+        ret.add(t);
 
-	@Override
-	public String getOutputDesc() {
-		return "NA";
-	}
+        return ret;
+    }
+
+    @Override
+    public String getOutputDesc() {
+        return "NA";
+    }
 
 }

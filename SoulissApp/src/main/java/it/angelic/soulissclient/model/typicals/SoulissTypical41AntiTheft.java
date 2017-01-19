@@ -50,21 +50,21 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand( this);
-		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T4n_Armed);
-		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		t.setCommand(Constants.Typicals.Souliss_T4n_Armed);
+		t.setSlot(getTypicalDTO().getSlot());
+		t.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		SoulissCommand tt = new SoulissCommand( this);
-		tt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T4n_NotArmed);
-		tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		tt.setCommand(Constants.Typicals.Souliss_T4n_NotArmed);
+		tt.setSlot(getTypicalDTO().getSlot());
+		tt.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tt);
 
 		SoulissCommand ter = new SoulissCommand( this);
-		ter.getCommandDTO().setCommand(Constants.Typicals.Souliss_T4n_ReArm);
-		ter.getCommandDTO().setSlot(typicalDTO.getSlot());
-		ter.getCommandDTO().setNodeId(typicalDTO.getNodeId());
+		ter.setCommand(Constants.Typicals.Souliss_T4n_ReArm);
+		ter.setSlot(typicalDTO.getSlot());
+		ter.setNodeId(typicalDTO.getNodeId());
 		ret.add(ter);
 
 		return ret;

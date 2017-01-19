@@ -43,39 +43,39 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
         ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
         SoulissCommand t = new SoulissCommand( this);
-        t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
-        t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-        t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        t.setCommand(Constants.Typicals.Souliss_T1n_OnCmd);
+        t.setSlot(getTypicalDTO().getSlot());
+        t.setNodeId(getTypicalDTO().getNodeId());
         ret.add(t);
 
         SoulissCommand ff = new SoulissCommand( this);
-        ff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
-        ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-        ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ff.setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
+        ff.setSlot(getTypicalDTO().getSlot());
+        ff.setNodeId(getTypicalDTO().getNodeId());
         ret.add(ff);
 
         SoulissCommand ft = new SoulissCommand( this);
-        ft.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
-        ft.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-        ft.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ft.setCommand(Constants.Typicals.Souliss_T1n_ToogleCmd);
+        ft.setSlot(getTypicalDTO().getSlot());
+        ft.setNodeId(getTypicalDTO().getNodeId());
         ret.add(ft);
 
         SoulissCommand ftt = new SoulissCommand( this);
-        ftt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T19_Min);
-        ftt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-        ftt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ftt.setCommand(Constants.Typicals.Souliss_T19_Min);
+        ftt.setSlot(getTypicalDTO().getSlot());
+        ftt.setNodeId(getTypicalDTO().getNodeId());
         ret.add(ftt);
 
         SoulissCommand fttd = new SoulissCommand( this);
-        fttd.getCommandDTO().setCommand(Constants.Typicals.Souliss_T19_Med);
-        fttd.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-        fttd.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        fttd.setCommand(Constants.Typicals.Souliss_T19_Med);
+        fttd.setSlot(getTypicalDTO().getSlot());
+        fttd.setNodeId(getTypicalDTO().getNodeId());
         ret.add(fttd);
 
         SoulissCommand ftts = new SoulissCommand( this);
-        ftts.getCommandDTO().setCommand(Constants.Typicals.Souliss_T19_Max);
-        ftts.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-        ftts.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+        ftts.setCommand(Constants.Typicals.Souliss_T19_Max);
+        ftts.setSlot(getTypicalDTO().getSlot());
+        ftts.setNodeId(getTypicalDTO().getNodeId());
         ret.add(ftts);
         return ret;
     }

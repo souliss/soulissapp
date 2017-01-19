@@ -162,7 +162,7 @@ public class SoulissWidget extends AppWidgetProvider {
                         final SoulissTypical tgt = db.getTypical(node, slot);
                         UDPHelper.pollRequest(opzioni, 1, tgt.getNodeId());
                         final SoulissCommand cmdd = new SoulissCommand(tgt);
-                        cmdd.getCommandDTO().setCommand(cmd);
+                        cmdd.setCommand(cmd);
                         // se comando non vuoto
                         if (cmd != -3) {
                             cmdd.execute();

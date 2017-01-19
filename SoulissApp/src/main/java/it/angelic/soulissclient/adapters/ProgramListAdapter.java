@@ -14,22 +14,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
 import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 
 public class ProgramListAdapter extends BaseAdapter {
-    SoulissCommand[] programmi;
+    List<SoulissCommand> programmi = new ArrayList<>();
     SparseArray<SoulissTriggerDTO> triggers;
     private LayoutInflater mInflater;
     private Context context;
     private SoulissPreferenceHelper opzioni;
 
-    public ProgramListAdapter(Context context, SoulissCommand[] versio, SparseArray<SoulissTriggerDTO> trigs,
+    public ProgramListAdapter(Context context, List<SoulissCommand> versio, SparseArray<SoulissTriggerDTO> trigs,
                               SoulissPreferenceHelper optss) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -40,18 +42,20 @@ public class ProgramListAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        return programmi.length;
+        if (programmi == null)
+            return 0;
+        return programmi.size();
     }
 
     public Object getItem(int position) {
-        return programmi[position];
+        return programmi.get(position);
     }
 
     public long getItemId(int position) {
         return position;
     }
 
-    public SoulissCommand[] getCommands() {
+    public List<SoulissCommand> getCommands() {
         return programmi;
     }
 
@@ -65,7 +69,7 @@ public class ProgramListAdapter extends BaseAdapter {
             holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
             holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
             holder.image = (ImageView) convertView.findViewById(R.id.program_icon);
-            holder.data = programmi[position];
+            holder.data = programmi.get(position);
             convertView.setTag(holder);
         } else {
             holder = (CommandViewHolder) convertView.getTag();
@@ -77,7 +81,6 @@ public class ProgramListAdapter extends BaseAdapter {
             holder.textCmd.setTextColor(context.getResources().getColor(R.color.black));
             holder.textCmdInfo.setTextColor(context.getResources().getColor(R.color.black));
         }
-        SoulissCommandDTO dto = holder.data.getCommandDTO();
         //StringBuilder info = new StringBuilder(holder.data.toString());
 
         holder.textCmd.setText(holder.data.getNiceName());
@@ -91,10 +94,10 @@ public class ProgramListAdapter extends BaseAdapter {
                     android.graphics.PorterDuff.Mode.SRC_ATOP);
 
             holder.textCmdWhen
-                    .setText(context.getString(R.string.execute_at)+" " + Constants.hourFormat.format(dto.getScheduledTime().getTime()));
-            if (holder.data.getCommandDTO().getInterval() > 0) {
+                    .setText(context.getString(R.string.execute_at) + " " + Constants.hourFormat.format(holder.data.getScheduledTime().getTime()));
+            if (holder.data.getInterval() > 0) {
                 String strMeatFormat = context.getString(R.string.programs_every);
-                holder.textCmdInfo.setText(String.format(strMeatFormat, dto.getInterval()));
+                holder.textCmdInfo.setText(String.format(strMeatFormat, holder.data.getInterval()));
             } else {
 
 
@@ -112,9 +115,9 @@ public class ProgramListAdapter extends BaseAdapter {
             holder.image.setImageResource(R.drawable.exit1);
             // holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
             // se gia eseguito, dico quando
-            if (holder.data.getCommandDTO().getExecutedTime() != null) {
+            if (holder.data.getExecutedTime() != null) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
-                        + " " + Constants.hourFormat.format(holder.data.getCommandDTO().getExecutedTime().getTime()));
+                        + " " + Constants.hourFormat.format(holder.data.getExecutedTime().getTime()));
             } else {
                 holder.textCmdWhen.setText(context.getString(R.string.programs_notyet));
             }
@@ -134,16 +137,16 @@ public class ProgramListAdapter extends BaseAdapter {
             holder.image.setImageResource(R.drawable.lighthouse1);
             holder.image.setColorFilter(context.getResources().getColor(color.aa_red), PorterDuff.Mode.SRC_ATOP);
 
-            SoulissTriggerDTO intrig = triggers.get((int) holder.data.getCommandDTO().getCommandId());
+            SoulissTriggerDTO intrig = triggers.get((int) holder.data.getCommandId());
 
 			/* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
             holder.textCmdInfo.setText(context.getString(R.string.programs_when) + " " + intrig.getInputSlot()
                     + " on Node " + intrig.getInputNodeId() + " " + context.getString(R.string.is) + " " + intrig.getOp()
                     + " " + intrig.getThreshVal());
-            if (holder.data.getCommandDTO().getExecutedTime() != null)
+            if (holder.data.getExecutedTime() != null)
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
-                        + " " + Constants.hourFormat.format((holder.data.getCommandDTO().getExecutedTime().getTime())));
+                        + " " + Constants.hourFormat.format((holder.data.getExecutedTime().getTime())));
             else
                 holder.textCmdWhen.setText(context.getString(R.string.programs_notyet));
         }

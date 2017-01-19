@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -27,10 +29,10 @@ import it.angelic.soulissclient.util.SoulissUtils;
 public class NodesListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private Context context;
-	SoulissNode[] nodi;
+	List<SoulissNode> nodi;
 	private SoulissPreferenceHelper opzioni;
 
-	public NodesListAdapter(Context context, SoulissNode[] versio, SoulissPreferenceHelper opts) {
+	public NodesListAdapter(Context context, List<SoulissNode> versio, SoulissPreferenceHelper opts) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
 		this.nodi = versio;
@@ -38,22 +40,22 @@ public class NodesListAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return nodi.length;
+		return nodi.size();
 	}
 
 	public Object getItem(int position) {
-		return nodi[position];
+		return nodi.get(position);
 	}
 
 	public long getItemId(int position) {
 		return position;
 	}
 
-	public SoulissNode[] getNodes() {
+	public List<SoulissNode> getNodes() {
 		return nodi;
 	}
 
-	public void setNodes(SoulissNode[] in) {
+	public void setNodes(List<SoulissNode> in) {
 		nodi = in;
 	}
 
@@ -79,7 +81,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.hlt.setProgress(0);
 			holder.hlt.setMax(Constants.MAX_HEALTH);
 			holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
-			holder.imageRes = nodi[position].getIconResourceId();
+			holder.imageRes = nodi.get(position).getIconResourceId();
 			// pgDrawable.getPaint().setStrokeWidth(3);
 			pgDrawable.getPaint().setDither(true);
 			pgDrawable.getPaint().setShader(gradient);
@@ -98,19 +100,19 @@ public class NodesListAdapter extends BaseAdapter {
 			// Gravity.LEFT, ClipDrawable.HORIZONTAL);
 			// holder.hlt.setProgressDrawable(progress);
 		}
-		holder.text.setText(nodi[position].getNiceName());
+		holder.text.setText(nodi.get(position).getNiceName());
 		// holder.text.setTextAppearance(context, R.style.CodeFontTitle);
 
 		// Progress = health
 		holder.hlt.setProgress(0);
-		holder.hlt.setProgress(nodi[position].getHealth());
+		holder.hlt.setProgress(nodi.get(position).getHealth());
 		/* Dimensioni del testo settate dalle opzioni */
 		// holder.textTyp.setTextSize(TypedValue.COMPLEX_UNIT_SP,holder.textTyp.getTextSize()
 		// + opzioni.getListDimensTesto());
 		// holder.textTyp.setTextAppearance(context, R.style.CodeFontMain);
 
         holder.textTyp.setText(  context.getResources().getQuantityString(R.plurals.Devices,
-				nodi[position].getActiveTypicals().size(), nodi[position].getActiveTypicals().size()) + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodi[position].getRefreshedAt()));
+				nodi.get(position).getActiveTypicals().size(), nodi.get(position).getActiveTypicals().size()) + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodi.get(position).getRefreshedAt()));
 
 		if (opzioni.isLightThemeSelected()) {
 			holder.textTyp.setTextColor(ContextCompat.getColor(context, R.color.black));
@@ -132,7 +134,7 @@ public class NodesListAdapter extends BaseAdapter {
 			// holder.text.startAnimation(a2);
 		}
 
-		holder.data = nodi[position];
+		holder.data = nodi.get(position);
 
 		return convertView;
 	}

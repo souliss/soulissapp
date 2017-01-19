@@ -110,7 +110,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         setContentView(R.layout.main_scenedetail);
 
         // Backg. stuff
-        SoulissApp.setBackground(findViewById(R.id.containerlista), getWindowManager());
+        //SoulissApp.setBackground(findViewById(R.id.containerlista), getWindowManager());
         // Testata, info scena
         createHeader();
 
@@ -155,6 +155,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         ImageView icon = (ImageView) findViewById(R.id.scene_icon);
@@ -162,10 +163,6 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
                 startActivity(settingsActivity);
-                final Intent preferencesActivity = new Intent(getBaseContext(), PreferencesActivity.class);
-                // evita doppie aperture per via delle sotto-schermate
-                preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(preferencesActivity);
                 return true;
             case R.id.AddScene:
                 //FrameLayout f1 = (FrameLayout) findViewById(android.R.id.custom);
@@ -195,14 +192,20 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         super.onResume();
         // thru = opzioni.isSoulissReachable();
         SoulissDBHelper.open();
-        // IntentFilter filtere = new IntentFilter();
-        // filtere.addAction("it.angelic.soulissclient.GOT_DATA");
+        ArrayList<SoulissCommand> gottardo = datasource.getSceneCommands(collected.getId());
+        SceneCommandListAdapter progsAdapter = new SceneCommandListAdapter(this, gottardo,
+                opzioni);
+        listaComandiView.setAdapter(progsAdapter);
+        listaComandiView.invalidateViews();
     }
 
     @Override
     protected void onStart() {
         //int versionNumber = Integer.valueOf(android.os.Build.VERSION.SDK_INT);
         super.onStart();
+        setActionBarInfo(getString(R.string.scenes_title));
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        opzioni.initializePrefs();
 
         Bundle extras = getIntent().getExtras();
         collected = (SoulissScene) extras.get("SCENA");
@@ -211,21 +214,13 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
         // tipici dal DB
         SoulissDBHelper.open();
-        ArrayList<SoulissCommand> gottardo = datasource.getSceneCommands(collected.getId());
-        SoulissCommand[] comandiArray = new SoulissCommand[gottardo.size()];
-        comandiArray = gottardo.toArray(comandiArray);
-
-        // typs = gottardo.toArray(typs);
-        ta = new SceneCommandListAdapter(this.getApplicationContext(), comandiArray, opzioni);
-        // Adapter della lista
-        listaComandiView.setAdapter(ta);
 
         listaComandiView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 // TODO exec single command ?
             }
         });
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //listaComandiView.invalidateViews();
     }
 
 

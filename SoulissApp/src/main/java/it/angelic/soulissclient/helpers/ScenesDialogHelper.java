@@ -52,7 +52,7 @@ public class ScenesDialogHelper {
                                            final SoulissScene tgt, final SoulissCommand toRename, final SoulissPreferenceHelper opzioni) {
 
         // se lo scenario e` default ci sono solo 2 COMANDI !!!
-        if (toRename.getCommandDTO().getSceneId() < 3 && toRename.getCommandDTO().getInterval() < 3) {
+        if (toRename.getSceneId() < 3 && toRename.getInterval() < 3) {
             Toast.makeText(cont, "Can't remove default commands", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -69,10 +69,10 @@ public class ScenesDialogHelper {
                         if (ctx != null) {
                             // prendo comandi dal DB
                             ArrayList<SoulissCommand> goer = datasource.getSceneCommands( tgt.getId());
-                            SoulissCommand[] programsArray = new SoulissCommand[goer.size()];
-                            programsArray = goer.toArray(programsArray);
+                            // SoulissCommand[] programsArray = new SoulissCommand[goer.size()];
+                            // programsArray = goer.toArray(programsArray);
                             tgt.setCommandArray(goer);
-                            SceneCommandListAdapter progsAdapter = new SceneCommandListAdapter(cont, programsArray,
+                            SceneCommandListAdapter progsAdapter = new SceneCommandListAdapter(cont, goer,
                                     opzioni);
                             // Adapter della lista
                             ctx.setAdapter(progsAdapter);
@@ -260,13 +260,13 @@ public class ScenesDialogHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         // Aggiungi comando
-                        SoulissCommand tull = (SoulissCommand) outputCommandSpinner.getSelectedItem();
-                        if (tull == null) {
+                        SoulissCommand toBeSaved = (SoulissCommand) outputCommandSpinner.getSelectedItem();
+                        if (toBeSaved == null) {
                             Toast.makeText(context, "Command not selected", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         // collega il comando alla scena
-                        tull.setSceneId(targetScene.getId());
+                        toBeSaved.setSceneId(targetScene.getId());
 
                         if (((SoulissNode) outputNodeSpinner.getSelectedItem()).getNodeId() == Constants.MASSIVE_NODE_ID) {// MASSIVE
                             SoulissTypical model = (SoulissTypical) outputTypicalSpinner.getSelectedItem();
@@ -274,28 +274,29 @@ public class ScenesDialogHelper {
                                 Toast.makeText(context, "Typical not selected", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            tull.setNodeId(Constants.MASSIVE_NODE_ID);
+                            toBeSaved.setNodeId(Constants.MASSIVE_NODE_ID);
                             //tull.getCommandDTO().setType(Constants.COMMAND_MASSIVE);
-                            tull.setSlot(model.getTypicalDTO().getTypical());
+                            toBeSaved.setSlot(model.getTypicalDTO().getTypical());
                         } else {
-                            tull.getCommandDTO().setType(Constants.COMMAND_SINGLE);
+                            toBeSaved.setType(Constants.COMMAND_SINGLE);
                         }
-                        // lo metto dopo l'ultimo inserito
+
                         int[] mefisto = context.getResources().getIntArray(R.array.delayIntervalValues);
-                        tull.getCommandDTO().setInterval(mefisto[outputDelaySpinner.getSelectedItemPosition()]  );
+                        toBeSaved.setInterval(mefisto[outputDelaySpinner.getSelectedItemPosition()]);
                         Log.w(Constants.TAG,"Saving new command with delay:"+ context.getResources().getIntArray(R.array.delayIntervalValues)[outputDelaySpinner.getSelectedItemPosition()]  );
-                        tull.setStep(targetScene.getCommandArray().size() + 1);
-                        tull.getCommandDTO().persistCommand();
+                        // lo metto dopo l'ultimo inserito
+                        toBeSaved.setStep(targetScene.getCommandArray().size() + 1);
+                        toBeSaved.persistCommand();
 
                         if (list != null) {//refresh
                             // prendo comandi dal DB per questa scena
                             ArrayList<SoulissCommand> goer = datasource.getSceneCommands(targetScene.getId());
-                            SoulissCommand[] scenesArr = new SoulissCommand[goer.size()];
-                            scenesArr = goer.toArray(scenesArr);
+                            //SoulissCommand[] scenesArr = new SoulissCommand[goer.size()];
+                            //scenesArr = goer.toArray(scenesArr);
                             targetScene.setCommandArray(goer);
                             // TODO usare notifydschange e togliere new
                             // Adapter()
-                            SceneCommandListAdapter progsAdapter = new SceneCommandListAdapter(context, scenesArr,
+                            SceneCommandListAdapter progsAdapter = new SceneCommandListAdapter(context, goer,
                                     opzioni);
                             list.setAdapter(progsAdapter);
                             list.invalidateViews();

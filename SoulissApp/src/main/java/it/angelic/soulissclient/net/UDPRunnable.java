@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
+import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.DatagramChannel;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -53,7 +54,6 @@ public class UDPRunnable implements Runnable {
         // lifecycle
 
         //final UDPSoulissDecoder decoder = new UDPSoulissDecoder(opzioni, SoulissClient.getAppContext());
-
         while (true) {
             try {
                 // InetAddress serverAddr = InetAddress.getByName(SOULISSIP);
@@ -76,6 +76,7 @@ public class UDPRunnable implements Runnable {
                 socket.setSoTimeout(to);
                 // wait to receive the packet
                 socket.receive(packet);
+                Log.d(TAG, "***Packet received, spawning decoder. Recvd bytes=" + packet.getLength());
                 // spawn a decoder and go on
                 threadExecutor.execute(new Runnable() {
                     @Override
@@ -101,9 +102,16 @@ public class UDPRunnable implements Runnable {
             } catch (SocketTimeoutException e2) {
                 Log.w(TAG, "***UDP SocketTimeoutException close!" + e2);
                 socket.close();
-            } catch (Exception ee) {
-                Log.e(TAG, "***UDP unhandled!" + ee.getMessage() + " of class " + ee.getClass());
+            } catch (ClosedByInterruptException xc) {
+                xc.printStackTrace();
+                Log.e(TAG, "***UDP runnable interrupted!");
                 socket.close();
+                Thread.currentThread().interrupt();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+                Log.e(TAG, "***UDP unhandled error!" + ee.getMessage() + " of class " + ee.getClass());
+                socket.close();
+                Thread.currentThread().interrupt();
             }
         }
     }

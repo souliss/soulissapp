@@ -41,15 +41,15 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_RGB_OnCmd);
-		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		t.setCommand(Constants.Typicals.Souliss_T1n_RGB_OnCmd);
+		t.setSlot(getTypicalDTO().getSlot());
+		t.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		SoulissCommand ff = new SoulissCommand(this);
-		ff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T1n_RGB_OffCmd);
-		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		ff.setCommand(Constants.Typicals.Souliss_T1n_RGB_OffCmd);
+		ff.setSlot(getTypicalDTO().getSlot());
+		ff.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
 
 		return ret;

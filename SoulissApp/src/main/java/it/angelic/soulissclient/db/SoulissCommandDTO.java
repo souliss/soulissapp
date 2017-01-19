@@ -14,8 +14,8 @@ public class SoulissCommandDTO implements Serializable {
     private Long commandId;
     private short nodeId;
     private short slot;
-    private Calendar scheduledTime;
-    private Calendar executedTime;
+    private Long scheduledTime;
+    private Long executedTime;
     private long command;
     private Integer sceneId;
     private int interval;
@@ -28,13 +28,12 @@ public class SoulissCommandDTO implements Serializable {
         setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SLOT)));
         setCommand(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_INPUT)));
         Calendar now = Calendar.getInstance();
-        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCHEDTIME))));
-        setScheduledTime(now);
+        setScheduledTime(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCHEDTIME)));
         long exd = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_EXECTIME));
         if (exd != 0) {
             Calendar bis = Calendar.getInstance();
             bis.setTime(new Date(exd));
-            setExecutedTime(bis);
+            setExecutedTime(exd);
         }
         setInterval(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCHEDTIME_INTERVAL)));
         setSceneId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCENEID)));
@@ -59,9 +58,9 @@ public class SoulissCommandDTO implements Serializable {
         values.put(SoulissDB.COLUMN_COMMAND_TYPE, type);
         values.put(SoulissDB.COLUMN_COMMAND_SCENEID, sceneId);
         if (scheduledTime != null)
-            values.put(SoulissDB.COLUMN_COMMAND_SCHEDTIME, scheduledTime.getTime().getTime());
+            values.put(SoulissDB.COLUMN_COMMAND_SCHEDTIME, scheduledTime);
         if (executedTime != null)
-            values.put(SoulissDB.COLUMN_COMMAND_EXECTIME, executedTime.getTime().getTime());
+            values.put(SoulissDB.COLUMN_COMMAND_EXECTIME, executedTime);
         // else
         // values.put(SoulissDB.COLUMN_EXECTIME, null);
         if (interval != 0)
@@ -102,19 +101,19 @@ public class SoulissCommandDTO implements Serializable {
         this.slot = slot;
     }
 
-    public Calendar getScheduledTime() {
+    public Long getScheduledTime() {
         return scheduledTime;
     }
 
-    public void setScheduledTime(Calendar scheduledTime) {
+    public void setScheduledTime(Long scheduledTime) {
         this.scheduledTime = scheduledTime;
     }
 
-    public Calendar getExecutedTime() {
+    public Long getExecutedTime() {
         return executedTime;
     }
 
-    public void setExecutedTime(Calendar executedTime) {
+    public void setExecutedTime(Long executedTime) {
         this.executedTime = executedTime;
     }
 

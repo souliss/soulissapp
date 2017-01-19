@@ -151,7 +151,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		progsAdapter = new SceneListAdapter(this, scenesArray, opzioni);
 		// Adapter della lista
 		listaScenesView.setAdapter(progsAdapter);
-		listaScenesView.invalidateViews();
+		//listaScenesView.invalidateViews();
 		// ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
 		// nodeic.setAlpha(150);
 		mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);

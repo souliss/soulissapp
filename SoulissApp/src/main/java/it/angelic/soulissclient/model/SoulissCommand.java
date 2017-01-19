@@ -70,51 +70,83 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SoulissCommandDTO dto = getCommandDTO();
                 Calendar now = Calendar.getInstance();
-                if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
+                if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
                     //in realta devo eseguire una scena, non questo comando
                     //salvato adalla Addprogram activity
                     targetScene.execute();
                     return;
-                } else if (dto.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
-                    String intero = Long.toHexString(dto.getCommand());
+                } else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
+                    String intero = Long.toHexString(commandDTO.getCommand());
                     String[] laCosa = ScenesDialogHelper.splitStringEvery(intero, 2);
                     //codice che funziona ma non so perche`
                     for (int i = 0; i < laCosa.length; i++) {
                         laCosa[i] = "0x" + laCosa[i];
                     }
                     //split the command if longer
-                    UDPHelper.issueMassiveCommand(String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(), laCosa);
+                    UDPHelper.issueMassiveCommand(String.valueOf(commandDTO.getSlot()), SoulissApp.getOpzioni(), laCosa);
                 } else {// COMANDO SINGOLO
-                    String start = Long.toHexString(dto.getCommand());
+                    String start = Long.toHexString(commandDTO.getCommand());
                     String[] laCosa = ScenesDialogHelper.splitStringEvery(start, 2);
                     // String[] laCosa = start.split("(?<=\\G..)");
                     for (int i = 0; i < laCosa.length; i++) {
                         laCosa[i] = "0x" + laCosa[i];
                     }
                     //codice che funziona ma non so perche`
-                    UDPHelper.issueSoulissCommand(String.valueOf(dto.getNodeId()),
-                            String.valueOf(dto.getSlot()), SoulissApp.getOpzioni(),
+                    UDPHelper.issueSoulissCommand(String.valueOf(commandDTO.getNodeId()),
+                            String.valueOf(commandDTO.getSlot()), SoulissApp.getOpzioni(),
                             // pura magia della decode
                             laCosa);
                 }
                 //in base al tipo, segno ultima esecuzione
                 if (getType() == it.angelic.soulissclient.Constants.COMMAND_TIMED
-                        && now.after(getCommandDTO().getScheduledTime())) {
-                    getCommandDTO().setExecutedTime(now);
+                        && now.after(commandDTO.getScheduledTime())) {
+                    setExecutedTime(now);
                 } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_COMEBACK_CODE) {
-                    getCommandDTO().setExecutedTime(now);
-                    getCommandDTO().setSceneId(null);
+                    setExecutedTime(now);
+                    commandDTO.setSceneId(null);
                 } else if (getType() == it.angelic.soulissclient.Constants.COMMAND_GOAWAY_CODE) {
-                    getCommandDTO().setExecutedTime(now);
-                    getCommandDTO().setSceneId(null);
+                    setExecutedTime(now);
+                    commandDTO.setSceneId(null);
                 }
             }
         }).start();
     }
 
+    public long getCommand() {
+        return commandDTO.getCommand();
+    }
 
+    //protetto per i trigger
+    protected SoulissCommandDTO getCommandDTO() {
+        return commandDTO;
+    }
+
+    public long getCommandId() {
+        return commandDTO.getCommandId();
+    }
+
+    public Calendar getExecutedTime() {
+        Calendar ret = Calendar.getInstance();
+        ret.setTime(new Date(commandDTO.getScheduledTime()));
+        return ret;
+    }
+
+    public int getSceneId() {
+        return commandDTO.getSceneId();
+    }
+
+    public void setCommandId(long commandId) {
+        commandDTO.setCommandId(commandId);
+    }
+
+
+    public void setExecutedTime(Calendar executedTime) {
+        if (executedTime == null)
+            commandDTO.setExecutedTime(null);
+        else
+            commandDTO.setExecutedTime(executedTime.getTime().getTime());
+    }
 
     // FIXME ritorna alla cazzo, rivedere le icone dei comandi
     public
@@ -179,6 +211,12 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
 
     @Override
     public void setIconResourceId(@DrawableRes int resId) {
+        //should not be called
+        Log.w(Constants.TAG, "set() invalid, command has no icon");
+    }
+
+    public int getInterval() {
+        return commandDTO.getInterval();
     }
 
     @Override
@@ -286,6 +324,10 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         return SoulissApp.getAppContext().getString(resId);
     }
 
+    public void setInterval(int interval) {
+        commandDTO.setInterval(interval);
+    }
+
     @Override
     public void setName(String newName) {
         throw new Error("Commands don't support custom names");
@@ -318,21 +360,47 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         return info.toString();
     }
 
-
-    @Override
-    public String toString() {
-        return getName();
+    public short getNodeId() {
+        return commandDTO.getNodeId();
     }
 
+    public void setNodeId(short id) {
+        commandDTO.setNodeId(id);
+    }
 
-    public void setStep(int size) {
-        if (!(parentTypical == null)) {
-            Log.e(Constants.TAG, "ERRORE strutturale, setStep con parent non nullo");
-        }
+    /**
+     * Quando targetScene non e` nullo, lo e` parentTypical, e nodeId nel DTO vale -2
+     * In pratica targetScene e typical sono mutuali, in base a cosa controlla il comando
+     *
+     * @return
+     */
+    public SoulissTypical getParentTypical() {
+        return parentTypical;
+    }
 
-        Calendar fakeDate = Calendar.getInstance();
-        fakeDate.setTime(new Date(size));
-        commandDTO.setScheduledTime(fakeDate);
+    public void setParentTypical(SoulissTypical parentTypical) {
+        this.parentTypical = parentTypical;
+    }
+
+    public Calendar getScheduledTime() {
+        Calendar ret = Calendar.getInstance();
+        ret.setTime(new Date(commandDTO.getScheduledTime()));
+        return ret;
+    }
+
+    public void setScheduledTime(Calendar baseNow) {
+        if (baseNow == null)
+            commandDTO.setScheduledTime(null);
+        else
+            commandDTO.setScheduledTime(baseNow.getTime().getTime());
+    }
+
+    public short getSlot() {
+        return commandDTO.getSlot();
+    }
+
+    public void setSlot(short typical) {
+        commandDTO.setSlot(typical);
     }
 
     /**
@@ -350,59 +418,36 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         this.targetScene = parentScene;
     }
 
-    public void setParentTypical(SoulissTypical parentTypical) {
-        this.parentTypical = parentTypical;
+    public int getType() {
+        return commandDTO.getType();
     }
 
-    /**
-     * Quando targetScene non e` nullo, lo e` parentTypical, e nodeId nel DTO vale -2
-     * In pratica targetScene e typical sono mutuali, in base a cosa controlla il comando
-     *
-     * @return
-     */
-    public SoulissTypical getParentTypical() {
-        return parentTypical;
+    public void setType(int commandSingle) {
+        commandDTO.setType(commandSingle);
     }
 
-    /*
-     *
-     *
-     *
-     *  DTO WRAPPERS
-     *
-     *
-     */
-
-    public short getNodeId() {
-        return commandDTO.getNodeId();
+    public void setCommand(long souliss_t4n_armed) {
+        commandDTO.setCommand(souliss_t4n_armed);
     }
 
-    public void setNodeId(short id) {
-        commandDTO.setNodeId(id);
+    public void persistCommand() {
+        commandDTO.persistCommand();
     }
 
-    public short getSlot() {
-        return commandDTO.getSlot();
-    }
-
-    public void setSlot(short typical) {
-        commandDTO.setSlot(typical);
-    }
-
-    public void setSceneId(int id) {
+    public void setSceneId(Integer id) {
         commandDTO.setSceneId(id);
     }
 
-    public long getCommand() {
-        return commandDTO.getCommand();
+    public void setStep(int size) {
+        if (!(parentTypical == null)) {
+            Log.e(Constants.TAG, "ERRORE strutturale, setStep con parent non nullo");
+        }
+        commandDTO.setScheduledTime((long) size);
     }
 
-    public SoulissCommandDTO getCommandDTO() {
-        return commandDTO;
-    }
-
-    public int getType() {
-        return commandDTO.getType();
+    @Override
+    public String toString() {
+        return getName();
     }
 
     /*

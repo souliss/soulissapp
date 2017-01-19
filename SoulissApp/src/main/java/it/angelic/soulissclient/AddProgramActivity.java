@@ -124,11 +124,11 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
     private void setFields() {
         if (collected == null)
             return;
-        else if (collected.getCommandDTO().getNodeId() == Constants.COMMAND_FAKE_SCENE) {
+        else if (collected.getNodeId() == Constants.COMMAND_FAKE_SCENE) {
             //get last
             outputNodeSpinner.setSelection(outputNodeSpinner.getAdapter().getCount() - 1);
             //tipici sono scene
-            int sceneid = collected.getCommandDTO().getSlot();
+            int sceneid = collected.getSlot();
             Log.w(Constants.TAG, "Restoring scene ID" + sceneid);
             setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[nodiArrayWithExtra.length - 1]);
             int tot = outputTypicalSpinner.getCount();
@@ -142,7 +142,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             }
             tvcommand.setVisibility(View.INVISIBLE);
         } else {//reload nodo, tipico e comando
-            int nodeId = collected.getCommandDTO().getNodeId();
+            int nodeId = collected.getNodeId();
             Log.i(Constants.TAG, "SELECTED NODEID:" + nodeId);
             int toti = outputNodeSpinner.getCount();
             int selIdx = 0;
@@ -159,7 +159,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             int tot = outputTypicalSpinner.getCount();
             for (int i = 0; i < tot; i++) {
                 SoulissTypical now = (SoulissTypical) outputTypicalSpinner.getItemAtPosition(i);
-                if (now.getSlot() == collected.getCommandDTO().getSlot()) {
+                if (now.getSlot() == collected.getSlot()) {
                     //seleziono la scena da eseguire
                     outputTypicalSpinner.setSelection(i);
                     Log.i(Constants.TAG, "SELECTED TYP:" + i);
@@ -170,7 +170,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             tot = outputCommandSpinner.getCount();
             for (int t = 0; t < tot; t++) {
                 SoulissCommand now = (SoulissCommand) outputCommandSpinner.getItemAtPosition(t);
-                if (now.getCommandDTO().getCommand() == collected.getCommandDTO().getCommand()) {
+                if (now.getCommand() == collected.getCommand()) {
                     //seleziono la scena da eseguire
                     outputCommandSpinner.setSelection(t);
                     Log.i(Constants.TAG, "SELECTED COMMAND POS:" + t);
@@ -180,14 +180,14 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         }
         //SETTA TYPE
         if (collected.getType() == Constants.COMMAND_TIMED) {
-            Calendar sched = collected.getCommandDTO().getScheduledTime();
+            Calendar sched = collected.getScheduledTime();
             commandTimePicker.setCurrentHour(sched.get(Calendar.HOUR_OF_DAY));
             commandTimePicker.setCurrentMinute(sched.get(Calendar.MINUTE));
 
-            if (collected.getCommandDTO().getInterval() > 0) {
+            if (collected.getInterval() > 0) {
                 int j = 0;
                 for (int spi : spinnerArrVal) {
-                    if (collected.getCommandDTO().getInterval() == spi)
+                    if (collected.getInterval() == spi)
                         commandSpinnerInterval.setSelection(j);
                     j++;
                 }
@@ -199,7 +199,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         } else if (collected.getType() == Constants.COMMAND_TRIGGERED) {
             radioTrigger.performClick();
 
-            inputTrigger = datasource.getTriggerByCommandId(this, collected.getCommandDTO().getCommandId());
+            inputTrigger = datasource.getTriggerByCommandId(this, collected.getCommandId());
 
             triggeredNodeSpinner.setSelection(inputTrigger.getInputNodeId());
             Log.d(Constants.TAG, "Setting trigger nodeid:" + inputTrigger.getInputNodeId() + " slot:" + inputTrigger.getInputSlot());
@@ -400,10 +400,10 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     programToSave = new SoulissCommand(dto);
                 } else if (IToSave instanceof SoulissCommand) {
                     programToSave = (SoulissCommand) IToSave;
-                    Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getCommandDTO().getNodeId());
-                    //programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
-                    //programToSave.getCommandDTO().setNodeId((short) Constants.MASSIVE_NODE_ID);
-                    //programToSave.getCommandDTO().setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
+                    Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getNodeId());
+                    //programToSave.setCommandId(collected.getCommandId());
+                    //programToSave.setNodeId((short) Constants.MASSIVE_NODE_ID);
+                    //programToSave.setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
                 }
                 if (programToSave == null) {
                     Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT).show();
@@ -411,7 +411,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                 }
 
                 //sceneId solo per i comandi che appartengono a una scena
-                programToSave.getCommandDTO().setSceneId(null);
+                programToSave.setSceneId(null);
 
 
                 Intent intent = AddProgramActivity.this.getIntent();
@@ -428,21 +428,21 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     }
                     baseNow.set(Calendar.HOUR_OF_DAY, commandTimePicker.getCurrentHour());
                     baseNow.set(Calendar.MINUTE, commandTimePicker.getCurrentMinute());
-                    programToSave.getCommandDTO().setType(Constants.COMMAND_TIMED);
-                    programToSave.getCommandDTO().setScheduledTime(baseNow);
+                    programToSave.setType(Constants.COMMAND_TIMED);
+                    programToSave.setScheduledTime(baseNow);
                     if (checkboxRecursive.isChecked()) {
 
-                        programToSave.getCommandDTO().setInterval(
+                        programToSave.setInterval(
                                 spinnerArrVal[commandSpinnerInterval.getSelectedItemPosition()]);
                     }
                     // inserimento nuovo
                     intent.putExtra("returnedData", Constants.COMMAND_TIMED);
                 } else if (radioPositional.isChecked()) {// POSIZIONALE
                     if (togglehomeaway.isChecked()) {
-                        programToSave.getCommandDTO().setType(Constants.COMMAND_COMEBACK_CODE);
+                        programToSave.setType(Constants.COMMAND_COMEBACK_CODE);
                         intent.putExtra("returnedData", Constants.COMMAND_COMEBACK_CODE);
                     } else {
-                        programToSave.getCommandDTO().setType(Constants.COMMAND_GOAWAY_CODE);
+                        programToSave.setType(Constants.COMMAND_GOAWAY_CODE);
                         intent.putExtra("returnedData", Constants.COMMAND_GOAWAY_CODE);
                     }
                     // inserimento nuovo
@@ -455,12 +455,12 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                         return;
                     }
                     intent.putExtra("returnedData", Constants.COMMAND_TRIGGERED);
-                    programToSave.getCommandDTO().setType(Constants.COMMAND_TRIGGERED);
+                    programToSave.setType(Constants.COMMAND_TRIGGERED);
                 }
                 // MERGE
                 if (collected != null)
-                    programToSave.getCommandDTO().setCommandId(collected.getCommandDTO().getCommandId());
-                programToSave.getCommandDTO().persistCommand();
+                    programToSave.setCommandId(collected.getCommandId());
+                programToSave.persistCommand();
 
                 if (radioTrigger.isChecked()) {// TRIGGER
                     SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
@@ -472,7 +472,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
 
                     trigger.setInputSlot(trig.getSlot());
                     trigger.setOp(threshButton.getText().toString());
-                    trigger.setCommandId(programToSave.getCommandDTO().getCommandId());
+                    trigger.setCommandId(programToSave.getCommandId());
                     try {
                         trigger.setThreshVal(Float.parseFloat(threshValEditText.getText().toString()));
                     } catch (Exception e){

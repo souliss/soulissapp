@@ -10,7 +10,8 @@
         android:layout_marginLeft="8dip"
         android:layout_marginRight="8dip"
         android:layout_marginTop="4dip"
-        android:background="@drawable/list_rect_yellow" >
+        android:background="@drawable/list_rect_yellow"
+        android:focusable="false">
 
         <ImageView
             android:id="@+id/command_icon"
@@ -25,12 +26,11 @@
         <TextView
             android:id="@+id/TextViewCommand"
             style="@style/CodeFontTitle"
-            android:textSize="@dimen/text_size"
+
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/command_icon"
             android:ellipsize="end"
-            android:lines="2"
             android:maxLines="1"
             android:textIsSelectable="false" >
         </TextView>
@@ -48,8 +48,7 @@
 
         <TextView
             android:id="@+id/TextViewCommandInfo"
-            style="@style/CodeFontSmall"
-            android:layout_width="wrap_content"
+            style="@style/CodeFontMain"
             android:layout_alignParentRight="true"
             android:layout_below="@id/TextViewCommandWhen"
             android:layout_toRightOf="@id/command_icon"

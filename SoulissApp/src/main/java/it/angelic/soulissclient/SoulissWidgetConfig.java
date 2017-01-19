@@ -147,7 +147,7 @@ public class SoulissWidgetConfig extends Activity {
             } else if (IToSave instanceof SoulissCommand) {
                 ccm = (SoulissCommand) IToSave;
                 editor.putInt(mAppWidgetId + "_SLOT", ((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getSlot());
-                editor.putLong(mAppWidgetId + "_CMD", (ccm).getCommandDTO().getCommand());
+                editor.putLong(mAppWidgetId + "_CMD", ccm.getCommand());
             } else if (IToSave == null) {//maybe a sensor
                 Toast.makeText(context, getString(R.string.widget_cantsave), Toast.LENGTH_LONG).show();
                 editor.putInt(mAppWidgetId + "_SLOT", ((SoulissTypical) outputTypicalSpinner.getSelectedItem()).getSlot());

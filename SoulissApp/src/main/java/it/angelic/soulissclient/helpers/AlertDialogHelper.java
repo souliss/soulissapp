@@ -287,9 +287,7 @@ public class AlertDialogHelper {
                         Log.i(TAG, "SoulissCommand deletion returned: " + res);
                         if (ctx != null) {
                             // prendo comandi dal DB
-                            LinkedList<SoulissCommand> goer = datasource.getUnexecutedCommands(cont);
-                            SoulissCommand[] programsArray = new SoulissCommand[goer.size()];
-                            programsArray = goer.toArray(programsArray);
+                            LinkedList<SoulissCommand> programsArray = datasource.getUnexecutedCommands(cont);
 
                             ProgramListAdapter progsAdapter = new ProgramListAdapter(cont, programsArray, datasource
                                     .getTriggerMap(cont), new SoulissPreferenceHelper(cont.getApplicationContext()));
@@ -341,9 +339,7 @@ public class AlertDialogHelper {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
                             if (listV != null) {
                                 List<SoulissNode> goer = datasource.getAllNodes();
-                                SoulissNode[] nodiArray = new SoulissNode[goer.size()];
-                                nodiArray = goer.toArray(nodiArray);
-                                NodesListAdapter nodesAdapter = new NodesListAdapter(cont, nodiArray, opzioni);
+                                NodesListAdapter nodesAdapter = new NodesListAdapter(cont, goer, opzioni);
                                 // Adapter della lista
                                 listV.setAdapter(nodesAdapter);
                                 listV.invalidateViews();
@@ -601,9 +597,7 @@ public class AlertDialogHelper {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
                             if (list != null) {
                                 List<SoulissNode> goer = datasource.getAllNodes();
-                                SoulissNode[] nodiArray = new SoulissNode[goer.size()];
-                                nodiArray = goer.toArray(nodiArray);
-                                NodesListAdapter nodesAdapter = new NodesListAdapter(context, nodiArray, opzioni);
+                                NodesListAdapter nodesAdapter = new NodesListAdapter(context, goer, opzioni);
                                 // Adapter della lista
                                 list.setAdapter(nodesAdapter);
                                 list.invalidateViews();

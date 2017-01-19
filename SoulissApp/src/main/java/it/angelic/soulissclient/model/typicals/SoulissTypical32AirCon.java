@@ -38,39 +38,39 @@ public class SoulissTypical32AirCon extends SoulissTypical implements ISoulissTy
 		ArrayList<ISoulissCommand> ret = new ArrayList<>();
 
 		SoulissCommand t = new SoulissCommand(this);
-		t.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_20);
-		t.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		t.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		t.setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_20);
+		t.setSlot(getTypicalDTO().getSlot());
+		t.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(t);
 
 		SoulissCommand ff = new SoulissCommand(this);
-		ff.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_24);
-		ff.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		ff.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		ff.setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Auto_24);
+		ff.setSlot(getTypicalDTO().getSlot());
+		ff.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(ff);
 
 		SoulissCommand cf = new SoulissCommand(this);
-		cf.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Cool_18);
-		cf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		cf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		cf.setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Cool_18);
+		cf.setSlot(getTypicalDTO().getSlot());
+		cf.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(cf);
 
 		SoulissCommand df = new SoulissCommand(this);
-		df.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Dry);
-		df.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		df.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		df.setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Dry);
+		df.setSlot(getTypicalDTO().getSlot());
+		df.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(df);
 
 		SoulissCommand faf = new SoulissCommand( this);
-		faf.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Fan);
-		faf.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		faf.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		faf.setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Fan);
+		faf.setSlot(getTypicalDTO().getSlot());
+		faf.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(faf);
 
 		SoulissCommand tt = new SoulissCommand(this);
-		tt.getCommandDTO().setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Off);
-		tt.getCommandDTO().setSlot(getTypicalDTO().getSlot());
-		tt.getCommandDTO().setNodeId(getTypicalDTO().getNodeId());
+		tt.setCommand(Constants.Typicals.Souliss_T_IrCom_AirCon_Pow_Off);
+		tt.setSlot(getTypicalDTO().getSlot());
+		tt.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(tt);
 
 		return ret;
