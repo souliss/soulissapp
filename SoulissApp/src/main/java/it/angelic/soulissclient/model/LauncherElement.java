@@ -10,10 +10,12 @@ import java.io.Serializable;
  */
 public class LauncherElement implements ILauncherTile, Serializable {
     private LauncherElementEnum componentEnum;
+    private String desc;
     private int id;
     private boolean isFullSpan;
     private ISoulissObject linkedObject;
     private short order;
+    private String title;
 
     public LauncherElement(LauncherElementEnum componentEnum) {
         super();
@@ -54,8 +56,24 @@ public class LauncherElement implements ILauncherTile, Serializable {
         this.order = order;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
     public boolean isFullSpan() {
         return isFullSpan;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setIsFullSpan(boolean isFullSpan) {

@@ -31,7 +31,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import it.angelic.receivers.NetworkStateReceiver;
-import it.angelic.soulissclient.adapters.StaggeredAdapter;
+import it.angelic.soulissclient.adapters.StaggeredLauncherElementAdapter;
 import it.angelic.soulissclient.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
@@ -53,7 +53,7 @@ import static it.angelic.soulissclient.Constants.TAG;
 public class MainActivity extends AbstractStatusedFragmentActivity {
     private Timer autoUpdate;
     private SoulissDBLauncherHelper dbLauncher;
-    private StaggeredAdapter launcherMainAdapter;
+    private StaggeredLauncherElementAdapter launcherMainAdapter;
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -173,13 +173,19 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }).start();
 
 
-        launcherMainAdapter = new StaggeredAdapter(this, launcherItems);
+        launcherMainAdapter = new StaggeredLauncherElementAdapter(this, launcherItems);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
         launcherMainAdapter.notifyDataSetChanged();
 
 
-        doBindService();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                doBindService();
+            }
+        }).start();
+
 
         // DRAWER
         initDrawer(this, DrawerMenuHelper.TAGS);
@@ -293,10 +299,10 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
     }
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
-        private final StaggeredAdapter adapter;
+        private final StaggeredLauncherElementAdapter adapter;
         View.OnClickListener mOnClickListener;
 
-        public LauncherStaggeredCallback(StaggeredAdapter adapter) {
+        public LauncherStaggeredCallback(StaggeredLauncherElementAdapter adapter) {
             this.adapter = adapter;
             mOnClickListener = new View.OnClickListener() {
                 @Override
@@ -321,7 +327,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             // get the viewHolder's and target's positions in your launcherMainAdapter data, swap them
 
-            Collections.swap(adapter.getList(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            Collections.swap(adapter.getLauncherElements(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
             // and notify the launcherMainAdapter that its dataset has changed
             adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
             return true;

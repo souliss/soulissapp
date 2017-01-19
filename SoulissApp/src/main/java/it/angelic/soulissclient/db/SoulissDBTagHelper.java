@@ -114,6 +114,26 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return count;
     }
 
+    public int countScenes() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_SCENES, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    public int countTriggers() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TRIGGERS, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
     public List<SoulissTypical> getFavouriteTypicals() {
 
         SoulissTag fake = new SoulissTag();

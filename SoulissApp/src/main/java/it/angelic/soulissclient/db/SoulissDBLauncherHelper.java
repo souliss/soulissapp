@@ -42,6 +42,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     private static Map<Integer, LauncherElement> myMap;
     private final SharedPreferences customCachedPrefs;
     private final File file;
+    private final Context context;
 
     public SoulissDBLauncherHelper(Context context) {
         super(context);
@@ -54,6 +55,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         createFakedMap();
         ///saveMap(myMap);
+        this.context = context;
     }
 
     public int countTags() {
@@ -74,15 +76,18 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
 
         //create FAKED Launcher array
-        LauncherElement scenari = new LauncherElement(LauncherElementEnum.SCENE);
+        LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
+        scenari.setDesc(dbt.countScenes() + " scenari configurati");
         scenari.setId(0);
         myMap.put(scenari.getId(), scenari);
 
-        LauncherElement man = new LauncherElement(LauncherElementEnum.MANUAL);
+        LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
+        man.setDesc(dbt.countNodes() + " nodi presenti");
         man.setId(1);
         myMap.put(man.getId(), man);
 
-        LauncherElement pro = new LauncherElement(LauncherElementEnum.PROGRAMS);
+        LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
+        pro.setDesc(dbt.countTriggers() + " programmi attivi");
         pro.setId(2);
         myMap.put(pro.getId(), pro);
 
