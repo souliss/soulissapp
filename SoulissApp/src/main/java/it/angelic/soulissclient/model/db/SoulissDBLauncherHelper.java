@@ -63,8 +63,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         }
 
         //tolgo i nascosti
-
-
         Set<LauncherElement> removeSet = new HashSet<>();
         for (int i = 0; i < launcherElementList.size(); i++) {
             if (!visibili.contains("" + launcherElementList.get(i).getId())) {
@@ -248,8 +246,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         //TODO sorting by order
         return launcherElementList;
-
-
     }
 
     /*public List<LauncherElement> loadLauncherItems(){
@@ -285,15 +281,19 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     }
 
     public void remove(LauncherElement launcherElement) {
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         launcherElementList.remove(launcherElement);
         deleteLauncher(launcherElement);
+        visibili.remove("" + launcherElement.getId());
+        preferences.edit().putStringSet("launcher_elems", visibili).apply();
     }
 
     private void synch() {
-
+        short order = 0;
         for (LauncherElement lau : launcherElementList) {
             try {
+                lau.setOrder(order++);
                 createOrUpdateLauncherElement(lau);
             } catch (SoulissModelException e) {
                 Log.e(Constants.TAG, "Errore synch laucher:" + e.getMessage());

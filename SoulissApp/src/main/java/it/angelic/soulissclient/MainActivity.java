@@ -127,36 +127,15 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull
-            String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission granted! Please retry", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permission denied from user", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }
-    }
-    /*
-     * @Override public void setTitle(CharSequence title) { mTitle = title;
-	 * getActionBar().setTitle(mTitle); }
-	 */
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
+    /*
+     * @Override public void setTitle(CharSequence title) { mTitle = title;
+	 * getActionBar().setTitle(mTitle); }
+	 */
 
     /**
      * This will not work so great since the heights of the imageViews
@@ -233,7 +212,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         initDrawer(this, DrawerMenuHelper.TAGS);
 
         // Extend the Callback class
-        ItemTouchHelper.Callback launcherCallback = new LauncherStaggeredCallback(launcherMainAdapter);
+        ItemTouchHelper.Callback launcherCallback = new LauncherStaggeredCallback(MainActivity.this, launcherMainAdapter);
         // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
         ItemTouchHelper ith = new ItemTouchHelper(launcherCallback);
         ith.attachToRecyclerView(mRecyclerView);
@@ -298,6 +277,26 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull
+            String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission granted! Please retry", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission denied from user", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // macaco pack
@@ -342,10 +341,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
         private final StaggeredLauncherElementAdapter adapter;
+        private final Context context;
         View.OnClickListener mOnClickListener;
 
-        public LauncherStaggeredCallback(StaggeredLauncherElementAdapter adapter) {
+        public LauncherStaggeredCallback(Context xct, StaggeredLauncherElementAdapter adapter) {
             this.adapter = adapter;
+            this.context = xct;
             mOnClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -375,9 +376,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
 
             try {
+                //occhio! sono gia swappati
+                LauncherElement p1 = adapter.getLauncherElements().get(viewHolder.getAdapterPosition());
+                LauncherElement p2 = adapter.getLauncherElements().get(target.getAdapterPosition());
+                p1.setOrder((short) viewHolder.getAdapterPosition());
+                p2.setOrder((short) target.getAdapterPosition());
                 //alla fine persisto
-                ((LauncherElement) adapter.getLauncherElements().get(viewHolder.getAdapterPosition())).persist(recyclerView.getContext());
-                ((LauncherElement) adapter.getLauncherElements().get(target.getAdapterPosition())).persist(recyclerView.getContext());
+                (p1).persist(recyclerView.getContext());
+                (p2).persist(recyclerView.getContext());
             } catch (SoulissModelException e) {
                 e.printStackTrace();
             }
@@ -387,12 +393,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
+            LauncherElement tbr = adapter.getLauncherElements().get(viewHolder.getAdapterPosition());
             //SoulissTag todoItem = launcherMainAdapter.getItem(viewHolder.getAdapterPosition());
             //forse non serve
             adapter.removeAt(viewHolder.getAdapterPosition());
             // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             //clearView(mRecyclerView, viewHolder);
-
+            SoulissDBLauncherHelper db = new SoulissDBLauncherHelper(context);
+            db.remove(tbr);
 
             Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
         }

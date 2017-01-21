@@ -76,7 +76,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         return launcherElements.get(position).getComponentEnum().ordinal();
     }
 
-    public List getLauncherElements() {
+    public List<LauncherElement> getLauncherElements() {
         return launcherElements;
     }
 
