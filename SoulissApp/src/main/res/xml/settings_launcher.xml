@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:icon="@android:drawable/ic_menu_save"
+                  android:key="launcher_setup"
+                  android:summary="@string/opt_db_desc"
+                  android:title="@string/opt_launcher">
+
+    <PreferenceCategory android:title="Launcher Configuration">
+        <it.angelic.soulissclient.preferences.LauncherListPreference
+            android:defaultValue="@array/launcher_elems_default"
+            android:key="launcher_elems"
+            android:summary="Selezione degli elementi sulla schermata principale"
+            android:title="Souliss Launcher"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

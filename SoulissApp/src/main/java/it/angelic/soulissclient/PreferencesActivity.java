@@ -20,6 +20,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
+import it.angelic.soulissclient.preferences.LauncherSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.preferences.VisualSettingsFragment;
@@ -186,6 +187,8 @@ public class PreferencesActivity extends PreferenceActivity {
         if (ServiceSettingsFragment.class.getName().equals(fragmentName))
             return true;
         if (VisualSettingsFragment.class.getName().equals(fragmentName))
+            return true;
+        if (LauncherSettingsFragment.class.getName().equals(fragmentName))
             return true;
         return BroadcastSettingsFragment.class.getName().equals(fragmentName);
 

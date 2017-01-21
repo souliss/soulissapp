@@ -9,6 +9,8 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,12 +20,15 @@ import java.lang.reflect.Type;
 import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
+import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 
 /**
@@ -46,15 +51,16 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     public SoulissDBLauncherHelper(Context context) {
         super(context);
         // Database fields
-        customCachedPrefs = context.getSharedPreferences("SoulissHome", Activity.MODE_PRIVATE);
+        customCachedPrefs = context.getSharedPreferences("SoulissLauncher", Activity.MODE_PRIVATE);
 
         //    file = new File( context.getFilesDir(), "SoulissHome");
         File path = context.getFilesDir();
-        file = new File(path, "SoulissHome");
+        file = new File(path, "SoulissLauncher");
 
-        createFakedMap();
+
         ///saveMap(myMap);
         this.context = context;
+        createFakedMap();
     }
 
     public int countTags() {
@@ -76,26 +82,25 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         //create FAKED Launcher array
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
+        scenari.setTitle(context.getString(R.string.scenes_title));
         scenari.setDesc(dbt.countScenes() + " scenari configurati");
         scenari.setId(0);
         myMap.put(scenari.getId(), scenari);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
+        man.setTitle(context.getString(R.string.manual_title));
         man.setDesc(dbt.countNodes() + " nodi presenti");
         man.setId(1);
         myMap.put(man.getId(), man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
+        pro.setTitle(context.getString(R.string.programs_title));
         pro.setDesc(dbt.countTriggers() + " programmi attivi");
         pro.setId(2);
         myMap.put(pro.getId(), pro);
 
-        LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
-        prob.setDesc(dbt.countTags() + " tags contenenti " + dbt.countTypicalTags() + " dispositivi");
-        prob.setId(5);
-        myMap.put(prob.getId(), prob);
-
         LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
+        prop.setTitle(context.getString(R.string.status));
         prop.setIsFullSpan(true);
         prop.setId(3);
         myMap.put(prop.getId(), prop);
@@ -108,6 +113,13 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         prot.setId(4);
         myMap.put(prot.getId(), prot);
 
+
+        LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
+        prob.setDesc(dbt.countTags() + " tags contenenti " + dbt.countTypicalTags() + " dispositivi");
+        prob.setTitle(context.getString(R.string.tags));
+        prob.setId(5);
+        myMap.put(prob.getId(), prob);
+
         //TAG example
         LauncherElement tag = new LauncherElement(LauncherElementEnum.TAG);
         try {
@@ -119,8 +131,17 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         tag.setTitle(tag.getLinkedObject().getNiceName());
         myMap.put(tag.getId(), tag);
 
+        LauncherElement protnode = new LauncherElement(LauncherElementEnum.NODE);
+        SoulissNode nod = super.getSoulissNode(0);
+        Log.i(Constants.TAG, "ricaricato nodo farlocco, value=" + tip.getOutput());
+        protnode.setLinkedObject(nod);
+        protnode.setTitle(nod.getNiceName());
+        protnode.setId(7);
+        myMap.put(protnode.getId(), protnode);
+
     }
-   /* public void saveLauncherItems( List<LauncherElement> in){
+
+    public void saveLauncherItems(List<LauncherElement> in) {
 
         SharedPreferences.Editor editor = customCachedPrefs.edit();
         JSONArray array = new JSONArray();
@@ -140,12 +161,12 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         editor.apply();
     }
 
-    public List<LauncherElement>  loadLauncherItems(){
+    /*public List<LauncherElement> loadLauncherItems(){
         String deMarshall = customCachedPrefs.getString("launcherItems","");
 
         JSONArray array = new JSONArray();
-    }
-*/
+    }*/
+
 
 
     //FIXME questo deve morire
@@ -158,6 +179,8 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         //TODO sorting by order
         return new ArrayList<LauncherElement>(myMap.values());
+
+
     }
 
     public Map<Integer, LauncherElement> loadMap() {

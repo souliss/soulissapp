@@ -38,14 +38,13 @@
             android:value="visual_setup" />
     </header>
     <header
+        android:fragment="it.angelic.soulissclient.preferences.LauncherSettingsFragment"
         android:icon="@android:drawable/ic_menu_today"
         android:summary="@string/menu_launcher_desc"
         android:title="@string/menu_launcher_config">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:data="it.angelic.soulissclient.preferences.LauncherSettingsActivity"
-            android:targetClass="it.angelic.soulissclient.preferences.LauncherSettingsActivity"
-            android:targetPackage="it.angelic.soulissclient"/>
+        <extra
+            android:name="opt_screen"
+            android:value="launcher_setup"/>
     </header>
     <header
         android:icon="@android:drawable/ic_menu_agenda"

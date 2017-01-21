@@ -20,6 +20,15 @@
         <item>6</item>
         <item>7</item>
     </string-array>
+    <string-array name="launcher_elems_default">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+
+    </string-array>
     <string-array name="nodes_array">
         <item>0</item>
         <item>1</item>

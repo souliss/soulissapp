@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +31,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 
 import it.angelic.receivers.NetworkStateReceiver;
@@ -38,6 +44,7 @@ import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -70,9 +77,18 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 // FIXME TEMPORARY
                 dbLauncher.refreshMap();
-                List launcherItems = dbLauncher.getLauncherItems(MainActivity.this);
-
+                List<LauncherElement> launcherItems = dbLauncher.getLauncherItems(MainActivity.this);
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
+                Set<LauncherElement> removeSet = new HashSet<>();
+                for (int i = 0; i < launcherItems.size(); i++) {
+                    if (!visibili.contains("" + launcherItems.get(i).getId())) {
+                        removeSet.add(launcherItems.get(i));
+                    }
+                }
+                launcherItems.removeAll(removeSet);
                 launcherMainAdapter.setLauncherElements(launcherItems);
+                launcherMainAdapter.notifyDataSetChanged();
 
             } else {
                 Log.e(TAG, "EMPTY response!!");
@@ -121,6 +137,31 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             unbindService(mConnection);
         }
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull
+            String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission granted! Please retry", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission denied from user", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+    /*
+     * @Override public void setTitle(CharSequence title) { mTitle = title;
+	 * getActionBar().setTitle(mTitle); }
+	 */
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -181,6 +222,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         dbLauncher = new SoulissDBLauncherHelper(this);
         List launcherItems = dbLauncher.getLauncherItems(this);
         // LauncherElement[] array = (LauncherElement[]) launcherItems.toArray(new LauncherElement[launcherItems.size()]);
+
 
         new Thread(new Runnable() {
             @Override

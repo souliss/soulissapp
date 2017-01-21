@@ -391,4 +391,5 @@
     <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
     <string name="menu_launcher_config">Homescreen Setup</string>
     <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
+    <string name="opt_launcher">Launcher Setup</string>
 </resources>
