@@ -38,6 +38,16 @@
             android:value="visual_setup" />
     </header>
     <header
+        android:icon="@android:drawable/ic_menu_today"
+        android:summary="@string/menu_launcher_desc"
+        android:title="@string/menu_launcher_config">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="it.angelic.soulissclient.preferences.LauncherSettingsActivity"
+            android:targetClass="it.angelic.soulissclient.preferences.LauncherSettingsActivity"
+            android:targetPackage="it.angelic.soulissclient"/>
+    </header>
+    <header
         android:icon="@android:drawable/ic_menu_agenda"
         android:summary="@string/menu_test"
         android:title="@string/menu_test_udp" >
@@ -47,5 +57,6 @@
             android:targetClass="it.angelic.soulissclient.ManualUDPTestActivity"
             android:targetPackage="it.angelic.soulissclient"  />
     </header>
+
 
 </preference-headers>

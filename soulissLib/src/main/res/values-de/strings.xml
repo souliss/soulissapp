@@ -386,4 +386,7 @@
     <string name="Souliss_T64_desc">Light setpoint (0, 40) kLux</string>
     <string name="Souliss_T65_desc">Voltage setpoint(0, 400) V</string>
     <string name="charts">Charts</string>
+    <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
+    <string name="menu_launcher_config">Homescreen Setup</string>
+    <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
 </resources>

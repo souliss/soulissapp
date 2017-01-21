@@ -22,13 +22,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.adapters.StaggeredLauncherElementAdapter;
@@ -39,6 +39,7 @@ import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -148,6 +149,23 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
+        final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
+        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewTagsDescFa);
+        FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, "fa-close");
+
+        //NASCONDI
+        textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textViewTagsDescFa.setVisibility(View.GONE);
+                toHid.setVisibility(View.GONE);
+                opzioni.setDontShowAgain("launcherInfo", true);
+            }
+        });
+        if (opzioni.getDontShowAgain("launcherInfo")) {
+            textViewTagsDescFa.setVisibility(View.GONE);
+            toHid.setVisibility(View.GONE);
+        }
 
         int gridsize = 2;
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -173,7 +191,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }).start();
 
 
-        launcherMainAdapter = new StaggeredLauncherElementAdapter(this, launcherItems);
+        launcherMainAdapter = new StaggeredLauncherElementAdapter(this, launcherItems, mBoundService);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
         launcherMainAdapter.notifyDataSetChanged();
@@ -263,7 +281,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(datareceiver, filtere);
 
-        autoUpdate = new Timer();
+       /* autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -275,7 +293,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 });
             }
             // UI updates every 5 secs.
-        }, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());
+        }, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());*/
     }
 
     @Override

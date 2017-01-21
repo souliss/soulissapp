@@ -7,17 +7,17 @@ public class NavMenuItem implements INavDrawerItem {
     public static final int ITEM_TYPE = 1 ;
 
     private int id; 
-    private String label ; 
-    private int icon ;
-	private boolean updateActionBarTitle ;
+    private String label ;
+    private String icon;
+    private boolean updateActionBarTitle ;
 
 	public NavMenuItem() {
     }
 
-    public  NavMenuItem( int id, String label, int iconId, boolean updateActionBarTitle, Context context ) {
+    public NavMenuItem(int id, String label, String fontAweId, boolean updateActionBarTitle, Context context) {
         setId(id);
         setLabel(label);
-        setIcon(iconId);
+        setIcon(fontAweId);
         setUpdateActionBarTitle(updateActionBarTitle);
     }
    
@@ -42,11 +42,11 @@ public class NavMenuItem implements INavDrawerItem {
         this.label = label;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 

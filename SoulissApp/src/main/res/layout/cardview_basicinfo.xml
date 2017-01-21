@@ -50,7 +50,7 @@
                 android:textIsSelectable="false" />
 
             <TextView
-                android:id="@+id/TextViewNodes"
+                android:id="@+id/textViewBasicInfoLittle"
                 style="@style/CodeFontMain"
                 android:layout_below="@id/textViewBasicInfo"
                 android:layout_marginLeft="5dip"

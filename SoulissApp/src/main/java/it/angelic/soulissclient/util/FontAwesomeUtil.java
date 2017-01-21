@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.TextView;
 
+import it.angelic.soulissclient.MainActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.tagviewlib.FontNotFoundException;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
@@ -32,12 +33,27 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         }
     }
 
+    public static void prepareMenuFontAweTextView(Activity context, TextView txtAwesome, String faCode) {
+        txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(context));
+        String code = FontAwesomeUtil.translateAwesomeCode(context, faCode);
+        //content.setFontAwesomeCode(code);
+        txtAwesome.setText(code);
+        txtAwesome.setTextSize(42);
+    }
     public static void prepareFontAweTextView(Activity context, TextView txtAwesome, @NonNull String faCode) {
         txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(context));
         String code = FontAwesomeUtil.translateAwesomeCode(context, faCode);
         //content.setFontAwesomeCode(code);
         txtAwesome.setText(code);
         txtAwesome.setTextSize(64);
+    }
+
+    public static void prepareMiniFontAweTextView(MainActivity mainActivity, TextView txtAwesome, String s) {
+        txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(mainActivity));
+        String code = FontAwesomeUtil.translateAwesomeCode(mainActivity, s);
+        //content.setFontAwesomeCode(code);
+        txtAwesome.setText(code);
+        txtAwesome.setTextSize(24);
     }
 
     /**
@@ -145,7 +161,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
             case R.drawable.shield1:
                 return "fa-shield";
             case R.drawable.souliss_node:
-                return "fa-microchip";
+                return "fa-square";
             case R.drawable.snow1:
                 return "fa-snowflake-o";
             case R.drawable.sos:
@@ -175,4 +191,6 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         }
 
     }
+
+
 }

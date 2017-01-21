@@ -395,5 +395,8 @@
     <string name="increment_input_err">Input a number between 0.1 and 10</string>
     <string name="range">Range</string>
     <string name="charts">Charts</string>
+    <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
+    <string name="menu_launcher_config">Homescreen Setup</string>
+    <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
     >
 </resources>

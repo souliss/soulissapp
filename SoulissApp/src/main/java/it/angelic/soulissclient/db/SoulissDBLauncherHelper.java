@@ -18,10 +18,10 @@ import java.lang.reflect.Type;
 import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
@@ -77,21 +77,24 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         //create FAKED Launcher array
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
+        scenari.setTitle(SoulissApp.getAppContext().getString(R.string.scenes_title));
         scenari.setDesc(dbt.countScenes() + " scenari configurati");
         scenari.setId(0);
         myMap.put(scenari.getId(), scenari);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
+        man.setTitle(SoulissApp.getAppContext().getString(R.string.manual_title));
         man.setDesc(dbt.countNodes() + " nodi presenti");
         man.setId(1);
         myMap.put(man.getId(), man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
+        pro.setTitle(SoulissApp.getAppContext().getString(R.string.programs_title));
         pro.setDesc(dbt.countTriggers() + " programmi attivi");
         pro.setId(2);
         myMap.put(pro.getId(), pro);
 
-        LauncherElement prop = new LauncherElement(LauncherElementEnum.STATO);
+        LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
         prop.setIsFullSpan(true);
         prop.setId(3);
         myMap.put(prop.getId(), prop);
@@ -100,6 +103,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         SoulissTypical tip = super.getTypical(0, (short) 0);
         Log.i(Constants.TAG, "ricaricato tipico farlocco, value=" + tip.getOutput());
         prot.setLinkedObject(tip);
+        prot.setTitle(tip.getNiceName());
         prot.setId(4);
         myMap.put(prot.getId(), prot);
 
@@ -111,6 +115,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             e.printStackTrace();
         }
         tag.setId(5);
+        tag.setTitle(tag.getLinkedObject().getNiceName());
         myMap.put(tag.getId(), tag);
 
     }
@@ -147,7 +152,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         createFakedMap();
     }
 
-    public List<LauncherElement> getLauncherItems(Context context) {
+    public ArrayList<LauncherElement> getLauncherItems(Context context) {
         //Set chiavi= myMap.keySet();
 
         //TODO sorting by order
@@ -175,6 +180,11 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         }
         return myMap;
     }
+
+    public void remove(LauncherElement launcherElement) {
+        myMap.remove(launcherElement);
+    }
+
 
     public void saveMap(Map<Integer, LauncherElement> map) {
 

@@ -13,6 +13,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +32,11 @@ import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SceneListActivity;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
+import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
@@ -42,14 +45,18 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
+import static it.angelic.soulissclient.Constants.TAG;
+
 public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<StaggeredLauncherElementAdapter.ViewHolder> {
 
+    SoulissDataService mBoundService;
     private Activity context;
     private List<LauncherElement> launcherElements;
 
-    public StaggeredLauncherElementAdapter(Activity context, List<LauncherElement> launcherElements) {
+    public StaggeredLauncherElementAdapter(Activity context, List<LauncherElement> launcherElements, SoulissDataService mBoundService) {
         this.launcherElements = launcherElements;
         this.context = context;
+        this.mBoundService = mBoundService;
     }
 
     @Override
@@ -66,6 +73,11 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
 
     public List getLauncherElements() {
         return launcherElements;
+    }
+
+    public void setLauncherElements(List<LauncherElement> in) {
+        launcherElements = in;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -196,6 +208,14 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 });
 
                 break;
+            case STATIC_STATUS:
+                TextView textCmdsd = (TextView) holder.container.findViewById(R.id.textViewBasicInfo);
+                TextView textCmdWhens = (TextView) holder.container.findViewById(R.id.textViewBasicInfoLittle);
+                setHeadInfo(textCmdsd);
+                setServiceInfo(textCmdWhens);
+
+
+                break;
             case TAG:
                 final SoulissTag soulissTag = (SoulissTag) item.getLinkedObject();
                 TextView textCmd = (TextView) holder.container.findViewById(R.id.TextViewTagTitle);
@@ -312,6 +332,11 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                         from(parent.getContext()).
                         inflate(R.layout.cardview_tag, parent, false);
                 break;
+            case STATIC_STATUS:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.cardview_basicinfo, parent, false);
+                break;
 
 
         }
@@ -324,9 +349,59 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         notifyItemRangeChanged(position, launcherElements.size());
     }
 
-    public void setLauncherElements(List<LauncherElement> in) {
-        launcherElements = in;
-        notifyDataSetChanged();
+    private void setHeadInfo(TextView basinfo) {
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
+        //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_green));
+        // check se IP non settato check system configured
+        if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissPublicIpConfigured()) {
+            basinfo.setText(Html.fromHtml(context.getString(R.string.notconfigured)));
+            //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+            return;
+        }
+        if (!opzioni.getCustomPref().contains("connectionName")) {
+            basinfo.setText(context.getString(R.string.warn_connection));
+            //basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_yellow));
+            return;
+        }
+        if (!opzioni.isSoulissPublicIpConfigured()
+                && !("WIFI".compareTo(opzioni.getCustomPref().getString("connectionName", "")) == 0)) {
+            basinfo.setText(Html.fromHtml(context.getString(R.string.warn_wifi)));
+            //	basinfoLine.setBackgroundColor(this.getResources().getColor(R.color.std_red));
+            return;
+        }
+        String base = opzioni.getCachedAddress();
+        Log.d(TAG, "cached Address: " + base + " backoff: " + opzioni.getBackoff());
+        if (base != null && "".compareTo(base) != 0) {
+            basinfo.setText(Html.fromHtml(context.getString(R.string.contact_at) + "<font color=\"#99CC00\"><b> " + base
+                    + "</b></font> via <b>" + opzioni.getCustomPref().getString("connectionName", "ERROR") + "</b>"));
+        } else if (base != null && context.getString(R.string.unavailable).compareTo(base) != 0) {
+            basinfo.setText(context.getString(R.string.souliss_unavailable));
+        } else {
+            basinfo.setText(context.getString(R.string.contact_progress));
+        }
+
+    }
+
+    private void setServiceInfo(TextView serviceInfo) {
+        StringBuilder sb = new StringBuilder();
+        //serviceinfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_green));
+        /* SERVICE MANAGEMENT */
+        if (SoulissApp.getOpzioni().isDataServiceEnabled()) {
+            if (mBoundService != null) {
+                sb.append("<b>").append(context.getString(R.string.service_lastexec)).append("</b> ").append(SoulissUtils.getTimeAgo(mBoundService.getLastupd())).append("<br/><b>");
+                sb.append(context.getString(R.string.opt_serviceinterval)).append(":</b> ")
+                        .append(SoulissUtils.getScaledTime(SoulissApp.getOpzioni().getDataServiceIntervalMsec() / 1000));
+            } else {
+                sb.append(context.getString(R.string.service_warnbound));
+                Intent serviceIntent = new Intent(context, SoulissDataService.class);
+                Log.w(TAG, "Service not bound yet, restarting");
+                context.startService(serviceIntent);
+                //serviceinfoLine.setBackgroundColor(ContextCompat.getColor(this, R.color.std_yellow));
+            }
+        } else {
+            sb.append(context.getResources().getString(R.string.service_disabled));
+        }
+        serviceInfo.setText(Html.fromHtml(sb.toString()));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

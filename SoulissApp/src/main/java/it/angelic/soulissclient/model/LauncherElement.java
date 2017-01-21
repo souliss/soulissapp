@@ -26,6 +26,7 @@ public class LauncherElement implements ILauncherTile, Serializable {
         return componentEnum;
     }
 
+
     public void setComponentEnum(LauncherElementEnum componentEnum) {
         this.componentEnum = componentEnum;
     }

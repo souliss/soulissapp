@@ -1,26 +1,28 @@
 package it.angelic.soulissclient.drawer;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
     private final int activeSection;
+    private final Activity context;
     private LayoutInflater inflater;
 
-    public NavDrawerAdapter(Context context, int textViewResourceId, INavDrawerItem[] objects, int mode) {
+    public NavDrawerAdapter(Activity context, int textViewResourceId, INavDrawerItem[] objects, int mode) {
 
         super(context, textViewResourceId, objects);
         this.inflater = LayoutInflater.from(context);
         this.activeSection = mode;
+        this.context = context;
     }
 
     @Override
@@ -50,7 +52,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
         TextView labelView = (TextView) convertView
                 .findViewById(R.id.dtitle);
-        ImageView iconView = (ImageView) convertView
+        TextView iconView = (TextView) convertView
                 .findViewById(R.id.dicon);
 
         navMenuItemHolder = new NavMenuItemHolder();
@@ -67,7 +69,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         //  }
 
         navMenuItemHolder.labelView.setText(menuItem.getLabel());
-        navMenuItemHolder.iconView.setImageResource(menuItem.getIcon());
+        FontAwesomeUtil.prepareMenuFontAweTextView(context, navMenuItemHolder.iconView, menuItem.getIcon());
 
         return convertView;
     }
@@ -115,7 +117,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
     private static class NavMenuItemHolder {
         private TextView labelView;
-        private ImageView iconView;
+        private TextView iconView;
     }
 
     private static class NavMenuSectionHolder {

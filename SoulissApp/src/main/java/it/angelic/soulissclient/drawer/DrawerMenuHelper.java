@@ -9,6 +9,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class DrawerMenuHelper {
 	private static Context ctx = SoulissApp.getAppContext();
@@ -34,8 +35,8 @@ public class DrawerMenuHelper {
             NavMenuItem item2 = new NavMenuItem();
 			item2.setId(object.getNodeId());
 			item2.setLabel(object.getNiceName());
-            item2.setIcon(object.getIconResourceId());
-            item2.setUpdateActionBarTitle(false);
+			item2.setIcon(FontAwesomeUtil.remapIconResId(object.getIconResourceId()));
+			item2.setUpdateActionBarTitle(false);
             tmp.add(item2);
         }
 
@@ -51,21 +52,21 @@ public class DrawerMenuHelper {
 		tmp.add(it);
 
 		//if (apartFromMe != SCENE){
-		NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), R.drawable.lamp,
+		NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), FontAwesomeUtil.remapIconResId(R.drawable.lamp),
 				false, ctx);
 		tmp.add(scenes);
 	//	}
 		
 		//if (apartFromMe != PROGRAMS){
-		NavMenuItem pro = new NavMenuItem(PROGRAMS, ctx.getString(R.string.programs_title), R.drawable.remote,
+		NavMenuItem pro = new NavMenuItem(PROGRAMS, ctx.getString(R.string.programs_title), FontAwesomeUtil.remapIconResId(R.drawable.remote),
 				false, ctx);
 		tmp.add(pro);
 
-        NavMenuItem prore = new NavMenuItem(TAGS, ctx.getString(R.string.tag), R.drawable.tv,
-                false, ctx);
+		NavMenuItem prore = new NavMenuItem(TAGS, ctx.getString(R.string.tag), FontAwesomeUtil.remapIconResId(R.drawable.tv),
+				false, ctx);
         tmp.add(prore);
 	//	}
-		NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), R.drawable.hand1,
+		NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), FontAwesomeUtil.remapIconResId(R.drawable.hand1),
 				false, ctx);
 		tmp.add(man);
 		
@@ -77,25 +78,25 @@ public class DrawerMenuHelper {
             NavMenuItem item2 = new NavMenuItem();
 			item2.setId(object.getNodeId());
 			item2.setLabel(object.getNiceName());
-            item2.setIcon(object.getIconResourceId());
-            item2.setUpdateActionBarTitle(false);
+			item2.setIcon(FontAwesomeUtil.remapIconResId(object.getIconResourceId()));
+			item2.setUpdateActionBarTitle(false);
             tmp.add(item2);
         }
 		NavMenuSection it2 = NavMenuSection.create(-10, SoulissApp.getAppContext().getString(R.string.menu_options).toUpperCase());
 		tmp.add(it2);
-		NavMenuItem op2 = new NavMenuItem(SETTINGS_NET, ctx.getString(R.string.opt_net_home),android.R.drawable.ic_menu_mylocation,
+		NavMenuItem op2 = new NavMenuItem(SETTINGS_NET, ctx.getString(R.string.opt_net_home), "fa-wifi",
 				false, ctx);
 		tmp.add(op2);
-		NavMenuItem op3 = new NavMenuItem(SETTINGS_DB, ctx.getString(R.string.opt_db),android.R.drawable.ic_menu_save,
+		NavMenuItem op3 = new NavMenuItem(SETTINGS_DB, ctx.getString(R.string.opt_db), "fa-sitemap",
 				false, ctx);
 		tmp.add(op3);
-		NavMenuItem op4 = new NavMenuItem(SETTINGS_SERVICE, ctx.getString(R.string.opt_service),android.R.drawable.ic_menu_rotate,
+		NavMenuItem op4 = new NavMenuItem(SETTINGS_SERVICE, ctx.getString(R.string.opt_service), "fa-spinner",
 				false, ctx);
 		tmp.add(op4);
-		NavMenuItem op5 = new NavMenuItem(SETTINGS_VISUAL, ctx.getString(R.string.opt_visual),android.R.drawable.ic_menu_gallery,
+		NavMenuItem op5 = new NavMenuItem(SETTINGS_VISUAL, ctx.getString(R.string.opt_visual), "fa-picture-o",
 				false, ctx);
 		tmp.add(op5);
-		NavMenuItem op6 = new NavMenuItem(SETTINGS_UDPTEST, ctx.getString(R.string.menu_test_udp),android.R.drawable.ic_menu_agenda,
+		NavMenuItem op6 = new NavMenuItem(SETTINGS_UDPTEST, ctx.getString(R.string.menu_test_udp), "fa-gears",
 				false, ctx);
 		tmp.add(op6);
 		

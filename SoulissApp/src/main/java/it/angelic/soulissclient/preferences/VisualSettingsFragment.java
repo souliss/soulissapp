@@ -32,7 +32,8 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			public boolean onPreferenceClick(Preference arg0) {
 				opzioni.setDontShowAgain(getResources().getString(R.string.dialog_disabled_db), false);
 				opzioni.setDontShowAgain(getResources().getString(R.string.dialog_disabled_service), false);
-				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
+                opzioni.setDontShowAgain("launcherInfo", false);
+                Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
 						Toast.LENGTH_SHORT).show();
 				return true;
 			}

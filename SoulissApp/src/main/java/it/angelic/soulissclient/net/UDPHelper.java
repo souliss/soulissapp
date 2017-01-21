@@ -451,7 +451,7 @@ public class UDPHelper {
 		DatagramPacket packet;
 
 		try {
-			Log.d(TAG, "Staterequest, numberof=" + numberOf);
+			Log.d(TAG, "HealthRequest, numberof=" + numberOf);
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
 			sender = getSenderSocket(serverAddr);
 

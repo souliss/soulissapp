@@ -251,7 +251,7 @@ public class NodesListFragment extends ListFragment {
 		SoulissDBHelper.open();
 
 		// prendo tipici dal DB
-		final List<SoulissNode> nodiArray = datasource.getAllNodes();
+		nodiArray = datasource.getAllNodes();
 		//timeoutHandler = new Handler();
 		Log.i(TAG, "mostro numnodi:" + nodiArray.size());
 

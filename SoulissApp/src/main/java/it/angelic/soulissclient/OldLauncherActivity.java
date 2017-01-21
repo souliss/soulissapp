@@ -284,7 +284,7 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
         serviceInfo = (TextView) findViewById(R.id.TextViewServiceActions);
         coordinfo = (TextView) findViewById(R.id.TextViewCoords);
         homedist = (TextView) findViewById(R.id.TextViewFromHome);
-        serviceInfoFoot = (TextView) findViewById(R.id.TextViewNodes);
+        serviceInfoFoot = (TextView) findViewById(R.id.textViewBasicInfoLittle);
         serviceInfoAntiTheft = (TextView) findViewById(R.id.TextViewAntiTheft);
 
         cardViewBasicInfo = (CardView) findViewById(R.id.BasicInfoCard);

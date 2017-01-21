@@ -35,7 +35,17 @@
                     style="@style/CodeFontSmall"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="2dp"
-                    android:text="@string/tag_desc"/>
+                    android:layout_marginRight="24dp"
+                    android:padding="4dp"
+                    android:text="@string/launcher_desc"/>
+
+                <TextView
+                    android:id="@+id/TextViewTagsDescFa"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerViewLauncherItems"
