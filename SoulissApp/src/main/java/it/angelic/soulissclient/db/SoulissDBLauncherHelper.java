@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.LauncherElementEnum;
@@ -77,22 +76,24 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         //create FAKED Launcher array
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
-        scenari.setTitle(SoulissApp.getAppContext().getString(R.string.scenes_title));
         scenari.setDesc(dbt.countScenes() + " scenari configurati");
         scenari.setId(0);
         myMap.put(scenari.getId(), scenari);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
-        man.setTitle(SoulissApp.getAppContext().getString(R.string.manual_title));
         man.setDesc(dbt.countNodes() + " nodi presenti");
         man.setId(1);
         myMap.put(man.getId(), man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
-        pro.setTitle(SoulissApp.getAppContext().getString(R.string.programs_title));
         pro.setDesc(dbt.countTriggers() + " programmi attivi");
         pro.setId(2);
         myMap.put(pro.getId(), pro);
+
+        LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
+        prob.setDesc(dbt.countTags() + " tags contenenti " + dbt.countTypicalTags() + " dispositivi");
+        prob.setId(5);
+        myMap.put(prob.getId(), prob);
 
         LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
         prop.setIsFullSpan(true);
@@ -114,7 +115,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         } catch (SQLDataException e) {
             e.printStackTrace();
         }
-        tag.setId(5);
+        tag.setId(6);
         tag.setTitle(tag.getLinkedObject().getNiceName());
         myMap.put(tag.getId(), tag);
 

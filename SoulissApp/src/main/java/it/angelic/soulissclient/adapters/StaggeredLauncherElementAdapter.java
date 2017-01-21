@@ -34,6 +34,7 @@ import it.angelic.soulissclient.SceneListActivity;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.TagGridActivity;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -154,6 +155,23 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 });
                 viewLine3.setBackgroundColor(context.getResources().getColor(R.color.std_blue));
                 break;
+            case STATIC_TAGS:
+                View viewLine34 = holder.container.findViewById(R.id.StaticTileLine);
+                TextView txtTit34 = (TextView) holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc34 = (TextView) holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom34 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom34, "fa-tags");
+                txtTit34.setText(context.getString(R.string.tags));
+                txtDesc34.setText(item.getDesc());
+                holder.container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent nodeDatail = new Intent(SoulissApp.getAppContext(), TagGridActivity.class);
+                        context.startActivity(nodeDatail);
+                    }
+                });
+                //viewLine34.setBackgroundColor(context.getResources().getColor(R.color.std_blue));
+                break;
             case TYPICAL:
 
                 final SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
@@ -189,8 +207,12 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                         }
                     });
                     linearActionsLayout.addView(myButton);
-                    linearActionsLayout.forceLayout();
+                    //linearActionsLayout.forceLayout();
                     //context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
+
+                    //non ce ne stanno piu di due
+                    if (linearActionsLayout.getChildCount() >= 2)
+                        break;
                 }
                 //linearActionsLayout.removeAllViews();
                 // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
@@ -318,6 +340,11 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                         inflate(R.layout.card_button_static, parent, false);
                 break;
             case STATIC_MANUAL:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.card_button_static, parent, false);
+                break;
+            case STATIC_TAGS:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.card_button_static, parent, false);

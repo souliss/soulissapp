@@ -173,6 +173,11 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             else
                 resId = R.drawable.bell1;
         } else if (typical == Constants.Typicals.Souliss_T12) {
+            if (command == Constants.Typicals.Souliss_T1n_OnCmd)
+                resId = R.drawable.light_on;
+            else if (command == Constants.Typicals.Souliss_T1n_OffCmd)
+                resId = R.drawable.light_off;
+            else
             resId = R.drawable.sos;
         } else if (typical == Constants.Typicals.Souliss_T13) {
             resId = R.drawable.sos;

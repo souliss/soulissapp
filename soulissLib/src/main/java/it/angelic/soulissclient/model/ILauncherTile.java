@@ -11,5 +11,6 @@ public interface ILauncherTile {
 
     ISoulissObject getLinkedObject();
 
+
     //CardView getCardView();
 }
