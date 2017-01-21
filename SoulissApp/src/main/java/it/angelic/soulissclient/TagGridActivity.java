@@ -26,8 +26,6 @@ import java.util.Collections;
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
@@ -35,6 +33,8 @@ import it.angelic.soulissclient.helpers.AlertDialogGridHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ContextMenuRecyclerView;
 import it.angelic.soulissclient.model.SoulissTag;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 
 
 /**

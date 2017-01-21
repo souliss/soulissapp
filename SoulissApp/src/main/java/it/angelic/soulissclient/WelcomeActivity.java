@@ -27,10 +27,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.Eula;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.util.SystemUiHider;
 
@@ -142,7 +143,6 @@ public class WelcomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFormat(PixelFormat.RGBA_8888);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_welcome);
 
         // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
@@ -477,6 +477,13 @@ public class WelcomeActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //trigger launcher build
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoulissDBLauncherHelper dbLauncher = new SoulissDBLauncherHelper(WelcomeActivity.this);
+            }
+        }).start();
 
         /* check for first time run */
         welcomeEnabledCheck();

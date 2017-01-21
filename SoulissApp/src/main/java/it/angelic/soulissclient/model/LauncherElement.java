@@ -1,21 +1,30 @@
 package it.angelic.soulissclient.model;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.io.Serializable;
+
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 
 /**
  * Created by shine@angelic.it on 06/10/2015.
  */
 public class LauncherElement implements ILauncherTile, Serializable {
     private LauncherElementEnum componentEnum;
+
+    private String title;
     private String desc;
     private int id;
     private boolean isFullSpan;
     private ISoulissObject linkedObject;
     private short order;
-    private String title;
+
+    public LauncherElement() {
+        super();
+
+    }
 
     public LauncherElement(LauncherElementEnum componentEnum) {
         super();
@@ -24,6 +33,11 @@ public class LauncherElement implements ILauncherTile, Serializable {
 
     public LauncherElementEnum getComponentEnum() {
         return componentEnum;
+    }
+
+    public void persist(Context cnt) throws SoulissModelException {
+        SoulissDBLauncherHelper db = new SoulissDBLauncherHelper(cnt);
+        db.createOrUpdateLauncherElement(this);
     }
 
 

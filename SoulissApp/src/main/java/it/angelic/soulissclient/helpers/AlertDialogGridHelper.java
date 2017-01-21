@@ -23,14 +23,14 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import us.feras.ecogallery.EcoGallery;
 
 import static junit.framework.Assert.assertTrue;
@@ -184,7 +184,7 @@ public class AlertDialogGridHelper {
                                 try {
                                     for (int i = 0; i < tagArray.length; i++) {
                                         if (tagArray[i].getTagId().equals(((SoulissTag) toRename).getTagId())) {
-                                            ((SoulissTag)list.getTag(i)).setIconResourceId(toRename.getIconResourceId());
+                                            list.getTag(i).setIconResourceId(toRename.getIconResourceId());
                                             list.notifyItemChanged(i);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
                                         }

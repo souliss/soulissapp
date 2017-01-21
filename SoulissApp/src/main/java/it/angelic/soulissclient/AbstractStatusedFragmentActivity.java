@@ -30,13 +30,13 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;
 

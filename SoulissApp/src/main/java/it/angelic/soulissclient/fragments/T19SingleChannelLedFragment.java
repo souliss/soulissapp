@@ -36,9 +36,9 @@ import com.pheelicks.visualizer.renderer.BarGraphRenderer;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 

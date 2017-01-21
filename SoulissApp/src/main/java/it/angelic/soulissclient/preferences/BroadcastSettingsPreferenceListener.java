@@ -7,8 +7,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 public class BroadcastSettingsPreferenceListener implements OnPreferenceClickListener {
 

@@ -12,8 +12,9 @@
         android:src="@drawable/home_automation"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop" />
-    <ImageView
-        android:id="@+id/imageTagIcon"
+
+    <TextView
+        android:id="@+id/imageTagIconFAwe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

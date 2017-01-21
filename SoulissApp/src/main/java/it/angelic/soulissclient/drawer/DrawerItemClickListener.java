@@ -17,7 +17,7 @@ import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.SceneListActivity;
 import it.angelic.soulissclient.TagGridActivity;
-import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;

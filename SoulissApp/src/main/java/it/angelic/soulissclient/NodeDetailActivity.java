@@ -15,13 +15,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.fragments.NodeDetailFragment;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 
 public class NodeDetailActivity extends AbstractStatusedFragmentActivity {

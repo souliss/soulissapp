@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.db;
+package it.angelic.soulissclient.model.db;
 
 import android.database.Cursor;
 import android.util.Log;

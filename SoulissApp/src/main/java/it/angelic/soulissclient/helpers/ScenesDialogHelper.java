@@ -25,14 +25,14 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.TagListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 
 /**
  * Classe helper per i dialoghi riciclabili

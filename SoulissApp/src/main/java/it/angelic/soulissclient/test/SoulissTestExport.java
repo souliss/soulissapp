@@ -8,11 +8,11 @@ import android.util.Log;
 import java.io.File;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 

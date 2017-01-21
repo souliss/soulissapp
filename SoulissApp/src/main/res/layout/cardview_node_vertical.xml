@@ -61,25 +61,26 @@
                 android:paddingRight="8dp">
 
                 <TextView
-                    android:id="@+id/TextViewInfoStatus"
+                    android:id="@+id/TextViewInfoNodo1"
+                    android:maxLines="1"
+                    android:ellipsize="marquee"
                     style="@style/CodeFontMain"
                     android:textIsSelectable="false"
                     tools:text="ON"/>
-
-                <TextView
-                    android:id="@+id/TextViewInfo2"
-                    style="@style/CodeFontMain"
-                    android:layout_below="@id/TextViewInfoStatus"
-                    android:layout_marginLeft="2dp"
-                    android:textIsSelectable="false"
-                    tools:text="Info String, not so long"/>
 
                 <View
                     android:id="@+id/PositionWarnLine"
                     android:layout_width="fill_parent"
                     android:layout_height="1dip"
-                    android:layout_below="@id/TextViewInfo2"
+                    android:layout_below="@id/TextViewInfoNodo1"
                     android:background="@color/std_green"/>
+                <TextView
+                    android:id="@+id/TextViewInfoNodo2"
+                    style="@style/CodeFontMain"
+                    android:layout_below="@id/TextViewInfoNodo1"
+                    android:layout_marginLeft="2dp"
+                    android:textIsSelectable="false"
+                    tools:text="Info String, not so long"/>
 
 
             </RelativeLayout>

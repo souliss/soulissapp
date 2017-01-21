@@ -7,8 +7,8 @@ import java.util.List;
 
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class DrawerMenuHelper {

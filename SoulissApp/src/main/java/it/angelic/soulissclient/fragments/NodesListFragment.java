@@ -38,10 +38,10 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.NodesListAdapter.NodeViewHolder;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;

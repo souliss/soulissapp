@@ -31,11 +31,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
 import it.angelic.soulissclient.util.SoulissUtils;

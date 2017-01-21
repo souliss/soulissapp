@@ -20,9 +20,9 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.db.SoulissTriggerDTO;
 
 public class ProgramListAdapter extends BaseAdapter {
     List<SoulissCommand> programmi = new ArrayList<>();

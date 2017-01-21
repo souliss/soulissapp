@@ -30,13 +30,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;

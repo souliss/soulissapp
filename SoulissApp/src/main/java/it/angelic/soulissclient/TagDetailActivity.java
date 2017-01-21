@@ -36,7 +36,6 @@ import android.widget.Toast;
 import java.sql.SQLDataException;
 import java.util.List;
 
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
 import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
@@ -48,6 +47,7 @@ import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;

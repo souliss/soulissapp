@@ -95,10 +95,11 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             // holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeUtil.remapIconResId(R.drawable.window));
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, "fa-tag");
             //holder.imageTag.setImageResource(R.drawable.window);//avoid exc
-            holder.imageTag.setVisibility(View.INVISIBLE);
+            // holder.imageTag.setVisibility(View.INVISIBLE);
         }
+        holder.imageTag.setTextColor(context.getResources().getColor(R.color.white));
         // Here you apply the animation when the view is bound
         //setAnimation(holder.container, position);
 

@@ -7,8 +7,8 @@ import android.util.AttributeSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.angelic.soulissclient.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.model.LauncherElement;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 
 public class LauncherListPreference extends MultiSelectListPreference {
 

@@ -49,12 +49,16 @@
                         android:src="@drawable/home_automation"
                         android:transitionName="photo_hero"/>
 
-                    <ImageView
-                        android:id="@+id/imageTagIcon"
+                    <TextView
+                        android:id="@+id/imageTagIconFAwe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
+                        android:shadowColor="@color/cardview_shadow_start_color"
+                        android:shadowDx="-1"
+                        android:shadowDy="-1"
+                        android:shadowRadius="1"
                         android:layout_margin="4dp"
                         android:src="@drawable/window"
                         android:transitionName="tag_hero"/>

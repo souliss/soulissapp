@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.util.SystemUiHider;
 

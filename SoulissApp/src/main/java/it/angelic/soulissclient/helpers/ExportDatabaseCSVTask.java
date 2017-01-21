@@ -22,8 +22,8 @@ import java.util.Locale;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>

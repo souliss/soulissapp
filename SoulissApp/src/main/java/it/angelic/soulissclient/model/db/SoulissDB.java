@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.db;
+package it.angelic.soulissclient.model.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,6 +32,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String TABLE_SCENES = "scenes";
     public static final String TABLE_TAGS = "tags";
     public static final String TABLE_TAGS_TYPICALS = "tags_typicals";
+    public static final String TABLE_LAUNCHER = "launcher";
     /*
      * NODES TABLE
      */
@@ -113,6 +114,24 @@ public class SoulissDB extends SQLiteOpenHelper {
     //   + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
     public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
             COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH, COLUMN_TAG_ORDER};
+
+
+    /*
+        TABELLA LAUNCHER
+       */
+    public static final String COLUMN_LAUNCHER_ID = "intlauid";
+    public static final String COLUMN_LAUNCHER_TYPE = "intlauType";
+    public static final String COLUMN_LAUNCHER_NODE_ID = "intlaunodeid";
+
+    public static final String COLUMN_LAUNCHER_SCENE_ID = "intlausceneid";
+    public static final String COLUMN_LAUNCHER_SLOT_ID = "intlauslotid";//se not null ->typico
+    public static final String COLUMN_LAUNCHER_TAG_ID = "intlautagid";
+    public static final String COLUMN_LAUNCHER_ORDER = "intlauorder";
+    public static final String COLUMN_LAUNCHER_TITLE = "intlautitle";
+    public static final String COLUMN_LAUNCHER_DESC = "intlaudesc";
+    public static final String COLUMN_LAUNCHER_FULL_SPAN = "intlaufullspan";
+    public static final String[] ALLCOLUMNS_LAUNCHER = {COLUMN_LAUNCHER_ID, COLUMN_LAUNCHER_TYPE,
+            COLUMN_LAUNCHER_NODE_ID, COLUMN_LAUNCHER_SCENE_ID, COLUMN_LAUNCHER_SLOT_ID, COLUMN_LAUNCHER_TAG_ID, COLUMN_LAUNCHER_ORDER, COLUMN_LAUNCHER_TITLE, COLUMN_LAUNCHER_DESC, COLUMN_LAUNCHER_FULL_SPAN};
     /*
      * TABELLA TAG'TYP
      * tabella di relazione n a m per TAG <-> typical
@@ -123,13 +142,13 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_TAG_TYP_PRIORITY = "inttagtyppriority";
     public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
             COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
+    private static final int DATABASE_VERSION = 34;
     // Database creation sql statement
     private static final String DATABASE_CREATE_NODES = "create table " + TABLE_NODES
             + "( "
-            +
             // COLUMN DEF
-            COLUMN_ID + " integer primary key autoincrement, " + COLUMN_NODE_ID + " integer UNIQUE, "
-            + COLUMN_NODE_HEALTH + " integer, " + COLUMN_NODE_ICON + " integer, " + COLUMN_NODE_NAME + " textslot, "
+            + COLUMN_ID + " integer primary key autoincrement, " + COLUMN_NODE_ID + " integer UNIQUE, "
+            + COLUMN_NODE_HEALTH + " integer, " + COLUMN_NODE_ICON + " integer, " + COLUMN_NODE_NAME + " TEXT, "
             + COLUMN_NODE_LASTMOD + " integer not null" + ");";
     private static final String DATABASE_CREATE_TYPICALS = "create table "
             + TABLE_TYPICALS
@@ -141,7 +160,7 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_TYPICAL_VALUE + " integer not null, "
             + COLUMN_TYPICAL_ICON + " integer, "
             + COLUMN_TYPICAL_ISFAV + " integer, "
-            + COLUMN_TYPICAL_NAME + " textslot, "
+            + COLUMN_TYPICAL_NAME + " TEXT, "
             + COLUMN_TYPICAL_LASTMOD + " integer not null,"
             + COLUMN_TYPICAL_WARNTIMER + " integer, "
             + " FOREIGN KEY( " + COLUMN_TYPICAL_NODE_ID
@@ -153,9 +172,8 @@ public class SoulissDB extends SQLiteOpenHelper {
             +
             COLUMN_COMMAND_ID + " integer primary key autoincrement, "
             + COLUMN_COMMAND_NODE_ID + " integer not null, "
-            +
             // TIPICO in caso di comando massivo
-            COLUMN_COMMAND_SLOT + " integer not null, "
+            + COLUMN_COMMAND_SLOT + " integer not null, "
             + COLUMN_COMMAND_TYPE + " integer not null, "
             + COLUMN_COMMAND_INPUT + " integer not null, "
             + COLUMN_COMMAND_SCHEDTIME + " integer, "
@@ -192,9 +210,8 @@ public class SoulissDB extends SQLiteOpenHelper {
             + " FOREIGN KEY( " + COLUMN_LOG_NODE_ID + "," + COLUMN_LOG_SLOT + ") "
             + " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
     private static final String DATABASE_CREATE_SCENES = "create table " + TABLE_SCENES + "( "
-            +
             // COLUMN DEF
-            COLUMN_SCENE_ID + " integer primary key autoincrement, " + COLUMN_SCENE_ICON + " integer, "
+            + COLUMN_SCENE_ID + " integer primary key autoincrement, " + COLUMN_SCENE_ICON + " integer, "
             + COLUMN_SCENE_NAME + " textname " + // command to trig
 
             ");";
@@ -202,10 +219,36 @@ public class SoulissDB extends SQLiteOpenHelper {
             + TABLE_TAGS
             + "( "
             + COLUMN_TAG_ID + " integer primary key autoincrement, "
-            + COLUMN_TAG_NAME + " textslot, "
+            + COLUMN_TAG_NAME + " TEXT, "
             + COLUMN_TAG_ICONID + " integer not null, "
-            + COLUMN_TAG_IMGPTH + " textslot, "
+            + COLUMN_TAG_IMGPTH + " TEXT, "
             + COLUMN_TAG_ORDER + " integer "
+            + ");";
+    private static final String DATABASE_CREATE_LAUNCHER = "create table "
+            + TABLE_LAUNCHER
+            + "( "
+            + COLUMN_LAUNCHER_ID + " integer primary key autoincrement, "
+            + COLUMN_LAUNCHER_TYPE + " integer not null, "
+            + COLUMN_LAUNCHER_ORDER + " integer not null, "
+            + COLUMN_LAUNCHER_NODE_ID + " integer, "
+            + COLUMN_LAUNCHER_SLOT_ID + " integer, "
+            + COLUMN_LAUNCHER_TAG_ID + " integer, "
+            + COLUMN_LAUNCHER_SCENE_ID + " integer, "
+            + COLUMN_LAUNCHER_TITLE + " TEXT, "
+            + COLUMN_LAUNCHER_DESC + " TEXT, "
+            + COLUMN_LAUNCHER_FULL_SPAN + " integer, "
+            + " FOREIGN KEY( " + COLUMN_LAUNCHER_NODE_ID
+            + " ) REFERENCES " + TABLE_NODES + " ("
+            + COLUMN_NODE_ID + "), "
+            + " FOREIGN KEY( " + COLUMN_LAUNCHER_SCENE_ID
+            + " ) REFERENCES " + TABLE_SCENES + " ("
+            + COLUMN_SCENE_ID + "), "
+            + " FOREIGN KEY( " + COLUMN_LAUNCHER_TAG_ID
+            + " ) REFERENCES " + TABLE_TAGS + " ("
+            + COLUMN_TAG_ID + "), "
+            + " FOREIGN KEY( " + COLUMN_LAUNCHER_SLOT_ID
+            + " ) REFERENCES " + TABLE_TYPICALS + " ("
+            + COLUMN_TYPICAL_SLOT + ") "
             + ");";
     private static final String DATABASE_CREATE_TAG_TYPICAL = "create table "
             + TABLE_TAGS_TYPICALS
@@ -220,9 +263,9 @@ public class SoulissDB extends SQLiteOpenHelper {
             + " FOREIGN KEY ( " + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
             + " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") "
             + ");";
-    private static final int DATABASE_VERSION = 32;
     public static long FAVOURITES_TAG_ID = 0;
     private Context context;
+
 
 //AUTOF
 
@@ -246,6 +289,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPICALS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NODES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
         onCreate(db);
     }
 
@@ -259,9 +303,10 @@ public class SoulissDB extends SQLiteOpenHelper {
         database.execSQL(DATABASE_CREATE_LOGS);
         database.execSQL(DATABASE_CREATE_SCENES);
         database.execSQL(DATABASE_CREATE_TAGS);
+        database.execSQL(DATABASE_CREATE_LAUNCHER);
         database.execSQL(DATABASE_CREATE_TAG_TYPICAL);
         /* DEFAULT TAG , Order=0 */
-        database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + ","+ COLUMN_TAG_ORDER + "," + COLUMN_TAG_ICONID
+        database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + "," + COLUMN_TAG_ORDER + "," + COLUMN_TAG_ICONID
                 + ") VALUES (" + FAVOURITES_TAG_ID + ",'" + context.getResources().getString(R.string.favourites) + "'," + 0 + ","
                 + R.drawable.favorites2 + ")");
         /* DEFAULT SCENE */

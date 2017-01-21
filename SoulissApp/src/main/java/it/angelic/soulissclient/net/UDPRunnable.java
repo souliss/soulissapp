@@ -107,6 +107,7 @@ public class UDPRunnable implements Runnable {
                 Log.e(TAG, "***UDP runnable interrupted!");
                 socket.close();
                 Thread.currentThread().interrupt();
+                return;
             } catch (Exception ee) {
                 ee.printStackTrace();
                 Log.e(TAG, "***UDP unhandled error!" + ee.getMessage() + " of class " + ee.getClass());

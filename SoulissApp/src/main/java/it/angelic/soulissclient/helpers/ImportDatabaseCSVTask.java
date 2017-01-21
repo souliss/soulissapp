@@ -24,14 +24,14 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDB;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.db.SoulissLogDTO;
-import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.model.db.SoulissLogDTO;
+import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -346,7 +346,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         }
         try {
             if (temp[6].length() > 0)
-                typo.setFavourite(temp[6].equals("1") ? true : false);
+                typo.setFavourite(temp[6].equals("1"));
         } catch (Exception e) {
             Log.w("NOT Favourite", e.getMessage());
         }

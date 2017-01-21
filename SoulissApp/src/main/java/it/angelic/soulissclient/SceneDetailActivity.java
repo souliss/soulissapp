@@ -26,11 +26,11 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 import static junit.framework.Assert.assertTrue;
 

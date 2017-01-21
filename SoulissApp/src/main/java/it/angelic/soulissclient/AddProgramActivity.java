@@ -29,9 +29,6 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -40,6 +37,9 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissCommandDTO;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissTriggerDTO;
 
 
 public class AddProgramActivity extends AbstractStatusedFragmentActivity {

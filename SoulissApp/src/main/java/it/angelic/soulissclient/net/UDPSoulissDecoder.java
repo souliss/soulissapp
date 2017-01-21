@@ -34,14 +34,14 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.SoulissWidget;
 import it.angelic.soulissclient.T4nFragWrapper;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBLowHelper;
-import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTrigger;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBLowHelper;
+import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_InAlarm;

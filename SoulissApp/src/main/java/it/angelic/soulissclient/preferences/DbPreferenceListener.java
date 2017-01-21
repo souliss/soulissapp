@@ -28,11 +28,11 @@ import java.io.ObjectOutputStream;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.ImportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 public class DbPreferenceListener implements OnPreferenceClickListener {
 

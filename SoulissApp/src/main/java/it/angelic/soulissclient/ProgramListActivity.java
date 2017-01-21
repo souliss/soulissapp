@@ -27,11 +27,11 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.List;
 
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;
 

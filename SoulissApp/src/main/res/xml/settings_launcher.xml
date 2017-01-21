@@ -9,9 +9,18 @@
         <it.angelic.soulissclient.preferences.LauncherListPreference
             android:defaultValue="@array/launcher_elems_default"
             android:key="launcher_elems"
-            android:summary="Selezione degli elementi sulla schermata principale"
+            android:summary="@string/settings_launcher_items"
             android:title="Souliss Launcher"
             />
+        <it.angelic.soulissclient.preferences.OptionDialogPreference
+            android:key="add_launcher_elem"
+            android:dialogIcon="@android:drawable/ic_menu_add"
+            android:title="Add element"
+            android:summary="Add a Launcher Screen elements"
+            android:dialogMessage="Are you sure you wish to reset your quest progress? This action cannot be undone!"
+            android:positiveButtonText="@string/save"
+            android:negativeButtonText="@string/cancel"/>
+
 
     </PreferenceCategory>
 

@@ -3,8 +3,8 @@ package it.angelic.soulissclient.model;
 import android.util.Log;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.model.typicals.SoulissTypical13DigitalInput;
@@ -26,7 +26,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
-import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 
 import static junit.framework.Assert.assertTrue;
 

@@ -8,10 +8,10 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 
 

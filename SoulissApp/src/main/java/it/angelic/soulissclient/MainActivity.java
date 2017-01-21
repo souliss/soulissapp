@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,20 +29,19 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Timer;
 
 import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.adapters.StaggeredLauncherElementAdapter;
-import it.angelic.soulissclient.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.LauncherElement;
+import it.angelic.soulissclient.model.SoulissModelException;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -60,7 +57,7 @@ import static it.angelic.soulissclient.Constants.TAG;
  */
 public class MainActivity extends AbstractStatusedFragmentActivity {
     private Timer autoUpdate;
-    private SoulissDBLauncherHelper dbLauncher;
+    private SoulissDBLauncherHelper database;
     private StaggeredLauncherElementAdapter launcherMainAdapter;
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
@@ -76,17 +73,9 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 @SuppressWarnings("unchecked")
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 // FIXME TEMPORARY
-                dbLauncher.refreshMap();
-                List<LauncherElement> launcherItems = dbLauncher.getLauncherItems(MainActivity.this);
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
-                Set<LauncherElement> removeSet = new HashSet<>();
-                for (int i = 0; i < launcherItems.size(); i++) {
-                    if (!visibili.contains("" + launcherItems.get(i).getId())) {
-                        removeSet.add(launcherItems.get(i));
-                    }
-                }
-                launcherItems.removeAll(removeSet);
+                database.refreshMapFromDB();
+                List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
+
                 launcherMainAdapter.setLauncherElements(launcherItems);
                 launcherMainAdapter.notifyDataSetChanged();
 
@@ -219,16 +208,17 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
 
-        dbLauncher = new SoulissDBLauncherHelper(this);
-        List launcherItems = dbLauncher.getLauncherItems(this);
+        database = new SoulissDBLauncherHelper(this);
+        List launcherItems = database.getLauncherItems(this);
         // LauncherElement[] array = (LauncherElement[]) launcherItems.toArray(new LauncherElement[launcherItems.size()]);
 
 
         new Thread(new Runnable() {
             @Override
             public void run() {
+                doBindService();
                 // subscribe a tutti i nodi, in teoria non serve*/
-                UDPHelper.stateRequest(opzioni, dbLauncher.countNodes(), 0);
+                UDPHelper.stateRequest(opzioni, database.countNodes(), 0);
             }
         }).start();
 
@@ -237,14 +227,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         mRecyclerView.setAdapter(launcherMainAdapter);
         launcherMainAdapter.notifyDataSetChanged();
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                doBindService();
-            }
-        }).start();
 
 
         // DRAWER
@@ -386,10 +368,19 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         //and in your imlpementaion of
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             // get the viewHolder's and target's positions in your launcherMainAdapter data, swap them
-
             Collections.swap(adapter.getLauncherElements(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+
+
             // and notify the launcherMainAdapter that its dataset has changed
             adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+
+            try {
+                //alla fine persisto
+                ((LauncherElement) adapter.getLauncherElements().get(viewHolder.getAdapterPosition())).persist(recyclerView.getContext());
+                ((LauncherElement) adapter.getLauncherElements().get(target.getAdapterPosition())).persist(recyclerView.getContext());
+            } catch (SoulissModelException e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -401,6 +392,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             adapter.removeAt(viewHolder.getAdapterPosition());
             // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             //clearView(mRecyclerView, viewHolder);
+
 
             Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
         }

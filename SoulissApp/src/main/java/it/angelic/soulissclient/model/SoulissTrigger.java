@@ -1,8 +1,8 @@
 package it.angelic.soulissclient.model;
 
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissTriggerDTO;
+import it.angelic.soulissclient.model.db.SoulissCommandDTO;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissTriggerDTO;
 
 public class SoulissTrigger extends SoulissCommand {
 

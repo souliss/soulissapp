@@ -23,10 +23,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissGraphData;
-import it.angelic.soulissclient.db.SoulissHistoryGraphData;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissGraphData;
+import it.angelic.soulissclient.model.db.SoulissHistoryGraphData;
 
 import static it.angelic.soulissclient.Constants.TAG;
 import static it.angelic.soulissclient.Constants.yearFormat;

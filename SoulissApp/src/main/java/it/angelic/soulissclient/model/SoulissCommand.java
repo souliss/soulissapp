@@ -11,9 +11,9 @@ import java.util.Date;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.db.SoulissCommandDTO;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
+import it.angelic.soulissclient.model.db.SoulissCommandDTO;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 
 import static junit.framework.Assert.assertEquals;

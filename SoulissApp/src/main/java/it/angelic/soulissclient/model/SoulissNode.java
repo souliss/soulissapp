@@ -76,6 +76,10 @@ public class SoulissNode implements Serializable, ISoulissNode {
         return health;
     }
 
+    public String getHealthPercent() {
+        return getHealth() * 100 / 255 + "%";
+    }
+
     public void setHealth(short health) {
         this.health = health;
     }

@@ -27,11 +27,11 @@ import it.angelic.bundle.PluginBundleManager;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TaskerEditActivity;
-import it.angelic.soulissclient.db.SoulissDBHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.helpers.TaskerPlugin;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 /**
  * This is the "fire" BroadcastReceiver for a Locale Plug-in setting.

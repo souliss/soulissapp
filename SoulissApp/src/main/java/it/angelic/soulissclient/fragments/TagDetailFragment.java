@@ -55,13 +55,14 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
-import it.angelic.soulissclient.db.SoulissDBHelper;
-import it.angelic.soulissclient.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -83,7 +84,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     private List<SoulissTypical> collectedTagTypicals;
     private SoulissDBTagHelper datasource;
     private FloatingActionButton fab;
-    private ImageView mLogoIcon;
+    private TextView mLogoIcon;
     private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
     private SwipeRefreshLayout swipeLayout;
@@ -248,10 +249,16 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         //  View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
         // layoutManagerFixed.setHeaderIncrementFixer(header);
 
-        mLogoIcon = (ImageView) getActivity().findViewById(R.id.imageTagIcon);
-        if (collectedTag.getIconResourceId() != 0)
-            mLogoIcon.setImageResource(collectedTag.getIconResourceId());
+        mLogoIcon = (TextView) getActivity().findViewById(R.id.imageTagIconFAwe);
+        if (collectedTag.getIconResourceId() != 0) {
+            FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, FontAwesomeUtil.remapIconResId(collectedTag.getIconResourceId()));
+        } else
+            FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, "fa-tag");
+
+        mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
         mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
+
+
         bro = (TextView) getActivity().findViewById(R.id.tagTextView);
         collapseToolbar = (CollapsingToolbarLayout) getActivity().findViewById(R.id.Collapselayout);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fabTag);

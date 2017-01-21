@@ -177,7 +177,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                         context.startActivity(nodeDatail);
                     }
                 });
-                //viewLine34.setBackgroundColor(context.getResources().getColor(R.color.std_blue));
+                viewLine34.setBackgroundColor(context.getResources().getColor(R.color.std_purple));
                 break;
             case TYPICAL:
 
@@ -210,16 +210,16 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
 
         TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
         TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
-        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoStatus);
-        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
+        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo1);
+        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo2);
 
         textView.setText(nodo.getNiceName());
 
         textViewInfo1.setText(context.getResources().getQuantityString(R.plurals.Devices,
-                nodo.getActiveTypicals().size(), nodo.getActiveTypicals().size()) + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()));
+                nodo.getActiveTypicals().size(), nodo.getActiveTypicals().size()));
 
         //textView.setTag(position);
-        textViewInfo2.setText(SoulissUtils.getTimeAgo(nodo.getRefreshedAt()));
+        textViewInfo2.setText(context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()) + context.getString(R.string.health) + nodo.getHealthPercent());
         // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
         FontAwesomeUtil.prepareFontAweTextView(context, imageView, FontAwesomeUtil.remapIconResId(nodo.getIconResourceId()));
         //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
@@ -436,6 +436,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         launcherElements.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, launcherElements.size());
+
     }
 
     private void setHeadInfo(TextView basinfo) {
@@ -492,6 +493,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         }
         serviceInfo.setText(Html.fromHtml(sb.toString()));
     }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public CardView container;

@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.db;
+package it.angelic.soulissclient.model.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,10 +13,8 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.SoulissTypicalFactory;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -60,79 +58,9 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return comments;
     }
 
-    public SoulissTag getTag(long tagId) throws SQLDataException {
-        SoulissTag dto = new SoulissTag();
-        if (!database.isOpen())
-            open();
-        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
-                SoulissDB.COLUMN_TAG_ID + " = " + tagId, null, null, null, null);
-        if(cursor.isLast())
-            throw new SQLDataException("Non Existing TagId:"+tagId);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
-            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
-            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
-            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
-            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
-            dto.setAssignedTypicals(getTagTypicals(dto));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return dto;
-    }
 
-    public int countFavourites() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
-                + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " =  " + SoulissDB.FAVOURITES_TAG_ID, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
 
-    public int countTypicalTags() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS_TYPICALS, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
 
-    public int countTags() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
-
-    public int countScenes() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_SCENES, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
-
-    public int countTriggers() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TRIGGERS, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
 
     public List<SoulissTypical> getFavouriteTypicals() {
 
@@ -244,33 +172,5 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return comments;
     }
 
-    public List<SoulissTypical> getTagTypicals(SoulissTag parent) {
 
-        List<SoulissTypical> comments = new ArrayList<>();
-        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS + " a "
-                + " INNER JOIN " + SoulissDB.TABLE_TYPICALS + " b "
-                + " ON a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = b." + SoulissDB.COLUMN_TYPICAL_NODE_ID
-                + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " = b." + SoulissDB.COLUMN_TYPICAL_SLOT
-                + " WHERE a." + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + parent.getTagId();
-        Cursor cursor = database.rawQuery(MY_QUERY, null);
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissNode par = getSoulissNode(dto.getNodeId());
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), par, dto, opts);
-            //hack dto ID, could be different if parent is massive
-            newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
-
-            //Se e` qui, e` taggato
-            if (parent.getTagId() == 0)
-                newTyp.getTypicalDTO().setFavourite(true);
-            newTyp.getTypicalDTO().setTagged(true);
-            comments.add(newTyp);
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-        return comments;
-    }
 }
