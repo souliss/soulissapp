@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import java.util.Collections;
 import java.util.List;
@@ -147,7 +146,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
         //Floatin Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToRecyclerView(mRecyclerView);
+        //fab.attachToRecyclerView(mRecyclerView);
 
 
         //ADD NEW SCENE
@@ -173,7 +172,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                     }
                 }, 500);  // msec
 
-                //listaTagsView.invalidateViews();
                 Toast.makeText(TagGridActivity.this,
                         getString(R.string.tag) + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
             }

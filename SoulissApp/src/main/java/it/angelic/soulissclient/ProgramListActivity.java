@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -21,8 +22,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 
@@ -119,7 +118,8 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		mDrawerList.setAdapter(mDrawermAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToListView(listaProgrammiView);
+		//fab.attachToListView(listaProgrammiView);
+
         //ADD NEW PROGRAM Listener
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

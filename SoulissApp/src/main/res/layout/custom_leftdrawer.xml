@@ -44,9 +44,10 @@
             android:textColor="@color/white"
             android:layout_above="@id/textViewDrawerInfo2"
             android:layout_alignParentLeft="true" />
-        <com.melnykov.fab.FloatingActionButton
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabSmall"
-            fab:fab_type="normal"
+            fab:fabSize="normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -55,10 +56,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="16dp"
             android:src="@drawable/favorites2"
-            android:tint="@color/white"
-            fab:fab_colorNormal="@color/std_green"
-            fab:fab_colorPressed="@color/std_blue_shadow"
-            fab:fab_colorRipple="@color/std_purple" />
+            android:tint="@color/white"/>
     </RelativeLayout>
 
 

@@ -85,7 +85,7 @@
                         android:transitionName="tag_title"
                         tools:text="Title Big Swallow"/>
 
-                    <com.melnykov.fab.FloatingActionButton
+                    <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabTag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -97,10 +97,7 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/ic_mode_edit_24dp"
-                        fab:fab_colorNormal="@color/std_green"
-                        fab:fab_colorPressed="@color/std_blue_shadow"
-                        fab:fab_colorRipple="@color/std_purple"
-                        fab:fab_type="mini"/>
+                        fab:fabSize="mini"/>
                 </FrameLayout>
 
                 <include layout="@layout/custom_actionbar"/>

@@ -31,6 +31,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,8 +44,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import java.io.File;
 import java.sql.SQLDataException;
@@ -271,11 +270,11 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 alert.show();
             }
         });
-        fab.hide(false);
+        fab.hide();
         fab.postDelayed(new Runnable() {
             @Override
             public void run() {
-                fab.show(true);
+                fab.show();
             }
         }, 500);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

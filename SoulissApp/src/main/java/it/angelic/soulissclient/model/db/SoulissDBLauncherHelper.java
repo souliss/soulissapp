@@ -50,10 +50,11 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         ///init
         this.context = context;
         if (launcherElementList.isEmpty()) {
-            launcherElementList = getDefaultStaticDBLauncherElements(context);
+            List<LauncherElement> launcherElementtemp = getDefaultStaticDBLauncherElements(context);
 
-            for (LauncherElement lau : launcherElementList) {
+            for (LauncherElement lau : launcherElementtemp) {
                 try {
+                    Log.w(Constants.TAG, "Launcher empty, adding def: " + lau.getTitle());
                     addElement(lau);
                 } catch (SoulissModelException e) {
                     e.printStackTrace();

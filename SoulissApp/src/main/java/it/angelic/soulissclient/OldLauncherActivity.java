@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -37,9 +38,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ObservableScrollView;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +89,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
     private View posInfoLine;
     private Button programsActivity;
     private String provider;
-    private ObservableScrollView scrollView;
     private TextView serviceInfo;
     private TextView serviceInfoAntiTheft;
     private TextView serviceInfoFoot;
@@ -291,7 +288,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
         cardViewPositionInfo = (CardView) findViewById(R.id.dbAndPositionCard);
         cardViewServiceInfo = (CardView) findViewById(R.id.ServiceInfoCard);
         cardViewFav = (CardView) findViewById(R.id.TagsCard);
-        scrollView = (ObservableScrollView) findViewById(R.id.launcherScrollView);
 
 
         // previously invisible view
@@ -680,7 +676,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
             fab.setVisibility(View.VISIBLE);
-            fab.attachToScrollView(scrollView);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

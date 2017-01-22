@@ -261,7 +261,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/startFromLabel"
-                            app:colors="@array/pattern_colors"
+                            app:colorSeeds="@array/material_colors"
                             />
 
                         <TextView
@@ -277,7 +277,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/stopLabel"
-                            app:colors="@array/pattern_colors"
+                            app:colorSeeds="@array/material_colors"
                             />
 
                         <TextView

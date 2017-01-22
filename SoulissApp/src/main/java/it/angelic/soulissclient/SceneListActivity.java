@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -21,8 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -82,7 +81,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToListView(listaScenesView);
+		//  fab.attachToListView(listaScenesView);
 
 		//SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 

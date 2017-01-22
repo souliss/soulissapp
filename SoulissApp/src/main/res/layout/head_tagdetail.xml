@@ -42,20 +42,16 @@
         android:textSize="32sp"
         tools:text="Title Big Swallow"/>
 
-    <com.melnykov.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        fab:fab_type="mini"
+        fab:fabSize="mini"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/ic_mode_edit_24dp"
-        fab:fab_colorNormal="@color/std_green"
-        fab:fab_colorPressed="@color/std_blue_shadow"
-        fab:fab_colorRipple="@color/std_purple"
         android:layout_gravity="right|bottom" />
 </FrameLayout>
