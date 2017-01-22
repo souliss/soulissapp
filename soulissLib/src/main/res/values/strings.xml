@@ -70,7 +70,7 @@
     <string name="scenes_changeicon">Change Scene Icon</string>
     <string name="scenes_add">Add Scene</string>
     <string name="scenes_empty">Scene is Empty!</string>
-    <string name="scenes_empty_desc">Use button below to add a command to this scene</string>
+    <string name="scenes_empty_desc">Use menu to add commands to this scene</string>
     <string name="scenes_desc">Scenes are made of several Souliss Commands. Long-press a Scene to edit or execute it, tap it to open details. Use button to create a new empty Scene</string>
     <string name="scene_turnoff_lights">Turn Off lights</string>
     <string name="scene_turnon_lights">Turn On lights</string>
@@ -402,5 +402,6 @@
     <string name="settings_launcher_items">Home screen Elements</string>
     <string name="launcher_type">Launcher element type</string>
     <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
+    <string name="scene_added">Scene inserted, long-press to rename it and choose icon</string>
     >
 </resources>

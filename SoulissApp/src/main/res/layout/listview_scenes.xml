@@ -5,6 +5,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_height="fill_parent"
     android:focusable="false">
 
@@ -12,9 +13,9 @@
         android:id="@+id/TypCard"
         style="?attr/cardStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="4dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:background="@android:color/transparent"
         android:elevation="2dp"
         android:padding="4dp"
         card_view:cardCornerRadius="2dp">
@@ -33,9 +34,10 @@
                 android:id="@+id/command_icon"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:contentDescription="@string/souliss_app_name"
                 android:gravity="center"
-                android:padding="4dp"/>
+                android:padding="2dp"/>
 
             <TextView
                 android:id="@+id/TextViewCommand"

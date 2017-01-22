@@ -2,7 +2,6 @@ package it.angelic.soulissclient;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.ContextMenu;
@@ -23,13 +22,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -53,10 +52,14 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         //TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
         TextView health = (TextView) findViewById(R.id.TextViewHealth);
         upda = (TextView) findViewById(R.id.TextViewNodeUpdate);
-        ImageView icon = (ImageView) findViewById(R.id.scene_icon);
+        TextView icon = (TextView) findViewById(R.id.scene_icon);
         // titolo.setText(getString(R.string.scene) + " " +
         // Constants.int2roman(collected.getNodeId()));
-        icon.setImageResource(collected.getIconResourceId());
+
+        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, icon, FontAwesomeUtil.remapIconResId(collected.getIconResourceId()));
+
+        //icon.setImageResource(collected.getIconResourceId());
         // Animazione icona nodo
         if (opzioni.getTextFx()) {
             Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalerotale);
@@ -127,10 +130,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
             }
         });
 
-        ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
 
-        nodeic.setImageResource(collected.getIconResourceId());
-        nodeic.setColorFilter(getResources().getColor(color.aa_yellow), PorterDuff.Mode.SRC_ATOP);
         datasource = new SoulissDBHelper(this);
         // datasource.open();
 

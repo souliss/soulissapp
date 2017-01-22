@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
-import it.angelic.soulissclient.MainActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.tagviewlib.FontNotFoundException;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
@@ -47,12 +46,22 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         txtAwesome.setTextSize(64);
     }
 
-    public static void prepareMiniFontAweTextView(MainActivity mainActivity, TextView txtAwesome, String s) {
+    public static void prepareMiniFontAweTextView(Activity mainActivity, TextView txtAwesome, String s) {
         txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(mainActivity));
         String code = FontAwesomeUtil.translateAwesomeCode(mainActivity, s);
         //content.setFontAwesomeCode(code);
         txtAwesome.setText(code);
         txtAwesome.setTextSize(24);
+    }
+
+    public static void prepareAwesomeFontAweTextView(Activity sceneDetailActivity, TextView txtAwesome, String s) {
+        txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(sceneDetailActivity));
+        String code = FontAwesomeUtil.translateAwesomeCode(sceneDetailActivity, s);
+        //content.setFontAwesomeCode(code);
+        txtAwesome.setText(code);
+        txtAwesome.setAlpha(0.1f);
+        //piu grande si scassa
+        txtAwesome.setTextSize(380);
     }
 
     /**
@@ -143,6 +152,8 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
                 return "fa-codepen";
             case R.drawable.lock1:
                 return "fa-unlock";
+            case R.drawable.arrowmove1:
+                return "fa-arrows-alt";
             case R.drawable.locked1:
                 return "fa-lock";
             case R.drawable.mark1:

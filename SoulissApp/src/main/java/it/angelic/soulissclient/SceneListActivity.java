@@ -21,6 +21,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.LinkedList;
@@ -35,6 +36,7 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -56,8 +58,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 	private ArrayAdapter<INavDrawerItem> mAdapter;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 		opzioni = SoulissApp.getOpzioni();
 		// Remove title bar
 		// this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -80,6 +82,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
+        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, "fa-moon-o");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		//  fab.attachToListView(listaScenesView);
 
@@ -92,16 +96,12 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
                 int rest = datasource.createOrUpdateScene(null);
                 // prendo comandi dal DB, setto adapter
                 LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
-
-                // progsAdapter = new SceneListAdapter(SceneListActivity.this, goer, opzioni);
-                // Adapter della lista
-                //SceneListAdapter t = listaScenesView.getAdapter();
                 progsAdapter.setScenes(goer);
                 progsAdapter.notifyDataSetChanged();
                 listaScenesView.setAdapter(progsAdapter);
                 listaScenesView.invalidateViews();
-                Toast.makeText(SceneListActivity.this,
-                        "Scene " + rest + " inserted, long-press to rename it and choose icon", Toast.LENGTH_LONG).show();
+
+                Toast.makeText(SceneListActivity.this, getString(R.string.scene_added), Toast.LENGTH_LONG).show();
             }
         });
 		// check se IP non settato

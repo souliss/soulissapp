@@ -48,7 +48,7 @@ public class ScenesDialogHelper {
      * @param toRename
      * @return //TODO rivedere parametri
      */
-    public static void removeCommandDialog(final Context cont, final ListView ctx, final SoulissDBHelper datasource,
+    public static void removeCommandDialog(final Activity cont, final ListView ctx, final SoulissDBHelper datasource,
                                            final SoulissScene tgt, final SoulissCommand toRename, final SoulissPreferenceHelper opzioni) {
 
         // se lo scenario e` default ci sono solo 2 COMANDI !!!
@@ -192,15 +192,10 @@ public class ScenesDialogHelper {
      * @param opzioni    puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder addSceneCommandDialog(final Context context, final ListView list,
+    public static AlertDialog.Builder addSceneCommandDialog(final Activity context, final ListView list,
                                                             final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni) {
         // prendo tipici dal DB
         final List<SoulissNode> allNodes = datasource.getAllNodes();
-        //final SoulissNode[] nodiArray = new SoulissNode[allNodes.size() + 1];
-        //int q = 0;
-        //for (SoulissNode object : allNodes) {
-        //    nodiArray[q++] = object;
-        //}
         SoulissNode fake = new SoulissNode(Constants.MASSIVE_NODE_ID);// MASSIVO
         fake.setName(context.getString(R.string.allnodes));
         fake.setTypicals(datasource.getUniqueTypicals(fake));

@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +18,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 /**
  * Adapter per gli scenari. Contiene comandi, come l'adapter dei programmi, ma i
@@ -28,11 +28,11 @@ import it.angelic.soulissclient.model.SoulissTypical;
  */
 public class SceneCommandListAdapter extends BaseAdapter {
     List<SoulissCommand> comandiScena;
-    private Context context;
+    private Activity context;
     private LayoutInflater mInflater;
     private SoulissPreferenceHelper opzioni;
 
-    public SceneCommandListAdapter(Context context, List<SoulissCommand> versio, SoulissPreferenceHelper op) {
+    public SceneCommandListAdapter(Activity context, List<SoulissCommand> versio, SoulissPreferenceHelper op) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
         this.comandiScena = versio;
@@ -40,6 +40,9 @@ public class SceneCommandListAdapter extends BaseAdapter {
     }
 
     public int getCount() {
+        // Hack lista vuota
+        if (comandiScena == null || comandiScena.size() == 0)
+            return 1;
         return comandiScena.size();
     }
 
@@ -51,7 +54,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
         return position;
     }
 
-    public List<SoulissCommand> getNodes() {
+    public List<SoulissCommand> getSceneCommands() {
         return comandiScena;
     }
 
@@ -64,7 +67,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
             holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
             holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
             holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-            holder.image = (ImageView) convertView.findViewById(R.id.command_icon);
+            holder.image = (TextView) convertView.findViewById(R.id.command_icon);
+            holder.tileLie = convertView.findViewById(R.id.tileLie);
             if (comandiScena.size() > 0)
                 holder.data = comandiScena.get(position);
 
@@ -79,38 +83,43 @@ public class SceneCommandListAdapter extends BaseAdapter {
         }
         /* Scena vuota */
         if (comandiScena.size() == 0) {
-            holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
-            holder.image.setColorFilter(context.getResources().getColor(R.color.aa_yellow),
-                    android.graphics.PorterDuff.Mode.SRC_ATOP);
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-exclamation-circle");
+            //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
+            holder.image.setTextColor(context.getResources().getColor(R.color.aa_yellow));
             holder.textCmd.setText(context.getResources().getString(R.string.scenes_empty));
             holder.textCmdWhen.setText(context.getResources().getString(R.string.scenes_empty_desc));
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.trans_black));
+            return convertView;
         }
 		/* comando singolo */
         else if (holder.data.getType() == Constants.COMMAND_SINGLE) {
-            holder.image.setImageResource(holder.data.getIconResId());
-            holder.image.setColorFilter(context.getResources().getColor(R.color.aa_yellow),
-                    android.graphics.PorterDuff.Mode.SRC_ATOP);
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(holder.data.getIconResId()));
+            //holder.image.setImageResource(holder.data.getIconResId());
+            holder.image.setTextColor(context.getResources().getColor(R.color.aa_yellow));
             SoulissTypical appoggio = holder.data.getParentTypical();
 
-            holder.textCmd.setText(holder.data.getNiceName());
+            holder.textCmd.setText(holder.data.getName());
             String strVal = Float.valueOf(holder.data.getInterval() / 1000f).toString();
-            holder.textCmdWhen.setText(context.getResources().getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, holder.data.getInterval() / 1000, strVal));
-
-			/* comando massivo */
+            holder.textCmdWhen.setText(holder.data.getNiceName());
+            holder.textCmdInfo.setText(context.getResources().getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, holder.data.getInterval() / 1000, strVal));
+            /* comando massivo */
         } else {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-            don.setBackgroundResource(R.drawable.list_rect_purple);
-            holder.image.setImageResource(holder.data.getIconResId());
-            holder.image.setColorFilter(context.getResources().getColor(R.color.aa_violet),
-                    android.graphics.PorterDuff.Mode.SRC_ATOP);
-            holder.textCmd.setText(holder.data.getNiceName());
+            //don.setBackgroundResource(R.drawable.list_rect_purple);
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(holder.data.getIconResId()));
+            holder.tileLie.setBackgroundColor(ContextCompat.getColor(context, R.color.std_purple));
+            holder.image.setTextColor(context.getResources().getColor(R.color.std_purple_shadow));
+            //holder.image.setImageResource(holder.data.getIconResId());
+            //holder.image.setColorFilter(context.getResources().getColor(R.color.aa_violet),
+            //        android.graphics.PorterDuff.Mode.SRC_ATOP);
+            holder.textCmd.setText(context.getString(R.string.scene_cmd_massive));
             String strVal = Float.valueOf(holder.data.getInterval() / 1000f).toString();
-            holder.textCmdWhen.setText(context.getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, holder.data.getInterval() / 1000, strVal) +
+            holder.textCmdWhen.setText(holder.data.getNiceName());
+            holder.textCmdInfo.setText(context.getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, holder.data.getInterval() / 1000, strVal) +
                     " - " + context.getString(R.string.scene_cmd_massive));
         }
         // Nascondi, maf
-        holder.textCmdInfo.setVisibility(View.GONE);
+        //holder.textCmdInfo.setVisibility(View.GONE);
 
 		/* Dimensioni del testo settate dalle opzioni */
         // holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP,
@@ -133,6 +142,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
         TextView textCmd;
         TextView textCmdWhen;
         TextView textCmdInfo;
-        ImageView image;
+        TextView image;
+        View tileLie;
     }
 }
