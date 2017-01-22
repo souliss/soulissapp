@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout android:id="@+id/drawer_layout"
+                                        xmlns:android="http://schemas.android.com/apk/res/android"
                                         xmlns:tools="http://schemas.android.com/tools"
-                                        android:id="@+id/drawer_layout"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:fitsSystemWindows="true">
 
     <RelativeLayout
-        android:transitionName="helloScenes"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="@dimen/external_margin"
-        android:layout_height="match_parent">
+        android:transitionName="helloScenes">
 
-        <include layout="@layout/custom_actionbar" />
+        <include layout="@layout/custom_actionbar"/>
 
         <LinearLayout
             android:id="@+id/containerlistaScenes"
@@ -29,37 +29,37 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                  <ImageView
-                      android:id="@+id/scene_icon"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_alignParentRight="true"
-                      android:layout_alignParentTop="true"
-                      android:layout_marginRight="4dip"
-                      android:layout_marginTop="4dip"
-                      android:alpha="0.5"
-                      android:contentDescription="@string/souliss_app_name"
-                      android:src="@drawable/moon" />
+                <ImageView
+                    android:id="@+id/scene_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="4dip"
+                    android:layout_marginTop="4dip"
+                    android:alpha="0.5"
+                    android:contentDescription="@string/souliss_app_name"
+                    android:src="@drawable/moon"/>
 
-                 <TextView
-                     android:id="@+id/TextViewTagsDesc"
-                     style="@style/CodeFontSmall"
-                     android:layout_marginLeft="4dp"
-                     android:layout_marginTop="2dp"
-                     android:text="@string/scenes_desc" />
+                <TextView
+                    android:id="@+id/TextViewTagsDesc"
+                    style="@style/CodeFontSmall"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/scenes_desc"/>
 
-                 <ListView
-                     android:id="@+id/ListViewListaScenes"
-                     android:layout_width="fill_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_below="@id/TextViewTagsDesc"
-                     android:background="@drawable/item_selector"
-                     android:cacheColorHint="@color/trans_black"
-                     android:divider="@android:color/transparent"
-                     android:fadingEdge="vertical"
-                     android:requiresFadingEdge="vertical"
-                     tools:listitem="@layout/listview_scenes"
-                     android:transitionName="helloScenes"/>
+                <ListView
+                    android:id="@+id/ListViewListaScenes"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/TextViewTagsDesc"
+                    android:cacheColorHint="@color/trans_black"
+                    android:divider="@android:color/transparent"
+                    android:fadingEdge="vertical"
+                    android:padding="4dp"
+                    android:requiresFadingEdge="vertical"
+                    android:transitionName="helloScenes"
+                    tools:listitem="@layout/listview_scenes"/>
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab"
@@ -77,5 +77,5 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <include layout="@layout/custom_leftdrawer" />
+    <include layout="@layout/custom_leftdrawer"/>
 </android.support.v4.widget.DrawerLayout>

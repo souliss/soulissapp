@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,44 +8,44 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class SceneListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
-	private Context context;
-	SoulissScene[] scene;
+	private Activity context;
+	List<SoulissScene> scenesList;
 	private SoulissPreferenceHelper opzioni;
 
-	public SceneListAdapter(Context context, SoulissScene[] versio,SoulissPreferenceHelper opts) {
+	public SceneListAdapter(Activity context, List<SoulissScene> versio, SoulissPreferenceHelper opts) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
-		this.scene = versio;
+		this.scenesList = versio;
 		opzioni = opts;
 	}
 
 	public int getCount() {
-		return scene.length;
+		return scenesList.size();
 	}
 
 	public Object getItem(int position) {
-		return scene[position];
+		return scenesList.get(position);
 	}
 
 	public long getItemId(int position) {
 		return position;
 	}
 
-	public SoulissScene[] getScenes() {
-		return scene;
+	public List<SoulissScene> getScenes() {
+		return scenesList;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -57,25 +57,25 @@ public class SceneListAdapter extends BaseAdapter {
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
 			holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-			holder.image = (ImageView) convertView.findViewById(R.id.command_icon);
+			holder.image = (TextView) convertView.findViewById(R.id.command_icon);
 			convertView.setTag(holder);
 		} else {
 			holder = (SceneViewHolder) convertView.getTag();
 		}
         //fuori e vaffanculo
-        holder.data = scene[position];
+		holder.data = scenesList.get(position);
 		// holder.data.getCommand().getNodeId()
 		if (opzioni.isLightThemeSelected()) {
 			holder.textCmdWhen.setTextColor(ContextCompat.getColor(context, R.color.black));
 			holder.textCmd.setTextColor(ContextCompat.getColor(context, R.color.black));
 			holder.textCmdInfo.setTextColor(ContextCompat.getColor(context, R.color.black));
 		}
-		holder.image.setImageResource(scene[position].getIconResourceId());
-		holder.image.setColorFilter(context.getResources().getColor(color.aa_yellow),
-				android.graphics.PorterDuff.Mode.SRC_ATOP);
+		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(scenesList.get(position).getIconResourceId()));
+		holder.image.setTextColor(ContextCompat.getColor(context, R.color.aa_yellow));
+
 		ArrayList<SoulissCommand> appoggio = holder.data.getCommandArray();
 		// name = context.getString(appoggio.getAliasNameResId());
-		holder.textCmd.setText(scene[position].getNiceName());
+		holder.textCmd.setText(scenesList.get(position).getNiceName());
 		
 		
 		String strMeatFormat = context.getString(R.string.scene_subtitle);
@@ -102,11 +102,11 @@ public class SceneListAdapter extends BaseAdapter {
 		TextView textCmd;
 		TextView textCmdWhen;
 		TextView textCmdInfo;
-		ImageView image;
+		TextView image;
 		public SoulissScene data;
 	}
 
-	public void setScenes(SoulissScene[] scene) {
-		this.scene = scene;
+	public void setScenes(List<SoulissScene> scene) {
+		this.scenesList = scene;
 	}
 }

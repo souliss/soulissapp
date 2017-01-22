@@ -98,7 +98,7 @@ public class ScenesDialogHelper {
      * @param toRename
      * @return //TODO rivedere parametri
      */
-    public static void removeSceneDialog(final Context cont, final ListView ctx, final SoulissDBHelper datasource,
+    public static void removeSceneDialog(final Activity cont, final ListView ctx, final SoulissDBHelper datasource,
                                          final SoulissScene toRename, final SoulissPreferenceHelper opts) {
 
         if (toRename.getId() < 3) {
@@ -117,10 +117,8 @@ public class ScenesDialogHelper {
                         if (ctx != null) {
                             // prendo comandi dal DB
                             LinkedList<SoulissScene> goer = datasource.getScenes(cont);
-                            SoulissScene[] programsArray = new SoulissScene[goer.size()];
-                            programsArray = goer.toArray(programsArray);
                             // targetScene.setCommandArray(goer);
-                            SceneListAdapter progsAdapter = new SceneListAdapter(cont, programsArray, opts);
+                            SceneListAdapter progsAdapter = new SceneListAdapter(cont, goer, opts);
                             // Adapter della lista
                             ctx.setAdapter(progsAdapter);
                             ctx.invalidateViews();

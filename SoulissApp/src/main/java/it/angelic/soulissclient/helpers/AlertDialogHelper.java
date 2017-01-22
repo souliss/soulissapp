@@ -349,15 +349,10 @@ public class AlertDialogHelper {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
                             if (listV != null) {
                                 LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
-                                SoulissScene[] scenesArray = new SoulissScene[goer.size()];
-                                scenesArray = goer.toArray(scenesArray);
                                 try {
                                     SceneListAdapter sa = (SceneListAdapter) listV.getAdapter();
-                                    // SceneListAdapter progsAdapter = new
-                                    // SceneListAdapter(cont, scenesArray,
-                                    // opzioni);
-                                    // Adapter della lista
-                                    sa.setScenes(scenesArray);
+
+                                    sa.setScenes(goer);
                                     sa.notifyDataSetChanged();
                                     // listV.setAdapter(sa);
                                     listV.invalidateViews();
@@ -606,9 +601,8 @@ public class AlertDialogHelper {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
                             if (list != null) {
                                 LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
-                                SoulissScene[] scenesArray = new SoulissScene[goer.size()];
-                                scenesArray = goer.toArray(scenesArray);
-                                SceneListAdapter progsAdapter = new SceneListAdapter(context, scenesArray, opzioni);
+
+                                SceneListAdapter progsAdapter = new SceneListAdapter(context, goer, opzioni);
                                 // Adapter della lista
                                 list.setAdapter(progsAdapter);
                                 list.invalidateViews();

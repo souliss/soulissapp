@@ -148,11 +148,13 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
             case R.drawable.mark1:
                 return "fa-remove";
             case R.drawable.moon:
-                return "fa-moon";
+                return "fa-moon-o";
             case R.drawable.pot:
                 return "fa-spoon";
             case R.drawable.power:
                 return "fa-power-off";
+            case R.drawable.remote:
+                return "fa-calendar";
             case R.drawable.robot:
                 return "fa-android";
             case R.drawable.setpoint:

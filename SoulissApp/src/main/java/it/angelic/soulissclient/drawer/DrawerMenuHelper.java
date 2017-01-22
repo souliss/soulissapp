@@ -52,7 +52,7 @@ public class DrawerMenuHelper {
 		tmp.add(it);
 
 		//if (apartFromMe != SCENE){
-		NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), FontAwesomeUtil.remapIconResId(R.drawable.lamp),
+		NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), FontAwesomeUtil.remapIconResId(R.drawable.moon),
 				false, ctx);
 		tmp.add(scenes);
 	//	}
@@ -66,7 +66,7 @@ public class DrawerMenuHelper {
 				false, ctx);
         tmp.add(prore);
 	//	}
-		NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), FontAwesomeUtil.remapIconResId(R.drawable.hand1),
+		NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), "fa-codepen",
 				false, ctx);
 		tmp.add(man);
 		

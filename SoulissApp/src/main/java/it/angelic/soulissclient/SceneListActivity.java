@@ -48,8 +48,8 @@ import static it.angelic.soulissclient.Constants.TAG;
  * 
  */
 public class SceneListActivity extends AbstractStatusedFragmentActivity {
-	private SoulissScene[] scenesArray;
-	private ListView listaScenesView;
+    private LinkedList<SoulissScene> goer;
+    private ListView listaScenesView;
 	private SoulissDBHelper datasource;
 	private SceneListAdapter progsAdapter;
 
@@ -92,12 +92,11 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
                 int rest = datasource.createOrUpdateScene(null);
                 // prendo comandi dal DB, setto adapter
                 LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
-                //scenesArray = new SoulissScene[goer.size()];
-                scenesArray = goer.toArray(scenesArray);
-                progsAdapter = new SceneListAdapter(SceneListActivity.this, scenesArray, opzioni);
+
+                // progsAdapter = new SceneListAdapter(SceneListActivity.this, goer, opzioni);
                 // Adapter della lista
                 //SceneListAdapter t = listaScenesView.getAdapter();
-                progsAdapter.setScenes(scenesArray);
+                progsAdapter.setScenes(goer);
                 progsAdapter.notifyDataSetChanged();
                 listaScenesView.setAdapter(progsAdapter);
                 listaScenesView.invalidateViews();
@@ -144,11 +143,10 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		SoulissDBHelper.open();
 
 		// prendo comandi dal DB, setto adapter
-		LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
-		scenesArray = new SoulissScene[goer.size()];
-		scenesArray = goer.toArray(scenesArray);
-		progsAdapter = new SceneListAdapter(this, scenesArray, opzioni);
-		// Adapter della lista
+        goer = datasource.getScenes(SoulissApp.getAppContext());
+
+        progsAdapter = new SceneListAdapter(this, goer, opzioni);
+        // Adapter della lista
 		listaScenesView.setAdapter(progsAdapter);
 		//listaScenesView.invalidateViews();
 		// ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
@@ -207,16 +205,12 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			List<SoulissScene> goer = datasource.getScenes(SceneListActivity.this);
-			scenesArray = new SoulissScene[goer.size()];
-			int q = 0;
-			for (SoulissScene object : goer) {
-				scenesArray[q++] = object;
-			}
-
-			progsAdapter = new SceneListAdapter(SceneListActivity.this.getApplicationContext(), scenesArray, opzioni);
-			// Adapter della lista
-			listaScenesView.setAdapter(progsAdapter);
-			listaScenesView.invalidateViews();
+            //progsAdapter = new SceneListAdapter(SceneListActivity.this.getApplicationContext(), scenesArray, opzioni);
+            progsAdapter.setScenes(goer);
+            progsAdapter.notifyDataSetChanged();
+            // Adapter della lista
+            //listaScenesView.setAdapter(progsAdapter);
+            listaScenesView.invalidateViews();
 		}
 	};
 
@@ -225,7 +219,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.scenelist_menu, menu);
 		return super.onCreateOptionsMenu(menu);
-
 	}
 	
 	@Override

@@ -188,7 +188,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
             case SCENE:
 
                 final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
-                Log.d(Constants.TAG, "Launcher Element scene " + nodo.getName());
+                Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
 
                 TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
                 TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
