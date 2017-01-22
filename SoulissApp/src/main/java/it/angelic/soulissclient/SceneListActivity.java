@@ -19,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +56,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 
 	private ArrayAdapter<INavDrawerItem> mAdapter;
+    private TextView textAwesomeUpperRight;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
-        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
+        textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, "fa-moon-o");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		//  fab.attachToListView(listaScenesView);
@@ -187,10 +187,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 			return true;
 		case R.id.scegliconaScena:
 			SoulissScene convertView = (SoulissScene) listaScenesView.getItemAtPosition(item.getOrder());
-			ImageView at = new ImageView(getApplicationContext());
-			at.setImageResource(convertView.getIconResourceId());
-			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, at, listaScenesView, datasource,
-					todoItem);
+            AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, textAwesomeUpperRight, listaScenesView, datasource,
+                    todoItem);
 			alert2.show();
 			// nodesAdapter.notifyDataSetChanged();
 			// listaNodiView.invalidateViews();

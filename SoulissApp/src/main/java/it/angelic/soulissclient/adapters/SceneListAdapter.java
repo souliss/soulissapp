@@ -70,7 +70,7 @@ public class SceneListAdapter extends BaseAdapter {
 			holder.textCmd.setTextColor(ContextCompat.getColor(context, R.color.black));
 			holder.textCmdInfo.setTextColor(ContextCompat.getColor(context, R.color.black));
 		}
-		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(scenesList.get(position).getIconResourceId()));
+		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, scenesList.get(position).getIconResourceId());
 		holder.image.setTextColor(ContextCompat.getColor(context, R.color.aa_yellow));
 
 		ArrayList<SoulissCommand> appoggio = holder.data.getCommandArray();

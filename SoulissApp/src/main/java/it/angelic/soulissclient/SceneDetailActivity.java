@@ -15,7 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -157,7 +156,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ImageView icon = (ImageView) findViewById(R.id.scene_icon);
+        TextView icon = (TextView) findViewById(R.id.scene_icon);
         switch (item.getItemId()) {
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);

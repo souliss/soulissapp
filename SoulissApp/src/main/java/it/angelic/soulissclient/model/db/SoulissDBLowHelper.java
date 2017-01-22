@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -67,7 +67,7 @@ public class SoulissDBLowHelper extends SoulissDBHelper {
             int upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + i,
                     null);
             if (upd == 0) {
-                values.put(SoulissDB.COLUMN_NODE_ICON, R.drawable.square);
+                values.put(SoulissDB.COLUMN_NODE_ICON, FontAwesomeUtil.getCodeIndexByFontName(context, "fa-cube"));
                 long insertId = database.insert(SoulissDB.TABLE_NODES, null, values);
                 Log.d(Constants.TAG, "Node " + i + " insert returned: " + insertId);
                 ret++;

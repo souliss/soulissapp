@@ -70,7 +70,8 @@ public class NodesListAdapter extends BaseAdapter {
 
 			convertView = mInflater.inflate(R.layout.listview, parent, false);
 			holder = new NodeViewHolder();
-			holder.text = (TextView) convertView.findViewById(R.id.TextView01);
+            holder.data = nodi.get(position);
+            holder.text = (TextView) convertView.findViewById(R.id.TextView01);
 			holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);
 			holder.textHlt = (TextView) convertView.findViewById(R.id.TextViewHealth);
 			holder.image = (TextView) convertView.findViewById(R.id.node_icon);
@@ -82,7 +83,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.hlt.setMax(Constants.MAX_HEALTH);
 			holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
 
-			FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(nodi.get(position).getIconResourceId()));
+
 			// pgDrawable.getPaint().setStrokeWidth(3);
 			pgDrawable.getPaint().setDither(true);
 			pgDrawable.getPaint().setShader(gradient);
@@ -122,7 +123,7 @@ public class NodesListAdapter extends BaseAdapter {
 		}
 
 		/* Icona del nodo */
-		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(nodi.get(position).getIconResourceId()));
+        FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
 
 		if (opzioni.getTextFx()) {
 			Animation a2 = AnimationUtils.loadAnimation(context, R.anim.alpha);
@@ -135,9 +136,8 @@ public class NodesListAdapter extends BaseAdapter {
 			// holder.text.startAnimation(a2);
 		}
 
-		holder.data = nodi.get(position);
 
-		return convertView;
+        return convertView;
 	}
 
 	public static class NodeViewHolder {

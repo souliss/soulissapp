@@ -27,6 +27,13 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <TextView
+                android:id="@+id/scene_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:alpha="0.1"
+                android:contentDescription="@string/souliss_app_name"/>
             <LinearLayout
                 android:layout_width="match_parent"
 

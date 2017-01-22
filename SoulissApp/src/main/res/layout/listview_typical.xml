@@ -23,15 +23,14 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/overflow_dots"/>
 
-        <ImageView
+        <TextView
             android:id="@+id/node_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginRight="8dip"
             android:layout_marginTop="4dip"
-            android:contentDescription="@string/souliss_app_name"
-            android:src="@drawable/soulisslogo" />
+            android:contentDescription="@string/souliss_app_name"/>
         <ImageView
             android:id="@+id/imageButtonFav"
             android:layout_width="wrap_content"

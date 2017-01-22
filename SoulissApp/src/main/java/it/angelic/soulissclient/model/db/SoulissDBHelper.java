@@ -40,6 +40,7 @@ import it.angelic.soulissclient.model.SoulissTypicalFactory;
 import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.MASSIVE_NODE_ID;
 import static it.angelic.soulissclient.Constants.TAG;
@@ -56,6 +57,7 @@ public class SoulissDBHelper {
     // Database fields
     protected static SQLiteDatabase database;
     protected static SoulissDB soulissDatabase;
+    protected final Context context;
     protected SoulissPreferenceHelper opts;
 
     public static synchronized SQLiteDatabase getDatabase() {
@@ -69,6 +71,7 @@ public class SoulissDBHelper {
     public SoulissDBHelper(Context context) {
         soulissDatabase = new SoulissDB(context);
         opts = SoulissApp.getOpzioni();
+        this.context = context;
     }
 
     public static synchronized void open() throws SQLException {
@@ -178,7 +181,7 @@ public class SoulissDBHelper {
             return database.update(SoulissDB.TABLE_SCENES, values, SoulissDB.COLUMN_SCENE_ID + " = " + nodeIN.getId(),
                     null);
         } else {
-            values.put(SoulissDB.COLUMN_SCENE_ICON, R.drawable.lamp);
+            values.put(SoulissDB.COLUMN_SCENE_ICON, FontAwesomeUtil.getCodeIndexByFontName(context, "fa-moon-o"));
             // Inserisco e risetto il nome
             int ret = (int) database.insert(SoulissDB.TABLE_SCENES, null, values);
             values.put(SoulissDB.COLUMN_SCENE_NAME,

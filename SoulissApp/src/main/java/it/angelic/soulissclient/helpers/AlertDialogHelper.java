@@ -21,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -40,7 +39,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
-import it.angelic.soulissclient.adapters.SoulissIconAdapter;
+import it.angelic.soulissclient.adapters.SoulissFontAwesomeAdapter;
 import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.model.ISoulissObject;
@@ -56,6 +55,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import us.feras.ecogallery.EcoGallery;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -565,7 +565,7 @@ public class AlertDialogHelper {
      * @param toRename   puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder chooseIconDialog(final Activity context, @Nullable final ImageView iconImageView, final ListView list,
+    public static AlertDialog.Builder chooseIconDialog(final Activity context, @Nullable final TextView iconImageView, final ListView list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
@@ -578,7 +578,7 @@ public class AlertDialogHelper {
         alert2.setIcon(R.drawable.ic_mode_edit_24dp);
         // loads gallery and requires icon selection*/
         final EcoGallery gallery = new EcoGallery(context);
-        gallery.setAdapter(new SoulissIconAdapter(context));
+        gallery.setAdapter(new SoulissFontAwesomeAdapter(context));
         alert2.setView(gallery);
 
 
@@ -586,8 +586,8 @@ public class AlertDialogHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int pos = gallery.getSelectedItemPosition();
-                        SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
-                        toRename.setIconResourceId(ad.getItemResId(pos));
+                        SoulissFontAwesomeAdapter ad = (SoulissFontAwesomeAdapter) gallery.getAdapter();
+                        toRename.setIconResourceId(pos);
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
                             if (list != null) {
@@ -628,7 +628,8 @@ public class AlertDialogHelper {
                             }
                         }
                         if (iconImageView != null) {
-                            iconImageView.setImageResource(toRename.getIconResourceId());
+                            FontAwesomeUtil.prepareFontAweTextView(context, iconImageView, toRename.getIconResourceId());
+                            // iconImageView.setText(FontAwesomeUtil.translateAwesomeCode(context, ));
                             iconImageView.invalidate();
                         }
 

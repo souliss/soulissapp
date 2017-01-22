@@ -3,9 +3,7 @@ package it.angelic.soulissclient.model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -25,6 +23,7 @@ import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -67,9 +66,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return new ArrayList<>();
     }
 
-    public
-    @StringRes
-    String getDefaultName() {
+    public String getDefaultName() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 
@@ -145,7 +142,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 
     @Override
     public
-    @DrawableRes
     int getIconResourceId() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
@@ -153,69 +149,69 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         if (typicalDTO.getIconId() != 0)
             return typicalDTO.getIconId();
         if (typical == Constants.Typicals.Souliss_T11)
-            return R.drawable.light_on;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.light_on));
         else if (typical == Constants.Typicals.Souliss_T12)
-            return R.drawable.button1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.button1));
         else if (typical == Constants.Typicals.Souliss_T1A)
-            return R.drawable.light_on;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.light_on));
         else if (typical == Constants.Typicals.Souliss_T13)
-            return R.drawable.light_on;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.light_on));
         else if (typical == Constants.Typicals.Souliss_T14)
-            return R.drawable.locked1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.locked1));
         else if (typical == Constants.Typicals.Souliss_T16)
-            return R.drawable.rgb;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.rgb));
         else if (typical == Constants.Typicals.Souliss_T18)
-            return R.drawable.power;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.power));
         else if (typical == Constants.Typicals.Souliss_T19)
-            return R.drawable.candle1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.candle1));
         else if (typical == Constants.Typicals.Souliss_T21)
-            return R.drawable.limit1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.limit1));
         else if (typical == Constants.Typicals.Souliss_T22)
-            return R.drawable.limit1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.limit1));
         else if (typical == Constants.Typicals.Souliss_T31)
-            return R.drawable.thermometer;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.thermometer));
         else if (typical == Constants.Typicals.Souliss_T41_Antitheft_Main)
-            return R.drawable.shield1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.shield1));
         else if (typical == Constants.Typicals.Souliss_T42_Antitheft_Peer || typical == Constants.Typicals.Souliss_T43_Antitheft_LocalPeer)
-            return R.drawable.shield1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.shield1));
         else if (typical == Constants.Typicals.Souliss_T_related)
-            return R.drawable.empty;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.empty));
         else if (typical == Constants.Typicals.Souliss_T32_IrCom_AirCon)
-            return R.drawable.snow1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.snow1));
         else if (typical == Constants.Typicals.Souliss_T15_RGB)
-            return R.drawable.remote;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.remote));
         else if (typical == Constants.Typicals.Souliss_T51)
-            return R.drawable.analog1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.analog1));
         else if (typical == Constants.Typicals.Souliss_T52_TemperatureSensor)
-            return R.drawable.thermometer;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.thermometer));
         else if (typical == Constants.Typicals.Souliss_T53_HumiditySensor)
-            return R.drawable.raindrop;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.raindrop));
         else if (typical == Constants.Typicals.Souliss_T54_LuxSensor)
-            return R.drawable.sun;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.sun));
         else if (typical == Constants.Typicals.Souliss_T55_VoltageSensor)
-            return R.drawable.lightning1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.lightning1));
         else if (typical == Constants.Typicals.Souliss_T56_CurrentSensor)
-            return R.drawable.lightning1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.lightning1));
         else if (typical == Constants.Typicals.Souliss_T57_PowerSensor)
-            return R.drawable.lightning1;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.lightning1));
         else if (typical == Constants.Typicals.Souliss_T58_PressureSensor)
-            return R.drawable.sun;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.sun));
         else if (typical == Constants.Typicals.Souliss_T61)
-            return R.drawable.setpoint;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.setpoint));
         else if (typical == Constants.Typicals.Souliss_T62)
-            return R.drawable.thermometer;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.thermometer));
         else if (typical == Constants.Typicals.Souliss_T63)
-            return R.drawable.raindrop;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.raindrop));
         else if (typical == Constants.Typicals.Souliss_T64)
-            return R.drawable.sun;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.sun));
         else if (typical == Constants.Typicals.Souliss_T65)
-            return R.drawable.plug;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.plug));
         else if (typical == Constants.Typicals.Souliss_T66)
-            return R.drawable.plug;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.plug));
         else if (typical == Constants.Typicals.Souliss_T67)
-            return R.drawable.plug;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.plug));
         else
-            return R.drawable.empty_narrow;
+            return FontAwesomeUtil.getCodeIndexByFontName(SoulissApp.getAppContext(), FontAwesomeUtil.remapIconResId(R.drawable.empty_narrow));
     }
 
     @Override

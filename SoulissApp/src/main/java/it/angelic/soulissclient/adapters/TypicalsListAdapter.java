@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -20,6 +20,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class TypicalsListAdapter extends BaseAdapter {
@@ -27,11 +28,11 @@ public class TypicalsListAdapter extends BaseAdapter {
     // private SoulissDBHelper dataSource;
     SoulissDataService mBoundService;
     private LayoutInflater mInflater;
-    private Context context;
+    private Activity context;
     private SoulissTypical[] tipici;
     private SoulissPreferenceHelper opzioni;
 
-    public TypicalsListAdapter(Context context, SoulissDataService serv, SoulissTypical[] versio, Intent forExtra,
+    public TypicalsListAdapter(Activity context, SoulissDataService serv, SoulissTypical[] versio, Intent forExtra,
                                SoulissPreferenceHelper op) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -91,7 +92,7 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder.textUpdated = (TextView) convertView.findViewById(R.id.TextViewUpdated);
             holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
             holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
-            holder.image = (ImageView) convertView.findViewById(R.id.node_icon);
+            holder.image = (TextView) convertView.findViewById(R.id.node_icon);
             holder.imageFav = (ImageView) convertView.findViewById(R.id.imageButtonFav);
             holder.imageTag = (ImageView) convertView.findViewById(R.id.imageButtonTag);
 
@@ -124,9 +125,11 @@ public class TypicalsListAdapter extends BaseAdapter {
         }
 		/* Nodo vuota */
         if (tipici.length == 0) {
-            holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
-            holder.image.setColorFilter(ContextCompat.getColor(context, R.color.aa_yellow),
-                    android.graphics.PorterDuff.Mode.SRC_ATOP);
+
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-exclamation-circle");
+            //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
+            //holder.image.setColorFilter(ContextCompat.getColor(context, R.color.aa_yellow),
+            //        android.graphics.PorterDuff.Mode.SRC_ATOP);
             holder.textslot.setText(context.getResources().getString(R.string.node_empty));
             holder.textStatus.setText(context.getResources().getString(R.string.node_empty_desc));
             // holder.evidenza.setBackgroundColor(context.getResources().getColor(color.trans_black));
@@ -142,7 +145,7 @@ public class TypicalsListAdapter extends BaseAdapter {
                 + context.getResources().getString(R.string.status));
 		/* Icona del nodo */
         if (tipici[position].getIconResourceId() != 0) {
-            holder.image.setImageResource(tipici[position].getIconResourceId());
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, tipici[position].getIconResourceId());
         }
         //Preferito, TagId == 0
         if (tipici[position].getTypicalDTO().isFavourite()) {
@@ -184,7 +187,7 @@ public class TypicalsListAdapter extends BaseAdapter {
         TextView textslot;
         TextView textUpdated;
         LinearLayout linearActionsLayout;
-        ImageView image;
+        TextView image;
         ImageView imageFav;
         ImageView imageTag;
     }

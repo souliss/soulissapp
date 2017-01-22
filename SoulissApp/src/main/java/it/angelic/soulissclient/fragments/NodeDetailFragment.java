@@ -34,7 +34,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -71,6 +70,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 import static junit.framework.Assert.assertTrue;
@@ -84,7 +84,7 @@ public class NodeDetailFragment extends ListFragment {
     private SoulissDataService mBoundService;
     private boolean mDualPane;
     private boolean mIsBound;
-    private ImageView nodeic;
+    private TextView nodeic;
     private SoulissPreferenceHelper opzioni;
     private ProgressBar par;
     private SwipeRefreshLayout swipeLayout;
@@ -170,14 +170,8 @@ public class NodeDetailFragment extends ListFragment {
     private void createHeader() {
 
         if (collected.getIconResourceId() != 0)
-            nodeic.setImageResource(collected.getIconResourceId());
+            FontAwesomeUtil.prepareFontAweTextView(getActivity(), nodeic, collected.getIconResourceId());
 
-        // Animazione icona nodo
-        /*
-		 * if (opzioni.getTextFx()) { Animation a =
-		 * AnimationUtils.loadAnimation(getApplicationContext(),
-		 * R.anim.scalerotale); a.reset(); nodeic.startAnimation(a); }
-		 */
 
         par.setMax(Constants.MAX_HEALTH);
 
@@ -273,10 +267,10 @@ public class NodeDetailFragment extends ListFragment {
                 .getWindowManager());
         // listaTypicalsView = (ListView) getListView();
         listaTypicalsView = getListView();
-        nodeic = (ImageView) getActivity().findViewById(R.id.node_icon);
+        nodeic = (TextView) getActivity().findViewById(R.id.node_icon);
         // Icona, puo esser nullo dopo rotazione schermo
         if (nodeic != null) {
-            nodeic.setImageResource(collected.getIconResourceId());
+            FontAwesomeUtil.prepareFontAweTextView(getActivity(), nodeic, collected.getIconResourceId());
             createHeader();
             registerForContextMenu(listaTypicalsView);
         } else
@@ -341,8 +335,8 @@ public class NodeDetailFragment extends ListFragment {
                 break;
             case R.id.sceglicona:
                 SoulissTypical convertView = (SoulissTypical) listaTypicalsView.getItemAtPosition(item.getOrder());
-                ImageView at = new ImageView(getActivity());
-                at.setImageResource(convertView.getIconResourceId());
+                TextView at = new TextView(getActivity());
+                FontAwesomeUtil.prepareFontAweTextView(getActivity(), at, convertView.getIconResourceId());
                 AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(getActivity(), at, listaTypicalsView,
                         datasource, todoItem);
                 alert2.show();

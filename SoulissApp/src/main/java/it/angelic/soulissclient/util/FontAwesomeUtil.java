@@ -15,7 +15,7 @@ import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 public class FontAwesomeUtil extends SimpleTagViewUtils {
 
-    public static String translateAwesomeCode(Context context, String fontName) throws FontNotFoundException {
+    public static int getCodeIndexByFontName(Context context, String fontName) {
         int codeidx;
         // Log.d("SimpleTagView", "translateAwesomeCode set for: " + fontName);
         try {
@@ -25,10 +25,17 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
                 //codes according to http://fortawesome.github.io/Font-Awesome/cheatsheet/
                 codeidx = SimpleTagViewUtils.getAwesomeNames(context).indexOf(fontName);
             }
-            return SimpleTagViewUtils.getAwesomeCodes(context).get(codeidx);
+            return codeidx;
         } catch (FontNotFoundException | ArrayIndexOutOfBoundsException | NullPointerException fr) {
             throw new FontNotFoundException("Font with code not found: " + fontName);
         }
+    }
+
+    public static String translateAwesomeCode(Context context, String fontName) throws FontNotFoundException {
+        int codeidx = getCodeIndexByFontName(context, fontName);
+
+        return SimpleTagViewUtils.getAwesomeCodes(context).get(codeidx);
+
     }
 
     public static void prepareMenuFontAweTextView(Activity context, TextView txtAwesome, String faCode) {
@@ -38,11 +45,19 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         txtAwesome.setText(code);
         txtAwesome.setTextSize(42);
     }
+
     public static void prepareFontAweTextView(Activity context, TextView txtAwesome, @NonNull String faCode) {
         txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(context));
         String code = FontAwesomeUtil.translateAwesomeCode(context, faCode);
         //content.setFontAwesomeCode(code);
         txtAwesome.setText(code);
+        txtAwesome.setTextSize(64);
+    }
+
+    public static void prepareFontAweTextView(Activity context, TextView txtAwesome, @NonNull int code) {
+        txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(context));
+        //content.setFontAwesomeCode(code);
+        txtAwesome.setText(SimpleTagViewUtils.getAwesomeCodes(context).get(code));
         txtAwesome.setTextSize(64);
     }
 
@@ -61,16 +76,15 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         txtAwesome.setText(code);
         txtAwesome.setAlpha(0.1f);
         //piu grande si scassa
-        txtAwesome.setTextSize(380);
+        txtAwesome.setTextSize(320);
     }
 
     /**
      * Catena rimappaggio vecchie icone
      *
-     * @author asfodel
-     *
      * @param oldResId
      * @return
+     * @author asfodel
      */
     public static String remapIconResId(int oldResId) {
         switch (oldResId) {

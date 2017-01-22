@@ -19,12 +19,11 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/item_selector"
+            android:background="@android:color/transparent"
             android:cacheColorHint="@color/trans_black"
             android:divider="@android:color/transparent"
             android:fadeScrollbars="true"
             android:fadingEdge="vertical"
-            android:requiresFadingEdge="vertical"
             tools:listitem="@layout/listview"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

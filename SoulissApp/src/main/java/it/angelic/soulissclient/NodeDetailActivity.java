@@ -11,7 +11,7 @@ import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
@@ -116,7 +116,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        ImageView icon = (ImageView) findViewById(R.id.node_icon);
+        TextView icon = (TextView) findViewById(R.id.node_icon);
         switch (item.getItemId()) {
             case android.R.id.home:
 

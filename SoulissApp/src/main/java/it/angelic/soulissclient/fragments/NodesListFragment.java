@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +42,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -115,9 +115,11 @@ public class NodesListFragment extends ListFragment {
 		// fragment directly in the containing UI.
 		View detailsFrame = getActivity().findViewById(R.id.detailPane);
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
-		
 
-		ImageView nodeic = (ImageView) getActivity().findViewById(R.id.scene_icon);
+
+        TextView nodeic = (TextView) getActivity().findViewById(R.id.scene_icon);
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, "fa-codepen");
+
 		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
 		textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewManualDesc);
 		swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
@@ -315,16 +317,16 @@ public class NodesListFragment extends ListFragment {
 		case R.id.rinominaNodo:
 			AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(getActivity(), null, getListView(),
 					datasource, todoItem);
+
 			alert.show();
 			// nodesAdapter.notifyDataSetChanged();
 			// listaNodiView.invalidateViews();
 			return true;
 		case R.id.changenodeicon:
 			SoulissNode convertView = (SoulissNode) getListView().getItemAtPosition(item.getOrder());
-			ImageView at = new ImageView(getActivity().getApplicationContext());
-			at.setImageResource(convertView.getIconResourceId());
-			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(getActivity(), at, getListView(),
-					datasource, todoItem);
+
+            AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(getActivity(), null, getListView(),
+                    datasource, todoItem);
 			alert2.show();
 			// nodesAdapter.notifyDataSetChanged();
 			// listaNodiView.invalidateViews();

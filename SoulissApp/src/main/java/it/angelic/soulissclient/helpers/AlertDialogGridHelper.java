@@ -21,6 +21,7 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.adapters.SoulissFontAwesomeAdapter;
 import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.model.ISoulissObject;
@@ -165,8 +166,8 @@ public class AlertDialogGridHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int pos = gallery.getSelectedItemPosition();
-                        SoulissIconAdapter ad = (SoulissIconAdapter) gallery.getAdapter();
-                        toRename.setIconResourceId(ad.getItemResId(pos));
+                        SoulissFontAwesomeAdapter ad = (SoulissFontAwesomeAdapter) gallery.getAdapter();
+                        toRename.setIconResourceId(pos);
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
 

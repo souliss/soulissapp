@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-    <ImageView
+    <TextView
         android:id="@+id/node_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,8 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="4dip"
         android:layout_marginTop="8dip"
-        android:contentDescription="@string/souliss_app_name"
-        android:src="@drawable/square" />
+        android:contentDescription="@string/souliss_app_name"/>
 
     <TextView
         android:id="@+id/TextViewNodeUpdate"

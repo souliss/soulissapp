@@ -7,6 +7,7 @@ import android.util.Log;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 /**
  * Classe che rappresenta il DB associato a Souliss client
@@ -308,14 +309,14 @@ public class SoulissDB extends SQLiteOpenHelper {
         /* DEFAULT TAG , Order=0 */
         database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + "," + COLUMN_TAG_ORDER + "," + COLUMN_TAG_ICONID
                 + ") VALUES (" + FAVOURITES_TAG_ID + ",'" + context.getResources().getString(R.string.favourites) + "'," + 0 + ","
-                + R.drawable.favorites2 + ")");
+                + FontAwesomeUtil.getCodeIndexByFontName(context, "fa-heart-o") + ")");
         /* DEFAULT SCENE */
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
                 + ") VALUES ('" + context.getResources().getString(R.string.scene_turnoff_lights) + "',"
-                + R.drawable.light_off + ")");
+                + FontAwesomeUtil.getCodeIndexByFontName(context, "fa-toggle-off") + ")");
         database.execSQL("INSERT INTO " + TABLE_SCENES + " (" + COLUMN_SCENE_NAME + "," + COLUMN_SCENE_ICON
                 + ") VALUES ('" + context.getResources().getString(R.string.scene_turnon_lights) + "',"
-                + R.drawable.light_on + ")");
+                + FontAwesomeUtil.getCodeIndexByFontName(context, "fa-toggle-on") + ")");
         // Comandi massivi di default OFF, NODEID = -1
         database.execSQL("INSERT INTO " + TABLE_COMMANDS + " (" + COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT
                 + "," + COLUMN_COMMAND_INPUT + "," + COLUMN_COMMAND_SCENEID + "," + COLUMN_COMMAND_TYPE + ","
