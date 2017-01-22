@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.sql.SQLDataException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,13 +44,13 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
     public SoulissDBLauncherHelper(Context context) {
         super(context);
+        this.context = context;
         open();
         // Database fields
         launcherElementList = getDBLauncherElements(context);
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         ///init
-        this.context = context;
         if (launcherElementList.isEmpty()) {
             List<LauncherElement> launcherElementtemp = getDefaultStaticDBLauncherElements(context);
 
@@ -71,10 +73,22 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             }
         }
         launcherElementList.removeAll(removeSet);
-
+        recomputeOrder();
 
     }
 
+    public LauncherElement addElement(LauncherElement lau) throws SoulissModelException {
+        launcherElementList.add(lau);
+        lau.setOrder((short) (launcherElementList.size()));
+        lau.setId(launcherElementList.size());
+        long id = createLauncherElement(lau);
+
+        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
+        visibili.add("" + lau.getId());
+        preferences.edit().putStringSet("launcher_elems", visibili).apply();
+        Log.i(Constants.TAG, "tile creato: " + lau.getId() + " = " + lau.getTitle());
+        return lau;
+    }
 
     /**
      * campi singoli altrimenti side effects
@@ -82,7 +96,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
      * @param nodeIN
      * @return
      */
-    public int createOrUpdateLauncherElement(LauncherElement nodeIN) throws SoulissModelException {
+    private long createLauncherElement(LauncherElement nodeIN) throws SoulissModelException {
         ContentValues values = new ContentValues();
         // wrap values from object
         values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
@@ -104,20 +118,20 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             else
                 throw new SoulissModelException("Missing ISoulissObject cast");
         }
-        int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
-                null);
-        if (upd == 0) {
-            long insertId = database.insert(SoulissDB.TABLE_LAUNCHER, null, values);
-        }
+        // int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
+        //         null);
+        // if (upd == 0) {
+        long insertId = database.insert(SoulissDB.TABLE_LAUNCHER, null, values);
+        //  }
 
-        return upd;
+        return insertId;
     }
 
     private int deleteLauncher(LauncherElement toRename) {
         return database.delete(SoulissDB.TABLE_LAUNCHER, SoulissDB.COLUMN_LAUNCHER_ID + " = " + toRename.getId(), null);
     }
 
-    public List<LauncherElement> getDBLauncherElements(Context context) {
+    private List<LauncherElement> getDBLauncherElements(Context context) {
         List<LauncherElement> comments = new ArrayList<>();
         if (!database.isOpen())
             open();
@@ -172,42 +186,47 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
         scenari.setTitle(context.getString(R.string.scenes_title));
         scenari.setDesc(countScenes() + " scenari configurati");
-        scenari.setId(0);
         ret.add(scenari);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
         man.setTitle(context.getString(R.string.manual_title));
         man.setDesc(countNodes() + " nodi presenti");
-        man.setId(1);
         ret.add(man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
         pro.setTitle(context.getString(R.string.programs_title));
         pro.setDesc(countTriggers() + " programmi attivi");
-        pro.setId(2);
         ret.add(pro);
 
         LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
         prop.setTitle(context.getString(R.string.status_souliss));
         prop.setIsFullSpan(true);
-        prop.setId(3);
         ret.add(prop);
-
 
         LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
         prob.setDesc(countTags() + " tags contenenti " + countTypicalTags() + " dispositivi");
         prob.setTitle(context.getString(R.string.tags));
-        prob.setId(4);
         ret.add(prob);
 
         return ret;
     }
 
     public List<LauncherElement> getLauncherItems(Context context) {
-        //Set chiavi= launcherElementList.keySet();
-
-        //TODO sorting by order
+        Collections.sort(launcherElementList, new Comparator<LauncherElement>() {
+            @Override
+            public int compare(final LauncherElement lhs, LauncherElement rhs) {
+                return lhs.getOrder() - rhs.getOrder();
+            }
+        });
+        // sorted by order from DB
         return launcherElementList;
+    }
+
+    private void recomputeOrder() {
+        for (LauncherElement ref : launcherElementList
+                ) {
+            ref.setOrder((short) launcherElementList.indexOf(ref));
+        }
     }
 
     /*public List<LauncherElement> loadLauncherItems(){
@@ -239,7 +258,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     }*/
 
     public void refreshMapFromDB() {
+        Log.d(Constants.TAG, "refresh launcher from DB");
         launcherElementList = getDBLauncherElements(context);
+        recomputeOrder();
     }
 
     public void remove(LauncherElement launcherElement) {
@@ -251,14 +272,59 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         preferences.edit().putStringSet("launcher_elems", visibili).apply();
     }
 
-    public void addElement(LauncherElement lau) throws SoulissModelException {
-        launcherElementList.add(lau);
-        lau.setOrder((short) (launcherElementList.size()));
-        createOrUpdateLauncherElement(lau);
-        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
-        visibili.add("" + lau.getId());
+    public void updateLauncherElement(LauncherElement nodeIN) {
+        try {
+            if (launcherElementList.contains(nodeIN)) {
 
-        preferences.edit().putStringSet("launcher_elems", visibili).apply();
+                updateLauncherElementImpl(nodeIN);
+                launcherElementList.set(launcherElementList.indexOf(nodeIN), nodeIN);
+
+                recomputeOrder();
+            } else {
+                throw new SoulissModelException("Nodo non trovato: " + nodeIN.getTitle());
+            }
+        } catch (SoulissModelException e) {
+            Log.e(Constants.TAG, e.getMessage());
+        }
+
+
+    }
+
+    /**
+     * campi singoli altrimenti side effects
+     *
+     * @param nodeIN
+     * @return
+     */
+    private long updateLauncherElementImpl(LauncherElement nodeIN) throws SoulissModelException {
+        ContentValues values = new ContentValues();
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
+        values.put(SoulissDB.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
+        values.put(SoulissDB.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
+        values.put(SoulissDB.COLUMN_LAUNCHER_TYPE, nodeIN.getComponentEnum().ordinal());
+        values.put(SoulissDB.COLUMN_LAUNCHER_ORDER, nodeIN.getOrder());
+        values.put(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN, nodeIN.isFullSpan() ? 1 : 0);
+        if (nodeIN.getLinkedObject() != null) {
+            if (nodeIN.getLinkedObject() instanceof SoulissNode)
+                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissNode) nodeIN.getLinkedObject()).getNodeId());
+            else if (nodeIN.getLinkedObject() instanceof SoulissTypical) {
+                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
+                values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
+            } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
+                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getId());
+            else if (nodeIN.getLinkedObject() instanceof SoulissTag)
+                values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
+            else
+                throw new SoulissModelException("Missing ISoulissObject cast");
+        }
+        int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
+                null);
+        if (upd == 0) {
+            Log.e(Constants.TAG, "updateLauncherElement() NO ROW UPDATED!!");
+        }
+
+        return upd;
     }
 
    /* public void synch() {

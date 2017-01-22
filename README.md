@@ -26,8 +26,8 @@ The easiest way to contribute is using <a href="https://developer.android.com/sd
 The project includes *SoulissLib* and other necessary modules. You may want to edit <a href="https://github.com/souliss/soulissapp/blob/master/soulissLib/src/main/res/values">translation Files</a> and commit them on separate branches. More info on how to use git and branching model is available on our <a href="https://github.com/souliss/souliss/wiki/Contribute">wiki</a>.
 
 ## Used Libraries
+
 * [android-parallax-recycleview](https://github.com/kanytu/android-parallax-recyclerview)
-* [AChartEngine ](http://www.achartengine.org/)
-* [FloatingActionButton](https://github.com/makovkastar/FloatingActionButton)
+* [AndroidCharts](https://github.com/HackPlan/AndroidCharts)
 * [ColorCrossfade](https://github.com/noties/ColorCrossFade)
 

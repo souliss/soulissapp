@@ -40,7 +40,6 @@ import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.LauncherElement;
-import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
@@ -212,7 +211,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         initDrawer(this, DrawerMenuHelper.TAGS);
 
         // Extend the Callback class
-        ItemTouchHelper.Callback launcherCallback = new LauncherStaggeredCallback(MainActivity.this, launcherMainAdapter);
+        ItemTouchHelper.Callback launcherCallback = new LauncherStaggeredCallback(MainActivity.this, launcherMainAdapter, database);
         // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
         ItemTouchHelper ith = new ItemTouchHelper(launcherCallback);
         ith.attachToRecyclerView(mRecyclerView);
@@ -343,10 +342,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         private final StaggeredLauncherElementAdapter adapter;
         private final Context context;
         View.OnClickListener mOnClickListener;
+        private SoulissDBLauncherHelper database;
 
-        public LauncherStaggeredCallback(Context xct, StaggeredLauncherElementAdapter adapter) {
+        public LauncherStaggeredCallback(Context xct, StaggeredLauncherElementAdapter adapter, SoulissDBLauncherHelper database) {
             this.adapter = adapter;
             this.context = xct;
+            this.database = database;
             mOnClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -375,18 +376,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             // and notify the launcherMainAdapter that its dataset has changed
             adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
 
-            try {
-                //occhio! sono gia swappati
-                LauncherElement p1 = adapter.getLauncherElements().get(viewHolder.getAdapterPosition());
-                LauncherElement p2 = adapter.getLauncherElements().get(target.getAdapterPosition());
-                p1.setOrder((short) viewHolder.getAdapterPosition());
-                p2.setOrder((short) target.getAdapterPosition());
-                //alla fine persisto
-                (p1).persist(recyclerView.getContext());
-                (p2).persist(recyclerView.getContext());
-            } catch (SoulissModelException e) {
-                e.printStackTrace();
-            }
+            //occhio! sono gia swappati
+            LauncherElement p1 = adapter.getLauncherElements().get(viewHolder.getAdapterPosition());
+            LauncherElement p2 = adapter.getLauncherElements().get(target.getAdapterPosition());
+            p1.setOrder((short) viewHolder.getAdapterPosition());
+            p2.setOrder((short) target.getAdapterPosition());
+            //alla fine persisto
+            database.updateLauncherElement(p1);
+            database.updateLauncherElement(p2);
             return true;
         }
 
@@ -399,8 +396,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             adapter.removeAt(viewHolder.getAdapterPosition());
             // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             //clearView(mRecyclerView, viewHolder);
-            SoulissDBLauncherHelper db = new SoulissDBLauncherHelper(context);
-            db.remove(tbr);
+
+            database.remove(tbr);
 
             Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
         }

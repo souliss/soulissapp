@@ -36,9 +36,9 @@ public class LauncherElement implements ILauncherTile, Serializable {
         return componentEnum;
     }
 
-    public void persist(Context cnt) throws SoulissModelException {
+    protected void persist(Context cnt) throws SoulissModelException {
         SoulissDBLauncherHelper db = new SoulissDBLauncherHelper(cnt);
-        db.createOrUpdateLauncherElement(this);
+        db.updateLauncherElement(this);
     }
 
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.LauncherElement;
+import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 
@@ -46,9 +49,18 @@ public class LauncherPreferenceListener implements OnPreferenceClickListener {
 
     protected void resetDefaultPref() {
         SoulissDBLauncherHelper database = new SoulissDBLauncherHelper(parent);
-        List po = database.getDBLauncherElements(parent);
-        po.addAll(0, database.getDefaultStaticDBLauncherElements(parent));
+        List<LauncherElement> po = database.getLauncherItems(parent);
+        List<LauncherElement> def = database.getDefaultStaticDBLauncherElements(parent);
 
+        for (LauncherElement la : def
+                ) {
+            try {
+                database.addElement(la);
+            } catch (SoulissModelException e) {
+                Toast.makeText(parent, "Errore salvataggio tile", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
 
     }
 
