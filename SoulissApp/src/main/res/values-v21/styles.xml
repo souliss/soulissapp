@@ -16,6 +16,8 @@
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
         <item name="cardStyle">@style/CardView.Light</item>
     </style>
+
+
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowSharedElementEnterTransition">@transition/grid_element_enter</item>

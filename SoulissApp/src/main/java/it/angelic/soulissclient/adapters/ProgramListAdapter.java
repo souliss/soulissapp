@@ -1,7 +1,7 @@
 package it.angelic.soulissclient.adapters;
 
-import android.content.Context;
-import android.graphics.PorterDuff;
+import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,15 +22,16 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissTriggerDTO;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class ProgramListAdapter extends BaseAdapter {
     List<SoulissCommand> programmi = new ArrayList<>();
     SparseArray<SoulissTriggerDTO> triggers;
+    private Activity context;
     private LayoutInflater mInflater;
-    private Context context;
     private SoulissPreferenceHelper opzioni;
 
-    public ProgramListAdapter(Context context, List<SoulissCommand> versio, SparseArray<SoulissTriggerDTO> trigs,
+    public ProgramListAdapter(Activity context, List<SoulissCommand> versio, SparseArray<SoulissTriggerDTO> trigs,
                               SoulissPreferenceHelper optss) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -39,6 +39,10 @@ public class ProgramListAdapter extends BaseAdapter {
         this.triggers = trigs;
         opzioni = optss;
 
+    }
+
+    public List<SoulissCommand> getCommands() {
+        return programmi;
     }
 
     public int getCount() {
@@ -55,10 +59,6 @@ public class ProgramListAdapter extends BaseAdapter {
         return position;
     }
 
-    public List<SoulissCommand> getCommands() {
-        return programmi;
-    }
-
     public View getView(int position, View convertView, ViewGroup parent) {
         CommandViewHolder holder;
 
@@ -68,7 +68,8 @@ public class ProgramListAdapter extends BaseAdapter {
             holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
             holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
             holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-            holder.image = (ImageView) convertView.findViewById(R.id.program_icon);
+            holder.image = (TextView) convertView.findViewById(R.id.program_icon);
+            holder.line = convertView.findViewById(R.id.StaticTileLine);
             holder.data = programmi.get(position);
             convertView.setTag(holder);
         } else {
@@ -87,12 +88,10 @@ public class ProgramListAdapter extends BaseAdapter {
         /* programma temporale */
         if (holder.data.getType() == Constants.COMMAND_TIMED) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-            don.setBackgroundResource(R.drawable.list_rect_purple);
+            //don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
-            holder.image.setImageResource(R.drawable.clock1);
-            holder.image.setColorFilter(context.getResources().getColor(color.aa_violet),
-                    android.graphics.PorterDuff.Mode.SRC_ATOP);
-
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-clock-o");
+            holder.image.setTextColor(ContextCompat.getColor(context, color.std_blue_shadow));
             holder.textCmdWhen
                     .setText(context.getString(R.string.execute_at) + " " + Constants.hourFormat.format(holder.data.getScheduledTime().getTime()));
             if (holder.data.getInterval() > 0) {
@@ -103,42 +102,35 @@ public class ProgramListAdapter extends BaseAdapter {
 
                 holder.textCmdInfo.setText(context.getString(R.string.programs_recursive));
             }
-            /* Dimensioni del testo settate dalle opzioni */
-            // holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-            // opzioni.getListDimensTesto());
 
         }/* programma POSIZIONALE */ else if (holder.data.getType() == Constants.COMMAND_COMEBACK_CODE
                 || holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-            don.setBackgroundResource(R.drawable.list_rect_blue);
-            //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.aa_blue));
-            holder.image.setImageResource(R.drawable.exit1);
-            // holder.image.setColorFilter(context.getResources().getColor(color.aa_blue), PorterDuff.Mode.SRC_ATOP);
-            // se gia eseguito, dico quando
+            holder.image.setTextColor(ContextCompat.getColor(context, color.std_blue_shadow));
             if (holder.data.getExecutedTime() != null) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
                         + " " + Constants.hourFormat.format(holder.data.getExecutedTime().getTime()));
             } else {
                 holder.textCmdWhen.setText(context.getString(R.string.programs_notyet));
             }
-            if (holder.data.getType() == Constants.COMMAND_GOAWAY_CODE)
+            if (holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_leave));
-            else
+                FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-sign-out");
+            } else {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_come));
-
-			/* Dimensioni del testo settate dalle opzioni */
+                FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-sign-in");
+            }
+            /* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
 
 			/* COMANDO TRIGGERED */
         } else if (holder.data.getType() == Constants.COMMAND_TRIGGERED) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-            don.setBackgroundResource(R.drawable.list_rect_red);
-            //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_red_shadow));
-            holder.image.setImageResource(R.drawable.lighthouse1);
-            holder.image.setColorFilter(context.getResources().getColor(color.aa_red), PorterDuff.Mode.SRC_ATOP);
-
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-code-fork");
+            //rosso
+            holder.image.setTextColor(ContextCompat.getColor(context, color.std_red_shadow));
+            holder.line.setBackgroundColor(ContextCompat.getColor(context, color.std_red_shadow));
             SoulissTriggerDTO intrig = triggers.get((int) holder.data.getCommandId());
-
 			/* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
             holder.textCmdInfo.setText(context.getString(R.string.programs_when) + " " + intrig.getInputSlot()
@@ -169,6 +161,7 @@ public class ProgramListAdapter extends BaseAdapter {
         TextView textCmd;
         TextView textCmdWhen;
         TextView textCmdInfo;
-        ImageView image;
+        TextView image;
+        public View line;
     }
 }

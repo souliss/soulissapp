@@ -29,6 +29,7 @@
                 android:id="@+id/node_icon"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:gravity="center"
                 android:padding="2dp"
                 android:contentDescription="@string/souliss_app_name"/>

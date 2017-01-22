@@ -272,7 +272,7 @@ public class AlertDialogHelper {
      * @param toRename
      * @return
      */
-    public static AlertDialog.Builder removeCommandDialog(final Context cont, final ListView ctx,
+    public static AlertDialog.Builder removeCommandDialog(final Activity cont, final ListView ctx,
                                                           final SoulissDBHelper datasource, final SoulissCommand toRename) {
         AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         alert.setTitle(cont.getString(R.string.dialog_remove_title));

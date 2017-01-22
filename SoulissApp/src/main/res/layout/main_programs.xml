@@ -29,17 +29,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <ImageView
+                <TextView
                     android:id="@+id/scene_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginRight="4dip"
-                    android:layout_marginTop="4dip"
-                    android:alpha="0.5"
-                    android:contentDescription="@string/souliss_app_name"
-                    android:src="@drawable/remote"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:alpha="0.1"
+                    android:contentDescription="@string/souliss_app_name"/>
 
                 <TextView
                     android:id="@+id/TextViewProgramsDesc"
@@ -64,9 +60,9 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_below="@id/TextViewTypicals"
-                    android:background="@drawable/item_selector"
                     android:cacheColorHint="@color/trans_black"
                     android:divider="@android:color/transparent"
+                    android:padding="4dp"
                     android:fadeScrollbars="true"
                     android:fadingEdge="vertical"
                     android:requiresFadingEdge="vertical"/>
