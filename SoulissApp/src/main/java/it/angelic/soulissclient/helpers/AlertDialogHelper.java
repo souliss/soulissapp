@@ -316,7 +316,7 @@ public class AlertDialogHelper {
      * @param toRename
      * @return
      */
-    public static AlertDialog.Builder renameSoulissObjectDialog(final Context cont, final TextView textViewLabel,
+    public static AlertDialog.Builder renameSoulissObjectDialog(final Activity cont, final TextView textViewLabel,
                                                                 final ListView listV, final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
@@ -395,7 +395,7 @@ public class AlertDialogHelper {
                             }
                         }
                         if (cont instanceof Activity && !(toRename instanceof SoulissTypical))
-                            ((Activity) cont).setTitle(toRename.getNiceName());
+                            cont.setTitle(toRename.getNiceName());
                         if (textViewLabel != null) {
                             textViewLabel.setText(value);
                             textViewLabel.setText(toRename.getNiceName());
@@ -570,7 +570,7 @@ public class AlertDialogHelper {
      * @param toRename   puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder chooseIconDialog(final Context context, @Nullable final ImageView iconImageView, final ListView list,
+    public static AlertDialog.Builder chooseIconDialog(final Activity context, @Nullable final ImageView iconImageView, final ListView list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);

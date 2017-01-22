@@ -30,7 +30,6 @@
             android:id="@+id/TextViewTypicalsTitle"
             style="@style/CodeFontMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:gravity="center"
             android:text="@string/position"

@@ -3,7 +3,8 @@
                   android:icon="@android:drawable/ic_menu_save"
                   android:key="launcher_setup"
                   android:summary="@string/opt_db_desc"
-                  android:title="@string/opt_launcher">
+                  android:title="@string/opt_launcher"
+                  android:background="?android:attr/selectableItemBackground">
 
     <PreferenceCategory android:title="Launcher Configuration">
         <it.angelic.soulissclient.preferences.LauncherListPreference
@@ -20,7 +21,11 @@
             android:dialogMessage="Are you sure you wish to reset your quest progress? This action cannot be undone!"
             android:positiveButtonText="@string/save"
             android:negativeButtonText="@string/cancel"/>
-
+        <Preference
+            android:name="rstlauncher"
+            android:key="rstlauncher"
+            android:summary="@string/opt_rstlauncher_desc"
+            android:title="@string/reset"/>
 
     </PreferenceCategory>
 

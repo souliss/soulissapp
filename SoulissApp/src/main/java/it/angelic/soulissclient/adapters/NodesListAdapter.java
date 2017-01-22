@@ -1,6 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,15 +23,16 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class NodesListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
-	private Context context;
+	private Activity context;
 	List<SoulissNode> nodi;
 	private SoulissPreferenceHelper opzioni;
 
-	public NodesListAdapter(Context context, List<SoulissNode> versio, SoulissPreferenceHelper opts) {
+	public NodesListAdapter(Activity context, List<SoulissNode> versio, SoulissPreferenceHelper opts) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
 		this.nodi = versio;
@@ -73,7 +73,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.text = (TextView) convertView.findViewById(R.id.TextView01);
 			holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);
 			holder.textHlt = (TextView) convertView.findViewById(R.id.TextViewHealth);
-			holder.image = (ImageView) convertView.findViewById(R.id.node_icon);
+			holder.image = (TextView) convertView.findViewById(R.id.node_icon);
 			holder.hlt = (ProgressBar) convertView.findViewById(R.id.progressBarHealth);
 			holder.hlt.setIndeterminate(false);
 			holder.hlt.setMax(50);
@@ -81,7 +81,8 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.hlt.setProgress(0);
 			holder.hlt.setMax(Constants.MAX_HEALTH);
 			holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
-			holder.imageRes = nodi.get(position).getIconResourceId();
+
+			FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(nodi.get(position).getIconResourceId()));
 			// pgDrawable.getPaint().setStrokeWidth(3);
 			pgDrawable.getPaint().setDither(true);
 			pgDrawable.getPaint().setShader(gradient);
@@ -121,7 +122,7 @@ public class NodesListAdapter extends BaseAdapter {
 		}
 
 		/* Icona del nodo */
-		holder.image.setImageResource(holder.imageRes);
+		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(nodi.get(position).getIconResourceId()));
 
 		if (opzioni.getTextFx()) {
 			Animation a2 = AnimationUtils.loadAnimation(context, R.anim.alpha);
@@ -144,7 +145,7 @@ public class NodesListAdapter extends BaseAdapter {
 		TextView textTyp;
 		TextView textHlt;
 		ProgressBar hlt;
-		ImageView image;
+		TextView image;
 		public SoulissNode data;
 		int imageRes;
 	}

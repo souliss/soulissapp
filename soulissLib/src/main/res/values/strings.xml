@@ -401,5 +401,6 @@
     <string name="opt_launcher">Launcher Setup</string>
     <string name="settings_launcher_items">Home screen Elements</string>
     <string name="launcher_type">Launcher element type</string>
+    <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
     >
 </resources>

@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.preferences;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -25,7 +24,7 @@ public class DbSettingsFragment extends PreferenceFragment {
 		getView().setClickable(true);
 		//http://stackoverflow.com/questions/8362908/preferencefragment-is-shown-transparently
 		//che merdata, non riesco a fare meglio
-		getView().setBackgroundColor(Color.WHITE);
+		//getView().setBackgroundColor(Color.WHITE);
 	}
 
 	@Override

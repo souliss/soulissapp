@@ -7,26 +7,22 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.LauncherElement;
-import it.angelic.soulissclient.model.LauncherElementEnum;
 import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -35,31 +31,35 @@ import it.angelic.soulissclient.model.SoulissTypical;
  */
 public class SoulissDBLauncherHelper extends SoulissDBHelper {
     private static final String MAP = "map";
-    private static final Type MAP_TYPE = new TypeToken<Map<Integer, LauncherElement>>() {
-    }.getType();
+
 
     // private static SharedPreferences prefs = MyApplication.getContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
 
     private static List<LauncherElement> launcherElementList;
 
     private final Context context;
+    private final SharedPreferences preferences;
 
     public SoulissDBLauncherHelper(Context context) {
         super(context);
         open();
         // Database fields
         launcherElementList = getDBLauncherElements(context);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         ///init
         this.context = context;
         if (launcherElementList.isEmpty()) {
-            createDefaultMap();
-            synch();
+            launcherElementList = getDefaultStaticDBLauncherElements(context);
+
             for (LauncherElement lau : launcherElementList) {
-                visibili.add("" + lau.getId());
+                try {
+                    addElement(lau);
+                } catch (SoulissModelException e) {
+                    e.printStackTrace();
+                }
             }
-            preferences.edit().putStringSet("launcher_elems", visibili).apply();
+            // preferences.edit().putStringSet("launcher_elems", visibili).apply();
         }
 
         //tolgo i nascosti
@@ -74,45 +74,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
     }
 
-    private void createDefaultMap() {
-        launcherElementList = new ArrayList<>();
-        //Map<> comments = new ArrayList<LauncherElement>();
-        open();
-
-        SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
-        launcherElementList.addAll(getDefaultDBLauncherElements(context));
-/*
-        LauncherElement prot = new LauncherElement(LauncherElementEnum.TYPICAL);
-        SoulissTypical tip = super.getTypical(0, (short) 0);
-        Log.i(Constants.TAG, "ricaricato tipico farlocco, value=" + tip.getOutput());
-        prot.setLinkedObject(tip);
-        prot.setTitle(tip.getNiceName());
-        prot.setId(4);
-        launcherElementList.add(  prot);
-*/
-
-
-/*
-        //TAG example
-        LauncherElement tag = new LauncherElement(LauncherElementEnum.TAG);
-        try {
-            tag.setLinkedObject(dbt.getTag(0L));
-        } catch (SQLDataException e) {
-            e.printStackTrace();
-        }
-        tag.setId(6);
-        tag.setTitle(tag.getLinkedObject().getNiceName());
-        launcherElementList.add( tag);
-
-        LauncherElement protnode = new LauncherElement(LauncherElementEnum.NODE);
-        SoulissNode nod = super.getSoulissNode(0);
-        Log.i(Constants.TAG, "ricaricato nodo farlocco, value=" + tip.getOutput());
-        protnode.setLinkedObject(nod);
-        protnode.setTitle(nod.getNiceName());
-        protnode.setId(7);
-        launcherElementList.add( protnode);
-*/
-    }
 
     /**
      * campi singoli altrimenti side effects
@@ -196,7 +157,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                     break;
             }
             dto.setLinkedObject(isoulissObj);
-            Log.i(Constants.TAG, "retrieving LAUNCHER item:" + dto.getTitle() + " ORDER:" + dto.getOrder());
+            Log.i(Constants.TAG, "retrieving LAUNCHER item:" + dto.getTitle() + " ID:" + dto.getId() + " ORDER:" + dto.getOrder());
 
             comments.add(dto);
             cursor.moveToNext();
@@ -205,7 +166,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         return comments;
     }
 
-    private List<LauncherElement> getDefaultDBLauncherElements(Context context) {
+    public List<LauncherElement> getDefaultStaticDBLauncherElements(Context context) {
         List<LauncherElement> ret = new ArrayList<>();
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
         scenari.setTitle(context.getString(R.string.scenes_title));
@@ -226,7 +187,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         ret.add(pro);
 
         LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
-        prop.setTitle(context.getString(R.string.status));
+        prop.setTitle(context.getString(R.string.status_souliss));
         prop.setIsFullSpan(true);
         prop.setId(3);
         ret.add(prop);
@@ -289,7 +250,17 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         preferences.edit().putStringSet("launcher_elems", visibili).apply();
     }
 
-    private void synch() {
+    public void addElement(LauncherElement lau) throws SoulissModelException {
+        launcherElementList.add(lau);
+        lau.setOrder((short) (launcherElementList.size()));
+        createOrUpdateLauncherElement(lau);
+        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
+        visibili.add("" + lau.getId());
+
+        preferences.edit().putStringSet("launcher_elems", visibili).apply();
+    }
+
+   /* public void synch() {
         short order = 0;
         for (LauncherElement lau : launcherElementList) {
             try {
@@ -299,7 +270,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                 Log.e(Constants.TAG, "Errore synch laucher:" + e.getMessage());
             }
         }
-    }
+    }*/
 
 
    /* public void saveMap(Map<Integer, LauncherElement> map) {

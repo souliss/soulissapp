@@ -2,6 +2,7 @@ package it.angelic.soulissclient.preferences;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import it.angelic.soulissclient.R;
@@ -24,5 +25,9 @@ public class LauncherSettingsFragment extends PreferenceFragment {
         String strVersionName;
 
         addPreferencesFromResource(R.xml.settings_launcher);
+
+        Preference exportDBPref = findPreference("rstlauncher");
+        LauncherPreferenceListener dbPrefListener = new LauncherPreferenceListener(getActivity());
+        exportDBPref.setOnPreferenceClickListener(dbPrefListener);
     }
 }

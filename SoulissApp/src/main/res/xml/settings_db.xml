@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    android:icon="@android:drawable/ic_menu_save"
-    android:key="db_setup"
-    android:summary="@string/opt_db_desc"
-    android:title="@string/opt_db">
+                  android:background="?android:attr/selectableItemBackground"
+                  android:icon="@android:drawable/ic_menu_save"
+                  android:key="db_setup"
+                  android:summary="@string/opt_db_desc"
+                  android:title="@string/opt_db">
 
-    <PreferenceCategory android:title="DB Configuration" >
+    <PreferenceCategory android:title="DB Configuration">
         <Preference
             android:name="createdb"
             android:key="createdb"
             android:summary=""
-            android:title="@string/opt_get_nodes" />
+            android:title="@string/opt_get_nodes"/>
         <Preference
             android:name="dropdb"
             android:key="dropdb"
             android:summary="@string/opt_dbdrop_desc"
-            android:title="@string/opt_dbdrop" />
-         <CheckBoxPreference
+            android:title="@string/opt_dbdrop"/>
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="checkboxLogHistory"
             android:summary="@string/opt_loghist_desc"
-            android:title="@string/opt_loghist" />
+            android:title="@string/opt_loghist"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="DB maintenance" >
+    <PreferenceCategory android:title="DB maintenance">
         <Preference
             android:name="dbinfo"
             android:key="dbinfo"
             android:summary="@string/opt_dbinfo_desc"
-            android:title="@string/opt_dbinfo" />
+            android:title="@string/opt_dbinfo"/>
         <Preference
             android:name="dbexp"
             android:key="dbexp"
             android:summary="@string/opt_dbexp_desc"
-            android:title="@string/opt_dbexp" />
+            android:title="@string/opt_dbexp"/>
         <Preference
             android:name="dbimp"
             android:key="dbimp"
             android:summary="@string/opt_dbimp_desc"
-            android:title="@string/opt_dbimp" />
-         <Preference
+            android:title="@string/opt_dbimp"/>
+        <Preference
             android:name="dbopt"
             android:key="dbopt"
             android:summary="@string/opt_dbopt_desc"
-            android:title="@string/opt_dbopt" />
+            android:title="@string/opt_dbopt"/>
         <Preference
             android:name="settingshare"
             android:key="settingshare"

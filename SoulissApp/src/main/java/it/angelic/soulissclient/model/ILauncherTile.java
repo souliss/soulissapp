@@ -1,5 +1,7 @@
 package it.angelic.soulissclient.model;
 
+import it.angelic.soulissclient.util.LauncherElementEnum;
+
 /**
  * Created by Ale on 10/02/2015.
  * <p/>

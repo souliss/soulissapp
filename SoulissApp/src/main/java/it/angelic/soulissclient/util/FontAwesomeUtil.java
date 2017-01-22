@@ -3,7 +3,6 @@ package it.angelic.soulissclient.util;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.MainActivity;
@@ -19,7 +18,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
 
     public static String translateAwesomeCode(Context context, String fontName) throws FontNotFoundException {
         int codeidx;
-        Log.d("SimpleTagView", "translateAwesomeCode set for: " + fontName);
+        // Log.d("SimpleTagView", "translateAwesomeCode set for: " + fontName);
         try {
             if (fontName.startsWith("&")) {
                 codeidx = SimpleTagViewUtils.getAwesomeCodes(context).indexOf(fontName);
@@ -161,7 +160,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
             case R.drawable.shield1:
                 return "fa-shield";
             case R.drawable.souliss_node:
-                return "fa-square";
+                return "fa-chipset";
             case R.drawable.snow1:
                 return "fa-snowflake-o";
             case R.drawable.sos:

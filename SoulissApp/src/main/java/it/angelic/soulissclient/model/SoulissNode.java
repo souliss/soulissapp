@@ -147,5 +147,19 @@ public class SoulissNode implements Serializable, ISoulissNode {
         return getNiceName();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        SoulissNode that = (SoulissNode) o;
+
+        return id == that.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) id;
+    }
 }

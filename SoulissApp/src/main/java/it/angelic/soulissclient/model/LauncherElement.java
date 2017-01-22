@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import java.io.Serializable;
 
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 
 /**
  * Created by shine@angelic.it on 06/10/2015.
@@ -16,7 +17,7 @@ public class LauncherElement implements ILauncherTile, Serializable {
 
     private String title;
     private String desc;
-    private int id;
+    private Integer id;
     private boolean isFullSpan;
     private ISoulissObject linkedObject;
     private short order;
@@ -45,11 +46,11 @@ public class LauncherElement implements ILauncherTile, Serializable {
         this.componentEnum = componentEnum;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(@NonNull int id) {
+    public void setId(@NonNull Integer id) {
         this.id = id;
     }
 
@@ -95,5 +96,19 @@ public class LauncherElement implements ILauncherTile, Serializable {
         this.isFullSpan = isFullSpan;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        LauncherElement that = (LauncherElement) o;
+
+        return id == that.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

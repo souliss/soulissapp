@@ -284,7 +284,8 @@ public class NodesListFragment extends ListFragment {
 				nodesAdapter.setNodes(goer);
 				nodesAdapter.notifyDataSetChanged();
 				getListView().invalidateViews();
-			} catch (IllegalStateException e) {
+
+            } catch (IllegalStateException e) {
 				Log.e(TAG, "DB read Impossible", e);
 			}
 		}

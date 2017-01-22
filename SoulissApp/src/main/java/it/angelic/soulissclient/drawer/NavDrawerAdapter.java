@@ -81,7 +81,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         NavMenuSectionHolder navMenuItemHolder = null;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.navdrawer_section, parentView, false);
+            convertView = inflater.inflate(R.layout.drawer_section, parentView, false);
             TextView labelView = (TextView) convertView
                     .findViewById(R.id.navmenusection_label);
 

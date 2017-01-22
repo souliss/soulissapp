@@ -39,9 +39,10 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${rootProject.ext.global_supportLibVersion}"
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
-    compile 'it.angelic:tagView:1.2.2'
+    //https://jcenter.bintray.com/it/angelic/tagView/
+    compile 'it.angelic:tagView:1.3.0'
     compile 'com.github.rtugeek:ColorSeekBar:1.0.2'
-    compile 'com.google.code.gson:gson:2.6.2'
+
     compile project(':soulissLib')
     wearApp project(":soulisswear")
     compile project(':taskerapi')

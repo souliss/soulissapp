@@ -271,6 +271,49 @@ public class SoulissDBHelper {
         return ret;
     }
 
+    /**
+     * DB typical factory
+     *
+     * @return produced Typical
+     */
+    public List<SoulissTypical> getAllTypicals() {
+        List<SoulissTypical> comments = new ArrayList<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, null, null, null, null, SoulissDB.COLUMN_TYPICAL_NODE_ID + " , " + SoulissDB.COLUMN_TYPICAL_SLOT);
+        cursor.moveToFirst();
+
+        List<SoulissNode> nodi = getAllNodes();
+
+        while (!cursor.isAfterLast()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), nodi.get(dto.getNodeId()), dto, opts);
+            //TAG? no join, perche 1 a n
+            Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
+                    SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
+                            + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
+                    null, null, null, null);
+            typTags.moveToFirst();
+            while (!typTags.isAfterLast()) {
+                int tagId = typTags.getInt(typTags.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
+                if (tagId == SoulissDB.FAVOURITES_TAG_ID)
+                    dto.setFavourite(true);
+                else
+                    dto.setTagged(true);
+                typTags.moveToNext();
+            }
+            typTags.close();
+            //hack dto ID, could be different if parent is massive
+            newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
+            newTyp.setParentNode(nodi.get(dto.getNodeId()));
+            // if (newTyp.getTypical() !=
+            // Constants.Souliss_T_CurrentSensor_slave)
+            comments.add(newTyp);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
     public List<SoulissTypical> getNodeTypicals(SoulissNode parent) {
 
 
@@ -800,6 +843,28 @@ public class SoulissDBHelper {
         return count;
     }
 
+    public List<SoulissTag> getTags(Context context) {
+        List<SoulissTag> comments = new ArrayList<>();
+        if (!database.isOpen())
+            open();
+        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
+                null, null, null, null, SoulissDB.COLUMN_TAG_ORDER + ", " + SoulissDB.COLUMN_TAG_ID);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTag dto = new SoulissTag();
+            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
+            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
+            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
+            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
+            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
+            dto.setAssignedTypicals(getTagTypicals(dto));
+            comments.add(dto);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return comments;
+    }
     public SoulissTag getTag(long tagId) throws SQLDataException {
         SoulissTag dto = new SoulissTag();
         if (!database.isOpen())

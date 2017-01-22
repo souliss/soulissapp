@@ -393,5 +393,6 @@
     <string name="charts">Charts</string>
     <string name="menu_launcher_config">Homescreen Setup</string>
     <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
+    <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
     >
 </resources>

@@ -43,11 +43,12 @@ import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.LauncherElement;
-import it.angelic.soulissclient.model.LauncherElementEnum;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -182,6 +183,42 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
             case TYPICAL:
 
                 bindTypicalElement(holder, item);
+
+                break;
+            case SCENE:
+
+                final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
+                Log.d(Constants.TAG, "Launcher Element scene " + nodo.getName());
+
+                TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
+                TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
+                TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
+                Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
+
+
+                textViewCommand.setText(nodo.getNiceName());
+
+
+                String strMeatFormat = context.getString(R.string.scene_subtitle);
+                textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
+
+                //textView.setTag(position);
+                // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
+                FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, FontAwesomeUtil.remapIconResId(nodo.getIconResourceId()));
+                //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
+
+
+                //linearActionsLayout.removeAllViews();
+                // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
+                exe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
+                        nodo.execute();
+                    }
+
+
+                });
 
                 break;
             case NODE:
@@ -385,7 +422,6 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 from(parent.getContext()).
                 inflate(R.layout.cardview_launcher2, parent, false);
         switch (enumVal) {
-
             case STATIC_SCENES:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
@@ -420,6 +456,11 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 itemView = LayoutInflater.
                         from(parent.getContext()).
                         inflate(R.layout.cardview_tag, parent, false);
+                break;
+            case SCENE:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.cardview_scene, parent, false);
                 break;
             case STATIC_STATUS:
                 itemView = LayoutInflater.

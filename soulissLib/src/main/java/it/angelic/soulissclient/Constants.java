@@ -42,7 +42,7 @@ public class Constants {
     public static final String SOULISS_CONFIGURATIONS_KEY = "configArray";
     public static final int AUTOCOMPLETE_THRESHOLD = 2;
     public static final String EXTERNAL_EXP_FOLDER = "//Souliss";
-    public static final String DEMO_PUBLIC_IP = "95.241.222.134";
+    public static final String DEMO_PUBLIC_IP = "79.1.194.142";
     public static final String DEMO_LOCAL_IP = "10.14.10.77";
 
     public static final int MY_PERMISSIONS_RECORD_AUDIO = 17;

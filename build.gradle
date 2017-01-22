@@ -4,8 +4,13 @@ buildscript {
     repositories {
         jcenter()
         maven {
-            url "https://jitpack.io"
+            url "E:/m2/"
         }
+        maven {
+            url "https://jitpack.io"
+
+        }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
@@ -15,17 +20,21 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+
+        mavenLocal()
+
         maven {
             url "https://jitpack.io"
         }
+
     }
 }
 
 project.ext {
     global_buildToolsVersion = "25.0.2"
-    global_supportLibVersion = "23.3.0"
-    VERSION_NAME = "2.0.1"
-    VERSION_CODE = 201
+    global_supportLibVersion = "25.1.0"
+    VERSION_NAME = "2.0.2"
+    VERSION_CODE = 202
     compileSdkVersion = 25
     targetSdkVersion = 25
 }

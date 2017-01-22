@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/BasicInfoCard"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:foreground="?attr/selectableItemBackground"
-    android:elevation="2dp"
+<android.support.v7.widget.CardView android:id="@+id/BasicInfoCard"
                                     style="?attr/cardStyle"
-    card_view:cardCornerRadius="2dp"
-    tools:showIn="@layout/main_launcher">
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    xmlns:tools="http://schemas.android.com/tools"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:elevation="2dp"
+                                    android:layout_margin="4dp"
+                                    android:foreground="?attr/selectableItemBackground"
+                                    card_view:cardCornerRadius="2dp"
+                                    tools:showIn="@layout/main_launcher">
     <!-- Your card content -->
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -20,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawingCacheQuality="high"
-            android:src="@drawable/side2" />
+            android:src="@drawable/side2"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -34,27 +35,27 @@
                 android:id="@+id/textViewBasicInfoTit"
                 style="@style/CodeFontTitle"
                 android:layout_marginLeft="5dip"
-                android:text="@string/status_souliss" />
+                android:text="@string/status_souliss"/>
 
             <View
                 android:id="@+id/BasicInfoLine"
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
-                android:background="@color/std_green" />
+                android:background="@color/std_green"/>
 
             <TextView
                 android:id="@+id/textViewBasicInfo"
                 style="@style/CodeFontMain"
                 android:layout_below="@id/textViewBasicInfoTit"
                 android:layout_marginLeft="5dp"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"/>
 
             <TextView
                 android:id="@+id/textViewBasicInfoLittle"
                 style="@style/CodeFontMain"
                 android:layout_below="@id/textViewBasicInfo"
                 android:layout_marginLeft="5dip"
-                android:textIsSelectable="false" />
+                android:textIsSelectable="false"/>
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
