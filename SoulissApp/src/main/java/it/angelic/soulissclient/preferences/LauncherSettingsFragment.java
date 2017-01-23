@@ -27,7 +27,7 @@ public class LauncherSettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.settings_launcher);
 
         Preference exportDBPref = findPreference("rstlauncher");
-        LauncherPreferenceListener dbPrefListener = new LauncherPreferenceListener(getActivity());
+        LauncherRstListener dbPrefListener = new LauncherRstListener(getActivity());
         exportDBPref.setOnPreferenceClickListener(dbPrefListener);
     }
 }

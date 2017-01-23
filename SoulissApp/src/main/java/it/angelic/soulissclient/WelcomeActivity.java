@@ -171,7 +171,7 @@ public class WelcomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         //avoid black-text spinner
-        setTheme(R.style.DarkThemeSelector);
+        //setTheme(R.style.DarkThemeSelector);
 
         getWindow().setFormat(PixelFormat.RGBA_8888);
         requestWindowFeature(Window.FEATURE_NO_TITLE);

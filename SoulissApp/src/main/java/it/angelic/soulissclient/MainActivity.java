@@ -40,11 +40,13 @@ import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.LauncherElement;
+import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
+import static android.support.v7.widget.StaggeredGridLayoutManager.GAP_HANDLING_NONE;
 import static it.angelic.soulissclient.Constants.TAG;
 
 /**
@@ -181,9 +183,11 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             gridsize = 3;
         if (getResources().getBoolean(R.bool.isTablet))
             gridsize++;
-        StaggeredGridLayoutManager gm = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager staggeredGridManager = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridManager.setGapStrategy(GAP_HANDLING_NONE);
 
-        mRecyclerView.setLayoutManager(gm);
+
+        mRecyclerView.setLayoutManager(staggeredGridManager);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
 
@@ -304,6 +308,11 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(datareceiver, filtere);
 
+        List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
+
+        launcherMainAdapter.setLauncherElements(launcherItems);
+        launcherMainAdapter.notifyDataSetChanged();
+
        /* autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
             @Override
@@ -345,17 +354,26 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         View.OnClickListener mOnClickListener;
         private SoulissDBLauncherHelper database;
 
-        public LauncherStaggeredCallback(Context xct, StaggeredLauncherElementAdapter adapter, SoulissDBLauncherHelper database) {
+        public LauncherStaggeredCallback(Context xct, final StaggeredLauncherElementAdapter adapter, SoulissDBLauncherHelper database) {
             this.adapter = adapter;
             this.context = xct;
             this.database = database;
-            mOnClickListener = new View.OnClickListener() {
+           /* mOnClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    LauncherElement tbr = adapter.getLauncherElements().get(adapter.getAdapterPosition());
+                    //SoulissTag todoItem = launcherMainAdapter.getItem(viewHolder.getAdapterPosition());
+                    //forse non serve
+                    adapter.removeAt(viewHolder.getAdapterPosition());
+                    // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    //clearView(mRecyclerView, viewHolder);
 
+                    database.remove(tbr);
+
+                    Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
                     // readd item
                 }
-            };
+            };*/
         }
 
         //defines the enabled move directions in each state (idle, swiping, dragging).
@@ -389,18 +407,32 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }
 
         @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
-            LauncherElement tbr = adapter.getLauncherElements().get(viewHolder.getAdapterPosition());
+        public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+            final int deletedPosition = viewHolder.getAdapterPosition();
+            final LauncherElement tbr = adapter.getLauncherElements().get(deletedPosition);
             //SoulissTag todoItem = launcherMainAdapter.getItem(viewHolder.getAdapterPosition());
             //forse non serve
-            adapter.removeAt(viewHolder.getAdapterPosition());
+            adapter.removeAt(deletedPosition);
             // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             //clearView(mRecyclerView, viewHolder);
-
             database.remove(tbr);
+            adapter.notifyDataSetChanged();
 
-            Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
+            //Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
+            Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_LONG)
+                    .setAction(R.string.cancel, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                database.addElement(tbr);
+                                adapter.notifyDataSetChanged();
+                                //adapter.addAt(deletedPosition, tbr);
+                            } catch (SoulissModelException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).show();
+
         }
     }
 }

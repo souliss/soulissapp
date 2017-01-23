@@ -14,13 +14,12 @@ import it.angelic.soulissclient.util.LauncherElementEnum;
  */
 public class LauncherElement implements ILauncherTile, Serializable {
     private LauncherElementEnum componentEnum;
-
-    private String title;
     private String desc;
-    private Integer id;
+    private Long id;
     private boolean isFullSpan;
     private ISoulissObject linkedObject;
     private short order;
+    private String title;
 
     public LauncherElement() {
         super();
@@ -32,25 +31,39 @@ public class LauncherElement implements ILauncherTile, Serializable {
         this.componentEnum = componentEnum;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LauncherElement that = (LauncherElement) o;
+
+        return id.equals(that.id);
+
+    }
+
     public LauncherElementEnum getComponentEnum() {
         return componentEnum;
     }
-
-    protected void persist(Context cnt) throws SoulissModelException {
-        SoulissDBLauncherHelper db = new SoulissDBLauncherHelper(cnt);
-        db.updateLauncherElement(this);
-    }
-
 
     public void setComponentEnum(LauncherElementEnum componentEnum) {
         this.componentEnum = componentEnum;
     }
 
-    public Integer getId() {
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(@NonNull Integer id) {
+    //fa il DB
+    public void setId(@NonNull Long id) {
         this.id = id;
     }
 
@@ -72,18 +85,6 @@ public class LauncherElement implements ILauncherTile, Serializable {
         this.order = order;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public boolean isFullSpan() {
-        return isFullSpan;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -92,23 +93,21 @@ public class LauncherElement implements ILauncherTile, Serializable {
         this.title = title;
     }
 
-    public void setIsFullSpan(boolean isFullSpan) {
-        this.isFullSpan = isFullSpan;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LauncherElement that = (LauncherElement) o;
-
-        return id.equals(that.id);
-
-    }
-
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    public boolean isFullSpan() {
+        return isFullSpan;
+    }
+
+    protected void persist(Context cnt) throws SoulissModelException {
+        SoulissDBLauncherHelper db = new SoulissDBLauncherHelper(cnt);
+        db.updateLauncherElement(this);
+    }
+
+    public void setIsFullSpan(boolean isFullSpan) {
+        this.isFullSpan = isFullSpan;
     }
 }

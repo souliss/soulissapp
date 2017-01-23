@@ -47,7 +47,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return context;
     }
 
-    protected final Context context;
+    protected final transient Context context;
     // nodo di appartenenza
     protected SoulissNode parentNode;
     // contenitore dati specchio del DB

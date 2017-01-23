@@ -9,12 +9,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.db.SoulissCommandDTO;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -35,7 +36,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     private SoulissCommandDTO commandDTO;
     private SoulissTypical parentTypical;
     private SoulissScene targetScene;
-    protected Context context;
+    protected transient Context context;
 
     public SoulissCommand(SoulissTypical parentTypical) {
         super();
@@ -158,45 +159,31 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             return targetScene.getIconResourceId();
         } else if (commandDTO.getNodeId() == it.angelic.soulissclient.Constants.MASSIVE_NODE_ID) {
             // comando massivo
-            return R.drawable.arrowmove1;
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_adjust.getFontName());
         }
         short typical = parentTypical.getTypicalDTO().getTypical();
         long command = commandDTO.getCommand();
         int resId;
-        if (typical == Constants.Typicals.Souliss_T11 || typical == Constants.Typicals.Souliss_T18) {
+        if (typical == Constants.Typicals.Souliss_T11 || typical == Constants.Typicals.Souliss_T12
+                || typical == Constants.Typicals.Souliss_T13 || typical == Constants.Typicals.Souliss_T16
+                || typical == Constants.Typicals.Souliss_T18 || typical == Constants.Typicals.Souliss_T19) {
             if (command == Constants.Typicals.Souliss_T1n_OnCmd)
-                resId = R.drawable.light_on;
+                resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_toggle_on.getFontName());
             else if (command == Constants.Typicals.Souliss_T1n_OffCmd)
-                resId = R.drawable.light_off;
+                resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_toggle_off.getFontName());
             else if (command == Constants.Typicals.Souliss_T1n_RstCmd)
-                resId = R.drawable.sos;
+                resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_refresh.getFontName());
             else if (command == Constants.Typicals.Souliss_T1n_ToogleCmd)
-                resId = R.drawable.button1;
+                resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_adjust.getFontName());
             else
-                resId = R.drawable.bell1;
-        } else if (typical == Constants.Typicals.Souliss_T12) {
-            if (command == Constants.Typicals.Souliss_T1n_OnCmd)
-                resId = R.drawable.light_on;
-            else if (command == Constants.Typicals.Souliss_T1n_OffCmd)
-                resId = R.drawable.light_off;
-            else
-            resId = R.drawable.sos;
-        } else if (typical == Constants.Typicals.Souliss_T13) {
-            resId = R.drawable.sos;
+                resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_bell_o.getFontName());
         } else if (typical == Constants.Typicals.Souliss_T14) {
             if (command == Constants.Typicals.Souliss_T1n_OnCmd)
-                resId = R.drawable.lock1;
+                resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_unlock.getFontName());
             else
                 resId = R.drawable.sos;
-        } else if (typical == Constants.Typicals.Souliss_T16) {
-            if (command == Constants.Typicals.Souliss_T1n_OnCmd)
-                resId = R.drawable.light_on;
-            else if (command == Constants.Typicals.Souliss_T1n_OffCmd)
-                resId = R.drawable.light_off;
-            else
-                resId = R.drawable.rgb;
-        } else if (typical == Constants.Typicals.Souliss_T19)
-            resId = R.drawable.candle1;
+        }
+
         else if (typical == Constants.Typicals.Souliss_T21)
             resId = R.drawable.sos;
         else if (typical == Constants.Typicals.Souliss_T22)

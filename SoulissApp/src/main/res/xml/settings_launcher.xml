@@ -13,7 +13,7 @@
             android:summary="@string/settings_launcher_items"
             android:title="Souliss Launcher"
             />
-        <it.angelic.soulissclient.preferences.OptionDialogPreference
+        <it.angelic.soulissclient.preferences.LauncherAddListener
             android:key="add_launcher_elem"
             android:dialogIcon="@android:drawable/ic_menu_add"
             android:title="Add element"

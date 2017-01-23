@@ -23,7 +23,7 @@ import it.angelic.soulissclient.R;
 public class SoulissNode implements Serializable, ISoulissNode {
 
     private static final long serialVersionUID = 8673027563853737718L;
-    private Context context;
+    private transient Context context;
     private short health;
     /* Icon resource ID */
     private int iconId = R.drawable.square;

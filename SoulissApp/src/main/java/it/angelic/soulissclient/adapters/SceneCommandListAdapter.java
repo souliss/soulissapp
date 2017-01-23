@@ -94,7 +94,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
         }
 		/* comando singolo */
         else if (holder.data.getType() == Constants.COMMAND_SINGLE) {
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(holder.data.getIconResId()));
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResId());
             //holder.image.setImageResource(holder.data.getIconResId());
             holder.image.setTextColor(context.getResources().getColor(R.color.aa_yellow));
             SoulissTypical appoggio = holder.data.getParentTypical();

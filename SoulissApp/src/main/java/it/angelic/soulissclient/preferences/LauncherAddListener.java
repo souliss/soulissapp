@@ -27,7 +27,7 @@ import it.angelic.soulissclient.util.LauncherElementEnum;
  * <code>true</code> when pressing the positive button and <code>false</code>
  * otherwise. It will persist to the android:key specified in xml-preference.
  */
-public class OptionDialogPreference extends DialogPreference implements DialogInterface.OnClickListener {
+public class LauncherAddListener extends DialogPreference implements DialogInterface.OnClickListener {
 
     private static LauncherElementEnum[] statArr = new LauncherElementEnum[]{LauncherElementEnum.NODE, LauncherElementEnum.TYPICAL, LauncherElementEnum.SCENE, LauncherElementEnum.TAG};
     private final Context context;
@@ -36,7 +36,7 @@ public class OptionDialogPreference extends DialogPreference implements DialogIn
     private Spinner outputTYpSpinner;
     private Spinner typeSpinner;
 
-    public OptionDialogPreference(Context context, AttributeSet attrs) {
+    public LauncherAddListener(Context context, AttributeSet attrs) {
 
         super(context, attrs);
         this.context = context;

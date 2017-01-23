@@ -50,7 +50,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         launcherElementList = getDBLauncherElements(context);
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
-        ///init
+        ///init sse vuoto
         if (launcherElementList.isEmpty()) {
             List<LauncherElement> launcherElementtemp = getDefaultStaticDBLauncherElements(context);
 
@@ -80,8 +80,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     public LauncherElement addElement(LauncherElement lau) throws SoulissModelException {
         launcherElementList.add(lau);
         recomputeOrder();
-        lau.setId(launcherElementList.size());
+
         long id = createLauncherElement(lau);
+        lau.setId(id);
 
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         visibili.add("" + lau.getId());
@@ -112,13 +113,13 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                 values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
                 values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
             } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
-                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getId());
+                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
             else if (nodeIN.getLinkedObject() instanceof SoulissTag)
                 values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
             else
                 throw new SoulissModelException("Missing ISoulissObject cast");
         }
-        // int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
+        // int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getSceneId(),
         //         null);
         // if (upd == 0) {
         long insertId = database.insert(SoulissDB.TABLE_LAUNCHER, null, values);
@@ -140,7 +141,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             LauncherElement dto = new LauncherElement();
-            dto.setId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_ID)));
+            dto.setId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_ID)));
             dto.setTitle(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TITLE)));
             dto.setDesc(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_DESC)));
             dto.setOrder(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_ORDER)));
@@ -228,8 +229,8 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     }
 
     private void recomputeOrder() {
-        for (LauncherElement ref : launcherElementList) {
-            ref.setOrder((short) launcherElementList.indexOf(ref));
+        for (int t = 0; t < launcherElementList.size(); t++) {
+            launcherElementList.get(t).setOrder((short) t);
         }
     }
 
@@ -288,7 +289,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                 values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
                 values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
             } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
-                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getId());
+                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
             else if (nodeIN.getLinkedObject() instanceof SoulissTag)
                 values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
             else

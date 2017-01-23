@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Collections;
@@ -34,6 +35,8 @@ import it.angelic.soulissclient.helpers.ContextMenuRecyclerView;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 
 /**
@@ -130,16 +133,10 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_tags_grid);
-        // final Button buttAddProgram = (Button)
-        // findViewById(R.id.buttonAddScene);
-        // tt = (TextView) findViewById(R.id.TextViewScenes);
-        /*
-         * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
-		 * font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
-		 * tt.setTypeface(font, Typeface.NORMAL); }
-		 */
 
         mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewLauncherItems);
+        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.back_icon);
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_tags.getFontName());
 
         //3 colonne in horiz
         gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
@@ -150,7 +147,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         //fab.attachToRecyclerView(mRecyclerView);
 
 
-        //ADD NEW SCENE
+        //ADD NEW TAG
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
