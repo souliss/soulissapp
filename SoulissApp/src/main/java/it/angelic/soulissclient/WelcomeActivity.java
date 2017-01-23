@@ -66,6 +66,16 @@ public class WelcomeActivity extends FragmentActivity {
     private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
     Handler mHideHandler = new Handler();
     /**
+     * The instance of the {@link SystemUiHider} for this activity.
+     */
+    private SystemUiHider mSystemUiHider;
+    Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mSystemUiHider.hide();
+        }
+    };
+    /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
@@ -79,18 +89,6 @@ public class WelcomeActivity extends FragmentActivity {
             return false;
         }
     };
-    /**
-     * The instance of the {@link SystemUiHider} for this activity.
-     */
-    private SystemUiHider mSystemUiHider;
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mSystemUiHider.hide();
-        }
-    };
-
-
 
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
@@ -99,6 +97,35 @@ public class WelcomeActivity extends FragmentActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    /**
+     * Ritorna l'indice della conf selezionata
+     * in base alla configurazione
+     *
+     * @param spinnerAdapter
+     * @return
+     */
+    private int fillSpinnerConfig(ArrayAdapter<String> spinnerAdapter) {
+        Set<String> configs = SoulissApp.getConfigurations();
+        //popola config, quelli statici
+        String[] statiche = getResources().getStringArray(R.array.configChooserArray);
+        int selectedIdx = -1;
+        int i = 0;
+        for (String nconf : statiche) {
+            if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
+                selectedIdx = i;
+            i++;
+            spinnerAdapter.add(nconf);
+        }
+        //quelli dinamici
+        for (String nconf : configs) {
+            if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
+                selectedIdx = i;
+            i++;
+            spinnerAdapter.add(nconf);
+        }
+        return selectedIdx;
     }
 
     private void loadOrCreateDemoConfig(File importDir, String newConfig) {
@@ -131,6 +158,7 @@ public class WelcomeActivity extends FragmentActivity {
         SoulissUtils.loadSharedPreferencesFromFile(WelcomeActivity.this, filePrefs);
         Log.w(Constants.TAG, "DEMO prefs loaded");
     }
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -141,6 +169,10 @@ public class WelcomeActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //avoid black-text spinner
+        setTheme(R.style.DarkThemeSelector);
+
         getWindow().setFormat(PixelFormat.RGBA_8888);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
@@ -433,35 +465,6 @@ public class WelcomeActivity extends FragmentActivity {
 
         /* show EULA if not accepted */
         Eula.show(this);
-    }
-
-    /**
-     * Ritorna l'indice della conf selezionata
-     * in base alla configurazione
-     *
-     * @param spinnerAdapter
-     * @return
-     */
-    private int fillSpinnerConfig(ArrayAdapter<String> spinnerAdapter) {
-        Set<String> configs = SoulissApp.getConfigurations();
-        //popola config, quelli statici
-        String[] statiche = getResources().getStringArray(R.array.configChooserArray);
-        int selectedIdx = -1;
-        int i = 0;
-        for (String nconf : statiche) {
-            if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
-                selectedIdx = i;
-            i++;
-            spinnerAdapter.add(nconf);
-        }
-        //quelli dinamici
-        for (String nconf : configs) {
-            if (SoulissApp.getCurrentConfig().equalsIgnoreCase(nconf))
-                selectedIdx = i;
-            i++;
-            spinnerAdapter.add(nconf);
-        }
-        return selectedIdx;
     }
 
     @Override
