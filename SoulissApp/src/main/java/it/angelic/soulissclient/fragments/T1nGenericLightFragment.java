@@ -106,7 +106,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-
+		super.onActivityCreated(savedInstanceState);
 		opzioni = SoulissApp.getOpzioni();
 		opzioni.reload();
 		// tema

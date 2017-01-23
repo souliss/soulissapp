@@ -29,10 +29,10 @@ public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoul
 
     private static final long serialVersionUID = 4553488325062232092L;
 
-
-    public SoulissTypical14PulseOutput(SoulissPreferenceHelper fg) {
-        super(fg);
+    public SoulissTypical14PulseOutput(Context context, SoulissPreferenceHelper pre) {
+        super(context, pre);
     }
+
 
     /**
      * Ottiene il layout del pannello comandi

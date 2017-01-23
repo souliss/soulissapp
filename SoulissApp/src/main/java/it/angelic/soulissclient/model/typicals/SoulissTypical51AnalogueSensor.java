@@ -20,7 +20,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -33,21 +32,23 @@ import it.angelic.soulissclient.model.SoulissTypical;
  */
 public class SoulissTypical51AnalogueSensor extends SoulissTypical implements ISoulissTypicalSensor {
 
-	public SoulissTypical51AnalogueSensor(SoulissPreferenceHelper pre) {
-		super(pre);
-	}
+
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3784476625375361669L;
 
+	public SoulissTypical51AnalogueSensor(Context ctx, SoulissPreferenceHelper opts) {
+		super(ctx, opts);
+	}
+
 	@Override
 	public String getOutputDesc() {
 		if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-			return SoulissApp.getAppContext().getString(R.string.ok);
+			return context.getString(R.string.ok);
 		else
-			return SoulissApp.getAppContext().getString(R.string.stale);
+			return context.getString(R.string.stale);
 
 	}
 	/**

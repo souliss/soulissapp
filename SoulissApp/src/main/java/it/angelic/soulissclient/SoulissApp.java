@@ -107,9 +107,9 @@ public class SoulissApp extends Application implements Serializable {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        setOpzioni(new SoulissPreferenceHelper(context));
+        setOpzioni(new SoulissPreferenceHelper(getApplicationContext()));
 
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
 
         displayWidth = displayMetrics.heightPixels / displayMetrics.density;
         displayHeight = displayMetrics.widthPixels / displayMetrics.density;

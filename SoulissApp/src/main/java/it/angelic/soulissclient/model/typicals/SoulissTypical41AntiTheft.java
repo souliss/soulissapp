@@ -13,7 +13,6 @@ import java.util.Calendar;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -38,8 +37,8 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 
 	// Context ctx;
 
-	public SoulissTypical41AntiTheft(SoulissPreferenceHelper fg) {
-		super(fg);
+	public SoulissTypical41AntiTheft(Context c, SoulissPreferenceHelper fg) {
+		super(c, fg);
 		//se lo istanzio, ce l'ho
 		fg.setAntitheftPresent(true);//
 	}
@@ -175,10 +174,10 @@ public class SoulissTypical41AntiTheft extends SoulissTypical implements ISoulis
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_NoAntitheft ||
 				(Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() > (prefs.getDataServiceIntervalMsec()*3)) ||
 				typicalDTO.getOutput() == Constants.Typicals.Souliss_T4n_InAlarm) {
-			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
+			textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
-			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
+			textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
 		}
 	}

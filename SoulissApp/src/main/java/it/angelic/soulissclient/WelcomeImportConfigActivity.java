@@ -104,7 +104,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                         try {
                             //WelcomeActivity.loadSoulissDbFromFile(configName.getText().toString(), importDir);
                             File bckDb = new File(importDir, prefs.getName().replaceAll(".prefs", ""));
-                            SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+                            SoulissDBHelper db = new SoulissDBHelper(WelcomeImportConfigActivity.this);
                             SoulissDBHelper.open();
                             String DbPath = SoulissDBHelper.getDatabase().getPath();
                             db.close();

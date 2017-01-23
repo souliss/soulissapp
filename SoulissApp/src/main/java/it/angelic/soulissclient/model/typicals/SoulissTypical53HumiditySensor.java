@@ -32,14 +32,15 @@ import it.angelic.soulissclient.model.SoulissTypical;
  */
 public class SoulissTypical53HumiditySensor extends SoulissTypical implements ISoulissTypicalSensor {
 
-    public SoulissTypical53HumiditySensor(SoulissPreferenceHelper pre) {
-        super(pre);
-    }
 
     /**
      *
      */
     private static final long serialVersionUID = 3784476625375333669L;
+
+    public SoulissTypical53HumiditySensor(Context ctx, SoulissPreferenceHelper opts) {
+        super(ctx, opts);
+    }
 
     @Override
     public Float getOutput() {

@@ -1,6 +1,7 @@
 package it.angelic.soulissclient.drawer;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,9 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public
+    @NonNull
+    View getView(int position, View convertView, @NonNull ViewGroup parent) {
         View view = null;
         INavDrawerItem menuItem = this.getItem(position);
         if (menuItem.getType() == NavMenuItem.ITEM_TYPE) {

@@ -20,6 +20,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -126,7 +127,7 @@ public class TypicalsListAdapter extends BaseAdapter {
 		/* Nodo vuota */
         if (tipici.length == 0) {
 
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-exclamation-circle");
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_exclamation_triangle.getFontName());
             //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
             //holder.image.setColorFilter(ContextCompat.getColor(context, R.color.aa_yellow),
             //        android.graphics.PorterDuff.Mode.SRC_ATOP);

@@ -335,7 +335,7 @@ public class WelcomeActivity extends FragmentActivity {
                         //DEMO
                         loadOrCreateDemoConfig(importDir, newConfig);
                         try {
-                            SoulissUtils.loadSoulissDbFromFile(newConfig, importDir);
+                            SoulissUtils.loadSoulissDbFromFile(WelcomeActivity.this, newConfig, importDir);
                         } catch (IOException e1) {
                             Log.w(Constants.TAG, "DB DEMO non disponibile: " + newConfig);
                             String DbPath = SoulissDBHelper.getDatabase().getPath();
@@ -379,7 +379,7 @@ public class WelcomeActivity extends FragmentActivity {
                             }
                         }
                         try {
-                            SoulissUtils.loadSoulissDbFromFile(newConfig, importDir);
+                            SoulissUtils.loadSoulissDbFromFile(WelcomeActivity.this, newConfig, importDir);
                         } catch (Exception te) {
                             //MAI creato prima? WTF
                             Log.e(Constants.TAG, "Errore loadSoulissDbFromFile " + newConfig, te);

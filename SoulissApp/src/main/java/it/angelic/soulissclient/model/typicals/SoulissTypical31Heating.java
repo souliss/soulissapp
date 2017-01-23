@@ -39,14 +39,15 @@ import it.angelic.soulissclient.util.SoulissUtils;
  * <p/>
  * all values shall be in half-precision floating point, automatic conversion is
  * done if using Souliss_AnalogIn
- *BIT 0	(0 System  OFF,  1 System  ON)
- BIT 1	(0 Heating OFF , 1 Heating ON)
- BIT 2	(0 Cooling OFF , 1 Cooling ON)
- BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
- BIT 4	(0 Fan 2 OFF   , 1 Fan 2 ON)
- BIT 5	(0 Fan 3 OFF   , 1 Fan 3 ON)
- BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
- BIT 7	(0 Heating Mode, 1 Cooling Mode)
+ * BIT 0	(0 System  OFF,  1 System  ON)
+ * BIT 1	(0 Heating OFF , 1 Heating ON)
+ * BIT 2	(0 Cooling OFF , 1 Cooling ON)
+ * BIT 3	(0 Fan 1 OFF   , 1 Fan 1 ON)
+ * BIT 4	(0 Fan 2 OFF   , 1 Fan 2 ON)
+ * BIT 5	(0 Fan 3 OFF   , 1 Fan 3 ON)
+ * BIT 6	(0 Manual Mode , 1 Automatic Mode for Fan)
+ * BIT 7	(0 Heating Mode, 1 Cooling Mode)
+ *
  * @author shine@angelic.it
  */
 public class SoulissTypical31Heating extends SoulissTypical implements ISoulissTypical, ISoulissTypicalSensor {
@@ -59,17 +60,48 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
      *
      */
     private static final long serialVersionUID = 1113488985342542012L;
+    private float TemperatureMeasuredVal;
+    private float TemperatureSetpointVal;
     // private SoulissNode parentd;
     // Context ctx;
     private SoulissTypical TemperatureSetpointValue;
     private SoulissTypical TemperatureSetpointValue2;
 
-    private float TemperatureMeasuredVal;
-    private float TemperatureSetpointVal;
-
     //AUTOF
-    public SoulissTypical31Heating(SoulissPreferenceHelper pp) {
-        super(pp);
+    public SoulissTypical31Heating(Context co, SoulissPreferenceHelper pp) {
+        super(co, pp);
+    }
+
+    private void computeTempValues() {
+        short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
+                .getTypicalDTO().getOutput();
+        short TemperatureMeasuredValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 2))
+                .getTypicalDTO().getOutput();
+
+        // Serve solo per dare comandi, da togliere
+        TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
+        TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
+        short TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3)).getTypicalDTO().getOutput();
+        short TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4)).getTypicalDTO().getOutput();
+
+        // ora ho i due bytes, li converto
+        int shifted = TemperatureMeasuredValue2 << 8;
+        float celsius = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
+        TemperatureMeasuredVal = prefs.isFahrenheitChosen() ? SoulissUtils.celsiusToFahrenheit(celsius) : celsius;
+
+        Log.i(Constants.TAG,
+                "first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"
+                        + Long.toHexString((long) TemperatureMeasuredValue2) + " SENSOR Reading:"
+                        + TemperatureMeasuredVal);
+
+        // ora ho i due bytes, li converto
+        int shifteds = TemperatureSetpointValue2 << 8;
+
+        TemperatureSetpointVal = HalfFloatUtils.toFloat(shifteds + TemperatureSetpointValue);
+        Log.i(Constants.TAG,
+                "first:" + Long.toHexString((long) TemperatureSetpointValue) + " second:"
+                        + Long.toHexString((long) TemperatureSetpointValue2) + "SENSOR Setpoint:"
+                        + TemperatureSetpointVal);
     }
 
     @Override
@@ -83,18 +115,16 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     @Override
     public String getOutputDesc() {
 
-        if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec()*3))
-        {
+        if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec() * 3)) {
             if (isStatusByteSet(getTypicalDTO().getOutput(), 0)) {
                 if (isCoolMode())
-                    return(SoulissApp.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[0]);
+                    return (context.getResources().getStringArray(R.array.HeatingFunction)[0]);
                 else
-                    return(SoulissApp.getAppContext().getResources().getStringArray(R.array.HeatingFunction)[1]);
+                    return (context.getResources().getStringArray(R.array.HeatingFunction)[1]);
             } else
-                return SoulissApp.getAppContext().getString(R.string.OFF);
-        }
-        else
-            return SoulissApp.getAppContext().getString(R.string.stale);
+                return context.getString(R.string.OFF);
+        } else
+            return context.getString(R.string.stale);
     }
 
     @Override
@@ -144,42 +174,6 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         return strout.toString();
     }
 
-    public boolean isTurnedOn() {
-        return isStatusByteSet(getTypicalDTO().getOutput(), 0);
-    }
-
-    private void computeTempValues() {
-        short TemperatureMeasuredValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 1))
-                .getTypicalDTO().getOutput();
-        short TemperatureMeasuredValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 2))
-                .getTypicalDTO().getOutput();
-
-        // Serve solo per dare comandi, da togliere
-        TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
-        TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
-        short TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3)).getTypicalDTO().getOutput();
-        short TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4)).getTypicalDTO().getOutput();
-
-        // ora ho i due bytes, li converto
-        int shifted = TemperatureMeasuredValue2 << 8;
-        float celsius = HalfFloatUtils.toFloat(shifted + TemperatureMeasuredValue);
-        TemperatureMeasuredVal = prefs.isFahrenheitChosen() ? SoulissUtils.celsiusToFahrenheit(celsius) : celsius;
-
-        Log.i(Constants.TAG,
-                "first:" + Long.toHexString((long) TemperatureMeasuredValue) + " second:"
-                        + Long.toHexString((long) TemperatureMeasuredValue2) + " SENSOR Reading:"
-                        + TemperatureMeasuredVal);
-
-        // ora ho i due bytes, li converto
-        int shifteds = TemperatureSetpointValue2 << 8;
-
-        TemperatureSetpointVal = HalfFloatUtils.toFloat(shifteds + TemperatureSetpointValue);
-        Log.i(Constants.TAG,
-                "first:" + Long.toHexString((long) TemperatureSetpointValue) + " second:"
-                        + Long.toHexString((long) TemperatureSetpointValue2) + "SENSOR Setpoint:"
-                        + TemperatureSetpointVal);
-    }
-
     public float getTemperatureMeasuredVal() {
         computeTempValues();
         return TemperatureMeasuredVal;
@@ -209,6 +203,10 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
 
     private boolean isStatusByteSet(int b, int n) {
         return ((b & (1L << n)) != 0);
+    }
+
+    public boolean isTurnedOn() {
+        return isStatusByteSet(getTypicalDTO().getOutput(), 0);
     }
 
     public void issueCommand(final int function, final Float temp) {
@@ -252,11 +250,11 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
         textStatusVal.setText(getOutputDesc());
         if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1) || !isTurnedOn()
                 || "UNKNOWN".compareTo(getOutputLongDesc()) == 0 || "NA".compareTo(getOutputLongDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
 
-            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }

@@ -28,6 +28,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -56,7 +57,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         // Constants.int2roman(collected.getNodeId()));
 
         TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
-        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, icon, FontAwesomeUtil.remapIconResId(collected.getIconResourceId()));
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, icon, SimpleTagViewUtils.getAwesomeNames(SceneDetailActivity.this).get(collected.getIconResourceId()));
 
         //icon.setImageResource(collected.getIconResourceId());
         // Animazione icona nodo

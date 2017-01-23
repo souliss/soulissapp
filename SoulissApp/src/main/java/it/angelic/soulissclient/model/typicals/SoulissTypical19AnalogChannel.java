@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -33,8 +32,9 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
 
     // Context ctx;
 
-    public SoulissTypical19AnalogChannel(SoulissPreferenceHelper pp) {
-        super(pp);
+
+    public SoulissTypical19AnalogChannel(Context ctx, SoulissPreferenceHelper opts) {
+        super(ctx, opts);
     }
 
     @Override
@@ -159,10 +159,10 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
-            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }
@@ -170,9 +170,9 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     @Override
     public String getOutputDesc() {
         if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
-            return SoulissApp.getAppContext().getString(R.string.OFF);
+            return context.getString(R.string.OFF);
         else
-            return SoulissApp.getAppContext().getString(R.string.ON) + " "  +getIntensityPercent();
+            return context.getString(R.string.ON) + " " + getIntensityPercent();
     }
 
     /**

@@ -79,7 +79,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
     public LauncherElement addElement(LauncherElement lau) throws SoulissModelException {
         launcherElementList.add(lau);
-        lau.setOrder((short) (launcherElementList.size()));
+        recomputeOrder();
         lau.setId(launcherElementList.size());
         long id = createLauncherElement(lau);
 
@@ -185,28 +185,33 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         List<LauncherElement> ret = new ArrayList<>();
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
         scenari.setTitle(context.getString(R.string.scenes_title));
+        scenari.setOrder((short) 0);
         scenari.setDesc(countScenes() + " scenari configurati");
         ret.add(scenari);
 
+        LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
+        prob.setDesc(countTags() + " tags contenenti " + countTypicalTags() + " dispositivi");
+        prob.setTitle(context.getString(R.string.tags));
+        scenari.setOrder((short) 1);
+        ret.add(prob);
+
+        LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
+        prop.setTitle(context.getString(R.string.status_souliss));
+        prop.setIsFullSpan(true);
+        scenari.setOrder((short) 2);
+        ret.add(prop);
+
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
         man.setTitle(context.getString(R.string.manual_title));
+        scenari.setOrder((short) 3);
         man.setDesc(countNodes() + " nodi presenti");
         ret.add(man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
         pro.setTitle(context.getString(R.string.programs_title));
+        scenari.setOrder((short) 4);
         pro.setDesc(countTriggers() + " programmi attivi");
         ret.add(pro);
-
-        LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
-        prop.setTitle(context.getString(R.string.status_souliss));
-        prop.setIsFullSpan(true);
-        ret.add(prop);
-
-        LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
-        prob.setDesc(countTags() + " tags contenenti " + countTypicalTags() + " dispositivi");
-        prob.setTitle(context.getString(R.string.tags));
-        ret.add(prob);
 
         return ret;
     }
@@ -223,39 +228,11 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     }
 
     private void recomputeOrder() {
-        for (LauncherElement ref : launcherElementList
-                ) {
+        for (LauncherElement ref : launcherElementList) {
             ref.setOrder((short) launcherElementList.indexOf(ref));
         }
     }
 
-    /*public List<LauncherElement> loadLauncherItems(){
-        String deMarshall = customCachedPrefs.getString("launcherItems","");
-
-        JSONArray array = new JSONArray();
-    }*/
-
-    /*public List<Integer, LauncherElement> loadMap() {
-        int length = (int) file.length();
-
-        byte[] bytes = new byte[length];
-        try {
-            FileInputStream in = new FileInputStream(file);
-
-            in.read(bytes);
-            in.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String contents = new String(bytes);
-        if (launcherElementList == null) {
-            launcherElementList = new Gson().fromJson(contents, MAP_TYPE);
-        }
-        return launcherElementList;
-    }*/
 
     public void refreshMapFromDB() {
         Log.d(Constants.TAG, "refresh launcher from DB");
@@ -270,6 +247,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         deleteLauncher(launcherElement);
         visibili.remove("" + launcherElement.getId());
         preferences.edit().putStringSet("launcher_elems", visibili).apply();
+        recomputeOrder();
     }
 
     public void updateLauncherElement(LauncherElement nodeIN) {
@@ -286,8 +264,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         } catch (SoulissModelException e) {
             Log.e(Constants.TAG, e.getMessage());
         }
-
-
     }
 
     /**
@@ -326,35 +302,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         return upd;
     }
-
-   /* public void synch() {
-        short order = 0;
-        for (LauncherElement lau : launcherElementList) {
-            try {
-                lau.setOrder(order++);
-                createOrUpdateLauncherElement(lau);
-            } catch (SoulissModelException e) {
-                Log.e(Constants.TAG, "Errore synch laucher:" + e.getMessage());
-            }
-        }
-    }*/
-
-
-   /* public void saveMap(Map<Integer, LauncherElement> map) {
-
-        FileOutputStream stream = null;
-        try {
-            stream = new FileOutputStream(file);
-            stream.write((new Gson().toJson(map)).getBytes());
-            stream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        launcherElementList = map;
-    }*/
 
 
 }

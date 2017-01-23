@@ -32,6 +32,8 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import us.feras.ecogallery.EcoGallery;
 
 import static junit.framework.Assert.assertTrue;
@@ -90,12 +92,11 @@ public class AlertDialogGridHelper {
                             if (tagRecyclerAdapter != null) {
                                 int tgtPos = -1;
                                 List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
-                                SoulissTag[] tagArray = new SoulissTag[goer.size()];
-                                tagArray = goer.toArray(tagArray);
-                                tagRecyclerAdapter.setTagArray(tagArray);
+
+                                tagRecyclerAdapter.setTagArray(goer);
                                 try {
-                                    for (int i = 0; i < tagArray.length; i++) {
-                                        if (tagArray[i].getTagId().equals(((SoulissTag) toRename).getTagId())) {
+                                    for (int i = 0; i < goer.size(); i++) {
+                                        if (goer.get(i).getTagId().equals(((SoulissTag) toRename).getTagId())) {
                                             tgtPos = i;
                                             tagRecyclerAdapter.notifyItemChanged(tgtPos);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + tgtPos);
@@ -165,9 +166,16 @@ public class AlertDialogGridHelper {
         alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        int pos = gallery.getSelectedItemPosition();
+                        /*int pos = gallery.getSelectedItemPosition();
                         SoulissFontAwesomeAdapter ad = (SoulissFontAwesomeAdapter) gallery.getAdapter();
-                        toRename.setIconResourceId(pos);
+                        toRename.setIconResourceId(pos);*/
+
+                        int pos = gallery.getSelectedItemPosition();
+
+                        SoulissFontAwesomeAdapter ad = (SoulissFontAwesomeAdapter) gallery.getAdapter();
+                        toRename.setIconResourceId(FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.values()[pos].getFontName()));
+
+
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
 
@@ -179,12 +187,12 @@ public class AlertDialogGridHelper {
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
                                 //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
-                                SoulissTag[] tagArray = list.getTagArray();
+                                List<SoulissTag> tagArray = list.getTagArray();
                                 // tagArray = goer.toArray(tagArray);
                                 //list.setTagArray(tagArray);
                                 try {
-                                    for (int i = 0; i < tagArray.length; i++) {
-                                        if (tagArray[i].getTagId().equals(((SoulissTag) toRename).getTagId())) {
+                                    for (int i = 0; i < tagArray.size(); i++) {
+                                        if (tagArray.get(i).getTagId().equals(((SoulissTag) toRename).getTagId())) {
                                             list.getTag(i).setIconResourceId(toRename.getIconResourceId());
                                             list.notifyItemChanged(i);
                                             Log.w(Constants.TAG, "notifiedAdapter of change on index " + i);
@@ -241,19 +249,15 @@ public class AlertDialogGridHelper {
                         int tgtPos = -1;
                         datasource.deleteTag(toRename);
                         if (ctx != null) {
-                            SoulissTag[] tagArrBck = ctx.getTagArray();
-                            for (int i = 0; i < tagArrBck.length; i++) {
-                                if (tagArrBck[i].getTagId().equals(toRename.getTagId()))
+                            List<SoulissTag> tagArrBck = ctx.getTagArray();
+                            for (int i = 0; i < tagArrBck.size(); i++) {
+                                if (tagArrBck.get(i).getTagId().equals(toRename.getTagId()))
                                     tgtPos = i;
                             }
 
                             // prendo dal DB
                             List<SoulissTag> goer = datasource.getTags(cont);
-                            SoulissTag[] tagArr = new SoulissTag[goer.size()];
-                            tagArr = goer.toArray(tagArr);
-                            // targetScene.setCommandArray(goer);
-                            // Adapter della lista
-                            ctx.setTagArray(tagArr);
+                            ctx.setTagArray(goer);
                             //shift visivo
                             ctx.notifyItemRemoved(tgtPos);
                             Handler handler = new Handler();
@@ -272,9 +276,9 @@ public class AlertDialogGridHelper {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int tgtPos = -1;
                         if (ctx != null) {
-                            SoulissTag[] tagArrBck = ctx.getTagArray();
-                            for (int i = 0; i < tagArrBck.length; i++) {
-                                if (tagArrBck[i].getTagId() == toRename.getTagId())
+                            List<SoulissTag> tagArrBck = ctx.getTagArray();
+                            for (int i = 0; i < tagArrBck.size(); i++) {
+                                if (tagArrBck.get(i).getTagId().equals(toRename.getTagId()))
                                     tgtPos = i;
                             }
 
@@ -311,11 +315,11 @@ public class AlertDialogGridHelper {
                         if (adapter != null) {
                             int newPosition = low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue();
                             //swap elements
-                            SoulissTag[] temp = adapter.getTagArray();
-                            Assert.assertTrue(oldPosition < temp.length);
-                            SoulissTag oldOne = temp[newPosition];
-                            temp[newPosition] = toUpdate;
-                            temp[oldPosition] = oldOne;
+                            List<SoulissTag> temp = adapter.getTagArray();
+                            Assert.assertTrue(oldPosition < temp.size());
+                            SoulissTag oldOne = temp.get(newPosition);
+                            temp.set(newPosition, toUpdate);
+                            temp.set(oldPosition, oldOne);
                             adapter.setTagArray(temp);
                             dbt.createOrUpdateTag(toUpdate);
                             //notify to move

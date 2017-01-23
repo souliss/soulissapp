@@ -22,6 +22,7 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissTriggerDTO;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class ProgramListAdapter extends BaseAdapter {
@@ -90,7 +91,7 @@ public class ProgramListAdapter extends BaseAdapter {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
             //don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-clock-o");
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_clock_o.getFontName());
             holder.image.setTextColor(ContextCompat.getColor(context, color.std_blue_shadow));
             holder.textCmdWhen
                     .setText(context.getString(R.string.execute_at) + " " + Constants.hourFormat.format(holder.data.getScheduledTime().getTime()));
@@ -115,10 +116,10 @@ public class ProgramListAdapter extends BaseAdapter {
             }
             if (holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_leave));
-                FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-sign-out");
+                FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_sign_out.getFontName());
             } else {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_come));
-                FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-sign-in");
+                FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_sign_in.getFontName());
             }
             /* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
@@ -126,7 +127,7 @@ public class ProgramListAdapter extends BaseAdapter {
 			/* COMANDO TRIGGERED */
         } else if (holder.data.getType() == Constants.COMMAND_TRIGGERED) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-code-fork");
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_puzzle_piece.getFontName());
             //rosso
             holder.image.setTextColor(ContextCompat.getColor(context, color.std_red_shadow));
             holder.line.setBackgroundColor(ContextCompat.getColor(context, color.std_red_shadow));

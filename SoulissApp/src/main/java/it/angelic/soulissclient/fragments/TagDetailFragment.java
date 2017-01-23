@@ -25,6 +25,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -37,6 +38,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,10 +104,10 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }
     };
 
-    public static String getRealPathFromURI(Uri contentUri) {
+    public static String getRealPathFromURI(Context ctx, Uri contentUri) {
         String res = null;
         String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = SoulissApp.getAppContext().getContentResolver().query(contentUri, proj, null, null, null);
+        Cursor cursor = ctx.getContentResolver().query(contentUri, proj, null, null, null);
         if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
@@ -250,11 +252,22 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
         mLogoIcon = (TextView) getActivity().findViewById(R.id.imageTagIconFAwe);
         if (collectedTag.getIconResourceId() != 0) {
-            FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, FontAwesomeUtil.remapIconResId(collectedTag.getIconResourceId()));
+            FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, collectedTag.getIconResourceId());
         } else
             FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, "fa-tag");
 
-        mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
+        TypedValue a = new TypedValue();
+        getActivity().getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            // windowBackground is a color
+            int color = a.data;
+            mLogoIcon.setTextColor(color);
+        } else {
+            // windowBackground is not a color, probably a drawable
+            Drawable d = getActivity().getResources().getDrawable(a.resourceId);
+            Log.w(Constants.TAG, "not getting window background");
+        }
+        //mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
         mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
 
 
@@ -314,7 +327,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
         if (collectedTag != null && collectedTag.getImagePath() != null) {
 
-            File picture = new File(getRealPathFromURI(Uri.parse(collectedTag.getImagePath())));
+            File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
             if (picture.exists()) {

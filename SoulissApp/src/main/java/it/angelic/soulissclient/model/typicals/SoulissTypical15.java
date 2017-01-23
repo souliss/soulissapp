@@ -29,10 +29,9 @@ public class SoulissTypical15 extends SoulissTypical implements ISoulissTypical 
 	 */
 	private static final long serialVersionUID = 4553488985062542092L;
 
-	// Context ctx;
 
-	public SoulissTypical15(SoulissPreferenceHelper pp) {
-		super(pp);
+	public SoulissTypical15(Context ctx, SoulissPreferenceHelper opts) {
+		super(ctx, opts);
 	}
 
 	@Override

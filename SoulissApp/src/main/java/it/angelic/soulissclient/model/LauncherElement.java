@@ -103,12 +103,12 @@ public class LauncherElement implements ILauncherTile, Serializable {
 
         LauncherElement that = (LauncherElement) o;
 
-        return id == that.id;
+        return id.equals(that.id);
 
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return id.hashCode();
     }
 }

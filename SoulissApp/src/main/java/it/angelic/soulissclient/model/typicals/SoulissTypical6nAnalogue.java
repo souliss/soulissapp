@@ -14,7 +14,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -26,8 +25,8 @@ import it.angelic.soulissclient.model.SoulissTypical;
  */
 public class SoulissTypical6nAnalogue extends SoulissTypical implements ISoulissTypicalSensor {
 
-    public SoulissTypical6nAnalogue(SoulissPreferenceHelper pre) {
-        super(pre);
+    public SoulissTypical6nAnalogue(Context c, SoulissPreferenceHelper pre) {
+        super(c, pre);
     }
 
     /**
@@ -40,7 +39,7 @@ public class SoulissTypical6nAnalogue extends SoulissTypical implements ISouliss
         if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec() * 3))
             return "" + String.format("%.2f", getOutputFloat());
         else
-            return SoulissApp.getAppContext().getString(R.string.stale);
+            return context.getString(R.string.stale);
 
     }
 

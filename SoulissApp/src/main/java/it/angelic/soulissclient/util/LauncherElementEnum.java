@@ -13,7 +13,7 @@ public enum LauncherElementEnum {
     public String toString(Context ctx) {
         switch (this) {
             case STATIC_SCENES:
-                return ctx.getString(R.string.node);
+                return ctx.getString(R.string.scenes_title);
             case STATIC_PROGRAMS:
                 return ctx.getString(R.string.programs_title);
             case STATIC_MANUAL:
@@ -22,6 +22,12 @@ public enum LauncherElementEnum {
                 return ctx.getString(R.string.tags);
             case STATIC_STATUS:
                 return ctx.getString(R.string.status_souliss);
+            case TYPICAL:
+                return ctx.getString(R.string.typical);
+            case SCENE:
+                return ctx.getString(R.string.scene);
+            case TAG:
+                return ctx.getString(R.string.tag);
             default:
                 return ctx.getString(R.string.programs_title);
         }

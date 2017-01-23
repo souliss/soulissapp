@@ -35,10 +35,12 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical  i
 	private final DecimalFormat df = new DecimalFormat("###.##");
 	
 	short typ;
-	public SoulissTypical5nCurrentVoltagePowerSensor(SoulissPreferenceHelper pre, short xTyp) {
-		super(pre);
-		typ=xTyp;
-	}
+
+    public SoulissTypical5nCurrentVoltagePowerSensor(Context c, SoulissPreferenceHelper pre, short xTyp) {
+        super(c, pre);
+        typ=xTyp;
+
+    }
 
 //	int maxTemp;
 	//int minTemp;

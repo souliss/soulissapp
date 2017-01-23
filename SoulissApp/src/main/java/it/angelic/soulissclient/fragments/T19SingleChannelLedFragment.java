@@ -45,7 +45,9 @@ import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 import static junit.framework.Assert.assertTrue;
 
 public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
-    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
+
+
+    private SoulissDBHelper datasource;
 
     private Button buttPlus;
     private Button buttMinus;
@@ -152,7 +154,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
+        super.onActivityCreated(savedInstanceState);
         opzioni = SoulissApp.getOpzioni();
         // tema
         if (opzioni.isLightThemeSelected())

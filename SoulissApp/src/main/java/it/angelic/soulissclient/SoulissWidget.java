@@ -174,7 +174,7 @@ public class SoulissWidget extends AppWidgetProvider {
                         dto.setSlot(slot);
                         if (cmd != -3) {
                             dto.setCommand(cmd);
-                            SoulissCommand cmdd = new SoulissCommand(dto);
+                            SoulissCommand cmdd = new SoulissCommand(context, dto);
                             cmdd.execute();
                         }
                     } else if (node == Constants.COMMAND_FAKE_SCENE) {

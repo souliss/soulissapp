@@ -33,9 +33,6 @@ import it.angelic.soulissclient.model.SoulissTypical;
  */
 public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulissTypicalSensor {
 
-	public SoulissTypical54LuxSensor(SoulissPreferenceHelper pre) {
-		super(pre);
-	}
 
 	int maxTemp;
 	int minTemp;
@@ -43,6 +40,10 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	 * 
 	 */
 	private static final long serialVersionUID = 3784476625375361669L;
+
+    public SoulissTypical54LuxSensor(Context ctx, SoulissPreferenceHelper opts) {
+        super(ctx, opts);
+    }
 
 	/**
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat

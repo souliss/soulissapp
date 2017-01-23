@@ -45,11 +45,12 @@ import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
  */
 public class TagGridActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBTagHelper datasource;
+    private List<SoulissTag> goer;
     private RecyclerView.LayoutManager gridManager;
     private ContextMenuRecyclerView mRecyclerView;
     private ArrayAdapter<INavDrawerItem> navAdapter;
     private TagRecyclerAdapter tagAdapter;
-    private SoulissTag[] tags;
+    //private SoulissTag[] tags;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
@@ -61,11 +62,11 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         if (resultCode == RESULT_OK) {
             Uri selectedImage = imageReturnedIntent.getData();
             Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
-            tags[requestCode].setImagePath(selectedImage.toString());
+            goer.get(requestCode).setImagePath(selectedImage.toString());
             //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            datasource.createOrUpdateTag(tags[requestCode]);
+            datasource.createOrUpdateTag(goer.get(requestCode));
             //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
-            Log.i(Constants.TAG, "SAVED IMG PATH:" + tags[requestCode].getImagePath());
+            Log.i(Constants.TAG, "SAVED IMG PATH:" + goer.get(requestCode).getImagePath());
             tagAdapter.notifyItemChanged(requestCode);
         }
 
@@ -156,11 +157,9 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
-                List<SoulissTag> goer = datasource.getTags(SoulissApp.getAppContext());
+                goer = datasource.getTags(SoulissApp.getAppContext());
 
-                tags = new SoulissTag[goer.size()];
-                tags = goer.toArray(tags);
-                tagAdapter.setTagArray(tags);
+                tagAdapter.setTagArray(goer);
 
                 tagAdapter.notifyItemInserted(tagAdapter.getItemCount());
                 Handler handler = new Handler();
@@ -186,10 +185,9 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         datasource = new SoulissDBTagHelper(this);
         SoulissDBHelper.open();
         // prendo comandi dal DB, setto adapter
-        List<SoulissTag> goer = datasource.getTags(SoulissApp.getAppContext());
-        tags = new SoulissTag[goer.size()];
-        tags = goer.toArray(tags);
-        tagAdapter = new TagRecyclerAdapter(this, tags, opzioni);
+        goer = datasource.getTags(SoulissApp.getAppContext());
+
+        tagAdapter = new TagRecyclerAdapter(this, goer, opzioni, fab);
         // Adapter della lista
         mRecyclerView.setAdapter(tagAdapter);
 
@@ -220,7 +218,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 dbt.createOrUpdateTag(dest);
 
 
-                Collections.swap(tagAdapter.getTagList(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                Collections.swap(tagAdapter.getTagArray(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 // and notify the adapter that its dataset has changed
                 tagAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 return true;

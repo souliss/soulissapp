@@ -42,6 +42,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -118,7 +119,7 @@ public class NodesListFragment extends ListFragment {
 
 
         TextView nodeic = (TextView) getActivity().findViewById(R.id.scene_icon);
-        FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, "fa-codepen");
+		FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, FontAwesomeEnum.fa_codepen.getFontName());
 
 		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
 		textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewManualDesc);

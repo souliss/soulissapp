@@ -31,6 +31,7 @@ import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -73,7 +74,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
 		textViewAwesomeBck = (TextView) findViewById(R.id.scene_icon);
 
-		FontAwesomeUtil.prepareAwesomeFontAweTextView(ProgramListActivity.this, textViewAwesomeBck, "fa-calendar");
+		FontAwesomeUtil.prepareAwesomeFontAweTextView(ProgramListActivity.this, textViewAwesomeBck, FontAwesomeEnum.fa_calendar.getFontName());
 		SoulissApp.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato

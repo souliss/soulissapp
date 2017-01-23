@@ -86,8 +86,8 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
         // DRAWER
         final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
         final TextView info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
-        dmh = new DrawerMenuHelper();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		dmh = new DrawerMenuHelper(ManualUDPTestActivity.this);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
                 R.string.warn_wifi, /* "open drawer" description */

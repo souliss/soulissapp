@@ -43,7 +43,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         String code = FontAwesomeUtil.translateAwesomeCode(context, faCode);
         //content.setFontAwesomeCode(code);
         txtAwesome.setText(code);
-        txtAwesome.setTextSize(42);
+        txtAwesome.setTextSize(40);
     }
 
     public static void prepareFontAweTextView(Activity context, TextView txtAwesome, @NonNull String faCode) {
@@ -54,7 +54,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         txtAwesome.setTextSize(64);
     }
 
-    public static void prepareFontAweTextView(Activity context, TextView txtAwesome, @NonNull int code) {
+    public static void prepareFontAweTextView(Activity context, TextView txtAwesome, int code) {
         txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(context));
         //content.setFontAwesomeCode(code);
         txtAwesome.setText(SimpleTagViewUtils.getAwesomeCodes(context).get(code));

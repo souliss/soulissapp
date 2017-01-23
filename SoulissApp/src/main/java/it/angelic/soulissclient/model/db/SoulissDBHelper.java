@@ -185,7 +185,7 @@ public class SoulissDBHelper {
             // Inserisco e risetto il nome
             int ret = (int) database.insert(SoulissDB.TABLE_SCENES, null, values);
             values.put(SoulissDB.COLUMN_SCENE_NAME,
-                    SoulissApp.getAppContext().getResources().getString(R.string.scene) + " " + ret);
+                    context.getResources().getString(R.string.scene) + " " + ret);
             database.update(SoulissDB.TABLE_SCENES, values, SoulissDB.COLUMN_SCENE_ID + " = " + ret, null);
             return ret;
         }
@@ -196,7 +196,7 @@ public class SoulissDBHelper {
         Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID
                 + " = " + nodeIN, null, null, null, null);
         cursor.moveToFirst();
-        SoulissNode ret = SoulissNode.cursorToNode(cursor);
+        SoulissNode ret = SoulissNode.cursorToNode(context, cursor);
 
         List<SoulissTypical> cod = getNodeTypicals(ret);
         // come sono grezzo, 'sta riga fa schifo
@@ -220,7 +220,7 @@ public class SoulissDBHelper {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
             newTyp.setParentNode(parent);
             if (parent.getNodeId() == Constants.MASSIVE_NODE_ID) {
                 //hack dto ID, could be different if parent is massive
@@ -269,7 +269,7 @@ public class SoulissDBHelper {
             typTags.moveToNext();
         }
         typTags.close();
-        SoulissTypical ret = SoulissTypicalFactory.getTypical(dto.getTypical(), getSoulissNode(node), dto, opts);
+        SoulissTypical ret = SoulissTypicalFactory.getTypical(context, dto.getTypical(), getSoulissNode(node), dto, opts);
         cursor.close();
         return ret;
     }
@@ -288,7 +288,7 @@ public class SoulissDBHelper {
 
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), nodi.get(dto.getNodeId()), dto, opts);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), nodi.get(dto.getNodeId()), dto, opts);
             //TAG? no join, perche 1 a n
             Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
                     SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
@@ -327,7 +327,7 @@ public class SoulissDBHelper {
 
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
             //TAG? no join, perche 1 a n
             Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
                     SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
@@ -642,7 +642,7 @@ public class SoulissDBHelper {
                 null, null);
         if (cursor.moveToFirst()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypicalFactory.getTypical(dto.getTypical(),
+            SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypicalFactory.getTypical(context, dto.getTypical(),
                     getSoulissNode(dto.getNodeId()), dto, opts);
             cursor.close();
             return ret;
@@ -660,7 +660,7 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissNode parent = getSoulissNode(dto.getNodeId());
-            SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypicalFactory.getTypical(
+            SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypicalFactory.getTypical(context,
                     dto.getTypical(), parent, dto, opts);
             newTyp.setParentNode(parent);
             // if (newTyp.getTypical() !=
@@ -678,7 +678,7 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissNode parent = getSoulissNode(dto.getNodeId());
-            SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypicalFactory.getTypical(dto.getTypical(), parent, dto, opts);
+            SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
             newTyp.setParentNode(parent);
             // if (newTyp.getTypical() !=
             // Constants.Souliss_T_CurrentSensor_slave)
@@ -755,7 +755,7 @@ public class SoulissDBHelper {
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-            SoulissNode comment = SoulissNode.cursorToNode(cursor);
+            SoulissNode comment = SoulissNode.cursorToNode(context, cursor);
             List<SoulissTypical> cod = getNodeTypicals(comment);
             // come sono grezzo, 'sta riga fa schifo
             for (SoulissTypical soulissTypical : cod) {
@@ -905,7 +905,7 @@ public class SoulissDBHelper {
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             SoulissNode par = getSoulissNode(dto.getNodeId());
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(dto.getTypical(), par, dto, opts);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), par, dto, opts);
             //hack dto ID, could be different if parent is massive
             newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
 
@@ -1011,21 +1011,21 @@ public class SoulissDBHelper {
                 //hack nodeId, Massive
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
-                adding = new SoulissCommand(comment, tgt);
+                adding = new SoulissCommand(context, comment, tgt);
             } else if (node > Constants.COMMAND_FAKE_SCENE) {
                 // List massivi = getUniqueTypicals(node);
-                SoulissNode minchia = new SoulissNode(Constants.MASSIVE_NODE_ID);
+                SoulissNode minchia = new SoulissNode(context, Constants.MASSIVE_NODE_ID);
                 List<SoulissTypical> massivi = getUniqueTypicals(minchia);
                 Log.d(Constants.TAG, "Massive command found, Typical:" + slot);
                 for (SoulissTypical cazzuto : massivi) {
                     if (slot == cazzuto.getTypicalDTO().getTypical()) {
-                        adding = new SoulissCommand(comment, cazzuto);
+                        adding = new SoulissCommand(context, comment, cazzuto);
                     }
                 }
 
             } else {
                 //scena, ovvero id scena da eseguire = slot
-                adding = new SoulissCommand(comment);
+                adding = new SoulissCommand(context, comment);
             }
             assertNotNull(adding);
             ret.add(adding);
@@ -1053,16 +1053,16 @@ public class SoulissDBHelper {
                 SoulissTypical tgt = getTypical(node, slot);
                 tgt.getTypicalDTO().setNodeId(node);
                 tgt.getTypicalDTO().setSlot(slot);
-                adding = new SoulissCommand(comment, tgt);
+                adding = new SoulissCommand(context, comment, tgt);
                 // comando massivo
             } else {
-                SoulissNode fake = new SoulissNode(Constants.MASSIVE_NODE_ID);
-                SoulissTypical tgt = new SoulissTypical(opts);
+                SoulissNode fake = new SoulissNode(context, Constants.MASSIVE_NODE_ID);
+                SoulissTypical tgt = new SoulissTypical(context, opts);
                 tgt.setParentNode(fake);
                 tgt.getTypicalDTO().setNodeId(Constants.MASSIVE_NODE_ID);
                 // in caso di comando massivo, SLOT = TYPICAL
                 tgt.getTypicalDTO().setTypical(slot);
-                adding = new SoulissCommand(comment, tgt);
+                adding = new SoulissCommand(context, comment, tgt);
             }
             ret.add(adding);
         }
@@ -1124,9 +1124,9 @@ public class SoulissDBHelper {
             SoulissCommand adding;
             if (node > MASSIVE_NODE_ID) {
                 SoulissTypical parentTypical = getTypical(node, slot);
-                adding = new SoulissCommand(comment, parentTypical);
+                adding = new SoulissCommand(context, comment, parentTypical);
             } else {
-                adding = new SoulissCommand(comment);
+                adding = new SoulissCommand(context, comment);
             }
             adding.setSceneId(null);
             ret.add(adding);

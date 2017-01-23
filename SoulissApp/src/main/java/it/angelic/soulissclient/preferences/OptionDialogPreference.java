@@ -50,15 +50,19 @@ public class OptionDialogPreference extends DialogPreference implements DialogIn
         if (mWhichButtonClicked == -1) {
             // Save user preferences
             ISoulissObject sobj = (ISoulissObject) outputTYpSpinner.getSelectedItem();
-            LauncherElement newEl = new LauncherElement();
-            newEl.setComponentEnum(statArr[typeSpinner.getSelectedItemPosition()]);
-            newEl.setTitle(statArr[typeSpinner.getSelectedItemPosition()].toString() + ": " + sobj.getNiceName());
-            newEl.setLinkedObject(sobj);
-            Toast.makeText(context, "Saved new Launcher item: " + newEl.getTitle(), Toast.LENGTH_SHORT).show();
-            try {
-                datasource.addElement(newEl);
-            } catch (SoulissModelException e) {
-                e.printStackTrace();
+            if (sobj != null) {
+                LauncherElement newEl = new LauncherElement();
+                newEl.setComponentEnum(statArr[typeSpinner.getSelectedItemPosition()]);
+                newEl.setTitle(statArr[typeSpinner.getSelectedItemPosition()].toString() + ": " + sobj.getNiceName());
+                newEl.setLinkedObject(sobj);
+                Toast.makeText(context, "Saved new Launcher item: " + newEl.getTitle(), Toast.LENGTH_SHORT).show();
+                try {
+                    datasource.addElement(newEl);
+                } catch (SoulissModelException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Toast.makeText(context, "Choose related data", Toast.LENGTH_SHORT).show();
             }
 
         } else {

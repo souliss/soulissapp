@@ -26,7 +26,7 @@ public class SoulissTestExport extends AndroidTestCase {
     private SoulissPreferenceHelper opzioni;
 
     protected void addFakeNode() {
-        SoulissNode testNode = new SoulissNode(fakeNodeId);
+        SoulissNode testNode = new SoulissNode(getContext(), fakeNodeId);
         // Here i have my new database wich is not connected to the standard database of the App
         db.createOrUpdateNode(testNode);
         assertEquals(1, db.countNodes());
@@ -34,7 +34,7 @@ public class SoulissTestExport extends AndroidTestCase {
     }
 
     protected void addFakeLight() {
-        SoulissTypical11DigitalOutput testTypical = new SoulissTypical11DigitalOutput(opzioni);
+        SoulissTypical11DigitalOutput testTypical = new SoulissTypical11DigitalOutput(getContext(), opzioni);
         testTypical.getTypicalDTO().setTypical(Constants.Typicals.Souliss_T11);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot(fakeSlotId);
@@ -46,7 +46,7 @@ public class SoulissTestExport extends AndroidTestCase {
     }
 
     protected void addFakeSensor() {
-        SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(opzioni);
+        SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(getContext(), opzioni);
         testTypical.getTypicalDTO().setTypical(Constants.Typicals.Souliss_T51);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot((short) (fakeSlotId + 1));

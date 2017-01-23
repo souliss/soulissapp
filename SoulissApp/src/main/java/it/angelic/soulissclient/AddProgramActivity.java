@@ -102,12 +102,12 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         nodiArray = new SoulissNode[goer.size()];
         nodiArray = goer.toArray(nodiArray);
         //Aggiungo massivo
-        SoulissNode massive = new SoulissNode( Constants.MASSIVE_NODE_ID);// MASSIVO
+        SoulissNode massive = new SoulissNode(this, Constants.MASSIVE_NODE_ID);// MASSIVO
         massive.setName(getString(R.string.allnodes));
         massive.setTypicals(datasource.getUniqueTypicals(massive));
         goer.add(massive);
         //AGGIUNGO scene
-        SoulissNode fake = new SoulissNode( Constants.COMMAND_FAKE_SCENE);// MASSIVO
+        SoulissNode fake = new SoulissNode(this, Constants.COMMAND_FAKE_SCENE);// MASSIVO
         fake.setName(getString(R.string.scenes_title));
         goer.add(fake);
 
@@ -397,7 +397,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     SoulissCommandDTO dto = new SoulissCommandDTO();
                     dto.setNodeId(Constants.COMMAND_FAKE_SCENE);
                     dto.setSlot((short) toExec.getId());
-                    programToSave = new SoulissCommand(dto);
+                    programToSave = new SoulissCommand(AddProgramActivity.this, dto);
                 } else if (IToSave instanceof SoulissCommand) {
                     programToSave = (SoulissCommand) IToSave;
                     Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getNodeId());

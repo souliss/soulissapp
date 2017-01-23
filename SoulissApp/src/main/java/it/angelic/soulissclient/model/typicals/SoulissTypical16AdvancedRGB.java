@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -32,10 +31,8 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	 */
 	private static final long serialVersionUID = 4553421985062542092L;
 
-	// Context ctx;
-
-	public SoulissTypical16AdvancedRGB(SoulissPreferenceHelper pp) {
-		super(pp);
+	public SoulissTypical16AdvancedRGB(Context context, SoulissPreferenceHelper pre) {
+		super(context, pre);
 	}
 
 	@Override
@@ -158,7 +155,7 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 	public void setOutputDescView(TextView textStatusVal) {
 		textStatusVal.setText(getOutputDesc());
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0) {
-			textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
+			textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
 			textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
 		} else {
 			textStatusVal.setTextColor(getColor());

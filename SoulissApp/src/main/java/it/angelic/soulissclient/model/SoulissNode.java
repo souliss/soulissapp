@@ -1,5 +1,6 @@
 package it.angelic.soulissclient.model;
 
+import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 
@@ -11,7 +12,6 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 
 /**
  * Souliss Unit, the node
@@ -23,6 +23,7 @@ import it.angelic.soulissclient.SoulissApp;
 public class SoulissNode implements Serializable, ISoulissNode {
 
     private static final long serialVersionUID = 8673027563853737718L;
+    private Context context;
     private short health;
     /* Icon resource ID */
     private int iconId = R.drawable.square;
@@ -32,9 +33,10 @@ public class SoulissNode implements Serializable, ISoulissNode {
 
     private List<SoulissTypical> soulissTypicals;
 
-    public SoulissNode(short id) {
+    public SoulissNode(Context c, short id) {
         super();
         this.id = id;
+        context = c;
         soulissTypicals = new ArrayList<>();
     }
 
@@ -44,8 +46,8 @@ public class SoulissNode implements Serializable, ISoulissNode {
      * @param cursor risultato della select
      * @return
      */
-    public static SoulissNode cursorToNode(Cursor cursor) {
-        SoulissNode comment = new SoulissNode(cursor.getShort(1));
+    public static SoulissNode cursorToNode(Context c, Cursor cursor) {
+        SoulissNode comment = new SoulissNode(c, cursor.getShort(1));
 
         comment.setHealth(cursor.getShort(2));
         comment.setIconResourceId(cursor.getInt(3));
@@ -112,9 +114,9 @@ public class SoulissNode implements Serializable, ISoulissNode {
         if (name != null && "".compareToIgnoreCase(name) != 0)
             return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getNodeId() + ")";
         else if (id > Constants.MASSIVE_NODE_ID)
-            return SoulissApp.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getNodeId());
+            return context.getString(R.string.node) + " " + Constants.int2roman(getNodeId());
         else
-            return SoulissApp.getAppContext().getString(R.string.allnodes);
+            return context.getString(R.string.allnodes);
     }
 
     public Calendar getRefreshedAt() {

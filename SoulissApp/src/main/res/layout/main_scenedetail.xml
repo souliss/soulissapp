@@ -56,8 +56,7 @@
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                          android:layout_width="match_parent"
                          android:layout_height="match_parent"
-                         android:layout_below="@id/TextViewTypicals"
-                >
+                         android:layout_below="@id/TextViewTypicals">
 
                 <ListView
                     android:id="@+id/ListViewListaScene"
@@ -73,12 +72,13 @@
                     tools:listitem="@layout/listview_scene_detail"/>
 
                 <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="16dp"
-                    android:background="@color/white"
+                    app:backgroundTint="@color/std_yellow"
                     android:src="@drawable/ic_play_arrow_32dp"/>
             </FrameLayout>
         </RelativeLayout>

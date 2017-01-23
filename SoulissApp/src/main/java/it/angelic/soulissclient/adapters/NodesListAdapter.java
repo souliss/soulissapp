@@ -23,6 +23,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -40,7 +41,10 @@ public class NodesListAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return nodi.size();
+        // Hack lista vuota
+        if (nodi == null || nodi.size() == 0)
+            return 1;
+        return nodi.size();
 	}
 
 	public Object getItem(int position) {
@@ -70,7 +74,7 @@ public class NodesListAdapter extends BaseAdapter {
 
 			convertView = mInflater.inflate(R.layout.listview, parent, false);
 			holder = new NodeViewHolder();
-            holder.data = nodi.get(position);
+
             holder.text = (TextView) convertView.findViewById(R.id.TextView01);
 			holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);
 			holder.textHlt = (TextView) convertView.findViewById(R.id.TextViewHealth);
@@ -96,13 +100,21 @@ public class NodesListAdapter extends BaseAdapter {
 
 			convertView.setTag(holder);
 		} else {
-
 			holder = (NodeViewHolder) convertView.getTag();
-			// ClipDrawable progress = new ClipDrawable(pgDrawable,
-			// Gravity.LEFT, ClipDrawable.HORIZONTAL);
-			// holder.hlt.setProgressDrawable(progress);
 		}
-		holder.text.setText(nodi.get(position).getNiceName());
+
+        if (nodi.size() == 0) {
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_exclamation_triangle.getFontName());
+            //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
+            holder.image.setTextColor(context.getResources().getColor(R.color.aa_yellow));
+            holder.text.setText(context.getResources().getString(R.string.node_empty));
+            holder.textTyp.setText(context.getResources().getString(R.string.dialog_notinited_db));
+            holder.hlt.setVisibility(View.INVISIBLE);
+            //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.trans_black));
+            return convertView;
+        }
+        holder.data = nodi.get(position);
+        holder.text.setText(nodi.get(position).getNiceName());
 		// holder.text.setTextAppearance(context, R.style.CodeFontTitle);
 
 		// Progress = health
@@ -114,14 +126,14 @@ public class NodesListAdapter extends BaseAdapter {
 		// holder.textTyp.setTextAppearance(context, R.style.CodeFontMain);
 
         holder.textTyp.setText(  context.getResources().getQuantityString(R.plurals.Devices,
-				nodi.get(position).getActiveTypicals().size(), nodi.get(position).getActiveTypicals().size()) + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodi.get(position).getRefreshedAt()));
+                nodi.get(position).getActiveTypicals().size(), nodi.get(position).getActiveTypicals().size())
+                + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodi.get(position).getRefreshedAt()));
 
 		if (opzioni.isLightThemeSelected()) {
 			holder.textTyp.setTextColor(ContextCompat.getColor(context, R.color.black));
 			holder.text.setTextColor(ContextCompat.getColor(context, R.color.black));
 			holder.textHlt.setTextColor(ContextCompat.getColor(context, R.color.black));
 		}
-
 		/* Icona del nodo */
         FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
 

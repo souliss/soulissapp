@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -116,10 +117,10 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         return actionTitleTextView;
     }
 
-    void initDrawer(final Activity parentActivity, int activeSection) {
+    void initDrawer(final @NonNull Activity parentActivity, int activeSection) {
 
         // DRAWER
-        dmh = new DrawerMenuHelper();
+        dmh = new DrawerMenuHelper(parentActivity);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
         info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);

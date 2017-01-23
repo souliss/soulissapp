@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -37,11 +36,10 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
      */
     private static final long serialVersionUID = 4553488985062232592L;
 
-    // Context ctx;
-
-    public SoulissTypical11DigitalOutput(SoulissPreferenceHelper fg) {
-        super(fg);
+    public SoulissTypical11DigitalOutput(Context context, SoulissPreferenceHelper pre) {
+        super(context, pre);
     }
+
 
     @Override
     public ArrayList<ISoulissCommand> getCommands(Context ctx) {
@@ -168,11 +166,11 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
         if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback ||
                 "UNKNOWN".compareTo(getOutputDesc()) == 0 ||
                 "NA".compareTo(getOutputDesc()) == 0) {
-            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_red));
+            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
             //textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
         } else {
-            textStatusVal.setTextColor(SoulissApp.getAppContext().getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
             //textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackon));
         }
@@ -181,9 +179,9 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
     @Override
     public String getOutputDesc() {
         if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnFeedback)
-            return SoulissApp.getAppContext().getString(R.string.ON);
+            return context.getString(R.string.ON);
         else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback)
-            return SoulissApp.getAppContext().getString(R.string.OFF);
+            return context.getString(R.string.OFF);
         else if (typicalDTO.getOutput() >= Constants.Typicals.Souliss_T1n_Timed)
             return "" + typicalDTO.getOutput();
             //return ctx.getString(R.string.Souliss_TRGB_sleep);

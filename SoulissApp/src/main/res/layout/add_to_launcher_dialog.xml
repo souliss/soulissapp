@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/elementType"
-        android:padding="8dp"
+        android:padding="12dp"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="24dp"/>
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/elementData"
-        android:padding="8dp"
+        android:padding="12dp"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="24dp"/>
 

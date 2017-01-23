@@ -26,7 +26,7 @@ public class SoulissTestPersistence extends AndroidTestCase {
     private SoulissPreferenceHelper opzioni;
 
     protected void addFakeNode() {
-        SoulissNode testNode = new SoulissNode(fakeNodeId);
+        SoulissNode testNode = new SoulissNode(getContext(), fakeNodeId);
         // Here i have my new database wich is not connected to the standard database of the App
         db.createOrUpdateNode(testNode);
         assertEquals(1, db.countNodes());
@@ -34,7 +34,7 @@ public class SoulissTestPersistence extends AndroidTestCase {
     }
 
     protected void addFakeLight() {
-        SoulissTypical11DigitalOutput testTypical = new SoulissTypical11DigitalOutput(opzioni);
+        SoulissTypical11DigitalOutput testTypical = new SoulissTypical11DigitalOutput(getContext(), opzioni);
         testTypical.getTypicalDTO().setTypical(Constants.Typicals.Souliss_T11);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot(fakeSlotId);
@@ -46,7 +46,7 @@ public class SoulissTestPersistence extends AndroidTestCase {
     }
 
     protected void addFakeSensor() {
-        SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(opzioni);
+        SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(getContext(), opzioni);
         testTypical.getTypicalDTO().setTypical(Constants.Typicals.Souliss_T51);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot((short) (fakeSlotId + 1));
@@ -106,16 +106,17 @@ public class SoulissTestPersistence extends AndroidTestCase {
         List<SoulissTypical> testTypical = db.getNodeTypicals(father);
 
         assertEquals(2, db.countTypicals());//siam sicuri che solo lui
-        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(Constants.Typicals.Souliss_T51, father, testTypical.get(1).getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
+        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(getContext(), Constants.Typicals.Souliss_T51, father, testTypical.get(1).getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
 
         assertEquals(copy.getTypicalDTO(), testTypical.get(1).getTypicalDTO());
     }
 
     public void testGetTypical() {
+
         SoulissTypical51AnalogueSensor testTypical = (SoulissTypical51AnalogueSensor) db.getTypical(fakeNodeId, (short) (fakeSlotId + 1));
 
         SoulissNode father = db.getSoulissNode(fakeNodeId);
-        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(Constants.Typicals.Souliss_T51, father, testTypical.getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
+        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(getContext(), Constants.Typicals.Souliss_T51, father, testTypical.getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
 
         assertEquals(true, testTypical.isSensor());
         assertEquals(copy.getTypicalDTO(), testTypical.getTypicalDTO());

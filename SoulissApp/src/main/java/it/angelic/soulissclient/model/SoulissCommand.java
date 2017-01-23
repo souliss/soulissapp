@@ -35,9 +35,11 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     private SoulissCommandDTO commandDTO;
     private SoulissTypical parentTypical;
     private SoulissScene targetScene;
+    protected Context context;
 
     public SoulissCommand(SoulissTypical parentTypical) {
         super();
+        this.context = parentTypical.getContext();
         this.commandDTO = new SoulissCommandDTO();
         commandDTO.setSlot(parentTypical.getTypicalDTO().getSlot());
         commandDTO.setNodeId(parentTypical.getParentNode().getNodeId());
@@ -46,20 +48,20 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             assertEquals(commandDTO.getNodeId(), parentTypical.getParentNode().getNodeId());
     }
 
-    public SoulissCommand(SoulissCommandDTO dto, SoulissTypical parentTypical) {
-        this(dto);
+    public SoulissCommand(Context context, SoulissCommandDTO dto, SoulissTypical parentTypical) {
+        this(context, dto);
         this.parentTypical = parentTypical;
         if (parentTypical.getParentNode() != null)
             assertEquals(dto.getNodeId(), parentTypical.getParentNode().getNodeId());
 
     }
 
-    public SoulissCommand(SoulissCommandDTO dto) {
+    public SoulissCommand(Context c, SoulissCommandDTO dto) {
         super();
         this.commandDTO = dto;
         // falso se trigger assertEquals(true, dto.getSceneId() != 0);
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
-            SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+            SoulissDBHelper db = new SoulissDBHelper(c);
             targetScene = db.getScene(dto.getSlot());
             commandDTO.setSceneId(null);
         }
@@ -228,8 +230,8 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     public String getName() {
         short typical;
         if (targetScene != null) {
-            return SoulissApp.getAppContext().getString(R.string.execute)
-                    + " " + SoulissApp.getAppContext().getString(R.string.scene)
+            return context.getString(R.string.execute)
+                    + " " + context.getString(R.string.scene)
                     + " " + targetScene.getNiceName();
         } else
             typical = parentTypical.getTypical();
@@ -326,7 +328,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         } else
             resId = R.string.Souliss_emptycmd_desc;
 
-        return SoulissApp.getAppContext().getString(resId);
+        return context.getString(resId);
     }
 
     public void setInterval(int interval) {
@@ -341,7 +343,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     @Override
     public String getNiceName() {
         StringBuilder info = new StringBuilder();
-        Context ctx = SoulissApp.getAppContext();
+        Context ctx = context;
         info.append(ctx.getString(R.string.scene_send_command));
         info.append(" ");
         info.append(getName()).append(" ");

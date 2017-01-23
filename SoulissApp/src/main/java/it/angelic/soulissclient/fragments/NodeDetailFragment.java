@@ -72,6 +72,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
+import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -170,7 +171,7 @@ public class NodeDetailFragment extends ListFragment {
     private void createHeader() {
 
         if (collected.getIconResourceId() != 0)
-            FontAwesomeUtil.prepareFontAweTextView(getActivity(), nodeic, collected.getIconResourceId());
+            FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
 
 
         par.setMax(Constants.MAX_HEALTH);
@@ -442,7 +443,7 @@ public class NodeDetailFragment extends ListFragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-					/*
+                    /*
                      * UDPHelper.healthRequest(opzioni, 1, collected.getNodeId());
 					 * try { Thread.sleep(500); } catch (InterruptedException e)
 					 * { e.printStackTrace(); }

@@ -18,6 +18,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 /**
@@ -83,7 +84,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
         }
         /* Scena vuota */
         if (comandiScena.size() == 0) {
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, "fa-exclamation-circle");
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_exclamation_triangle.getFontName());
             //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
             holder.image.setTextColor(context.getResources().getColor(R.color.aa_yellow));
             holder.textCmd.setText(context.getResources().getString(R.string.scenes_empty));

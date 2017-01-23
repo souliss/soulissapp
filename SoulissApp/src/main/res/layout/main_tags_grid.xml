@@ -52,7 +52,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_add_32dp"/>
+                    android:src="@drawable/ic_add_32dp"
+                    android:transitionName="fab_hero"/>
             </RelativeLayout>
 
         </LinearLayout>

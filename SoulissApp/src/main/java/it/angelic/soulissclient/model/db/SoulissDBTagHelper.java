@@ -12,7 +12,6 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 
@@ -72,7 +71,7 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             // Inserisco e risetto il nome e l'ordine
             ret = (int) database.insert(SoulissDB.TABLE_TAGS, null, values);
             values.put(SoulissDB.COLUMN_TAG_NAME,
-                    SoulissApp.getAppContext().getResources().getString(R.string.tag) + " " + ret);
+                    context.getResources().getString(R.string.tag) + " " + ret);
             values.put(SoulissDB.COLUMN_TAG_ORDER, ret);
             database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + ret, null);
             return ret;

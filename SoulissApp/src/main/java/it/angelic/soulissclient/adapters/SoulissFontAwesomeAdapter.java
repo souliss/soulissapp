@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
-import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 public class SoulissFontAwesomeAdapter extends BaseAdapter {
     int mGalleryItemBackground;
@@ -25,11 +25,12 @@ public class SoulissFontAwesomeAdapter extends BaseAdapter {
 
 
     public int getCount() {
-        return SimpleTagViewUtils.getAwesomeNames(mContext).size();
+        return FontAwesomeEnum.values().length;
     }
 
     public Object getItem(int position) {
-        return SimpleTagViewUtils.getAwesomeNames(mContext).get(position);
+        return FontAwesomeEnum.values()[position];
+        //return SimpleTagViewUtils.getAwesomeNames(mContext).get(position);
     }
 
     public long getItemId(int position) {
@@ -39,7 +40,7 @@ public class SoulissFontAwesomeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView txtAwesome = new TextView(mContext);
         txtAwesome.setTypeface(FontAwesomeUtil.getAwesomeTypeface(mContext));
-        String code = FontAwesomeUtil.translateAwesomeCode(mContext, (String) getItem(position));
+        String code = FontAwesomeUtil.translateAwesomeCode(mContext, ((FontAwesomeEnum) getItem(position)).getFontName());
         //content.setFontAwesomeCode(code);
         txtAwesome.setText(code);
         txtAwesome.setTextSize(96);

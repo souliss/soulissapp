@@ -162,10 +162,10 @@ public class SoulissUtils {
     }
 
 
-    public static void loadSoulissDbFromFile(String config, File importDir) throws IOException {
+    public static void loadSoulissDbFromFile(Context c, String config, File importDir) throws IOException {
 
         File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
-        SoulissDBHelper db = new SoulissDBHelper(SoulissApp.getAppContext());
+        SoulissDBHelper db = new SoulissDBHelper(c);
         SoulissDBHelper.open();
         String DbPath = SoulissDBHelper.getDatabase().getPath();
         db.close();

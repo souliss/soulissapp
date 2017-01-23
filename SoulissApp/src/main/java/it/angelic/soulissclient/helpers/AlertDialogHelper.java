@@ -55,6 +55,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import us.feras.ecogallery.EcoGallery;
 
@@ -586,8 +587,9 @@ public class AlertDialogHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int pos = gallery.getSelectedItemPosition();
+
                         SoulissFontAwesomeAdapter ad = (SoulissFontAwesomeAdapter) gallery.getAdapter();
-                        toRename.setIconResourceId(pos);
+                        toRename.setIconResourceId(FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.values()[pos].getFontName()));
                         if (toRename instanceof SoulissNode) {
                             datasource.createOrUpdateNode((SoulissNode) toRename);
                             if (list != null) {

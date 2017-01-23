@@ -35,6 +35,7 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -83,8 +84,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
         textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
-        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, "fa-moon-o");
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+		FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_moon_o.getFontName());
+		FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 		//  fab.attachToListView(listaScenesView);
 
 		//SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());

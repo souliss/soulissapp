@@ -10,7 +10,7 @@ public class SoulissTrigger extends SoulissCommand {
     private SoulissTriggerDTO triggerDto;
 
     public SoulissTrigger(SoulissCommandDTO dto, SoulissTypical pare) {
-        super(dto, pare);
+        super(pare.getContext(), dto, pare);
         // TODO Auto-generated constructor stub
     }
 

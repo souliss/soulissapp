@@ -20,7 +20,6 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -34,8 +33,9 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
 
     private static final long serialVersionUID = 3784476625112669L;
 
-    public SoulissTypical58PressureSensor(SoulissPreferenceHelper pre) {
-        super(pre);
+
+    public SoulissTypical58PressureSensor(Context ctx, SoulissPreferenceHelper opts) {
+        super(ctx, opts);
     }
 
     @Override
@@ -84,9 +84,9 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
     @Override
     public String getOutputDesc() {
         if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec() * 3))
-            return SoulissApp.getAppContext().getString(R.string.ok);
+            return context.getString(R.string.ok);
         else
-            return SoulissApp.getAppContext().getString(R.string.stale);
+            return context.getString(R.string.stale);
     }
 
     @Override

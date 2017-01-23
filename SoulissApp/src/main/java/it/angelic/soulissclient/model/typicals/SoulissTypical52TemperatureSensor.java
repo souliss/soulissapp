@@ -34,12 +34,15 @@ import it.angelic.soulissclient.util.SoulissUtils;
  */
 public class SoulissTypical52TemperatureSensor extends SoulissTypical implements ISoulissTypicalSensor {
 	//private final DecimalFormat df = new DecimalFormat("###.##");
-	public SoulissTypical52TemperatureSensor(SoulissPreferenceHelper pre) {
-		super(pre);
-	}
 
-	int maxTemp;
+
+    int maxTemp;
 	int minTemp;
+
+    public SoulissTypical52TemperatureSensor(Context context, SoulissPreferenceHelper pre) {
+        super(context, pre);
+    }
+
 	/**
 	 * 
 	 */

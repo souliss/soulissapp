@@ -143,7 +143,7 @@ public class ScenesDialogHelper {
      * @param toRename
      * @return //TODO rivedere parametri
      */
-    public static void removeTagDialog(final Context cont, final ListView ctx, final SoulissDBHelper datasource,
+    public static void removeTagDialog(final Activity cont, final ListView ctx, final SoulissDBHelper datasource,
                                        final SoulissTag toRename, final SoulissPreferenceHelper opts) {
         Log.w(Constants.TAG, "Removing TAG:" + toRename.getNiceName() + " ID:" + toRename.getTagId());
         if (toRename.getTagId() < 2) {
@@ -196,7 +196,7 @@ public class ScenesDialogHelper {
                                                             final SoulissDBHelper datasource, final SoulissScene targetScene, final SoulissPreferenceHelper opzioni) {
         // prendo tipici dal DB
         final List<SoulissNode> allNodes = datasource.getAllNodes();
-        SoulissNode fake = new SoulissNode(Constants.MASSIVE_NODE_ID);// MASSIVO
+        SoulissNode fake = new SoulissNode(context, Constants.MASSIVE_NODE_ID);// MASSIVO
         fake.setName(context.getString(R.string.allnodes));
         fake.setTypicals(datasource.getUniqueTypicals(fake));
         //nodiArray[q] = fake;
@@ -317,7 +317,7 @@ public class ScenesDialogHelper {
             ref.getActiveTypicals().toArray(strArray);
 
             if (strArray.length == 0) {// nodo vuoto
-                SoulissTypical fake = new SoulissTypical(SoulissApp.getOpzioni());
+                SoulissTypical fake = new SoulissTypical(ctx, SoulissApp.getOpzioni());
                 fake.setName(ctx.getString(R.string.node_empty));
                 strArray = new SoulissTypical[1];
                 strArray[0] = fake;

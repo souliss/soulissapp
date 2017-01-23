@@ -47,6 +47,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.LauncherElementEnum;
 import it.angelic.soulissclient.util.SoulissUtils;
@@ -111,13 +112,13 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 TextView txtTit = (TextView) holder.container.findViewById(R.id.card_static_title);
                 TextView txtDesc = (TextView) holder.container.findViewById(R.id.card_static_desc);
                 TextView txtAwesom = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom, "fa-moon-o");
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom, FontAwesomeEnum.fa_moon_o.getFontName());
                 txtTit.setText(item.getTitle());
                 txtDesc.setText(item.getDesc());
                 holder.container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent nodeDatail = new Intent(SoulissApp.getAppContext(), SceneListActivity.class);
+                        Intent nodeDatail = new Intent(context, SceneListActivity.class);
                         context.startActivity(nodeDatail);
                     }
 
@@ -130,13 +131,13 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 TextView txtTit2 = (TextView) holder.container.findViewById(R.id.card_static_title);
                 TextView txtDesc2 = (TextView) holder.container.findViewById(R.id.card_static_desc);
                 TextView txtAwesom2 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom2, "fa-codepen");
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom2, FontAwesomeEnum.fa_codepen.getFontName());
                 txtTit2.setText(item.getTitle());
                 txtDesc2.setText(item.getDesc());
                 holder.container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent nodeDatail = new Intent(SoulissApp.getAppContext(), NodesListActivity.class);
+                        Intent nodeDatail = new Intent(context, NodesListActivity.class);
                         context.startActivity(nodeDatail);
                     }
 
@@ -155,7 +156,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 holder.container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent nodeDatail = new Intent(SoulissApp.getAppContext(), ProgramListActivity.class);
+                        Intent nodeDatail = new Intent(context, ProgramListActivity.class);
                         context.startActivity(nodeDatail);
                     }
 
@@ -174,7 +175,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 holder.container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent nodeDatail = new Intent(SoulissApp.getAppContext(), TagGridActivity.class);
+                        Intent nodeDatail = new Intent(context, TagGridActivity.class);
                         context.startActivity(nodeDatail);
                     }
                 });
@@ -195,21 +196,12 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
                 Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
 
-
                 textViewCommand.setText(nodo.getNiceName());
-
 
                 String strMeatFormat = context.getString(R.string.scene_subtitle);
                 textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
 
-                //textView.setTag(position);
-                // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
-                FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, FontAwesomeUtil.remapIconResId(nodo.getIconResourceId()));
-                //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
-
-
-                //linearActionsLayout.removeAllViews();
-                // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
+                FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
                 exe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -268,7 +260,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
             @Override
             public void onClick(View view) {
                 Log.w(Constants.TAG, "Activating NODE " + nodo.getNiceName());
-                Intent nodeDatail = new Intent(SoulissApp.getAppContext(), NodeDetailActivity.class);
+                Intent nodeDatail = new Intent(context, NodeDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
                 nodeDatail.putExtra("NODO", nodo);
                 context.startActivity(nodeDatail);
@@ -300,7 +292,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
             FontAwesomeUtil.prepareFontAweTextView(context, imageTag, FontAwesomeUtil.remapIconResId(soulissTag.getIconResourceId()));
             imageTag.setVisibility(View.VISIBLE);
         } else {
-            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, "fa-window");
+            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, FontAwesomeEnum.fa_window_maximize.getFontName());
             imageTag.setVisibility(View.INVISIBLE);
         }
         // Here you apply the animation when the view is bound
@@ -310,7 +302,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
             @Override
             public void onClick(View view) {
                 Log.w(Constants.TAG, "Activating TAG " + soulissTag.getNiceName());
-                Intent nodeDatail = new Intent(SoulissApp.getAppContext(), TagDetailActivity.class);
+                Intent nodeDatail = new Intent(context, TagDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
                 nodeDatail.putExtra("TAG", soulissTag.getTagId());
 
@@ -339,7 +331,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
 
         //holder.image.setImageResource(soulissTags[position].getIconResourceId());
         try {
-            File picture = new File(TagDetailFragment.getRealPathFromURI(Uri.parse(soulissTag.getImagePath())));
+            File picture = new File(TagDetailFragment.getRealPathFromURI(context, Uri.parse(soulissTag.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
             if (picture.exists()) {
@@ -354,7 +346,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
 
         } catch (Exception io) {
             Log.i(Constants.TAG, "cant load image " + soulissTag.getImagePath());
-            image.setImageDrawable(ContextCompat.getDrawable(SoulissApp.getAppContext(), R.drawable.home_automation));
+            image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
     }
 
@@ -405,7 +397,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
             @Override
             public void onClick(View view) {
                 Log.w(Constants.TAG, "Activating TYP" + tipico.getNiceName());
-                Intent nodeDatail = new Intent(SoulissApp.getAppContext(), TypicalDetailFragWrapper.class);
+                Intent nodeDatail = new Intent(context, TypicalDetailFragWrapper.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
                 nodeDatail.putExtra("TIPICO", tipico);
                 context.startActivity(nodeDatail);

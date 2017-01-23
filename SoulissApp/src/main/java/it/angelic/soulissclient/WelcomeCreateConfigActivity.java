@@ -69,7 +69,7 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
                                 Log.w(Constants.TAG, "Valid IP inserted " + pars);
                                 SoulissApp.getOpzioni().setIPPreference(initialIp.getText().toString());
                                 //save valid IP to cache
-                                SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(SoulissApp.getAppContext());
+                                SoulissGlobalPreferenceHelper gbPref = new SoulissGlobalPreferenceHelper(WelcomeCreateConfigActivity.this);
                                 gbPref.addWordToIpDictionary(initialIp.getText().toString());
 
                             } catch (final Exception e) {

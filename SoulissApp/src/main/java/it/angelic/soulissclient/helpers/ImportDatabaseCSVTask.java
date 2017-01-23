@@ -374,7 +374,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
     private void insertNode(String[] temp) {
 
-        SoulissNode nit = new SoulissNode(Short.valueOf(temp[1]));
+        SoulissNode nit = new SoulissNode(activity, Short.valueOf(temp[1]));
         nit.setHealth(Short.valueOf(temp[2]));
         try {
             nit.setIconResourceId(Integer.valueOf(temp[3]));
@@ -406,7 +406,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         if (success) {
             String formatStr = activity.getString(R.string.imported_success);
 
-            Toast.makeText(SoulissApp.getAppContext(),
+            Toast.makeText(activity,
                     String.format(formatStr, totNodes, tottyp), Toast.LENGTH_SHORT).show();
             final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
 

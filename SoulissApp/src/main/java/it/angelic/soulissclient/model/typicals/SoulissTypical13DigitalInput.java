@@ -31,8 +31,9 @@ public class SoulissTypical13DigitalInput extends SoulissTypical implements ISou
 
 	// Context ctx;
 
-	public SoulissTypical13DigitalInput(SoulissPreferenceHelper fg) {
-		super(fg);
+
+	public SoulissTypical13DigitalInput(Context ctx, SoulissPreferenceHelper opts) {
+		super(ctx, opts);
 	}
 
 	@Override

@@ -76,12 +76,12 @@ public class SoulissWidgetConfig extends Activity {
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();
         //Aggiungo massivo
-        SoulissNode massive = new SoulissNode(Constants.MASSIVE_NODE_ID);// MASSIVO
+        SoulissNode massive = new SoulissNode(getApplicationContext(), Constants.MASSIVE_NODE_ID);// MASSIVO
         massive.setName(getString(R.string.allnodes));
         massive.setTypicals(datasource.getUniqueTypicals(massive));
         goer.add(massive);
         //AGGIUNGO scene
-        SoulissNode fake = new SoulissNode(Constants.COMMAND_FAKE_SCENE);// MASSIVO
+        SoulissNode fake = new SoulissNode(getApplicationContext(), Constants.COMMAND_FAKE_SCENE);// MASSIVO
         fake.setName(getString(R.string.scenes_title));
         goer.add(fake);
         scenes = datasource.getScenes(this);

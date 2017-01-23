@@ -73,7 +73,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private boolean continueDecrementing;
     private boolean continueIncrementing;
     private ColorPickerView cpv;
-    private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
+    private SoulissDBHelper datasource = new SoulissDBHelper(getActivity());
     // private SoulissTypical related;
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {

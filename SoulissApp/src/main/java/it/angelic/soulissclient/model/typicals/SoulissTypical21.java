@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -23,8 +22,8 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 	private static final long serialVersionUID = 4553652125062232032L;
 
 
-	public SoulissTypical21(SoulissPreferenceHelper fg) {
-		super(fg);
+	public SoulissTypical21(Context ctx, SoulissPreferenceHelper opts) {
+		super(ctx, opts);
 	}
 
 	@Override
@@ -78,13 +77,13 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close)
 			return "CLOSING";
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
-			return SoulissApp.getAppContext().getString(R.string.open);
+			return context.getString(R.string.open);
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Close)
-			return SoulissApp.getAppContext().getString(R.string.close);
+			return context.getString(R.string.close);
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Open)
-			return SoulissApp.getAppContext().getString(R.string.open);
+			return context.getString(R.string.open);
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
-			return SoulissApp.getAppContext().getString(R.string.stop);
+			return context.getString(R.string.stop);
 		else
 			return "UNKNOWN";
 	}

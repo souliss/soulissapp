@@ -1,13 +1,12 @@
 package it.angelic.soulissclient.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,14 +16,15 @@ import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class TagListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
-	private Context context;
+	private Activity context;
 	SoulissTag[] soulissTags;
 	private SoulissPreferenceHelper opzioni;
 
-	public TagListAdapter(Context context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
+	public TagListAdapter(Activity context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
 		this.soulissTags = versio;
@@ -56,7 +56,7 @@ public class TagListAdapter extends BaseAdapter {
 			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
 			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
 			holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-			holder.image = (ImageView) convertView.findViewById(R.id.command_icon);
+			holder.image = (TextView) convertView.findViewById(R.id.command_icon);
 			convertView.setTag(holder);
 		} else {
 			holder = (TagViewHolder) convertView.getTag();
@@ -69,9 +69,8 @@ public class TagListAdapter extends BaseAdapter {
 			holder.textCmd.setTextColor(context.getResources().getColor(color.black));
 			holder.textCmdInfo.setTextColor(context.getResources().getColor(color.black));
 		}
-		holder.image.setImageResource(soulissTags[position].getIconResourceId());
-		holder.image.setColorFilter(context.getResources().getColor(color.aa_green),
-				android.graphics.PorterDuff.Mode.SRC_ATOP);
+
+		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, soulissTags[position].getIconResourceId());
 		List<SoulissTypical> appoggio = holder.data.getAssignedTypicals();
 		// SoulissCommandDTO dto = holder.data.getCommandDTO();
 		// if (name == null || "".compareTo(name) == 0)
@@ -103,7 +102,7 @@ public class TagListAdapter extends BaseAdapter {
 		TextView textCmd;
 		TextView textCmdWhen;
 		TextView textCmdInfo;
-		ImageView image;
+		TextView image;
 		public SoulissTag data;
 	}
 

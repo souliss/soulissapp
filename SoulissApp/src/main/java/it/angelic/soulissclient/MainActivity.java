@@ -42,6 +42,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -159,7 +160,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
         final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
         final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewTagsDescFa);
-        FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, "fa-close");
+        FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
 
         //NASCONDI
         textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {

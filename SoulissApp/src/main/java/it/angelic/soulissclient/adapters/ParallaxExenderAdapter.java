@@ -17,7 +17,6 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -61,16 +60,16 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         ((TypicalCardViewHolder) viewHolder).getTextView().setText(mDataset.get(i).getNiceName());
         ((TypicalCardViewHolder) viewHolder).getTextView().setTag(i);
         mDataset.get(i).setOutputDescView(((TypicalCardViewHolder) viewHolder).getTextViewInfo1());
-        ((TypicalCardViewHolder) viewHolder).getTextViewInfo2().setText(SoulissApp.getAppContext().getString(R.string.update) + " "
+        ((TypicalCardViewHolder) viewHolder).getTextViewInfo2().setText(opzioni.getContx().getString(R.string.update) + " "
                 + SoulissUtils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
         ((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
         LinearLayout sghembo = ((TypicalCardViewHolder) viewHolder).getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()) {
-            ((TypicalCardViewHolder) viewHolder).getCardView().setCardBackgroundColor(SoulissApp.getAppContext().getResources().getColor(R.color.background_floating_material_light));
+            ((TypicalCardViewHolder) viewHolder).getCardView().setCardBackgroundColor(opzioni.getContx().getResources().getColor(R.color.background_floating_material_light));
         }
         //viewHolder.getTextView().setOnClickListener(this);
-        mDataset.get(i).getActionsLayout(SoulissApp.getAppContext(), sghembo);
+        mDataset.get(i).getActionsLayout(opzioni.getContx(), sghembo);
         ((TypicalCardViewHolder) viewHolder).getCardView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

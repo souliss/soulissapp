@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +15,7 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -30,36 +32,36 @@ import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.TagViewHolder> {
-    SoulissTag[] soulissTags;
+    private final FloatingActionButton fab;
+    List<SoulissTag> soulissTags;
     private Activity context;
     // Allows to remember the last item shown on screen
 
     private SoulissPreferenceHelper opzioni;
 
 
-    public TagRecyclerAdapter(Activity context, @NonNull SoulissTag[] versio, SoulissPreferenceHelper opts) {
+    public TagRecyclerAdapter(Activity context, @NonNull List<SoulissTag> versio, SoulissPreferenceHelper opts, FloatingActionButton fab) {
         //  mInflater = LayoutInflater.from(context);
         this.context = context;
         this.soulissTags = versio;
         opzioni = opts;
+        this.fab = fab;
     }
 
     public SoulissTag getTag(int position) {
-        return soulissTags[position];
+        return soulissTags.get(position);
     }
 
-    public SoulissTag[] getTagArray() {
+    public List<SoulissTag> getTagArray() {
         return soulissTags;
     }
 
-    public List<SoulissTag> getTagList() {
-        return Arrays.asList(getTagArray());
-    }
 
-    public void setTagArray(SoulissTag[] scene) {
+    public void setTagArray(List<SoulissTag> scene) {
         this.soulissTags = scene;
     }
 
@@ -80,26 +82,40 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
         try {
-            List<SoulissTypical> appoggio = soulissTags[position].getAssignedTypicals();
+            List<SoulissTypical> appoggio = soulissTags.get(position).getAssignedTypicals();
             quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                     appoggio.size(), appoggio.size());
         } catch (Exception ce) {
             Log.w(Constants.TAG, "TAG Empty? ");
         }
-
-        holder.textCmd.setText(soulissTags[position].getName());
+        holder.fabTag = fab;
+        holder.textCmd.setText(soulissTags.get(position).getName());
         holder.textCmdWhen.setText(quantityString);
-        holder.data = soulissTags[position];
-        if (soulissTags[position].getIconResourceId() != 0) {
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeUtil.remapIconResId(soulissTags[position].getIconResourceId()));
+        holder.data = soulissTags.get(position);
+        if (soulissTags.get(position).getIconResourceId() != 0) {
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, soulissTags.get(position).getIconResourceId());
             // holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, "fa-tag");
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeEnum.fa_tag.getFontName());
             //holder.imageTag.setImageResource(R.drawable.window);//avoid exc
             // holder.imageTag.setVisibility(View.INVISIBLE);
         }
-        holder.imageTag.setTextColor(context.getResources().getColor(R.color.white));
+
+        TypedValue a = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            // windowBackground is a color
+            int color = a.data;
+            holder.imageTag.setTextColor(color);
+        } else {
+            // windowBackground is not a color, probably a drawable
+            Drawable d = context.getResources().getDrawable(a.resourceId);
+            Log.w(Constants.TAG, "not getting window background");
+        }
+
+
+
         // Here you apply the animation when the view is bound
         //setAnimation(holder.container, position);
 
@@ -109,7 +125,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                 Log.w(Constants.TAG, "Activating TAG " + position);
                 Intent nodeDatail = new Intent(context, TagDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                nodeDatail.putExtra("TAG", soulissTags[position].getTagId());
+                nodeDatail.putExtra("TAG", soulissTags.get(position).getTagId());
 
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
@@ -117,7 +133,8 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                                 //"photo_hero"    // The transitionName of the view we’re transitioning to
                                 Pair.create((View) holder.image, "photo_hero"),
                                 Pair.create((View) holder.shadowbar, "shadow_hero"),
-                                Pair.create((View) holder.imageTag, "tag_hero")
+                                Pair.create((View) holder.imageTag, "tag_hero"),
+                                Pair.create((View) holder.fabTag, "fab_hero")
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
@@ -137,7 +154,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
 
         //holder.image.setImageResource(soulissTags[position].getIconResourceId());
         try {
-            File picture = new File(TagDetailFragment.getRealPathFromURI(Uri.parse(holder.data.getImagePath())));
+            File picture = new File(TagDetailFragment.getRealPathFromURI(context, Uri.parse(holder.data.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
             if (picture.exists()) {
@@ -157,12 +174,12 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     }
     @Override
     public long getItemId(int position) {
-        return soulissTags[position].getTagId();
+        return soulissTags.get(position).getTagId();
     }
 
     @Override
     public int getItemCount() {
-        return soulissTags.length;
+        return soulissTags.size();
     }
 
     /**
@@ -187,6 +204,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         TextView textCmdWhen;
         ImageView image;
         public ImageView shadowbar;
+        public FloatingActionButton fabTag;
 
         public TagViewHolder(View itemView) {
             super(itemView);

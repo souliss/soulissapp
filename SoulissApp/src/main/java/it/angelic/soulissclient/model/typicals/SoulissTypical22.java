@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissTypical;
@@ -26,20 +25,22 @@ public class SoulissTypical22 extends SoulissTypical implements ISoulissTypical 
 	private static final long serialVersionUID = -1116356816188011036L;
 	Context ctx;
 
-	public SoulissTypical22(SoulissPreferenceHelper fg) {
-		super(fg);
+
+	public SoulissTypical22(Context ctx, SoulissPreferenceHelper opts) {
+
+		super(ctx, opts);
 	}
 
 	@Override
 	public String getOutputDesc() {
 		if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Close
 				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Close)
-			return SoulissApp.getAppContext().getString(R.string.close).toUpperCase();
+			return context.getString(R.string.close).toUpperCase();
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Open
 				|| typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_LimSwitch_Open)
-			return SoulissApp.getAppContext().getString(R.string.open).toUpperCase();
+			return context.getString(R.string.open).toUpperCase();
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
-			return SoulissApp.getAppContext().getString(R.string.stop).toUpperCase();
+			return context.getString(R.string.stop).toUpperCase();
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_NoLimSwitch)
 			return "MIDDLE";
 		else
