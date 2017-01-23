@@ -92,22 +92,21 @@ public class ProgramListAdapter extends BaseAdapter {
             //don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_clock_o.getFontName());
-            holder.image.setTextColor(ContextCompat.getColor(context, color.std_blue_shadow));
+            holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_100));
+            holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_100));
             holder.textCmdWhen
                     .setText(context.getString(R.string.execute_at) + " " + Constants.hourFormat.format(holder.data.getScheduledTime().getTime()));
             if (holder.data.getInterval() > 0) {
                 String strMeatFormat = context.getString(R.string.programs_every);
                 holder.textCmdInfo.setText(String.format(strMeatFormat, holder.data.getInterval()));
             } else {
-
-
                 holder.textCmdInfo.setText(context.getString(R.string.programs_recursive));
             }
 
         }/* programma POSIZIONALE */ else if (holder.data.getType() == Constants.COMMAND_COMEBACK_CODE
                 || holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
-            holder.image.setTextColor(ContextCompat.getColor(context, color.std_blue_shadow));
+
             if (holder.data.getExecutedTime() != null) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
                         + " " + Constants.hourFormat.format(holder.data.getExecutedTime().getTime()));
@@ -117,9 +116,13 @@ public class ProgramListAdapter extends BaseAdapter {
             if (holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_leave));
                 FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_sign_out.getFontName());
+                holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_400));
+                holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_400));
             } else {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_come));
                 FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_sign_in.getFontName());
+                holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_500));
+                holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_500));
             }
             /* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
@@ -129,8 +132,8 @@ public class ProgramListAdapter extends BaseAdapter {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_puzzle_piece.getFontName());
             //rosso
-            holder.image.setTextColor(ContextCompat.getColor(context, color.std_red_shadow));
-            holder.line.setBackgroundColor(ContextCompat.getColor(context, color.std_red_shadow));
+            holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_900));
+            holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_900));
             SoulissTriggerDTO intrig = triggers.get((int) holder.data.getCommandId());
 			/* Dimensioni del testo settate dalle opzioni */
             holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());

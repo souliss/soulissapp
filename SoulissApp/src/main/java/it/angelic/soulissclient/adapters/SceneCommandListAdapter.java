@@ -96,7 +96,8 @@ public class SceneCommandListAdapter extends BaseAdapter {
         else if (holder.data.getType() == Constants.COMMAND_SINGLE) {
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResId());
             //holder.image.setImageResource(holder.data.getIconResId());
-            holder.image.setTextColor(context.getResources().getColor(R.color.aa_yellow));
+            holder.image.setTextColor(context.getResources().getColor(R.color.md_yellow_600));
+            holder.tileLie.setBackgroundColor(ContextCompat.getColor(context, R.color.md_yellow_600));
             SoulissTypical appoggio = holder.data.getParentTypical();
 
             holder.textCmd.setText(holder.data.getName());
@@ -107,9 +108,9 @@ public class SceneCommandListAdapter extends BaseAdapter {
         } else {
             RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
             //don.setBackgroundResource(R.drawable.list_rect_purple);
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeUtil.remapIconResId(holder.data.getIconResId()));
-            holder.tileLie.setBackgroundColor(ContextCompat.getColor(context, R.color.std_purple));
-            holder.image.setTextColor(context.getResources().getColor(R.color.std_purple_shadow));
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_arrows_alt.getFontName());
+            holder.tileLie.setBackgroundColor(ContextCompat.getColor(context, R.color.md_yellow_900));
+            holder.image.setTextColor(context.getResources().getColor(R.color.md_yellow_900));
             //holder.image.setImageResource(holder.data.getIconResId());
             //holder.image.setColorFilter(context.getResources().getColor(R.color.aa_violet),
             //        android.graphics.PorterDuff.Mode.SRC_ATOP);

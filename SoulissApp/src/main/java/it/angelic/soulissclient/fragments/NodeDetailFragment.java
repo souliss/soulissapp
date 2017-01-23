@@ -156,7 +156,7 @@ public class NodeDetailFragment extends ListFragment {
         args.putInt("index", index);
         // Ci metto il nodo dentro
         if (content != null) {
-            args.putSerializable("NODO", content);
+            args.putSerializable("NODO", content.getNodeId());
         }
         f.setArguments(args);
 
@@ -245,20 +245,21 @@ public class NodeDetailFragment extends ListFragment {
             return;
         Bundle extras = getActivity().getIntent().getExtras();
         // recuper nodo da extra
+        Integer colId = 0;
         if (extras != null && extras.get("NODO") != null)
-            collected = (SoulissNode) extras.get("NODO");
+            colId = extras.getInt("NODO");
         else if (getArguments() != null) {
-            collected = (SoulissNode) getArguments().get("NODO");
-        } else {
-            try {
-                // TODO remove this branch
-                Log.w(Constants.TAG, "Attempting emergency load");
-                collected = datasource.getSoulissNode(getShownIndex());
-            } catch (Exception e) {
-                Log.e(Constants.TAG, "Error retriving node:" + e.getMessage());
-                return;
-            }
+            colId = getArguments().getInt("NODO");
         }
+
+        try {
+            Log.w(Constants.TAG, "DB load node id" + colId);
+            collected = datasource.getSoulissNode(colId);
+        } catch (Exception e) {
+            Log.e(Constants.TAG, "Error retriving node:" + e.getMessage());
+            return;
+        }
+
 
         assertTrue("NODO NULLO", collected != null);
         getActivity().setTitle(collected.getNiceName());
@@ -271,7 +272,7 @@ public class NodeDetailFragment extends ListFragment {
         nodeic = (TextView) getActivity().findViewById(R.id.node_icon);
         // Icona, puo esser nullo dopo rotazione schermo
         if (nodeic != null) {
-            FontAwesomeUtil.prepareFontAweTextView(getActivity(), nodeic, collected.getIconResourceId());
+            FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
             createHeader();
             registerForContextMenu(listaTypicalsView);
         } else

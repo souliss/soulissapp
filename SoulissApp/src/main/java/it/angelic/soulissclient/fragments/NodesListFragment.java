@@ -233,7 +233,7 @@ public class NodesListFragment extends ListFragment {
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), NodeDetailActivity.class);
 			intent.putExtra("index", index);
-			intent.putExtra("NODO", data);
+			intent.putExtra("NODO", data.getNodeId());
 			startActivity(intent);
 			if (opzioni.isAnimationsEnabled())
 				getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

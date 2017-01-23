@@ -23,6 +23,11 @@
         android:background="@android:color/transparent"
         android:focusable="false">
 
+        <View
+            android:id="@+id/StaticTileLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@color/md_purple_100"/>
         <ImageView
             android:id="@+id/imageViewTag"
             android:layout_width="fill_parent"

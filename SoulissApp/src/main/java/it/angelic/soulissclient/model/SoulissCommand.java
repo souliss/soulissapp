@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
 import it.angelic.soulissclient.model.db.SoulissCommandDTO;
@@ -18,6 +19,7 @@ import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 /**
  * Il comando e` nato per riflettere qualcosa da inviare
@@ -41,6 +43,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     public SoulissCommand(SoulissTypical parentTypical) {
         super();
         this.context = parentTypical.getContext();
+        assertNotNull(context);
         this.commandDTO = new SoulissCommandDTO();
         commandDTO.setSlot(parentTypical.getTypicalDTO().getSlot());
         commandDTO.setNodeId(parentTypical.getParentNode().getNodeId());
@@ -52,13 +55,15 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     public SoulissCommand(Context context, SoulissCommandDTO dto, SoulissTypical parentTypical) {
         this(context, dto);
         this.parentTypical = parentTypical;
-        if (parentTypical.getParentNode() != null)
+        if (parentTypical.getParentNode() != null) {
             assertEquals(dto.getNodeId(), parentTypical.getParentNode().getNodeId());
-
+        }
     }
 
     public SoulissCommand(Context c, SoulissCommandDTO dto) {
         super();
+        context = c;
+        assertNotNull(context);
         this.commandDTO = dto;
         // falso se trigger assertEquals(true, dto.getSceneId() != 0);
         if (dto.getNodeId() == it.angelic.soulissclient.Constants.COMMAND_FAKE_SCENE) {
@@ -315,7 +320,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         } else
             resId = R.string.Souliss_emptycmd_desc;
 
-        return context.getString(resId);
+        return SoulissApp.getAppContext().getString(resId);
     }
 
     public void setInterval(int interval) {
@@ -331,7 +336,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     public String getNiceName() {
         StringBuilder info = new StringBuilder();
         Context ctx = context;
-        info.append(ctx.getString(R.string.scene_send_command));
+        info.append(SoulissApp.getAppContext().getString(R.string.scene_send_command));
         info.append(" ");
         info.append(getName()).append(" ");
         if (getParentTypical() != null) {

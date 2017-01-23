@@ -62,7 +62,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
 			Intent intent = new Intent();
 			intent.setClass(mActivity, NodeDetailActivity.class);
 			intent.putExtra("index", id);
-			intent.putExtra("NODO", db.getSoulissNode(id));
+			intent.putExtra("NODO", id);
 			mActivity.startActivity(intent);
 			return;
 		} else {

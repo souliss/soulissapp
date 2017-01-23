@@ -96,6 +96,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="10dp"
+                        app:backgroundTint="@color/md_purple_200"
                         android:src="@drawable/ic_mode_edit_24dp"
                         android:transitionName="fab_hero"
                         fab:fabSize="mini"/>

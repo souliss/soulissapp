@@ -188,8 +188,8 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 			return true;
 		case R.id.scegliconaScena:
 			SoulissScene convertView = (SoulissScene) listaScenesView.getItemAtPosition(item.getOrder());
-            AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, textAwesomeUpperRight, listaScenesView, datasource,
-                    todoItem);
+			AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, null, listaScenesView, datasource,
+					todoItem);
 			alert2.show();
 			// nodesAdapter.notifyDataSetChanged();
 			// listaNodiView.invalidateViews();

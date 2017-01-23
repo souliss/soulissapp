@@ -42,6 +42,10 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
         return commandArray;
     }
 
+    public int getSceneId() {
+        return getId();
+    }
+
     public void setCommandArray(ArrayList<SoulissCommand> commandArray) {
         this.commandArray = commandArray;
     }

@@ -262,7 +262,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 Log.w(Constants.TAG, "Activating NODE " + nodo.getNiceName());
                 Intent nodeDatail = new Intent(context, NodeDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                nodeDatail.putExtra("NODO", nodo);
+                nodeDatail.putExtra("NODO", nodo.getNodeId());
                 context.startActivity(nodeDatail);
             }
 

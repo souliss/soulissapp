@@ -74,6 +74,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_detailwrapper);
+        database = new SoulissDBHelper(this);
         // recuper nodo da extra
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // If the screen is now in landscape mode, we can show the
@@ -85,7 +86,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("NODO") != null) {
-            collected = (SoulissNode) extras.get("NODO");
+            collected = database.getSoulissNode(extras.getInt("NODO"));
             initDrawer(NodeDetailActivity.this, collected.getNodeId());
             setActionBarInfo(collected.getNiceName());
         }
@@ -159,7 +160,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onStart() {
         setActionBarInfo(collected == null ? getString(R.string.scenes_title) : collected.getNiceName());
-        database = new SoulissDBHelper(this);
+
         super.onStart();
         mDrawermAdapter = new NavDrawerAdapter(NodeDetailActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
         mDrawerList.setAdapter(mDrawermAdapter);

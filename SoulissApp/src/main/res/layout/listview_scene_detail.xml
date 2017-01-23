@@ -30,10 +30,10 @@
             <TextView
                 android:id="@+id/command_icon"
                 android:layout_width="80dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/souliss_app_name"
                 android:gravity="center"
-                android:layout_margin="4dp"
+                android:layout_centerVertical="true"
                 android:padding="2dp"/>
 
             <TextView

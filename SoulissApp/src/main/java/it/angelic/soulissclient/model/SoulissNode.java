@@ -26,7 +26,7 @@ public class SoulissNode implements Serializable, ISoulissNode {
     private transient Context context;
     private short health;
     /* Icon resource ID */
-    private int iconId = R.drawable.square;
+    private int iconId;
     private short id;
     private String name;
     private Calendar refreshedAt;
