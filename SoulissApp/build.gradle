@@ -1,16 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('localsignature.properties').newDataInputStream())
-    def storeFileDir = properties.getProperty('storeFile')
-
-    signingConfigs {
-        config {
-            storeFile file(storeFileDir)
+    try {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('localsignature.properties').newDataInputStream())
+        def storeFileDir = properties.getProperty('storeFile')
+        signingConfigs {
+            config {
+                storeFile file(storeFileDir)
+            }
         }
+    } catch (Exception e) {
+        println 'localScope2NotAvailable'
     }
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.global_buildToolsVersion
 
