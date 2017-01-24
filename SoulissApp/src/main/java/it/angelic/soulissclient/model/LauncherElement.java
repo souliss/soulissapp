@@ -66,7 +66,7 @@ public class LauncherElement implements ILauncherTile, Serializable {
         return id;
     }
 
-    //fa il DB
+    //fa il DB (autoincrement)
     public void setId(@NonNull Long id) {
         this.id = id;
     }

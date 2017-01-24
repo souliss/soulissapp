@@ -245,11 +245,11 @@ public class NodeDetailFragment extends ListFragment {
             return;
         Bundle extras = getActivity().getIntent().getExtras();
         // recuper nodo da extra
-        Integer colId = 0;
+        Short colId = 0;
         if (extras != null && extras.get("NODO") != null)
-            colId = extras.getInt("NODO");
+            colId = extras.getShort("NODO");
         else if (getArguments() != null) {
-            colId = getArguments().getInt("NODO");
+            colId = getArguments().getShort("NODO");
         }
 
         try {
@@ -276,7 +276,7 @@ public class NodeDetailFragment extends ListFragment {
             createHeader();
             registerForContextMenu(listaTypicalsView);
         } else
-            Log.e(Constants.TAG, "porcatroia");
+            Log.e(Constants.TAG, "icona nulla? impossible...");
 
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

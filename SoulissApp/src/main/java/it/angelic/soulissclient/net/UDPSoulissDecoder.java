@@ -272,7 +272,7 @@ public class UDPSoulissDecoder {
         if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
             opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
             editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
-            Log.w(Constants.Net.TAG, "decodePing Set cached address: " + opzioni.getIPPreferencePublic());
+            Log.w(Constants.Net.TAG, "decodePing Set cached address (PUBLIC): " + opzioni.getIPPreferencePublic());
         } else if (putIn == 0xF) {// PRIVATO
             opzioni.setCachedAddr(opzioni.getPrefIPAddress());
             editor.putString("cachedAddress", opzioni.getPrefIPAddress());
