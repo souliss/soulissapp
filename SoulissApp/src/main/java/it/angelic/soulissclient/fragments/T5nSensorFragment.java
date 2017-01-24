@@ -11,7 +11,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -23,15 +22,17 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
+import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
 
     private SoulissDBHelper datasource;
-    private ImageView icon;
+    private TextView icon;
     private TextView nodeinfo;
     private ProgressBar par;
     private TextView upda;
@@ -90,7 +91,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         }
         View ret = inflater.inflate(R.layout.frag_t5n_sensordetail, container, false);
         nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
-        icon = (ImageView) ret.findViewById(R.id.typ_icon);
+        icon = (TextView) ret.findViewById(R.id.typ_icon);
         upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
         par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
@@ -139,7 +140,9 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         upda.setText(getResources().getString(R.string.update) + " "
                 + SoulissUtils.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
 
-        icon.setImageResource(collected.getIconResourceId());
+
+        if (collected.getIconResourceId() != 0)
+            FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), icon, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
 
         return ret;
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                            xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            xmlns:tools="http://schemas.android.com/tools"
                                             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
@@ -19,15 +19,14 @@
             android:background="@android:color/transparent"
             android:padding="4dp">
 
-            <ImageView
+            <TextView
                 android:id="@+id/typ_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="2dip"
-                android:contentDescription="@string/souliss_app_name"
-                android:src="@drawable/soulisslogo"/>
+                android:contentDescription="@string/souliss_app_name"/>
 
             <TextView
                 android:id="@+id/TextViewTypNodeInfo"
@@ -71,63 +70,64 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:layout_toLeftOf="@id/typ_icon"
                 android:layout_toRightOf="@id/TextViewHealth"/>
-        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/textviewSetpointDiv"
-            android:layout_width="wrap_content"
-            android:layout_below="@id/RelativeLayoutNodeDetail"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="@string/setpoint"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textIsSelectable="false"/>
-        <RelativeLayout
-            android:id="@+id/relativeLayoutPicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textviewSetpointDiv"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp">
 
-            <it.angelic.soulissclient.views.NumberPickerT6
-                android:id="@+id/tempSliderPicker"
+            <TextView
+                android:id="@+id/textviewSetpointDiv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progressBarTypNodo"
+                android:layout_marginLeft="5dip"
+                android:text="@string/setpoint"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false"/>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="4dp"
-                android:layout_weight="1"/>
+                android:layout_below="@id/textviewSetpointDiv"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/editTextIncrementCont"
-                android:layout_width="match_parent"
-                android:layout_below="@id/tempSliderPicker"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/editTextIncrement"
+                <it.angelic.soulissclient.views.NumberPickerT6
+                    android:id="@+id/tempSliderPicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="increment"
-                    android:inputType="numberDecimal"/>
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"/>
 
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/editTextIncrementCont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tempSliderPicker">
+
+                    <EditText
+                        android:id="@+id/editTextIncrement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="increment"
+                        android:inputType="numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/hvacChart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relativeLayoutPicker"
+                tools:layout="@layout/frag_t5n_sensordetail"/>
+
+            <it.angelic.tagviewlib.SimpleTagRelativeLayout
+                android:id="@+id/tag_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/hvacChart"
+                android:layout_margin="2dp"/>
         </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/hvacChart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/relativeLayoutPicker"
-            tools:layout="@layout/frag_t5n_sensordetail"/>
-
-        <it.angelic.tagviewlib.SimpleTagRelativeLayout
-            android:id="@+id/tag_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/hvacChart"
-            android:layout_margin="2dp"/>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
