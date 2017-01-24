@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +19,7 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 /**
@@ -27,7 +27,7 @@ import it.angelic.soulissclient.util.SoulissUtils;
  * Created by Ale on 08/03/2015.
  */
 public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final TagDetailActivity tadDetailActivity;
+    private final TagDetailActivity context;
     protected List<SoulissTypical> mDataset;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -37,7 +37,7 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mDataset = data;
         this.tagId = tagId;
         opzioni = pref;
-        tadDetailActivity = father;
+        context = father;
     }
 
     @Override
@@ -62,7 +62,9 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mDataset.get(i).setOutputDescView(((TypicalCardViewHolder) viewHolder).getTextViewInfo1());
         ((TypicalCardViewHolder) viewHolder).getTextViewInfo2().setText(opzioni.getContx().getString(R.string.update) + " "
                 + SoulissUtils.getTimeAgo(mDataset.get(i).getTypicalDTO().getRefreshedAt()));
-        ((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
+        /* Icona del nodo */
+        FontAwesomeUtil.prepareFontAweTextView(context, ((TypicalCardViewHolder) viewHolder).getImageView(), mDataset.get(i).getIconResourceId());
+        //((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
         LinearLayout sghembo = ((TypicalCardViewHolder) viewHolder).getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()) {
@@ -74,7 +76,7 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             @Override
             public void onClick(View view) {
                 Log.w(Constants.TAG, "OnClick");
-                tadDetailActivity.showDetails(i);
+                context.showDetails(i);
             }
         });
         /* Dario dice di togliere...
@@ -123,13 +125,13 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
-        private ImageView imageView;
+        private TextView imageView;
         private LinearLayout linearActionsLayout;
 
         public TypicalCardViewHolder(View v) {
             super(v);
             textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
-            imageView = (ImageView) v.findViewById(R.id.card_thumbnail_image2);
+            imageView = (TextView) v.findViewById(R.id.card_thumbnail_image2);
             linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
             textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
             textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
@@ -141,7 +143,7 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return cardView;
         }
 
-        public ImageView getImageView() {
+        public TextView getImageView() {
             return imageView;
         }
 

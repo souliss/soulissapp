@@ -107,7 +107,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
             // windowBackground is a color
             int color = a.data;
-            holder.imageTag.setTextColor(color);
+            holder.imageTag.setTextColor(ContextCompat.getColor(context, android.R.color.transparent));
         } else {
             // windowBackground is not a color, probably a drawable
             Drawable d = context.getResources().getDrawable(a.resourceId);

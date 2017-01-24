@@ -135,7 +135,7 @@ public class NodesListAdapter extends BaseAdapter {
 			holder.textHlt.setTextColor(ContextCompat.getColor(context, R.color.black));
 		}
 		/* Icona del nodo */
-        FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
+		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
 
 		if (opzioni.getTextFx()) {
 			Animation a2 = AnimationUtils.loadAnimation(context, R.anim.alpha);

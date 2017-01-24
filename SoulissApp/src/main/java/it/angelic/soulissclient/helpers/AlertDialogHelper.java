@@ -57,6 +57,7 @@ import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.tagviewlib.SimpleTagViewUtils;
 import us.feras.ecogallery.EcoGallery;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -563,7 +564,7 @@ public class AlertDialogHelper {
      * @param iconImageView
      * @param list
      * @param datasource
-     * @param toRename   puo essere nodo o Scenario
+     * @param toRename      puo essere nodo o Scenario
      * @return
      */
     public static AlertDialog.Builder chooseIconDialog(final Activity context, @Nullable final TextView iconImageView, final ListView list,
@@ -833,6 +834,7 @@ public class AlertDialogHelper {
                             long newId = datasource.createOrUpdateTag(null);
                             it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
+                            SimpleTagViewUtils.getAwesomeNames(context).indexOf(FontAwesomeEnum.fa_tv.getFontName());
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
                             datasource.createOrUpdateTag(it);

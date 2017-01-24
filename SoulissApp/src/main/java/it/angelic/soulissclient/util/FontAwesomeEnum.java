@@ -1,7 +1,9 @@
 package it.angelic.soulissclient.util;
 
 /**
- * Created by shine@angelic.it on 22/01/2017.
+ * Created by asphodelique@gmail.com on 22/01/2017.
+ * <p>
+ * Icon selection from font-awesome to be used in open-source home automation
  */
 
 public enum FontAwesomeEnum {
