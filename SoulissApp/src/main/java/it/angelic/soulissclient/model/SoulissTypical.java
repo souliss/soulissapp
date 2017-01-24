@@ -155,69 +155,69 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         if (typicalDTO.getIconId() != 0)
             return typicalDTO.getIconId();
         if (typical == Constants.Typicals.Souliss_T11)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.light_on));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_lightbulb_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T12)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.button1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_lightbulb_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T1A)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.light_on));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_lightbulb_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T13)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.light_on));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_lightbulb_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T14)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.locked1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_lock.getFontName());
         else if (typical == Constants.Typicals.Souliss_T16)
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_sliders.getFontName());
         else if (typical == Constants.Typicals.Souliss_T18)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.power));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_power_off.getFontName());
         else if (typical == Constants.Typicals.Souliss_T19)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.candle1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_signal.getFontName());
         else if (typical == Constants.Typicals.Souliss_T21)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.limit1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_codepen.getFontName());
         else if (typical == Constants.Typicals.Souliss_T22)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.limit1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_codepen.getFontName());
         else if (typical == Constants.Typicals.Souliss_T31)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.thermometer));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_thermometer_half.getFontName());
         else if (typical == Constants.Typicals.Souliss_T41_Antitheft_Main)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.shield1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_shield.getFontName());
         else if (typical == Constants.Typicals.Souliss_T42_Antitheft_Peer || typical == Constants.Typicals.Souliss_T43_Antitheft_LocalPeer)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.shield1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_shield.getFontName());
         else if (typical == Constants.Typicals.Souliss_T_related)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.empty));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_angle_double_up.getFontName());
         else if (typical == Constants.Typicals.Souliss_T32_IrCom_AirCon)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.snow1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_snowflake_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T15_RGB)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.remote));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_wifi.getFontName());
         else if (typical == Constants.Typicals.Souliss_T51)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.analog1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_line_chart.getFontName());
         else if (typical == Constants.Typicals.Souliss_T52_TemperatureSensor)
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_thermometer_half.getFontName());
         else if (typical == Constants.Typicals.Souliss_T53_HumiditySensor)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.raindrop));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tint.getFontName());
         else if (typical == Constants.Typicals.Souliss_T54_LuxSensor)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.sun));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_sun_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T55_VoltageSensor)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.lightning1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_flash.getFontName());
         else if (typical == Constants.Typicals.Souliss_T56_CurrentSensor)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.lightning1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_flash.getFontName());
         else if (typical == Constants.Typicals.Souliss_T57_PowerSensor)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.lightning1));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_flash.getFontName());
         else if (typical == Constants.Typicals.Souliss_T58_PressureSensor)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.sun));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_compress.getFontName());
         else if (typical == Constants.Typicals.Souliss_T61)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.setpoint));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_level_up.getFontName());
         else if (typical == Constants.Typicals.Souliss_T62)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.thermometer));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_thermometer_half.getFontName());
         else if (typical == Constants.Typicals.Souliss_T63)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.raindrop));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tint.getFontName());
         else if (typical == Constants.Typicals.Souliss_T64)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.sun));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_sun_o.getFontName());
         else if (typical == Constants.Typicals.Souliss_T65)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.plug));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_plug.getFontName());
         else if (typical == Constants.Typicals.Souliss_T66)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.plug));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_plug.getFontName());
         else if (typical == Constants.Typicals.Souliss_T67)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.plug));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_plug.getFontName());
         else
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeUtil.remapIconResId(R.drawable.empty_narrow));
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_microchip.getFontName());
     }
 
     @Override

@@ -12,6 +12,11 @@ import android.widget.TextView;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
+import static it.angelic.soulissclient.drawer.DrawerMenuHelper.MANUAL;
+import static it.angelic.soulissclient.drawer.DrawerMenuHelper.PROGRAMS;
+import static it.angelic.soulissclient.drawer.DrawerMenuHelper.SCENES;
+import static it.angelic.soulissclient.drawer.DrawerMenuHelper.TAGS;
+
 public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
     private final int activeSection;
@@ -24,20 +29,6 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         this.inflater = LayoutInflater.from(context);
         this.activeSection = mode;
         this.context = context;
-    }
-
-    @Override
-    public
-    @NonNull
-    View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        View view = null;
-        INavDrawerItem menuItem = this.getItem(position);
-        if (menuItem.getType() == NavMenuItem.ITEM_TYPE) {
-            view = getItemView(parent, menuItem);
-        } else {
-            view = getSectionView(convertView, parent, menuItem);
-        }
-        return view;
     }
 
     public View getItemView(ViewGroup parentView, INavDrawerItem navDrawerItem) {
@@ -72,9 +63,29 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
         //  }
 
         navMenuItemHolder.labelView.setText(menuItem.getLabel());
+
+        switch (navDrawerItem.getId()) {
+            case SCENES:
+                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_yellow_50));
+                break;
+            case PROGRAMS:
+                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_light_blue_50));
+                break;
+            case MANUAL:
+                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_green_50));
+                break;
+            case TAGS:
+                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_purple_50));
+                break;
+        }
         FontAwesomeUtil.prepareMenuFontAweTextView(context, navMenuItemHolder.iconView, menuItem.getIcon());
 
         return convertView;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return this.getItem(position).getType();
     }
 
     public View getSectionView(View convertView, ViewGroup parentView,
@@ -103,13 +114,22 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return 2;
+    public
+    @NonNull
+    View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        View view = null;
+        INavDrawerItem menuItem = this.getItem(position);
+        if (menuItem.getType() == NavMenuItem.ITEM_TYPE) {
+            view = getItemView(parent, menuItem);
+        } else {
+            view = getSectionView(convertView, parent, menuItem);
+        }
+        return view;
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return this.getItem(position).getType();
+    public int getViewTypeCount() {
+        return 2;
     }
 
     @Override
@@ -119,8 +139,8 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
 
     private static class NavMenuItemHolder {
-        private TextView labelView;
         private TextView iconView;
+        private TextView labelView;
     }
 
     private static class NavMenuSectionHolder {

@@ -86,6 +86,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
      * @return
      * @author asfodel
      */
+    @Deprecated
     public static String remapIconResId(int oldResId) {
         switch (oldResId) {
             case R.drawable.fan:

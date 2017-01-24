@@ -250,7 +250,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         //textView.setTag(position);
         textViewInfo2.setText(context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()) + context.getString(R.string.health) + nodo.getHealthPercent());
         // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
-        FontAwesomeUtil.prepareFontAweTextView(context, imageView, FontAwesomeUtil.remapIconResId(nodo.getIconResourceId()));
+        FontAwesomeUtil.prepareFontAweTextView(context, imageView, nodo.getIconResourceId());
         //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
 
 
@@ -289,7 +289,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         textCmd.setText(soulissTag.getName());
         textCmdWhen.setText(quantityString);
         if (soulissTag.getIconResourceId() != 0) {
-            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, FontAwesomeUtil.remapIconResId(soulissTag.getIconResourceId()));
+            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, soulissTag.getIconResourceId());
             imageTag.setVisibility(View.VISIBLE);
         } else {
             FontAwesomeUtil.prepareFontAweTextView(context, imageTag, FontAwesomeEnum.fa_window_maximize.getFontName());
@@ -365,7 +365,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         tipico.setOutputDescView(textViewInfo1);
         textViewInfo2.setText(SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
         // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
-        FontAwesomeUtil.prepareFontAweTextView(context, imageView, FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
+        FontAwesomeUtil.prepareFontAweTextView(context, imageView, tipico.getIconResourceId());
         linearActionsLayout.removeAllViews();
         //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
 

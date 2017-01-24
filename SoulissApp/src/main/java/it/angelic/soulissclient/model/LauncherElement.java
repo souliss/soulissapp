@@ -38,7 +38,11 @@ public class LauncherElement implements ILauncherTile, Serializable {
 
         LauncherElement that = (LauncherElement) o;
 
-        return id.equals(that.id);
+        if (id != null && that.id != null)
+            return id.equals(that.id);
+
+        return getComponentEnum().equals(((LauncherElement) o).getComponentEnum());
+
 
     }
 

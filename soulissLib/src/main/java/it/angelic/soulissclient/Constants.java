@@ -48,6 +48,7 @@ public class Constants {
     public static final int MY_PERMISSIONS_RECORD_AUDIO = 17;
     public static final int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 18;
     public static final int MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 19;
+    public static final int MY_PERMISSIONS_READ_EXT_STORAGE = 56;//by asfodel
 
     //public static SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMdd");
     public static final long POSITION_UPDATE_INTERVAL = 10 * 1000;//5 seconds
@@ -80,6 +81,7 @@ public class Constants {
     private static final int[][] DIGITS = {
             {}, {0}, {0, 0}, {0, 0, 0}, {0, 1}, {1},
             {1, 0}, {1, 0, 0}, {1, 0, 0, 0}, {0, 2}};
+
     public static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
     public static DecimalFormat gpsDecimalFormat = new DecimalFormat("#.######");
     public static final int POSITION_DEADZONE_METERS = 27;

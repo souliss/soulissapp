@@ -9,7 +9,6 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
-import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 public class DrawerMenuHelper {
@@ -40,7 +39,7 @@ public class DrawerMenuHelper {
             NavMenuItem item2 = new NavMenuItem();
             item2.setId(object.getNodeId());
             item2.setLabel(object.getNiceName());
-            item2.setIcon(FontAwesomeUtil.remapIconResId(object.getIconResourceId()));
+            item2.setIcon("" + object.getIconResourceId());
             item2.setUpdateActionBarTitle(false);
             tmp.add(item2);
         }
@@ -58,7 +57,7 @@ public class DrawerMenuHelper {
         tmp.add(it);
 
         //if (apartFromMe != SCENE){
-        NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), FontAwesomeUtil.remapIconResId(R.drawable.moon),
+        NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), FontAwesomeEnum.fa_moon_o.getFontName(),
                 false, ctx);
         tmp.add(scenes);
         //	}

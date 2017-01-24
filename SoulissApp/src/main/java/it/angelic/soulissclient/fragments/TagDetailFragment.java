@@ -16,11 +16,13 @@
 
 package it.angelic.soulissclient.fragments;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,6 +35,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -327,29 +330,33 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
         if (collectedTag != null && collectedTag.getImagePath() != null) {
 
-            File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
+                // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+                if (picture.exists()) {
+                    //ImageView imageView = (ImageView)findViewById(R.id.imageView);
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 2;
+                    Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+                    if (myBitmap.getHeight() > mRecyclerView.getWidth())
+                        myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
+                    Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                    mLogoImg.setImageBitmap(myBitmap);
 
-            // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
-            if (picture.exists()) {
-                //ImageView imageView = (ImageView)findViewById(R.id.imageView);
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 2;
-                Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
-                if (myBitmap.getHeight() > mRecyclerView.getWidth())
-                    myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
-                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
-                mLogoImg.setImageBitmap(myBitmap);
+                }
+                try {
+                    mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
 
+                } catch (Exception e) {
+                    Log.d(TAG, "can't set logo", e);
+                }
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        Constants.MY_PERMISSIONS_READ_EXT_STORAGE);
             }
-            try {
-                mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
 
-            } catch (Exception e) {
-                Log.d(TAG, "can't set logo", e);
-            }
         }
-
-
         //parallaxExtAdapter.setShouldClipView(true);
         // parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
 
