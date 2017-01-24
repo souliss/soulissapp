@@ -95,9 +95,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.eliminaTag:
-
-                return true;
             case R.id.rinominaTag:
                 AlertDialog.Builder alert3 = AlertDialogGridHelper.renameSoulissObjectDialog(this, null, tagAdapter,
                         datasource, todoItem);
@@ -342,6 +339,9 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(navAdapter);
+        //un po bruto
+        tagAdapter.setTagArray(datasource.getTags(this));
+        tagAdapter.notifyDataSetChanged();
     }
 
 }

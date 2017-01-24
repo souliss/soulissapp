@@ -741,7 +741,7 @@ public class SoulissDBHelper {
         return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
     }
 
-    public int deleteTagTypical(int tagId, int nodeid, int slot) {
+    public int deleteTagTypical(long tagId, int nodeid, int slot) {
         //elimino associazione
         return database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + tagId
                 +" AND "+SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " +nodeid
@@ -898,7 +898,8 @@ public class SoulissDBHelper {
                 + " INNER JOIN " + SoulissDB.TABLE_TYPICALS + " b "
                 + " ON a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = b." + SoulissDB.COLUMN_TYPICAL_NODE_ID
                 + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " = b." + SoulissDB.COLUMN_TYPICAL_SLOT
-                + " WHERE a." + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + parent.getTagId();
+                + " WHERE a." + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + parent.getTagId()
+                + " ORDER BY a." + SoulissDB.COLUMN_TAG_TYP_PRIORITY;
         Cursor cursor = database.rawQuery(MY_QUERY, null);
 
         cursor.moveToFirst();

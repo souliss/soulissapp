@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import it.angelic.soulissclient.R;
 import us.feras.ecogallery.EcoGallery;
 
+@Deprecated
 public class SoulissIconAdapter extends BaseAdapter {
     int mGalleryItemBackground;
     private Context mContext;
