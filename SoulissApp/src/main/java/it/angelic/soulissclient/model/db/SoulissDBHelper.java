@@ -738,6 +738,8 @@ public class SoulissDBHelper {
     public int deleteTag(SoulissTag toRename) {
         //CASCADE sulle associazioni
         database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toRename.getTagId(), null);
+        //CASCADE sui figli
+        database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_FATHER_ID + " = " + toRename.getTagId(), null);
         return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
     }
 
@@ -850,8 +852,9 @@ public class SoulissDBHelper {
         List<SoulissTag> comments = new ArrayList<>();
         if (!database.isOpen())
             open();
+        //solo radici
         Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
-                null, null, null, null, SoulissDB.COLUMN_TAG_ORDER + ", " + SoulissDB.COLUMN_TAG_ID);
+                SoulissDB.COLUMN_TAG_FATHER_ID + " IS NULL ", null, null, null, SoulissDB.COLUMN_TAG_ORDER + ", " + SoulissDB.COLUMN_TAG_ID);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissTag dto = new SoulissTag();
@@ -862,12 +865,45 @@ public class SoulissDBHelper {
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
             Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
             dto.setAssignedTypicals(getTagTypicals(dto));
+            dto.setChildTags(getTagChild(dto));
+
             comments.add(dto);
             cursor.moveToNext();
         }
         cursor.close();
         return comments;
     }
+
+    private List<SoulissTag> getTagChild(SoulissTag fatherDto) {
+        List<SoulissTag> ret = new ArrayList<>();
+        if (!database.isOpen())
+            open();
+        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
+                SoulissDB.COLUMN_TAG_FATHER_ID + " = " + fatherDto.getTagId(), null, null, null, null);
+        if (cursor.isLast()) {
+            cursor.close();
+            return ret;//basta figli
+        }
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTag dtoI = new SoulissTag();
+            dtoI.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
+            dtoI.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
+            dtoI.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
+            dtoI.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
+            dtoI.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            Log.i(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
+            fatherDto.setAssignedTypicals(getTagTypicals(dtoI));
+            dtoI.setChildTags(getTagChild(dtoI));//recursive
+            ret.add(dtoI);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+
+        return ret;
+    }
+
     public SoulissTag getTag(long tagId) throws SQLDataException {
         SoulissTag dto = new SoulissTag();
         if (!database.isOpen())
@@ -885,6 +921,7 @@ public class SoulissDBHelper {
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
             Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
             dto.setAssignedTypicals(getTagTypicals(dto));
+            dto.setChildTags(getTagChild(dto));
             cursor.moveToNext();
         }
         cursor.close();

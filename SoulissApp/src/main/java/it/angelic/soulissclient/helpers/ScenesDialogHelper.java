@@ -22,9 +22,9 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.adapters.FontAwesomeTagListAdapter;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
-import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -166,7 +166,7 @@ public class ScenesDialogHelper {
                             SoulissTag[] programsArray = new SoulissTag[goer.size()];
                             programsArray = goer.toArray(programsArray);
                             // targetScene.setCommandArray(goer);
-                            TagListAdapter progsAdapter = new TagListAdapter(cont, programsArray, opts);
+                            FontAwesomeTagListAdapter progsAdapter = new FontAwesomeTagListAdapter(cont, programsArray, opts);
                             // Adapter della lista
                             ctx.setAdapter(progsAdapter);
                             ctx.invalidateViews();

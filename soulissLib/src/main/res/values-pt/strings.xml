@@ -398,5 +398,6 @@
     <string name="launcher_type">Launcher element type</string>
     <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
     <string name="scene_added">" inserted, long-press to rename it and choose icon"</string>
+    <string name="tag_addSub">Add a sub-Tag</string>
 
 </resources>

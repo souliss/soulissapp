@@ -400,6 +400,7 @@
     <string name="settings_launcher_items">Home screen Elements</string>
     <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
     <string name="scene_added">Scenario inserito, usare long-press per le opzioni</string>
+    <string name="tag_addSub">Add a sub-Tag</string>
 
 
 </resources>

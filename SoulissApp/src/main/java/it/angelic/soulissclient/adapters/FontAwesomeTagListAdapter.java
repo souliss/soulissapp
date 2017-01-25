@@ -18,13 +18,13 @@ import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
-public class TagListAdapter extends BaseAdapter {
+public class FontAwesomeTagListAdapter extends BaseAdapter {
 	private LayoutInflater mInflater;
 	private Activity context;
 	SoulissTag[] soulissTags;
 	private SoulissPreferenceHelper opzioni;
 
-	public TagListAdapter(Activity context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
+	public FontAwesomeTagListAdapter(Activity context, SoulissTag[] versio, SoulissPreferenceHelper opts) {
 		mInflater = LayoutInflater.from(context);
 		this.context = context;
 		this.soulissTags = versio;

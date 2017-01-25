@@ -44,6 +44,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -59,9 +62,11 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.adapters.ParallaxExenderAdapter;
+import it.angelic.soulissclient.adapters.TagDetailParallaxExenderAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissObject;
+import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
@@ -80,15 +85,14 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     private static final int SPAN_COUNT = 2;
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
-    protected ParallaxExenderAdapter parallaxExtAdapter;
+    protected TagDetailParallaxExenderAdapter parallaxExtAdapter;
     protected RecyclerView.LayoutManager mTagTypicalsLayoutManager;
     private AppBarLayout appBarLayout;
-    private TextView tagTitle;
     private CollapsingToolbarLayout collapseToolbar;
     private SoulissTag collectedTag;
-
     private SoulissDBTagHelper datasource;
     private FloatingActionButton fab;
+    private Long fatherId;
     private TextView mLogoIcon;
     private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
@@ -107,6 +111,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             mRecyclerView.invalidate();
         }
     };
+    private TextView tagTitle;
 
     public static String getRealPathFromURI(Context ctx, Uri contentUri) {
         String res = null;
@@ -145,8 +150,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
@@ -160,8 +163,17 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         // recuper nodo da extra
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
+        if (extras != null && extras.get("FATHERTAG") != null)
+            fatherId = (long) extras.get("FATHERTAG");
         initDataset(getActivity());
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.addchildtag_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated add child menu");
+        // super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -169,6 +181,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
+        setHasOptionsMenu(true);
         Log.i(Constants.TAG, "onCreateView with size of data:" + collectedTag.getAssignedTypicals().size());
         appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBar_layout);
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
@@ -217,7 +230,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        parallaxExtAdapter = new ParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
+        parallaxExtAdapter = new TagDetailParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
         //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
@@ -345,6 +358,31 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.aggiungiFiglio:
+                long nuovoFiglioId = datasource.createOrUpdateTag(null, null);
+
+                try {
+                    collectedTag.getChildTags().add(datasource.getTag(nuovoFiglioId));
+                    SoulissTag fatherTag = null;
+                    if (fatherId != null) {
+                        fatherTag = datasource.getTag(fatherId);
+                    }
+                    datasource.createOrUpdateTag(collectedTag, fatherTag);
+                } catch (SQLDataException e) {
+                    e.printStackTrace();
+                }
+                parallaxExtAdapter.notifyDataSetChanged();
+                return true;
+        }
+
+        return false;
+        //return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         getActivity().unregisterReceiver(datareceiver);
@@ -426,13 +464,13 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     }
 
     private static class ParallaxGridCallback extends ItemTouchHelper.Callback {
-        private final ParallaxExenderAdapter adapter;
+        private final TagDetailParallaxExenderAdapter adapter;
         private final Context context;
         View.OnClickListener mOnClickListener;
         private SoulissDBTagHelper database;
         private SoulissTag targetTag;
 
-        public ParallaxGridCallback(Context xct, final ParallaxExenderAdapter adapter, SoulissDBTagHelper database, final SoulissTag targetTag) {
+        public ParallaxGridCallback(Context xct, final TagDetailParallaxExenderAdapter adapter, SoulissDBTagHelper database, final SoulissTag targetTag) {
             this.adapter = adapter;
             this.context = xct;
             this.database = database;
@@ -464,13 +502,19 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         @Override
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
             final int deletedPosition = viewHolder.getAdapterPosition();
-            final SoulissTypical tbr = adapter.getItems().get(deletedPosition);
+            final ISoulissObject tbr = adapter.getItems().get(deletedPosition);
 
 
             adapter.removeAt(deletedPosition);
             // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             //clearView(mRecyclerView, viewHolder);
-            database.deleteTagTypical(targetTag.getTagId(), tbr.getNodeId(), tbr.getSlot());
+            if (tbr instanceof SoulissTypical) {
+                database.deleteTagTypical(targetTag.getTagId(), ((SoulissTypical) tbr).getNodeId(), ((SoulissTypical) tbr).getSlot());
+            } else if (tbr instanceof SoulissTag) {
+                database.deleteTag((SoulissTag) tbr);
+            } else
+                throw new SoulissModelException("E ADESSO DOVE SI VA?");
+
             adapter.notifyDataSetChanged();
 
 

@@ -111,10 +111,11 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_TAG_ICONID = "inttagico";
     public static final String COLUMN_TAG_IMGPTH = "strtagpat";
     public static final String COLUMN_TAG_ORDER = "inttagord";
+    public static final String COLUMN_TAG_FATHER_ID = "inttagfathId";
     //   + " FOREIGN KEY( "+ COLUMN_COMMAND_NODE_ID + "," + COLUMN_COMMAND_SLOT + ") " + " REFERENCES " + TABLE_TYPICALS + " ("
     //   + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") " + ");";
     public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
-            COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH, COLUMN_TAG_ORDER};
+            COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH, COLUMN_TAG_ORDER, COLUMN_TAG_FATHER_ID};
 
 
     /*
@@ -143,7 +144,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     public static final String COLUMN_TAG_TYP_PRIORITY = "inttagtyppriority";
     public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
             COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
-    private static final int DATABASE_VERSION = 34;
+    private static final int DATABASE_VERSION = 35;
     // Database creation sql statement
     private static final String DATABASE_CREATE_NODES = "create table " + TABLE_NODES
             + "( "
@@ -223,7 +224,11 @@ public class SoulissDB extends SQLiteOpenHelper {
             + COLUMN_TAG_NAME + " TEXT, "
             + COLUMN_TAG_ICONID + " integer not null, "
             + COLUMN_TAG_IMGPTH + " TEXT, "
-            + COLUMN_TAG_ORDER + " integer "
+            + COLUMN_TAG_ORDER + " integer, "
+            + COLUMN_TAG_FATHER_ID + " integer, "
+            + " FOREIGN KEY( " + COLUMN_TAG_FATHER_ID
+            + " ) REFERENCES " + TABLE_TAGS + " ("
+            + COLUMN_TAG_ID + ") ON DELETE CASCADE "
             + ");";
     private static final String DATABASE_CREATE_LAUNCHER = "create table "
             + TABLE_LAUNCHER

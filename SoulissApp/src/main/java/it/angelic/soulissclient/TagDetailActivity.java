@@ -76,8 +76,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             Uri selectedImage = imageReturnedIntent.getData();
             Log.i(Constants.TAG, "RESULT_OK PATH:" + selectedImage.toString());
             collected.setImagePath(selectedImage.toString());
-            //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            db.createOrUpdateTag(collected);
+            //father nullo che' siamo sulla lista grid
+            db.createOrUpdateTag(collected, null);
             //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
             Log.i(Constants.TAG, "SAVED IMG PATH:" + collected.getImagePath());
         }
@@ -178,6 +178,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                     setActionBarInfo(collected.getNiceName());
                 }
                 return true;
+
+
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(this, PreferencesActivity.class);
                 startActivity(settingsActivity);

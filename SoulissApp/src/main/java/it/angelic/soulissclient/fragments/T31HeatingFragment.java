@@ -141,7 +141,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         }
-
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

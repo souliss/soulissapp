@@ -12,8 +12,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -67,7 +65,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
             goer.get(requestCode).setImagePath(selectedImage.toString());
             //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            datasource.createOrUpdateTag(goer.get(requestCode));
+            datasource.createOrUpdateTag(goer.get(requestCode), null);
             //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
             Log.i(Constants.TAG, "SAVED IMG PATH:" + goer.get(requestCode).getImagePath());
             tagAdapter.notifyItemChanged(requestCode);
@@ -149,7 +147,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             @Override
             public void onClick(View v) {
 
-                long rest = datasource.createOrUpdateTag(null);
+                long rest = datasource.createOrUpdateTag(null, null);
                 // prendo comandi dal DB, setto adapter
                 goer = datasource.getTags(SoulissApp.getAppContext());
 
@@ -208,8 +206,9 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 SoulissTag dest = tagAdapter.getTag(target.getAdapterPosition());
                 dest.setTagOrder(viewHolder.getAdapterPosition());
 
-                dbt.createOrUpdateTag(origin);
-                dbt.createOrUpdateTag(dest);
+                //passo null come padre
+                dbt.createOrUpdateTag(origin, null);
+                dbt.createOrUpdateTag(dest, null);
 
 
                 Collections.swap(tagAdapter.getTagArray(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
@@ -272,7 +271,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         });*/
     }
 
-
+/*
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 
@@ -281,7 +280,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         // Rinomina nodo e scelta icona
         inflater.inflate(R.menu.ctx_menu_tags, menu);
         super.onCreateContextMenu(menu, v, menuInfo);
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

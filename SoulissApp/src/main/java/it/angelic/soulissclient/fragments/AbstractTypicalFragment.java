@@ -65,7 +65,7 @@ public class AbstractTypicalFragment extends Fragment {
         switch (id) {
             case R.id.addTo:
                 SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
-                AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, collected, null);
+                AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, collected, null, null);
                 AlertDialog built = alert4.create();
                 built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 built.show();

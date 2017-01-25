@@ -88,7 +88,7 @@ public class AlertDialogGridHelper {
                                 return;
                             }
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
-                            dbt.createOrUpdateTag((SoulissTag) toRename);
+                            dbt.createOrUpdateTag((SoulissTag) toRename, null);
                             if (tagRecyclerAdapter != null) {
                                 int tgtPos = -1;
                                 List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
@@ -184,7 +184,7 @@ public class AlertDialogGridHelper {
 
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
-                            dbt.createOrUpdateTag((SoulissTag) toRename);
+                            dbt.createOrUpdateTag((SoulissTag) toRename, null);
                             if (list != null) {
                                 //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
                                 List<SoulissTag> tagArray = list.getTagArray();
@@ -292,7 +292,7 @@ public class AlertDialogGridHelper {
     }
 
     @Deprecated
-    public static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final int oldPosition, final TagRecyclerAdapter adapter) {
+    private static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final int oldPosition, final TagRecyclerAdapter adapter) {
         final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
@@ -321,7 +321,7 @@ public class AlertDialogGridHelper {
                             temp.set(newPosition, toUpdate);
                             temp.set(oldPosition, oldOne);
                             adapter.setTagArray(temp);
-                            dbt.createOrUpdateTag(toUpdate);
+                            dbt.createOrUpdateTag(toUpdate, null);
                             //notify to move
                             adapter.notifyItemMoved(oldPosition, newPosition);
                         }

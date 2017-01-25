@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissObject;
+import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissTag;
-import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -25,13 +27,13 @@ import it.angelic.soulissclient.util.SoulissUtils;
  * solo per implementare la posizione e passare  gli eventi
  * Created by Ale on 08/03/2015.
  */
-public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final TagDetailActivity context;
     protected SoulissTag mDataset;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
 
-    public ParallaxExenderAdapter(SoulissPreferenceHelper pref, TagDetailActivity father, SoulissTag data, long tagId) {
+    public TagDetailParallaxExenderAdapter(SoulissPreferenceHelper pref, TagDetailActivity father, SoulissTag data, long tagId) {
         super();
         mDataset = data;
         this.tagId = tagId;
@@ -47,13 +49,19 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             return 0;
     }
 
-    public List<SoulissTypical> getItems() {
-        return mDataset.getAssignedTypicals();
+    public List<ISoulissObject> getItems() {
+        ArrayList<ISoulissObject> tifr = new ArrayList<>();
+        tifr.addAll(mDataset.getChildTags());
+        tifr.addAll(mDataset.getAssignedTypicals());
+        return tifr;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof TypicalCardViewHolder)
         onBindViewHolderImpl(holder, position);
+        else
+            throw new SoulissModelException("TOIMPLEMENT");
     }
 
     public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, final int i) {
@@ -129,6 +137,54 @@ public class ParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
 
+    /**
+     * Provide a reference to the type of views that you are using (custom ViewHolder)
+     */
+    public static class TagCardViewHolder extends RecyclerView.ViewHolder {
+        private final TextView textView;
+        private final TextView textViewInfo1;
+        private final TextView textViewInfo2;
+        private final CardView cardView;
+        private TextView imageView;
+        private LinearLayout linearActionsLayout;
+
+        public TagCardViewHolder(View v) {
+            super(v);
+            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
+            imageView = (TextView) v.findViewById(R.id.card_thumbnail_image2);
+            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
+            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
+            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
+            cardView = (CardView) v.findViewById(R.id.TypCard);
+            //v.setOnCreateContextMenuListener(this);
+        }
+
+        public CardView getCardView() {
+            return cardView;
+        }
+
+        public TextView getImageView() {
+            return imageView;
+        }
+
+        public LinearLayout getLinearActionsLayout() {
+            return linearActionsLayout;
+        }
+
+        public TextView getTextView() {
+            return textView;
+        }
+
+        public TextView getTextViewInfo1() {
+            return textViewInfo1;
+        }
+
+        public TextView getTextViewInfo2() {
+            return textViewInfo2;
+        }
+
+
+    }
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */

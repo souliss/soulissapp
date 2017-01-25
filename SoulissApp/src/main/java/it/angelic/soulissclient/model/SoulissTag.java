@@ -11,6 +11,16 @@ import java.util.List;
  */
 public class SoulissTag implements Serializable, ISoulissObject {
     private List<SoulissTypical> assignedTypicals = new ArrayList<>();
+
+    public List<SoulissTag> getChildTags() {
+        return childTags;
+    }
+
+    public void setChildTags(List<SoulissTag> childTags) {
+        this.childTags = childTags;
+    }
+
+    private List<SoulissTag> childTags = new ArrayList<>();
     private int iconId;
     private String imagePath;
     private String name;

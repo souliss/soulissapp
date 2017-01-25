@@ -36,11 +36,11 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.adapters.FontAwesomeTagListAdapter;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
 import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SoulissFontAwesomeAdapter;
-import it.angelic.soulissclient.adapters.TagListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -363,13 +363,13 @@ public class AlertDialogHelper {
                             }
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
-                            dbt.createOrUpdateTag((SoulissTag) toRename);
+                            dbt.createOrUpdateTag((SoulissTag) toRename, null);//non aggiorno il campo fath, non serve
                             if (listV != null) {
                                 List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 try {
-                                    TagListAdapter sa = (TagListAdapter) listV.getAdapter();
+                                    FontAwesomeTagListAdapter sa = (FontAwesomeTagListAdapter) listV.getAdapter();
                                     // SceneListAdapter progsAdapter = new
                                     // SceneListAdapter(cont, scenesArray,
                                     // opzioni);
@@ -611,12 +611,12 @@ public class AlertDialogHelper {
                             }
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
-                            dbt.createOrUpdateTag((SoulissTag) toRename);
+                            dbt.createOrUpdateTag((SoulissTag) toRename, null);//non aggiorno il campo fath, non serve
                             if (list != null) {
                                 List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
-                                TagListAdapter progsAdapter = new TagListAdapter(context, scenesArray, opzioni);
+                                FontAwesomeTagListAdapter progsAdapter = new FontAwesomeTagListAdapter(context, scenesArray, opzioni);
                                 // Adapter della lista
                                 list.setAdapter(progsAdapter);
                                 list.invalidateViews();
@@ -753,6 +753,7 @@ public class AlertDialogHelper {
     public static AlertDialog.Builder addTagCommandDialog(final Context context,
                                                           final SoulissDBTagHelper datasource,
                                                           final SoulissTypical toadd,
+                                                          @Nullable final SoulissTag parentTag,
                                                           @Nullable final ListView toReferesh) {
         // prendo tag dal DB
         List<SoulissTag> goer = datasource.getTags(context);
@@ -823,20 +824,20 @@ public class AlertDialogHelper {
                             it = (SoulissTag) outputNodeSpinner.getSelectedItem();
                             if (!it.getAssignedTypicals().contains(toadd))
                                 it.getAssignedTypicals().add(toadd);
-                            datasource.createOrUpdateTag(it);
+                            datasource.createOrUpdateTag(it, null);//non aggiorno il campo fath, non serve
                         } else if (newTagRadio.isChecked()) {
                             if (editNewTag.getText() == null || editNewTag.getText().length() == 0) {
                                 Toast.makeText(context, context.getString(R.string.input_tag_name), Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             it = new SoulissTag();
-                            long newId = datasource.createOrUpdateTag(null);
+                            long newId = datasource.createOrUpdateTag(null, parentTag);
                             it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
                             FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tv.getFontName());
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
-                            datasource.createOrUpdateTag(it);
+                            datasource.createOrUpdateTag(it, parentTag);
                             Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
 
                             return;
