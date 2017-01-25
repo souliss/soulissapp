@@ -1,5 +1,6 @@
 package it.angelic.soulissclient;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -8,12 +9,17 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -45,6 +51,7 @@ import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 import static android.support.v7.widget.StaggeredGridLayoutManager.GAP_HANDLING_NONE;
 import static it.angelic.soulissclient.Constants.TAG;
@@ -57,10 +64,12 @@ import static it.angelic.soulissclient.Constants.TAG;
  *
  * @author Maurycy Wojtowicz
  */
-public class MainActivity extends AbstractStatusedFragmentActivity {
+public class MainActivity extends AbstractStatusedFragmentActivity implements LocationListener {
     private Timer autoUpdate;
     private SoulissDBLauncherHelper database;
     private StaggeredLauncherElementAdapter launcherMainAdapter;
+    private LocationManager locationManager;
+    private SoulissDataService mBoundService;
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -77,17 +86,16 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 // FIXME TEMPORARY
                 database.refreshMapFromDB();
                 List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
-
+                launcherMainAdapter.setmBoundService(mBoundService);
                 launcherMainAdapter.setLauncherElements(launcherItems);
                 launcherMainAdapter.notifyDataSetChanged();
-
+                if (mBoundService != null)
+                    Log.i(TAG, "Service lastupd: " + mBoundService.getLastupd());
             } else {
                 Log.e(TAG, "EMPTY response!!");
             }
         }
     };
-    private SoulissDataService mBoundService;
-    private boolean mIsBound;
     private RecyclerView mRecyclerView;
     private ArrayAdapter<INavDrawerItem> navAdapter;
     private SoulissPreferenceHelper opzioni;
@@ -101,10 +109,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 //will detect if late
                 mBoundService.reschedule(false);
             } else {
-                Log.i(TAG, "Dataservice DISABLED");
+                Log.w(TAG, "Dataservice DISABLED");
             }
-            //setServiceInfo();
-            mIsBound = true;
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -112,9 +118,10 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             // see this happen.
             mBoundService = null;
             Toast.makeText(MainActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
-            mIsBound = false;
         }
     };
+    private String provider;
+    private View serviceinfoLine;
 
     private void doBindService() {
         Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
@@ -123,9 +130,36 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
 
     private void doUnbindService() {
-        if (mIsBound) {
+        if (mBoundService != null) {
             Log.d(TAG, "UNBIND, Detach our existing connection.");
             unbindService(mConnection);
+        }
+    }
+
+
+    private void initLocationProvider() {
+        // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
+        provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
+        boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            if (enabled) {
+
+                // ogni minuto, minimo 100 metri
+                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                        Constants.POSITION_UPDATE_MIN_DIST, this);
+                Location location = locationManager.getLastKnownLocation(provider);
+                // Initialize the location fields
+                if (location != null) {
+                    onLocationChanged(location);
+                }
+            }
+        } else//permesso mancante
+        {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+
         }
     }
 
@@ -186,7 +220,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         StaggeredGridLayoutManager staggeredGridManager = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridManager.setGapStrategy(GAP_HANDLING_NONE);
 
-
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mRecyclerView.setLayoutManager(staggeredGridManager);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
@@ -221,8 +255,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         ItemTouchHelper ith = new ItemTouchHelper(launcherCallback);
         ith.attachToRecyclerView(mRecyclerView);
 
-
+        opzioni.reload();
     }
+    /*
+     * @Override public void setTitle(CharSequence title) { mTitle = title;
+	 * getActionBar().setTitle(mTitle); }
+	 */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -236,6 +274,11 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         doUnbindService();
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        //TODO
     }
 
     @Override
@@ -270,7 +313,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
     protected void onPause() {
         unregisterReceiver(datareceiver);
         super.onPause();
-
+        //autoUpdate.cancel();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //...e amen
+            return;
+        }
+        locationManager.removeUpdates(this);
+        //non mettere nulla qui
     }
 
     @Override
@@ -278,6 +328,19 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+    }
+
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "Disabled provider " + provider);
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "Enabled new provider " + provider);
     }
 
     @Override
@@ -294,12 +357,44 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 }
                 return;
             }
+            case Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
+                    Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
+
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Log.wtf(TAG, "boh. permesso negato su risposta permesso");
+                        return;
+                    }
+                    locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                            Constants.POSITION_UPDATE_MIN_DIST, this);
+                    Location location = locationManager.getLastKnownLocation(provider);
+                    // Initialize the location fields
+                    if (location != null) {
+                        onLocationChanged(location);
+                    }
+
+                } else {
+                    // quello stronzo. Utente nega permesso
+                    // if (cardViewPositionInfo != null)
+                    //   cardViewPositionInfo.setVisibility(View.GONE);
+                }
+                return;
+            }
 
             // other 'case' lines to check for other
             // permissions this app might request
         }
     }
 
+    /**
+     * Request updates at startup
+     *
+     * @see NetworkStateReceiver
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -313,6 +408,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         launcherMainAdapter.setLauncherElements(launcherItems);
         launcherMainAdapter.notifyDataSetChanged();
 
+        if (provider != null) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //   non chiamo request perche c'e altrove
+            } else
+                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                        Constants.POSITION_UPDATE_MIN_DIST, this);
+        }
        /* autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
             @Override
@@ -339,6 +442,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
+        initLocationProvider();
 
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(this);
@@ -346,6 +450,11 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(navAdapter);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
     }
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
@@ -358,22 +467,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             this.adapter = adapter;
             this.context = xct;
             this.database = database;
-           /* mOnClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    LauncherElement tbr = adapter.getLauncherElements().get(adapter.getAdapterPosition());
-                    //SoulissTag todoItem = launcherMainAdapter.getItem(viewHolder.getAdapterPosition());
-                    //forse non serve
-                    adapter.removeAt(viewHolder.getAdapterPosition());
-                    // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                    //clearView(mRecyclerView, viewHolder);
 
-                    database.remove(tbr);
-
-                    Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
-                    // readd item
-                }
-            };*/
         }
 
         //defines the enabled move directions in each state (idle, swiping, dragging).

@@ -469,7 +469,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
             return true;//cliccato sul drawer, non far altro
         }
         switch (item.getItemId()) {
-
             case R.id.Opzioni:
                 Intent preferencesActivity = new Intent(getBaseContext(), PreferencesActivity.class);
                 // evita doppie aperture per via delle sotto-schermate

@@ -528,6 +528,12 @@ public class SoulissDataService extends Service implements LocationListener {
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL * 2,
                         Constants.POSITION_UPDATE_MIN_DIST * 2, SoulissDataService.this);
             } else {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.e(TAG, SoulissDataService.class.getName() + " misses permission. Killing himself");
+                    //...e amen. MUOIO
+                    return;
+                }
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                         Constants.POSITION_UPDATE_MIN_DIST, SoulissDataService.this);
             }
