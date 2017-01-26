@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_gravity="bottom"
-                        android:alpha="0.3"
+                        android:alpha="0.4"
                         android:background="@color/black"
                         android:transitionName="shadow_hero"
                         />
@@ -78,10 +78,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|left"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginLeft="12dp"
                         android:textColor="@color/white_bitaplha"
-                        android:textSize="32sp"
+                        android:textSize="24sp"
                         android:transitionName="tag_title"
                         tools:text="Title Big Swallow"/>
 

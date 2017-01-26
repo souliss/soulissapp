@@ -52,7 +52,7 @@ public class LauncherRstListener implements OnPreferenceClickListener {
     protected void resetDefaultPref() {
         SoulissDBLauncherHelper database = new SoulissDBLauncherHelper(parent);
         List<LauncherElement> po = database.getLauncherItems(parent);
-        List<LauncherElement> def = database.getDefaultStaticDBLauncherElements(parent);
+        List<LauncherElement> def = database.getDefaultStaticDBLauncherElements();
 
         for (LauncherElement la : def) {
             if (!po.contains(la)) {

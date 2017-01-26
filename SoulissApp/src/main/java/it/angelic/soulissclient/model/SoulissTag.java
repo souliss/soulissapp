@@ -11,16 +11,8 @@ import java.util.List;
  */
 public class SoulissTag implements Serializable, ISoulissSortableObject {
     private List<SoulissTypical> assignedTypicals = new ArrayList<>();
-
-    public List<SoulissTag> getChildTags() {
-        return childTags;
-    }
-
-    public void setChildTags(List<SoulissTag> childTags) {
-        this.childTags = childTags;
-    }
-
     private List<SoulissTag> childTags = new ArrayList<>();
+    private Long fatherId = null;
     private int iconId;
     private String imagePath;
     private String name;
@@ -43,6 +35,22 @@ public class SoulissTag implements Serializable, ISoulissSortableObject {
 
     public void setAssignedTypicals(List<SoulissTypical> assignedTypicals) {
         this.assignedTypicals = assignedTypicals;
+    }
+
+    public List<SoulissTag> getChildTags() {
+        return childTags;
+    }
+
+    public void setChildTags(List<SoulissTag> childTags) {
+        this.childTags = childTags;
+    }
+
+    public Long getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(Long fatherId) {
+        this.fatherId = fatherId;
     }
 
     @Override
@@ -76,8 +84,9 @@ public class SoulissTag implements Serializable, ISoulissSortableObject {
         return getName();
     }
 
-    public Long getTagId() {
-        return tagId;
+    @Override
+    public Integer getOrder() {
+        return getTagOrder();
     }
 
     @Override
@@ -85,9 +94,8 @@ public class SoulissTag implements Serializable, ISoulissSortableObject {
         setTagOrder(order);
     }
 
-    @Override
-    public Integer getOrder() {
-        return getTagOrder();
+    public Long getTagId() {
+        return tagId;
     }
 
     public void setTagId(long tagId) {

@@ -52,7 +52,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         ///init sse vuoto
         if (launcherElementList.isEmpty()) {
-            List<LauncherElement> launcherElementtemp = getDefaultStaticDBLauncherElements(context);
+            List<LauncherElement> launcherElementtemp = getDefaultStaticDBLauncherElements();
 
             for (LauncherElement lau : launcherElementtemp) {
                 try {
@@ -152,6 +152,18 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                 case STATIC_MANUAL:
                     dto.setDesc(countNodes() + " nodi presenti");
                     break;
+                case STATIC_TAGS:
+                    dto.setDesc(context.getResources().getQuantityString(R.plurals.tags_plur,
+                            countTags(), countTags()));
+                    break;
+                case STATIC_SCENES:
+                    dto.setDesc(context.getResources().getQuantityString(R.plurals.scenes_plur,
+                            countScenes(), countScenes()) + " " + context.getString(R.string.string_configured));
+                    break;
+                case STATIC_PROGRAMS:
+                    dto.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
+                            countTriggers(), countTriggers()));//FIXME count progs
+                    break;
                 case NODE:
                     isoulissObj = getSoulissNode(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)));
                     break;
@@ -182,16 +194,19 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         return comments;
     }
 
-    public List<LauncherElement> getDefaultStaticDBLauncherElements(Context context) {
+    public List<LauncherElement> getDefaultStaticDBLauncherElements() {
         List<LauncherElement> ret = new ArrayList<>();
         LauncherElement scenari = new LauncherElement(LauncherElementEnum.STATIC_SCENES);
+
         scenari.setTitle(context.getString(R.string.scenes_title));
         scenari.setOrder((short) 0);
-        scenari.setDesc(countScenes() + " scenari configurati");
+        scenari.setDesc(context.getResources().getQuantityString(R.plurals.scenes_plur,
+                countScenes(), countScenes()) + " " + context.getString(R.string.string_configured));
         ret.add(scenari);
 
         LauncherElement prob = new LauncherElement(LauncherElementEnum.STATIC_TAGS);
-        prob.setDesc(countTags() + " tags contenenti " + countTypicalTags() + " dispositivi");
+        prob.setDesc(context.getResources().getQuantityString(R.plurals.tags_plur,
+                countTags(), countTags()));
         prob.setTitle(context.getString(R.string.tags));
         scenari.setOrder((short) 1);
         ret.add(prob);
@@ -211,7 +226,8 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
         pro.setTitle(context.getString(R.string.programs_title));
         scenari.setOrder((short) 4);
-        pro.setDesc(countTriggers() + " programmi attivi");
+        pro.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
+                countTriggers(), countTriggers()));//FIXME count progs
         ret.add(pro);
 
         return ret;

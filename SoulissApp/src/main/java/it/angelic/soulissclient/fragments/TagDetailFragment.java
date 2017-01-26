@@ -38,7 +38,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -57,6 +56,7 @@ import java.io.File;
 import java.sql.SQLDataException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -86,13 +86,12 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
     protected TagDetailParallaxExenderAdapter parallaxExtAdapter;
-    protected RecyclerView.LayoutManager mTagTypicalsLayoutManager;
+    protected GridLayoutManager mTagTypicalsLayoutManager;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapseToolbar;
     private SoulissTag collectedTag;
     private SoulissDBTagHelper datasource;
     private FloatingActionButton fab;
-    private Long fatherId;
     private TextView mLogoIcon;
     private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
@@ -139,7 +138,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         } catch (SQLDataException e) {
             Log.e(Constants.TAG, "CANT LOAD tagId" + tagId);
         }
-        Log.i(Constants.TAG, "initDataset tagId" + tagId);
+        Log.i(Constants.TAG, "initDataset loaded TAG" + tagId + " with father ID: " + collectedTag.getFatherId());
         List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
         Log.i(Constants.TAG, "getTagTypicals() returned " + favs.size());
         if (!opzioni.isDbConfigured())
@@ -163,8 +162,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         // recuper nodo da extra
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
-        if (extras != null && extras.get("FATHERTAG") != null)
-            fatherId = (long) extras.get("FATHERTAG");
+
         initDataset(getActivity());
 
     }
@@ -227,7 +225,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
-                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.GRID_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         parallaxExtAdapter = new TagDetailParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
@@ -307,8 +305,31 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
 
         if (tagTitle != null && collectedTag != null) {
-            tagTitle.setText(getActivity().getResources().getQuantityString(R.plurals.Devices,
+            StringBuilder header = new StringBuilder();
+            Stack<String> path = new Stack<>();
+            Long fatherIt = collectedTag.getFatherId();
+            while (!(fatherIt == null)) {
+                try {
+                    SoulissTag father = datasource.getTag(fatherIt);
+                    path.push(father.getNiceName() + " > ");
+                    fatherIt = father.getFatherId();//vai al nonno
+                } catch (SQLDataException | NullPointerException e) {
+                    e.printStackTrace();
+                    fatherIt = null;
+                }
+            }
+
+            while (!path.isEmpty()) {
+                header.append(path.pop());
+            }
+            header.append(collectedTag.getNiceName());
+            header.append("\n");
+            header.append(getActivity().getResources().getQuantityString(R.plurals.Devices,
                     collectedTag.getAssignedTypicals().size(), collectedTag.getAssignedTypicals().size()));
+            header.append(" - ");
+            header.append(getActivity().getResources().getQuantityString(R.plurals.SubTags,
+                    collectedTag.getAssignedTypicals().size(), collectedTag.getChildTags().size()));
+            tagTitle.setText(header.toString());
             // tagTitle.setText(collectedTag.getNiceName());
             collapseToolbar.setTitle(collectedTag.getNiceName());
         }
@@ -362,15 +383,13 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         int id = item.getItemId();
         switch (id) {
             case R.id.aggiungiFiglio:
-                long nuovoFiglioId = datasource.createOrUpdateTag(null, null);
+                long nuovoFiglioId = datasource.createOrUpdateTag(null);
 
                 try {
-                    collectedTag.getChildTags().add(datasource.getTag(nuovoFiglioId));
-                    SoulissTag fatherTag = null;
-                    if (fatherId != null) {
-                        fatherTag = datasource.getTag(fatherId);
-                    }
-                    datasource.createOrUpdateTag(collectedTag, fatherTag);
+                    SoulissTag figlio = datasource.getTag(nuovoFiglioId);
+                    figlio.setFatherId(collectedTag.getTagId());
+                    collectedTag.getChildTags().add(figlio);
+                    datasource.createOrUpdateTag(collectedTag);
                 } catch (SQLDataException e) {
                     e.printStackTrace();
                 }
@@ -435,9 +454,8 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         int scrollPosition = 0;
 
         // If a layout manager has already been set, get current scroll position.
-       /* if (mRecyclerView.getLayoutManager() != null) {
-            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
-                    .findFirstCompletelyVisibleItemPosition();
+       /* TENGO QUESTO CODICE PER RIFERIMENTO
+       uso solo GridLayoutManager
         }*/
 
         switch (layoutManagerType) {
@@ -445,15 +463,28 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 mTagTypicalsLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
                 mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
                 break;
-            case LINEAR_LAYOUT_MANAGER:
-                mTagTypicalsLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+            case LINEAR_LAYOUT_MANAGER://OCCHIO OVERRIDE GRID
+                mTagTypicalsLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
+                mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
                 break;
             default:
-                mTagTypicalsLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+                throw new SoulissModelException("NON CONTEMPLATO");
+                //mTagTypicalsLayoutManager = new LinearLayoutManager(getActivity());
+                //mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
         }
-
+        mTagTypicalsLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch (parallaxExtAdapter.getItemViewType(position)) {
+                    case TagDetailParallaxExenderAdapter.VIEW_TYPE_TAG_TYPICAL:
+                        return 2;
+                    case TagDetailParallaxExenderAdapter.VIEW_TYPE_TAG_NESTED:
+                        return 1;
+                    default:
+                        return -1;
+                }
+            }
+        });
         mRecyclerView.setLayoutManager(mTagTypicalsLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
     }

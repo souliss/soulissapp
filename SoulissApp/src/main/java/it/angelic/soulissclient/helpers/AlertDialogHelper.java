@@ -363,9 +363,9 @@ public class AlertDialogHelper {
                             }
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
-                            dbt.createOrUpdateTag((SoulissTag) toRename, null);//non aggiorno il campo fath, non serve
+                            dbt.createOrUpdateTag((SoulissTag) toRename);//non aggiorno il campo fath, non serve
                             if (listV != null) {
-                                List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
+                                List<SoulissTag> goer = dbt.getRootTags(SoulissApp.getAppContext());
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 try {
@@ -611,9 +611,9 @@ public class AlertDialogHelper {
                             }
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
-                            dbt.createOrUpdateTag((SoulissTag) toRename, null);//non aggiorno il campo fath, non serve
+                            dbt.createOrUpdateTag((SoulissTag) toRename);//non aggiorno il campo fath, non serve
                             if (list != null) {
-                                List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
+                                List<SoulissTag> goer = dbt.getRootTags(SoulissApp.getAppContext());
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 FontAwesomeTagListAdapter progsAdapter = new FontAwesomeTagListAdapter(context, scenesArray, opzioni);
@@ -756,7 +756,7 @@ public class AlertDialogHelper {
                                                           @Nullable final SoulissTag parentTag,
                                                           @Nullable final ListView toReferesh) {
         // prendo tag dal DB
-        List<SoulissTag> goer = datasource.getTags(context);
+        List<SoulissTag> goer = datasource.getRootTags(context);
         final SoulissTag[] tagArray = new SoulissTag[goer.size()];
         int q = 0;
         for (SoulissTag object : goer) {
@@ -824,20 +824,21 @@ public class AlertDialogHelper {
                             it = (SoulissTag) outputNodeSpinner.getSelectedItem();
                             if (!it.getAssignedTypicals().contains(toadd))
                                 it.getAssignedTypicals().add(toadd);
-                            datasource.createOrUpdateTag(it, null);//non aggiorno il campo fath, non serve
+                            datasource.createOrUpdateTag(it);//non aggiorno il campo fath, non serve
                         } else if (newTagRadio.isChecked()) {
                             if (editNewTag.getText() == null || editNewTag.getText().length() == 0) {
                                 Toast.makeText(context, context.getString(R.string.input_tag_name), Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             it = new SoulissTag();
-                            long newId = datasource.createOrUpdateTag(null, parentTag);
+                            long newId = datasource.createOrUpdateTag(null);
+                            it.setFatherId(parentTag.getTagId());
                             it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
                             FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tv.getFontName());
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
-                            datasource.createOrUpdateTag(it, parentTag);
+                            datasource.createOrUpdateTag(it);
                             Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
 
                             return;

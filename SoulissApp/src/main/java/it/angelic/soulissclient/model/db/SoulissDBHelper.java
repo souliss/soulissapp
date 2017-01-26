@@ -848,7 +848,7 @@ public class SoulissDBHelper {
         return count;
     }
 
-    public List<SoulissTag> getTags(Context context) {
+    public List<SoulissTag> getRootTags(Context context) {
         List<SoulissTag> comments = new ArrayList<>();
         if (!database.isOpen())
             open();
@@ -863,7 +863,8 @@ public class SoulissDBHelper {
             dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
+            dto.setFatherId(null);
+            Log.i(Constants.TAG, "retrieving ROOT TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
             dto.setAssignedTypicals(getTagTypicals(dto));
             dto.setChildTags(getTagChild(dto));
 
@@ -892,6 +893,7 @@ public class SoulissDBHelper {
             dtoI.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
             dtoI.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dtoI.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            dtoI.setFatherId(fatherDto.getTagId());
             Log.i(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
             fatherDto.setAssignedTypicals(getTagTypicals(dtoI));
             dtoI.setChildTags(getTagChild(dtoI));//recursive
@@ -919,7 +921,11 @@ public class SoulissDBHelper {
             dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
+            Long l = null;
+            if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)))
+                l = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID));
+            dto.setFatherId(l);
+            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder() + " Father:" + dto.getFatherId());
             dto.setAssignedTypicals(getTagTypicals(dto));
             dto.setChildTags(getTagChild(dto));
             cursor.moveToNext();

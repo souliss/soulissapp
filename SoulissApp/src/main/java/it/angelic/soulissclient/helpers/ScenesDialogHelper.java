@@ -162,7 +162,7 @@ public class ScenesDialogHelper {
                         if (ctx != null) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             // prendo comandi dal DB
-                            List<SoulissTag> goer = dbt.getTags(cont);
+                            List<SoulissTag> goer = dbt.getRootTags(cont);
                             SoulissTag[] programsArray = new SoulissTag[goer.size()];
                             programsArray = goer.toArray(programsArray);
                             // targetScene.setCommandArray(goer);

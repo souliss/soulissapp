@@ -761,7 +761,7 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
                     final TextView textViewFav = (TextView) findViewById(R.id.textViewFav);
                     final TextView textViewFav2 = (TextView) findViewById(R.id.textViewFav2);
                     final LinearLayout tagCont = (LinearLayout) findViewById(R.id.tagCont);
-                    tags = tagDb.getTags(OldLauncherActivity.this);
+                    tags = tagDb.getRootTags(OldLauncherActivity.this);
                     if (tags.size() > 1 || favCount > 0) {//1 di sicuro
 
                         try {

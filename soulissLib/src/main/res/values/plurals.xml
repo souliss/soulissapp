@@ -8,6 +8,13 @@
     </plurals>
 
     <plurals
+        name="SubTags">
+        <item quantity="zero">No Sub-Tag</item>
+        <item quantity="one">one Sub-Tag</item>
+        <item quantity="other">%d  Sub-Tags</item>
+    </plurals>
+
+    <plurals
         name="Bytes">
         <item quantity="zero">0 Byte</item>
         <item quantity="one">1 Byte</item>
@@ -17,5 +24,20 @@
         <item quantity="zero">0 Seconds</item>
         <item quantity="one">1 Second</item>
         <item quantity="other">%s  Seconds</item>
+    </plurals>
+    <plurals name="scenes_plur">
+        <item quantity="zero">No Scene</item>
+        <item quantity="one">1 Scene</item>
+        <item quantity="other">%s Scenes</item>
+    </plurals>
+    <plurals name="tags_plur">
+        <item quantity="zero">No Tag</item>
+        <item quantity="one">1 Tag</item>
+        <item quantity="other">%s Tags</item>
+    </plurals>
+    <plurals name="programs_plur">
+        <item quantity="zero">No Program</item>
+        <item quantity="one">1 Program</item>
+        <item quantity="other">%s Programs</item>
     </plurals>
 </resources>

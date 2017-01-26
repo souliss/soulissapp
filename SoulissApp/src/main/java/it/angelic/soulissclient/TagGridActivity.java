@@ -65,7 +65,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             Log.i(Constants.TAG, "SAVED IMG PATH:" + selectedImage.toString());
             goer.get(requestCode).setImagePath(selectedImage.toString());
             //String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            datasource.createOrUpdateTag(goer.get(requestCode), null);
+            datasource.createOrUpdateTag(goer.get(requestCode));
             //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
             Log.i(Constants.TAG, "SAVED IMG PATH:" + goer.get(requestCode).getImagePath());
             tagAdapter.notifyItemChanged(requestCode);
@@ -147,9 +147,9 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             @Override
             public void onClick(View v) {
 
-                long rest = datasource.createOrUpdateTag(null, null);
+                long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
-                goer = datasource.getTags(SoulissApp.getAppContext());
+                goer = datasource.getRootTags(TagGridActivity.this);
 
                 tagAdapter.setTagArray(goer);
 
@@ -177,7 +177,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         datasource = new SoulissDBTagHelper(this);
         SoulissDBHelper.open();
         // prendo comandi dal DB, setto adapter
-        goer = datasource.getTags(SoulissApp.getAppContext());
+        goer = datasource.getRootTags(SoulissApp.getAppContext());
 
         tagAdapter = new TagRecyclerAdapter(this, goer, opzioni, fab);
         // Adapter della lista
@@ -207,8 +207,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 dest.setTagOrder(viewHolder.getAdapterPosition());
 
                 //passo null come padre
-                dbt.createOrUpdateTag(origin, null);
-                dbt.createOrUpdateTag(dest, null);
+                dbt.createOrUpdateTag(origin);
+                dbt.createOrUpdateTag(dest);
 
 
                 Collections.swap(tagAdapter.getTagArray(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
@@ -339,7 +339,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(navAdapter);
         //un po bruto
-        tagAdapter.setTagArray(datasource.getTags(this));
+        tagAdapter.setTagArray(datasource.getRootTags(this));
         tagAdapter.notifyDataSetChanged();
     }
 

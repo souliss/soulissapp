@@ -1,9 +1,15 @@
 package it.angelic.soulissclient.adapters;
 
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +27,7 @@ import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -30,8 +37,8 @@ import it.angelic.soulissclient.util.SoulissUtils;
  */
 public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final TagDetailActivity context;
-    private final int VIEW_TYPE_TAG_TYPICAL = 1;
-    private final int VIEW_TYPE_TAG_NESTED = 2;
+    public static final int VIEW_TYPE_TAG_TYPICAL = 1;
+    public static final int VIEW_TYPE_TAG_NESTED = 2;
     protected SoulissTag mDataset;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -75,10 +82,12 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         List<ISoulissObject> tifr = new ArrayList<>();
         List<SoulissTypical> currentTyps = mDataset.getAssignedTypicals();
 
-        tifr.addAll(currentTyps);//gia ordinati
+        tifr.addAll(mDataset.getChildTags());//gia ordinati
+
+        //poi i tipici ordinati
         tifr.addAll(currentTyps);
 
-       /* for (SoulissTag itta :
+        /*for (SoulissTag itta :
                 mDataset.getChildTags()) {
             //inserisco tag ordinatamente
             for (int i = 0; i < getItemCount(); i++) {
@@ -99,16 +108,77 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     }
 
     @Override//bellissimo shine deve dormire di piu'
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TypicalCardViewHolder)
             onBindViewHolderImpl((TypicalCardViewHolder) holder, position);
-        else if (holder instanceof TagCardViewHolder)
-            onBindViewHolderImpl((TagCardViewHolder) holder, position);
+        else if (holder instanceof TagRecyclerAdapter.TagCardViewHolder)
+            onBindViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
         else
             throw new SoulissModelException("TOIMPLEMENT");
     }
 
-    public void onBindViewHolderImpl(TagCardViewHolder viewHolder, final int i) {
+    public void onBindViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
+        String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
+                0);
+        holder.data = (SoulissTag) getItems().get(position);
+        try {
+            List<SoulissTypical> appoggio = holder.data.getAssignedTypicals();
+            quantityString = context.getResources().getQuantityString(R.plurals.Devices,
+                    appoggio.size(), appoggio.size());
+        } catch (Exception ce) {
+            Log.w(Constants.TAG, "TAG Empty? ");
+        }
+        holder.textCmd.setText(holder.data.getName() + " (" + context.getString(R.string.subtag) + ") ");
+        holder.textCmdWhen.setText(quantityString);
+
+        if (holder.data.getIconResourceId() != 0) {
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, holder.data.getIconResourceId());
+            // holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
+            holder.imageTag.setVisibility(View.VISIBLE);
+        } else {
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeEnum.fa_tag.getFontName());
+            //holder.imageTag.setImageResource(R.drawable.window);//avoid exc
+            // holder.imageTag.setVisibility(View.INVISIBLE);
+        }
+
+        TypedValue a = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.windowBackground, a, true);
+        if (a.type >= TypedValue.TYPE_FIRST_COLOR_INT && a.type <= TypedValue.TYPE_LAST_COLOR_INT) {
+            // windowBackground is a color
+            int color = a.data;
+            holder.imageTag.setTextColor(color);
+        } else {
+            // windowBackground is not a color, probably a drawable
+            Drawable d = context.getResources().getDrawable(a.resourceId);
+            Log.w(Constants.TAG, "not getting window background");
+        }
+
+
+        // Here you apply the animation when the view is bound
+        //setAnimation(holder.container, position);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "Activating TAG " + position);
+                Intent nodeDatail = new Intent(context, TagDetailActivity.class);
+                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                nodeDatail.putExtra("TAG", holder.data.getTagId());
+                nodeDatail.putExtra("FATHERTAG", holder.data.getFatherId());
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                                //holder.image,   // The view which starts the transition
+                                //"photo_hero"    // The transitionName of the view we’re transitioning to
+                                Pair.create((View) holder.image, "photo_hero"),
+                                Pair.create((View) holder.shadowbar, "shadow_hero"),
+                                Pair.create((View) holder.imageTag, "tag_hero")
+                        );
+
+                ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+            }
+
+
+        });
 
     }
 
@@ -159,14 +229,14 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     public RecyclerView.ViewHolder onCreateTagViewHolderImpl(ViewGroup viewGroup) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.cardview_tag, viewGroup, false);
+                .inflate(R.layout.cardview_subtag, viewGroup, false);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.w(Constants.TAG, "nel holder TAG click");
             }
         });
-        return new TagCardViewHolder(v);
+        return new TagRecyclerAdapter.TagCardViewHolder(v);
     }
 
     @Override
@@ -203,63 +273,6 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         mDataset = data;
     }
 
-    /**
-     * Provide a reference to the type of views that you are using (custom ViewHolder)
-     */
-    public static class TagCardViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
-        private final TextView textViewInfo1;
-        private final TextView textViewInfo2;
-        private final CardView cardView;
-        private SoulissTag data;
-        private TextView imageView;
-        private LinearLayout linearActionsLayout;
-
-        public TagCardViewHolder(View v) {
-            super(v);
-            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
-            imageView = (TextView) v.findViewById(R.id.card_thumbnail_image2);
-            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
-            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
-            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
-            cardView = (CardView) v.findViewById(R.id.TypCard);
-            //v.setOnCreateContextMenuListener(this);
-        }
-
-        public CardView getCardView() {
-            return cardView;
-        }
-
-        public SoulissTag getData() {
-            return data;
-        }
-
-        public void setData(SoulissTag data) {
-            this.data = data;
-        }
-
-        public TextView getImageView() {
-            return imageView;
-        }
-
-        public LinearLayout getLinearActionsLayout() {
-            return linearActionsLayout;
-        }
-
-        public TextView getTextView() {
-            return textView;
-        }
-
-        public TextView getTextViewInfo1() {
-            return textViewInfo1;
-        }
-
-        public TextView getTextViewInfo2() {
-            return textViewInfo2;
-        }
-
-
-    }
 
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)

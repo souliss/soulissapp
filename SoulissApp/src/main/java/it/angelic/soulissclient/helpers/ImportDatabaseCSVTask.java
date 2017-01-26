@@ -309,7 +309,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         }
 
         //TODO agg padre al CSV
-        database.createOrUpdateTag(tIns, null);
+        database.createOrUpdateTag(tIns);
     }
 
     private void insertLog(String[] temp) {

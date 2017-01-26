@@ -77,7 +77,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             Log.i(Constants.TAG, "RESULT_OK PATH:" + selectedImage.toString());
             collected.setImagePath(selectedImage.toString());
             //father nullo che' siamo sulla lista grid
-            db.createOrUpdateTag(collected, null);
+            db.createOrUpdateTag(collected);
             //Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
             Log.i(Constants.TAG, "SAVED IMG PATH:" + collected.getImagePath());
         }
@@ -118,6 +118,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("TAG") != null)
             tagId = (long) extras.get("TAG");
+
 
         try {
             collected = db.getTag((int) tagId);
@@ -165,7 +166,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextView icon = (TextView) findViewById(R.id.node_icon);
+        TextView icon = (TextView) findViewById(R.id.imageTagIconFAwe);
         switch (item.getItemId()) {
             case android.R.id.home:
 

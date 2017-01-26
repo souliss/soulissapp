@@ -105,7 +105,7 @@ public class LauncherAddListener extends DialogPreference implements DialogInter
                     outputTYpSpinner.setAdapter(adaptertyp);
                 } else if (statArr[pos].equals(LauncherElementEnum.TAG)) {
                     ArrayAdapter<SoulissTag> adaptertyp = new ArrayAdapter<>(context,
-                            android.R.layout.simple_spinner_dropdown_item, datasource.getTags(context));
+                            android.R.layout.simple_spinner_dropdown_item, datasource.getRootTags(context));
                     //setTypicalSpinner(outputTypicalSpinner, nodiArray[pos], context);
                     outputTYpSpinner.setAdapter(adaptertyp);
                 } else if (statArr[pos].equals(LauncherElementEnum.SCENE)) {

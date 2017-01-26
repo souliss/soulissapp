@@ -18,4 +18,5 @@
         <item quantity="one">1 Second</item>
         <item quantity="other">%s  Seconds</item>
     </plurals>
+    <plurals name="scenes_configured">Scenes configured</plurals>
 </resources>

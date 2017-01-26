@@ -88,10 +88,10 @@ public class AlertDialogGridHelper {
                                 return;
                             }
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
-                            dbt.createOrUpdateTag((SoulissTag) toRename, null);
+                            dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (tagRecyclerAdapter != null) {
                                 int tgtPos = -1;
-                                List<SoulissTag> goer = dbt.getTags(SoulissApp.getAppContext());
+                                List<SoulissTag> goer = dbt.getRootTags(SoulissApp.getAppContext());
 
                                 tagRecyclerAdapter.setTagArray(goer);
                                 try {
@@ -184,9 +184,9 @@ public class AlertDialogGridHelper {
 
                         } else if (toRename instanceof SoulissTag) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
-                            dbt.createOrUpdateTag((SoulissTag) toRename, null);
+                            dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (list != null) {
-                                //   List<SoulissTag> goer = dbt.getTags(SoulissClient.getAppContext());
+                                //   List<SoulissTag> goer = dbt.getRootTags(SoulissClient.getAppContext());
                                 List<SoulissTag> tagArray = list.getTagArray();
                                 // tagArray = goer.toArray(tagArray);
                                 //list.setTagArray(tagArray);
@@ -256,7 +256,7 @@ public class AlertDialogGridHelper {
                             }
 
                             // prendo dal DB
-                            List<SoulissTag> goer = datasource.getTags(cont);
+                            List<SoulissTag> goer = datasource.getRootTags(cont);
                             ctx.setTagArray(goer);
                             //shift visivo
                             ctx.notifyItemRemoved(tgtPos);
@@ -321,7 +321,7 @@ public class AlertDialogGridHelper {
                             temp.set(newPosition, toUpdate);
                             temp.set(oldPosition, oldOne);
                             adapter.setTagArray(temp);
-                            dbt.createOrUpdateTag(toUpdate, null);
+                            dbt.createOrUpdateTag(toUpdate);
                             //notify to move
                             adapter.notifyItemMoved(oldPosition, newPosition);
                         }
