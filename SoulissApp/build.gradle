@@ -11,7 +11,7 @@ android {
             }
         }
     } catch (Exception e) {
-        println 'localScope2NotAvailable'
+        println 'localsignature.properties not found'
     }
 
     compileSdkVersion rootProject.ext.compileSdkVersion
