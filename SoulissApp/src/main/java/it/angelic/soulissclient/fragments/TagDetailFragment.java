@@ -488,7 +488,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
         //and in your imlpementaion of
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            // get the viewHolder's and target's positions in your launcherMainAdapter data, swap them
+            // coi subtag volutamente non funziona
             Collections.swap(adapter.getItems(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
 
             // and notify the launcherMainAdapter that its dataset has changed

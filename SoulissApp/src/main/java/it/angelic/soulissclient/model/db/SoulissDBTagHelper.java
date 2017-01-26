@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -19,6 +20,8 @@ import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
+
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Classe helper per l'esecuzione di interrogazioni al DB, Inserimenti eccetera
@@ -162,18 +165,56 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return comments;
     }
 
+    /**
+     * Come me li dai li setto...
+     * <p>
+     * Tutti gli oggetti che possono essere typ o tag vengono
+     * ri-settati in base alla loro posizione in freshTagTyps
+     *
+     * @param freshTagTyps
+     * @param fatherTag
+     */
     public void updateTagTypicalsOrder(List<ISoulissObject> freshTagTyps, SoulissTag fatherTag) {
         for (int i = 0; i < freshTagTyps.size(); i++) {
             if (freshTagTyps.get(i) instanceof SoulissTypical) {
-                createOrUpdateTagTypicalNode((SoulissTypical) freshTagTyps.get(i), fatherTag, i);
+                refreshTagTypical((SoulissTypical) freshTagTyps.get(i), fatherTag, i);
+                // createOrUpdateTagTypicalNode((SoulissTypical) freshTagTyps.get(i), fatherTag, i);
             } else if (freshTagTyps.get(i) instanceof SoulissTag) {
                 SoulissTag sorting = (SoulissTag) freshTagTyps.get(i);
                 sorting.setTagOrder(i);
-                createOrUpdateTag(sorting, fatherTag);
+                refreshTag(sorting);
             } else
                 throw new SoulissModelException("E ADESSO DOVE SI VA?");
         }
     }
 
+    public int refreshTagTypical(SoulissTypical nodeIN, SoulissTag father, @NonNull Integer priority) {
+        ContentValues values = new ContentValues();
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_TAG_TYP_PRIORITY, priority);
+        long upd = database.update(SoulissDB.TABLE_TAGS_TYPICALS, values, SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
+                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot()
+                        + " AND " + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + father.getTagId(),
+                null);
 
+        assertEquals(upd, 1);
+        return (int) upd;
+    }
+
+    /**
+     * Order-only UPDATE
+     *
+     * @param nodeIN
+     * @return
+     */
+    public int refreshTag(SoulissTag nodeIN) {
+        ContentValues values = new ContentValues();
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_TAG_ORDER, nodeIN.getTagOrder());
+        long upd = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + nodeIN.getTagId(),
+                null);
+
+        assertEquals(upd, 1);
+        return (int) upd;
+    }
 }

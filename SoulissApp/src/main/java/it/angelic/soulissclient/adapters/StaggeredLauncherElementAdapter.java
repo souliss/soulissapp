@@ -58,13 +58,181 @@ import static it.angelic.soulissclient.Constants.TAG;
 
 public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<StaggeredLauncherElementAdapter.ViewHolder> {
 
+    public SoulissDataService getmBoundService() {
+        return mBoundService;
+    }
+
+    public void setmBoundService(SoulissDataService mBoundService) {
+        this.mBoundService = mBoundService;
+    }
+
     SoulissDataService mBoundService;
     private Activity context;
     private List<LauncherElement> launcherElements;
+
     public StaggeredLauncherElementAdapter(Activity context, List<LauncherElement> launcherElements, SoulissDataService mBoundService) {
         this.launcherElements = launcherElements;
         this.context = context;
         this.mBoundService = mBoundService;
+    }
+
+    @Override
+    public int getItemCount() {
+        return launcherElements.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        // Just as an example, return 0 or 2 depending on position
+        // Note that unlike in ListView adapters, types don't have to be contiguous
+        return launcherElements.get(position).getComponentEnum().ordinal();
+    }
+
+    public List<LauncherElement> getLauncherElements() {
+        return launcherElements;
+    }
+
+    public void setLauncherElements(List<LauncherElement> in) {
+        launcherElements = in;
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final LauncherElement item = launcherElements.get(position);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        //holder.container.removeAllViews();
+        //holder.textView.setText(item.title);
+        // holder.container = launcherElements[position].inflateCardView();
+
+        final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+        if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+            StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
+            sglp.setFullSpan(item.isFullSpan());
+            Log.w(Constants.TAG, "Full span for element?" + holder.getItemViewType());
+            holder.itemView.setLayoutParams(sglp);
+
+        }
+        //qui la view c'e` gia
+        switch (item.getComponentEnum()) {
+            case STATIC_SCENES:
+                View viewLine = holder.container.findViewById(R.id.StaticTileLine);
+                TextView txtTit = (TextView) holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc = (TextView) holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom, FontAwesomeEnum.fa_moon_o.getFontName());
+                txtTit.setText(item.getTitle());
+                txtDesc.setText(item.getDesc());
+                holder.container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent nodeDatail = new Intent(context, SceneListActivity.class);
+                        context.startActivity(nodeDatail);
+                    }
+
+
+                });
+                viewLine.setBackgroundColor(context.getResources().getColor(R.color.std_yellow));
+                break;
+            case STATIC_MANUAL:
+                View viewLine2 = holder.container.findViewById(R.id.StaticTileLine);
+                TextView txtTit2 = (TextView) holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc2 = (TextView) holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom2 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom2, FontAwesomeEnum.fa_codepen.getFontName());
+                txtTit2.setText(item.getTitle());
+                txtDesc2.setText(item.getDesc());
+                holder.container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent nodeDatail = new Intent(context, NodesListActivity.class);
+                        context.startActivity(nodeDatail);
+                    }
+
+
+                });
+                viewLine2.setBackgroundColor(context.getResources().getColor(R.color.std_green));
+                break;
+            case STATIC_PROGRAMS:
+                View viewLine3 = holder.container.findViewById(R.id.StaticTileLine);
+                TextView txtTit3 = (TextView) holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc3 = (TextView) holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom3 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom3, "fa-calendar");
+                txtTit3.setText(item.getTitle());
+                txtDesc3.setText(item.getDesc());
+                holder.container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent nodeDatail = new Intent(context, ProgramListActivity.class);
+                        context.startActivity(nodeDatail);
+                    }
+
+
+                });
+                viewLine3.setBackgroundColor(context.getResources().getColor(R.color.std_blue));
+                break;
+            case STATIC_TAGS:
+                View viewLine34 = holder.container.findViewById(R.id.StaticTileLine);
+                TextView txtTit34 = (TextView) holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc34 = (TextView) holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom34 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom34, "fa-tags");
+                txtTit34.setText(item.getTitle());
+                txtDesc34.setText(item.getDesc());
+                holder.container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent nodeDatail = new Intent(context, TagGridActivity.class);
+                        context.startActivity(nodeDatail);
+                    }
+                });
+                viewLine34.setBackgroundColor(context.getResources().getColor(R.color.std_purple));
+                break;
+            case TYPICAL:
+                bindTypicalElement(holder, item);
+                break;
+            case SCENE:
+
+                final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
+                Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
+
+                TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
+                TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
+                TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
+                Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
+
+                textViewCommand.setText(nodo.getNiceName());
+
+                String strMeatFormat = context.getString(R.string.scene_subtitle);
+                textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
+
+                FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
+                exe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
+                        nodo.execute();
+                    }
+
+
+                });
+
+                break;
+            case NODE:
+                bindNodeElement(holder, item);
+                break;
+            case STATIC_STATUS:
+                TextView textCmdsd = (TextView) holder.container.findViewById(R.id.textViewBasicInfo);
+                TextView textCmdWhens = (TextView) holder.container.findViewById(R.id.textViewBasicInfoLittle);
+                setServiceInfo(textCmdsd, textCmdWhens);
+                break;
+            case TAG:
+                bindTagElement(holder, item);
+                break;
+        }
     }
 
     private void bindNodeElement(ViewHolder holder, LauncherElement item) {
@@ -239,173 +407,6 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
 
 
         });
-    }
-
-    @Override
-    public int getItemCount() {
-        return launcherElements.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        // Just as an example, return 0 or 2 depending on position
-        // Note that unlike in ListView adapters, types don't have to be contiguous
-        return launcherElements.get(position).getComponentEnum().ordinal();
-    }
-
-    public List<LauncherElement> getLauncherElements() {
-        return launcherElements;
-    }
-
-    public void setLauncherElements(List<LauncherElement> in) {
-        launcherElements = in;
-        notifyDataSetChanged();
-    }
-
-    public SoulissDataService getmBoundService() {
-        return mBoundService;
-    }
-
-    public void setmBoundService(SoulissDataService mBoundService) {
-        this.mBoundService = mBoundService;
-    }
-
-    @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final LauncherElement item = launcherElements.get(position);
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-        //holder.container.removeAllViews();
-        //holder.textView.setText(item.title);
-        // holder.container = launcherElements[position].inflateCardView();
-
-        final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
-            StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
-            sglp.setFullSpan(item.isFullSpan());
-            Log.w(Constants.TAG, "Full span for element?" + holder.getItemViewType());
-            holder.itemView.setLayoutParams(sglp);
-
-        }
-        //qui la view c'e` gia
-        switch (item.getComponentEnum()) {
-            case STATIC_SCENES:
-                View viewLine = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom, FontAwesomeEnum.fa_moon_o.getFontName());
-                txtTit.setText(item.getTitle());
-                txtDesc.setText(item.getDesc());
-                holder.container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent nodeDatail = new Intent(context, SceneListActivity.class);
-                        context.startActivity(nodeDatail);
-                    }
-
-
-                });
-                viewLine.setBackgroundColor(context.getResources().getColor(R.color.std_yellow));
-                break;
-            case STATIC_MANUAL:
-                View viewLine2 = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit2 = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc2 = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom2 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom2, FontAwesomeEnum.fa_codepen.getFontName());
-                txtTit2.setText(item.getTitle());
-                txtDesc2.setText(item.getDesc());
-                holder.container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent nodeDatail = new Intent(context, NodesListActivity.class);
-                        context.startActivity(nodeDatail);
-                    }
-
-
-                });
-                viewLine2.setBackgroundColor(context.getResources().getColor(R.color.std_green));
-                break;
-            case STATIC_PROGRAMS:
-                View viewLine3 = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit3 = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc3 = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom3 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom3, "fa-calendar");
-                txtTit3.setText(item.getTitle());
-                txtDesc3.setText(item.getDesc());
-                holder.container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent nodeDatail = new Intent(context, ProgramListActivity.class);
-                        context.startActivity(nodeDatail);
-                    }
-
-
-                });
-                viewLine3.setBackgroundColor(context.getResources().getColor(R.color.std_blue));
-                break;
-            case STATIC_TAGS:
-                View viewLine34 = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit34 = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc34 = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom34 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom34, "fa-tags");
-                txtTit34.setText(item.getTitle());
-                txtDesc34.setText(item.getDesc());
-                holder.container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent nodeDatail = new Intent(context, TagGridActivity.class);
-                        context.startActivity(nodeDatail);
-                    }
-                });
-                viewLine34.setBackgroundColor(context.getResources().getColor(R.color.std_purple));
-                break;
-            case TYPICAL:
-                bindTypicalElement(holder, item);
-                break;
-            case SCENE:
-
-                final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
-                Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
-
-                TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
-                TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
-                TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
-                Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
-
-                textViewCommand.setText(nodo.getNiceName());
-
-                String strMeatFormat = context.getString(R.string.scene_subtitle);
-                textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
-
-                FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
-                exe.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
-                        nodo.execute();
-                    }
-
-
-                });
-
-                break;
-            case NODE:
-                bindNodeElement(holder, item);
-                break;
-            case STATIC_STATUS:
-                TextView textCmdsd = (TextView) holder.container.findViewById(R.id.textViewBasicInfo);
-                TextView textCmdWhens = (TextView) holder.container.findViewById(R.id.textViewBasicInfoLittle);
-                setServiceInfo(textCmdsd, textCmdWhens);
-                break;
-            case TAG:
-                bindTagElement(holder, item);
-                break;
-        }
     }
 
     @Override

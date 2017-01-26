@@ -20,6 +20,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissTag;
+import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -29,6 +30,8 @@ import it.angelic.soulissclient.util.SoulissUtils;
  */
 public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final TagDetailActivity context;
+    private final int VIEW_TYPE_TAG_TYPICAL = 1;
+    private final int VIEW_TYPE_TAG_NESTED = 2;
     protected SoulissTag mDataset;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -44,49 +47,95 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public int getItemCount() {
         if (mDataset != null)
-            return mDataset.getAssignedTypicals().size();
+            return mDataset.getAssignedTypicals().size() + mDataset.getChildTags().size();
         else
             return 0;
     }
 
-    public List<ISoulissObject> getItems() {
-        ArrayList<ISoulissObject> tifr = new ArrayList<>();
-        tifr.addAll(mDataset.getChildTags());
-        tifr.addAll(mDataset.getAssignedTypicals());
-        return tifr;
-    }
-
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof TypicalCardViewHolder)
-        onBindViewHolderImpl(holder, position);
+    public int getItemViewType(int position) {
+
+        if (getItems().get(position) instanceof SoulissTypical)
+            return VIEW_TYPE_TAG_TYPICAL;
+        else if (getItems().get(position) instanceof SoulissTag)
+            return VIEW_TYPE_TAG_NESTED;
         else
             throw new SoulissModelException("TOIMPLEMENT");
     }
 
-    public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, final int i) {
-        Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(mDataset.getAssignedTypicals().get(i).getTypicalDTO().getRefreshedAt()));
+    /**
+     * Non posso ordinare col comparator A MENO
+     * di introdurre correttamente TagTypical.java
+     * <p>
+     * Il typico NON ha order
+     *
+     * @return
+     */
+    public List<ISoulissObject> getItems() {
+        List<ISoulissObject> tifr = new ArrayList<>();
+        List<SoulissTypical> currentTyps = mDataset.getAssignedTypicals();
+
+        tifr.addAll(currentTyps);//gia ordinati
+        tifr.addAll(currentTyps);
+
+       /* for (SoulissTag itta :
+                mDataset.getChildTags()) {
+            //inserisco tag ordinatamente
+            for (int i = 0; i < getItemCount(); i++) {
+                if (itta.getTagOrder() <= i) {
+                    tifr.add(i, itta);
+                    break;
+                }
+                if (i > currentTyps.size()){
+                    tifr.add(itta);
+                    break;
+                }
+            }
+        }*/
+        if (tifr.size() != getItemCount())
+            throw new SoulissModelException("REMOVE ME");
+
+        return tifr;
+    }
+
+    @Override//bellissimo shine deve dormire di piu'
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof TypicalCardViewHolder)
+            onBindViewHolderImpl((TypicalCardViewHolder) holder, position);
+        else if (holder instanceof TagCardViewHolder)
+            onBindViewHolderImpl((TagCardViewHolder) holder, position);
+        else
+            throw new SoulissModelException("TOIMPLEMENT");
+    }
+
+    public void onBindViewHolderImpl(TagCardViewHolder viewHolder, final int i) {
+
+    }
+
+    public void onBindViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
+        viewHolder.setData((SoulissTypical) getItems().get(i));
+        Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
-        ((TypicalCardViewHolder) viewHolder).getTextView().setText(
-                mDataset.getAssignedTypicals().get(i).getParentNode().getNiceName()
+        viewHolder.getTextView().setText(
+                viewHolder.getData().getParentNode().getNiceName()
                         + " "
-                        + mDataset.getAssignedTypicals().get(i).getNiceName());
-        ((TypicalCardViewHolder) viewHolder).getTextView().setTag(i);
-        mDataset.getAssignedTypicals().get(i).setOutputDescView(((TypicalCardViewHolder) viewHolder).getTextViewInfo1());
-        ((TypicalCardViewHolder) viewHolder).getTextViewInfo2().setText(opzioni.getContx().getString(R.string.update) + " "
-                + SoulissUtils.getTimeAgo(mDataset.getAssignedTypicals().get(i).getTypicalDTO().getRefreshedAt()));
+                        + viewHolder.getData().getNiceName());
+        viewHolder.getTextView().setTag(i);
+        viewHolder.getData().setOutputDescView(viewHolder.getTextViewInfo1());
+        viewHolder.getTextViewInfo2().setText(opzioni.getContx().getString(R.string.update) + " "
+                + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
         /* Icona del nodo */
-        FontAwesomeUtil.prepareFontAweTextView(context, ((TypicalCardViewHolder) viewHolder).getImageView(), mDataset.getAssignedTypicals().get(i).getIconResourceId());
+        FontAwesomeUtil.prepareFontAweTextView(context, viewHolder.getImageView(), viewHolder.getData().getIconResourceId());
         //((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
-        LinearLayout sghembo = ((TypicalCardViewHolder) viewHolder).getLinearActionsLayout();
+        LinearLayout sghembo = viewHolder.getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()) {
-            ((TypicalCardViewHolder) viewHolder).getCardView().setCardBackgroundColor(opzioni.getContx().getResources().getColor(R.color.background_floating_material_light));
+            viewHolder.getCardView().setCardBackgroundColor(opzioni.getContx().getResources().getColor(R.color.background_floating_material_light));
         }
         //viewHolder.getTextView().setOnClickListener(this);
-        mDataset.getAssignedTypicals().get(i).getActionsLayout(opzioni.getContx(), sghembo);
-        ((TypicalCardViewHolder) viewHolder).getCardView().setOnClickListener(new View.OnClickListener() {
+        viewHolder.getData().getActionsLayout(opzioni.getContx(), sghembo);
+        viewHolder.getCardView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.w(Constants.TAG, "OnClick");
@@ -108,13 +157,31 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     }
 
+    public RecyclerView.ViewHolder onCreateTagViewHolderImpl(ViewGroup viewGroup) {
+        View v = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.cardview_tag, viewGroup, false);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.w(Constants.TAG, "nel holder TAG click");
+            }
+        });
+        return new TagCardViewHolder(v);
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return onCreateViewHolderImpl(parent, viewType);
+
+        if (viewType == VIEW_TYPE_TAG_TYPICAL)
+            return onCreateViewHolderImpl(parent);
+        else if (viewType == VIEW_TYPE_TAG_NESTED)
+            return onCreateTagViewHolderImpl(parent);
+        else
+            throw new SoulissModelException("TOIMPLEMENT");
 
     }
 
-    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, final int i) {
+    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
         v.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +203,6 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         mDataset = data;
     }
 
-
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
@@ -145,6 +211,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
+        private SoulissTag data;
         private TextView imageView;
         private LinearLayout linearActionsLayout;
 
@@ -161,6 +228,14 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
         public CardView getCardView() {
             return cardView;
+        }
+
+        public SoulissTag getData() {
+            return data;
+        }
+
+        public void setData(SoulissTag data) {
+            this.data = data;
         }
 
         public TextView getImageView() {
@@ -185,6 +260,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
 
     }
+
     /**
      * Provide a reference to the type of views that you are using (custom ViewHolder)
      */
@@ -193,8 +269,10 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         private final TextView textViewInfo1;
         private final TextView textViewInfo2;
         private final CardView cardView;
+        private SoulissTypical data;
         private TextView imageView;
         private LinearLayout linearActionsLayout;
+
 
         public TypicalCardViewHolder(View v) {
             super(v);
@@ -209,6 +287,14 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
         public CardView getCardView() {
             return cardView;
+        }
+
+        public SoulissTypical getData() {
+            return data;
+        }
+
+        public void setData(SoulissTypical data) {
+            this.data = data;
         }
 
         public TextView getImageView() {

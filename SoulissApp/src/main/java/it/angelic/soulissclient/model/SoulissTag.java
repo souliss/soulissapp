@@ -9,7 +9,7 @@ import java.util.List;
  * <p/>
  * Created by Ale on 27/02/2015.
  */
-public class SoulissTag implements Serializable, ISoulissObject {
+public class SoulissTag implements Serializable, ISoulissSortableObject {
     private List<SoulissTypical> assignedTypicals = new ArrayList<>();
 
     public List<SoulissTag> getChildTags() {
@@ -78,6 +78,16 @@ public class SoulissTag implements Serializable, ISoulissObject {
 
     public Long getTagId() {
         return tagId;
+    }
+
+    @Override
+    public void setOrder(Integer order) {
+        setTagOrder(order);
+    }
+
+    @Override
+    public Integer getOrder() {
+        return getTagOrder();
     }
 
     public void setTagId(long tagId) {
