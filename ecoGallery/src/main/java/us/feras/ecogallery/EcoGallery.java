@@ -1,7 +1,5 @@
 package us.feras.ecogallery;
 
-import java.lang.reflect.Field;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
@@ -19,6 +17,8 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.animation.Transformation;
 import android.widget.Scroller;
+
+import java.lang.reflect.Field;
 
 public class EcoGallery extends EcoGalleryAbsSpinner implements GestureDetector.OnGestureListener {
 
@@ -184,10 +184,12 @@ public class EcoGallery extends EcoGalleryAbsSpinner implements GestureDetector.
 
 			FLAG_USE_CHILD_DRAWING_ORDER = childDrawingOrder.getInt(this);
 			FLAG_SUPPORT_STATIC_TRANSFORMATIONS = supportStaticTrans.getInt(this);
-		} catch (NoSuchFieldException | IllegalAccessException e) {
+		} catch (NoSuchFieldException e) {
+			Log.e(LOG_TAG, e.getMessage(), e);
+		} catch (IllegalAccessException e) {
 			Log.e(LOG_TAG, e.getMessage(), e);
 		}
-        try {
+		try {
 			// set new group flags
 			Field groupFlags = vgClass.getDeclaredField("mGroupFlags");
 			groupFlags.setAccessible(true);
@@ -200,10 +202,12 @@ public class EcoGallery extends EcoGalleryAbsSpinner implements GestureDetector.
 
 			// working!
 			mBroken = false;
-		} catch (NoSuchFieldException | IllegalAccessException e) {
+		} catch (NoSuchFieldException e) {
+			Log.e(LOG_TAG, e.getMessage(), e);
+		} catch (IllegalAccessException e) {
 			Log.e(LOG_TAG, e.getMessage(), e);
 		}
-    }
+	}
 
 	/**
 	 * @return Whether the widget is broken or working (functional)

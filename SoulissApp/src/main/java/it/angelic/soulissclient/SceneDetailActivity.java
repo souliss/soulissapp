@@ -52,19 +52,18 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         //TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
         TextView health = (TextView) findViewById(R.id.TextViewHealth);
         upda = (TextView) findViewById(R.id.TextViewNodeUpdate);
-        TextView icon = (TextView) findViewById(R.id.scene_icon);
+        TextView aweIcon = (TextView) findViewById(R.id.scene_icon);
         // titolo.setText(getString(R.string.scene) + " " +
         // Constants.int2roman(collected.getNodeId()));
 
-        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
-        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, icon, SimpleTagViewUtils.getAwesomeNames(SceneDetailActivity.this).get(collected.getIconResourceId()));
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(this, aweIcon, SimpleTagViewUtils.getAwesomeNames(SceneDetailActivity.this).get(collected.getIconResourceId()));
 
         //icon.setImageResource(collected.getIconResourceId());
         // Animazione icona nodo
         if (opzioni.getTextFx()) {
             Animation a = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scalerotale);
             a.reset();
-            icon.startAnimation(a);
+            aweIcon.startAnimation(a);
         }
 
         upda.setText(collected.toString());

@@ -2,9 +2,13 @@ package it.angelic.soulissclient.adapters;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +20,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
+import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissModelException;
@@ -110,14 +116,14 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     @Override//bellissimo shine deve dormire di piu'
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TypicalCardViewHolder)
-            onBindViewHolderImpl((TypicalCardViewHolder) holder, position);
+            onBindTagCardViewHolderImpl((TypicalCardViewHolder) holder, position);
         else if (holder instanceof TagRecyclerAdapter.TagCardViewHolder)
-            onBindViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
+            onBindTagCardViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
         else
             throw new SoulissModelException("TOIMPLEMENT");
     }
 
-    public void onBindViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
+    public void onBindTagCardViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
         holder.data = (SoulissTag) getItems().get(position);
@@ -153,6 +159,24 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
             Log.w(Constants.TAG, "not getting window background");
         }
 
+        try {
+            File picture = new File(TagDetailFragment.getRealPathFromURI(context, Uri.parse(holder.data.getImagePath())));
+
+            // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+            if (picture.exists()) {
+                //ImageView imageView = (ImageView)findViewById(R.id.imageView);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                options.inPreferQualityOverSpeed = false;
+                Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                holder.image.setImageBitmap(myBitmap);
+            }
+
+        } catch (Exception io) {
+            Log.i(Constants.TAG, "cant load image " + holder.data.getImagePath());
+            holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
+        }
 
         // Here you apply the animation when the view is bound
         //setAnimation(holder.container, position);
@@ -182,7 +206,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     }
 
-    public void onBindViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
+    public void onBindTagCardViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
         viewHolder.setData((SoulissTypical) getItems().get(i));
         Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view

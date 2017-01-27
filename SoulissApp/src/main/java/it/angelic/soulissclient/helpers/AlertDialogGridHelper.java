@@ -5,16 +5,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import junit.framework.Assert;
 
 import java.util.List;
 
@@ -291,57 +285,5 @@ public class AlertDialogGridHelper {
         alert.show();
     }
 
-    @Deprecated
-    private static AlertDialog tagOrderPickerDialog(final Context context, @Nullable final SoulissTag toUpdate, final int oldPosition, final TagRecyclerAdapter adapter) {
-        final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
-        // alert2.setTitle("Choose " + toRename.toString() + " icon");
-        final AlertDialog.Builder deleteBuilder = new AlertDialog.Builder(context);
 
-        LayoutInflater factory = LayoutInflater.from(context);
-        final View deleteDialogView = factory.inflate(R.layout.dialog_numberpicker, null, false);
-
-        final NumberPicker low = (NumberPicker) deleteDialogView.findViewById(R.id.numberPicker1);
-        low.setMinValue((int) (SoulissDB.FAVOURITES_TAG_ID + 1));
-
-        low.setMaxValue(adapter == null ? 10 : adapter.getItemCount());
-
-        Log.i(Constants.TAG, "Setting new TAG order:" + toUpdate.getName());
-
-        deleteBuilder.setPositiveButton(context.getResources().getString(android.R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        SoulissDBTagHelper dbt = new SoulissDBTagHelper(context);
-                        toUpdate.setTagOrder(low.getValue());//sempre
-                        if (adapter != null) {
-                            int newPosition = low.getValue() >= adapter.getItemCount() ? adapter.getItemCount() - 1 : low.getValue();
-                            //swap elements
-                            List<SoulissTag> temp = adapter.getTagArray();
-                            Assert.assertTrue(oldPosition < temp.size());
-                            SoulissTag oldOne = temp.get(newPosition);
-                            temp.set(newPosition, toUpdate);
-                            temp.set(oldPosition, oldOne);
-                            adapter.setTagArray(temp);
-                            dbt.createOrUpdateTag(toUpdate);
-                            //notify to move
-                            adapter.notifyItemMoved(oldPosition, newPosition);
-                        }
-                    }
-                }
-        );
-
-        deleteBuilder.setNegativeButton(context.getResources().getString(android.R.string.cancel),
-
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                }
-
-        );
-        final AlertDialog deleteDialog = deleteBuilder.create();
-
-        deleteDialog.setView(deleteDialogView);
-
-        deleteDialog.setTitle("Select Position");
-        return deleteDialog;
-    }
 }

@@ -74,7 +74,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final TagCardViewHolder holder, final int position) {
+    public void onBindViewHolder(final TagCardViewHolder holder, int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
         try {
@@ -110,10 +110,10 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w(Constants.TAG, "Activating TAG " + position);
+                Log.w(Constants.TAG, "Activating TAG " + holder.data.getName());
                 Intent nodeDatail = new Intent(context, TagDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                nodeDatail.putExtra("TAG", soulissTags.get(position).getTagId());
+                nodeDatail.putExtra("TAG", holder.data.getTagId());
 
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,

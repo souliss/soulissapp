@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
@@ -35,6 +34,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.views.NumberPickerT6;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
@@ -44,7 +44,7 @@ import static junit.framework.Assert.assertTrue;
 public class T6nAnalogueFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
 
     private SoulissDBHelper datasource;
-    private ImageView icon;
+    private TextView icon;
     private EditText incrementText;
     private TextView nodeinfo;
     // Aggiorna il feedback
@@ -125,7 +125,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         View ret = inflater.inflate(R.layout.frag_t6n_analogue, container, false);
         nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
         incrementText = (EditText) ret.findViewById(R.id.editTextIncrement);
-        icon = (ImageView) ret.findViewById(R.id.typ_icon);
+        icon = (TextView) ret.findViewById(R.id.typ_icon);
         tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSliderPicker);
         upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
         par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
@@ -173,8 +173,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         upda.setText(getResources().getString(R.string.update) + " "
                 + SoulissUtils.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
 
-        icon.setImageResource(collected.getIconResourceId());
-
+        FontAwesomeUtil.prepareFontAweTextView(getActivity(), icon, collected.getIconResourceId());
         tempSlider.setModel(collected.getTypical());
         incrementText.setText(String.valueOf(tempSlider.getIncrement()));
         incrementText.addTextChangedListener(new TextWatcher() {
