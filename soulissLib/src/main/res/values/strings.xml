@@ -406,5 +406,6 @@
     <string name="tag_addSub">Add a sub-Tag</string>
     <string name="string_configured">" scenari configurati"</string>
     <string name="subtag">sub-Tag</string>
+    <string name="opt_welcome_restored">Welcome screen restored</string>
     >
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +19,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,6 +40,8 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissCommandDTO;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissTriggerDTO;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 
 public class AddProgramActivity extends AbstractStatusedFragmentActivity {
@@ -87,15 +89,19 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         datasource = new SoulissDBHelper(this);
         SoulissDBHelper.open();
         spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
-        ImageView nodeic = (ImageView) findViewById(R.id.timed_icon);
+        TextView nodeic = (TextView) findViewById(R.id.timed_icon);
         tvcommand = (TextView) findViewById(R.id.textViewCommand);
-        nodeic.setColorFilter(getResources().getColor(R.color.aa_violet), android.graphics.PorterDuff.Mode.SRC_ATOP);
-
-        ImageView nodeic2 = (ImageView) findViewById(R.id.position_icon);
-        nodeic2.setColorFilter(getResources().getColor(R.color.aa_blue), android.graphics.PorterDuff.Mode.SRC_ATOP);
-
-         ImageView nodeic3 = (ImageView) findViewById(R.id.triggered_icon);
-         nodeic3.setColorFilter(getResources().getColor(R.color.aa_red), android.graphics.PorterDuff.Mode.SRC_ATOP);
+        /* Icona timed */
+        nodeic.setTextColor(ContextCompat.getColor(AddProgramActivity.this, R.color.md_light_blue_200));
+        FontAwesomeUtil.prepareFontAweTextView(AddProgramActivity.this, nodeic, FontAwesomeEnum.fa_clock_o.getFontName());
+/* Icona positional */
+        TextView nodeic2 = (TextView) findViewById(R.id.position_icon);
+        nodeic2.setTextColor(ContextCompat.getColor(AddProgramActivity.this, R.color.md_light_blue_400));
+        FontAwesomeUtil.prepareFontAweTextView(AddProgramActivity.this, nodeic2, FontAwesomeEnum.fa_sign_out.getFontName());
+/* Icona Trigger */
+        TextView nodeic3 = (TextView) findViewById(R.id.triggered_icon);
+        nodeic3.setTextColor(ContextCompat.getColor(AddProgramActivity.this, R.color.md_light_blue_900));
+        FontAwesomeUtil.prepareFontAweTextView(AddProgramActivity.this, nodeic3, FontAwesomeEnum.fa_puzzle_piece.getFontName());
 
         // prendo tipici dal DB
         List<SoulissNode> goer = datasource.getAllNodes();

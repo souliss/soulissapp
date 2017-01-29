@@ -89,19 +89,19 @@ public class DrawerMenuHelper {
         }
         NavMenuSection it2 = NavMenuSection.create(-10, ctx.getString(R.string.menu_options).toUpperCase());
         tmp.add(it2);
-        NavMenuItem op2 = new NavMenuItem(SETTINGS_NET, ctx.getString(R.string.opt_net_home), "fa-wifi",
+        NavMenuItem op2 = new NavMenuItem(SETTINGS_NET, ctx.getString(R.string.opt_net_home), FontAwesomeEnum.fa_wifi.getFontName(),
                 false, ctx);
         tmp.add(op2);
-        NavMenuItem op3 = new NavMenuItem(SETTINGS_DB, ctx.getString(R.string.opt_db), "fa-sitemap",
+        NavMenuItem op3 = new NavMenuItem(SETTINGS_DB, ctx.getString(R.string.opt_db), FontAwesomeEnum.fa_sitemap.getFontName(),
                 false, ctx);
         tmp.add(op3);
-        NavMenuItem op4 = new NavMenuItem(SETTINGS_SERVICE, ctx.getString(R.string.opt_service), "fa-spinner",
+        NavMenuItem op4 = new NavMenuItem(SETTINGS_SERVICE, ctx.getString(R.string.opt_service), FontAwesomeEnum.fa_spinner.getFontName(),
                 false, ctx);
         tmp.add(op4);
-        NavMenuItem op5 = new NavMenuItem(SETTINGS_VISUAL, ctx.getString(R.string.opt_visual), "fa-picture-o",
+        NavMenuItem op5 = new NavMenuItem(SETTINGS_VISUAL, ctx.getString(R.string.opt_visual), FontAwesomeEnum.fa_picture_o.getFontName(),
                 false, ctx);
         tmp.add(op5);
-        NavMenuItem op6 = new NavMenuItem(SETTINGS_UDPTEST, ctx.getString(R.string.menu_test_udp), "fa-gears",
+        NavMenuItem op6 = new NavMenuItem(SETTINGS_UDPTEST, ctx.getString(R.string.menu_test_udp), FontAwesomeEnum.fa_gears.getFontName(),
                 false, ctx);
         tmp.add(op6);
 

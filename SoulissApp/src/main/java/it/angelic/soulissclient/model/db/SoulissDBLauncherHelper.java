@@ -40,7 +40,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     private static List<LauncherElement> launcherElementList;
 
     private final Context context;
-    private final SharedPreferences preferences;
 
     public SoulissDBLauncherHelper(Context context) {
         super(context);
@@ -48,8 +47,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         open();
         // Database fields
         launcherElementList = getDBLauncherElements(context);
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
+
         ///init sse vuoto
         if (launcherElementList.isEmpty()) {
             List<LauncherElement> launcherElementtemp = getDefaultStaticDBLauncherElements();
@@ -65,7 +63,16 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             // preferences.edit().putStringSet("launcher_elems", visibili).apply();
         }
 
-        //tolgo i nascosti
+
+        filterElementsFromPrefs();
+        recomputeOrder();
+
+    }
+
+    private void filterElementsFromPrefs() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
+        //FILTER tolgo i nascosti
         Set<LauncherElement> removeSet = new HashSet<>();
         for (int i = 0; i < launcherElementList.size(); i++) {
             if (!visibili.contains("" + launcherElementList.get(i).getId())) {
@@ -73,8 +80,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             }
         }
         launcherElementList.removeAll(removeSet);
-        recomputeOrder();
-
     }
 
     public LauncherElement addElement(LauncherElement lau) throws SoulissModelException {
@@ -83,7 +88,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         long id = createLauncherElement(lau);
         lau.setId(id);
-
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         visibili.add("" + lau.getId());
         preferences.edit().putStringSet("launcher_elems", visibili).apply();
@@ -254,6 +259,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     public void refreshMapFromDB() {
         Log.d(Constants.TAG, "refresh launcher from DB");
         launcherElementList = getDBLauncherElements(context);
+        filterElementsFromPrefs();
         recomputeOrder();
     }
 
@@ -262,8 +268,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         launcherElementList.remove(launcherElement);
         deleteLauncher(launcherElement);
-        visibili.remove("" + launcherElement.getId());
-        preferences.edit().putStringSet("launcher_elems", visibili).apply();
+        //non serve togliero, la lista e` in sottrazione
+        //visibili.remove("" + launcherElement.getId());
+        //preferences.edit().putStringSet("launcher_elems", visibili).apply();
         recomputeOrder();
     }
 

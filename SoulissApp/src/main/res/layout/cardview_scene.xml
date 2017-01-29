@@ -56,7 +56,6 @@
                 android:id="@+id/TextViewCommandWhen"
                 style="@style/CodeFontMain"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/TextViewCommand"
                 android:layout_toRightOf="@id/command_icon"
                 android:ellipsize="end"
                 android:minLines="1"

@@ -668,7 +668,7 @@ public class AlertDialogHelper {
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         if (opts.isSoulissReachable()) {
             // alert.setIcon()
-            alert.setMessage(preferencesActivity.getResources().getString(R.string.dialog_create_db) + ip
+            alert.setMessage(preferencesActivity.getResources().getString(R.string.dialog_create_db) + ": " + ip
                     + preferencesActivity.getResources().getString(R.string.dialog_create_db2));
             alert.setPositiveButton(preferencesActivity.getResources().getString(android.R.string.ok),
                     new DialogInterface.OnClickListener() {

@@ -173,7 +173,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T21)
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_codepen.getFontName());
         else if (typical == Constants.Typicals.Souliss_T22)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_codepen.getFontName());
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_gears.getFontName());
         else if (typical == Constants.Typicals.Souliss_T31)
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_thermometer_half.getFontName());
         else if (typical == Constants.Typicals.Souliss_T41_Antitheft_Main)
@@ -262,7 +262,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
      * @return
      */
     public String getOutputDesc() {
-        return "TOIMPLEMENT";
+        return "TOBEIMPL";
     }
 
     public SoulissNode getParentNode() {

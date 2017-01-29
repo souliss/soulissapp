@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -248,7 +247,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.explode));
 
                 // Our shared element (in Fragment A)
-                ImageView mProductImage = (ImageView) details.getView().findViewById(R.id.card_thumbnail_image2);
+                TextView mProductImage = (TextView) details.getView().findViewById(R.id.card_thumbnail_image2);
                 TextView mProductText = (TextView) findViewById(R.id.TextViewTypicalsTitle);
 
                 AppBarLayout.Behavior beh = new AppBarLayout.Behavior();

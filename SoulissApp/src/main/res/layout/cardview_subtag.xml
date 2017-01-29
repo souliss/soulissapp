@@ -38,7 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_alignParentTop="true"
             android:layout_height="1dip"
-            android:background="@color/md_purple_400"/>
+            android:background="@color/md_purple_800"/>
 
         <TextView
             android:id="@+id/imageTagIconFa"

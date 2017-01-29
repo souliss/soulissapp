@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Set;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -130,6 +131,8 @@ public class SoulissUtils {
                     prefEdit.putLong(key, ((Long) v).longValue());
                 else if (v instanceof String)
                     prefEdit.putString(key, ((String) v));
+                else if (v instanceof Set)
+                    prefEdit.putStringSet(key, (Set) v);
 
                 Log.d(Constants.TAG, "Restored pref:" + key + " Value:" + v);
             }

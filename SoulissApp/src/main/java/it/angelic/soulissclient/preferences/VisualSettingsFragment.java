@@ -43,7 +43,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
 				SoulissApp.saveWelcomeDisabledPreference(false);
-				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_dialog_restored),
+				Toast.makeText(getActivity(), SoulissApp.getAppContext().getString(R.string.opt_welcome_restored),
 						Toast.LENGTH_SHORT).show();
 				return true;
 			}

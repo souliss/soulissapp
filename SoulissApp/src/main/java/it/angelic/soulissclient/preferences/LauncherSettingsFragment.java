@@ -26,6 +26,7 @@ public class LauncherSettingsFragment extends PreferenceFragment {
 
         addPreferencesFromResource(R.xml.settings_launcher);
 
+        //bind opzione reset
         Preference exportDBPref = findPreference("rstlauncher");
         LauncherRstListener dbPrefListener = new LauncherRstListener(getActivity());
         exportDBPref.setOnPreferenceClickListener(dbPrefListener);

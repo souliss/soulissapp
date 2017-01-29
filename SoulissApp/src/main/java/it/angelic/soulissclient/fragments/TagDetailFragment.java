@@ -83,6 +83,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
+    private static final int SPAN_COUNT_LAND = 3;
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
     protected TagDetailParallaxExenderAdapter parallaxExtAdapter;
@@ -225,7 +226,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
-                LayoutManagerType.GRID_LAYOUT_MANAGER : LayoutManagerType.GRID_LAYOUT_MANAGER;
+                LayoutManagerType.LAND_LAYOUT_MANAGER : LayoutManagerType.PORT_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
         parallaxExtAdapter = new TagDetailParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
@@ -459,18 +460,18 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }*/
 
         switch (layoutManagerType) {
-            case GRID_LAYOUT_MANAGER:
-                mTagTypicalsLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
-                mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
+            case LAND_LAYOUT_MANAGER:
+                mTagTypicalsLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_LAND);
+                mCurrentLayoutManagerType = LayoutManagerType.LAND_LAYOUT_MANAGER;
                 break;
-            case LINEAR_LAYOUT_MANAGER://OCCHIO OVERRIDE GRID
+            case PORT_LAYOUT_MANAGER://OCCHIO OVERRIDE GRID
                 mTagTypicalsLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
-                mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
+                mCurrentLayoutManagerType = LayoutManagerType.LAND_LAYOUT_MANAGER;
                 break;
             default:
                 throw new SoulissModelException("NON CONTEMPLATO");
                 //mTagTypicalsLayoutManager = new LinearLayoutManager(getActivity());
-                //mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+                //mCurrentLayoutManagerType = LayoutManagerType.PORT_LAYOUT_MANAGER;
         }
         mTagTypicalsLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -490,8 +491,8 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     }
 
     private enum LayoutManagerType {
-        GRID_LAYOUT_MANAGER,
-        LINEAR_LAYOUT_MANAGER
+        LAND_LAYOUT_MANAGER,
+        PORT_LAYOUT_MANAGER
     }
 
     private static class ParallaxGridCallback extends ItemTouchHelper.Callback {

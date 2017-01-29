@@ -108,14 +108,13 @@
                         android:paddingTop="2dp"
                         android:text="@string/addprogram_timed"/>
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/timed_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:alpha="0.5"
-                        android:contentDescription="@string/addprogram_timed"
-                        android:src="@drawable/clock1"/>
+                        android:contentDescription="@string/addprogram_timed"/>
 
                     <TextView
                         android:id="@+id/textviewtimed"
@@ -174,14 +173,13 @@
                         android:paddingTop="2dp"
                         android:text="@string/addprogram_positional"/>
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/position_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:alpha="0.5"
-                        android:contentDescription="@string/addprogram_positional"
-                        android:src="@drawable/exit1"/>
+                        android:contentDescription="@string/addprogram_positional"/>
 
                     <TextView
                         android:id="@+id/textViewInfoPos"
@@ -221,14 +219,13 @@
                         android:paddingTop="2dp"
                         android:text="@string/addprogram_sensorial"/>
 
-                    <ImageView
+                    <TextView
                         android:id="@+id/triggered_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:alpha="0.5"
-                        android:contentDescription="@string/addprogram_sensorial"
-                        android:src="@drawable/lighthouse1"/>
+                        android:contentDescription="@string/addprogram_sensorial"/>
 
                     <TextView
                         android:id="@+id/textViewInfoTrig"

@@ -92,8 +92,8 @@ public class ProgramListAdapter extends BaseAdapter {
             //don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_clock_o.getFontName());
-            holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_100));
-            holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_100));
+            holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_200));
+            holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_200));
             holder.textCmdWhen
                     .setText(context.getString(R.string.execute_at) + " " + Constants.hourFormat.format(holder.data.getScheduledTime().getTime()));
             if (holder.data.getInterval() > 0) {
