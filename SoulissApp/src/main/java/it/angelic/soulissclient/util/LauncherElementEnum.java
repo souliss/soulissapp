@@ -8,7 +8,7 @@ import it.angelic.soulissclient.R;
  * Created by Ale on 06/10/2015.
  */
 public enum LauncherElementEnum {
-    STATIC_SCENES, STATIC_PROGRAMS, STATIC_MANUAL, STATIC_TAGS, TAG, STATIC_STATUS, POSIZIONE, SERVIZI, NODE, TYPICAL, SCENE;
+    STATIC_SCENES, STATIC_PROGRAMS, STATIC_MANUAL, STATIC_TAGS, TAG, STATIC_STATUS, STATIC_LOCATION, SERVIZI, NODE, TYPICAL, SCENE;
 
     public String toString(Context ctx) {
         switch (this) {
@@ -26,6 +26,8 @@ public enum LauncherElementEnum {
                 return ctx.getString(R.string.typical);
             case SCENE:
                 return ctx.getString(R.string.scene);
+            case STATIC_LOCATION:
+                return ctx.getString(R.string.position);
             case TAG:
                 return ctx.getString(R.string.tag);
             default:

@@ -53,18 +53,20 @@ public class LauncherRstListener implements OnPreferenceClickListener {
         SoulissDBLauncherHelper database = new SoulissDBLauncherHelper(parent);
         List<LauncherElement> po = database.getLauncherItems(parent);
         List<LauncherElement> def = database.getDefaultStaticDBLauncherElements();
-
+        int cont = 0;
+        //contains funziona con lo static solo perche id nulli da getDefaultStaticDBLauncherElements
         for (LauncherElement la : def) {
             if (!po.contains(la)) {
                 try {
                     database.addElement(la);
+                    cont++;
                 } catch (SoulissModelException e) {
                     Toast.makeText(parent, "Errore salvataggio tile", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
         }
-
+        Toast.makeText(parent, cont + " default tiles restored", Toast.LENGTH_SHORT).show();
     }
 
 

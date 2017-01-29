@@ -63,24 +63,10 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             // preferences.edit().putStringSet("launcher_elems", visibili).apply();
         }
 
-
-        filterElementsFromPrefs();
         recomputeOrder();
 
     }
 
-    private void filterElementsFromPrefs() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
-        //FILTER tolgo i nascosti
-        Set<LauncherElement> removeSet = new HashSet<>();
-        for (int i = 0; i < launcherElementList.size(); i++) {
-            if (!visibili.contains("" + launcherElementList.get(i).getId())) {
-                removeSet.add(launcherElementList.get(i));
-            }
-        }
-        launcherElementList.removeAll(removeSet);
-    }
 
     public LauncherElement addElement(LauncherElement lau) throws SoulissModelException {
         launcherElementList.add(lau);
@@ -154,6 +140,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             dto.setComponentEnum(LauncherElementEnum.values()[cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TYPE))]);
             ISoulissObject isoulissObj = null;
             switch (dto.getComponentEnum()) {
+                case STATIC_LOCATION:
+                    dto.setDesc(context.getString(R.string.opt_homepos_err));
+                    break;
                 case STATIC_MANUAL:
                     dto.setDesc(countNodes() + " nodi presenti");
                     break;
@@ -213,27 +202,33 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         prob.setDesc(context.getResources().getQuantityString(R.plurals.tags_plur,
                 countTags(), countTags()));
         prob.setTitle(context.getString(R.string.tags));
-        scenari.setOrder((short) 1);
+        prob.setOrder((short) 1);
         ret.add(prob);
 
         LauncherElement prop = new LauncherElement(LauncherElementEnum.STATIC_STATUS);
         prop.setTitle(context.getString(R.string.status_souliss));
         prop.setIsFullSpan(true);
-        scenari.setOrder((short) 2);
+        prop.setOrder((short) 2);
         ret.add(prop);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
         man.setTitle(context.getString(R.string.manual_title));
-        scenari.setOrder((short) 3);
+        man.setOrder((short) 3);
         man.setDesc(countNodes() + " nodi presenti");
         ret.add(man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
         pro.setTitle(context.getString(R.string.programs_title));
-        scenari.setOrder((short) 4);
+        pro.setOrder((short) 4);
         pro.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
                 countTriggers(), countTriggers()));//FIXME count progs
         ret.add(pro);
+
+        LauncherElement loc = new LauncherElement(LauncherElementEnum.STATIC_LOCATION);
+        loc.setTitle(context.getString(R.string.position));
+        loc.setOrder((short) 5);
+        loc.setDesc("");//dopo
+        ret.add(loc);
 
         return ret;
     }
@@ -259,7 +254,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     public void refreshMapFromDB() {
         Log.d(Constants.TAG, "refresh launcher from DB");
         launcherElementList = getDBLauncherElements(context);
-        filterElementsFromPrefs();
         recomputeOrder();
     }
 

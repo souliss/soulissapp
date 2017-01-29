@@ -88,6 +88,17 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         return launcherElements.get(position).getComponentEnum().ordinal();
     }
 
+    public LauncherElement getLocationLauncherElements() {
+
+        for (LauncherElement lal :
+                launcherElements) {
+            if (lal.getComponentEnum().equals(LauncherElementEnum.STATIC_LOCATION))
+                return lal;
+        }
+
+        return null;
+    }
+
     public List<LauncherElement> getLauncherElements() {
         return launcherElements;
     }
@@ -117,6 +128,17 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         }
         //qui la view c'e` gia
         switch (item.getComponentEnum()) {
+            case STATIC_LOCATION:
+                View viewLineL = holder.container.findViewById(R.id.StaticTileLine);
+                TextView txtTitL = (TextView) holder.container.findViewById(R.id.card_static_title);
+                TextView txtDescL = (TextView) holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesomL = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesomL, FontAwesomeEnum.fa_location_arrow.getFontName());
+                txtTitL.setText(item.getTitle());
+                txtDescL.setText(item.getDesc());
+
+                viewLineL.setBackgroundColor(context.getResources().getColor(R.color.md_blue_grey_500));
+                break;
             case STATIC_SCENES:
                 View viewLine = holder.container.findViewById(R.id.StaticTileLine);
                 TextView txtTit = (TextView) holder.container.findViewById(R.id.card_static_title);
@@ -386,8 +408,6 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 }
             });
             linearActionsLayout.addView(myButton);
-            //linearActionsLayout.forceLayout();
-            //context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
 
             //non ce ne stanno piu di due
             if (linearActionsLayout.getChildCount() >= 2)
@@ -416,21 +436,10 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
                 from(parent.getContext()).
                 inflate(R.layout.cardview_launcher2, parent, false);
         switch (enumVal) {
+            case STATIC_LOCATION:
             case STATIC_SCENES:
-                itemView = LayoutInflater.
-                        from(parent.getContext()).
-                        inflate(R.layout.card_button_static, parent, false);
-                break;
             case STATIC_PROGRAMS:
-                itemView = LayoutInflater.
-                        from(parent.getContext()).
-                        inflate(R.layout.card_button_static, parent, false);
-                break;
             case STATIC_MANUAL:
-                itemView = LayoutInflater.
-                        from(parent.getContext()).
-                        inflate(R.layout.card_button_static, parent, false);
-                break;
             case STATIC_TAGS:
                 itemView = LayoutInflater.
                         from(parent.getContext()).

@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +26,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,9 +36,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 
 import it.angelic.receivers.NetworkStateReceiver;
@@ -121,7 +126,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         }
     };
     private String provider;
-    private View serviceinfoLine;
 
     private void doBindService() {
         Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
@@ -136,7 +140,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         }
     }
 
-
     private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
         provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
@@ -144,7 +147,9 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             if (enabled) {
-
+                //launcherMainAdapter.getLocationLauncherElements().setTitle(getString(R.string.position));
+                launcherMainAdapter.getLocationLauncherElements().setDesc(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
+                        + "</b>)").toString());
                 // ogni minuto, minimo 100 metri
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                         Constants.POSITION_UPDATE_MIN_DIST, this);
@@ -153,6 +158,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 if (location != null) {
                     onLocationChanged(location);
                 }
+            } else if (opzioni.getHomeLatitude() != 0) {
+                launcherMainAdapter.getLocationLauncherElements().setDesc(Html.fromHtml(getString(R.string.status_geoprovider_disabled)).toString());
+                // homedist.setVisibility(View.GONE);
+            } else {
+                // coordinfo.setVisibility(View.GONE);
+                // homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
             }
         } else//permesso mancante
         {
@@ -162,6 +173,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
         }
     }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -278,7 +290,72 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
     @Override
     public void onLocationChanged(Location location) {
-        //TODO
+        final double lat = (location.getLatitude());
+        final double lng = (location.getLongitude());
+        if (launcherMainAdapter.getLocationLauncherElements() != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String adString = "";
+                    final StringBuilder out1 = new StringBuilder();
+                    final StringBuilder out2 = new StringBuilder();
+                    Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                    String loc = null;
+                    try {
+
+                        List<Address> list;
+                        list = geocoder.getFromLocation(lat, lng, 1);
+
+                        if (list != null && list.size() > 0) {
+                            Address address = list.get(0);
+                            loc = address.getLocality();
+                            if (address.getAddressLine(0) != null)
+                                adString = ", " + address.getAddressLine(0);
+                        }
+                    } catch (final IOException e) {
+                        out1.append(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage())).toString();
+                        loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
+                    }
+                    final String ff = loc;
+                    final String sonoIncapace = adString;
+
+                    out2.append(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + ff
+                            + sonoIncapace)).toString();
+
+                    final float[] res = new float[3];
+                    // Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
+                    Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
+                    if (opzioni.getHomeLatitude() != 0) {
+
+                        // calcola unita di misura e localita col
+                        // geocoder
+                        String unit = "m";
+                        if (res[0] > 2000) {// usa chilometri
+                            unit = "km";
+                            res[0] = res[0] / 1000;
+                        }
+                        // homedist.setVisibility(View.VISIBLE);
+                        out1.append(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
+                                + (int) res[0] + unit
+                                + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")"))).toString();
+
+                    } else {
+
+                        out1.append(Html.fromHtml(getString(R.string.homewarn))).toString();
+
+                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            launcherMainAdapter.getLocationLauncherElements().setDesc(out1.toString() + "\n" + out2.toString());
+                            launcherMainAdapter.notifyItemChanged(launcherMainAdapter.getLauncherElements().indexOf(launcherMainAdapter.getLocationLauncherElements()));
+                        }
+                    });
+
+                }
+
+            }).start();
+        }
     }
 
     @Override
@@ -437,7 +514,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setActionBarInfo(getString(R.string.souliss_app_name));
         opzioni.initializePrefs();
-
+        initLocationProvider();
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
