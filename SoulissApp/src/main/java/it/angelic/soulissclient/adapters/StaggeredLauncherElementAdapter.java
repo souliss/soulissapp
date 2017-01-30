@@ -122,7 +122,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
         if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
             StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
             sglp.setFullSpan(item.isFullSpan());
-            Log.w(Constants.TAG, "Full span for element?" + holder.getItemViewType());
+            //Log.d(Constants.TAG, "Full span for element?" + holder.getItemViewType());
             holder.itemView.setLayoutParams(sglp);
 
         }

@@ -29,6 +29,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.MediaStore;
@@ -237,6 +238,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         // layoutManagerFixed.setHeaderIncrementFixer(header);
 
         mLogoIcon = (TextView) getActivity().findViewById(R.id.imageTagIconFAwe);
+        ImageView infoAlpha = (ImageView) getActivity().findViewById(R.id.infoAlpha);
         if (collectedTag.getIconResourceId() != 0) {
             FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, collectedTag.getIconResourceId());
         } else
@@ -255,6 +257,11 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         }
         //mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
         mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mLogoImg.setTransitionName("photo_hero" + collectedTag.getTagId());
+            infoAlpha.setTransitionName("shadow_hero" + collectedTag.getTagId());
+            mLogoIcon.setTransitionName("tag_hero" + collectedTag.getTagId());
+        }
 
 
         tagTitle = (TextView) getActivity().findViewById(R.id.tagTextView);

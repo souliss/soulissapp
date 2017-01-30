@@ -258,8 +258,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     }
 
     public void remove(LauncherElement launcherElement) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
         launcherElementList.remove(launcherElement);
         deleteLauncher(launcherElement);
         //non serve togliero, la lista e` in sottrazione

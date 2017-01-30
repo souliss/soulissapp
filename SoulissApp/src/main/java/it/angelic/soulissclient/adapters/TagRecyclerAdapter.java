@@ -77,16 +77,19 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
     public void onBindViewHolder(final TagCardViewHolder holder, int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
+        String quantityStringTag = "";
         try {
             List<SoulissTypical> appoggio = soulissTags.get(position).getAssignedTypicals();
             quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                     appoggio.size(), appoggio.size());
+            quantityStringTag = " - " + context.getResources().getQuantityString(R.plurals.SubTags,
+                    soulissTags.get(position).getChildTags().size(), soulissTags.get(position).getChildTags().size());
         } catch (Exception ce) {
             Log.w(Constants.TAG, "TAG Empty? ");
         }
         holder.fabTag = fab;
         holder.textCmd.setText(soulissTags.get(position).getName());
-        holder.textCmdWhen.setText(quantityString);
+        holder.textCmdWhen.setText(quantityString + quantityStringTag);
         holder.data = soulissTags.get(position);
 
         FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, soulissTags.get(position).getIconResourceId());
@@ -119,10 +122,10 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                                 //holder.image,   // The view which starts the transition
                                 //"photo_hero"    // The transitionName of the view we’re transitioning to
-                                Pair.create((View) holder.image, "photo_hero"),
-                                Pair.create((View) holder.shadowbar, "shadow_hero"),
-                                Pair.create((View) holder.imageTag, "tag_hero"),
-                                Pair.create((View) holder.fabTag, "fab_hero")
+                                Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
+                                Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
+                                Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId()),
+                                Pair.create((View) holder.fabTag, "fab_hero" + holder.data.getTagId())
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());

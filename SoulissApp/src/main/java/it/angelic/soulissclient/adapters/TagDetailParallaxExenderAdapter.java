@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
@@ -171,6 +172,9 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
                 Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                 holder.image.setImageBitmap(myBitmap);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
+                }
             }
 
         } catch (Exception io) {
@@ -178,6 +182,11 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
+            holder.shadowbar.setTransitionName("shadow_hero" + holder.data.getTagId());
+            holder.imageTag.setTransitionName("tag_hero" + holder.data.getTagId());
+        }
         // Here you apply the animation when the view is bound
         //setAnimation(holder.container, position);
 
@@ -191,11 +200,10 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                 nodeDatail.putExtra("FATHERTAG", holder.data.getFatherId());
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                                //holder.image,   // The view which starts the transition
-                                //"photo_hero"    // The transitionName of the view we’re transitioning to
-                                Pair.create((View) holder.image, "photo_hero"),
-                                Pair.create((View) holder.shadowbar, "shadow_hero"),
-                                Pair.create((View) holder.imageTag, "tag_hero")
+                                //verso i subtag
+                                Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
+                                Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
+                                Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId())
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
