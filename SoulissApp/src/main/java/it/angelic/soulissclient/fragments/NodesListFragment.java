@@ -221,7 +221,8 @@ public class NodesListFragment extends ListFragment {
 			// Execute a transaction, replacing any existing fragment
 			// with this one inside the frame.
 			FragmentTransaction ft = getFragmentManager().beginTransaction();
-			if (opzioni.isAnimationsEnabled())
+
+            if (opzioni.isAnimationsEnabled())
 				ft.setCustomAnimations(R.anim.slide_in_left_delay, R.anim.slide_out_left);
 			ft.replace(R.id.detailPane, details);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);

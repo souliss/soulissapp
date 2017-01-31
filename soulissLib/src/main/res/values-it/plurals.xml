@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals
+        name="Nodes">
+        <item quantity="zero">0 Nodi</item>
+        <item quantity="one">1 Nodo</item>
+        <item quantity="other">%d Nodi</item>
+    </plurals>
+    <plurals
         name="Devices">
         <item quantity="zero">0 Dispositivi</item>
         <item quantity="one">1 Dispositivo</item>

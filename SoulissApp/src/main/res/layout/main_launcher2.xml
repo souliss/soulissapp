@@ -39,7 +39,7 @@
                     android:text="@string/launcher_desc"/>
 
                 <TextView
-                    android:id="@+id/TextViewTagsDescFa"
+                    android:id="@+id/TextViewDashboardDescFa"
                     android:layout_alignParentRight="true"
                     android:gravity="right"
                     android:padding="4dp"

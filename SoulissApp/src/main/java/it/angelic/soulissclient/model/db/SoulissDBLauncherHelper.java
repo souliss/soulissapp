@@ -139,7 +139,13 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                     dto.setDesc(context.getString(R.string.opt_homepos_err));
                     break;
                 case STATIC_MANUAL:
-                    dto.setDesc(countNodes() + " nodi presenti");
+                    int cntTyp = countTypicals();
+                    int cntN = countNodes();
+                    dto.setDesc(context.getResources().getQuantityString(R.plurals.Nodes,
+                            cntN, cntN)
+                            + "\n"
+                            + context.getResources().getQuantityString(R.plurals.Devices,
+                            cntTyp, cntTyp));
                     break;
                 case STATIC_TAGS:
                     dto.setDesc(context.getResources().getQuantityString(R.plurals.tags_plur,

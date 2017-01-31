@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SharedElementCallback;
@@ -268,51 +267,42 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     }
 
 
-    public void showDetails(int pos) {
+    public void showTypical(int pos, SoulissTypical soulissTypical) {
         Bundle bundle = new Bundle();
         bundle.putInt("key", pos);
-        List<SoulissTypical> typicalList = collected.getAssignedTypicals();
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         // Check what fragment is currently shown, replace if needed.
-        Fragment details = manager.findFragmentById(R.id.detailPane);
+        Fragment oldFrag = manager.findFragmentById(R.id.detailPane);
         Fragment NewFrag = null;
         // Istanzia e ci mette l'indice
-        if (typicalList.get(pos).isSensor())
-            NewFrag = T5nSensorFragment.newInstance(pos, typicalList.get(pos));
-        else if (typicalList.get(pos) instanceof SoulissTypical16AdvancedRGB)
-            NewFrag = T16RGBAdvancedFragment.newInstance(pos, typicalList.get(pos));
-        else if (typicalList.get(pos) instanceof SoulissTypical19AnalogChannel)
-            NewFrag = T19SingleChannelLedFragment.newInstance(pos, typicalList.get(pos));
-        else if (typicalList.get(pos) instanceof SoulissTypical31Heating)
-            NewFrag = T31HeatingFragment.newInstance(pos, typicalList.get(pos));
-        else if (typicalList.get(pos) instanceof SoulissTypical11DigitalOutput || typicalList.get(pos) instanceof SoulissTypical12DigitalOutputAuto)
-            NewFrag = T1nGenericLightFragment.newInstance(pos, typicalList.get(pos));
-        else if (typicalList.get(pos) instanceof SoulissTypical41AntiTheft || typicalList.get(pos) instanceof SoulissTypical42AntiTheftPeer || typicalList.get(pos) instanceof SoulissTypical43AntiTheftLocalPeer)
-            NewFrag = T4nFragment.newInstance(pos, typicalList.get(pos));
-        else if (typicalList.get(pos) instanceof SoulissTypical6nAnalogue)
-            NewFrag = T6nAnalogueFragment.newInstance(pos, typicalList.get(pos));
-        FragmentTransaction ft = manager.beginTransaction();
+        if (soulissTypical.isSensor())
+            NewFrag = T5nSensorFragment.newInstance(pos, soulissTypical);
+        else if (soulissTypical instanceof SoulissTypical16AdvancedRGB)
+            NewFrag = T16RGBAdvancedFragment.newInstance(pos, soulissTypical);
+        else if (soulissTypical instanceof SoulissTypical19AnalogChannel)
+            NewFrag = T19SingleChannelLedFragment.newInstance(pos, soulissTypical);
+        else if (soulissTypical instanceof SoulissTypical31Heating)
+            NewFrag = T31HeatingFragment.newInstance(pos, soulissTypical);
+        else if (soulissTypical instanceof SoulissTypical11DigitalOutput || soulissTypical instanceof SoulissTypical12DigitalOutputAuto)
+            NewFrag = T1nGenericLightFragment.newInstance(pos, soulissTypical);
+        else if (soulissTypical instanceof SoulissTypical41AntiTheft || soulissTypical instanceof SoulissTypical42AntiTheftPeer || soulissTypical instanceof SoulissTypical43AntiTheftLocalPeer)
+            NewFrag = T4nFragment.newInstance(pos, soulissTypical);
+        else if (soulissTypical instanceof SoulissTypical6nAnalogue)
+            NewFrag = T6nAnalogueFragment.newInstance(pos, soulissTypical);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         if (NewFrag != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
-                //details.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.fade));
-
-                // Create new fragment to add (Fragment B)
-                // NewFrag.setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
-                NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.explode));
-
-                // Our shared element (in Fragment A)
-                TextView mProductImage = (TextView) details.getView().findViewById(R.id.card_thumbnail_image2);
-                TextView mProductText = (TextView) findViewById(R.id.TextViewTypicalsTitle);
-
-                AppBarLayout.Behavior beh = new AppBarLayout.Behavior();
+                oldFrag.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.slide_top));
+                NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.slide_top));
 
                 // Add Fragment B
-                manager.beginTransaction()
+                ft
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
-                        .addSharedElement(mProductText, "hero_title").commit();//NOT WORK
+                        // .addSharedElement(mProductText, "hero_title")
+                        .commit();
                 //.addSharedElement(mProductText, "ToolbarText");
             } else {
                 // if (opzioni.isAnimationsEnabled())

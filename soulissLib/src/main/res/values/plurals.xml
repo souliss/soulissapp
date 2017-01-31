@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <plurals
+        name="Nodes">
+        <item quantity="zero">0 Nodes</item>
+        <item quantity="one">1 Node</item>
+        <item quantity="other">%d Nodes</item>
+    </plurals>
+    <plurals
         name="Devices">
         <item quantity="zero">No Device</item>
         <item quantity="one">one Device</item>
-        <item quantity="other">%d  Devices</item>
+        <item quantity="other">%d Devices</item>
     </plurals>
 
     <plurals

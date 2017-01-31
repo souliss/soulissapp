@@ -94,8 +94,8 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
             holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
             holder.image = (TextView) convertView.findViewById(R.id.node_icon);
-            holder.imageFav = (ImageView) convertView.findViewById(R.id.imageButtonFav);
-            holder.imageTag = (ImageView) convertView.findViewById(R.id.imageButtonTag);
+            holder.imageFav = (TextView) convertView.findViewById(R.id.imageButtonFav);
+            holder.imageTag = (TextView) convertView.findViewById(R.id.imageButtonTag);
 
             holder.linearActionsLayout = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
             // linButton.removeAllViews();
@@ -150,12 +150,14 @@ public class TypicalsListAdapter extends BaseAdapter {
         }
         //Preferito, TagId == 0
         if (tipici[position].getTypicalDTO().isFavourite()) {
+            FontAwesomeUtil.prepareMiniFontAweTextView(context, holder.imageFav, FontAwesomeEnum.fa_star_o.getFontName());
             holder.imageFav.setVisibility(View.VISIBLE);
         }else{
             holder.imageFav.setVisibility(View.GONE);
         }
         //puo essere ANCHE tagged
         if (tipici[position].getTypicalDTO().isTagged()) {
+            FontAwesomeUtil.prepareMiniFontAweTextView(context, holder.imageTag, FontAwesomeEnum.fa_tag.getFontName());
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
             holder.imageTag.setVisibility(View.GONE);
@@ -189,8 +191,8 @@ public class TypicalsListAdapter extends BaseAdapter {
         TextView textUpdated;
         LinearLayout linearActionsLayout;
         TextView image;
-        ImageView imageFav;
-        ImageView imageTag;
+        TextView imageFav;
+        TextView imageTag;
     }
 
 }

@@ -62,12 +62,9 @@ import static android.support.v7.widget.StaggeredGridLayoutManager.GAP_HANDLING_
 import static it.angelic.soulissclient.Constants.TAG;
 
 /**
- * This will not work so great since the heights of the imageViews
- * are calculated on the iamgeLoader callback ruining the offsets. To fix this try to get
- * the (intrinsic) image width and height and set the views height manually. I will
- * look into a fix once I find extra time.
+ * SoulissApp Main screen - Dashboard
  *
- * @author Maurycy Wojtowicz
+ * @author shine@angelic.it
  */
 public class MainActivity extends AbstractStatusedFragmentActivity implements LocationListener {
     private Timer autoUpdate;
@@ -88,7 +85,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 Log.i(TAG, "Broadcast receive, refresh from DB");
                 @SuppressWarnings("unchecked")
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
-                // FIXME TEMPORARY
                 database.refreshMapFromDB();
                 List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
                 launcherMainAdapter.setmBoundService(mBoundService);
@@ -207,7 +203,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
         final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
-        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewTagsDescFa);
+        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewDashboardDescFa);
         FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
 
         //NASCONDI
@@ -356,6 +352,11 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
             }).start();
         }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.i(Constants.TAG, "status change " + provider);
     }
 
     @Override
@@ -529,10 +530,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         mDrawerList.setAdapter(navAdapter);
     }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
         private final StaggeredLauncherElementAdapter adapter;

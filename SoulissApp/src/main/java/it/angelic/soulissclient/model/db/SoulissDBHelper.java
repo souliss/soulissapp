@@ -778,7 +778,7 @@ public class SoulissDBHelper {
      * @return
      */
     public int countTypicals() {
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TYPICALS + " where "
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TYPICALS + " where "
                 + SoulissDB.COLUMN_TYPICAL + " <> "
                 + Constants.Typicals.Souliss_T_related
                 +" AND "+ SoulissDB.COLUMN_TYPICAL + " <> "
@@ -790,7 +790,7 @@ public class SoulissDBHelper {
     }
 
     public int countNodes() {
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_NODES, null);
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_NODES, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();
@@ -800,7 +800,7 @@ public class SoulissDBHelper {
     public int countFavourites() {
         if (!database.isOpen())
             open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
                 + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " =  " + SoulissDB.FAVOURITES_TAG_ID, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
@@ -811,7 +811,7 @@ public class SoulissDBHelper {
     public int countTypicalTags() {
         if (!database.isOpen())
             open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS_TYPICALS, null);
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS_TYPICALS, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();
@@ -821,7 +821,7 @@ public class SoulissDBHelper {
     public int countTags() {
         if (!database.isOpen())
             open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TAGS, null);
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS, null);
         mCount.moveToFirst();
         int count = mCount.getInt(0);
         mCount.close();

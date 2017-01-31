@@ -105,7 +105,7 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
 
 
     private void startSoulissMainActivity() {
-        Intent myIntent = new Intent(WelcomeCreateConfigActivity.this, OldLauncherActivity.class);
+        Intent myIntent = new Intent(WelcomeCreateConfigActivity.this, MainActivity.class);
         startActivity(myIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         finish();

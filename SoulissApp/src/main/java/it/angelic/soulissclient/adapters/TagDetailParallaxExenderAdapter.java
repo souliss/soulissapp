@@ -210,7 +210,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     }
 
-    public void onBindTagCardViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
+    private void onBindTagCardViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
         viewHolder.setData((SoulissTypical) getItems().get(i));
         Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
         // Get element from your dataset at this position and replace the contents of the view
@@ -237,7 +237,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
             @Override
             public void onClick(View view) {
                 Log.w(Constants.TAG, "OnClick");
-                context.showDetails(i);
+                context.showTypical(i, (SoulissTypical) getItems().get(i));
             }
         });
         /* Dario dice di togliere...

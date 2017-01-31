@@ -47,18 +47,6 @@
 
 
         <activity
-            android:name=".OldLauncherActivity"
-            android:label="@string/souliss_app_name"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="it.angelic.soulissclient.RAW_TIMEOUT"/>
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".VoiceCommandActivityNoDisplay"
             android:label="@string/souliss_app_name"
             android:theme="@android:style/Theme.NoDisplay"/>

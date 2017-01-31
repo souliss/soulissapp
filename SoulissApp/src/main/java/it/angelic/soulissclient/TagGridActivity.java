@@ -129,6 +129,23 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
         setContentView(R.layout.main_tags_grid);
 
+        final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
+        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewTagsDescFa);
+        FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
+        //NASCONDI
+        textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textViewTagsDescFa.setVisibility(View.GONE);
+                toHid.setVisibility(View.GONE);
+                opzioni.setDontShowAgain("tagsInfo", true);
+            }
+        });
+        if (opzioni.getDontShowAgain("tagsInfo")) {
+            textViewTagsDescFa.setVisibility(View.GONE);
+            toHid.setVisibility(View.GONE);
+        }
+
         mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewLauncherItems);
         TextView textAwesomeUpperRight = (TextView) findViewById(R.id.back_icon);
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_tags.getFontName());
