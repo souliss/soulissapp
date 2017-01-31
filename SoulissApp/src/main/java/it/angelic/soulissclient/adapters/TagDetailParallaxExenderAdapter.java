@@ -124,6 +124,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
             throw new SoulissModelException("TOIMPLEMENT");
     }
 
+
     public void onBindTagCardViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
@@ -140,12 +141,9 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
         if (holder.data.getIconResourceId() != 0) {
             FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, holder.data.getIconResourceId());
-            // holder.imageTag.setImageResource(soulissTags[position].getIconResourceId());
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
             FontAwesomeUtil.prepareFontAweTextView(context, holder.imageTag, FontAwesomeEnum.fa_tag.getFontName());
-            //holder.imageTag.setImageResource(R.drawable.window);//avoid exc
-            // holder.imageTag.setVisibility(View.INVISIBLE);
         }
 
         TypedValue a = new TypedValue();
@@ -176,19 +174,17 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                     holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
                 }
             }
-
         } catch (Exception io) {
-            Log.i(Constants.TAG, "cant load image " + holder.data.getImagePath());
+            Log.i(Constants.TAG, "cant load TAG image " + holder.data.getImagePath());
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
-
+        //queste vengono eseguite in tempo grazie a postponeEnterTrans
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.d(Constants.TAG, "setting setTransitionName for subtag:" + holder.data.getTagId());
             holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
             holder.shadowbar.setTransitionName("shadow_hero" + holder.data.getTagId());
             holder.imageTag.setTransitionName("tag_hero" + holder.data.getTagId());
         }
-        // Here you apply the animation when the view is bound
-        //setAnimation(holder.container, position);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +193,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                 Intent nodeDatail = new Intent(context, TagDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
                 nodeDatail.putExtra("TAG", holder.data.getTagId());
-                nodeDatail.putExtra("FATHERTAG", holder.data.getFatherId());
+                // nodeDatail.putExtra("FATHERTAG", holder.data.getFatherId());
                 ActivityOptionsCompat options =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                                 //verso i subtag
@@ -229,7 +225,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                 + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
         /* Icona del nodo */
         FontAwesomeUtil.prepareFontAweTextView(context, viewHolder.getImageView(), viewHolder.getData().getIconResourceId());
-        //((TypicalCardViewHolder) viewHolder).getImageView().setImageResource(mDataset.get(i).getIconResourceId());
+        //comandi
         LinearLayout sghembo = viewHolder.getLinearActionsLayout();
         sghembo.removeAllViews();
         if (opzioni.isLightThemeSelected()) {

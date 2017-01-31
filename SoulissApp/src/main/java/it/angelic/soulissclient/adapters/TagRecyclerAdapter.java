@@ -151,14 +151,13 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                 //ImageView imageView = (ImageView)findViewById(R.id.imageView);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
-                options.inPreferQualityOverSpeed = false;
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
-                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                //Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                 holder.image.setImageBitmap(myBitmap);
             }
 
         } catch (Exception io) {
-            Log.i(Constants.TAG, "cant load image " + holder.data.getImagePath());
+            Log.i(Constants.TAG, "cant load tag grid image " + holder.data.getImagePath());
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
     }

@@ -49,6 +49,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,6 +95,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     private SoulissTag collectedTag;
     private SoulissDBTagHelper datasource;
     private FloatingActionButton fab;
+    private ImageView infoAlpha;
     private TextView mLogoIcon;
     private ImageView mLogoImg;
     private SoulissPreferenceHelper opzioni;
@@ -220,25 +222,28 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
 
 
-        if (savedInstanceState != null) {
+       /* if (savedInstanceState != null) {
             // Restore saved layout manager type.
             mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
                     .getSerializable(KEY_LAYOUT_MANAGER);
-        }
+        }*/
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 LayoutManagerType.LAND_LAYOUT_MANAGER : LayoutManagerType.PORT_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-        parallaxExtAdapter = new TagDetailParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
+
         //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
-        //  View header = getLayoutInflater(null).inflate(R.layout.head_tagdetail, tagContainer, false);
-        // layoutManagerFixed.setHeaderIncrementFixer(header);
-
+        // shared trans su queste
         mLogoIcon = (TextView) getActivity().findViewById(R.id.imageTagIconFAwe);
-        ImageView infoAlpha = (ImageView) getActivity().findViewById(R.id.infoAlpha);
+        infoAlpha = (ImageView) getActivity().findViewById(R.id.infoAlpha);
+        mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
+
+
+        parallaxExtAdapter = new TagDetailParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
+
         if (collectedTag.getIconResourceId() != 0) {
             FontAwesomeUtil.prepareFontAweTextView(getActivity(), mLogoIcon, collectedTag.getIconResourceId());
         } else
@@ -256,12 +261,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             Log.w(Constants.TAG, "not getting window background");
         }
         //mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
-        mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mLogoImg.setTransitionName("photo_hero" + collectedTag.getTagId());
-            infoAlpha.setTransitionName("shadow_hero" + collectedTag.getTagId());
-            mLogoIcon.setTransitionName("tag_hero" + collectedTag.getTagId());
-        }
+
 
 
         tagTitle = (TextView) getActivity().findViewById(R.id.tagTextView);
@@ -347,9 +347,8 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
-                // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+
                 if (picture.exists()) {
-                    //ImageView imageView = (ImageView)findViewById(R.id.imageView);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inSampleSize = 2;
                     Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
@@ -357,27 +356,46 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                         myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
                     Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                     mLogoImg.setImageBitmap(myBitmap);
-
                 }
-                try {
+               /* try {
                     mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
-
+                    boh, non so perche, io itanto commento
                 } catch (Exception e) {
                     Log.d(TAG, "can't set logo", e);
-                }
+                }*/
             } else {
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         Constants.MY_PERMISSIONS_READ_EXT_STORAGE);
+                //img di default
             }
 
         }
-        //parallaxExtAdapter.setShouldClipView(true);
-        // parallaxExtAdapter.setParallaxHeader(header, mRecyclerView);
 
         registerForContextMenu(mRecyclerView);
 
         return rootView;
+    }
+
+    /**
+     * Siccome nel rientro da dettaglio nested a dettaglio
+     * gli elementi non sono ancora presenti, si postpone la transazione per sbloccarla
+     * poi con una chiamata a codesto metodo
+     */
+    private void scheduleStartPostponedTransition(final View sharedElement) {
+        Log.w(Constants.TAG, "SCHEDULE  ");
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        Log.w(Constants.TAG, "SCHEDULE StartPostponedTransition ");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            getActivity().startPostponedEnterTransition();
+                        }
+                        return true;
+                    }
+                });
     }
 
     @Override
@@ -401,12 +419,11 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 } catch (SQLDataException e) {
                     e.printStackTrace();
                 }
-                parallaxExtAdapter.notifyDataSetChanged();
+                parallaxExtAdapter.notifyItemInserted(parallaxExtAdapter.getItemCount() - 1);
                 return true;
         }
-
-        return false;
-        //return super.onOptionsItemSelected(item);
+        //home e altro nel activity
+        return getActivity().onOptionsItemSelected(item);
     }
 
     @Override
@@ -444,14 +461,22 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(parallaxExtAdapter);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.d(Constants.TAG, "onStart() setting setTransitionName for detail frag:" + collectedTag.getTagId());
+            mLogoImg.setTransitionName("photo_hero" + collectedTag.getTagId());
+            infoAlpha.setTransitionName("shadow_hero" + collectedTag.getTagId());
+            mLogoIcon.setTransitionName("tag_hero" + collectedTag.getTagId());
+        }
 
         // Extend the Callback class
         ItemTouchHelper.Callback launcherCallback = new TagDetailFragment.ParallaxGridCallback(getActivity(), parallaxExtAdapter, datasource, collectedTag);
         // Create an `ItemTouchHelper` and attach it to the `RecyclerView`
         ItemTouchHelper ith = new ItemTouchHelper(launcherCallback);
         ith.attachToRecyclerView(mRecyclerView);
-
+        //spiega di sbloccare a render finito
+        scheduleStartPostponedTransition(mRecyclerView);
     }
+
 
     /**
      * Set RecyclerView's LayoutManager to the one given.

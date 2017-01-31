@@ -16,24 +16,31 @@
 
 package it.angelic.soulissclient;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SharedElementCallback;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLDataException;
 import java.util.List;
+import java.util.Map;
 
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
@@ -60,10 +67,23 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 
 public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
-    private long tagId;
-    private SoulissDBTagHelper db;
     private SoulissTag collected;
+    private SoulissDBTagHelper db;
     private TagDetailFragment fragment;
+    private long tagId;
+
+    /**
+     * Don't forget to call setResult(Activity.RESULT_OK) in the returning
+     * activity or else this method won't be called!
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+
+        // Postpone the shared element return transition.
+        postponeEnterTransition();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
@@ -92,6 +112,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         Fragment details = getSupportFragmentManager().findFragmentById(R.id.detailPane);
         Log.w(Constants.TAG, "instanceof: " + details.getClass());
         if (details instanceof TagDetailFragment) {
+            setResult(Activity.RESULT_OK);
             supportFinishAfterTransition();
             super.onBackPressed();
         } else {
@@ -105,7 +126,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         db = new SoulissDBTagHelper(this);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
@@ -113,6 +134,10 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tag_detail);
+
+       /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }*/
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("TAG") != null)
@@ -132,11 +157,13 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
-       /* try {
+        try {
             setEnterSharedElementCallback(new SharedElementCallback() {
+
+
                 @Override
                 public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                    Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size());
+                    Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + sharedElements.size() + collected);
                     //manual override perche il fragment ancora non c'e
                     //sharedElements.put("photo_hero", fragment.getView().findViewById(R.id.photo));
                     //  sharedElements.put("shadow_hero", fragment.getView().findViewById(R.id.infoAlpha));
@@ -146,14 +173,47 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
                 @Override
                 public void onRejectSharedElements(List<View> rejectedSharedElements) {
-                    Log.i(Constants.TAG, "EnterSharedElement.onMapSharedElements:" + rejectedSharedElements.size());
+                    Log.i(Constants.TAG, "EnterSharedElement.onRejectSharedElements:" + rejectedSharedElements.size() + collected);
                     super.onRejectSharedElements(rejectedSharedElements);
                 }
 
             });
         } catch (Exception uie) {
             Log.e(Constants.TAG, "UIE:" + uie.getMessage());
-        }*/
+        }
+
+
+        setExitSharedElementCallback(new SharedElementCallback() {
+            @Override
+            public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onMapSharedElements:"
+                        + sharedElements.size() + collected);
+                super.onMapSharedElements(names, sharedElements);
+            }
+
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onRejectSharedElements(List<View> rejectedSharedElements) {
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onRejectSharedElements:"
+                        + rejectedSharedElements.size() + collected);
+
+                super.onRejectSharedElements(rejectedSharedElements);
+            }
+
+            @Override
+            public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                Log.i(Constants.TAG, "ExitSharedElementCallback.onSharedElementEnd");
+                super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+
+            @Override
+            public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+                Log.d(Constants.TAG, "ExitSharedElementCallback.onSharedElementStart:" + sharedElementNames.size() + collected);
+                super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+            }
+        });
+
+
     }
 
     @Override
@@ -163,6 +223,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         TextView icon = (TextView) findViewById(R.id.imageTagIconFAwe);
@@ -171,15 +232,15 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
                 Fragment details = getSupportFragmentManager().findFragmentById(R.id.detailPane);
                 Log.w(Constants.TAG, "instanceof: " + details.getClass());
-                if (details instanceof TagDetailFragment)
+                if (details instanceof TagDetailFragment) {
+                    setResult(Activity.RESULT_OK);
                     supportFinishAfterTransition();
-                else {
+                    return true;
+                } else {
                     getSupportFragmentManager().popBackStack();
                     setActionBarInfo(collected.getNiceName());
                 }
                 return true;
-
-
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(this, PreferencesActivity.class);
                 startActivity(settingsActivity);
@@ -206,11 +267,6 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setActionBarInfo(collected.getNiceName());
-    }
 
     public void showDetails(int pos) {
         Bundle bundle = new Bundle();

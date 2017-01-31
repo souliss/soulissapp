@@ -46,22 +46,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/home_automation"
-                        android:transitionName="photo_hero"/>
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/home_automation"/>
 
                     <TextView
                         android:id="@+id/imageTagIconFAwe"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
                         android:shadowColor="@color/cardview_shadow_start_color"
                         android:shadowDx="-1"
                         android:shadowDy="-1"
                         android:shadowRadius="1"
-                        android:layout_margin="4dp"
-                        android:src="@drawable/window"
-                        android:transitionName="tag_hero"/>
+                        android:layout_margin="4dp"/>
 
                     <ImageView
                         android:id="@+id/infoAlpha"
@@ -69,9 +65,7 @@
                         android:layout_height="60dp"
                         android:layout_gravity="bottom"
                         android:alpha="0.4"
-                        android:background="@color/black"
-                        android:transitionName="shadow_hero"
-                        />
+                        android:background="@color/black"/>
 
                     <TextView
                         android:id="@+id/tagTextView"
@@ -82,7 +76,6 @@
                         android:layout_marginLeft="12dp"
                         android:textColor="@color/white_bitaplha"
                         android:textSize="24sp"
-                        android:transitionName="tag_title"
                         tools:text="Title Big Swallow"/>
 
                     <android.support.design.widget.FloatingActionButton
