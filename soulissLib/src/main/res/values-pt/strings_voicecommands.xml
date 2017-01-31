@@ -4,26 +4,34 @@
     <!-- add pertinent synonyms, to be used during voice recognition -->
     <string-array name="open_strarray">
         <item>Abrir</item>
+        <item>Abra</item>
     </string-array>
 
     <string-array name="close_strarray">
         <item>Fechar</item>
+        <item>Feche</item>
     </string-array>
 
     <string-array name="stop_strarray">
         <item>Parar</item>
+        <item>Pare</item>
     </string-array>
 
     <string-array name="toggle_strarray">
         <item>Alternar</item>
+        <item>Mudar</item>
     </string-array>
 
     <string-array name="TurnON_strarray">
         <item>Ligar</item>
+        <item>Acender</item>
+        <item>Acionar</item>
     </string-array>
 
     <string-array name="TurnOFF_strarray">
         <item>Desligar</item>
+        <item>Desligue</item>
+        <item>Apagar</item>
     </string-array>
     
 </resources>
