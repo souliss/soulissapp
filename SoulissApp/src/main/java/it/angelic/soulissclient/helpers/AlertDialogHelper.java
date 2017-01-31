@@ -43,6 +43,7 @@ import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SoulissFontAwesomeAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.model.ISoulissObject;
+import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
@@ -50,6 +51,7 @@ import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
@@ -57,6 +59,7 @@ import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 import us.feras.ecogallery.EcoGallery;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -756,7 +759,7 @@ public class AlertDialogHelper {
                                                           @Nullable final SoulissTag parentTag,
                                                           @Nullable final ListView toReferesh) {
         // prendo tag dal DB
-        List<SoulissTag> goer = datasource.getRootTags(context);
+        List<SoulissTag> goer = datasource.getAllTagsWithoutChildren(context);
         final SoulissTag[] tagArray = new SoulissTag[goer.size()];
         int q = 0;
         for (SoulissTag object : goer) {
@@ -767,10 +770,10 @@ public class AlertDialogHelper {
 
         View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);
         alert2.setView(dialoglayout);
-        // alert2.setInverseBackgroundForced( true );
         alert2.setTitle(context.getString(R.string.scene_add_to));
-        //alert2.setIcon(android.R.drawable.ic_dialog_map);
+        alert2.setIcon(android.R.drawable.ic_menu_add);
 
+        final RadioButton dashbRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonDashboardTag);
         final RadioButton tagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonTag);
         final RadioButton newTagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonNewTag);
         final EditText editNewTag = (EditText) dialoglayout.findViewById(R.id.editTextNewTag);
@@ -783,12 +786,24 @@ public class AlertDialogHelper {
         outputNodeSpinner.setAdapter(adapter);
 
         /* INTERLOCK */
+        View.OnClickListener db_radio_listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                outputNodeSpinner.setEnabled(false);
+                editNewTag.setEnabled(false);
+                newTagRadio.setChecked(false);
+                tagRadio.setChecked(false);
+                dashbRadio.setChecked(true);
+            }
+        };
+        dashbRadio.setOnClickListener(db_radio_listener);
         View.OnClickListener se_radio_listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 outputNodeSpinner.setEnabled(true);
                 editNewTag.setEnabled(false);
                 newTagRadio.setChecked(false);
+                dashbRadio.setChecked(false);
             }
         };
         tagRadio.setOnClickListener(se_radio_listener);
@@ -799,6 +814,7 @@ public class AlertDialogHelper {
                 outputNodeSpinner.setEnabled(false);
                 editNewTag.setEnabled(true);
                 tagRadio.setChecked(false);
+                dashbRadio.setChecked(false);
             }
         };
         newTagRadio.setOnClickListener(te_radio_listener);
@@ -820,7 +836,14 @@ public class AlertDialogHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         SoulissTag it;
-                        if (tagRadio.isChecked()) {
+                        if (dashbRadio.isChecked()) {
+                            SoulissDBLauncherHelper dbl = new SoulissDBLauncherHelper(context);
+                            LauncherElement nodeLauncher = new LauncherElement();
+                            nodeLauncher.setComponentEnum(LauncherElementEnum.TYPICAL);
+                            nodeLauncher.setLinkedObject(toadd);
+                            dbl.addElement(nodeLauncher);
+                            Toast.makeText(context, toadd.getNiceName() + context.getString(R.string.added_to_dashboard), Toast.LENGTH_SHORT).show();
+                        } else if (tagRadio.isChecked()) {
                             it = (SoulissTag) outputNodeSpinner.getSelectedItem();
                             if (!it.getAssignedTypicals().contains(toadd))
                                 it.getAssignedTypicals().add(toadd);
@@ -840,16 +863,12 @@ public class AlertDialogHelper {
                             it.getAssignedTypicals().add(toadd);
                             datasource.createOrUpdateTag(it);
                             Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
-
-                            return;
                         } else {
 
                             Toast.makeText(context, "Select " + context.getString(R.string.existing_tag) + " " + context.getString(R.string.or)
                                     + " " + context.getString(R.string.new_tag), Toast.LENGTH_SHORT).show();
                             return;
                         }
-
-
                     }
                 });
 

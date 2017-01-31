@@ -7,11 +7,20 @@
     android:padding="16dp"
     style="@android:style/Theme.Dialog">
 
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textSize="@dimen/text_size_big"
+        android:text="@string/dashboard"
+        android:id="@+id/radioButtonDashboardTag"/>
 
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/existing_tag"
+        android:textSize="@dimen/text_size_big"
+        android:padding="8dp"
         android:id="@+id/radioButtonTag" />
 
     <Spinner
@@ -20,12 +29,14 @@
         android:id="@+id/spinnerTags"
 
         android:layout_gravity="center_horizontal"
-        android:paddingLeft="24dp" />
+        android:paddingLeft="36dp"/>
 
     <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_tag"
+        android:textSize="@dimen/text_size_big"
+        android:padding="8dp"
         android:id="@+id/radioButtonNewTag" />
 
     <EditText
@@ -33,7 +44,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextNewTag"
         android:enabled="false"
-        android:paddingLeft="24dp"
+        android:paddingLeft="36dp"
         android:hint="@string/input_tag_name"/>
 
 </LinearLayout>

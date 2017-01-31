@@ -130,6 +130,31 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         return upd;
     }
 
+    public List<SoulissTag> getAllTagsWithoutChildren(Context context) {
+        List<SoulissTag> comments = new ArrayList<>();
+        if (!database.isOpen())
+            open();
+        //solo radici
+        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS, null, null, null, null, SoulissDB.COLUMN_TAG_ORDER + ", " + SoulissDB.COLUMN_TAG_ID);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTag dto = new SoulissTag();
+            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
+            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
+            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
+            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
+            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            dto.setFatherId(null);
+            Log.i(Constants.TAG, "retrieving ROOT TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
+            dto.setAssignedTypicals(getTagTypicals(dto));
+
+            comments.add(dto);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return comments;
+    }
+
     public List<SoulissTypical> getFavouriteTypicals() {
 
         SoulissTag fake = new SoulissTag();

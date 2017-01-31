@@ -5,4 +5,9 @@
         android:icon="@android:drawable/ic_menu_revert"
         android:title="@string/menu_changenodeRebuild"
         android:orderInCategory="2"/>
+    <item
+        android:id="@+id/AddToDashboard"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="@string/menu_addto_dashboard"
+        android:orderInCategory="4"/>
 </menu>

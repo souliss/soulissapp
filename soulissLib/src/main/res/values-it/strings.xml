@@ -394,16 +394,18 @@
     <string name="range">Intervallo</string>
     <string name="charts">Grafici</string>
     <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
-    <string name="menu_launcher_config">Homescreen Setup</string>
-    <string name="launcher_desc">Trascina gli elementi per riordinarli, oppure eliminali lanciandoli fuori dallo schermo. Launcher option menu offers further menu configuration</string>
-    <string name="opt_launcher">Launcher Setup</string>
-    <string name="settings_launcher_items">Home screen Elements</string>
-    <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
+    <string name="menu_launcher_config">Dashboard Setup</string>
+    <string name="launcher_desc">Trascina gli elementi per riordinarli, oppure eliminali lanciandoli fuori dallo schermo. Per ripristinare o aggiungere elementi usare le opzioni relative</string>
+    <string name="settings_launcher_items">Elementi nella Dashboard</string>
+    <string name="opt_rstlauncher_desc">Ripristina gli elementi predefiniti</string>
     <string name="scene_added">Scenario inserito, usare long-press per le opzioni</string>
     <string name="tag_addSub">Add a sub-Tag</string>
-    <string name="string_configured">" scenari configurati"</string>
+    <string name="string_configured"> configurati</string>
     <string name="subtag">sub-Tag</string>
-    <string name="opt_welcome_restored">Welcome screen restored</string>
+    <string name="opt_welcome_restored">Welcome screen ripristinato</string>
+    <string name="menu_addto_dashboard">Aggiungi alla Dashboard</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="added_to_dashboard">" added to Dashboard"</string>
 
 
 </resources>

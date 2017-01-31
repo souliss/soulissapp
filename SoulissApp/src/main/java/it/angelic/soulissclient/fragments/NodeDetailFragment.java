@@ -54,9 +54,11 @@ import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter.TypicalViewHolder;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
@@ -71,6 +73,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPee
 import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
@@ -289,7 +292,7 @@ public class NodeDetailFragment extends ListFragment {
                         if (collected != null) {
                             //  UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
                             // state req. meglio, fa subscribe
-                            UDPHelper.stateRequest(opzioni, 1, collected.getNodeId());
+                            UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
 
                         }
 
@@ -387,6 +390,14 @@ public class NodeDetailFragment extends ListFragment {
                 AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(getActivity(), collected, opzioni);
                 alertt.show();
                 return true;
+            case R.id.AddToDashboard:
+                SoulissDBLauncherHelper dbl = new SoulissDBLauncherHelper(getActivity());
+                LauncherElement nodeLauncher = new LauncherElement();
+                nodeLauncher.setComponentEnum(LauncherElementEnum.NODE);
+                nodeLauncher.setLinkedObject(collected);
+                dbl.addElement(nodeLauncher);
+                Toast.makeText(getActivity(), collected.getNiceName() + " " + getActivity().getString(R.string.added_to_dashboard), Toast.LENGTH_SHORT).show();
+                return true;
         }
 
         return false;
@@ -451,7 +462,7 @@ public class NodeDetailFragment extends ListFragment {
 					 * { e.printStackTrace(); }
 					 */
                     //UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
-                    UDPHelper.stateRequest(opzioni, 1, collected.getNodeId());
+                    UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
                 }
             }).start();
 

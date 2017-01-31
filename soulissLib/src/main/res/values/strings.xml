@@ -398,7 +398,6 @@
     <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
     <string name="menu_launcher_config">Homescreen Setup</string>
     <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
-    <string name="opt_launcher">Launcher Setup</string>
     <string name="settings_launcher_items">Home screen Elements</string>
     <string name="launcher_type">Launcher element type</string>
     <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
@@ -407,5 +406,8 @@
     <string name="string_configured">" scenari configurati"</string>
     <string name="subtag">sub-Tag</string>
     <string name="opt_welcome_restored">Welcome screen restored</string>
+    <string name="menu_addto_dashboard">Add to Dashboard</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="added_to_dashboard">" added to Dashboard"</string>
     >
 </resources>

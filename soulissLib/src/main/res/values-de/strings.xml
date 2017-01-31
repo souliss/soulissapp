@@ -398,4 +398,7 @@
     <string name="string_configured">" scenari configurati"</string>
     <string name="subtag">sub-Tag</string>
     <string name="opt_welcome_restored">Welcome screen restored</string>
+    <string name="menu_addto_dashboard">Addo to Dashboard</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="added_to_dashboard">" added to Dashboard"</string>
 </resources>

@@ -3,7 +3,7 @@
                   android:icon="@android:drawable/ic_menu_save"
                   android:key="launcher_setup"
                   android:summary="@string/opt_db_desc"
-                  android:title="@string/opt_launcher"
+                  android:title="@string/menu_launcher_config"
                   android:background="?android:attr/selectableItemBackground">
 
     <PreferenceCategory android:title="Launcher Configuration">

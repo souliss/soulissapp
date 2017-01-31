@@ -195,8 +195,8 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                     public void run() {
                         Looper.prepare();
                         if (collectedTag != null) {
-                            UDPHelper.stateRequest(opzioni, 1, collectedTag.getAssignedTypicals().get(0).getNodeId());
-                            Log.d(Constants.TAG, "stateRequest for node:" + collectedTag.getAssignedTypicals().get(0).getNodeId());
+                            UDPHelper.pollRequest(opzioni, 1, collectedTag.getAssignedTypicals().get(0).getNodeId());
+                            Log.d(Constants.TAG, "pollRequest for node:" + collectedTag.getAssignedTypicals().get(0).getNodeId());
                         }
 
                         if (!opzioni.isSoulissReachable()) {
@@ -291,7 +291,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                     public void run() {
                         Looper.prepare();
                         for (SoulissTypical typ : collectedTag.getAssignedTypicals()) {
-                            UDPHelper.stateRequest(opzioni, 1, typ.getSlot());
+                            UDPHelper.pollRequest(opzioni, 1, typ.getNodeId());
                         }
                         //Avvisa solo
                         if (!opzioni.isSoulissReachable()) {

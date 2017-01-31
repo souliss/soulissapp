@@ -143,6 +143,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
                 AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, database, collected);
                 alert2.show();
                 return true;
+
             case R.id.Rinomina:
                 AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, getActionTitleTextView(), null, database,
                         collected);

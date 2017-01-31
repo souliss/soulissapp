@@ -11,9 +11,7 @@ import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -75,9 +73,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         long id = createLauncherElement(lau);
         lau.setId(id);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Set<String> visibili = preferences.getStringSet("launcher_elems", new HashSet<String>());
-        visibili.add("" + lau.getId());
-        preferences.edit().putStringSet("launcher_elems", visibili).apply();
         Log.i(Constants.TAG, "tile creato: " + lau.getId() + " = " + lau.getTitle());
         return lau;
     }
