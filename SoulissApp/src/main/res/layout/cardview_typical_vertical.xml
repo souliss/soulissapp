@@ -27,6 +27,7 @@
         <TextView
             android:id="@+id/TextViewTypicalsTitle"
             style="@style/CodeFontMain"
+            android:layout_width="match_parent"
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/position"

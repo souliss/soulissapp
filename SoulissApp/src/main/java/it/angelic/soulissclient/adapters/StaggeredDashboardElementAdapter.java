@@ -56,7 +56,7 @@ import it.angelic.soulissclient.util.SoulissUtils;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
-public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<StaggeredLauncherElementAdapter.ViewHolder> {
+public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<StaggeredDashboardElementAdapter.ViewHolder> {
 
     public SoulissDataService getmBoundService() {
         return mBoundService;
@@ -70,7 +70,7 @@ public class StaggeredLauncherElementAdapter extends RecyclerView.Adapter<Stagge
     private Activity context;
     private List<LauncherElement> launcherElements;
 
-    public StaggeredLauncherElementAdapter(Activity context, List<LauncherElement> launcherElements, SoulissDataService mBoundService) {
+    public StaggeredDashboardElementAdapter(Activity context, List<LauncherElement> launcherElements, SoulissDataService mBoundService) {
         this.launcherElements = launcherElements;
         this.context = context;
         this.mBoundService = mBoundService;

@@ -181,7 +181,7 @@ public class SoulissTypicalDTO implements Serializable {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
             if (dto.getOutput() != getOutput()) {
                 parent.logTypical();// logga il nuovo
-                Log.i(Constants.TAG, "logging node " + this.getNodeId() + " - slot " + parent.getSlot() + " - " + parent.getNiceName() + " new state from: " + dto.getOutput() + " to " + parent.getOutput());
+                Log.i(Constants.TAG, "logging node " + this.getNodeId() + " - slot " + parent.getSlot() + " - " + parent.getNiceName() + " new state from: " + dto.getOutput() + " to " + Integer.toHexString(parent.getOutput().intValue()));
             }
             cursor.close();
         }

@@ -79,6 +79,7 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
             return "UNKNOWN";
     }
 
+
     @Override
     public void setOutputDescView(@NonNull TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());

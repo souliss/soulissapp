@@ -60,23 +60,26 @@ public class SoulissDBHelper {
     protected final Context context;
     protected SoulissPreferenceHelper opts;
 
-    public static synchronized SQLiteDatabase getDatabase() {
-        return database;
-    }
-
-    public long getSize() {
-        return new File(database.getPath()).length();
-    }
-
     public SoulissDBHelper(Context context) {
         soulissDatabase = new SoulissDB(context);
         opts = SoulissApp.getOpzioni();
         this.context = context;
     }
 
+    public static synchronized SQLiteDatabase getDatabase() {
+        return database;
+    }
+
     public static synchronized void open() throws SQLException {
         if (database == null || !database.isOpen())
             database = soulissDatabase.getWritableDatabase();
+    }
+
+    public void clean() {
+        if (database != null && database.isOpen()) {
+            database.execSQL("VACUUM");
+        } else
+            Log.w(TAG, "DB closed, clean() failed");
     }
 
     public void close() {
@@ -87,58 +90,80 @@ public class SoulissDBHelper {
             Log.w(TAG, "DB already closed");
     }
 
-    /**
-     * presuppone che il nodo esista, asserError altrimenti Light update, solo
-     * data ed health, pensato per JSON
-     *
-     * @param nodeIN
-     * @return
-     */
-    @Deprecated
-    public int refreshNode(SoulissNode nodeIN) {
-        ContentValues values = new ContentValues();
-        // wrap values from object
-        values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
-        values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
-        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
-                null);
-
-        assertEquals(upd, 1);
-        return (int) upd;
+    public int countFavourites() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
+                + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " =  " + SoulissDB.FAVOURITES_TAG_ID, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
     }
 
-    public void clean() {
-        if (database != null && database.isOpen()) {
-            database.execSQL("VACUUM");
-        } else
-            Log.w(TAG, "DB closed, clean() failed");
+    public int countNodes() {
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_NODES, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    public int countScenes() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_SCENES, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    public int countTags() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    public int countTriggers() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TRIGGERS, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
+    public int countTypicalTags() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS_TYPICALS, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
     }
 
     /**
-     * presuppone che il nodo esista, asserError altrimenti Light update, solo
-     * data ed health, pensato per JSON. Skippa refresh se tipico vuoto
+     * Conta i non vuoti diversi da Souliss_T_related
      *
-     * @param nodeIN
      * @return
      */
-    @Deprecated
-    public int refreshNodeAndTypicals(SoulissNode nodeIN) {
-        ContentValues values = new ContentValues();
-        // wrap values from object
-        values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
-        values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
-        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
-                null);
-
-        assertEquals(upd, 1);
-
-        List<SoulissTypical> tips = nodeIN.getTypicals();
-        for (SoulissTypical x : tips) {
-            if (!x.isEmpty())
-                x.refresh();
-        }
-
-        return (int) upd;
+    public int countTypicals() {
+        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TYPICALS + " where "
+                + SoulissDB.COLUMN_TYPICAL + " <> "
+                + Constants.Typicals.Souliss_T_related
+                + " AND " + SoulissDB.COLUMN_TYPICAL + " <> "
+                + Constants.Typicals.Souliss_T_empty, null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
     }
 
     /**
@@ -192,47 +217,52 @@ public class SoulissDBHelper {
 
     }
 
-    public SoulissNode getSoulissNode(int nodeIN) {
-        Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID
-                + " = " + nodeIN, null, null, null, null);
-        cursor.moveToFirst();
-        SoulissNode ret = SoulissNode.cursorToNode(context, cursor);
-
-        List<SoulissTypical> cod = getNodeTypicals(ret);
-        // come sono grezzo, 'sta riga fa schifo
-        for (SoulissTypical soulissTypical : cod) {
-            // if (soulissTypical.getNodeId() == comment.getNodeId())
-            ret.addTypical(soulissTypical);
-        }
-        cursor.close();
-        return ret;
+    /*
+     * public void deleteTypical(int nodeid, SoulissTypical comment) { // long
+     * id = comment.getNodeId(); // System.out.println("Comment deleted with id: " +
+     * id); database.delete(SoulissDB.TABLE_TYPICALS, SoulissDB.COLUMN_ID +
+     * " = " + nodeid, null); }
+     */
+    public int deleteCommand(SoulissCommand toRename) {
+        return database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_ID + " = "
+                + toRename.getCommandId(), null);
     }
 
-    /**
-     * @param parent fake node, id -1
-     * @return
-     */
-    public List<SoulissTypical> getUniqueTypicals(SoulissNode parent) {
-        ArrayList<SoulissTypical> comments = new ArrayList<>();
-        HashSet<Short> pool = new HashSet<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, null, null, null, null,
-                null);
+    public int deleteScene(SoulissScene toRename) {
+        database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_SCENEID + " = " + toRename.getId(), null);
+        return database.delete(SoulissDB.TABLE_SCENES, SoulissDB.COLUMN_SCENE_ID + " = " + toRename.getId(), null);
+    }
+
+    public int deleteTag(SoulissTag toRename) {
+        //CASCADE sulle associazioni
+        database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toRename.getTagId(), null);
+        //CASCADE sui figli
+        database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_FATHER_ID + " = " + toRename.getTagId(), null);
+        return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
+    }
+
+    public int deleteTagTypical(long tagId, int nodeid, int slot) {
+        //elimino associazione
+        return database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + tagId
+                + " AND " + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeid
+                + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + slot, null);
+    }
+
+    public List<SoulissNode> getAllNodes() {
+        List<SoulissNode> comments = new ArrayList<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, null, null, null, null,
+                SoulissDB.COLUMN_NODE_ID);
         cursor.moveToFirst();
+
         while (!cursor.isAfterLast()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
-            newTyp.setParentNode(parent);
-            if (parent.getNodeId() == Constants.MASSIVE_NODE_ID) {
-                //hack dto ID, could be different if parent is massive
-                newTyp.getTypicalDTO().setNodeId(parent.getNodeId());
-                newTyp.getTypicalDTO().setSlot(dto.getTypical());
+            SoulissNode comment = SoulissNode.cursorToNode(context, cursor);
+            List<SoulissTypical> cod = getNodeTypicals(comment);
+            // come sono grezzo, 'sta riga fa schifo
+            for (SoulissTypical soulissTypical : cod) {
+                // if (soulissTypical.getNodeId() == comment.getNodeId())
+                comment.addTypical(soulissTypical);
             }
-            // if (newTyp.getTypical() !=
-            // Constants.Souliss_T_CurrentSensor_slave)
-            if (!pool.contains(dto.getTypical())) {
-                comments.add(newTyp);
-                pool.add(dto.getTypical());
-            }
+            comments.add(comment);
             cursor.moveToNext();
         }
         // Make sure to close the cursor
@@ -240,36 +270,31 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    /**
-     * DB typical factory
-     *
-     * @param node
-     * @param slot
-     * @return produced Typical
-     */
-    public SoulissTypical getTypical(int node, short slot) {
-        // query with primary key
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + node + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
-                        + slot, null, null, null, null);
+    public List<SoulissTrigger> getAllTriggers(Context context) {
+        List<SoulissTrigger> ret = new ArrayList<>();
+        // Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS,
+        // SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,null);
+        // String MY_QUERY =
+        // "SELECT * FROM "+SoulissDB.TABLE_TRIGGERS+" a INNER JOIN "+SoulissDB.TABLE_COMMANDS
+        // +" b ON a.cmdid = b.cmdid WHERE b.property_id=?";
+        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TRIGGERS + " a " + "INNER JOIN "
+                + SoulissDB.TABLE_COMMANDS + " b ON a." + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = b."
+                + SoulissDB.COLUMN_COMMAND_ID;
+        Cursor cursor = database.rawQuery(MY_QUERY, null);
         cursor.moveToFirst();
-        SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-        //TAG? no join, perche 1 a n
-        Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
-                SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
-                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
-                null, null, null, null);
-        typTags.moveToFirst();
-        while (!typTags.isAfterLast()) {
-            int tagId = typTags.getInt(typTags.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
-            if (tagId == SoulissDB.FAVOURITES_TAG_ID)
-                dto.setFavourite(true);
-            else
-                dto.setTagged(true);
-            typTags.moveToNext();
+
+        while (!cursor.isAfterLast()) {
+            SoulissCommandDTO cmd = new SoulissCommandDTO(cursor);
+            SoulissTypical tgt = getTypical(cmd.getNodeId(), cmd.getSlot());
+            SoulissTrigger cols = new SoulissTrigger(cmd, tgt);
+            SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
+
+            cols.setTriggerDTO(comment);
+
+            ret.add(cols);
+            cursor.moveToNext();
         }
-        typTags.close();
-        SoulissTypical ret = SoulissTypicalFactory.getTypical(context, dto.getTypical(), getSoulissNode(node), dto, opts);
+        // Make sure to close the cursor
         cursor.close();
         return ret;
     }
@@ -317,34 +342,39 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    public List<SoulissTypical> getNodeTypicals(SoulissNode parent) {
+    /**
+     * Return antitheft master typical
+     *
+     * @return produced Typical
+     */
+    public SoulissTypical41AntiTheft getAntiTheftMasterTypical() {
+        // query with primary key
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+                SoulissDB.COLUMN_TYPICAL + " = "
+                        + Constants.Typicals.Souliss_T41_Antitheft_Main, null, null,
+                null, null);
+        if (cursor.moveToFirst()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypicalFactory.getTypical(context, dto.getTypical(),
+                    getSoulissNode(dto.getNodeId()), dto, opts);
+            cursor.close();
+            return ret;
+        } else
+            throw new NoSuchElementException();
+    }
 
-
+    public List<SoulissTypical> getAntiTheftSensors() {
         List<SoulissTypical> comments = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getNodeId(), null, null, null, null);
+                SoulissDB.COLUMN_TYPICAL + " = "
+                        + Constants.Typicals.Souliss_T42_Antitheft_Peer, null, null,
+                null, null);
         cursor.moveToFirst();
-
         while (!cursor.isAfterLast()) {
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
-            //TAG? no join, perche 1 a n
-            Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
-                    SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
-                    + " AND "+SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
-                    null, null, null, null);
-            typTags.moveToFirst();
-            while (!typTags.isAfterLast()) {
-               int tagId = typTags.getInt(typTags.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
-                if (tagId == SoulissDB.FAVOURITES_TAG_ID)
-                    dto.setFavourite(true);
-                else
-                    dto.setTagged(true);
-                typTags.moveToNext();
-            }
-            typTags.close();
-            //hack dto ID, could be different if parent is massive
-            newTyp.getTypicalDTO().setNodeId(parent.getNodeId());
+            SoulissNode parent = getSoulissNode(dto.getNodeId());
+            SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypicalFactory.getTypical(context,
+                    dto.getTypical(), parent, dto, opts);
             newTyp.setParentNode(parent);
             // if (newTyp.getTypical() !=
             // Constants.Souliss_T_CurrentSensor_slave)
@@ -353,203 +383,24 @@ public class SoulissDBHelper {
         }
         // Make sure to close the cursor
         cursor.close();
-        return comments;
-    }
 
-    public ArrayList<SoulissLogDTO> getTypicalLogs(SoulissTypical tgt) {
-        ArrayList<SoulissLogDTO> comments = new ArrayList<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_LOGS, SoulissDB.ALLCOLUMNS_LOGS, SoulissDB.COLUMN_LOG_NODE_ID
-                + " = " + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                + tgt.getSlot(), null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
+        cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, SoulissDB.COLUMN_TYPICAL
+                        + " = " + Constants.Typicals.Souliss_T43_Antitheft_LocalPeer, null,
+                null, null, null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            SoulissLogDTO dto = new SoulissLogDTO(cursor);
-            comments.add(dto);
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissNode parent = getSoulissNode(dto.getNodeId());
+            SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
+            newTyp.setParentNode(parent);
+            // if (newTyp.getTypical() !=
+            // Constants.Souliss_T_CurrentSensor_slave)
+            comments.add(newTyp);
             cursor.moveToNext();
         }
         // Make sure to close the cursor
         cursor.close();
-        return comments;
-    }
 
-    /**
-     * torna la storia di uno slot, raggruppata per giorno
-     *
-     * @param tgt
-     * @return
-     */
-    public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(ISoulissTypical tgt, int range) {
-        HashMap<Date, SoulissHistoryGraphData> comments = new HashMap<>();
-
-        Date dff;
-        String limitCause = "";
-        Calendar now = Calendar.getInstance();
-        switch (range) {
-
-            case 0:
-                // tutti i dati
-                break;
-            case 2:
-                now.add(Calendar.DATE, -7);
-                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
-                break;
-            case 1:
-                now.add(Calendar.MONTH, -1);
-                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
-                break;
-            default:
-                Log.e("DB", "Unexpected switch ERROR");
-                break;
-        }
-        Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[]{
-                        "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
-                        "AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
-                        "MAX(CAST(flologval AS FLOAT)) AS MAX"}, SoulissDB.COLUMN_LOG_NODE_ID + " = "
-                        + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                        + tgt.getSlot() + limitCause + " ", null,
-                "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))", null, "IDX ASC");
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            try {
-                dff = Constants.yearFormat.parse(cursor.getString(0));
-                SoulissHistoryGraphData dto = new SoulissHistoryGraphData(cursor, dff);
-                comments.put(dto.key, dto);
-            } catch (ParseException e) {
-                Log.e(TAG, "getHistoryTypicalLogs", e);
-            }
-
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-        return comments;
-    }
-
-    /**
-     * TO TEST
-     *
-     * @param tgt
-     * @param range
-     * @return
-     */
-    public int getTypicalOnDurationMsec(SoulissTypical tgt, TimeRangeEnum range) {
-        LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
-        int accumulator = 0;
-        boolean firstGo = true;
-        Date accStart = new Date();
-        for (Date cur : comments.keySet()) {
-            Short val = comments.get(cur);
-            if (val != 0) {
-                //spento, inizia nuovo per
-                accStart = cur;
-                firstGo = false;
-            } else if (!firstGo) {
-                accumulator += cur.getTime() - accStart.getTime();
-                firstGo = true;
-            }
-        }
-        return accumulator;
-    }
-
-    /**
-     * TO TEST
-     *
-     * @param tgt
-     * @param range
-     * @return
-     */
-    public ArrayList<ClockPieHelper> getTypicalOnClockPie(SoulissTypical tgt, TimeRangeEnum range) {
-        ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<ClockPieHelper>();
-        LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
-        boolean firstGo = true;
-        Date accStart = new Date();
-        for (Date cur : comments.keySet()) {
-            Short val = comments.get(cur);
-            if (val != 0) {
-                //spento, inizia nuovo per
-                accStart = cur;
-                firstGo = false;
-            } else if (!firstGo) {
-                Calendar start = Calendar.getInstance();
-                Calendar stop = Calendar.getInstance();
-                start.setTime(accStart);
-                stop.setTime(cur);
-                //aggiungo fetta sse piu di un minuto
-                if (!(start.get(Calendar.HOUR_OF_DAY) == stop.get(Calendar.HOUR_OF_DAY) &&
-                        (start.get(Calendar.MINUTE) == stop.get(Calendar.MINUTE)))) {
-                    Log.d(Constants.TAG, "Aggiungo fetta dalle " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE)
-                            + " alle " + stop.get(Calendar.HOUR_OF_DAY) + ":" + stop.get(Calendar.MINUTE));
-                    clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE),
-                            stop.get(Calendar.HOUR_OF_DAY), stop.get(Calendar.MINUTE)));
-                }
-                firstGo = true;
-            }
-        }
-
-        return clockPieHelperArrayList;
-    }
-
-
-    /**
-     * torna la storia di uno slot, raggruppata per giorno
-     *
-     * @param tgt
-     * @return
-     */
-    public LinkedHashMap<Date, Short> getHistoryTypicalHashMap(SoulissTypical tgt, TimeRangeEnum range) {
-        LinkedHashMap<Date, Short> comments = new LinkedHashMap<>();
-
-        Date dff;
-        Short how;
-        String limitCause = "";
-        Calendar now = Calendar.getInstance();
-        switch (range) {
-
-            case ALL_DATA:
-                // tutti i dati
-                break;
-            case LAST_WEEK:
-                now.add(Calendar.DATE, -7);
-                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
-                break;
-            case LAST_MONTH:
-                now.add(Calendar.MONTH, -1);
-                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
-                break;
-            case LAST_DAY:
-                now.add(Calendar.DAY_OF_WEEK_IN_MONTH, -1);
-                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
-                break;
-            default:
-                Log.e("DB", "Unexpected switch ERROR");
-                break;
-        }
-        Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[]{
-                SoulissDB.COLUMN_LOG_DATE,
-                SoulissDB.COLUMN_LOG_VAL,
-                //"strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
-                //"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
-                //"MAX(CAST(flologval AS FLOAT)) AS MAX"
-        }
-                , SoulissDB.COLUMN_LOG_NODE_ID + " = "
-                + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                + tgt.getSlot() + limitCause + " ", null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()) {
-            try {
-                dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
-                how = (short) cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_VAL));
-                //SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-                //comments.put(dto.key, dto);
-                comments.put(dff, how);
-            } catch (Exception e) {
-                Log.e(TAG, "getHistoryTypicalHashMap", e);
-            }
-
-            cursor.moveToNext();
-        }
-        cursor.close();
         return comments;
     }
 
@@ -630,222 +481,187 @@ public class SoulissDBHelper {
     }
 
     /**
-     * Return antitheft master typical
+     * torna la storia di uno slot, raggruppata per giorno
      *
-     * @return produced Typical
+     * @param tgt
+     * @return
      */
-    public SoulissTypical41AntiTheft getAntiTheftMasterTypical() {
-        // query with primary key
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL + " = "
-                        + Constants.Typicals.Souliss_T41_Antitheft_Main, null, null,
-                null, null);
-        if (cursor.moveToFirst()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissTypical41AntiTheft ret = (SoulissTypical41AntiTheft) SoulissTypicalFactory.getTypical(context, dto.getTypical(),
-                    getSoulissNode(dto.getNodeId()), dto, opts);
-            cursor.close();
-            return ret;
-        } else
-            throw new NoSuchElementException();
-    }
+    public LinkedHashMap<Date, Short> getHistoryTypicalHashMap(SoulissTypical tgt, TimeRangeEnum range) {
+        LinkedHashMap<Date, Short> comments = new LinkedHashMap<>();
 
-    public List<SoulissTypical> getAntiTheftSensors() {
-        List<SoulissTypical> comments = new ArrayList<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
-                SoulissDB.COLUMN_TYPICAL + " = "
-                        + Constants.Typicals.Souliss_T42_Antitheft_Peer, null, null,
-                null, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissNode parent = getSoulissNode(dto.getNodeId());
-            SoulissTypical42AntiTheftPeer newTyp = (SoulissTypical42AntiTheftPeer) SoulissTypicalFactory.getTypical(context,
-                    dto.getTypical(), parent, dto, opts);
-            newTyp.setParentNode(parent);
-            // if (newTyp.getTypical() !=
-            // Constants.Souliss_T_CurrentSensor_slave)
-            comments.add(newTyp);
-            cursor.moveToNext();
+        Date dff;
+        Short how;
+        String limitCause = "";
+        Calendar now = Calendar.getInstance();
+        switch (range) {
+
+            case ALL_DATA:
+                // tutti i dati
+                break;
+            case LAST_WEEK:
+                now.add(Calendar.DATE, -7);
+                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+                break;
+            case LAST_MONTH:
+                now.add(Calendar.MONTH, -1);
+                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+                break;
+            case LAST_DAY:
+                now.add(Calendar.DAY_OF_WEEK_IN_MONTH, -1);
+                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+                break;
+            default:
+                Log.e("DB", "Unexpected switch ERROR");
+                break;
         }
-        // Make sure to close the cursor
-        cursor.close();
-
-        cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, SoulissDB.COLUMN_TYPICAL
-                        + " = " + Constants.Typicals.Souliss_T43_Antitheft_LocalPeer, null,
-                null, null, null);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissNode parent = getSoulissNode(dto.getNodeId());
-            SoulissTypical43AntiTheftLocalPeer newTyp = (SoulissTypical43AntiTheftLocalPeer) SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
-            newTyp.setParentNode(parent);
-            // if (newTyp.getTypical() !=
-            // Constants.Souliss_T_CurrentSensor_slave)
-            comments.add(newTyp);
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-
-        return comments;
-    }
-
-
-    public SoulissTriggerDTO getSoulissTrigger(long insertId) {
-        Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS,
-                SoulissDB.COLUMN_TRIGGER_ID + " = " + insertId, null, null, null, null);
-        cursor.moveToFirst();
-        SoulissTriggerDTO dto = new SoulissTriggerDTO(cursor);
-        // SoulissTypical ret = SoulissTypical.typicalFactory(dto.getTypical(),
-        // getSoulissNode(node), dto);
-        cursor.close();
-        return dto;
-    }
-
-    /*
-     * public void deleteTypical(int nodeid, SoulissTypical comment) { // long
-     * id = comment.getNodeId(); // System.out.println("Comment deleted with id: " +
-     * id); database.delete(SoulissDB.TABLE_TYPICALS, SoulissDB.COLUMN_ID +
-     * " = " + nodeid, null); }
-     */
-    public int deleteCommand(SoulissCommand toRename) {
-        return database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_ID + " = "
-                + toRename.getCommandId(), null);
-    }
-
-    public int truncateImportTables() {
-        int ret;
-        ret = database.delete(SoulissDB.TABLE_LOGS, null, null);
-        ret += database.delete(SoulissDB.TABLE_TYPICALS, null, null);
-        ret += database.delete(SoulissDB.TABLE_NODES, null, null);
-        return ret;
-
-    }
-
-    public void truncateAll() {
-        if (soulissDatabase != null) {
-            Log.w(TAG, "DB dropCreate !!!");
-            soulissDatabase.dropCreate(database);
-        }
-    }
-
-    public int deleteScene(SoulissScene toRename) {
-        database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_SCENEID + " = " + toRename.getId(), null);
-        return database.delete(SoulissDB.TABLE_SCENES, SoulissDB.COLUMN_SCENE_ID + " = " + toRename.getId(), null);
-    }
-
-    public int deleteTag(SoulissTag toRename) {
-        //CASCADE sulle associazioni
-        database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toRename.getTagId(), null);
-        //CASCADE sui figli
-        database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_FATHER_ID + " = " + toRename.getTagId(), null);
-        return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
-    }
-
-    public int deleteTagTypical(long tagId, int nodeid, int slot) {
-        //elimino associazione
-        return database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + tagId
-                +" AND "+SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " +nodeid
-                +" AND "+SoulissDB.COLUMN_TAG_TYP_SLOT+ " = " +slot, null);
-    }
-
-    public List<SoulissNode> getAllNodes() {
-        List<SoulissNode> comments = new ArrayList<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, null, null, null, null,
-                SoulissDB.COLUMN_NODE_ID);
+        Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[]{
+                        SoulissDB.COLUMN_LOG_DATE,
+                        SoulissDB.COLUMN_LOG_VAL,
+                        //"strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
+                        //"AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
+                        //"MAX(CAST(flologval AS FLOAT)) AS MAX"
+                }
+                , SoulissDB.COLUMN_LOG_NODE_ID + " = "
+                        + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+                        + tgt.getSlot() + limitCause + " ", null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-            SoulissNode comment = SoulissNode.cursorToNode(context, cursor);
-            List<SoulissTypical> cod = getNodeTypicals(comment);
-            // come sono grezzo, 'sta riga fa schifo
-            for (SoulissTypical soulissTypical : cod) {
-                // if (soulissTypical.getNodeId() == comment.getNodeId())
-                comment.addTypical(soulissTypical);
+            try {
+                dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
+                how = (short) cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_VAL));
+                //SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+                //comments.put(dto.key, dto);
+                comments.put(dff, how);
+            } catch (Exception e) {
+                Log.e(TAG, "getHistoryTypicalHashMap", e);
             }
-            comments.add(comment);
+
             cursor.moveToNext();
         }
-        // Make sure to close the cursor
         cursor.close();
         return comments;
     }
 
     /**
-     * Conta i non vuoti diversi da Souliss_T_related
+     * torna la storia di uno slot, raggruppata per giorno
      *
+     * @param tgt
      * @return
      */
-    public int countTypicals() {
-        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TYPICALS + " where "
-                + SoulissDB.COLUMN_TYPICAL + " <> "
-                + Constants.Typicals.Souliss_T_related
-                +" AND "+ SoulissDB.COLUMN_TYPICAL + " <> "
-                + Constants.Typicals.Souliss_T_empty, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
+    public HashMap<Date, SoulissHistoryGraphData> getHistoryTypicalLogs(ISoulissTypical tgt, int range) {
+        HashMap<Date, SoulissHistoryGraphData> comments = new HashMap<>();
+
+        Date dff;
+        String limitCause = "";
+        Calendar now = Calendar.getInstance();
+        switch (range) {
+
+            case 0:
+                // tutti i dati
+                break;
+            case 2:
+                now.add(Calendar.DATE, -7);
+                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+                break;
+            case 1:
+                now.add(Calendar.MONTH, -1);
+                limitCause = " AND " + SoulissDB.COLUMN_LOG_DATE + "  > " + now.getTime().getTime();
+                break;
+            default:
+                Log.e("DB", "Unexpected switch ERROR");
+                break;
+        }
+        Cursor cursor = database.query(SoulissDB.TABLE_LOGS, new String[]{
+                        "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
+                        "AVG(CAST(flologval AS FLOAT)) AS AVG", "MIN(CAST(flologval AS FLOAT)) AS MIN",
+                        "MAX(CAST(flologval AS FLOAT)) AS MAX"}, SoulissDB.COLUMN_LOG_NODE_ID + " = "
+                        + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+                        + tgt.getSlot() + limitCause + " ", null,
+                "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime'))", null, "IDX ASC");
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            try {
+                dff = Constants.yearFormat.parse(cursor.getString(0));
+                SoulissHistoryGraphData dto = new SoulissHistoryGraphData(cursor, dff);
+                comments.put(dto.key, dto);
+            } catch (ParseException e) {
+                Log.e(TAG, "getHistoryTypicalLogs", e);
+            }
+
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
     }
 
-    public int countNodes() {
-        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_NODES, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
+    public List<SoulissTypical> getNodeTypicals(SoulissNode parent) {
+
+
+        List<SoulissTypical> comments = new ArrayList<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + parent.getNodeId(), null, null, null, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
+            //TAG? no join, perche 1 a n
+            Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
+                    SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
+                            + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
+                    null, null, null, null);
+            typTags.moveToFirst();
+            while (!typTags.isAfterLast()) {
+                int tagId = typTags.getInt(typTags.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
+                if (tagId == SoulissDB.FAVOURITES_TAG_ID)
+                    dto.setFavourite(true);
+                else
+                    dto.setTagged(true);
+                typTags.moveToNext();
+            }
+            typTags.close();
+            //hack dto ID, could be different if parent is massive
+            newTyp.getTypicalDTO().setNodeId(parent.getNodeId());
+            newTyp.setParentNode(parent);
+            // if (newTyp.getTypical() !=
+            // Constants.Souliss_T_CurrentSensor_slave)
+            comments.add(newTyp);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
     }
 
-    public int countFavourites() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS_TYPICALS + " where "
-                + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " =  " + SoulissDB.FAVOURITES_TAG_ID, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
+    public LinkedList<SoulissCommand> getPositionalPrograms(Context soulissDataService) {
+        LinkedList<SoulissCommand> ret = new LinkedList<>();
+        Cursor cursor = database
+                .query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, SoulissDB.COLUMN_COMMAND_TYPE + " = "
+                        + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " = "
+                        + Constants.COMMAND_GOAWAY_CODE, null, null, null, null);
+        cursor.moveToFirst();
 
-    public int countTypicalTags() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS_TYPICALS, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
+        while (!cursor.isAfterLast()) {
 
-    public int countTags() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(1) from " + SoulissDB.TABLE_TAGS, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
-
-    public int countScenes() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_SCENES, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
-    }
-
-    public int countTriggers() {
-        if (!database.isOpen())
-            open();
-        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDB.TABLE_TRIGGERS, null);
-        mCount.moveToFirst();
-        int count = mCount.getInt(0);
-        mCount.close();
-        return count;
+            SoulissCommandDTO comment = new SoulissCommandDTO(cursor);
+            // comments.add(comment);
+            cursor.moveToNext();
+            short node = comment.getNodeId();
+            short slot = comment.getSlot();
+            SoulissCommand adding;
+            if (node > MASSIVE_NODE_ID) {
+                SoulissTypical parentTypical = getTypical(node, slot);
+                adding = new SoulissCommand(context, comment, parentTypical);
+            } else {
+                adding = new SoulissCommand(context, comment);
+            }
+            adding.setSceneId(null);
+            ret.add(adding);
+        }
+        cursor.close();
+        return ret;
     }
 
     public List<SoulissTag> getRootTags(Context context) {
@@ -875,207 +691,19 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    private List<SoulissTag> getTagChild(SoulissTag fatherDto) {
-        List<SoulissTag> ret = new ArrayList<>();
-        if (!database.isOpen())
-            open();
-        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
-                SoulissDB.COLUMN_TAG_FATHER_ID + " = " + fatherDto.getTagId(), null, null, null, null);
-        if (cursor.isLast()) {
-            cursor.close();
-            return ret;//basta figli
-        }
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SoulissTag dtoI = new SoulissTag();
-            dtoI.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
-            dtoI.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
-            dtoI.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
-            dtoI.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
-            dtoI.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            dtoI.setFatherId(fatherDto.getTagId());
-            Log.i(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
-            fatherDto.setAssignedTypicals(getTagTypicals(dtoI));
-            dtoI.setChildTags(getTagChild(dtoI));//recursive
-            ret.add(dtoI);
-            cursor.moveToNext();
-        }
-        cursor.close();
-
-
-        return ret;
-    }
-
-    public SoulissTag getTag(long tagId) throws SQLDataException {
-        SoulissTag dto = new SoulissTag();
-        if (!database.isOpen())
-            open();
-        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
-                SoulissDB.COLUMN_TAG_ID + " = " + tagId, null, null, null, null);
-        if (cursor.isLast())
-            throw new SQLDataException("Non Existing TagId:" + tagId);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
-            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
-            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
-            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
-            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            Long l = null;
-            if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)))
-                l = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID));
-            dto.setFatherId(l);
-            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder() + " Father:" + dto.getFatherId());
-            dto.setAssignedTypicals(getTagTypicals(dto));
-            dto.setChildTags(getTagChild(dto));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return dto;
-    }
-
-    public List<SoulissTypical> getTagTypicals(SoulissTag parent) {
-
-        List<SoulissTypical> comments = new ArrayList<>();
-        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS + " a "
-                + " INNER JOIN " + SoulissDB.TABLE_TYPICALS + " b "
-                + " ON a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = b." + SoulissDB.COLUMN_TYPICAL_NODE_ID
-                + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " = b." + SoulissDB.COLUMN_TYPICAL_SLOT
-                + " WHERE a." + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + parent.getTagId()
-                + " ORDER BY a." + SoulissDB.COLUMN_TAG_TYP_PRIORITY;
-        Cursor cursor = database.rawQuery(MY_QUERY, null);
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
-            SoulissNode par = getSoulissNode(dto.getNodeId());
-            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), par, dto, opts);
-            //hack dto ID, could be different if parent is massive
-            newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
-
-            //Se e` qui, e` taggato
-            if (parent.getTagId() == 0)
-                newTyp.getTypicalDTO().setFavourite(true);
-            newTyp.getTypicalDTO().setTagged(true);
-            comments.add(newTyp);
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-        return comments;
-    }
-    public List<SoulissTrigger> getAllTriggers(Context context) {
-        List<SoulissTrigger> ret = new ArrayList<>();
-        // Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS,
-        // SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,null);
-        // String MY_QUERY =
-        // "SELECT * FROM "+SoulissDB.TABLE_TRIGGERS+" a INNER JOIN "+SoulissDB.TABLE_COMMANDS
-        // +" b ON a.cmdid = b.cmdid WHERE b.property_id=?";
-        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TRIGGERS + " a " + "INNER JOIN "
-                + SoulissDB.TABLE_COMMANDS + " b ON a." + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = b."
-                + SoulissDB.COLUMN_COMMAND_ID;
-        Cursor cursor = database.rawQuery(MY_QUERY, null);
+    public SoulissScene getScene(int sceneId) {
+        Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
+                SoulissDB.COLUMN_SCENE_ID);
         cursor.moveToFirst();
 
-        while (!cursor.isAfterLast()) {
-            SoulissCommandDTO cmd = new SoulissCommandDTO(cursor);
-            SoulissTypical tgt = getTypical(cmd.getNodeId(), cmd.getSlot());
-            SoulissTrigger cols = new SoulissTrigger(cmd, tgt);
-            SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
+        SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
+        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
+        comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
 
-            cols.setTriggerDTO(comment);
-
-            ret.add(cols);
-            cursor.moveToNext();
-        }
-        // Make sure to close the cursor
-        cursor.close();
-        return ret;
-    }
-
-    public SoulissTriggerDTO getTriggerByCommandId(Context context, long triggerId) {
-
-        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TRIGGERS + " a " + "INNER JOIN "
-                + SoulissDB.TABLE_COMMANDS + " b ON a." + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = b."
-                + SoulissDB.COLUMN_COMMAND_ID + " WHERE " + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = " + triggerId;
-        Cursor cursor = database.rawQuery(MY_QUERY, null);
-        cursor.moveToFirst();
-        if(BuildConfig.DEBUG && !(cursor.getColumnCount() == 1))
-            throw new RuntimeException("cursor.getColumnCount() != 1");
-        SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
-
-        // cols.setTriggerDTO(comment);
-        // Make sure to close the cursor
+        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
+        comment.setCommandArray(cmds);
         cursor.close();
         return comment;
-    }
-
-    /**
-     * Ritorna mappa di tutti i comandi, indicizzati per ID
-     *
-     * @param ct
-     * @return
-     */
-    public SparseArray<SoulissTriggerDTO> getTriggerMap(Context ct) {
-        SparseArray<SoulissTriggerDTO> ret = new SparseArray<>();
-
-        Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,
-                null);
-        cursor.moveToFirst();
-
-        while (!cursor.isAfterLast()) {
-            SoulissTriggerDTO dto = new SoulissTriggerDTO(cursor);
-            ret.put((int) dto.getCommandId(), dto);
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return ret;
-
-    }
-
-    public LinkedList<SoulissCommand> getUnexecutedCommands(Context context) {
-        LinkedList<SoulissCommand> ret = new LinkedList<>();
-        Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, " ("
-                        + SoulissDB.COLUMN_COMMAND_EXECTIME + " is null OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
-                        + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
-                        + Constants.COMMAND_GOAWAY_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
-                        + Constants.COMMAND_TRIGGERED + ") AND " + SoulissDB.COLUMN_COMMAND_SCENEID + " IS NULL", null, null,
-                null, SoulissDB.COLUMN_COMMAND_SCHEDTIME);
-        cursor.moveToFirst();
-        Log.d(Constants.TAG, "Found unexecuted commands:" + cursor.getCount());
-        while (!cursor.isAfterLast()) {
-            SoulissCommandDTO comment = new SoulissCommandDTO(cursor);
-            cursor.moveToNext();
-            short node = comment.getNodeId();
-            short slot = comment.getSlot();
-            SoulissCommand adding = null;
-            if (node > Constants.MASSIVE_NODE_ID) {
-                SoulissTypical tgt = getTypical(node, slot);
-                //hack nodeId, Massive
-                tgt.getTypicalDTO().setNodeId(node);
-                tgt.getTypicalDTO().setSlot(slot);
-                adding = new SoulissCommand(context, comment, tgt);
-            } else if (node > Constants.COMMAND_FAKE_SCENE) {
-                // List massivi = getUniqueTypicals(node);
-                SoulissNode minchia = new SoulissNode(context, Constants.MASSIVE_NODE_ID);
-                List<SoulissTypical> massivi = getUniqueTypicals(minchia);
-                Log.d(Constants.TAG, "Massive command found, Typical:" + slot);
-                for (SoulissTypical cazzuto : massivi) {
-                    if (slot == cazzuto.getTypicalDTO().getTypical()) {
-                        adding = new SoulissCommand(context, comment, cazzuto);
-                    }
-                }
-
-            } else {
-                //scena, ovvero id scena da eseguire = slot
-                adding = new SoulissCommand(context, comment);
-            }
-            assertNotNull(adding);
-            ret.add(adding);
-        }
-        cursor.close();
-        return ret;
     }
 
     public ArrayList<SoulissCommand> getSceneCommands(int sceneId) {
@@ -1135,48 +763,419 @@ public class SoulissDBHelper {
         return ret;
     }
 
-    public SoulissScene getScene(int sceneId) {
-        Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
-                SoulissDB.COLUMN_SCENE_ID);
+    public long getSize() {
+        return new File(database.getPath()).length();
+    }
+
+    public SoulissNode getSoulissNode(int nodeIN) {
+        Cursor cursor = database.query(SoulissDB.TABLE_NODES, SoulissDB.ALLCOLUMNS_NODES, SoulissDB.COLUMN_NODE_ID
+                + " = " + nodeIN, null, null, null, null);
         cursor.moveToFirst();
+        SoulissNode ret = SoulissNode.cursorToNode(context, cursor);
 
-        SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
-        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
-        comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
+        List<SoulissTypical> cod = getNodeTypicals(ret);
+        // come sono grezzo, 'sta riga fa schifo
+        for (SoulissTypical soulissTypical : cod) {
+            // if (soulissTypical.getNodeId() == comment.getNodeId())
+            ret.addTypical(soulissTypical);
+        }
+        cursor.close();
+        return ret;
+    }
 
-        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
-        comment.setCommandArray(cmds);
+    public SoulissTriggerDTO getSoulissTrigger(long insertId) {
+        Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS,
+                SoulissDB.COLUMN_TRIGGER_ID + " = " + insertId, null, null, null, null);
+        cursor.moveToFirst();
+        SoulissTriggerDTO dto = new SoulissTriggerDTO(cursor);
+        // SoulissTypical ret = SoulissTypical.typicalFactory(dto.getTypical(),
+        // getSoulissNode(node), dto);
+        cursor.close();
+        return dto;
+    }
+
+    public SoulissTag getTag(long tagId) throws SQLDataException {
+        SoulissTag dto = new SoulissTag();
+        if (!database.isOpen())
+            open();
+        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
+                SoulissDB.COLUMN_TAG_ID + " = " + tagId, null, null, null, null);
+        if (cursor.isLast())
+            throw new SQLDataException("Non Existing TagId:" + tagId);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
+            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
+            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
+            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
+            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            Long l = null;
+            if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)))
+                l = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID));
+            dto.setFatherId(l);
+            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder() + " Father:" + dto.getFatherId());
+            dto.setAssignedTypicals(getTagTypicals(dto));
+            dto.setChildTags(getTagChild(dto));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return dto;
+    }
+
+    private List<SoulissTag> getTagChild(SoulissTag fatherDto) {
+        List<SoulissTag> ret = new ArrayList<>();
+        if (!database.isOpen())
+            open();
+        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
+                SoulissDB.COLUMN_TAG_FATHER_ID + " = " + fatherDto.getTagId(), null, null, null, null);
+        if (cursor.isLast()) {
+            cursor.close();
+            return ret;//basta figli
+        }
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTag dtoI = new SoulissTag();
+            dtoI.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
+            dtoI.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
+            dtoI.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
+            dtoI.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
+            dtoI.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            dtoI.setFatherId(fatherDto.getTagId());
+            Log.i(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
+            fatherDto.setAssignedTypicals(getTagTypicals(dtoI));
+            dtoI.setChildTags(getTagChild(dtoI));//recursive
+            ret.add(dtoI);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+
+        return ret;
+    }
+
+    public List<SoulissTypical> getTagTypicals(SoulissTag parent) {
+
+        List<SoulissTypical> comments = new ArrayList<>();
+        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS + " a "
+                + " INNER JOIN " + SoulissDB.TABLE_TYPICALS + " b "
+                + " ON a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = b." + SoulissDB.COLUMN_TYPICAL_NODE_ID
+                + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " = b." + SoulissDB.COLUMN_TYPICAL_SLOT
+                + " WHERE a." + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + parent.getTagId()
+                + " ORDER BY a." + SoulissDB.COLUMN_TAG_TYP_PRIORITY;
+        Cursor cursor = database.rawQuery(MY_QUERY, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissNode par = getSoulissNode(dto.getNodeId());
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), par, dto, opts);
+            //hack dto ID, could be different if parent is massive
+            newTyp.getTypicalDTO().setNodeId(dto.getNodeId());
+
+            //Se e` qui, e` taggato
+            if (parent.getTagId() == 0)
+                newTyp.getTypicalDTO().setFavourite(true);
+            newTyp.getTypicalDTO().setTagged(true);
+            comments.add(newTyp);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
+    public SoulissTriggerDTO getTriggerByCommandId(Context context, long triggerId) {
+
+        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TRIGGERS + " a " + "INNER JOIN "
+                + SoulissDB.TABLE_COMMANDS + " b ON a." + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = b."
+                + SoulissDB.COLUMN_COMMAND_ID + " WHERE " + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = " + triggerId;
+        Cursor cursor = database.rawQuery(MY_QUERY, null);
+        cursor.moveToFirst();
+        if (BuildConfig.DEBUG && !(cursor.getColumnCount() == 1))
+            throw new RuntimeException("cursor.getColumnCount() != 1");
+        SoulissTriggerDTO comment = new SoulissTriggerDTO(cursor);
+
+        // cols.setTriggerDTO(comment);
+        // Make sure to close the cursor
         cursor.close();
         return comment;
     }
 
-    public LinkedList<SoulissCommand> getPositionalPrograms(Context soulissDataService) {
-        LinkedList<SoulissCommand> ret = new LinkedList<>();
-        Cursor cursor = database
-                .query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, SoulissDB.COLUMN_COMMAND_TYPE + " = "
-                        + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " = "
-                        + Constants.COMMAND_GOAWAY_CODE, null, null, null, null);
+    /**
+     * Ritorna mappa di tutti i comandi, indicizzati per ID
+     *
+     * @param ct
+     * @return
+     */
+    public SparseArray<SoulissTriggerDTO> getTriggerMap(Context ct) {
+        SparseArray<SoulissTriggerDTO> ret = new SparseArray<>();
+
+        Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,
+                null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
+            SoulissTriggerDTO dto = new SoulissTriggerDTO(cursor);
+            ret.put((int) dto.getCommandId(), dto);
+            cursor.moveToNext();
+        }
 
+        cursor.close();
+        return ret;
+
+    }
+
+    /**
+     * DB typical factory
+     *
+     * @param node
+     * @param slot
+     * @return produced Typical
+     */
+    public SoulissTypical getTypical(int node, short slot) {
+        // query with primary key
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS,
+                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + node + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
+                        + slot, null, null, null, null);
+        cursor.moveToFirst();
+        SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+        //TAG? no join, perche 1 a n
+        Cursor typTags = database.query(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.ALLCOLUMNS_TAGS_TYPICAL,
+                SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + dto.getNodeId()
+                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + dto.getSlot(),
+                null, null, null, null);
+        typTags.moveToFirst();
+        while (!typTags.isAfterLast()) {
+            int tagId = typTags.getInt(typTags.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
+            if (tagId == SoulissDB.FAVOURITES_TAG_ID)
+                dto.setFavourite(true);
+            else
+                dto.setTagged(true);
+            typTags.moveToNext();
+        }
+        typTags.close();
+        SoulissTypical ret = SoulissTypicalFactory.getTypical(context, dto.getTypical(), getSoulissNode(node), dto, opts);
+        cursor.close();
+        return ret;
+    }
+
+    public ArrayList<SoulissLogDTO> getTypicalLogs(SoulissTypical tgt) {
+        ArrayList<SoulissLogDTO> comments = new ArrayList<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_LOGS, SoulissDB.ALLCOLUMNS_LOGS, SoulissDB.COLUMN_LOG_NODE_ID
+                + " = " + tgt.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
+                + tgt.getSlot(), null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissLogDTO dto = new SoulissLogDTO(cursor);
+            comments.add(dto);
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
+    /**
+     * TO TEST
+     *
+     * @param tgt
+     * @param range
+     * @return
+     */
+    public ArrayList<ClockPieHelper> getTypicalOnClockPie(SoulissTypical tgt, TimeRangeEnum range) {
+        ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<ClockPieHelper>();
+        LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
+        boolean firstGo = true;
+        Date accStart = new Date();
+        for (Date cur : comments.keySet()) {
+            Short val = comments.get(cur);
+            if (val != Constants.Typicals.Souliss_T1n_OffCoil && val != Constants.Typicals.Souliss_T1n_OffCoil_Auto) {
+                //spento, inizia nuovo per
+                accStart = cur;
+                firstGo = false;
+            } else if (!firstGo) {
+                Calendar start = Calendar.getInstance();
+                Calendar stop = Calendar.getInstance();
+                start.setTime(accStart);
+                stop.setTime(cur);
+                //aggiungo fetta sse piu di un minuto
+                if (!(start.get(Calendar.HOUR_OF_DAY) == stop.get(Calendar.HOUR_OF_DAY) &&
+                        (start.get(Calendar.MINUTE) == stop.get(Calendar.MINUTE)))) {
+                    Log.d(Constants.TAG, "Aggiungo fetta dalle " + start.get(Calendar.HOUR_OF_DAY) + ":" + start.get(Calendar.MINUTE)
+                            + " alle " + stop.get(Calendar.HOUR_OF_DAY) + ":" + stop.get(Calendar.MINUTE));
+                    clockPieHelperArrayList.add(new ClockPieHelper(start.get(Calendar.HOUR_OF_DAY), start.get(Calendar.MINUTE),
+                            stop.get(Calendar.HOUR_OF_DAY), stop.get(Calendar.MINUTE)));
+                }
+                firstGo = true;
+            }
+        }
+
+        return clockPieHelperArrayList;
+    }
+
+    /**
+     * TO TEST
+     *
+     * @param tgt
+     * @param range
+     * @return
+     */
+    public int getTypicalOnDurationMsec(SoulissTypical tgt, TimeRangeEnum range) {
+        LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
+        int accumulator = 0;
+        boolean firstGo = true;
+        Date accStart = new Date();
+        for (Date cur : comments.keySet()) {
+            Short val = comments.get(cur);
+            if (val != Constants.Typicals.Souliss_T1n_OffCoil && val != Constants.Typicals.Souliss_T1n_OffCoil_Auto) {
+                //spento, inizia nuovo per
+                accStart = cur;
+                firstGo = false;
+            } else if (!firstGo) {
+                accumulator += cur.getTime() - accStart.getTime();
+                firstGo = true;
+            }
+        }
+        return accumulator;
+    }
+
+    public LinkedList<SoulissCommand> getUnexecutedCommands(Context context) {
+        LinkedList<SoulissCommand> ret = new LinkedList<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, " ("
+                        + SoulissDB.COLUMN_COMMAND_EXECTIME + " is null OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
+                        + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
+                        + Constants.COMMAND_GOAWAY_CODE + " OR " + SoulissDB.COLUMN_COMMAND_TYPE + " ="
+                        + Constants.COMMAND_TRIGGERED + ") AND " + SoulissDB.COLUMN_COMMAND_SCENEID + " IS NULL", null, null,
+                null, SoulissDB.COLUMN_COMMAND_SCHEDTIME);
+        cursor.moveToFirst();
+        Log.d(Constants.TAG, "Found unexecuted commands:" + cursor.getCount());
+        while (!cursor.isAfterLast()) {
             SoulissCommandDTO comment = new SoulissCommandDTO(cursor);
-            // comments.add(comment);
             cursor.moveToNext();
             short node = comment.getNodeId();
             short slot = comment.getSlot();
-            SoulissCommand adding;
-            if (node > MASSIVE_NODE_ID) {
-                SoulissTypical parentTypical = getTypical(node, slot);
-                adding = new SoulissCommand(context, comment, parentTypical);
+            SoulissCommand adding = null;
+            if (node > Constants.MASSIVE_NODE_ID) {
+                SoulissTypical tgt = getTypical(node, slot);
+                //hack nodeId, Massive
+                tgt.getTypicalDTO().setNodeId(node);
+                tgt.getTypicalDTO().setSlot(slot);
+                adding = new SoulissCommand(context, comment, tgt);
+            } else if (node > Constants.COMMAND_FAKE_SCENE) {
+                // List massivi = getUniqueTypicals(node);
+                SoulissNode minchia = new SoulissNode(context, Constants.MASSIVE_NODE_ID);
+                List<SoulissTypical> massivi = getUniqueTypicals(minchia);
+                Log.d(Constants.TAG, "Massive command found, Typical:" + slot);
+                for (SoulissTypical cazzuto : massivi) {
+                    if (slot == cazzuto.getTypicalDTO().getTypical()) {
+                        adding = new SoulissCommand(context, comment, cazzuto);
+                    }
+                }
+
             } else {
+                //scena, ovvero id scena da eseguire = slot
                 adding = new SoulissCommand(context, comment);
             }
-            adding.setSceneId(null);
+            assertNotNull(adding);
             ret.add(adding);
         }
         cursor.close();
         return ret;
+    }
+
+    /**
+     * @param parent fake node, id -1
+     * @return
+     */
+    public List<SoulissTypical> getUniqueTypicals(SoulissNode parent) {
+        ArrayList<SoulissTypical> comments = new ArrayList<>();
+        HashSet<Short> pool = new HashSet<>();
+        Cursor cursor = database.query(SoulissDB.TABLE_TYPICALS, SoulissDB.ALLCOLUMNS_TYPICALS, null, null, null, null,
+                null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
+            SoulissTypical newTyp = SoulissTypicalFactory.getTypical(context, dto.getTypical(), parent, dto, opts);
+            newTyp.setParentNode(parent);
+            if (parent.getNodeId() == Constants.MASSIVE_NODE_ID) {
+                //hack dto ID, could be different if parent is massive
+                newTyp.getTypicalDTO().setNodeId(parent.getNodeId());
+                newTyp.getTypicalDTO().setSlot(dto.getTypical());
+            }
+            // if (newTyp.getTypical() !=
+            // Constants.Souliss_T_CurrentSensor_slave)
+            if (!pool.contains(dto.getTypical())) {
+                comments.add(newTyp);
+                pool.add(dto.getTypical());
+            }
+            cursor.moveToNext();
+        }
+        // Make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
+    /**
+     * presuppone che il nodo esista, asserError altrimenti Light update, solo
+     * data ed health, pensato per JSON
+     *
+     * @param nodeIN
+     * @return
+     */
+    @Deprecated
+    public int refreshNode(SoulissNode nodeIN) {
+        ContentValues values = new ContentValues();
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
+        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
+                null);
+
+        assertEquals(upd, 1);
+        return (int) upd;
+    }
+
+    /**
+     * presuppone che il nodo esista, asserError altrimenti Light update, solo
+     * data ed health, pensato per JSON. Skippa refresh se tipico vuoto
+     *
+     * @param nodeIN
+     * @return
+     */
+    @Deprecated
+    public int refreshNodeAndTypicals(SoulissNode nodeIN) {
+        ContentValues values = new ContentValues();
+        // wrap values from object
+        values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDB.COLUMN_NODE_HEALTH, nodeIN.getHealth());
+        long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + nodeIN.getNodeId(),
+                null);
+
+        assertEquals(upd, 1);
+
+        List<SoulissTypical> tips = nodeIN.getTypicals();
+        for (SoulissTypical x : tips) {
+            if (!x.isEmpty())
+                x.refresh();
+        }
+
+        return (int) upd;
+    }
+
+    public void truncateAll() {
+        if (soulissDatabase != null) {
+            Log.w(TAG, "DB dropCreate !!!");
+            soulissDatabase.dropCreate(database);
+        }
+    }
+
+    public int truncateImportTables() {
+        int ret;
+        ret = database.delete(SoulissDB.TABLE_LOGS, null, null);
+        ret += database.delete(SoulissDB.TABLE_TYPICALS, null, null);
+        ret += database.delete(SoulissDB.TABLE_NODES, null, null);
+        return ret;
+
     }
 
 

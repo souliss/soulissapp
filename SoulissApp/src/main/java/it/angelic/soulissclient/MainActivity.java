@@ -44,7 +44,7 @@ import java.util.Locale;
 import java.util.Timer;
 
 import it.angelic.receivers.NetworkStateReceiver;
-import it.angelic.soulissclient.adapters.StaggeredLauncherElementAdapter;
+import it.angelic.soulissclient.adapters.StaggeredDashboardElementAdapter;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
@@ -69,7 +69,7 @@ import static it.angelic.soulissclient.Constants.TAG;
 public class MainActivity extends AbstractStatusedFragmentActivity implements LocationListener {
     private Timer autoUpdate;
     private SoulissDBLauncherHelper database;
-    private StaggeredLauncherElementAdapter launcherMainAdapter;
+    private StaggeredDashboardElementAdapter launcherMainAdapter;
     private LocationManager locationManager;
     private SoulissDataService mBoundService;
     // invoked when RAW data is received
@@ -248,7 +248,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         }).start();
 
 
-        launcherMainAdapter = new StaggeredLauncherElementAdapter(this, launcherItems, mBoundService);
+        launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
         launcherMainAdapter.notifyDataSetChanged();
@@ -532,12 +532,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
-        private final StaggeredLauncherElementAdapter adapter;
+        private final StaggeredDashboardElementAdapter adapter;
         private final Context context;
         View.OnClickListener mOnClickListener;
         private SoulissDBLauncherHelper database;
 
-        public LauncherStaggeredCallback(Context xct, final StaggeredLauncherElementAdapter adapter, SoulissDBLauncherHelper database) {
+        public LauncherStaggeredCallback(Context xct, final StaggeredDashboardElementAdapter adapter, SoulissDBLauncherHelper database) {
             this.adapter = adapter;
             this.context = xct;
             this.database = database;

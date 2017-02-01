@@ -176,7 +176,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
-		infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot());
+        infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot() + "Val: 0x" + Integer.toHexString(collected.getOutput().intValue()));
 
         refreshTagsInfo();
 
@@ -458,10 +458,10 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 				SoulissDBHelper.open();
 				SoulissNode coll = datasource.getSoulissNode(collected.getNodeId());
 				collected = coll.getTypical(collected.getSlot());
-				if (collected.getOutput() == Souliss_T1n_OnCoil)
-					buttPlus.setBackgroundResource(R.drawable.bulb_on);
-				else if (collected.getOutput() == Souliss_T1n_OffCoil)
-					buttPlus.setBackgroundResource(R.drawable.bulb_off);
+                if (collected.getOutput() == Souliss_T1n_OnCoil || collected.getOutput() == Souliss_T1n_OnCoil_Auto)
+                    buttPlus.setBackgroundResource(R.drawable.bulb_on);
+                else if (collected.getOutput() == Souliss_T1n_OffCoil || collected.getOutput() == Souliss_T1n_OffCoil_Auto)
+                    buttPlus.setBackgroundResource(R.drawable.bulb_off);
 				else if (collected.getOutput() >= Souliss_T1n_Timed) {
 					timer.setProgress(collected.getOutput().intValue());
 					buttPlus.setBackgroundResource(R.drawable.bulb_on);
@@ -474,8 +474,13 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                     refreshHistoryInfo();
                 }
 				refreshStatusIcon();
+                if (collected.getOutput() == Souliss_T1n_OffCoil_Auto || collected.getOutput() == Souliss_T1n_OnCoil_Auto)
+                    autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON");
+                else
+                    autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF");
+                // datasource.close();
+                infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot() + "Val: 0x" + Integer.toHexString(collected.getOutput().intValue()));
 
-				// datasource.close();
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);
 			}
