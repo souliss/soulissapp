@@ -47,7 +47,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return context;
     }
 
-    protected final transient Context context;
+    protected transient Context context;
     // nodo di appartenenza
     protected SoulissNode parentNode;
     // contenitore dati specchio del DB
@@ -218,6 +218,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_plug.getFontName());
         else
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_microchip.getFontName());
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override

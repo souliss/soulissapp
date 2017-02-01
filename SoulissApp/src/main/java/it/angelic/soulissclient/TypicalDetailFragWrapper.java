@@ -63,9 +63,10 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
 
         if (extras != null && extras.get("TIPICO") != null)
             collected = (SoulissTypical) extras.get("TIPICO");
-        assertTrue("TIPICO NULLO", collected != null);
 
-// DRAWER gabola
+        assertTrue("TIPICO NULLO", collected != null);
+        collected.setContext(TypicalDetailFragWrapper.this);
+        // DRAWER gabola
         initDrawer(this, collected.getNodeId());
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         Fragment NewFrag = null;
@@ -111,13 +112,6 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
 
@@ -129,6 +123,13 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
     }
 
     @Override

@@ -196,6 +196,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         }
         patternAnimator = CCFAnimator.rgb(Color.RED, Color.BLUE);
         setHasOptionsMenu(true);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -514,36 +515,42 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 patternRunner = new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        int iterCount = 0;
                         float cnt = 0f;
-                        float step = 0.05f;
+                        float step = 0.01f;
                         boolean goinUp = true;
                         while (patternRunning) {
+                            iterCount++;
                             try {
                                 if (checkBoxScatter.isChecked())
                                     cnt = Constants.random.nextFloat();
                                 color = patternAnimator.getColor(cnt);
-                                if (goinUp)
-                                    cnt += step;
-                                else
-                                    cnt -= step;
+                                //varia il colore solo ogni tot
+                                if (iterCount % (11 - sliderSpeed.getProgress() / 10) == 0) {
+                                    if (goinUp)
+                                        cnt += step;
+                                    else
+                                        cnt -= step;
 
-                                collected.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set,
-                                        Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
-                                Log.d(Constants.TAG, "dialogColorChangedListener, pattern color asc: " + goinUp
-                                        + " cnt=" + cnt);
-                                if (getActivity() != null) {//could be detached
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        public void run() {
-                                            btFeedBackPatern
-                                                    .setBackgroundColor(color);
-                                        }
-                                    });
+                                    collected.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set,
+                                            Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
+                                    Log.d(Constants.TAG, "dialogColorChangedListener, pattern color asc: " + goinUp
+                                            + " cnt=" + cnt);
+                                    if (getActivity() != null) {//could be detached
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            public void run() {
+                                                btFeedBackPatern
+                                                        .setBackgroundColor(color);
+                                            }
+                                        });
+                                    }
+                                    if (cnt >= 1)
+                                        goinUp = false;
+                                    else if (cnt <= 0)
+                                        goinUp = true;
+                                    //slider max = 255
                                 }
-                                if (cnt >= 1)
-                                    goinUp = false;
-                                else if (cnt <= 0)
-                                    goinUp = true;
-                                //slider max = 255
+                                //do respiro almeno 50msec
                                 Thread.sleep(150 - sliderSpeed.getProgress());
                             } catch (InterruptedException e) {
                                 Log.e(Constants.TAG, "Error Thread.sleep:");
