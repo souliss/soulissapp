@@ -237,7 +237,7 @@
     <string name="Souliss_T13_desc">Digital Input Value</string>
     <string name="Souliss_T14_desc">Pulse Digital Output</string>
     <string name="Souliss_T16_desc">RGB LED Strip</string>
-    <string name="Souliss_T18_desc">ON/OFF Digital Output</string>
+    <string name="Souliss_T18_desc">Step Relay</string>
     <string name="Souliss_T19_desc">Dimmable Light</string>
     <string name="Souliss_T19_received">Current brightness:</string>
     <string name="Souliss_T19_set">Setting brightness to:</string>
@@ -409,5 +409,6 @@
     <string name="menu_addto_dashboard">Add to Dashboard</string>
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">" added to Dashboard"</string>
+    <string name="step">STEP</string>
     >
 </resources>

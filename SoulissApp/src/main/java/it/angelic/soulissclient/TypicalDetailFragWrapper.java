@@ -21,6 +21,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto
 import it.angelic.soulissclient.model.typicals.SoulissTypical14PulseOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical18StepRelay;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
@@ -83,7 +84,7 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
             NewFrag = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical32AirCon)
             NewFrag = T32AirConFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
-        else if (collected instanceof SoulissTypical14PulseOutput) {
+        else if (collected instanceof SoulissTypical14PulseOutput || collected instanceof SoulissTypical18StepRelay) {
             //no detail, notice user and return
             Toast.makeText(this,
                     getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)

@@ -222,9 +222,9 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		OnClickListener plus = new OnClickListener() {
 			public void onClick(View v) {
 				Short cmd = (Short) v.getTag();
-				if (collected.getOutput() == Souliss_T1n_OnCoil) {
+				if (collected.getOutput() == Souliss_T1n_OnCoil || collected.getOutput() == Souliss_T1n_OnCoil_Auto) {
 					shutoff();
-				} else if (collected.getOutput() == Souliss_T1n_OffCoil) {
+				} else if (collected.getOutput() == Souliss_T1n_OffCoil || collected.getOutput() == Souliss_T1n_OffCoil_Auto) {
 					turnOn(0);
 				} else {
 					Log.e(Constants.TAG, "OUTPUT Error");
@@ -271,7 +271,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			timer.setVisibility(View.GONE);
 			timerInfo.setVisibility(View.GONE);
 			// Check AUTO mode
-			if (collected.getOutputDesc().contains("AUTO"))
+			if (collected.getOutput() == Souliss_T1n_OnCoil || collected.getOutput() == Souliss_T1n_OnCoil_Auto)
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " ON");
 			else
 				autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF");

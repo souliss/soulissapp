@@ -64,6 +64,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.model.typicals.SoulissTypical14PulseOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical18StepRelay;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
@@ -540,7 +541,7 @@ public class NodeDetailFragment extends ListFragment {
             NewFrag = T4nFragment.newInstance(index, target);
         else if (target instanceof SoulissTypical32AirCon)
             NewFrag = T32AirConFragment.newInstance(index, target);
-        else if (target instanceof SoulissTypical14PulseOutput) {
+        else if (target instanceof SoulissTypical14PulseOutput || target instanceof SoulissTypical18StepRelay) {
             //no detail, notice user and return
             Toast.makeText(getActivity(),
                     getString(R.string.status_souliss_nodetail), Toast.LENGTH_SHORT)

@@ -2,6 +2,7 @@ package it.angelic.soulissclient.model.typicals;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -81,11 +82,13 @@ public class SoulissTypical12DigitalOutputAuto extends SoulissTypical implements
     @Override
     public void setOutputDescView(@NonNull TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
-        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil_Auto) {
-            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil
+                || "UNKNOWN".compareTo(getOutputDesc()) == 0
+                || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil_Auto) {
+            textStatusVal.setTextColor(ContextCompat.getColor(context, R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {
-            textStatusVal.setTextColor(context.getResources().getColor(R.color.std_green));
+            textStatusVal.setTextColor(ContextCompat.getColor(context, R.color.std_green));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackon);
         }
     }

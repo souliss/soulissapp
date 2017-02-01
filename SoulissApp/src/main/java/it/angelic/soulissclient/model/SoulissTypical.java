@@ -167,7 +167,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else if (typical == Constants.Typicals.Souliss_T16)
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_sliders.getFontName());
         else if (typical == Constants.Typicals.Souliss_T18)
-            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_power_off.getFontName());
+            return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_step_forward.getFontName());
         else if (typical == Constants.Typicals.Souliss_T19)
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_signal.getFontName());
         else if (typical == Constants.Typicals.Souliss_T21)

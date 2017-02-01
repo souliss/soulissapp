@@ -228,7 +228,7 @@
     <string name="Souliss_T13_desc">Input Digitale</string>
     <string name="Souliss_T14_desc">Pulse Digital Output</string>
     <string name="Souliss_T16_desc">RGB LED Strip</string>
-    <string name="Souliss_T18_desc">ON/OFF Digitale</string>
+    <string name="Souliss_T18_desc">Step Relè</string>
     <string name="Souliss_T19_desc">Luce analogica</string>
     <string name="Souliss_T19_received">Intensità attuale:</string>
     <string name="Souliss_T19_set">Intensità impostata:</string>
@@ -406,6 +406,7 @@
     <string name="menu_addto_dashboard">Aggiungi alla Dashboard</string>
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">" added to Dashboard"</string>
+    <string name="step">STEP</string>
 
 
 </resources>

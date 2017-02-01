@@ -12,6 +12,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical13DigitalInput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical14PulseOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical15;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
+import it.angelic.soulissclient.model.typicals.SoulissTypical18StepRelay;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
 import it.angelic.soulissclient.model.typicals.SoulissTypical1ALightsArray;
 import it.angelic.soulissclient.model.typicals.SoulissTypical21;
@@ -63,7 +64,7 @@ public class SoulissTypicalFactory {
 				rest = new SoulissTypical16AdvancedRGB(ctx, opts);
 			break;
 			case Constants.Typicals.Souliss_T18:
-				rest = new SoulissTypical11DigitalOutput(ctx, opts);
+				rest = new SoulissTypical18StepRelay(ctx, opts);
 			break;
 			case Constants.Typicals.Souliss_T19:
 				rest = new SoulissTypical19AnalogChannel(ctx, opts);

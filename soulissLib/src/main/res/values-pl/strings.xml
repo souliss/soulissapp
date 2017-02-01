@@ -406,4 +406,5 @@
     <string name="menu_addto_dashboard">Addo to Dashboard</string>
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">" added to Dashboard"</string>
+    <string name="step">STEP</string>
 </resources>
