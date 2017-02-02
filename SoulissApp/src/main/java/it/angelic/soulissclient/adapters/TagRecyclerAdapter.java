@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -107,6 +108,14 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
             Log.w(Constants.TAG, "not getting window background");
         }
 
+        //queste vengono eseguite in tempo grazie a postponeEnterTrans
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.d(Constants.TAG, "setting setTransitionName for subtag:" + holder.data.getTagId());
+            holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
+            holder.shadowbar.setTransitionName("shadow_hero" + holder.data.getTagId());
+            holder.imageTag.setTransitionName("tag_hero" + holder.data.getTagId());
+        }
+
         // Here you apply the animation when the view is bound
         //setAnimation(holder.container, position);
 
@@ -125,7 +134,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                                 Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
                                 Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
                                 Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId()),
-                                Pair.create((View) holder.fabTag, "fab_hero" + holder.data.getTagId())
+                                Pair.create((View) holder.fabTag, "fab_hero")
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());

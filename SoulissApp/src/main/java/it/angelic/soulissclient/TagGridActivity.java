@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -343,6 +345,18 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mDrawerToggle.syncState();
     }
 
+    /**
+     * Don't forget to call setResult(Activity.RESULT_OK) in the returning
+     * activity or else this method won't be called!
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+
+        // Postpone the shared element return transition.
+        postponeEnterTransition();
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -358,6 +372,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         //un po bruto
         tagAdapter.setTagArray(datasource.getRootTags(this));
         tagAdapter.notifyDataSetChanged();
+        scheduleStartPostponedTransition(mDrawerList);
     }
 
 }

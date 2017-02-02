@@ -49,7 +49,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +56,9 @@ import android.widget.Toast;
 import java.io.File;
 import java.sql.SQLDataException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Stack;
 
 import it.angelic.soulissclient.Constants;
@@ -187,34 +188,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         Log.i(Constants.TAG, "onCreateView with size of data:" + collectedTag.getAssignedTypicals().size());
         appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBar_layout);
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Looper.prepare();
-                        if (collectedTag != null) {
-                            UDPHelper.pollRequest(opzioni, 1, collectedTag.getAssignedTypicals().get(0).getNodeId());
-                            Log.d(Constants.TAG, "pollRequest for node:" + collectedTag.getAssignedTypicals().get(0).getNodeId());
-                        }
-
-                        if (!opzioni.isSoulissReachable()) {
-                            getActivity().runOnUiThread(new Runnable() {
-                                public void run() {
-                                    Toast.makeText(getActivity(),
-                                            getString(R.string.status_souliss_notreachable), Toast.LENGTH_SHORT)
-                                            .show();
-                                    swipeLayout.setRefreshing(false);
-                                }
-                            });
-
-
-                        }
-                    }
-                }).start();
-            }
-        });
         swipeLayout.setColorSchemeResources(R.color.std_blue,
                 R.color.std_blue_shadow);
         // BEGIN_INCLUDE(initializeRecyclerView)
@@ -290,8 +263,12 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                     @Override
                     public void run() {
                         Looper.prepare();
+                        Set<Short> alreadyRequested = new HashSet<>();
                         for (SoulissTypical typ : collectedTag.getAssignedTypicals()) {
-                            UDPHelper.pollRequest(opzioni, 1, typ.getNodeId());
+                            if (!alreadyRequested.contains(typ.getNodeId())) {
+                                UDPHelper.pollRequest(opzioni, 1, typ.getNodeId());
+                                alreadyRequested.add(Short.valueOf(typ.getNodeId()));
+                            }
                         }
                         //Avvisa solo
                         if (!opzioni.isSoulissReachable()) {
@@ -377,26 +354,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         return rootView;
     }
 
-    /**
-     * Siccome nel rientro da dettaglio nested a dettaglio
-     * gli elementi non sono ancora presenti, si postpone la transazione per sbloccarla
-     * poi con una chiamata a codesto metodo
-     */
-    private void scheduleStartPostponedTransition(final View sharedElement) {
-        Log.w(Constants.TAG, "SCHEDULE  ");
-        sharedElement.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
-                        Log.w(Constants.TAG, "SCHEDULE StartPostponedTransition ");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            getActivity().startPostponedEnterTransition();
-                        }
-                        return true;
-                    }
-                });
-    }
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
@@ -466,6 +424,8 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             mLogoImg.setTransitionName("photo_hero" + collectedTag.getTagId());
             infoAlpha.setTransitionName("shadow_hero" + collectedTag.getTagId());
             mLogoIcon.setTransitionName("tag_hero" + collectedTag.getTagId());
+            fab.setTransitionName("fab_hero");
+
         }
 
         // Extend the Callback class

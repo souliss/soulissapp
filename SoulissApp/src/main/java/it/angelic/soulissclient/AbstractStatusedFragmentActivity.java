@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -317,4 +319,24 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Siccome nel rientro da dettaglio nested a dettaglio
+     * gli elementi non sono ancora presenti, si postpone la transazione per sbloccarla
+     * poi con una chiamata a codesto metodo
+     */
+    protected void scheduleStartPostponedTransition(final View sharedElement) {
+        Log.w(Constants.TAG, "SCHEDULE  ");
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        Log.w(Constants.TAG, "SCHEDULE StartPostponedTransition ");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            startPostponedEnterTransition();
+                        }
+                        return true;
+                    }
+                });
+    }
 }
