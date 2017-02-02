@@ -827,7 +827,7 @@ public class SoulissDBHelper {
         if (!database.isOpen())
             open();
         Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS,
-                SoulissDB.COLUMN_TAG_FATHER_ID + " = " + fatherDto.getTagId(), null, null, null, null);
+                SoulissDB.COLUMN_TAG_FATHER_ID + " = " + fatherDto.getTagId(), null, null, null, SoulissDB.COLUMN_TAG_ORDER);
         if (cursor.isLast()) {
             cursor.close();
             return ret;//basta figli

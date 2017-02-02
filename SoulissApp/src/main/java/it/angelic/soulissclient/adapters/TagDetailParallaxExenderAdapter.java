@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import it.angelic.soulissclient.Constants;
@@ -43,9 +44,9 @@ import it.angelic.soulissclient.util.SoulissUtils;
  * Created by Ale on 08/03/2015.
  */
 public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final TagDetailActivity context;
     public static final int VIEW_TYPE_TAG_TYPICAL = 1;
     public static final int VIEW_TYPE_TAG_NESTED = 2;
+    private final TagDetailActivity context;
     protected SoulissTag mDataset;
     private SoulissPreferenceHelper opzioni;
     private long tagId;
@@ -113,17 +114,6 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
         return tifr;
     }
-
-    @Override//bellissimo shine deve dormire di piu'
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof TypicalCardViewHolder)
-            onBindTagCardViewHolderImpl((TypicalCardViewHolder) holder, position);
-        else if (holder instanceof TagRecyclerAdapter.TagCardViewHolder)
-            onBindTagCardViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
-        else
-            throw new SoulissModelException("TOIMPLEMENT");
-    }
-
 
     public void onBindTagCardViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
@@ -255,6 +245,16 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     }
 
+    @Override//bellissimo shine deve dormire di piu'
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof TypicalCardViewHolder)
+            onBindTagCardViewHolderImpl((TypicalCardViewHolder) holder, position);
+        else if (holder instanceof TagRecyclerAdapter.TagCardViewHolder)
+            onBindTagCardViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
+        else
+            throw new SoulissModelException("TOIMPLEMENT");
+    }
+
     public RecyclerView.ViewHolder onCreateTagViewHolderImpl(ViewGroup viewGroup) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_subtag, viewGroup, false);
@@ -299,6 +299,26 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     public void setData(SoulissTag data) {
         mDataset = data;
+    }
+
+    public void swap(int adapterPosition, int TgtadapterPosition1) throws SoulissModelException {
+        ISoulissObject start = getItems().get(adapterPosition);
+        ISoulissObject to = getItems().get(TgtadapterPosition1);
+
+        if ((start instanceof SoulissTypical && to instanceof SoulissTypical)
+                || (start instanceof SoulissTag && to instanceof SoulissTag)) {
+
+            if (start instanceof SoulissTag) {
+                Collections.swap(mDataset.getChildTags(), adapterPosition, TgtadapterPosition1);
+
+            } else if (start instanceof SoulissTypical) {
+                Collections.swap(mDataset.getAssignedTypicals(), adapterPosition - mDataset.getChildTags().size(), TgtadapterPosition1 - mDataset.getChildTags().size());
+            }
+        } else {
+            throw new SoulissModelException("DA GESTIRE NEL CHIAMANTE");
+        }
+
+        notifyItemMoved(adapterPosition, TgtadapterPosition1);
     }
 
 

@@ -67,6 +67,7 @@
                 android:layout_alignLeft="@id/strut"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/textView1"
+
                 android:entries="@array/graphRange"
                 android:entryValues="@array/graphRangeValues"/>
 

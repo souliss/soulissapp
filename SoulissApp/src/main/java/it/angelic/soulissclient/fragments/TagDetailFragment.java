@@ -55,7 +55,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.sql.SQLDataException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -513,13 +512,16 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         //and in your imlpementaion of
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             // coi subtag volutamente non funziona
-            Collections.swap(adapter.getItems(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            try {
+                adapter.swap(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                //nel ordine del adapter aggiorno tutti senza complimenti
+                database.updateTagTypicalsOrder(adapter.getItems(), targetTag);
+            } catch (SoulissModelException e) {
 
-            // and notify the launcherMainAdapter that its dataset has changed
-            adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                Log.i(Constants.TAG, "User tried to swap incompatible tag elements");
+            }
 
-            //nel ordine del adapter aggiorno tutti senza complimenti
-            database.updateTagTypicalsOrder(adapter.getItems(), targetTag);
+
             return true;
         }
 

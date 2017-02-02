@@ -158,6 +158,7 @@ public class ChartFragment extends Fragment {
         nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
         graphtSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphType);
         rangeSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphRange);
+        rangeSpinner.setSelection(2);
         lineView = (LineView) ret.findViewById(R.id.line_view);
         upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
 
