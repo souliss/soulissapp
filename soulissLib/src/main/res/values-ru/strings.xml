@@ -363,7 +363,7 @@
     <string name="functions">Функции</string>
     <string name="souliss_controlling">Souliss контролирует %1$d Вещей</string>
     <string name="voice_command_query_help">Использовать имя устройства, followed by output status needed to verify condition</string>
-    <string name="tasker_query_longexp"><![CDATA]Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\']]></string>
+    <string name="tasker_query_longexp">Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\</string>
     <string name="opt_settingshare_desc">Сохранить текущие настройки и поделиться ими</string>
     <string name="opt_settingshare">Поделиться настройками</string>
     <string name="welcome_create_new_conf">Создать новую Конфигурацию</string>
@@ -373,6 +373,7 @@
     <string name="welcome_import_title">Импортировать Конфигурацию SoulissApp</string>
     <string name="welcome_import_conf_name">Имя Комфигурации (напр., Дом, Офис, Пляж)</string>
     <string name="command_hint">Команда будет передана SoulissApp с целью её выполнения</string>
+    <string name="conf_name_hint">Choose Configuration name (es. Home, Office, seaside)</string>
     <string name="as_measured">Как замерено</string>
     <string name="setpoint">заданная величина</string>
     <string name="reading">Считывание</string>
