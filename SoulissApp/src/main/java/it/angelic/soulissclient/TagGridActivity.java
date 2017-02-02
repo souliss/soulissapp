@@ -55,6 +55,19 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
     private TagRecyclerAdapter tagAdapter;
     //private SoulissTag[] tags;
 
+    /**
+     * Don't forget to call setResult(Activity.RESULT_OK) in the returning
+     * activity or else this method won't be called!
+     */
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+
+        // Postpone the shared element return transition.
+        postponeEnterTransition();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent imageReturnedIntent) {
@@ -117,6 +130,17 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 return super.onContextItemSelected(item);
         }
     }
+
+/*
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.ctx_menu_tags, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -211,7 +235,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END;
                 int swipeFlags = ItemTouchHelper.START | ItemTouchHelper.END;
                 return makeMovementFlags(dragFlags, swipeFlags);
-              //  return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
+                //  return makeFlag(ItemTouchHelper.ACTION_STATE_DRAG,
                 //        ItemTouchHelper.DOWN | ItemTouchHelper.UP |);
             }
 
@@ -219,20 +243,26 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 // get the viewHolder's and target's positions in your adapter data, swap them
                 SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
-                SoulissTag origin = tagAdapter.getTag(viewHolder.getAdapterPosition());
-                origin.setTagOrder(target.getAdapterPosition());
+                if (viewHolder.getAdapterPosition() < target.getAdapterPosition()) {
+                    for (int i = viewHolder.getAdapterPosition(); i < target.getAdapterPosition(); i++) {
+                        Collections.swap(tagAdapter.getTagArray(), i, i + 1);
+                    }
+                } else {
+                    for (int i = viewHolder.getAdapterPosition(); i > target.getAdapterPosition(); i--) {
+                        Collections.swap(tagAdapter.getTagArray(), i, i - 1);
+                    }
+                }
 
-                SoulissTag dest = tagAdapter.getTag(target.getAdapterPosition());
-                dest.setTagOrder(viewHolder.getAdapterPosition());
 
-                //passo null come padre
-                dbt.createOrUpdateTag(origin);
-                dbt.createOrUpdateTag(dest);
-
-
-                Collections.swap(tagAdapter.getTagArray(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
                 // and notify the adapter that its dataset has changed
                 tagAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                List<SoulissTag> tagList = tagAdapter.getTagArray();
+                int i = 0;
+                for (SoulissTag tag :
+                        tagList) {
+                    tag.setTagOrder(i++);
+                    dbt.refreshTag(tag);
+                }
                 return true;
             }
 
@@ -290,17 +320,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         });*/
     }
 
-/*
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        // Rinomina nodo e scelta icona
-        inflater.inflate(R.menu.ctx_menu_tags, menu);
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -345,18 +364,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mDrawerToggle.syncState();
     }
 
-    /**
-     * Don't forget to call setResult(Activity.RESULT_OK) in the returning
-     * activity or else this method won't be called!
-     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void onActivityReenter(int resultCode, Intent data) {
-        super.onActivityReenter(resultCode, data);
-
-        // Postpone the shared element return transition.
-        postponeEnterTransition();
-    }
     @Override
     protected void onStart() {
         super.onStart();

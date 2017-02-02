@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
                     android:layout_margin="16dp"
-                    app:backgroundTint="@color/md_yellow_200"
+                    app:backgroundTint="@color/md_yellow_400"
                     android:src="@drawable/ic_play_arrow_32dp"/>
             </FrameLayout>
         </RelativeLayout>

@@ -240,4 +240,6 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
                 throw new SoulissModelException("E ADESSO DOVE SI VA?");
         }
     }
+
+
 }

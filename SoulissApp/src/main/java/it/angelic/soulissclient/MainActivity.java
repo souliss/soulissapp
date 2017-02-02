@@ -343,6 +343,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if (launcherMainAdapter.getLocationLauncherElements() != null)
                             launcherMainAdapter.getLocationLauncherElements().setDesc(out1.toString() + "\n" + out2.toString());
                             launcherMainAdapter.notifyItemChanged(launcherMainAdapter.getLauncherElements().indexOf(launcherMainAdapter.getLocationLauncherElements()));
                         }
@@ -557,8 +558,18 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         //and in your imlpementaion of
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
             // get the viewHolder's and target's positions in your launcherMainAdapter data, swap them
-            Collections.swap(adapter.getLauncherElements(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
+            // Collections.swap(adapter.getLauncherElements(), viewHolder.getAdapterPosition(), target.getAdapterPosition());
 
+
+            if (viewHolder.getAdapterPosition() < target.getAdapterPosition()) {
+                for (int i = viewHolder.getAdapterPosition(); i < target.getAdapterPosition(); i++) {
+                    Collections.swap(adapter.getLauncherElements(), i, i + 1);
+                }
+            } else {
+                for (int i = viewHolder.getAdapterPosition(); i > target.getAdapterPosition(); i--) {
+                    Collections.swap(adapter.getLauncherElements(), i, i - 1);
+                }
+            }
 
             // and notify the launcherMainAdapter that its dataset has changed
             adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());

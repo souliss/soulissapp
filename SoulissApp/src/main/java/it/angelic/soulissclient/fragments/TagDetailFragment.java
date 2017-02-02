@@ -235,7 +235,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         //mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
 
 
-
         tagTitle = (TextView) getActivity().findViewById(R.id.tagTextView);
         collapseToolbar = (CollapsingToolbarLayout) getActivity().findViewById(R.id.Collapselayout);
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fabTag);
@@ -320,30 +319,33 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
 
         if (collectedTag != null && collectedTag.getImagePath() != null) {
+            try {
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
 
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
-
-                if (picture.exists()) {
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 2;
-                    Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
-                    if (myBitmap.getHeight() > mRecyclerView.getWidth())
-                        myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
-                    Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
-                    mLogoImg.setImageBitmap(myBitmap);
-                }
-               /* try {
+                    if (picture.exists()) {
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inSampleSize = 2;
+                        Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+                        if (myBitmap.getHeight() > mRecyclerView.getWidth())
+                            myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
+                        Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                        mLogoImg.setImageBitmap(myBitmap);
+                    }
+               /*
                     mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
                     boh, non so perche, io itanto commento
                 } catch (Exception e) {
                     Log.d(TAG, "can't set logo", e);
                 }*/
-            } else {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        Constants.MY_PERMISSIONS_READ_EXT_STORAGE);
-                //img di default
+                } else {
+                    ActivityCompat.requestPermissions(getActivity(),
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            Constants.MY_PERMISSIONS_READ_EXT_STORAGE);
+                    //img di default
+                }
+            } catch (Exception e) {
+                Log.d(TAG, "can't set logo", e);
             }
 
         }
@@ -352,7 +354,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
         return rootView;
     }
-
 
 
     @Override
@@ -442,6 +443,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
      *
      * @param layoutManagerType Type of layout manager to switch to.
      */
+
     public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
         int scrollPosition = 0;
 

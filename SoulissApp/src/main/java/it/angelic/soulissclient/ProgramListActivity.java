@@ -71,6 +71,23 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		setTitle(getString(R.string.souliss_app_name) + " - " + getString(R.string.programs_title));
 		tt = (TextView) findViewById(R.id.TextViewTypicals);
 
+        final TextView toHid = (TextView) findViewById(R.id.TextViewProgramsDesc);
+        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewProgramsDescFa);
+        FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
+        //NASCONDI
+        textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textViewTagsDescFa.setVisibility(View.GONE);
+                toHid.setVisibility(View.GONE);
+                opzioni.setDontShowAgain("programsInfo", true);
+            }
+        });
+        if (opzioni.getDontShowAgain("programsInfo")) {
+            textViewTagsDescFa.setVisibility(View.GONE);
+            toHid.setVisibility(View.GONE);
+        }
+
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
 		textViewAwesomeBck = (TextView) findViewById(R.id.scene_icon);
 

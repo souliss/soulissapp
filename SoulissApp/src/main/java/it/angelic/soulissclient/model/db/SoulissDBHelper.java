@@ -664,6 +664,21 @@ public class SoulissDBHelper {
         return ret;
     }
 
+
+    public SoulissScene getScene(int sceneId) {
+        Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
+                SoulissDB.COLUMN_SCENE_ID);
+        cursor.moveToFirst();
+
+        SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
+        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
+        comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
+
+        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
+        comment.setCommandArray(cmds);
+        cursor.close();
+        return comment;
+    }
     public List<SoulissTag> getRootTags(Context context) {
         List<SoulissTag> comments = new ArrayList<>();
         if (!database.isOpen())
@@ -690,22 +705,6 @@ public class SoulissDBHelper {
         cursor.close();
         return comments;
     }
-
-    public SoulissScene getScene(int sceneId) {
-        Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
-                SoulissDB.COLUMN_SCENE_ID);
-        cursor.moveToFirst();
-
-        SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
-        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
-        comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
-
-        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
-        comment.setCommandArray(cmds);
-        cursor.close();
-        return comment;
-    }
-
     public ArrayList<SoulissCommand> getSceneCommands(int sceneId) {
         ArrayList<SoulissCommand> ret = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS,
@@ -822,7 +821,7 @@ public class SoulissDBHelper {
         return dto;
     }
 
-    private List<SoulissTag> getTagChild(SoulissTag fatherDto) {
+    protected List<SoulissTag> getTagChild(SoulissTag fatherDto) {
         List<SoulissTag> ret = new ArrayList<>();
         if (!database.isOpen())
             open();

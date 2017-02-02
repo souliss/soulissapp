@@ -118,7 +118,7 @@ public class NodesListFragment extends ListFragment {
 		mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
 
-        TextView nodeic = (TextView) getActivity().findViewById(R.id.scene_icon);
+		TextView nodeic = (TextView) getActivity().findViewById(R.id.scene_icon_awe);
 		FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, FontAwesomeEnum.fa_codepen.getFontName());
 
 		//tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);

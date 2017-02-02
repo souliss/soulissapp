@@ -273,7 +273,7 @@ public class NodeDetailFragment extends ListFragment {
                 .getWindowManager());
         // listaTypicalsView = (ListView) getListView();
         listaTypicalsView = getListView();
-        nodeic = (TextView) getActivity().findViewById(R.id.node_icon);
+        nodeic = (TextView) getActivity().findViewById(R.id.node_icon_detail);
         // Icona, puo esser nullo dopo rotazione schermo
         if (nodeic != null) {
             FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));

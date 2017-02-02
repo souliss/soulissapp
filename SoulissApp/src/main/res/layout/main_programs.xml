@@ -43,8 +43,17 @@
                     style="@style/CodeFontSmall"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
+                    android:layout_marginRight="24dp"
                     android:layout_marginTop="2dp"
                     android:text="@string/programs_desc"/>
+
+                <TextView
+                    android:id="@+id/TextViewProgramsDescFa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:padding="4dp"/>
 
                 <TextView
                     android:id="@+id/TextViewTypicals"

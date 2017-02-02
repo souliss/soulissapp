@@ -145,6 +145,25 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
         listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
         textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
+
+        final TextView toHid = (TextView) findViewById(R.id.TextViewSceneDesc);
+        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewSceneDescFa);
+        FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
+        //NASCONDI
+        textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textViewTagsDescFa.setVisibility(View.GONE);
+                toHid.setVisibility(View.GONE);
+                opzioni.setDontShowAgain("scenesInfo", true);
+            }
+        });
+        if (opzioni.getDontShowAgain("scenesInfo")) {
+            textViewTagsDescFa.setVisibility(View.GONE);
+            toHid.setVisibility(View.GONE);
+        }
+
+
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_moon_o.getFontName());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         //  fab.attachToListView(listaScenesView);
