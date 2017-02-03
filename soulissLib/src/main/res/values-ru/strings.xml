@@ -298,7 +298,7 @@
     <string name="amongTags">Это устройство было отмечено</string>
     <string name="status_souliss_nodetail" >Окно свойств недоступно</string>
     <string name="bridge_isgateway" >Установить удаленный узел как Шлюз/Обнаружить сеть Souliss</string>
-    <string name="nodeleteFav" >Невозможно удалить предпочитаемый Tag по умолчанию</string>
+    <string name="nodeleteFav" >Невозможно удалить предпочитаемую Метку по умолчанию</string>
 
     <string name="warn_wifi">Невозможно использовать локальный адрес без подключения к WI-FI!</string>
     <string name="warn_connection">Соединение недоступно</string>
@@ -328,10 +328,10 @@
     <string name="Souliss_T19_Max_desc" >Максимальная интенсивность</string>
     <string name="Souliss_T19_Med_desc">Средняя интенсивность</string>
     <string name="Souliss_T19_Min_desc">Минимальная интенсивность</string>
-    <string name="sureToRemoveTag">Вы уверены, что хотите удалить этот Tag?</string>
-    <string name="cantRemoveDefault">Невозможно удалить предпочитаемый Tag по умолчанию</string>
-    <string name="removeTag">Удалить Tag</string>
-    <string name="tagorder_desc">Если обнаруживаются два TAG, занимающие одинаковую позицию, их Id будет использоваться для определения конечной позиции</string>
+    <string name="sureToRemoveTag">Вы уверены, что хотите удалить эту Метку?</string>
+    <string name="cantRemoveDefault">Невозможно удалить предпочитаемую Метку по умолчанию</string>
+    <string name="removeTag">Удалить Метку</string>
+    <string name="tagorder_desc">Если обнаруживаются две Метки, занимающие одинаковую позицию, их Id будет использоваться для определения конечной позиции</string>
     <string name="opt_fahrenheit">Фаренгейт</string>
     <string name="hasbeenturnedontoolong">Устройство %s оставалось включенным слишком долго</string>
     <string name="hours">часов</string>
@@ -353,7 +353,7 @@
     <string name="addprogram_choosedelay">Откладывание команды</string>
     <string name="scene_add_typical_to">Добавить устойство к...</string>
     <string name="action_settings">Настройки</string>
-    <string name="config_choose_desc">Попобовать SoulissApp с системой демо, создать Вашу собственную конфигурацию или загрузить существующую</string>
+    <string name="config_choose_desc">Попробовать SoulissApp с системой демо, создать Вашу собственную конфигурацию или загрузить существующую</string>
     <string name="opt_restore_welcome_desc">Показывать экран приветствия, когда Проиложение запускается </string>
     <string name="opt_restore_welcome">Восстановить Начальный Экран</string>
     <string name="export_failed">Экспорт не удался</string>
@@ -363,7 +363,7 @@
     <string name="functions">Функции</string>
     <string name="souliss_controlling">Souliss контролирует %1$d Вещей</string>
     <string name="voice_command_query_help">Использовать имя устройства, followed by output status needed to verify condition</string>
-    <string name="tasker_query_longexp"><![CDATA]Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\']]></string>
+    <string name="tasker_query_longexp">Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\']]></string>
     <string name="opt_settingshare_desc">Сохранить текущие настройки и поделиться ими</string>
     <string name="opt_settingshare">Поделиться настройками</string>
     <string name="welcome_create_new_conf">Создать новую Конфигурацию</string>
@@ -371,7 +371,7 @@
     <string name="welcome_insertIp">Ввести персональный IP адрес (факультативно)</string>
     <string name="welcome_import_hints">Ввести желаемое имя конфигурации и указать предпочтения для файлов на импорт</string>
     <string name="welcome_import_title">Импортировать Конфигурацию SoulissApp</string>
-    <string name="welcome_import_conf_name">Имя Комфигурации (напр., Дом, Офис, Пляж)</string>
+    <string name="welcome_import_conf_name">Имя Конфигурации (напр., Дом, Офис, Пляж)</string>
     <string name="command_hint">Команда будет передана SoulissApp с целью её выполнения</string>
     <string name="as_measured">Как замерено</string>
     <string name="setpoint">заданная величина</string>
@@ -395,9 +395,9 @@
     <string name="launcher_type">Тип элемента пуска</string>
     <string name="opt_rstlauncher_desc">Восстановить элементы пуска по умолчанию</string>
     <string name="scene_added">" добавлено, долгое нажатие для переименования или выбора иконки"</string>
-    <string name="tag_addSub">Добавить под-Заладку</string>
+    <string name="tag_addSub">Добавить под-Метку</string>
     <string name="string_configured">" сконфигурированные сценарии"</string>
-    <string name="subtag">под-Закладка</string>
+    <string name="subtag">под-Метка</string>
     <string name="opt_welcome_restored">Экран приветствия восстановлен</string>
     <string name="menu_addto_dashboard">Добавить на Приборную панель</string>
     <string name="dashboard">Приборная панель</string>
