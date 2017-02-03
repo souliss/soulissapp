@@ -54,12 +54,12 @@
     <string name="offline">Не в сети</string>
     <string name="ok">OK</string>
     <string name="stale">УСТАРЕЛ</string>
-    <string name="synch">synch</string>
-    <string name="delete">Delete</string>
-    <string name="tags">Tags</string>
-    <string name="speed">Speed</string>
-    <string name="play">Play</string>
-    <string name="scatter">Scatter</string>
+    <string name="synch">Синхронизация</string>
+    <string name="delete">Удалить</string>
+    <string name="tags">Метки</string>
+    <string name="speed">Скорость</string>
+    <string name="play">Воспроизвести</string>
+    <string name="scatter">Разброс</string>
 
 
 </resources>
