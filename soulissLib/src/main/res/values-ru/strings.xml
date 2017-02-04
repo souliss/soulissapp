@@ -379,13 +379,13 @@
     <string name="reading">Reading</string>
     <string name="from_color">From color</string>
     <string name="to_color">To color</string>
-    <string name="increment_input_err">Input a number between 0.1 and 10</string>
+    <string name="increment_input_err">Введите число от 0.1 до 10</string>
     <string name="range">Range</string>
     <string name="Souliss_T61_desc">Analog setpoint, half-precision floating point</string>
-    <string name="Souliss_T62_desc">Temperature setpoint (-20, +50)°C</string>
-    <string name="Souliss_T63_desc">Humidity setpoint (0, 100)%</string>
-    <string name="welcome_tour_button">Start</string>
-    <string name="Souliss_T64_desc">Light setpoint (0, 40) kLux</string>
+    <string name="Souliss_T62_desc">Задать температуру(-20, +50)°C</string>
+    <string name="Souliss_T63_desc">Задать влажность(0, 100)%</string>
+    <string name="welcome_tour_button">Старт</string>
+    <string name="Souliss_T64_desc">Задать освещённость (0, 40) kLux</string>
     <string name="Souliss_T65_desc">Voltage setpoint(0, 400) V</string>
     <string name="charts">Charts</string>
 </resources>
