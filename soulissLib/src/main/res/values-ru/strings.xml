@@ -363,7 +363,7 @@
     <string name="functions">Функции</string>
     <string name="souliss_controlling">Souliss контролирует %1$d Вещей</string>
     <string name="voice_command_query_help">Использовать имя устройства, followed by output status needed to verify condition</string>
-    <string name="tasker_query_longexp">Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\']]></string>
+    <string name="tasker_query_longexp">Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\'</string>
     <string name="opt_settingshare_desc">Сохранить текущие настройки и поделиться ими</string>
     <string name="opt_settingshare">Поделиться настройками</string>
     <string name="welcome_create_new_conf">Создать новую Конфигурацию</string>

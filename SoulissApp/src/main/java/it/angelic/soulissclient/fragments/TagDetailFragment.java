@@ -56,7 +56,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.sql.SQLDataException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -143,14 +142,10 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             Log.e(Constants.TAG, "CANT LOAD tagId" + tagId);
         }
         Log.i(Constants.TAG, "initDataset loaded TAG" + tagId + " with father ID: " + collectedTag.getFatherId());
-        List<SoulissTypical> favs = datasource.getTagTypicals(collectedTag);
-        Log.i(Constants.TAG, "getTagTypicals() returned " + favs.size());
+
         if (!opzioni.isDbConfigured())
             AlertDialogHelper.dbNotInitedDialog(ctx);
-        else {
-            //collectedTagTypicals = new SoulissTypical[favs.size()];
-            collectedTag.setAssignedTypicals(favs);
-        }
+
     }
 
     @Override
@@ -173,7 +168,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.addchildtag_ctx_menu, menu);
+        inflater.inflate(R.menu.addchildtagctx_menu, menu);
         Log.i(Constants.TAG, "Inflated add child menu");
         // super.onCreateOptionsMenu(menu, inflater);
     }

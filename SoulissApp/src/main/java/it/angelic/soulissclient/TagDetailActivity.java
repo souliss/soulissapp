@@ -16,7 +16,6 @@
 
 package it.angelic.soulissclient;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -26,20 +25,16 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SharedElementCallback;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.SQLDataException;
-import java.util.List;
-import java.util.Map;
 
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
@@ -156,6 +151,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }
+        /*
         try {
             setEnterSharedElementCallback(new SharedElementCallback() {
 
@@ -180,8 +176,8 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         } catch (Exception uie) {
             Log.e(Constants.TAG, "UIE:" + uie.getMessage());
         }
-
-
+*/
+/*
         setExitSharedElementCallback(new SharedElementCallback() {
             @Override
             public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
@@ -211,7 +207,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
                 super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
             }
         });
-
+*/
 
     }
 

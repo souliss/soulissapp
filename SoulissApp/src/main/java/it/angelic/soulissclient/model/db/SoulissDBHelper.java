@@ -664,21 +664,6 @@ public class SoulissDBHelper {
         return ret;
     }
 
-
-    public SoulissScene getScene(int sceneId) {
-        Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
-                SoulissDB.COLUMN_SCENE_ID);
-        cursor.moveToFirst();
-
-        SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
-        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
-        comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
-
-        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
-        comment.setCommandArray(cmds);
-        cursor.close();
-        return comment;
-    }
     public List<SoulissTag> getRootTags(Context context) {
         List<SoulissTag> comments = new ArrayList<>();
         if (!database.isOpen())
@@ -705,6 +690,22 @@ public class SoulissDBHelper {
         cursor.close();
         return comments;
     }
+
+    public SoulissScene getScene(int sceneId) {
+        Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, SoulissDB.COLUMN_SCENE_ID + " =" + sceneId, null, null, null,
+                SoulissDB.COLUMN_SCENE_ID);
+        cursor.moveToFirst();
+
+        SoulissScene comment = new SoulissScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ID)));
+        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_NAME)));
+        comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_SCENE_ICON)));
+
+        ArrayList<SoulissCommand> cmds = getSceneCommands(comment.getId());
+        comment.setCommandArray(cmds);
+        cursor.close();
+        return comment;
+    }
+
     public ArrayList<SoulissCommand> getSceneCommands(int sceneId) {
         ArrayList<SoulissCommand> ret = new ArrayList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS,
@@ -812,9 +813,10 @@ public class SoulissDBHelper {
             if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)))
                 l = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID));
             dto.setFatherId(l);
-            Log.i(Constants.TAG, "retrieving TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder() + " Father:" + dto.getFatherId());
-            dto.setAssignedTypicals(getTagTypicals(dto));
+            List<SoulissTypical> devs = getTagTypicals(dto);
+            dto.setAssignedTypicals(devs);
             dto.setChildTags(getTagChild(dto));
+            Log.i(Constants.TAG, "retrieved TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder() + " Father:" + dto.getFatherId() + " Devices:" + dto.getAssignedTypicals().size() + " Childs:" + dto.getAssignedTypicals().size());
             cursor.moveToNext();
         }
         cursor.close();
@@ -841,7 +843,7 @@ public class SoulissDBHelper {
             dtoI.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
             dtoI.setFatherId(fatherDto.getTagId());
             Log.i(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
-            fatherDto.setAssignedTypicals(getTagTypicals(dtoI));
+            dtoI.setAssignedTypicals(getTagTypicals(dtoI));
             dtoI.setChildTags(getTagChild(dtoI));//recursive
             ret.add(dtoI);
             cursor.moveToNext();
