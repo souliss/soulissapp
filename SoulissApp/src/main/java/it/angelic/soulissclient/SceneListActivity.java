@@ -53,7 +53,7 @@ import static it.angelic.soulissclient.Constants.TAG;
  */
 public class SceneListActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBHelper datasource;
-    private LinkedList<SoulissScene> goer;
+    private LinkedList<SoulissScene> sceneList;
     private ListView listaScenesView;
     private ArrayAdapter<INavDrawerItem> mAdapter;
     private SceneListAdapter progsAdapter;
@@ -293,9 +293,9 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
         SoulissDBHelper.open();
 
         // prendo comandi dal DB, setto adapter
-        goer = datasource.getScenes(SoulissApp.getAppContext());
+        sceneList = datasource.getScenes(SoulissApp.getAppContext());
 
-        progsAdapter = new SceneListAdapter(this, goer, opzioni);
+        progsAdapter = new SceneListAdapter(this, sceneList, opzioni);
         // Adapter della lista
         listaScenesView.setAdapter(progsAdapter);
         //listaScenesView.invalidateViews();

@@ -527,7 +527,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             AlertDialogHelper.dbNotInitedDialog(this);
         }
         // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
+        navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.DASHBOARD);
         mDrawerList.setAdapter(navAdapter);
     }
 

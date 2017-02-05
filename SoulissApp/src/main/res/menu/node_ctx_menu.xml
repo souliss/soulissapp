@@ -4,4 +4,7 @@
           android:title="@string/menu_rename" />
     <item android:id="@+id/changenodeicon"
           android:title="@string/menu_changenodeicon" />
+    <item
+        android:id="@+id/AddToDashboard"
+        android:title="@string/menu_addto_dashboard"/>
 </menu>

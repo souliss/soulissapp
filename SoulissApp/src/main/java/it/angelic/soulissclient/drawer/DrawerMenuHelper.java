@@ -18,6 +18,7 @@ public class DrawerMenuHelper {
         DrawerMenuHelper.ctx = ctx;
     }
 
+    public static final int DASHBOARD = -9;
     public static final int SCENES = -1;
     public static final int PROGRAMS = -2;
     public static final int MANUAL = -3;
@@ -26,6 +27,7 @@ public class DrawerMenuHelper {
     public static final int SETTINGS_SERVICE = -6;
     public static final int SETTINGS_VISUAL = -7;
     public static final int SETTINGS_UDPTEST = -8;
+    public static final int SETTINGS_DASHBOARD = -11;
     public static final int TAGS = -10;
 
     private INavDrawerItem[] getNodes() {
@@ -55,6 +57,10 @@ public class DrawerMenuHelper {
 
         NavMenuSection it = NavMenuSection.create(-9, ctx.getString(R.string.functions).toUpperCase());
         tmp.add(it);
+
+        NavMenuItem das = new NavMenuItem(DASHBOARD, ctx.getString(R.string.dashboard), FontAwesomeEnum.fa_dashboard.getFontName(),
+                false, ctx);
+        tmp.add(das);
 
         //if (apartFromMe != SCENE){
         NavMenuItem scenes = new NavMenuItem(SCENES, ctx.getString(R.string.scenes_title), FontAwesomeEnum.fa_moon_o.getFontName(),
@@ -101,6 +107,9 @@ public class DrawerMenuHelper {
         NavMenuItem op5 = new NavMenuItem(SETTINGS_VISUAL, ctx.getString(R.string.opt_visual), FontAwesomeEnum.fa_picture_o.getFontName(),
                 false, ctx);
         tmp.add(op5);
+        NavMenuItem opd = new NavMenuItem(SETTINGS_DASHBOARD, ctx.getString(R.string.dashboard), FontAwesomeEnum.fa_calendar.getFontName(),
+                false, ctx);
+        tmp.add(opd);
         NavMenuItem op6 = new NavMenuItem(SETTINGS_UDPTEST, ctx.getString(R.string.menu_test_udp), FontAwesomeEnum.fa_gears.getFontName(),
                 false, ctx);
         tmp.add(op6);

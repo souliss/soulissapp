@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
-import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.fragments.NodeDetailFragment;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -160,10 +159,10 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     protected void onStart() {
-        setActionBarInfo(collected == null ? getString(R.string.scenes_title) : collected.getNiceName());
+        setActionBarInfo(collected == null ? getString(R.string.manual_title) : collected.getNiceName());
 
         super.onStart();
-        mDrawermAdapter = new NavDrawerAdapter(NodeDetailActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
+        mDrawermAdapter = new NavDrawerAdapter(NodeDetailActivity.this, R.layout.drawer_list_item, dmh.getStuff(), collected.getNodeId());
         mDrawerList.setAdapter(mDrawermAdapter);
         mDrawerToggle.syncState();
 

@@ -33,18 +33,27 @@
 
 
             <TextView
-                android:id="@+id/TextViewManualDesc"
+                android:id="@+id/TextViewTypListDesc"
                 style="@style/CodeFontSmall"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
+                android:layout_marginRight="24dp"
                 android:layout_marginTop="2dp"
                 android:text="@string/manual_desc"/>
+
+            <TextView
+                android:id="@+id/TextViewTypListDescFa"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:padding="4dp"/>
 
             <TextView
                 android:id="@+id/TextViewTypicals"
                 style="@style/CodeFontTitleBig"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/TextViewManualDesc"
+                android:layout_below="@id/TextViewTypListDesc"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
