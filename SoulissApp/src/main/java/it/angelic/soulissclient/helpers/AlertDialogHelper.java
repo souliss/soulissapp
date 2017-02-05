@@ -871,7 +871,6 @@ public class AlertDialogHelper {
                             datasource.createOrUpdateTag(it);
                             Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
                         } else {
-
                             Toast.makeText(context, "Select " + context.getString(R.string.existing_tag) + " " + context.getString(R.string.or)
                                     + " " + context.getString(R.string.new_tag), Toast.LENGTH_SHORT).show();
                             return;
