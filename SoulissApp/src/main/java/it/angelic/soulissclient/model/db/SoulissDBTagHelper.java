@@ -146,7 +146,10 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
             dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
-            dto.setFatherId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)));
+            Long l = null;
+            if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)))
+                l = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID));
+            dto.setFatherId(l);
             Log.i(Constants.TAG, "retrieving ROOT TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
             dto.setAssignedTypicals(getTagTypicals(dto));
 

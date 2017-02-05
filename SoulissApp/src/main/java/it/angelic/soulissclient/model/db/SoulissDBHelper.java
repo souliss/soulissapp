@@ -238,6 +238,7 @@ public class SoulissDBHelper {
         database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toRename.getTagId(), null);
         //CASCADE sui figli
         database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_FATHER_ID + " = " + toRename.getTagId(), null);
+
         return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
     }
 

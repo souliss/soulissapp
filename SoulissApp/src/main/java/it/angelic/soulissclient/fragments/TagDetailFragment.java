@@ -20,6 +20,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -525,20 +526,38 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         @Override
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
             final int deletedPosition = viewHolder.getAdapterPosition();
-            final ISoulissObject tbr = adapter.getItems().get(deletedPosition);
+            final ISoulissObject toRemove = adapter.getItems().get(deletedPosition);
 
+            Log.w(Constants.TAG, "Removing TAG:" + toRemove.getNiceName());
 
-            adapter.removeAt(deletedPosition);
-            // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-            //clearView(mRecyclerView, viewHolder);
-            if (tbr instanceof SoulissTypical) {
-                database.deleteTagTypical(targetTag.getTagId(), ((SoulissTypical) tbr).getNodeId(), ((SoulissTypical) tbr).getSlot());
-            } else if (tbr instanceof SoulissTag) {
-                database.deleteTag((SoulissTag) tbr);
-            } else
-                throw new SoulissModelException("E ADESSO DOVE SI VA?");
+            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+            alert.setTitle(R.string.removeTag);
+            alert.setIcon(android.R.drawable.ic_dialog_alert);
+            alert.setMessage(R.string.sureToRemoveTag);
+            alert.setPositiveButton(context.getString(android.R.string.ok),
+                    new DialogInterface.OnClickListener() {
 
-            adapter.notifyDataSetChanged();
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            adapter.removeAt(deletedPosition);
+                            // launcherMainAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                            //clearView(mRecyclerView, viewHolder);
+                            if (toRemove instanceof SoulissTypical) {
+                                database.deleteTagTypical(targetTag.getTagId(), ((SoulissTypical) toRemove).getNodeId(), ((SoulissTypical) toRemove).getSlot());
+                            } else if (toRemove instanceof SoulissTag) {
+                                database.deleteTag((SoulissTag) toRemove);
+                            } else
+                                throw new SoulissModelException("UNIMPLEMENTED STRUCTURAL ERROR");
+                        }
+                    });
+
+            alert.setNegativeButton(context.getResources().getString(android.R.string.cancel),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Log.w(Constants.TAG, "Remove canceled");
+                            adapter.notifyItemChanged(deletedPosition);
+                        }
+                    });
+            alert.show();
 
 
         }
