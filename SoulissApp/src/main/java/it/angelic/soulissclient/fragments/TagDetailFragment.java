@@ -372,7 +372,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 } catch (SQLDataException e) {
                     e.printStackTrace();
                 }
-                parallaxExtAdapter.notifyItemInserted(parallaxExtAdapter.getItemCount() - 1);
+                parallaxExtAdapter.notifyItemInserted(collectedTag.getChildTags().size() - 1);
                 return true;
         }
         //home e altro nel activity

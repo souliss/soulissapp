@@ -863,8 +863,7 @@ public class AlertDialogHelper {
                             it.setFatherId(parentTag != null ? parentTag.getTagId() : null);
                             it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
-                            FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tv.getFontName());
-                            it.setIconResourceId(R.drawable.tv);
+                            it.setIconResourceId(FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tag.getFontName()));
                             it.getAssignedTypicals().add(toadd);
 
                             toadd.getTypicalDTO().setTagged(true);

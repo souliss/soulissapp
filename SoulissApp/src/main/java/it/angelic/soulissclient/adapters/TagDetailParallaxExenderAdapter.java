@@ -292,9 +292,18 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     }
 
     public void removeAt(int deletedPosition) {
-        mDataset.getAssignedTypicals().remove(deletedPosition);
+
+        final ISoulissObject tbr = getItems().get(deletedPosition);
+
+        if (tbr instanceof SoulissTypical) {
+            mDataset.getAssignedTypicals().remove(tbr);
+        } else if (tbr instanceof SoulissTag) {
+            mDataset.getChildTags().remove(tbr);
+        } else
+            throw new SoulissModelException("E ADESSO DOVE SI VA?");
+
         notifyItemRemoved(deletedPosition);
-        notifyItemRangeChanged(deletedPosition, mDataset.getAssignedTypicals().size());
+        //notifyItemRangeChanged(deletedPosition, mDataset.getAssignedTypicals().size());
     }
 
     public void setData(SoulissTag data) {
