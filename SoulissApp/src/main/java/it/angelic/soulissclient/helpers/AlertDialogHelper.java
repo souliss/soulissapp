@@ -847,6 +847,11 @@ public class AlertDialogHelper {
                             it = (SoulissTag) outputNodeSpinner.getSelectedItem();
                             if (!it.getAssignedTypicals().contains(toadd))
                                 it.getAssignedTypicals().add(toadd);
+                            if (it.getTagId() == SoulissDB.FAVOURITES_TAG_ID)
+                                toadd.getTypicalDTO().setFavourite(true);
+                            else
+                                toadd.getTypicalDTO().setTagged(true);
+                            toadd.getTypicalDTO().persist();
                             datasource.createOrUpdateTag(it);//non aggiorno il campo fath, non serve
                         } else if (newTagRadio.isChecked()) {
                             if (editNewTag.getText() == null || editNewTag.getText().length() == 0) {
@@ -855,12 +860,15 @@ public class AlertDialogHelper {
                             }
                             it = new SoulissTag();
                             long newId = datasource.createOrUpdateTag(null);
-                            it.setFatherId(parentTag.getTagId());
+                            it.setFatherId(parentTag != null ? parentTag.getTagId() : null);
                             it.setTagId(newId);
                             it.setName(editNewTag.getText().toString());
                             FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_tv.getFontName());
                             it.setIconResourceId(R.drawable.tv);
                             it.getAssignedTypicals().add(toadd);
+
+                            toadd.getTypicalDTO().setTagged(true);
+                            toadd.getTypicalDTO().persist();
                             datasource.createOrUpdateTag(it);
                             Toast.makeText(context, "TAG" + ": " + it.getNiceName(), Toast.LENGTH_SHORT).show();
                         } else {
@@ -868,6 +876,13 @@ public class AlertDialogHelper {
                             Toast.makeText(context, "Select " + context.getString(R.string.existing_tag) + " " + context.getString(R.string.or)
                                     + " " + context.getString(R.string.new_tag), Toast.LENGTH_SHORT).show();
                             return;
+                        }
+
+                        if (toReferesh != null) {
+
+                            TypicalsListAdapter ta = (TypicalsListAdapter) toReferesh.getAdapter();
+                            ta.notifyDataSetChanged();
+                            toReferesh.invalidateViews();
                         }
                     }
                 });
