@@ -410,5 +410,6 @@
     <string name="added_to_dashboard">added to Dashboard</string>
     <string name="step">STEP</string>
     <string name="opt_launcher">Dashboard setup</string>
+    <string name="active_config">Active Config</string>
 
 </resources>

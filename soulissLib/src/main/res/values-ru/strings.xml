@@ -404,4 +404,5 @@
     <string name="dashboard">Приборная панель</string>
     <string name="added_to_dashboard">" добавлен на Приборную панель"</string>
     <string name="step">ШАГ</string>
+    <string name="active_config">Active Config</string>
 </resources>

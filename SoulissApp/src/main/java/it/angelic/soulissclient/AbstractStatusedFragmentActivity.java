@@ -141,7 +141,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 ActivityCompat.invalidateOptionsMenu(parentActivity);
-                info2.setText(getString(R.string.souliss_app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline)) + " - " + SoulissApp.getCurrentConfig());
+                info2.setText(getString(R.string.souliss_app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline))
+                        + " - " + getString(R.string.active_config) + ": " + SoulissApp.getCurrentConfig());
                 info1.setText("Souliss is controlling " + opzioni
                         .getCustomPref().getInt("numTipici", 0) + " Things");
             }
