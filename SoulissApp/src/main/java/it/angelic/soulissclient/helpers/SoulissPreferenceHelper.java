@@ -3,12 +3,10 @@ package it.angelic.soulissclient.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -29,11 +27,9 @@ import static it.angelic.soulissclient.Constants.TAG;
 public class SoulissPreferenceHelper implements Serializable {
     // private static final Object countLock = new Object();
     private static final long serialVersionUID = -7522863636731669014L;
-    private String DimensTesto;
     private String IPPreference;
     private String IPPreferencePublic;
     private float ListDimensTesto;// dimensione testo tipici e info autore
-    private String PrefFont;
     private Integer UDPPort;
     private boolean animations;
     private boolean antitheftNotify;
@@ -261,14 +257,6 @@ public class SoulissPreferenceHelper implements Serializable {
         pesta.apply();
     }
 
-    public String getPrefFont() {
-        return PrefFont;
-    }
-
-    public void setPrefFont(String iPPreference) {
-        PrefFont = iPPreference;
-    }
-
     public String getPrefIPAddress() {
         return IPPreference;
     }
@@ -351,8 +339,6 @@ public class SoulissPreferenceHelper implements Serializable {
         lightTheme = prefs.getBoolean("checkboxHoloLight", true);
         IPPreference = prefs.getString("edittext_IP", "");
         IPPreferencePublic = prefs.getString("edittext_IP_pubb", "");
-        DimensTesto = prefs.getString("listPref", "0");
-        PrefFont = prefs.getString("fontPref", "Futura.ttf");
         remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "3000"));
         dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
         homeThold = prefs.getInt("distanceThold", 150);
@@ -381,11 +367,6 @@ public class SoulissPreferenceHelper implements Serializable {
         Calendar fake = Calendar.getInstance();
         fake.add(Calendar.MONTH, -2);// Default value in the past
         serviceLastrun = prefs.getLong("serviceLastrun", Calendar.getInstance().getTimeInMillis());
-        try {
-            ListDimensTesto = Float.valueOf(DimensTesto);
-        } catch (Exception e) {
-            ListDimensTesto = 14;
-        }
 
     }
 
@@ -581,12 +562,6 @@ public class SoulissPreferenceHelper implements Serializable {
         pesta.putBoolean("dontshow" + string, val);
         pesta.commit();
     }
-
-    public void setFont(TextView in) {
-        Typeface font = Typeface.createFromAsset(contx.getAssets(), this.getPrefFont());
-        in.setTypeface(font);
-    }
-
 
     public void setIPPreference(String newIP) {// serve anche commit perche`
         // chiamata fuori da prefs

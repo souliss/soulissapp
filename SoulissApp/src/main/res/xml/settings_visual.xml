@@ -5,23 +5,6 @@
     android:summary="@string/opt_visualdesc"
     android:title="@string/opt_visual">
 
-    <PreferenceCategory android:title="Fonts" >
-        <ListPreference
-            android:defaultValue="14"
-            android:entries="@array/textsiz_array"
-            android:entryValues="@array/textsiz_values"
-            android:key="listPref"
-            android:summary="@string/opt_fontsizedesc"
-            android:title="@string/opt_fontsize" />
-        <ListPreference
-            android:defaultValue="Futura.ttf"
-            android:entries="@array/font_array"
-            android:entryValues="@array/font_values"
-            android:key="fontPref"
-            android:summary="@string/opt_fonttitledesc"
-            android:title="@string/opt_fonttitle" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="Other" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="checkboxFahrenheit"
@@ -53,6 +36,5 @@
             android:key="restorewelcome"
             android:summary="@string/opt_restore_welcome_desc"
             android:title="@string/opt_restore_welcome"/>
-    </PreferenceCategory>
 
 </PreferenceScreen>

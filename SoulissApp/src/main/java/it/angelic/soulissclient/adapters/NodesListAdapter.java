@@ -135,10 +135,10 @@ public class NodesListAdapter extends BaseAdapter {
             holder.textHlt.setTextColor(ContextCompat.getColor(context, R.color.black));
         }
         /* Icona del nodo */
-        if (holder.data.getIconResourceId() != 0)
+        //if (holder.data.getIconResourceId() != 0)
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
-        else
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_microchip.getFontName());
+        //else
+        //    FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_microchip.getFontName());
         if (opzioni.getTextFx()) {
             Animation a2 = AnimationUtils.loadAnimation(context, R.anim.alpha);
             a2.reset();

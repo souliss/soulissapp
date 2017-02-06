@@ -27,44 +27,57 @@
                 android:id="@+id/scene_icon_awe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:alpha="0.1"
-                android:contentDescription="@string/souliss_app_name"/>
+                android:contentDescription="@string/souliss_app_name"
+                android:gravity="center"/>
 
-
-            <TextView
-                android:id="@+id/TextViewTypListDesc"
-                style="@style/CodeFontSmall"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginTop="2dp"
-                android:text="@string/manual_desc"/>
-
-            <TextView
-                android:id="@+id/TextViewTypListDescFa"
+            <android.support.v7.widget.CardView
+                android:id="@+id/NodeDetailCardContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="right"
-                android:padding="4dp"/>
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                android:foreground="?attr/selectableItemBackground">
 
-            <TextView
-                android:id="@+id/TextViewTypicals"
-                style="@style/CodeFontTitleBig"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@id/TextViewTypListDesc"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:text="@string/nodes"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/TextViewTypListDesc"
+                        style="@style/CodeFontSmall"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/manual_desc"/>
+
+                    <TextView
+                        android:id="@+id/TextViewTypListDescFa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:padding="4dp"/>
+
+                    <TextView
+                        android:id="@+id/TextViewTypicals"
+                        style="@style/CodeFontTitleBig"
+                        android:layout_alignParentLeft="true"
+
+                        android:layout_below="@id/TextViewTypListDesc"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="4dp"
+                        android:ellipsize="end"
+                        android:text="@string/nodes"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
             <fragment
-                android:layout_below="@id/TextViewTypicals"
                 android:id="@+id/listFragment"
                 class="it.angelic.soulissclient.fragments.NodesListFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/NodeDetailCardContainer"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:layout="@layout/frag_nodelist"/>
         </RelativeLayout>

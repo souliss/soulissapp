@@ -92,7 +92,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 		textViewAwesomeBck = (TextView) findViewById(R.id.scene_icon);
 
 		FontAwesomeUtil.prepareAwesomeFontAweTextView(ProgramListActivity.this, textViewAwesomeBck, FontAwesomeEnum.fa_calendar.getFontName());
-		SoulissApp.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
+		//SoulissApp.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
 
 		// check se IP non settato
 		if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {
@@ -117,7 +117,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
 
 		registerForContextMenu(listaProgrammiView);
 
-        SoulissApp.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
+		//SoulissApp.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
 
 	}

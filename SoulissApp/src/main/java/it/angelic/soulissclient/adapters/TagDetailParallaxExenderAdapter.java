@@ -169,7 +169,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
             holder.image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
         }
         //queste vengono eseguite in tempo grazie a postponeEnterTrans
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && opzioni.isAnimationsEnabled()) {
             Log.d(Constants.TAG, "setting setTransitionName for subtag:" + holder.data.getTagId());
             holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
             holder.shadowbar.setTransitionName("shadow_hero" + holder.data.getTagId());
@@ -184,15 +184,18 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
                 nodeDatail.putExtra("TAG", holder.data.getTagId());
                 // nodeDatail.putExtra("FATHERTAG", holder.data.getFatherId());
-                ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                                //verso i subtag
-                                Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
-                                Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
-                                Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId())
-                        );
+                if (opzioni.isAnimationsEnabled()) {
+                    ActivityOptionsCompat options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                                    //verso i subtag
+                                    Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
+                                    Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
+                                    Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId())
+                            );
 
-                ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+                    ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+                } else
+                    ActivityCompat.startActivity(context, nodeDatail, null);
             }
 
 

@@ -372,7 +372,6 @@
     <string name="imported_success" formatted="false">Imported successfully %1$d totNodes and %2$d devices</string>
     <string name="config_mandatory">Configuration name is mandatory</string>
     <string name="welcome_dontshow">Don\'t show welcome screen again</string>
-    >
     <string name="functions">Functions</string>
     <string name="souliss_controlling">Souliss is controlling %1$d Things</string>
     <string name="voice_command_query_help">Use a device name, followed by output status needed to verify condition</string>
@@ -410,5 +409,6 @@
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">added to Dashboard</string>
     <string name="step">STEP</string>
+    <string name="opt_launcher">Dashboard setup</string>
 
 </resources>

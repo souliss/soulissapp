@@ -126,18 +126,20 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
                 Intent nodeDatail = new Intent(context, TagDetailActivity.class);
                 // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
                 nodeDatail.putExtra("TAG", holder.data.getTagId());
+                if (opzioni.isAnimationsEnabled()) {
+                    ActivityOptionsCompat options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                                    //holder.image,   // The view which starts the transition
+                                    //"photo_hero"    // The transitionName of the view we’re transitioning to
+                                    Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
+                                    Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
+                                    Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId()),
+                                    Pair.create((View) holder.fabTag, "fab_hero")
+                            );
 
-                ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                                //holder.image,   // The view which starts the transition
-                                //"photo_hero"    // The transitionName of the view we’re transitioning to
-                                Pair.create((View) holder.image, "photo_hero" + holder.data.getTagId()),
-                                Pair.create((View) holder.shadowbar, "shadow_hero" + holder.data.getTagId()),
-                                Pair.create((View) holder.imageTag, "tag_hero" + holder.data.getTagId()),
-                                Pair.create((View) holder.fabTag, "fab_hero")
-                        );
-
-                ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+                    ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+                } else
+                    ActivityCompat.startActivity(context, nodeDatail, null);
             }
 
 

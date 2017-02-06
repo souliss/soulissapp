@@ -44,16 +44,6 @@
         <item>2</item>
         <item>4</item>
     </string-array>
-    <string-array name="font_array">
-        <item>Standard</item>
-        <item>Futura</item>
-        <item>Robotics</item>
-    </string-array>
-    <string-array name="font_values">
-        <item>def</item>
-        <item>Futura.ttf</item>
-        <item>Robotics.ttf</item>
-    </string-array>
     <string-array name="updateInterval">
         <item name="3000">3 sekundy</item>
         <item name="5000">5 sekund</item>

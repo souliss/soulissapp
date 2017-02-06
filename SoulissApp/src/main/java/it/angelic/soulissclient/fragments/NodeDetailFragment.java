@@ -269,19 +269,15 @@ public class NodeDetailFragment extends ListFragment {
         getActivity().setTitle(collected.getNiceName());
 
         // SFONDO
-        SoulissApp.setBackground(getActivity().findViewById(R.id.containerlista), getActivity()
-                .getWindowManager());
+        //SoulissApp.setBackground(getActivity().findViewById(R.id.containerlista), getActivity()
+        //       .getWindowManager());
         // listaTypicalsView = (ListView) getListView();
         listaTypicalsView = getListView();
         nodeic = (TextView) getActivity().findViewById(R.id.node_icon_detail);
         // Icona, puo esser nullo dopo rotazione schermo
-        if (nodeic != null) {
-            FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
-            createHeader();
-            registerForContextMenu(listaTypicalsView);
-        } else
-            Log.e(Constants.TAG, "icona nulla? impossible...");
-
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
+        createHeader();
+        registerForContextMenu(listaTypicalsView);
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

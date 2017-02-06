@@ -134,21 +134,23 @@ public class NodesListFragment extends ListFragment {
         //tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
         textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewTypListDesc);
         final TextView textViewTagsDescFa = (TextView) getActivity().findViewById(R.id.TextViewTypListDescFa);
-        FontAwesomeUtil.prepareMiniFontAweTextView(getActivity(), textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
-        //NASCONDI
-        textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        if (textViewTagsDescFa != null) {//forse nascosto > landscape
+            FontAwesomeUtil.prepareMiniFontAweTextView(getActivity(), textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
+            //NASCONDI
+            textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    textViewTagsDescFa.setVisibility(View.GONE);
+                    textHeadListInfo.setVisibility(View.GONE);
+                    opzioni.setDontShowAgain("manualInfo", true);
+                }
+            });
+            if (opzioni.getDontShowAgain("manualInfo")) {
                 textViewTagsDescFa.setVisibility(View.GONE);
                 textHeadListInfo.setVisibility(View.GONE);
-                opzioni.setDontShowAgain("manualInfo", true);
             }
-        });
-        if (opzioni.getDontShowAgain("manualInfo")) {
-            textViewTagsDescFa.setVisibility(View.GONE);
-            textHeadListInfo.setVisibility(View.GONE);
         }
-
         swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -177,8 +179,8 @@ public class NodesListFragment extends ListFragment {
         });
         swipeLayout.setColorSchemeResources(R.color.std_blue,
                 R.color.std_blue_shadow);
-        SoulissApp.setBackground(getActivity().findViewById(R.id.relativeLayout1),
-                getActivity().getWindowManager());
+        //SoulissApp.setBackground(getActivity().findViewById(R.id.relativeLayout1),
+        //        getActivity().getWindowManager());
 
         // check se IP non settato
         if (!opzioni.isSoulissIpConfigured() && !opzioni.isSoulissReachable()) {

@@ -415,7 +415,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(parallaxExtAdapter);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && opzioni.isAnimationsEnabled()) {
             Log.d(Constants.TAG, "onStart() setting setTransitionName for detail frag:" + collectedTag.getTagId());
             mLogoImg.setTransitionName("photo_hero" + collectedTag.getTagId());
             infoAlpha.setTransitionName("shadow_hero" + collectedTag.getTagId());

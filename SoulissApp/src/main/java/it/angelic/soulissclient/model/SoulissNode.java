@@ -12,6 +12,9 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 /**
  * Souliss Unit, the node
@@ -25,8 +28,8 @@ public class SoulissNode implements Serializable, ISoulissNode {
     private static final long serialVersionUID = 8673027563853737718L;
     private transient Context context;
     private short health;
-    /* Icon resource ID */
-    private int iconId;
+    /* Icon resource ID > se null torna chipset */
+    private Integer iconId;
     private short id;
     private String name;
     private Calendar refreshedAt;
@@ -49,18 +52,30 @@ public class SoulissNode implements Serializable, ISoulissNode {
     public static SoulissNode cursorToNode(Context c, Cursor cursor) {
         SoulissNode comment = new SoulissNode(c, cursor.getShort(1));
 
-        comment.setHealth(cursor.getShort(2));
-        comment.setIconResourceId(cursor.getInt(3));
-        comment.setName(cursor.getString(4));
+        comment.setHealth(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_HEALTH)));
+        if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_ICON)))
+            comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_ICON)));
+        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_NAME)));
 
         Calendar now = Calendar.getInstance();
-        now.setTime(new Date(cursor.getLong(5)));
+        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_LASTMOD))));
         comment.setRefreshedAt(now);
         return comment;
     }
 
     public void addTypical(SoulissTypical rest) {
         soulissTypicals.add(rest);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SoulissNode that = (SoulissNode) o;
+
+        return id == that.id;
+
     }
 
     public List<SoulissTypical> getActiveTypicals() {
@@ -78,28 +93,20 @@ public class SoulissNode implements Serializable, ISoulissNode {
         return health;
     }
 
-    public String getHealthPercent() {
-        return getHealth() * 100 / 255 + "%";
-    }
-
     public void setHealth(short health) {
         this.health = health;
     }
 
+    public String getHealthPercent() {
+        return getHealth() * 100 / 255 + "%";
+    }
+
     public int getIconResourceId() {
-        return iconId;
+        return iconId == null ? FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_microchip.getFontName()) : iconId;
     }
 
     public void setIconResourceId(int itemResId) {
         iconId = itemResId;
-    }
-
-    public short getNodeId() {
-        return id;
-    }
-
-    public void setId(short id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -117,6 +124,10 @@ public class SoulissNode implements Serializable, ISoulissNode {
             return context.getString(R.string.node) + " " + Constants.int2roman(getNodeId());
         else
             return context.getString(R.string.allnodes);
+    }
+
+    public short getNodeId() {
+        return id;
     }
 
     public Calendar getRefreshedAt() {
@@ -145,23 +156,16 @@ public class SoulissNode implements Serializable, ISoulissNode {
     }
 
     @Override
-    public String toString() {
-        return getNiceName();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SoulissNode that = (SoulissNode) o;
-
-        return id == that.id;
-
-    }
-
-    @Override
     public int hashCode() {
         return (int) id;
+    }
+
+    public void setId(short id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return getNiceName();
     }
 }

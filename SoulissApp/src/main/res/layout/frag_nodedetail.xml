@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/containerlista"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/containerlista"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -10,65 +10,75 @@
         android:id="@+id/node_icon_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:alpha="0.1"
-        android:contentDescription="@string/souliss_app_name"/>
+        android:contentDescription="@string/souliss_app_name"
+        android:gravity="center"/>
 
-    <TextView
-        android:id="@+id/TextViewNodeUpdate"
-        style="@style/CodeFontMain"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="2dip"
-        android:ellipsize="end"
-        android:text="@string/update"/>
-
-    <TextView
-        android:id="@+id/TextViewHealth"
-        style="@style/CodeFontMain"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/TextViewNodeUpdate"
-        android:layout_marginLeft="2dp"
-        android:text="@string/health"/>
-
-    <ProgressBar
-        android:id="@+id/progressBarNodo"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/TextViewNodeUpdate"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_toLeftOf="@id/node_icon_detail"
-        android:layout_toRightOf="@id/TextViewHealth" />
-
-    <TextView
-        android:id="@+id/TextViewTypicalsTitle"
-        style="@style/CodeFontTitleBig"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/progressBarNodo"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
-        android:ellipsize="end"
-        android:text="@string/manual_typicals"/>
-
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeRefreshContainer"
+    <android.support.v7.widget.CardView
+        android:id="@+id/NodeDetailCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/TextViewTypicalsTitle">
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:foreground="?attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/TextViewNodeUpdate"
+                style="@style/CodeFontMain"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dip"
+                android:ellipsize="end"
+                android:text="@string/update"/>
+
+            <TextView
+                android:id="@+id/TextViewHealth"
+                style="@style/CodeFontMain"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/TextViewNodeUpdate"
+                android:layout_marginLeft="2dp"
+                android:text="@string/health"/>
+
+            <ProgressBar
+                android:id="@+id/progressBarNodo"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/TextViewNodeUpdate"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@id/TextViewHealth"/>
+
+            <TextView
+                android:id="@+id/TextViewTypicalsTitle"
+                style="@style/CodeFontTitleBig"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/progressBarNodo"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:text="@string/manual_typicals"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v4.widget.SwipeRefreshLayout android:id="@+id/swipeRefreshContainer"
+                                                  xmlns:android="http://schemas.android.com/apk/res/android"
+                                                  android:layout_width="match_parent"
+                                                  android:layout_height="match_parent"
+                                                  android:layout_below="@id/NodeDetailCard">
 
         <ListView
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:padding="4dp"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"
             android:fadeScrollbars="true"
-            android:fadingEdge="vertical"
-            android:requiresFadingEdge="vertical"
+            android:padding="4dp"
             tools:listitem="@layout/listview_typical"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
