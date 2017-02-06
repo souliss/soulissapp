@@ -17,96 +17,98 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class SceneListAdapter extends BaseAdapter {
-	private LayoutInflater mInflater;
-	private Activity context;
-	List<SoulissScene> scenesList;
-	private SoulissPreferenceHelper opzioni;
+    List<SoulissScene> scenesList;
+    private Activity context;
+    private LayoutInflater mInflater;
+    private SoulissPreferenceHelper opzioni;
 
-	public SceneListAdapter(Activity context, List<SoulissScene> versio, SoulissPreferenceHelper opts) {
-		mInflater = LayoutInflater.from(context);
-		this.context = context;
-		this.scenesList = versio;
-		opzioni = opts;
-	}
+    public SceneListAdapter(Activity context, List<SoulissScene> versio, SoulissPreferenceHelper opts) {
+        mInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.scenesList = versio;
+        opzioni = opts;
+    }
 
-	public int getCount() {
-		return scenesList.size();
-	}
+    public int getCount() {
+        return scenesList.size();
+    }
 
-	public Object getItem(int position) {
-		return scenesList.get(position);
-	}
+    public Object getItem(int position) {
+        return scenesList.get(position);
+    }
 
-	public long getItemId(int position) {
-		return position;
-	}
+    public long getItemId(int position) {
+        return position;
+    }
 
-	public List<SoulissScene> getScenes() {
-		return scenesList;
-	}
+    public List<SoulissScene> getScenes() {
+        return scenesList;
+    }
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		SceneViewHolder holder;
+    public void setScenes(List<SoulissScene> scene) {
+        this.scenesList = scene;
+    }
 
-		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.listview_scenes, parent, false);
-			holder = new SceneViewHolder();
-			holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
-			holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
-			holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-			holder.image = (TextView) convertView.findViewById(R.id.command_icon);
-			convertView.setTag(holder);
-		} else {
-			holder = (SceneViewHolder) convertView.getTag();
-		}
+    public View getView(int position, View convertView, ViewGroup parent) {
+        SceneViewHolder holder;
+
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.listview_scenes, parent, false);
+            holder = new SceneViewHolder();
+            holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
+            holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
+            holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
+            holder.image = (TextView) convertView.findViewById(R.id.command_icon);
+            convertView.setTag(holder);
+        } else {
+            holder = (SceneViewHolder) convertView.getTag();
+        }
         //fuori e vaffanculo
-		holder.data = scenesList.get(position);
-		// holder.data.getCommand().getNodeId()
-		if (opzioni.isLightThemeSelected()) {
-			holder.textCmdWhen.setTextColor(ContextCompat.getColor(context, R.color.black));
-			holder.textCmd.setTextColor(ContextCompat.getColor(context, R.color.black));
-			holder.textCmdInfo.setTextColor(ContextCompat.getColor(context, R.color.black));
-		}
-		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, scenesList.get(position).getIconResourceId());
-		holder.image.setTextColor(ContextCompat.getColor(context, R.color.aa_yellow));
+        holder.data = scenesList.get(position);
+        // holder.data.getCommand().getNodeId()
+        if (opzioni.isLightThemeSelected()) {
+            holder.textCmdWhen.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textCmd.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textCmdInfo.setTextColor(ContextCompat.getColor(context, R.color.black));
+        }
+        if (scenesList.get(position).getIconResourceId() != 0)
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, scenesList.get(position).getIconResourceId());
+        else
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_moon_o.getFontName());
+        holder.image.setTextColor(ContextCompat.getColor(context, R.color.aa_yellow));
 
-		ArrayList<SoulissCommand> appoggio = holder.data.getCommandArray();
-		// name = context.getString(appoggio.getAliasNameResId());
-		holder.textCmd.setText(scenesList.get(position).getNiceName());
-		
-		
-		String strMeatFormat = context.getString(R.string.scene_subtitle);
-		holder.textCmdWhen.setText(String.format(strMeatFormat, appoggio.size()));
-		
-		//EMPTY space for info
-		//holder.textCmdInfo.setText("Info 2");
-		holder.textCmdInfo.setVisibility(View.GONE);
-
-		if (opzioni.getTextFx()) {
-			Animation a2 = AnimationUtils.loadAnimation(context, R.anim.scalerotale);
-			a2.reset();
-			a2.setStartOffset(100 * position);
-			// Animazione immagine holder.image.clearAnimation();
-			holder.image.startAnimation(a2);
-		}
-
-		return convertView;
-	}
+        ArrayList<SoulissCommand> appoggio = holder.data.getCommandArray();
+        // name = context.getString(appoggio.getAliasNameResId());
+        holder.textCmd.setText(scenesList.get(position).getNiceName());
 
 
+        String strMeatFormat = context.getString(R.string.scene_subtitle);
+        holder.textCmdWhen.setText(String.format(strMeatFormat, appoggio.size()));
 
-	public static class SceneViewHolder {
-		TextView textCmd;
-		TextView textCmdWhen;
-		TextView textCmdInfo;
-		TextView image;
-		public SoulissScene data;
-	}
+        //EMPTY space for info
+        //holder.textCmdInfo.setText("Info 2");
+        holder.textCmdInfo.setVisibility(View.GONE);
 
-	public void setScenes(List<SoulissScene> scene) {
-		this.scenesList = scene;
-	}
+        if (opzioni.getTextFx()) {
+            Animation a2 = AnimationUtils.loadAnimation(context, R.anim.scalerotale);
+            a2.reset();
+            a2.setStartOffset(100 * position);
+            // Animazione immagine holder.image.clearAnimation();
+            holder.image.startAnimation(a2);
+        }
+
+        return convertView;
+    }
+
+    public static class SceneViewHolder {
+        public SoulissScene data;
+        TextView textCmd;
+        TextView textCmdWhen;
+        TextView textCmdInfo;
+        TextView image;
+    }
 }

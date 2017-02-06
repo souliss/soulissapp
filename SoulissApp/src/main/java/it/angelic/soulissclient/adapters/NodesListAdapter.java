@@ -28,80 +28,80 @@ import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class NodesListAdapter extends BaseAdapter {
-	private LayoutInflater mInflater;
-	private Activity context;
-	List<SoulissNode> nodi;
-	private SoulissPreferenceHelper opzioni;
+    List<SoulissNode> nodi;
+    private Activity context;
+    private LayoutInflater mInflater;
+    private SoulissPreferenceHelper opzioni;
 
-	public NodesListAdapter(Activity context, List<SoulissNode> versio, SoulissPreferenceHelper opts) {
-		mInflater = LayoutInflater.from(context);
-		this.context = context;
-		this.nodi = versio;
-		opzioni = opts;
-	}
+    public NodesListAdapter(Activity context, List<SoulissNode> versio, SoulissPreferenceHelper opts) {
+        mInflater = LayoutInflater.from(context);
+        this.context = context;
+        this.nodi = versio;
+        opzioni = opts;
+    }
 
-	public int getCount() {
+    public int getCount() {
         // Hack lista vuota
         if (nodi == null || nodi.size() == 0)
             return 1;
         return nodi.size();
-	}
+    }
 
-	public Object getItem(int position) {
-		return nodi.get(position);
-	}
+    public Object getItem(int position) {
+        return nodi.get(position);
+    }
 
-	public long getItemId(int position) {
-		return position;
-	}
+    public long getItemId(int position) {
+        return position;
+    }
 
-	public List<SoulissNode> getNodes() {
-		return nodi;
-	}
+    public List<SoulissNode> getNodes() {
+        return nodi;
+    }
 
-	public void setNodes(List<SoulissNode> in) {
-		nodi = in;
-	}
+    public void setNodes(List<SoulissNode> in) {
+        nodi = in;
+    }
 
-	public View getView(int position, View convertView, ViewGroup parent) {
-		NodeViewHolder holder;
+    public View getView(int position, View convertView, ViewGroup parent) {
+        NodeViewHolder holder;
 
-		if (convertView == null) {
-			// ProgressBar sfumata
-			final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
-			final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, ContextCompat.getColor(context, color.aa_red), ContextCompat.getColor(context, R.color.aa_green),
-					android.graphics.Shader.TileMode.CLAMP);
+        if (convertView == null) {
+            // ProgressBar sfumata
+            final ShapeDrawable pgDrawable = new ShapeDrawable(new RoundRectShape(Constants.roundedCorners, null, null));
+            final LinearGradient gradient = new LinearGradient(0, 0, 250, 0, ContextCompat.getColor(context, color.aa_red), ContextCompat.getColor(context, R.color.aa_green),
+                    android.graphics.Shader.TileMode.CLAMP);
 
-			convertView = mInflater.inflate(R.layout.listview, parent, false);
-			holder = new NodeViewHolder();
+            convertView = mInflater.inflate(R.layout.listview, parent, false);
+            holder = new NodeViewHolder();
 
             holder.text = (TextView) convertView.findViewById(R.id.TextView01);
-			holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);
-			holder.textHlt = (TextView) convertView.findViewById(R.id.TextViewHealth);
-			holder.image = (TextView) convertView.findViewById(R.id.node_icon);
-			holder.hlt = (ProgressBar) convertView.findViewById(R.id.progressBarHealth);
-			holder.hlt.setIndeterminate(false);
-			holder.hlt.setMax(50);
-			holder.hlt.setProgress(20);
-			holder.hlt.setProgress(0);
-			holder.hlt.setMax(Constants.MAX_HEALTH);
-			holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
+            holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);
+            holder.textHlt = (TextView) convertView.findViewById(R.id.TextViewHealth);
+            holder.image = (TextView) convertView.findViewById(R.id.node_icon);
+            holder.hlt = (ProgressBar) convertView.findViewById(R.id.progressBarHealth);
+            holder.hlt.setIndeterminate(false);
+            holder.hlt.setMax(50);
+            holder.hlt.setProgress(20);
+            holder.hlt.setProgress(0);
+            holder.hlt.setMax(Constants.MAX_HEALTH);
+            holder.hlt.setBackgroundResource(android.R.drawable.progress_horizontal);
 
 
-			// pgDrawable.getPaint().setStrokeWidth(3);
-			pgDrawable.getPaint().setDither(true);
-			pgDrawable.getPaint().setShader(gradient);
+            // pgDrawable.getPaint().setStrokeWidth(3);
+            pgDrawable.getPaint().setDither(true);
+            pgDrawable.getPaint().setShader(gradient);
 
-			ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+            ClipDrawable progress = new ClipDrawable(pgDrawable, Gravity.LEFT, ClipDrawable.HORIZONTAL);
 
-			// Rect bounds = holder.hlt.getProgressDrawable().getBounds();
-			holder.hlt.setProgressDrawable(progress);
-			// holder.hlt.getProgressDrawable().setBounds(bounds);
+            // Rect bounds = holder.hlt.getProgressDrawable().getBounds();
+            holder.hlt.setProgressDrawable(progress);
+            // holder.hlt.getProgressDrawable().setBounds(bounds);
 
-			convertView.setTag(holder);
-		} else {
-			holder = (NodeViewHolder) convertView.getTag();
-		}
+            convertView.setTag(holder);
+        } else {
+            holder = (NodeViewHolder) convertView.getTag();
+        }
 
         if (nodi.size() == 0) {
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_exclamation_triangle.getFontName());
@@ -115,50 +115,52 @@ public class NodesListAdapter extends BaseAdapter {
         }
         holder.data = nodi.get(position);
         holder.text.setText(nodi.get(position).getNiceName());
-		// holder.text.setTextAppearance(context, R.style.CodeFontTitle);
+        // holder.text.setTextAppearance(context, R.style.CodeFontTitle);
 
-		// Progress = health
-		holder.hlt.setProgress(0);
-		holder.hlt.setProgress(nodi.get(position).getHealth());
-		/* Dimensioni del testo settate dalle opzioni */
-		// holder.textTyp.setTextSize(TypedValue.COMPLEX_UNIT_SP,holder.textTyp.getTextSize()
-		// + opzioni.getListDimensTesto());
-		// holder.textTyp.setTextAppearance(context, R.style.CodeFontMain);
+        // Progress = health
+        holder.hlt.setProgress(0);
+        holder.hlt.setProgress(nodi.get(position).getHealth());
+        /* Dimensioni del testo settate dalle opzioni */
+        // holder.textTyp.setTextSize(TypedValue.COMPLEX_UNIT_SP,holder.textTyp.getTextSize()
+        // + opzioni.getListDimensTesto());
+        // holder.textTyp.setTextAppearance(context, R.style.CodeFontMain);
 
-        holder.textTyp.setText(  context.getResources().getQuantityString(R.plurals.Devices,
+        holder.textTyp.setText(context.getResources().getQuantityString(R.plurals.Devices,
                 nodi.get(position).getActiveTypicals().size(), nodi.get(position).getActiveTypicals().size())
                 + " - " + context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodi.get(position).getRefreshedAt()));
 
-		if (opzioni.isLightThemeSelected()) {
-			holder.textTyp.setTextColor(ContextCompat.getColor(context, R.color.black));
-			holder.text.setTextColor(ContextCompat.getColor(context, R.color.black));
-			holder.textHlt.setTextColor(ContextCompat.getColor(context, R.color.black));
-		}
-		/* Icona del nodo */
-		FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
-
-		if (opzioni.getTextFx()) {
-			Animation a2 = AnimationUtils.loadAnimation(context, R.anim.alpha);
-			a2.reset();
-			// a2.setStartTime(System.currentTimeMillis() + 400 * position);
-			a2.setStartOffset(250 * position);
-			// Animazione immagine holder.image.clearAnimation();
-			holder.image.startAnimation(a2);
-			// holder.text.clearAnimation();
-			// holder.text.startAnimation(a2);
-		}
+        if (opzioni.isLightThemeSelected()) {
+            holder.textTyp.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.text.setTextColor(ContextCompat.getColor(context, R.color.black));
+            holder.textHlt.setTextColor(ContextCompat.getColor(context, R.color.black));
+        }
+        /* Icona del nodo */
+        if (holder.data.getIconResourceId() != 0)
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, holder.data.getIconResourceId());
+        else
+            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_microchip.getFontName());
+        if (opzioni.getTextFx()) {
+            Animation a2 = AnimationUtils.loadAnimation(context, R.anim.alpha);
+            a2.reset();
+            // a2.setStartTime(System.currentTimeMillis() + 400 * position);
+            a2.setStartOffset(250 * position);
+            // Animazione immagine holder.image.clearAnimation();
+            holder.image.startAnimation(a2);
+            // holder.text.clearAnimation();
+            // holder.text.startAnimation(a2);
+        }
 
 
         return convertView;
-	}
+    }
 
-	public static class NodeViewHolder {
-		TextView text;
-		TextView textTyp;
-		TextView textHlt;
-		ProgressBar hlt;
-		TextView image;
-		public SoulissNode data;
-		int imageRes;
-	}
+    public static class NodeViewHolder {
+        public SoulissNode data;
+        TextView text;
+        TextView textTyp;
+        TextView textHlt;
+        ProgressBar hlt;
+        TextView image;
+        int imageRes;
+    }
 }

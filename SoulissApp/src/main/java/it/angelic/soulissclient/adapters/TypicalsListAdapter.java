@@ -28,10 +28,10 @@ public class TypicalsListAdapter extends BaseAdapter {
     Intent parentIntent;
     // private SoulissDBHelper dataSource;
     SoulissDataService mBoundService;
-    private LayoutInflater mInflater;
     private Activity context;
-    private SoulissTypical[] tipici;
+    private LayoutInflater mInflater;
     private SoulissPreferenceHelper opzioni;
+    private SoulissTypical[] tipici;
 
     public TypicalsListAdapter(Activity context, SoulissDataService serv, SoulissTypical[] versio, Intent forExtra,
                                SoulissPreferenceHelper op) {
@@ -40,7 +40,7 @@ public class TypicalsListAdapter extends BaseAdapter {
         this.tipici = versio;
 
 		/*for (int i = 0; i < versio.length; i++) {
-			if (versio[i].getCtx() == null)
+            if (versio[i].getCtx() == null)
 				throw new RuntimeException("Non dovrebbe essere nullo, controlla il giro");
 		}*/
 
@@ -48,14 +48,6 @@ public class TypicalsListAdapter extends BaseAdapter {
         parentIntent = forExtra;
         // dataSource = ds;
         mBoundService = serv;
-    }
-
-    public SoulissDataService getmBoundService() {
-        return mBoundService;
-    }
-
-    public void setmBoundService(SoulissDataService mBoundService2) {
-        mBoundService = mBoundService2;
     }
 
     public int getCount() {
@@ -144,15 +136,13 @@ public class TypicalsListAdapter extends BaseAdapter {
         holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
                 + ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
                 + context.getResources().getString(R.string.status));
-		/* Icona del nodo */
-        if (tipici[position].getIconResourceId() != 0) {
-            FontAwesomeUtil.prepareFontAweTextView(context, holder.image, tipici[position].getIconResourceId());
-        }
+        /* Icona del device */
+        FontAwesomeUtil.prepareFontAweTextView(context, holder.image, tipici[position].getIconResourceId());
         //Preferito, TagId == 0
         if (tipici[position].getTypicalDTO().isFavourite()) {
             FontAwesomeUtil.prepareMiniFontAweTextView(context, holder.imageFav, FontAwesomeEnum.fa_star_o.getFontName());
             holder.imageFav.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.imageFav.setVisibility(View.GONE);
         }
         //puo essere ANCHE tagged
@@ -181,10 +171,18 @@ public class TypicalsListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public SoulissDataService getmBoundService() {
+        return mBoundService;
+    }
+
+    public void setmBoundService(SoulissDataService mBoundService2) {
+        mBoundService = mBoundService2;
+    }
+
     public static class TypicalViewHolder {
         public ImageView expand;
         public SoulissTypical data;
-        View shader;
+        //View shader;
         TextView textStatus;
         TextView textStatusVal;
         TextView textslot;
