@@ -378,9 +378,9 @@ public class SoulissDB extends SQLiteOpenHelper {
 
             try {
                 //font awesome now
-                db.execSQL("UPDATE TABLE  " + TABLE_TYPICALS + " SET " + COLUMN_TYPICAL_ICON + " = null");
-                db.execSQL("UPDATE TABLE  " + TABLE_NODES + " SET " + COLUMN_NODE_ICON + " = null");
-                db.execSQL("UPDATE TABLE  " + TABLE_SCENES + " SET " + COLUMN_SCENE_ICON + " = null");
+                db.execSQL("UPDATE " + TABLE_TYPICALS + " SET " + COLUMN_TYPICAL_ICON + " = null");
+                db.execSQL("UPDATE " + TABLE_NODES + " SET " + COLUMN_NODE_ICON + " = null");
+                db.execSQL("UPDATE " + TABLE_SCENES + " SET " + COLUMN_SCENE_ICON + " = null");
                 //added TABLE_LAUNCHER and related
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
