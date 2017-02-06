@@ -45,8 +45,10 @@ import it.angelic.soulissclient.fragments.T5nSensorFragment;
 import it.angelic.soulissclient.fragments.T6nAnalogueFragment;
 import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
+import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
@@ -57,6 +59,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 
 
 public class TagDetailActivity extends AbstractStatusedFragmentActivity {
@@ -256,6 +259,14 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
             case R.id.scegliImmagineTag:
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, collected.getTagId().intValue());
+                return true;
+            case R.id.AddToDashboard:
+                SoulissDBLauncherHelper dbl = new SoulissDBLauncherHelper(TagDetailActivity.this);
+                LauncherElement nodeLauncher = new LauncherElement();
+                nodeLauncher.setComponentEnum(LauncherElementEnum.TAG);
+                nodeLauncher.setLinkedObject(collected);
+                dbl.addElement(nodeLauncher);
+                Toast.makeText(TagDetailActivity.this, collected.getNiceName() + " " + getString(R.string.added_to_dashboard), Toast.LENGTH_SHORT).show();
                 return true;
         }
 

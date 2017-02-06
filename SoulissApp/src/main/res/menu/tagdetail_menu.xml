@@ -19,4 +19,8 @@
         android:id="@+id/scegliImmagineTag"
         android:title="@string/img_select"/>
 
+    <item
+        android:id="@+id/AddToDashboard"
+        android:title="@string/menu_addto_dashboard"/>
+
 </menu>

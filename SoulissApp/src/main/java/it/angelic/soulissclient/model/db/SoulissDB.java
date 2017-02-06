@@ -385,6 +385,7 @@ public class SoulissDB extends SQLiteOpenHelper {
                 db.execSQL("UPDATE " + TABLE_TYPICALS + " SET " + COLUMN_TYPICAL_ICON + " = null");
                 db.execSQL("UPDATE " + TABLE_NODES + " SET " + COLUMN_NODE_ICON + " = null");
                 db.execSQL("UPDATE " + TABLE_SCENES + " SET " + COLUMN_SCENE_ICON + " = null");
+                //costretto a droppare i TAGS
                 //added TABLE_LAUNCHER and related
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
                 db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
@@ -406,19 +407,6 @@ public class SoulissDB extends SQLiteOpenHelper {
                 dropNeeded = true;
             }
         }
-
-
-        /*
-        CREATE TABLE typBck AS select * from typicals;
-
-DROP TABLE typicals;
-
-CREATE TABLE typicals(inttypid integer PRIMARY KEY, inttypnodeid integer not null, inttyp integer not null, inttypslo integer not null, inttypcmd integer, inttypval integer not null, inttypico integer, flgtypisfav integer, strtypname textslot, cldtypmod integer not null,inttypwarn integer,  FOREIGN KEY( inttypnodeid) REFERENCES nodes (inttypnodeid), UNIQUE(inttypnodeid,inttypslo) )
-
-INSERT INTO typicals (inttypnodeid, inttyp, inttypslo, inttypcmd, inttypval, inttypico, flgtypisfav, strtypname, cldtypmod, inttypwarn)
-SELECT inttypnodeid, inttyp, inttypslo, inttypcmd, inttypval, inttypico, flgtypisfav, strtypname, cldtypmod, inttypwarn
-FROM typBck
-         */
 
         if (dropNeeded) {
             Log.e(SoulissDB.class.getName(), "Upgrading database went wrong, DROPPI&RE-CREATE");
