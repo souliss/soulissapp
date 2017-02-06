@@ -285,8 +285,10 @@ public class SoulissDB extends SQLiteOpenHelper {
         this.context = context;
     }
 
+
     protected void dropCreate(SQLiteDatabase db) {
         Log.w(SoulissDB.class.getName(), "DB dropCreate " + db.getPath());
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIGGERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGS);
@@ -295,7 +297,7 @@ public class SoulissDB extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TYPICALS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NODES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
+
         onCreate(db);
     }
 
@@ -366,21 +368,33 @@ public class SoulissDB extends SQLiteOpenHelper {
             try {
                 String upgradeQuery = "ALTER TABLE " + TABLE_TYPICALS + " ADD COLUMN " + COLUMN_TYPICAL_WARNTIMER + " INTEGER";
                 db.execSQL(upgradeQuery);
-                dropNeeded = false;
+
             } catch (Exception cazzo) {
                 //somehow already existing, just log
                 Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
             }
         }
-        if (oldVersion <= 31 && newVersion == DATABASE_VERSION) {
-            //added tag Order
+        if (oldVersion <= 34 && newVersion == DATABASE_VERSION) {
+
             try {
-                String upgradeQuery = "ALTER TABLE " + TABLE_TAGS + " ADD COLUMN " + COLUMN_TAG_ORDER + " INTEGER";
-                db.execSQL(upgradeQuery);
+                //font awesome now
+                db.execSQL("UPDATE TABLE  " + TABLE_TYPICALS + " SET " + COLUMN_TYPICAL_ICON + " = null");
+                db.execSQL("UPDATE TABLE  " + TABLE_NODES + " SET " + COLUMN_NODE_ICON + " = null");
+                db.execSQL("UPDATE TABLE  " + TABLE_SCENES + " SET " + COLUMN_SCENE_ICON + " = null");
+                //added TABLE_LAUNCHER and related
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS_TYPICALS);
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAGS);
+
+                db.execSQL(DATABASE_CREATE_TAGS);
+                db.execSQL(DATABASE_CREATE_TAG_TYPICAL);
+                db.execSQL(DATABASE_CREATE_LAUNCHER);
+
                 dropNeeded = false;
             } catch (Exception cazzo) {
                 //somehow already existing, just log
                 Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
+                dropNeeded = true;
             }
         }
 
