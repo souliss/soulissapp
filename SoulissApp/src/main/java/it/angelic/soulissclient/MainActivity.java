@@ -124,14 +124,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     private String provider;
 
     private void doBindService() {
-        Log.d(TAG, "doBindService(), BIND_AUTO_CREATE.");
+        Log.i(TAG, "doBindService(), BIND_AUTO_CREATE.");
         bindService(new Intent(MainActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
     }
 
 
     private void doUnbindService() {
         if (mBoundService != null) {
-            Log.d(TAG, "UNBIND, Detach our existing connection.");
+            Log.i(TAG, "UNBIND, Detach our existing connection.");
             unbindService(mConnection);
         }
     }
@@ -269,7 +269,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         ItemTouchHelper ith = new ItemTouchHelper(launcherCallback);
         ith.attachToRecyclerView(mRecyclerView);
 
-        opzioni.reload();
+        //opzioni.reload();
     }
     /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
@@ -527,7 +527,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
-        initLocationProvider();
+        //initLocationProvider();
 
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(this);

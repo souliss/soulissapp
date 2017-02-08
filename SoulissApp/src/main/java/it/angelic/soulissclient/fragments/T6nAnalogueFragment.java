@@ -38,6 +38,7 @@ import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.views.NumberPickerT6;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
+import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -173,7 +174,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         upda.setText(getResources().getString(R.string.update) + " "
                 + SoulissUtils.getTimeAgo(collected.getTypicalDTO().getRefreshedAt()));
 
-        FontAwesomeUtil.prepareFontAweTextView(getActivity(), icon, collected.getIconResourceId());
+        FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), icon, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
         tempSlider.setModel(collected.getTypical());
         incrementText.setText(String.valueOf(tempSlider.getIncrement()));
         incrementText.addTextChangedListener(new TextWatcher() {

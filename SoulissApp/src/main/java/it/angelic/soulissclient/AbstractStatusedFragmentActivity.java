@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -95,7 +98,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             timeoutHandler.removeCallbacks(timeExpired);
             hasPosted = false;
             refreshStatusIcon();
-
         }
     };
     // meccanismo per network detection
@@ -269,9 +271,17 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             if (ds != null) {
                 ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
                 TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-
+                if (opzioni.isAnimationsEnabled()) {
+                    final Animation animation = new AlphaAnimation(1, 0.2f); // Change alpha from fully visible to invisible
+                    animation.setDuration(250);
+                    animation.setInterpolator(new LinearOutSlowInInterpolator()); // do not alter animation rate
+                    animation.setRepeatCount(1);
+                    animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
+                    online.startAnimation(animation);
+                }
                 if (!opzioni.isSoulissReachable()) {
                     online.setBackgroundResource(R.drawable.red);
+
                     statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_red));
                     statusOnline.setText(R.string.offline);
                 } else {
@@ -285,6 +295,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
 
     public void setActionBarInfo(String title) {
         try {

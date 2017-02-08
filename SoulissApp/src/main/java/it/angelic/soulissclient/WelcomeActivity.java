@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -481,12 +482,13 @@ public class WelcomeActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         //trigger launcher build
-        new Thread(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 SoulissDBLauncherHelper dbLauncher = new SoulissDBLauncherHelper(WelcomeActivity.this);
             }
-        }).start();
+        });
+
 
         /* check for first time run */
         welcomeEnabledCheck();
