@@ -67,7 +67,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "Command " + cmd[0] + " sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "<-- issueSoulissCommand " + cmd[0] + " sent to: " + serverAddr);
 
 			return "UDP command OK";
 		} catch (UnknownHostException ed) {
@@ -168,7 +168,7 @@ public class UDPHelper {
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "Massive Command sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "<-- Massive Command sent to: " + serverAddr);
 
 			return "UDP massive command OK";
 		} catch (UnknownHostException ed) {
@@ -243,7 +243,7 @@ public class UDPHelper {
 			sender.bind(sa);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  pref.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "Ping sent to: " + serverAddr);
+			Log.i(Constants.Net.TAG, "<-- Ping sent to: " + serverAddr);
 			debugByteArray(buf);
 			return serverAddr;
 		} finally {
@@ -278,7 +278,7 @@ public class UDPHelper {
 			}
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.Net.TAG, "DB struct sent. bytes:" + packet.getLength());
+			Log.w(Constants.Net.TAG, "<-- dbStructRequest bytes:" + packet.getLength());
 			return;
 		} catch (UnknownHostException | SocketException ed) {
 			Log.d(Constants.Net.TAG, "***requestDBStruct Fail", ed);
@@ -310,7 +310,7 @@ public class UDPHelper {
 
 		try {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			Log.w(Constants.Net.TAG, "Staterequest, numberof=" + numberOf);
+			Log.i(Constants.Net.TAG, "<-- Staterequest, numberof=" + numberOf);
 			sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
@@ -328,7 +328,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "stateRequest sent. bytes:" + packet.getLength());
+			Log.i(Constants.Net.TAG, "<-- stateRequest sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.Net.TAG, "***stateRequest Fail", ed);
 			return;
@@ -358,8 +358,8 @@ public class UDPHelper {
 
 		try {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-            Log.w(TAG, "Poll request, numberof=" + numberOf + " offset=" + startOffset);
-            sender = getSenderSocket(serverAddr);
+			Log.i(Constants.Net.TAG, "<-- Poll request, numberof=" + numberOf + " offset=" + startOffset);
+			sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
 			macaco.add(Constants.Net.Souliss_UDP_function_poll);
@@ -378,7 +378,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "poll Request sent. bytes:" + packet.getLength());
+			Log.i(Constants.Net.TAG, "<-- poll Request sent. bytes:" + packet.getLength());
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.Net.TAG, "***stateRequest Fail", ed);
 			return;
@@ -411,7 +411,7 @@ public class UDPHelper {
 		try {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
 			sender = getSenderSocket(serverAddr);
-
+			Log.i(Constants.Net.TAG, "<-- typicalRequest, numberof=" + numberOf);
 			List<Byte> macaco = new ArrayList<>();
 			// PUTIN, STARTOFFEST, NUMBEROF
 			macaco.add(Constants.Net.Souliss_UDP_function_typreq);
@@ -426,7 +426,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr, prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.Net.TAG, "typRequest sent to " + serverAddr.getHostAddress());
+			Log.i(Constants.Net.TAG, "<-- typRequest sent to " + serverAddr.getHostAddress());
 		} catch (UnknownHostException ed) {
 			ed.printStackTrace();
 			return;
@@ -451,7 +451,7 @@ public class UDPHelper {
 		DatagramPacket packet;
 
 		try {
-			Log.d(TAG, "HealthRequest, numberof=" + numberOf);
+			Log.d(Constants.Net.TAG, "<-- HealthRequest, numberof=" + numberOf);
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
 			sender = getSenderSocket(serverAddr);
 
@@ -469,7 +469,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.w(Constants.Net.TAG, "healthRequest sent to " + serverAddr.getHostAddress());
+			Log.w(Constants.Net.TAG, "<-- healthRequest sent to " + serverAddr.getHostAddress());
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.Net.TAG, "Souliss unavailable " + ed.getMessage());
 			return;
@@ -569,7 +569,7 @@ public class UDPHelper {
 		// Send broadcast timeout
 		Intent i = new Intent();
 		int it = SoulissApp.getOpzioni().getRemoteTimeoutPref() + SoulissApp.getOpzioni().getBackoff() * 1000;
-		Log.d(TAG, "Posting timeout msec. " + it);
+		Log.d(TAG, "buildVNetFrame Posting timeout msec. " + it);
 		i.putExtra("REQUEST_TIMEOUT_MSEC", it);
 		i.setAction(Constants.CUSTOM_INTENT_SOULISS_TIMEOUT);
 		SoulissApp.getOpzioni().getContx().sendBroadcast(i);

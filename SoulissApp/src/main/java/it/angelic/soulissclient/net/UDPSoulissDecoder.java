@@ -123,8 +123,8 @@ public class UDPSoulissDecoder {
         int maxTypicalXnode = mac.get(7);
         int maxrequests = mac.get(8);
 
-        Log.i(Constants.Net.TAG, "DB Struct requested,nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
-                + maxrequests);
+        Log.i(Constants.Net.TAG, ">--decodeDBStructRequest, nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
+                + maxrequests + " maxTypicalXnode: " + maxTypicalXnode);
         SoulissDBHelper.open();
         database.createOrUpdateStructure(nodes, maxTypicalXnode);
         // Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
@@ -147,7 +147,7 @@ public class UDPSoulissDecoder {
                 //ask for all typicals
                 UDPHelper.typicalRequest(opzioni, nodes, 0);
                 //first health req
-                UDPHelper.healthRequest(opzioni, nodes, 0);
+                //UDPHelper.healthRequest(opzioni, nodes, 0);
             }
         }).start();
 
@@ -168,7 +168,7 @@ public class UDPSoulissDecoder {
         for (int i = 5; i < 5 + numberOf; i++) {
             healths.add(mac.get(i));
         }
-
+        Log.i(Constants.Net.TAG, ">--decodeHealthRequest OFFSET:" + tgtnode + " NUMOF:" + numberOf);
         try {
             numberOf = database.refreshNodeHealths(healths, tgtnode);
             Log.i(Constants.Net.TAG, "Health request refreshed " + numberOf + " nodes' health");
@@ -192,50 +192,50 @@ public class UDPSoulissDecoder {
         // NUMBEROF 1 byte
         int startOffset = macacoPck.get(3);
         int numberOf = macacoPck.get(4);
-        Log.d(Constants.Net.TAG, "** Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
+        Log.d(Constants.Net.TAG, ">- Macaco IN: Start Offset:" + startOffset + ", Number of " + numberOf);
         switch (functionalCode) {
             case Constants.Net.Souliss_UDP_function_subscribe_data:
-                Log.d(Constants.Net.TAG, "** Subscription answer");
+                Log.d(Constants.Net.TAG, ">- Subscription answer");
                 decodeStateRequest(macacoPck);
                 break;
             case Constants.Net.Souliss_UDP_function_poll_resp:
-                Log.d(Constants.Net.TAG, "** Poll answer");
+                Log.d(Constants.Net.TAG, ">- Poll answer");
                 decodeStateRequest(macacoPck);
                 processTriggers();
                 processWidgets();
                 break;
             case Constants.Net.Souliss_UDP_function_ping_resp:
                 // assertEquals(mac.size(), 8);
-                Log.d(Constants.Net.TAG, "** Ping response bytes " + macacoPck.size());
+                Log.d(Constants.Net.TAG, ">- Ping response bytes " + macacoPck.size());
                 decodePing(macacoPck);
                 break;
             case Constants.Net.Souliss_UDP_function_ping_bcast_resp:
                 // assertEquals(mac.size(), 8);
-                Log.d(Constants.Net.TAG, "** Ping BROADCAST response bytes " + macacoPck.size());
+                Log.d(Constants.Net.TAG, ">- Ping BROADCAST response bytes " + macacoPck.size());
                 decodePing(macacoPck);
                 break;
             case Constants.Net.Souliss_UDP_function_subscribe_resp:
-                Log.d(Constants.Net.TAG, "** State request answer");
+                Log.d(Constants.Net.TAG, ">- State request answer");
                 decodeStateRequest(macacoPck);
                 processTriggers();
                 processWidgets();
                 break;
             case Constants.Net.Souliss_UDP_function_typreq_resp:// Answer for assigned
                 // typical logic
-                Log.d(Constants.Net.TAG, "** TypReq answer");
+                Log.d(Constants.Net.TAG, ">- TypReq answer");
                 decodeTypRequest(macacoPck);
                 break;
             case Constants.Net.Souliss_UDP_function_health_resp:// Answer nodes healty
-                Log.d(Constants.Net.TAG, "** Health answer");
+                Log.d(Constants.Net.TAG, ">- Health answer");
                 decodeHealthRequest(macacoPck);
                 break;
             case Constants.Net.Souliss_UDP_function_db_struct_resp:// Answer nodes
                 assertEquals(macacoPck.size(), 9); // healty
-                Log.w(Constants.Net.TAG, "** DB Structure answer");
+                Log.w(Constants.Net.TAG, ">- DB Structure answer");
                 decodeDBStructRequest(macacoPck);
                 break;
             case 0x83:
-                Log.e(Constants.Net.TAG, "** (Functional code not supported)");
+                Log.e(Constants.Net.TAG, "!!! (Functional code not supported)");
                 Toast.makeText(context, "Functional code not supported", Toast.LENGTH_SHORT).show();
                 break;
             case 0x84:
@@ -272,11 +272,11 @@ public class UDPSoulissDecoder {
         if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
             opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
             editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
-            Log.w(Constants.Net.TAG, "decodePing Set cached address (PUBLIC): " + opzioni.getIPPreferencePublic());
+            Log.w(Constants.Net.TAG, ">--decodePing Set cached address (PUBLIC): " + opzioni.getIPPreferencePublic());
         } else if (putIn == 0xF) {// PRIVATO
             opzioni.setCachedAddr(opzioni.getPrefIPAddress());
             editor.putString("cachedAddress", opzioni.getPrefIPAddress());
-            Log.w(Constants.Net.TAG, "decodePing Set cached address: " + opzioni.getPrefIPAddress());
+            Log.w(Constants.Net.TAG, ">--decodePing Set cached address: " + opzioni.getPrefIPAddress());
         } else if (putIn == 0x5) {// BROADCAST VA, USO QUELLA
             try {// sanity check
                 final InetAddress toverify = NetUtils.extractTargetAddress(mac);
@@ -341,11 +341,11 @@ public class UDPSoulissDecoder {
     private void decodeStateRequest(ArrayList<Short> mac) {
         try {
             List<SoulissNode> nodes = database.getAllNodes();
-            Log.i(Constants.Net.TAG, "decodeStateRequest received: " + mac.size());
+            Log.i(Constants.Net.TAG, Thread.currentThread().getId() + ">--decodeStateRequest received: " + mac.size());
             int tgtnode = mac.get(3);
             int numberOf = mac.get(4);
             int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 8);
-            Log.d(Constants.Net.TAG, "--DECODE MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
+            Log.d(Constants.Net.TAG, Thread.currentThread().getId() + ">--decodeStateRequest MACACO OFFSET:" + tgtnode + " NUMOF:" + numberOf);
             // SoulissTypicalDTO dto = new SoulissTypicalDTO();
             // refresh typicals
             for (short j = 0; j < numberOf; j++) {
@@ -358,7 +358,7 @@ public class UDPSoulissDecoder {
                     dto.setNodeId((short) (j / typXnodo + tgtnode));
                     // sufficiente una refresh
                     dto.refresh(temp);
-                    Log.d(Constants.Net.TAG, "---REFRESHED NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo));
+                    Log.d(Constants.Net.TAG, Thread.currentThread().getId() + " --REFRESHED TYP NODE:" + (j / typXnodo + tgtnode) + " SLOT:" + (j % typXnodo) + " OUT:" + (mac.get(5 + j)));
                 } catch (NotFoundException e) {
                     // skipping unexistent typical");
                     //OK, può succedere
@@ -392,7 +392,7 @@ public class UDPSoulissDecoder {
             int done = 0;
             // SoulissNode node = database.getSoulissNode(tgtnode);
             int typXnodo = soulissSharedPreference.getInt("TipiciXNodo", 1);
-            Log.i(Constants.Net.TAG, "decodeTypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
+            Log.i(Constants.Net.TAG, ">--decodeTypRequest:" + tgtnode + " NUMOF:" + numberOf + " TYPICALSXNODE: "
                     + typXnodo);
             // creates Souliss nodes
             for (int j = 0; j < numberOf; j++) {

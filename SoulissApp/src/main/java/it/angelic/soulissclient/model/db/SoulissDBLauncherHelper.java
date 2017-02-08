@@ -180,7 +180,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                     break;
             }
             dto.setLinkedObject(isoulissObj);
-            Log.i(Constants.TAG, "retrieving LAUNCHER item:" + dto.getTitle() + " ID:" + dto.getId() + " ORDER:" + dto.getOrder());
+            Log.d(Constants.TAG, "retrieving LAUNCHER item:" + dto.getTitle() + " ID:" + dto.getId() + " ORDER:" + dto.getOrder());
 
             comments.add(dto);
             cursor.moveToNext();

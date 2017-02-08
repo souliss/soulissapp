@@ -681,7 +681,7 @@ public class SoulissDBHelper {
             dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
             dto.setFatherId(null);
-            Log.i(Constants.TAG, "retrieving ROOT TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
+            Log.d(Constants.TAG, "retrieving ROOT TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
             dto.setAssignedTypicals(getTagTypicals(dto));
             dto.setChildTags(getTagChild(dto));
 
@@ -843,7 +843,7 @@ public class SoulissDBHelper {
             dtoI.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
             dtoI.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
             dtoI.setFatherId(fatherDto.getTagId());
-            Log.i(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
+            Log.d(Constants.TAG, "retrieving TAG CHILD OF:" + fatherDto.getTagId() + " CHILD ID: " + dtoI.getTagId());
             dtoI.setAssignedTypicals(getTagTypicals(dtoI));
             dtoI.setChildTags(getTagChild(dtoI));//recursive
             ret.add(dtoI);

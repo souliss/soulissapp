@@ -16,6 +16,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
@@ -58,7 +59,6 @@ import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
-import static android.support.v7.widget.StaggeredGridLayoutManager.GAP_HANDLING_NONE;
 import static it.angelic.soulissclient.Constants.TAG;
 
 /**
@@ -142,7 +142,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            if (enabled) {
+            if (enabled && launcherMainAdapter.getLocationLauncherElements() != null) {
                 //launcherMainAdapter.getLocationLauncherElements().setTitle(getString(R.string.position));
                 launcherMainAdapter.getLocationLauncherElements().setDesc(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
                         + "</b>)").toString());
@@ -154,7 +154,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 if (location != null) {
                     onLocationChanged(location);
                 }
-            } else if (opzioni.getHomeLatitude() != 0) {
+            } else if (opzioni.getHomeLatitude() != 0 && launcherMainAdapter.getLocationLauncherElements() != null) {
                 launcherMainAdapter.getLocationLauncherElements().setDesc(Html.fromHtml(getString(R.string.status_geoprovider_disabled)).toString());
                 // homedist.setVisibility(View.GONE);
             } else {
@@ -226,7 +226,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         if (getResources().getBoolean(R.bool.isTablet))
             gridsize++;
         StaggeredGridLayoutManager staggeredGridManager = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
-        staggeredGridManager.setGapStrategy(GAP_HANDLING_NONE);
+        //staggeredGridManager.setGapStrategy(GAP_HANDLING_NONE);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mRecyclerView.setLayoutManager(staggeredGridManager);
@@ -237,21 +237,27 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         List launcherItems = database.getLauncherItems(this);
         // LauncherElement[] array = (LauncherElement[]) launcherItems.toArray(new LauncherElement[launcherItems.size()]);
 
-
-        new Thread(new Runnable() {
+        AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 doBindService();
                 // subscribe a tutti i nodi, in teoria non serve*/
                 UDPHelper.stateRequest(opzioni, database.countNodes(), 0);
             }
-        }).start();
+        });
+
+       /* new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();*/
 
 
         launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
-        launcherMainAdapter.notifyDataSetChanged();
+        //launcherMainAdapter.notifyDataSetChanged();
 
 
         // DRAWER

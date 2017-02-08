@@ -28,6 +28,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical53HumiditySensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical54LuxSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical58PressureSensor;
 import it.angelic.soulissclient.model.typicals.SoulissTypical5nCurrentVoltagePowerSensor;
+import it.angelic.soulissclient.model.typicals.SoulissTypical6nAnalogue;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -101,35 +102,37 @@ public class SoulissTypicalFactory {
 			break;
 			case Constants.Typicals.Souliss_T51:
 				rest = new SoulissTypical51AnalogueSensor(ctx, opts);
-			//rest.setSensor(true);
 			break;
 			case Constants.Typicals.Souliss_T52_TemperatureSensor:
 				rest = new SoulissTypical52TemperatureSensor(ctx, opts);
-			//rest.setSensor(true);
 			break;
 			case Constants.Typicals.Souliss_T53_HumiditySensor:
 				rest = new SoulissTypical53HumiditySensor(ctx, opts);
-			//rest.setSensor(true);
 			break;
 			case Constants.Typicals.Souliss_T54_LuxSensor:
 				rest = new SoulissTypical54LuxSensor(ctx, opts);
-			//rest.setSensor(true);
 			break;
 			case Constants.Typicals.Souliss_T55_VoltageSensor:
 				rest = new SoulissTypical5nCurrentVoltagePowerSensor(ctx, opts, typ);
-			//rest.setSensor(true);
 			break;
 			case Constants.Typicals.Souliss_T56_CurrentSensor:
 				rest = new SoulissTypical5nCurrentVoltagePowerSensor(ctx, opts, typ);
-			//rest.setSensor(true);
 				break;
 			case Constants.Typicals.Souliss_T57_PowerSensor:
 				rest = new SoulissTypical5nCurrentVoltagePowerSensor(ctx, opts, typ);
-			//rest.setSensor(true);
 			break;
 			case Constants.Typicals.Souliss_T58_PressureSensor:
 				rest = new SoulissTypical58PressureSensor(ctx, opts);
-			//rest.setSensor(true);
+				break;
+			case Constants.Typicals.Souliss_T61:
+			case Constants.Typicals.Souliss_T62:
+			case Constants.Typicals.Souliss_T63:
+			case Constants.Typicals.Souliss_T64:
+			case Constants.Typicals.Souliss_T65:
+			case Constants.Typicals.Souliss_T66:
+			case Constants.Typicals.Souliss_T67:
+			case Constants.Typicals.Souliss_T68:
+				rest = new SoulissTypical6nAnalogue(ctx, opts);
 			break;
 		default:
 			Log.w(Constants.Typicals.TAG, "warning, unknown typical");
