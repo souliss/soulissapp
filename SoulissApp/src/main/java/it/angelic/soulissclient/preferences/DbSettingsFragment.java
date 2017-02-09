@@ -1,9 +1,12 @@
 package it.angelic.soulissclient.preferences;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -11,24 +14,41 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 /**
  * Fragment of database options
  */
-public class DbSettingsFragment extends PreferenceFragment {
+public class DbSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private DbPreferenceListener dbPrefListener;
+    private Preference dbinfopref;
     private Preference exportDBPref;
 	private SoulissPreferenceHelper opzioni;
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		opzioni = SoulissApp.getOpzioni();
-		super.onActivityCreated(savedInstanceState);
-		getView().setClickable(true);
-		//http://stackoverflow.com/questions/8362908/preferencefragment-is-shown-transparently
-		//che merdata, non riesco a fare meglio
-		//getView().setBackgroundColor(Color.WHITE);
-	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    /*
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = getActivity().getTheme();
+            theme.resolveAttribute(R.attr.backgroundTint, typedValue, true);
+            @ColorInt  int color = typedValue.data;
+            View view = super.onCreateView(inflater, container, savedInstanceState);
+            view.setBackgroundColor(color);
+
+            return view;
+        }
+    */
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		opzioni = SoulissApp.getOpzioni();
 		addPreferencesFromResource(R.xml.settings_db);
@@ -37,8 +57,8 @@ public class DbSettingsFragment extends PreferenceFragment {
         exportDBPref = findPreference("dbexp");
         Preference imortDBPref = findPreference("dbimp");
 		Preference optimDBPref = findPreference("dbopt");
-		Preference dbinfopref = findPreference("dbinfo");
-		Preference sharesettingspref = findPreference("settingshare");
+        dbinfopref = findPreference("dbinfo");
+        Preference sharesettingspref = findPreference("settingshare");
 		/* listeners DB */
         dbPrefListener = new DbPreferenceListener(getActivity());
         exportDBPref.setOnPreferenceClickListener(dbPrefListener);
@@ -57,4 +77,18 @@ public class DbSettingsFragment extends PreferenceFragment {
 
 	}
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        try {
+            String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
+            String nonode = getString(R.string.dialog_disabled_db);
+            final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(
+                    strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
+                    opzioni.getCustomPref().getInt("numTipici", 0));
+            dbinfopref.setSummary(strMeatMsg);
+        } catch (Exception ree) {
+            //amen
+            Log.e(Constants.TAG, ree.getMessage());
+        }
+    }
 }

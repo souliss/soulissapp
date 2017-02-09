@@ -134,7 +134,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             ISoulissObject isoulissObj = null;
             switch (dto.getComponentEnum()) {
                 case STATIC_LOCATION:
-                    dto.setDesc(context.getString(R.string.opt_homepos_err));
+                    //dto.setDesc(context.getString(R.string.opt_homepos_err));
                     break;
                 case STATIC_MANUAL:
                     int cntTyp = countTypicals();
