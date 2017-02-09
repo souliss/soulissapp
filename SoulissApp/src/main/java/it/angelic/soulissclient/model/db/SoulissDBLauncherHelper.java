@@ -2,9 +2,7 @@ package it.angelic.soulissclient.model.db;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.sql.SQLDataException;
@@ -72,7 +70,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
 
         long id = createLauncherElement(lau);
         lau.setId(id);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Log.i(Constants.TAG, "tile creato: " + lau.getId() + " = " + lau.getTitle());
         return lau;
     }

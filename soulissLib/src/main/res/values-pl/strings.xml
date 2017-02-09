@@ -365,7 +365,7 @@
     <string name="opt_restore_welcome_desc">Show welcome screen when App starts</string>
     <string name="opt_restore_welcome">Restore Splash Screen</string>
     <string name="export_failed">Export failed</string>
-    <string name="imported_success">"Imported successfully "</string>
+    <string name="imported_success">Imported successfully %1$d totNodes and %2$d devices</string>
     <string name="config_mandatory">Configuration name is mandatory</string>
     <string name="welcome_dontshow">Don\'t show welcome screen again</string>
     <string name="functions">Functions</string>
@@ -408,4 +408,5 @@
     <string name="added_to_dashboard">" added to Dashboard"</string>
     <string name="step">STEP</string>
     <string name="active_config">Active Config</string>
+    <string name="importing_be_patient">Importing %1$s, please be patient</string>
 </resources>

@@ -404,5 +404,6 @@
     <string name="dashboard">Приборная панель</string>
     <string name="added_to_dashboard">" добавлен на Приборную панель"</string>
     <string name="step">ШАГ</string>
-    <string name="active_config">Active Config</string>
+    <string name="active_config">Активная конфигурация</string>
+    <string name="importing_be_patient">Выполняется экспорт %1$s пожалуйста, подождите</string>
 </resources>

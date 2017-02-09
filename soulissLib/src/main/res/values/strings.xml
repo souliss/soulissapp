@@ -53,7 +53,7 @@
     <string name="programs_come">The command will be repeated every time that user comes back home</string>
     <string name="programs_when">The command will be executed when slot</string>
     <string name="programs_every">The command will be repeated every %1$d seconds</string>
-    <string name="export_ok">Exported successfully %1$d nodes</string>
+    <string name="export_ok">Exported successfully %1$d elements</string>
     <string name="programs_notyet">The command hasn\'t been executed yet</string>
     <string name="command_sent">command Sent</string>
     <string name="command_send">Send command</string>
@@ -411,5 +411,6 @@
     <string name="step">STEP</string>
     <string name="opt_launcher">Dashboard setup</string>
     <string name="active_config">Active Config</string>
+    <string name="importing_be_patient">Importing %1$s, please be patient</string>
 
 </resources>

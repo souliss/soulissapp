@@ -24,23 +24,36 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.model.ISoulissObject;
+import it.angelic.soulissclient.model.LauncherElement;
+import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissNode;
+import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.db.SoulissLogDTO;
 import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
 {
+    private static final int PHASE_NODES = 1;
+    private static final int PHASE_TYPICALS = 2;
+    private static final int PHASE_LOGS = 3;
+    private static final int PHASE_TAGS = 4;
+    private static final int PHASE_DASHB = 6;
+    private static final int PHASE_TAG_TYP = 5;
     private final String TAG = "SoulissApp:" + getClass().getName();
     // private ProgressDialog dialog;
 
+    private SoulissDBLauncherHelper databaseLauncher;
     private SoulissDBTagHelper database;
     private SharedPreferences customSharedPreference;
     private File file;
@@ -95,7 +108,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         int loopMode = 0;
         // File dbFile = null;// getDatabasePath("excerDB.db");
         database = new SoulissDBTagHelper(SoulissApp.getAppContext());
-
+        databaseLauncher = new SoulissDBLauncherHelper(SoulissApp.getAppContext());
         File importDir;
         try {
             Looper.prepare();
@@ -150,7 +163,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 // Log.d("Souliss:file import", temp.toString());
                 if (temp[1].compareToIgnoreCase(SoulissDB.COLUMN_NODE_ID) == 0) {
                     Log.i(TAG, "Importing nodes...");
-                    loopMode = 1;
+                    loopMode = PHASE_NODES;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
                             // lin - 3 head
@@ -162,40 +175,48 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TYPICAL_NODE_ID) == 0) {
                     Log.i(TAG, "Imported " + totNodes + " nodes. Importing typicals...");
                     editor.putInt("numNodi", totNodes);
-                    loopMode = 2;
+                    loopMode = PHASE_TYPICALS;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            mProgressDialog.setMessage("Importing Typicals");
+                            mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.typical)));
                         }
                     });
                     continue;
                 } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LOG_ID) == 0) {
                     editor.putInt("numTipici", database.countTypicals());
                     Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
-                    loopMode = 3;
+                    loopMode = PHASE_LOGS;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            mProgressDialog.setMessage("Importing Log Data, please be patient");
+                            String melo = String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.historyof));
+                            mProgressDialog.setMessage(melo);
                         }
                     });
                     continue;
                 } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_ID) == 0) {
-                    editor.putInt("numTipici", database.countTypicals());
-                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
-                    loopMode = 4;
+                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAGS...");
+                    loopMode = PHASE_TAGS;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            mProgressDialog.setMessage("Importing cuneyt.Tag Data, please be patient");
+                            mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.tags)));
                         }
                     });
                     continue;
                 } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_SLOT) == 0) {
-                    editor.putInt("numTipici", database.countTypicals());
-                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
-                    loopMode = 5;
+                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAG_TYP...");
+                    loopMode = PHASE_TAG_TYP;
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            mProgressDialog.setMessage("Importing cuneyt.Tag Data, please be patient");
+                            mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.tags)));
+                        }
+                    });
+                    continue;
+                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LAUNCHER_ID) == 0) {
+                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing DASHBOARD...");
+                    loopMode = PHASE_DASHB;
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            mProgressDialog.setMessage("Importing Dashboard Data, please be patient");
                         }
                     });
                     continue;
@@ -207,22 +228,25 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 });
                 switch (loopMode) {
 
-                    case 1:
+                    case PHASE_NODES:
                         insertNode(temp);
                         totNodes++;
                         break;
-                    case 2:
+                    case PHASE_TYPICALS:
                         SoulissTypicalDTO ret = insertTypical(temp);
                         tottyp++;
                         break;
-                    case 3:
+                    case PHASE_LOGS:
                         insertLog(temp);
                         break;
-                    case 4:
+                    case PHASE_TAGS:
                         insertTag(temp);
                         break;
-                    case 5:
+                    case PHASE_TAG_TYP:
                         insertTagTyp(temp);
+                        break;
+                    case PHASE_DASHB:
+                        insertDashboard(temp);
                         break;
                     default:
                         break;
@@ -251,7 +275,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         });
         try {
             //uguale al dump tranne ultima parte
-            File filePrefs = new File(importDir, file.getName().substring(file.getName().lastIndexOf("_")) + "_SoulissApp.prefs");
+            File filePrefs = new File(importDir, file.getName().substring(0, file.getName().lastIndexOf("_")) + "_SoulissApp.prefs");
             SoulissUtils.loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
         } catch (Exception e) {
             Log.e(TAG, "Errore import prefs", e);
@@ -259,6 +283,63 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         return true;
 
+    }
+
+    private void insertDashboard(String[] temp) {
+        try {
+            LauncherElement reto = new LauncherElement();
+            reto.setId(Long.parseLong(temp[0]));
+            reto.setComponentEnum(LauncherElementEnum.valueOf(temp[1]));
+            reto.setOrder(Short.parseShort(temp[2]));
+
+            try {
+                ISoulissObject assign = null;
+                if (temp[1].length() > 0 && temp[2].length() == 0) {//nodeId
+                    SoulissNode fat = database.getSoulissNode(Integer.valueOf(temp[1]));
+                    assign = fat;
+                } else if (temp[2].length() > 0) {//typ
+                    SoulissTypical typ = database.getTypical(Integer.valueOf(temp[1]), Short.valueOf(temp[2]));
+                    assign = typ;
+                } else if (temp[3].length() > 0) {//typ
+                    SoulissTag tag = database.getTag(Integer.valueOf(temp[3]));
+                    assign = tag;
+                } else if (temp[4].length() > 0) {//typ
+                    SoulissScene sc = database.getScene(Integer.valueOf(temp[4]));
+                    assign = sc;
+                } else {
+                    throw new SoulissModelException("Caso non contemplato in immportazione");
+                }
+
+                reto.setLinkedObject(assign);
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            try {
+                if (temp[5].length() > 0)//title
+                    reto.setTitle(temp[5]);
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            try {
+                if (temp[6].length() > 0)//title
+                    reto.setDesc(temp[6]);
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            try {
+                if (temp[7].length() > 0)//title
+                    reto.setIsFullSpan(!"0".equals(temp[7]));
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            databaseLauncher.addElement(reto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -307,8 +388,13 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         } catch (Exception e) {
             Log.w(Constants.TAG, e.getMessage());
         }
+        try {
+            tIns.setFatherId(Long.valueOf(temp[5]));
+        } catch (Exception e) {
+            Log.w(Constants.TAG, e.getMessage());
+            tIns.setFatherId(null);
+        }
 
-        //TODO agg padre al CSV
         database.createOrUpdateTag(tIns);
     }
 
