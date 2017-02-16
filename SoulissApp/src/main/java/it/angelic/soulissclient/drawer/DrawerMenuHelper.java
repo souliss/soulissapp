@@ -77,7 +77,7 @@ public class DrawerMenuHelper {
                 false, ctx);
         tmp.add(prore);
         //	}
-        NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_title), "fa-codepen",
+        NavMenuItem man = new NavMenuItem(MANUAL, ctx.getString(R.string.manual_typicals), "fa-codepen",
                 false, ctx);
         tmp.add(man);
 

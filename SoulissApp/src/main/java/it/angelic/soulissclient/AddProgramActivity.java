@@ -445,11 +445,11 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                     intent.putExtra("returnedData", Constants.COMMAND_TIMED);
                 } else if (radioPositional.isChecked()) {// POSIZIONALE
                     if (togglehomeaway.isChecked()) {
-                        programToSave.setType(Constants.COMMAND_COMEBACK_CODE);
-                        intent.putExtra("returnedData", Constants.COMMAND_COMEBACK_CODE);
-                    } else {
                         programToSave.setType(Constants.COMMAND_GOAWAY_CODE);
                         intent.putExtra("returnedData", Constants.COMMAND_GOAWAY_CODE);
+                    } else {
+                        programToSave.setType(Constants.COMMAND_COMEBACK_CODE);
+                        intent.putExtra("returnedData", Constants.COMMAND_COMEBACK_CODE);
                     }
                     // inserimento nuovo
                 } else if (radioTrigger.isChecked()) {// TRIGGER

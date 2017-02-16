@@ -152,13 +152,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		collected.setPrefs(opzioni);
 
 		super.setCollected(collected);
-		/*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
-		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-		super.actionBar.setDisplayHomeAsUpEnabled(true);*/
-		//((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //super.actionBar.setTitle(collected.getNiceName());
 		warnerCheck = (CheckBox) ret.findViewById(R.id.checkBoxWarn);
 		warner = (NumberPicker) ret.findViewById(R.id.warnTimer);
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
@@ -176,14 +170,10 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
-        infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot() + "Val: 0x" + Integer.toHexString(collected.getOutput().intValue()));
+		infoTyp.setText(collected.getParentNode().getNiceName() + " - Slot " + collected.getSlot() + " - Out: 0x" + Integer.toHexString(collected.getOutput().intValue()));
 
         refreshTagsInfo();
-
         refreshHistoryInfo();
-        // datasource.getHistoryTypicalHashMap(collected, 0);
-		//warner.setMinValue(5);
-		//warner.setMaxValue(120);
 
 		String nums[]= {getString(R.string.hours),"1/4","1/2","3/4","1","2","3","4","5","6","8","12","24"};
 

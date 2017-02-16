@@ -115,7 +115,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         return tifr;
     }
 
-    public void onBindTagCardViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
+    private void onBindTypicalCardViewHolderImpl(final TagRecyclerAdapter.TagCardViewHolder holder, final int position) {
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
         holder.data = (SoulissTag) getItems().get(position);
@@ -158,7 +158,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
                 options.inSampleSize = 2;
                 options.inPreferQualityOverSpeed = false;
                 Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
-                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                Log.d(Constants.TAG, picture.getAbsolutePath() + "loaded, bitmap size " + myBitmap.getRowBytes());
                 holder.image.setImageBitmap(myBitmap);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     holder.image.setTransitionName("photo_hero" + holder.data.getTagId());
@@ -203,11 +203,10 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
     }
 
-    private void onBindTagCardViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
+    private void onBindTypicalCardViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
         viewHolder.setData((SoulissTypical) getItems().get(i));
         Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
-        // Get element from your dataset at this position and replace the contents of the view
-        // with that element
+
         viewHolder.getTextView().setText(
                 viewHolder.getData().getParentNode().getNiceName()
                         + " "
@@ -251,14 +250,14 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     @Override//bellissimo shine deve dormire di piu'
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof TypicalCardViewHolder)
-            onBindTagCardViewHolderImpl((TypicalCardViewHolder) holder, position);
+            onBindTypicalCardViewHolderImpl((TypicalCardViewHolder) holder, position);
         else if (holder instanceof TagRecyclerAdapter.TagCardViewHolder)
-            onBindTagCardViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
+            onBindTypicalCardViewHolderImpl((TagRecyclerAdapter.TagCardViewHolder) holder, position);
         else
             throw new SoulissModelException("TOIMPLEMENT");
     }
 
-    public RecyclerView.ViewHolder onCreateTagViewHolderImpl(ViewGroup viewGroup) {
+    private RecyclerView.ViewHolder onCreateTagViewHolderImpl(ViewGroup viewGroup) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_subtag, viewGroup, false);
         v.setOnClickListener(new View.OnClickListener() {
@@ -270,19 +269,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         return new TagRecyclerAdapter.TagCardViewHolder(v);
     }
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        if (viewType == VIEW_TYPE_TAG_TYPICAL)
-            return onCreateViewHolderImpl(parent);
-        else if (viewType == VIEW_TYPE_TAG_NESTED)
-            return onCreateTagViewHolderImpl(parent);
-        else
-            throw new SoulissModelException("TOIMPLEMENT");
-
-    }
-
-    public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup) {
+    private RecyclerView.ViewHolder onCreateTypicalViewHolderImpl(ViewGroup viewGroup) {
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.cardview_typical, viewGroup, false);
         v.setOnClickListener(new View.OnClickListener() {
@@ -292,6 +279,18 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
             }
         });
         return new TypicalCardViewHolder(v);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        if (viewType == VIEW_TYPE_TAG_TYPICAL)
+            return onCreateTypicalViewHolderImpl(parent);
+        else if (viewType == VIEW_TYPE_TAG_NESTED)
+            return onCreateTagViewHolderImpl(parent);
+        else
+            throw new SoulissModelException("TOIMPLEMENT");
+
     }
 
     public void removeAt(int deletedPosition) {

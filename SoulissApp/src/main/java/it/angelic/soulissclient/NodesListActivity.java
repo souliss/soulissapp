@@ -96,7 +96,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
         mDrawerList.setAdapter(mDrawermAdapter);
         mDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setActionBarInfo(getString(R.string.manual_title));
+        setActionBarInfo(getString(R.string.manual_typicals));
         refreshStatusIcon();
     }
 

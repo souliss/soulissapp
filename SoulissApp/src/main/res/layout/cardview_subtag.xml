@@ -28,7 +28,6 @@
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:alpha="0.8"
             android:scaleType="centerCrop"/>
 
         <View

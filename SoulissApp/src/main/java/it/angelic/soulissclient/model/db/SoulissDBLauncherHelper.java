@@ -211,7 +211,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         ret.add(prop);
 
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
-        man.setTitle(context.getString(R.string.manual_title));
+        man.setTitle(context.getString(R.string.manual_typicals));
         man.setOrder((short) 3);
         man.setDesc(countNodes() + " nodi presenti");
         ret.add(man);

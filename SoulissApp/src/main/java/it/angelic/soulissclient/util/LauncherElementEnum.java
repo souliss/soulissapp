@@ -17,7 +17,7 @@ public enum LauncherElementEnum {
             case STATIC_PROGRAMS:
                 return ctx.getString(R.string.programs_title);
             case STATIC_MANUAL:
-                return ctx.getString(R.string.manual_title);
+                return ctx.getString(R.string.manual_typicals);
             case STATIC_TAGS:
                 return ctx.getString(R.string.tags);
             case STATIC_STATUS:
