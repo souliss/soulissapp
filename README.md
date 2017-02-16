@@ -118,4 +118,6 @@ Network layer rewritten for performance and reliability
 
 ## Privacy
 
-Play store requires me to advise you about the fact SoulissApp is requesting RECORD_AUDIO permission. Actually, nothing is being recorded, that permission is requested only when synching lights to music. Audio flows thru main channel, requiring that permission.
+Play store requires me to advise you about the fact SoulissApp is requesting RECORD_AUDIO permission. Actually, nothing is being recorded, that permission is requested only when synching lights to music. Audio has to flow thru main channel, thus requiring that permission. 
+
+More in general, SoulissApp DOES NOT track, record or share ANY user information whatsoever. You can check it in the sources
