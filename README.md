@@ -115,3 +115,7 @@ RGB Music sync
 
 ### 1.0.0
 Network layer rewritten for performance and reliability
+
+## Privacy
+
+Play store requires me to advise you about the fact SoulissApp is requesting RECORD_AUDIO permission. Actually, nothing is being recorded, that permission is requested only when synching lights to music. Audio flows thru main channel, requiring that permission.
