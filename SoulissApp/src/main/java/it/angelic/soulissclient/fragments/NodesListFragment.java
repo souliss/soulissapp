@@ -92,22 +92,12 @@ public class NodesListFragment extends ListFragment {
             }
         }
     };
-    //  private Toolbar actionBar;
-    private TextView textHeadListInfo;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-        /*ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-        actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
-		actionBar.setDisplayHomeAsUpEnabled(true);
-*/
 
         setHasOptionsMenu(true);
-        //opzioni.reload();
-        // Remove title bar
-        // tema
         if (opzioni.isLightThemeSelected())
             getActivity().setTheme(R.style.LightThemeSelector);
         else
@@ -131,9 +121,9 @@ public class NodesListFragment extends ListFragment {
         TextView nodeic = (TextView) getActivity().findViewById(R.id.scene_icon_awe);
         FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, FontAwesomeEnum.fa_codepen.getFontName());
 
-        //tt = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
-        textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewTypListDesc);
+        final TextView textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewTypListDesc);
         final TextView textViewTagsDescFa = (TextView) getActivity().findViewById(R.id.TextViewTypListDescFa);
+
 
         if (textViewTagsDescFa != null) {//forse nascosto > landscape
             FontAwesomeUtil.prepareMiniFontAweTextView(getActivity(), textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
@@ -151,6 +141,7 @@ public class NodesListFragment extends ListFragment {
                 textHeadListInfo.setVisibility(View.GONE);
             }
         }
+
         swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -349,14 +340,13 @@ public class NodesListFragment extends ListFragment {
         // Adapter della lista
         // setListAdapter(nodesAdapter);
         getListView().setAdapter(nodesAdapter);
-        getListView().invalidateViews();
 
-        //actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
-        // ((AbstractStatusedFragmentActivity)getActivity()).setSupportActionBar(actionBar);
-        // ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // ((AbstractStatusedFragmentActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        //((AbstractStatusedFragmentActivity)getActivity()).setActionBarInfo(co);
-        //((AbstractStatusedFragmentActivity) getActivity()).refreshStatusIcon();
+        final TextView nodesTitle = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
+        if (nodesTitle != null) {//se dual pane salta
+            nodesTitle.setText(getActivity().getResources().getQuantityString(R.plurals.Nodes,
+                    nodiArray.size(), nodiArray.size()));
+        }
+
     }
 
     /**
@@ -372,14 +362,6 @@ public class NodesListFragment extends ListFragment {
 
             ((AbstractStatusedFragmentActivity) getActivity()).setActionBarInfo(data.getNiceName());
             ((AbstractStatusedFragmentActivity) getActivity()).refreshStatusIcon();
-            //getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            // We can display everything in-place with fragments, so update
-            // the list to highlight the selected item and show the data.
-            //getListView().setItemChecked(index, true);
-            // Check what fragment is currently shown, replace if needed.
-            // Fragment details = (Fragment)
-            // getFragmentManager().findFragmentById(R.id.details);
-            // if (details == null)
             // Istanzia e ci mette l'indice
             NodeDetailFragment details = NodeDetailFragment.newInstance(index, data);
 
@@ -406,29 +388,4 @@ public class NodesListFragment extends ListFragment {
         }
     }
 
-
-    /*private void refreshStatusIcon() {
-		try {
-            //actionBar = getSupportActionBar();
-            View ds = actionBar.getRootView();
-            TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
-            TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
-            ImageButton online = (ImageButton) ds.findViewById(R.id.action_starred);
-            TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
-            TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
-            actionTitle.setText("Manual");
-            if (!opzioni.isSoulissReachable()) {
-                online.setBackgroundResource(R.drawable.red);
-                statusOnline.setTextColor(ContextCompat.getColor(getContext(), R.color.std_red));
-                statusOnline.setText(R.string.offline);
-
-            } else {
-                online.setBackgroundResource(R.drawable.green);
-                statusOnline.setTextColor(ContextCompat.getColor(getContext(), R.color.std_green));
-                statusOnline.setText(R.string.Online);
-            }
-        } catch (Exception e) {
-            Log.e(Constants.TAG, "null bar? " + e.getMessage());
-        }
-    }*/
 }

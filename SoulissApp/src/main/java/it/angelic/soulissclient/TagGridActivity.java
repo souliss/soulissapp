@@ -131,22 +131,10 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
-/*
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        // Rinomina nodo e scelta icona
-        inflater.inflate(R.menu.ctx_menu_tags, menu);
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-        // Remove title bar
-        // this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
         else
@@ -158,7 +146,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
         final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewTagsDescFa);
         FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
-        //NASCONDI
+        //NASCONDI HINT
         textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -182,8 +170,6 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
         //Floatin Button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        //fab.attachToRecyclerView(mRecyclerView);
-
 
         //ADD NEW TAG
         fab.setOnClickListener(new View.OnClickListener() {
