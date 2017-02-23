@@ -42,11 +42,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
      *
      */
     private static final long serialVersionUID = -7375342157142543740L;
-
-    public Context getContext() {
-        return context;
-    }
-
     protected transient Context context;
     // nodo di appartenenza
     protected SoulissNode parentNode;
@@ -55,7 +50,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     //transient per evitare problemi di serializzazione
     protected transient SoulissPreferenceHelper prefs;
     private boolean isSlave = false;// indica se includerlo nelle liste
-
     //AUTOF
     public SoulissTypical(Context context, SoulissPreferenceHelper pre) {
         super();
@@ -71,6 +65,14 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     public List<ISoulissCommand> getCommands(Context ctx) {
         // to be overridden
         return new ArrayList<>();
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public String getDefaultName(Context ctx) {
@@ -220,10 +222,6 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             return FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_cube.getFontName());
     }
 
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     @Override
     public void setIconResourceId(int resId) {
         typicalDTO.setIconId(resId);
@@ -326,8 +324,8 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         return isSlave;
     }
 
-    public void setRelated(boolean isSlave) {
-        this.isSlave = isSlave;
+    public void setRelated(SoulissTypical in) {
+        throw new RuntimeException("Can't call setRelated on a single generic typical");
     }
 
     public boolean isSensor() {
@@ -394,15 +392,17 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         }
     }
 
-    public void setRelated(SoulissTypical in) {
-        throw new RuntimeException("Can't call setRelated on a single generic typical");
+    public void setRelated(boolean isSlave) {
+        this.isSlave = isSlave;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(getParentNode().getNiceName())
-                .append(" (").append(context.getString(R.string.slot)).append(" ").append(getSlot()).append(") ")
+        if (getParentNode() != null) {
+            sb.append(getParentNode().getNiceName());
+        }
+        sb.append(" (").append(context.getString(R.string.slot)).append(" ").append(getSlot()).append(") ")
                 .append(" - ").append(getName());
         return sb.toString();
     }

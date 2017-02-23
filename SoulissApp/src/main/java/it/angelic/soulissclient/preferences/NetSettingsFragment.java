@@ -63,8 +63,8 @@ public class NetSettingsFragment extends PreferenceFragment {
 		}
 		//BROADCAST Settings
 		bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(getActivity()));
-		
-		// GOOGLE PLUS link
+
+		// Github contrib link
 		Preference creditsPref = findPreference("credits");
 		creditsPref.setTitle(getResources().getString(R.string.souliss_app_name) + " Version " + strVersionName);
 		creditsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {

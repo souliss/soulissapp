@@ -55,7 +55,8 @@ public class SoulissGlobalPreferenceHelper implements Serializable {
         Set<String> newDefaults = new HashSet<>();
         //autocomplete initial values
         newDefaults.add(Constants.DEMO_PUBLIC_IP);
-        newDefaults.add("192.168.1.17");
+        newDefaults.add("192.168.1.");
+        newDefaults.add("192.168.0.");
         ipDictionary = customCachedPrefs.getStringSet("ipDictionary", newDefaults);
 
     }

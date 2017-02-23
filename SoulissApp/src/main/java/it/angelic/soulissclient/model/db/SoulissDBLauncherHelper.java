@@ -113,6 +113,8 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     }
 
     private int deleteLauncher(LauncherElement toRename) {
+        if (!database.isOpen())
+            open();
         return database.delete(SoulissDB.TABLE_LAUNCHER, SoulissDB.COLUMN_LAUNCHER_ID + " = " + toRename.getId(), null);
     }
 
@@ -213,7 +215,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         LauncherElement man = new LauncherElement(LauncherElementEnum.STATIC_MANUAL);
         man.setTitle(context.getString(R.string.manual_typicals));
         man.setOrder((short) 3);
-        man.setDesc(countNodes() + " nodi presenti");
+        int tNodes = countNodes();
+        man.setDesc(tNodes + context.getResources().getQuantityString(R.plurals.Nodes,
+                tNodes, tNodes));
         ret.add(man);
 
         LauncherElement pro = new LauncherElement(LauncherElementEnum.STATIC_PROGRAMS);
