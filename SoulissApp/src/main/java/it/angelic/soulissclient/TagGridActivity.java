@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,6 +36,7 @@ import it.angelic.soulissclient.helpers.ContextMenuRecyclerView;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
+import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -211,6 +213,16 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         tagAdapter = new TagRecyclerAdapter(this, goer, opzioni, fab);
         // Adapter della lista
         mRecyclerView.setAdapter(tagAdapter);
+
+
+        if (opzioni.isSoulissReachable()) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    UDPHelper.stateRequest(opzioni, goer.size(), 0);
+                }
+            });
+        }
 
 
         // Extend the Callback class

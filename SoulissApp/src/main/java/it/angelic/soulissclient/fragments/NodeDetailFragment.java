@@ -93,8 +93,8 @@ public class NodeDetailFragment extends ListFragment {
     private SoulissPreferenceHelper opzioni;
     private ProgressBar par;
     private SwipeRefreshLayout swipeLayout;
-    //private ActionBar actionBar;
-    //private TextView tt;
+
+
     private TypicalsListAdapter ta;
     /* SOULISS DATA SERVICE BINDING */
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -132,10 +132,7 @@ public class NodeDetailFragment extends ListFragment {
                 refreshHeader();
 
                 List<SoulissTypical> goer = collected.getActiveTypicals();
-                SoulissTypical[] typs = new SoulissTypical[goer.size()];
-                typs = goer.toArray(typs);
-
-                ta.setTypicals(typs);
+                ta.setTypicals(goer);
                 ta.notifyDataSetChanged();
 
                 // save index and top position
@@ -268,10 +265,6 @@ public class NodeDetailFragment extends ListFragment {
         assertTrue("NODO NULLO", collected != null);
         getActivity().setTitle(collected.getNiceName());
 
-        // SFONDO
-        //SoulissApp.setBackground(getActivity().findViewById(R.id.containerlista), getActivity()
-        //       .getWindowManager());
-        // listaTypicalsView = (ListView) getListView();
         listaTypicalsView = getListView();
         nodeic = (TextView) getActivity().findViewById(R.id.node_icon_detail);
         // Icona, puo esser nullo dopo rotazione schermo
@@ -287,10 +280,7 @@ public class NodeDetailFragment extends ListFragment {
                     public void run() {
                         Looper.prepare();
                         if (collected != null) {
-                            //  UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
-                            // state req. meglio, fa subscribe
                             UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
-
                         }
 
                         if (!opzioni.isSoulissReachable()) {
@@ -302,8 +292,6 @@ public class NodeDetailFragment extends ListFragment {
                                     swipeLayout.setRefreshing(false);
                                 }
                             });
-
-
                         }
                     }
                 }).start();
@@ -453,12 +441,6 @@ public class NodeDetailFragment extends ListFragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    /*
-                     * UDPHelper.healthRequest(opzioni, 1, collected.getNodeId());
-					 * try { Thread.sleep(500); } catch (InterruptedException e)
-					 * { e.printStackTrace(); }
-					 */
-                    //UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
                     UDPHelper.pollRequest(opzioni, 1, collected.getNodeId());
                 }
             }).start();
@@ -467,11 +449,7 @@ public class NodeDetailFragment extends ListFragment {
             // tipici dal DB
             List<SoulissTypical> goer = collected.getActiveTypicals();
 
-            SoulissTypical[] typs = new SoulissTypical[goer.size()];
-            typs = goer.toArray(typs);
-
-
-            ta = new TypicalsListAdapter(getActivity(), mBoundService, typs, getActivity().getIntent(),
+            ta = new TypicalsListAdapter(getActivity(), mBoundService, goer, getActivity().getIntent(),
                     opzioni);
             listaTypicalsView = getListView();
             // Adapter della lista

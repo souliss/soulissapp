@@ -68,7 +68,6 @@ public class NodesListFragment extends ListFragment {
     //private TextView tt;
     private boolean mDualPane;
     private NodesListAdapter nodesAdapter;
-    private List<SoulissNode> nodiArray;
     private SoulissPreferenceHelper opzioni;
     private SwipeRefreshLayout swipeLayout;
     // Aggiorna il feedback
@@ -150,9 +149,17 @@ public class NodesListFragment extends ListFragment {
                     @Override
                     public void run() {
                         Looper.prepare();
-                        if (nodiArray != null)
-                            UDPHelper.healthRequest(opzioni, nodiArray.size(), 0);
+                        if (nodesAdapter != null && nodesAdapter.getNodes() != null) {
+                            UDPHelper.healthRequest(opzioni, nodesAdapter.getNodes().size(), 0);
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            UDPHelper.pollRequest(opzioni, nodesAdapter.getNodes().size(), 0);
+                        }
                         if (!opzioni.isSoulissReachable()) {
+                            //rinuncio subito
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
                                     Toast.makeText(getActivity(),
@@ -161,8 +168,6 @@ public class NodesListFragment extends ListFragment {
                                     swipeLayout.setRefreshing(false);
                                 }
                             });
-
-
                         }
                     }
                 }).start();
@@ -226,12 +231,12 @@ public class NodesListFragment extends ListFragment {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
         //BUG?
-        if (info.position >= nodiArray.size()) {
+        if (info.position >= nodesAdapter.getNodes().size()) {
             Log.e(TAG, "info.position >= nodiArray.length");
             return super.onContextItemSelected(item);
         }
 
-        final SoulissNode todoItem = nodiArray.get(info.position);
+        final SoulissNode todoItem = (SoulissNode) nodesAdapter.getItem(info.position);
 
         switch (item.getItemId()) {
             case R.id.rinominaNodo:
@@ -239,17 +244,12 @@ public class NodesListFragment extends ListFragment {
                         datasource, todoItem);
 
                 alert.show();
-                // nodesAdapter.notifyDataSetChanged();
-                // listaNodiView.invalidateViews();
                 return true;
             case R.id.changenodeicon:
                 //SoulissNode convertView = (SoulissNode) getListView().getItemAtPosition(item.getOrder());
-
                 AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(getActivity(), null, getListView(),
                         datasource, todoItem);
                 alert2.show();
-                // nodesAdapter.notifyDataSetChanged();
-                // listaNodiView.invalidateViews();
                 return true;
             case R.id.AddToDashboard:
                 SoulissDBLauncherHelper dbl = new SoulissDBLauncherHelper(getActivity());
@@ -332,13 +332,12 @@ public class NodesListFragment extends ListFragment {
         SoulissDBHelper.open();
 
         // prendo tipici dal DB
-        nodiArray = datasource.getAllNodes();
         //timeoutHandler = new Handler();
-        Log.i(TAG, "mostro numnodi:" + nodiArray.size());
+        List<SoulissNode> nodiArray = datasource.getAllNodes();
+        Log.i(TAG, NodesListFragment.class.getName() + " onStart:" + nodiArray.size());
 
         nodesAdapter = new NodesListAdapter(getActivity(), nodiArray, opzioni);
         // Adapter della lista
-        // setListAdapter(nodesAdapter);
         getListView().setAdapter(nodesAdapter);
 
         final TextView nodesTitle = (TextView) getActivity().findViewById(R.id.TextViewTypicals);

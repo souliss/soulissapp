@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Locale;
 
 import it.angelic.soulissclient.R;
@@ -31,9 +32,9 @@ public class TypicalsListAdapter extends BaseAdapter {
     private Activity context;
     private LayoutInflater mInflater;
     private SoulissPreferenceHelper opzioni;
-    private SoulissTypical[] tipici;
+    private List<SoulissTypical> tipici;
 
-    public TypicalsListAdapter(Activity context, SoulissDataService serv, SoulissTypical[] versio, Intent forExtra,
+    public TypicalsListAdapter(Activity context, SoulissDataService serv, List<SoulissTypical> versio, Intent forExtra,
                                SoulissPreferenceHelper op) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
@@ -52,24 +53,24 @@ public class TypicalsListAdapter extends BaseAdapter {
 
     public int getCount() {
         // Hack lista vuota
-        if (tipici == null || tipici.length == 0)
+        if (tipici == null || tipici.size() == 0)
             return 1;
-        return tipici.length;
+        return tipici.size();
     }
 
     public Object getItem(int position) {
-        return tipici[position];
+        return tipici.get(position);
     }
 
     public long getItemId(int position) {
         return position;
     }
 
-    public SoulissTypical[] getTypicals() {
+    public List<SoulissTypical> getTypicals() {
         return tipici;
     }
 
-    public void setTypicals(SoulissTypical[] in) {
+    public void setTypicals(List<SoulissTypical> in) {
         tipici = in;
     }
 
@@ -104,8 +105,8 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder = (TypicalViewHolder) convertView.getTag();
         }
         //fuori da if-else per evitare #74
-        if (tipici.length > 0) // magari e` vuoto
-            holder.data = tipici[position];
+        if (tipici.size() > 0) // magari e` vuoto
+            holder.data = tipici.get(position);
 
 
         if (opzioni.isLightThemeSelected()) {
@@ -117,7 +118,7 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder.expand.setColorFilter(R.color.black);
         }
 		/* Nodo vuota */
-        if (tipici.length == 0) {
+        if (tipici.isEmpty()) {
 
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_exclamation_triangle.getFontName());
             //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
@@ -129,35 +130,35 @@ public class TypicalsListAdapter extends BaseAdapter {
             return convertView;
         }
 		/* INFO slot e Alias Name */
-        holder.textslot.setText(tipici[position].getNiceName());
+        holder.textslot.setText(tipici.get(position).getNiceName());
         holder.textUpdated.setText(context.getString(R.string.update) + " "
-                + SoulissUtils.getTimeAgo(tipici[position].getTypicalDTO().getRefreshedAt()) + " - "
-                + context.getString(R.string.manual_slot) + ": " + tipici[position].getSlot());
+                + SoulissUtils.getTimeAgo(tipici.get(position).getTypicalDTO().getRefreshedAt()) + " - "
+                + context.getString(R.string.manual_slot) + ": " + tipici.get(position).getSlot());
         holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
-                + ": " + tipici[position].getTypicalDTO().getTypicalDec() + " - "
+                + ": " + tipici.get(position).getTypicalDTO().getTypicalDec() + " - "
                 + context.getResources().getString(R.string.status));
         /* Icona del device */
-        FontAwesomeUtil.prepareFontAweTextView(context, holder.image, tipici[position].getIconResourceId());
+        FontAwesomeUtil.prepareFontAweTextView(context, holder.image, tipici.get(position).getIconResourceId());
         //Preferito, TagId == 0
-        if (tipici[position].getTypicalDTO().isFavourite()) {
+        if (tipici.get(position).getTypicalDTO().isFavourite()) {
             FontAwesomeUtil.prepareMiniFontAweTextView(context, holder.imageFav, FontAwesomeEnum.fa_star_o.getFontName());
             holder.imageFav.setVisibility(View.VISIBLE);
         } else {
             holder.imageFav.setVisibility(View.GONE);
         }
         //puo essere ANCHE tagged
-        if (tipici[position].getTypicalDTO().isTagged()) {
+        if (tipici.get(position).getTypicalDTO().isTagged()) {
             FontAwesomeUtil.prepareMiniFontAweTextView(context, holder.imageTag, FontAwesomeEnum.fa_tag.getFontName());
             holder.imageTag.setVisibility(View.VISIBLE);
         } else {
             holder.imageTag.setVisibility(View.GONE);
         }
 
-        tipici[position].setOutputDescView(holder.textStatusVal);
+        tipici.get(position).setOutputDescView(holder.textStatusVal);
         holder.linearActionsLayout.removeAllViews();
 
         // richiama l'overloaded del tipico relativo
-        tipici[position].getActionsLayout(context, holder.linearActionsLayout);
+        tipici.get(position).getActionsLayout(context, holder.linearActionsLayout);
 
         // linearActionsLayout.setVisibility(View.VISIBLE);
 
@@ -182,7 +183,6 @@ public class TypicalsListAdapter extends BaseAdapter {
     public static class TypicalViewHolder {
         public ImageView expand;
         public SoulissTypical data;
-        //View shader;
         TextView textStatus;
         TextView textStatusVal;
         TextView textslot;

@@ -89,7 +89,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
     protected TagDetailParallaxExenderAdapter parallaxExtAdapter;
-    protected GridLayoutManager mTagTypicalsLayoutManager;
+
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapseToolbar;
     private SoulissTag collectedTag;
@@ -189,19 +189,10 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
 
-
-       /* if (savedInstanceState != null) {
-            // Restore saved layout manager type.
-            mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
-                    .getSerializable(KEY_LAYOUT_MANAGER);
-        }*/
-
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 LayoutManagerType.LAND_LAYOUT_MANAGER : LayoutManagerType.PORT_LAYOUT_MANAGER;
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
 
-
-        //HeaderLayoutManagerFixed layoutManagerFixed = new HeaderLayoutManagerFixed(getActivity());
 
         //HEADER
         // shared trans su queste
@@ -448,6 +439,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
        uso solo GridLayoutManager
         }*/
 
+        GridLayoutManager mTagTypicalsLayoutManager;
         switch (layoutManagerType) {
             case LAND_LAYOUT_MANAGER:
                 mTagTypicalsLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT_LAND);
@@ -487,7 +479,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     private static class ParallaxGridCallback extends ItemTouchHelper.Callback {
         private final TagDetailParallaxExenderAdapter adapter;
         private final Context context;
-        View.OnClickListener mOnClickListener;
+        //View.OnClickListener mOnClickListener;
         private SoulissDBTagHelper database;
         private SoulissTag targetTag;
 
@@ -496,7 +488,6 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             this.context = xct;
             this.database = database;
             this.targetTag = targetTag;
-
         }
 
         //defines the enabled move directions in each state (idle, swiping, dragging).
@@ -515,10 +506,8 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                 //nel ordine del adapter aggiorno tutti senza complimenti
                 database.updateTagTypicalsOrder(adapter.getItems(), targetTag);
             } catch (SoulissModelException e) {
-
                 Log.i(Constants.TAG, "User tried to swap incompatible tag elements");
             }
-
 
             return true;
         }

@@ -33,8 +33,8 @@ The project includes *SoulissLib* and other necessary modules. You may want to e
 
 ## Release Notes
 
-### 2.0.2
-New Dynamic Launcher screen
+### 2.0.5
+New Dynamic Dashboard screen
 Nested Tags
 New Icon set
 

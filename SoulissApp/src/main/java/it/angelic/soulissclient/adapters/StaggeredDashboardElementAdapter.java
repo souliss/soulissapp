@@ -278,8 +278,6 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
 
 
-        //linearActionsLayout.removeAllViews();
-        // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -385,13 +383,13 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
 
         textView.setText(tipico.getNiceName());
-        //textView.setTag(position);
+
         tipico.setOutputDescView(textViewInfo1);
         textViewInfo2.setText(SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
         // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
         FontAwesomeUtil.prepareFontAweTextView(context, imageView, tipico.getIconResourceId());
         linearActionsLayout.removeAllViews();
-        //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
+
 
         List<ISoulissCommand> pi = tipico.getCommands(context);
         for (final ISoulissCommand cmd : pi) {
@@ -480,7 +478,6 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         launcherElements.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, launcherElements.size());
-
     }
 
     private void setServiceInfo(TextView basinfo, TextView serviceInfo) {

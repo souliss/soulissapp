@@ -1,6 +1,7 @@
 package it.angelic.soulissclient;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -68,29 +69,29 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     protected void onStart() {
-        /*ActionBar actionBar = getSupportActionBar();
-        actionBar.setCustomView(R.layout.custom_actionbar); // load your layout
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM ); // show
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setHomeButtonEnabled(true);*/
-        //View ds = actionBar.getCustomView();
 
         super.onStart();
         SoulissDBHelper.open();
         // prendo tipici dal DB
         goer = datasource.getAllNodes();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UDPHelper.healthRequest(opzioni, goer.size(), 0);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+
+        if (opzioni.isSoulissReachable()) {
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    UDPHelper.healthRequest(opzioni, goer.size(), 0);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    // subscribe a tutti i nodi, in teoria non serve*/
+                    UDPHelper.stateRequest(opzioni, goer.size(), 0);
                 }
-            }
-        }).start();
+            });
+        }
+
 
         mDrawermAdapter = new NavDrawerAdapter(NodesListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.MANUAL);
         mDrawerList.setAdapter(mDrawermAdapter);
