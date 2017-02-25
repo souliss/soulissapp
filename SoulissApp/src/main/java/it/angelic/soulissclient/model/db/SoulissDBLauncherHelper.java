@@ -82,27 +82,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
      * @return
      */
     private long createLauncherElement(LauncherElement nodeIN) throws SoulissModelException {
-        ContentValues values = new ContentValues();
-        // wrap values from object
-        values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
-        values.put(SoulissDB.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
-        values.put(SoulissDB.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
-        values.put(SoulissDB.COLUMN_LAUNCHER_TYPE, nodeIN.getComponentEnum().ordinal());
-        values.put(SoulissDB.COLUMN_LAUNCHER_ORDER, nodeIN.getOrder());
-        values.put(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN, nodeIN.isFullSpan() ? 1 : 0);
-        if (nodeIN.getLinkedObject() != null) {
-            if (nodeIN.getLinkedObject() instanceof SoulissNode)
-                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissNode) nodeIN.getLinkedObject()).getNodeId());
-            else if (nodeIN.getLinkedObject() instanceof SoulissTypical) {
-                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
-                values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
-            } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
-                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
-            else if (nodeIN.getLinkedObject() instanceof SoulissTag)
-                values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
-            else
-                throw new SoulissModelException("Missing ISoulissObject cast");
-        }
+        ContentValues values = fillcontentValues(nodeIN);
         // int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getSceneId(),
         //         null);
         // if (upd == 0) {
@@ -292,8 +272,20 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
      * @return
      */
     private long updateLauncherElementImpl(LauncherElement nodeIN) throws SoulissModelException {
-        ContentValues values = new ContentValues();
         // wrap values from object
+
+        ContentValues values = fillcontentValues(nodeIN);
+        int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
+                null);
+        if (upd == 0) {
+            Log.e(Constants.TAG, "updateLauncherElement() NO ROW UPDATED!!");
+        }
+
+        return upd;
+    }
+
+    private ContentValues fillcontentValues(LauncherElement nodeIN) {
+        ContentValues values = new ContentValues();
         values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
         values.put(SoulissDB.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
         values.put(SoulissDB.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
@@ -313,13 +305,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             else
                 throw new SoulissModelException("Missing ISoulissObject cast");
         }
-        int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
-                null);
-        if (upd == 0) {
-            Log.e(Constants.TAG, "updateLauncherElement() NO ROW UPDATED!!");
-        }
 
-        return upd;
+
+        return values;
     }
 
 

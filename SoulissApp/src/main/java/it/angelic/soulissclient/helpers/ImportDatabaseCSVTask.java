@@ -49,7 +49,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     private static final int PHASE_TAGS = 4;
     private static final int PHASE_DASHB = 6;
     private static final int PHASE_TAG_TYP = 5;
-    private final String TAG = "SoulissApp:" + getClass().getName();
+
     // private ProgressDialog dialog;
 
     private SoulissDBLauncherHelper databaseLauncher;
@@ -118,7 +118,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
             if (!file.exists()) {
                 Toast.makeText(SoulissApp.getAppContext(), SoulissApp.getAppContext().getString(R.string.dialog_import_nofile), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "Import file doesn't exist!" + file.getAbsolutePath());
+                Log.e(Constants.TAG, "Import file doesn't exist!" + file.getAbsolutePath());
                 return false;
             }
 
@@ -153,7 +153,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             while ((temp = csvReader.readNext()) != null) {
                 linesNum++;
             }
-            Log.w(TAG, "Importing " + linesNum + " lines");
+            Log.w(Constants.TAG, "Importing " + linesNum + " lines");
             csvReader.close();
             csvReader = new CSVReader(new FileReader(file));
 
@@ -161,12 +161,12 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             editor.apply();
             csvReader.close();
 
-            Log.i(TAG, "Import finished");
+            Log.i(Constants.TAG, "Import finished");
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage(), e);
+            Log.e(Constants.TAG, e.getMessage(), e);
             return false;
         } catch (Exception es) {
-            Log.e(TAG, es.getMessage(), es);
+            Log.e(Constants.TAG, es.getMessage(), es);
             return false;
         } finally {
             database.close();
@@ -182,7 +182,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             File filePrefs = new File(importDir, file.getName().substring(0, file.getName().lastIndexOf("_")) + "_SoulissApp.prefs");
             SoulissUtils.loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
         } catch (Exception e) {
-            Log.e(TAG, "Errore import prefs", e);
+            Log.e(Constants.TAG, "Errore import prefs", e);
         }
 
         return true;
@@ -196,7 +196,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         while ((temp = csvReader.readNext()) != null) {
             // Log.d("Souliss:file import", temp.toString());
             if (temp[1].compareToIgnoreCase(SoulissDB.COLUMN_NODE_ID) == 0) {
-                Log.i(TAG, "Importing nodes...");
+                Log.i(Constants.TAG, "Importing nodes...");
                 loopMode = PHASE_NODES;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
@@ -207,7 +207,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 });
                 continue;
             } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TYPICAL_NODE_ID) == 0) {
-                Log.i(TAG, "Imported " + totNodes + " nodes. Importing typicals...");
+                Log.i(Constants.TAG, "Imported " + totNodes + " nodes. Importing typicals...");
                 editor.putInt("numNodi", totNodes);
                 loopMode = PHASE_TYPICALS;
                 activity.runOnUiThread(new Runnable() {
@@ -218,7 +218,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 continue;
             } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LOG_ID) == 0) {
                 editor.putInt("numTipici", database.countTypicals());
-                Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
+                Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing Logs...");
                 loopMode = PHASE_LOGS;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
@@ -228,7 +228,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 });
                 continue;
             } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_ID) == 0) {
-                Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAGS...");
+                Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing TAGS...");
                 loopMode = PHASE_TAGS;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
@@ -237,7 +237,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 });
                 continue;
             } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_SLOT) == 0) {
-                Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAG_TYP...");
+                Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing TAG_TYP...");
                 loopMode = PHASE_TAG_TYP;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
@@ -246,7 +246,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 });
                 continue;
             } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LAUNCHER_ID) == 0) {
-                Log.i(TAG, "Imported " + tottyp + " typicals. Importing DASHBOARD...");
+                Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing DASHBOARD...");
                 loopMode = PHASE_DASHB;
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
