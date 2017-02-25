@@ -36,27 +36,6 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 	private Button btOff;
 	private Button btOn;
 	private SoulissTypical collected;
-	// private SoulissTypical related;
-	private Button btRed;
-	private Button btRed2;
-	private Button btRed3;
-	private Button btRed4;
-	private Button btRed5;
-	private Button btGreen;
-	private Button btGreen2;
-	private Button btGreen3;
-	private Button btGreen4;
-	private Button btGreen5;
-	private Button btBlu;
-	private Button btBlu2;
-	private Button btBlu3;
-	private Button btBlu4;
-	private Button btBlu5;
-	private Button btWhite;
-	private Button btFlash;
-	private Button btFade;
-	private Button btShoot;
-	private Button btStrobo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,29 +58,29 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		btOff = (Button) findViewById(R.id.buttonTurnOff);
 		btOn = (Button) findViewById(R.id.buttonTurnOn);
 
-		btWhite = (Button) findViewById(R.id.white);
-		btFlash = (Button) findViewById(R.id.flash);
-		btFade = (Button) findViewById(R.id.fade);
-		btShoot = (Button) findViewById(R.id.smooth);
-		btStrobo = (Button) findViewById(R.id.strobe);
+        Button btWhite = (Button) findViewById(R.id.white);
+        Button btFlash = (Button) findViewById(R.id.flash);
+        Button btFade = (Button) findViewById(R.id.fade);
+        Button btShoot = (Button) findViewById(R.id.smooth);
+        Button btStrobo = (Button) findViewById(R.id.strobe);
 
-		btRed = (Button) findViewById(R.id.red);
-		btRed2 = (Button) findViewById(R.id.red2);
-		btRed3 = (Button) findViewById(R.id.red3);
-		btRed4 = (Button) findViewById(R.id.red4);
-		btRed5 = (Button) findViewById(R.id.red5);
+        Button btRed = (Button) findViewById(R.id.red);
+        Button btRed2 = (Button) findViewById(R.id.red2);
+        Button btRed3 = (Button) findViewById(R.id.red3);
+        Button btRed4 = (Button) findViewById(R.id.red4);
+        Button btRed5 = (Button) findViewById(R.id.red5);
 
-		btGreen = (Button) findViewById(R.id.green);
-		btGreen2 = (Button) findViewById(R.id.green2);
-		btGreen3 = (Button) findViewById(R.id.green3);
-		btGreen4 = (Button) findViewById(R.id.green4);
-		btGreen5 = (Button) findViewById(R.id.green5);
+        Button btGreen = (Button) findViewById(R.id.green);
+        Button btGreen2 = (Button) findViewById(R.id.green2);
+        Button btGreen3 = (Button) findViewById(R.id.green3);
+        Button btGreen4 = (Button) findViewById(R.id.green4);
+        Button btGreen5 = (Button) findViewById(R.id.green5);
 
-		btBlu = (Button) findViewById(R.id.blue);
-		btBlu2 = (Button) findViewById(R.id.blue2);
-		btBlu3 = (Button) findViewById(R.id.blue3);
-		btBlu4 = (Button) findViewById(R.id.blue4);
-		btBlu5 = (Button) findViewById(R.id.blue5);
+        Button btBlu = (Button) findViewById(R.id.blue);
+        Button btBlu2 = (Button) findViewById(R.id.blue2);
+        Button btBlu3 = (Button) findViewById(R.id.blue3);
+        Button btBlu4 = (Button) findViewById(R.id.blue4);
+        Button btBlu5 = (Button) findViewById(R.id.blue5);
 
 		btOff.setTag(Constants.Typicals.Souliss_T1n_RGB_OffCmd);
 		btOn.setTag(Constants.Typicals.Souliss_T1n_RGB_OnCmd);
@@ -141,7 +120,43 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical15);
 
 
-		// upcast
+        OnClickListener plus = new OnClickListener() {
+            public void onClick(View v) {
+                Short cmd = (Short) v.getTag();
+                assertTrue(cmd != null);
+                issueIrCommand(cmd);
+            }
+        };
+        buttPlus.setOnClickListener(plus);
+        buttMinus.setOnClickListener(plus);
+
+        btOff.setOnClickListener(plus);
+        btOn.setOnClickListener(plus);
+
+        btWhite.setOnClickListener(plus);
+        btFlash.setOnClickListener(plus);
+        btFade.setOnClickListener(plus);
+        btShoot.setOnClickListener(plus);
+        btStrobo.setOnClickListener(plus);
+
+        btRed.setOnClickListener(plus);
+        btRed2.setOnClickListener(plus);
+        btRed3.setOnClickListener(plus);
+        btRed4.setOnClickListener(plus);
+        btRed5.setOnClickListener(plus);
+
+        btGreen.setOnClickListener(plus);
+        btGreen2.setOnClickListener(plus);
+        btGreen3.setOnClickListener(plus);
+        btGreen4.setOnClickListener(plus);
+        btGreen5.setOnClickListener(plus);
+
+        btBlu.setOnClickListener(plus);
+        btBlu2.setOnClickListener(plus);
+        btBlu3.setOnClickListener(plus);
+        btBlu4.setOnClickListener(plus);
+        btBlu5.setOnClickListener(plus);
+        // upcast
 		// Integer status =
 		// Integer.valueOf(collected.getTypicalDTO().getOutput());
 	}
@@ -153,42 +168,6 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		// final ToggleButton tog = (ToggleButton)
 		// findViewById(R.id.toggleButton1);
 
-		OnClickListener plus = new OnClickListener() {
-			public void onClick(View v) {
-				Short cmd = (Short) v.getTag();
-				assertTrue(cmd != null);
-				issueIrCommand(cmd);
-			}
-		};
-		buttPlus.setOnClickListener(plus);
-		buttMinus.setOnClickListener(plus);
-
-		btOff.setOnClickListener(plus);
-		btOn.setOnClickListener(plus);
-
-		btWhite.setOnClickListener(plus);
-		btFlash.setOnClickListener(plus);
-		btFade.setOnClickListener(plus);
-		btShoot.setOnClickListener(plus);
-		btStrobo.setOnClickListener(plus);
-
-		btRed.setOnClickListener(plus);
-		btRed2.setOnClickListener(plus);
-		btRed3.setOnClickListener(plus);
-		btRed4.setOnClickListener(plus);
-		btRed5.setOnClickListener(plus);
-
-		btGreen.setOnClickListener(plus);
-		btGreen2.setOnClickListener(plus);
-		btGreen3.setOnClickListener(plus);
-		btGreen4.setOnClickListener(plus);
-		btGreen5.setOnClickListener(plus);
-
-		btBlu.setOnClickListener(plus);
-		btBlu2.setOnClickListener(plus);
-		btBlu3.setOnClickListener(plus);
-		btBlu4.setOnClickListener(plus);
-		btBlu5.setOnClickListener(plus);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
