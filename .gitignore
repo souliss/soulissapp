@@ -1,14 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Android template
-# Built application files
-*.apk
-*.ap_
-
-# Files for the Dalvik VM
-*.dex
-
-# Java class files
-*.class
 
 # Generated files
 bin/
@@ -21,12 +12,12 @@ gradlew.bat
 .gradle/
 build/
 captures/
-/*/build/
+
 # PRESERVE PROXY 
 
 #IDE
 .idea
-.idea/
+
 soulissapp/.idea/
 *.iml
 
@@ -40,4 +31,6 @@ proguard/
 *.log
 
 
+localsignature.properties
+projectFilesBackup/
 
