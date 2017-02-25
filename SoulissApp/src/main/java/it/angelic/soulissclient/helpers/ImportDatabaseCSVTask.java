@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Looper;
@@ -104,8 +103,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     protected Boolean doInBackground(final String... args)
 
     {
-        int lin = 0;
-        int loopMode = 0;
+        int linesNum = 0;
         // File dbFile = null;// getDatabasePath("excerDB.db");
         database = new SoulissDBTagHelper(SoulissApp.getAppContext());
         databaseLauncher = new SoulissDBLauncherHelper(SoulissApp.getAppContext());
@@ -151,114 +149,19 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                 }
             });
             Thread.sleep(200);
+
             while ((temp = csvReader.readNext()) != null) {
-                lin++;
+                linesNum++;
             }
-            final int lines = lin;
-            Log.e(TAG, "Importing " + lin + " lines");
+            Log.w(TAG, "Importing " + linesNum + " lines");
             csvReader.close();
             csvReader = new CSVReader(new FileReader(file));
 
-            while ((temp = csvReader.readNext()) != null) {
-                // Log.d("Souliss:file import", temp.toString());
-                if (temp[1].compareToIgnoreCase(SoulissDB.COLUMN_NODE_ID) == 0) {
-                    Log.i(TAG, "Importing nodes...");
-                    loopMode = PHASE_NODES;
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            // lin - 3 head
-                            mProgressDialog.setMax(lines - 3);
-
-                        }
-                    });
-                    continue;
-                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TYPICAL_NODE_ID) == 0) {
-                    Log.i(TAG, "Imported " + totNodes + " nodes. Importing typicals...");
-                    editor.putInt("numNodi", totNodes);
-                    loopMode = PHASE_TYPICALS;
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.typical)));
-                        }
-                    });
-                    continue;
-                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LOG_ID) == 0) {
-                    editor.putInt("numTipici", database.countTypicals());
-                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
-                    loopMode = PHASE_LOGS;
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            String melo = String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.historyof));
-                            mProgressDialog.setMessage(melo);
-                        }
-                    });
-                    continue;
-                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_ID) == 0) {
-                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAGS...");
-                    loopMode = PHASE_TAGS;
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.tags)));
-                        }
-                    });
-                    continue;
-                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_SLOT) == 0) {
-                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAG_TYP...");
-                    loopMode = PHASE_TAG_TYP;
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.tags)));
-                        }
-                    });
-                    continue;
-                } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LAUNCHER_ID) == 0) {
-                    Log.i(TAG, "Imported " + tottyp + " typicals. Importing DASHBOARD...");
-                    loopMode = PHASE_DASHB;
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            mProgressDialog.setMessage("Importing Dashboard Data, please be patient");
-                        }
-                    });
-                    continue;
-                }
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        mProgressDialog.setProgress(mProgressDialog.getProgress() + 1);
-                    }
-                });
-                switch (loopMode) {
-
-                    case PHASE_NODES:
-                        insertNode(temp);
-                        totNodes++;
-                        break;
-                    case PHASE_TYPICALS:
-                        SoulissTypicalDTO ret = insertTypical(temp);
-                        tottyp++;
-                        break;
-                    case PHASE_LOGS:
-                        insertLog(temp);
-                        break;
-                    case PHASE_TAGS:
-                        insertTag(temp);
-                        break;
-                    case PHASE_TAG_TYP:
-                        insertTagTyp(temp);
-                        break;
-                    case PHASE_DASHB:
-                        insertDashboard(temp);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            processCsv(csvReader, editor, linesNum);
             editor.apply();
             csvReader.close();
-            database.close();
+
             Log.i(TAG, "Import finished");
-        } catch (SQLException sqlEx) {
-            Log.e(TAG, sqlEx.getMessage(), sqlEx);
-            return false;
         } catch (IOException e) {
             Log.e(TAG, e.getMessage(), e);
             return false;
@@ -266,6 +169,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             Log.e(TAG, es.getMessage(), es);
             return false;
         } finally {
+            database.close();
             mProgressDialog.dismiss();
         }
         activity.runOnUiThread(new Runnable() {
@@ -283,6 +187,105 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         return true;
 
+    }
+
+    private void processCsv(CSVReader csvReader, SharedPreferences.Editor editor, final int lines) throws IOException {
+        String[] temp;
+        int loopMode = -1;
+
+        while ((temp = csvReader.readNext()) != null) {
+            // Log.d("Souliss:file import", temp.toString());
+            if (temp[1].compareToIgnoreCase(SoulissDB.COLUMN_NODE_ID) == 0) {
+                Log.i(TAG, "Importing nodes...");
+                loopMode = PHASE_NODES;
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        // lin - 3 head
+                        mProgressDialog.setMax(lines - 3);
+
+                    }
+                });
+                continue;
+            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TYPICAL_NODE_ID) == 0) {
+                Log.i(TAG, "Imported " + totNodes + " nodes. Importing typicals...");
+                editor.putInt("numNodi", totNodes);
+                loopMode = PHASE_TYPICALS;
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.typical)));
+                    }
+                });
+                continue;
+            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LOG_ID) == 0) {
+                editor.putInt("numTipici", database.countTypicals());
+                Log.i(TAG, "Imported " + tottyp + " typicals. Importing Logs...");
+                loopMode = PHASE_LOGS;
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        String melo = String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.historyof));
+                        mProgressDialog.setMessage(melo);
+                    }
+                });
+                continue;
+            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_ID) == 0) {
+                Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAGS...");
+                loopMode = PHASE_TAGS;
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.tags)));
+                    }
+                });
+                continue;
+            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_SLOT) == 0) {
+                Log.i(TAG, "Imported " + tottyp + " typicals. Importing TAG_TYP...");
+                loopMode = PHASE_TAG_TYP;
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        mProgressDialog.setMessage(String.format(activity.getString(R.string.importing_be_patient), activity.getString(R.string.tags)));
+                    }
+                });
+                continue;
+            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LAUNCHER_ID) == 0) {
+                Log.i(TAG, "Imported " + tottyp + " typicals. Importing DASHBOARD...");
+                loopMode = PHASE_DASHB;
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        mProgressDialog.setMessage("Importing Dashboard Data, please be patient");
+                    }
+                });
+                continue;
+            }
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    mProgressDialog.setProgress(mProgressDialog.getProgress() + 1);
+                }
+            });
+            switch (loopMode) {
+
+                case PHASE_NODES:
+                    insertNode(temp);
+                    totNodes++;
+                    break;
+                case PHASE_TYPICALS:
+                    SoulissTypicalDTO ret = insertTypical(temp);
+                    tottyp++;
+                    break;
+                case PHASE_LOGS:
+                    insertLog(temp);
+                    break;
+                case PHASE_TAGS:
+                    insertTag(temp);
+                    break;
+                case PHASE_TAG_TYP:
+                    insertTagTyp(temp);
+                    break;
+                case PHASE_DASHB:
+                    insertDashboard(temp);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void insertDashboard(String[] temp) {

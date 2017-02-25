@@ -617,7 +617,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                             }
                         }
                     }).show();
-
         }
     }
 }

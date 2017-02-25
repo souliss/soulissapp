@@ -57,8 +57,8 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 					//Location luogo = locationManager.getLastKnownLocation(provider);
 
                     // faccio sto schifo per trigger di SecurityException.
-                    Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    if (location == null) {
+					Location location = locationManager.getLastKnownLocation(provider);
+					if (location == null) {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     }
 
@@ -70,8 +70,8 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 				} catch (SecurityException xe) {
 					Log.e(Constants.TAG, "PERMISSION DENIED", xe);
                     Toast.makeText(getActivity(), "location permission denied from user", Toast.LENGTH_SHORT).show();
-                } catch (IllegalArgumentException e) {
-                    Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
+				} catch (Exception e) {
+					Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
 					Toast.makeText(getActivity(), getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();
 				}
 				return true;
