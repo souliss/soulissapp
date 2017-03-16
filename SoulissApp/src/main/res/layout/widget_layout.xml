@@ -9,6 +9,12 @@
     android:orientation="vertical"
     android:padding="4dip" >
 
+    <ImageView
+        android:id="@+id/widget_awesome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"/>
+
     <TextView
         android:id="@+id/wid_node"
         style="@style/CodeFontSmall"
@@ -40,7 +46,7 @@
         android:id="@+id/button1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/souliss_node"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:shadowColor="#000000"
         android:shadowDx="1"

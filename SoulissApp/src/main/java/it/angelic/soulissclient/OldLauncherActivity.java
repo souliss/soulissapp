@@ -199,7 +199,6 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
             ActivityCompat.requestPermissions(OldLauncherActivity.this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
-
         }
     }
 

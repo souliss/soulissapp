@@ -8,6 +8,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,14 +28,15 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissCommandDTO;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.util.FontAwesomeEnum;
+import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class SoulissWidget extends AppWidgetProvider {
 
     private static final String TAG = "SoulissWidget";
     private static SoulissDBHelper db;
-    private Handler handler;
-
     private SharedPreferences customSharedPreference;
+    private Handler handler;
     private SoulissPreferenceHelper opzioni;
 
     /**
@@ -53,65 +59,83 @@ public class SoulissWidget extends AppWidgetProvider {
             Log.e(TAG, "missing widget preferences, aborting");
             return;
         }
-            RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-            db = new SoulissDBHelper(context);
-            SoulissDBHelper.open();
-            if (node > Constants.MASSIVE_NODE_ID) {
-                try {
-                    final SoulissTypical tgt = db.getTypical(node, (short) slot);
-                    updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-                    updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
-                    if (tgt instanceof ISoulissTypicalSensor) {
-                        updateViews.setTextViewText(R.id.wid_info,
-                                tgt.getOutputDesc());
-                    } else
-
-                    if (tgt instanceof ISoulissTypicalSensor)
-                        //TODO change to effective output
-                        updateViews.setTextViewText(R.id.wid_info, ""+(((ISoulissTypicalSensor)tgt).getOutputFloat()));
-                    else
-                        updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
-                }catch (Exception ee) {
-                    updateViews.setTextViewText(R.id.button1, name);
-                    updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.widget_cantsave));
-                }
-
-                updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
-                updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
-
-
-
-                updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-            } else if (node == Constants.MASSIVE_NODE_ID) {
-               //final SoulissTypical tgt = db.getTypical(node, (short) slot);
-                updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.allnodes));
-                updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.typical) + " " + slot);
-                updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.scene_cmd_massive));
-                updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-                updateViews.setTextViewText(R.id.button1, name);
-            } else if (node == Constants.COMMAND_FAKE_SCENE) {
-                final SoulissScene tgt = db.getScene( (short) slot);
-                updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.scene));
-                updateViews.setTextViewText(R.id.wid_typical, "");
-                updateViews.setTextViewText(R.id.wid_info,  context.getString(R.string.execute));
-                updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_scene);
-                if (!name.equals(""))
-                    updateViews.setTextViewText(R.id.button1, name);
-                else
+        RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        db = new SoulissDBHelper(context);
+        SoulissDBHelper.open();
+        if (node > Constants.MASSIVE_NODE_ID) {
+            try {
+                final SoulissTypical tgt = db.getTypical(node, (short) slot);
                 updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-                updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
+                // updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
+                if (tgt instanceof ISoulissTypicalSensor) {
+                    updateViews.setTextViewText(R.id.wid_info,
+                            tgt.getOutputDesc());
+                } else if (tgt instanceof ISoulissTypicalSensor)
+                    //TODO change to effective output
+                    updateViews.setTextViewText(R.id.wid_info, "" + (((ISoulissTypicalSensor) tgt).getOutputFloat()));
+                else
+                    updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
+            } catch (Exception ee) {
+                updateViews.setTextViewText(R.id.button1, name);
+                updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.widget_cantsave));
             }
-            // UPDATE SINCRONO
-            Intent intent = new Intent(context, SoulissWidget.class);
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            Uri data = Uri.withAppendedPath(Uri.parse("W://widget/id/"), String.valueOf(appWidgetId));
-            intent.setData(data);
-            intent.putExtra("_ID", appWidgetId);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            updateViews.setOnClickPendingIntent(R.id.button1, pendingIntent);
-            appWidgetManager.updateAppWidget(appWidgetId, updateViews);
-            // Toast.makeText(context, "forcedUpdate(), node " +
-            // String.valueOf(node), Toast.LENGTH_LONG).show();
+
+            updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
+            updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
+            updateViews.setImageViewBitmap(R.id.widget_awesome, buildUpdate(FontAwesomeEnum.fa_anchor.getFontName(), context));
+
+            //updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
+        } else if (node == Constants.MASSIVE_NODE_ID) {
+            //final SoulissTypical tgt = db.getTypical(node, (short) slot);
+            updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.allnodes));
+            updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.typical) + " " + slot);
+            updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.scene_cmd_massive));
+            updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
+
+            //RemoteViews views = new RemoteViews(getPackageName(), R.layout.main);
+            updateViews.setImageViewBitmap(R.id.widget_awesome, buildUpdate(FontAwesomeEnum.fa_anchor.getFontName(), context));
+            updateViews.setTextViewText(R.id.button1, name);
+        } else if (node == Constants.COMMAND_FAKE_SCENE) {
+            final SoulissScene tgt = db.getScene((short) slot);
+            updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.scene));
+            updateViews.setTextViewText(R.id.wid_typical, "");
+            updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.execute));
+            updateViews.setImageViewBitmap(R.id.widget_awesome, buildUpdate(FontAwesomeEnum.fa_moon_o.getFontName(), context));
+            //updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_scene);
+            if (!name.equals(""))
+                updateViews.setTextViewText(R.id.button1, name);
+            else
+                updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
+            //updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
+        }
+        // UPDATE SINCRONO
+        Intent intent = new Intent(context, SoulissWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        Uri data = Uri.withAppendedPath(Uri.parse("W://widget/id/"), String.valueOf(appWidgetId));
+        intent.setData(data);
+        intent.putExtra("_ID", appWidgetId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        updateViews.setOnClickPendingIntent(R.id.button1, pendingIntent);
+        Log.i(TAG, "calling updateAppWidget for widgetId:" + appWidgetId);
+        appWidgetManager.updateAppWidget(appWidgetId, updateViews);
+        // Toast.makeText(context, "forcedUpdate(), node " +
+        // String.valueOf(node), Toast.LENGTH_LONG).show();
+    }
+
+    public static Bitmap buildUpdate(String time, Context ctx) {
+        Bitmap myBitmap = Bitmap.createBitmap(160, 84, Bitmap.Config.ARGB_4444);
+        Canvas myCanvas = new Canvas(myBitmap);
+        Paint paint = new Paint();
+        Typeface clock = FontAwesomeUtil.getAwesomeTypeface(ctx);
+        paint.setAntiAlias(true);
+        paint.setSubpixelText(true);
+        paint.setTypeface(clock);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.WHITE);
+        paint.setTextSize(65);
+        paint.setTextAlign(Paint.Align.CENTER);
+        myCanvas.drawText(FontAwesomeUtil.translateAwesomeCode(ctx, time), 80, 60, paint);
+        return myBitmap;
     }
 
     @Override
@@ -123,7 +147,7 @@ public class SoulissWidget extends AppWidgetProvider {
         final AppWidgetManager awm = AppWidgetManager.getInstance(context);
         final int got = intent.getIntExtra("_ID", -1);
 
-        Log.w(TAG, "widget command from id:" + got);
+        Log.w(TAG, "widget onReceive() from id:" + got);
         if (got != -1) {
             Log.w("SoulissWidget", "PRESS");
             final short node = (short) customSharedPreference.getInt(got + "_NODE", -3);
@@ -135,7 +159,7 @@ public class SoulissWidget extends AppWidgetProvider {
             if (cmd != -3) {
                 updateViews.setTextViewText(R.id.button1, "Sending command...");
             }
-            updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_active);
+            // updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_active);
             //updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
             //updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
 
@@ -178,7 +202,7 @@ public class SoulissWidget extends AppWidgetProvider {
                             cmdd.execute();
                         }
                     } else if (node == Constants.COMMAND_FAKE_SCENE) {
-                        SoulissScene targrt = db.getScene( slot);
+                        SoulissScene targrt = db.getScene(slot);
                         targrt.execute();
                         UDPHelper.pollRequest(opzioni, db.countNodes(), 0);
                     }

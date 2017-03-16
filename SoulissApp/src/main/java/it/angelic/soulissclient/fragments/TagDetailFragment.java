@@ -28,7 +28,6 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -216,7 +215,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
             mLogoIcon.setTextColor(color);
         } else {
             // windowBackground is not a color, probably a drawable
-            Drawable d = getActivity().getResources().getDrawable(a.resourceId);
+            //Drawable d = getActivity().getResources().getDrawable(a.resourceId);
             Log.w(Constants.TAG, "not getting window background");
         }
         //mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
@@ -275,33 +274,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
 
         if (tagTitle != null && collectedTag != null) {
-            StringBuilder header = new StringBuilder();
-            Stack<String> path = new Stack<>();
-            Long fatherIt = collectedTag.getFatherId();
-            while (!(fatherIt == null)) {
-                try {
-                    SoulissTag father = datasource.getTag(fatherIt);
-                    path.push(father.getNiceName() + " > ");
-                    fatherIt = father.getFatherId();//vai al nonno
-                } catch (SQLDataException | NullPointerException e) {
-                    e.printStackTrace();
-                    fatherIt = null;
-                }
-            }
-
-            while (!path.isEmpty()) {
-                header.append(path.pop());
-            }
-            header.append(collectedTag.getNiceName());
-            header.append("\n");
-            header.append(getActivity().getResources().getQuantityString(R.plurals.Devices,
-                    collectedTag.getAssignedTypicals().size(), collectedTag.getAssignedTypicals().size()));
-            header.append(" - ");
-            header.append(getActivity().getResources().getQuantityString(R.plurals.SubTags,
-                    collectedTag.getAssignedTypicals().size(), collectedTag.getChildTags().size()));
-            tagTitle.setText(header.toString());
-            // tagTitle.setText(collectedTag.getNiceName());
-            collapseToolbar.setTitle(collectedTag.getNiceName());
+            setTitleBar();
         }
 
 
@@ -316,18 +289,12 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                         Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
                         if (myBitmap.getHeight() > mRecyclerView.getWidth())
                             myBitmap = Bitmap.createScaledBitmap(myBitmap, myBitmap.getWidth() / 2, myBitmap.getHeight() / 2, true);
-                        Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                        // Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
                         mLogoImg.setImageBitmap(myBitmap);
                     }
-               /*
-                    mLogoImg.setImageURI(Uri.parse(collectedTag.getImagePath()));
-                    boh, non so perche, io itanto commento
-                } catch (Exception e) {
-                    Log.d(TAG, "can't set logo", e);
-                }*/
                 } else {
                     ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                             Constants.MY_PERMISSIONS_READ_EXT_STORAGE);
                     //img di default
                 }
@@ -340,6 +307,36 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         registerForContextMenu(mRecyclerView);
 
         return rootView;
+    }
+
+    private void setTitleBar() {
+        StringBuilder header = new StringBuilder();
+        Stack<String> path = new Stack<>();
+        Long fatherIt = collectedTag.getFatherId();
+        while (!(fatherIt == null)) {
+            try {
+                SoulissTag father = datasource.getTag(fatherIt);
+                path.push(father.getNiceName() + " > ");
+                fatherIt = father.getFatherId();//vai al nonno
+            } catch (SQLDataException | NullPointerException e) {
+                e.printStackTrace();
+                fatherIt = null;
+            }
+        }
+
+        while (!path.isEmpty()) {
+            header.append(path.pop());
+        }
+        header.append(collectedTag.getNiceName());
+        header.append("\n");
+        header.append(getActivity().getResources().getQuantityString(R.plurals.Devices,
+                collectedTag.getAssignedTypicals().size(), collectedTag.getAssignedTypicals().size()));
+        header.append(" - ");
+        header.append(getActivity().getResources().getQuantityString(R.plurals.SubTags,
+                collectedTag.getAssignedTypicals().size(), collectedTag.getChildTags().size()));
+        tagTitle.setText(header.toString());
+        // tagTitle.setText(collectedTag.getNiceName());
+        collapseToolbar.setTitle(collectedTag.getNiceName());
     }
 
 
