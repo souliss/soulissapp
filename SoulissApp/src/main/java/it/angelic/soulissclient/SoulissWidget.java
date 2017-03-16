@@ -28,8 +28,8 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissCommandDTO;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPHelper;
-import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 public class SoulissWidget extends AppWidgetProvider {
 
@@ -53,6 +53,7 @@ public class SoulissWidget extends AppWidgetProvider {
         final int node = customSharedPreference.getInt(appWidgetId + "_NODE", -3);
         final int slot = customSharedPreference.getInt(appWidgetId + "_SLOT", -3);
         final long cmd = customSharedPreference.getLong(appWidgetId + "_CMD", -3);
+        final Integer fontCode = customSharedPreference.getInt(appWidgetId + "_FONTCODE", FontAwesomeUtil.getCodeIndexByFontName(context, "fa-cube"));
         final String name = customSharedPreference.getString(appWidgetId + "_NAME", "");
 
         if (node == -3) {
@@ -66,47 +67,35 @@ public class SoulissWidget extends AppWidgetProvider {
             try {
                 final SoulissTypical tgt = db.getTypical(node, (short) slot);
                 updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-                // updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
                 if (tgt instanceof ISoulissTypicalSensor) {
                     updateViews.setTextViewText(R.id.wid_info,
-                            tgt.getOutputDesc());
-                } else if (tgt instanceof ISoulissTypicalSensor)
-                    //TODO change to effective output
-                    updateViews.setTextViewText(R.id.wid_info, "" + (((ISoulissTypicalSensor) tgt).getOutputFloat()));
-                else
+                            tgt.getOutputDesc() + " - " + ((ISoulissTypicalSensor) tgt).getTypedOutputValue());
+                } else
                     updateViews.setTextViewText(R.id.wid_info, (tgt.getOutputDesc()));
             } catch (Exception ee) {
                 updateViews.setTextViewText(R.id.button1, name);
                 updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.widget_cantsave));
             }
-
             updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.node) + " " + node);
             updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.slot) + " " + slot);
-            updateViews.setImageViewBitmap(R.id.widget_awesome, buildUpdate(FontAwesomeEnum.fa_anchor.getFontName(), context));
-
-            //updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
+            updateViews.setImageViewBitmap(R.id.widget_awesome, buildFABitmap(fontCode, context));
         } else if (node == Constants.MASSIVE_NODE_ID) {
             //final SoulissTypical tgt = db.getTypical(node, (short) slot);
             updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.allnodes));
             updateViews.setTextViewText(R.id.wid_typical, context.getString(R.string.typical) + " " + slot);
             updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.scene_cmd_massive));
-            updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape);
-
-            //RemoteViews views = new RemoteViews(getPackageName(), R.layout.main);
-            updateViews.setImageViewBitmap(R.id.widget_awesome, buildUpdate(FontAwesomeEnum.fa_anchor.getFontName(), context));
+            updateViews.setImageViewBitmap(R.id.widget_awesome, buildFABitmap(FontAwesomeUtil.getCodeIndexByFontName(context, "fa-arrows-alt"), context));
             updateViews.setTextViewText(R.id.button1, name);
         } else if (node == Constants.COMMAND_FAKE_SCENE) {
             final SoulissScene tgt = db.getScene((short) slot);
             updateViews.setTextViewText(R.id.wid_node, context.getString(R.string.scene));
             updateViews.setTextViewText(R.id.wid_typical, "");
             updateViews.setTextViewText(R.id.wid_info, context.getString(R.string.execute));
-            updateViews.setImageViewBitmap(R.id.widget_awesome, buildUpdate(FontAwesomeEnum.fa_moon_o.getFontName(), context));
-            //updateViews.setInt(R.id.widgetcontainer, "setBackgroundResource", R.drawable.widget_shape_scene);
+            updateViews.setImageViewBitmap(R.id.widget_awesome, buildFABitmap(FontAwesomeUtil.getCodeIndexByFontName(context, "fa-moon-o"), context));
             if (!name.equals(""))
                 updateViews.setTextViewText(R.id.button1, name);
             else
                 updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
-            //updateViews.setInt(R.id.button1, "setBackgroundResource", tgt.getIconResourceId());
         }
         // UPDATE SINCRONO
         Intent intent = new Intent(context, SoulissWidget.class);
@@ -122,7 +111,7 @@ public class SoulissWidget extends AppWidgetProvider {
         // String.valueOf(node), Toast.LENGTH_LONG).show();
     }
 
-    public static Bitmap buildUpdate(String time, Context ctx) {
+    static Bitmap buildFABitmap(Integer fontIndex, Context ctx) {
         Bitmap myBitmap = Bitmap.createBitmap(160, 84, Bitmap.Config.ARGB_4444);
         Canvas myCanvas = new Canvas(myBitmap);
         Paint paint = new Paint();
@@ -134,7 +123,7 @@ public class SoulissWidget extends AppWidgetProvider {
         paint.setColor(Color.WHITE);
         paint.setTextSize(65);
         paint.setTextAlign(Paint.Align.CENTER);
-        myCanvas.drawText(FontAwesomeUtil.translateAwesomeCode(ctx, time), 80, 60, paint);
+        myCanvas.drawText(SimpleTagViewUtils.getAwesomeCodes(ctx).get(fontIndex), 80, 60, paint);
         return myBitmap;
     }
 
@@ -154,6 +143,7 @@ public class SoulissWidget extends AppWidgetProvider {
             final short slot = (short) customSharedPreference.getInt(got + "_SLOT", -3);
             final long cmd = customSharedPreference.getLong(got + "_CMD", -3);
             final String name = customSharedPreference.getString(got + "_NAME", "");
+            final Integer fontCode = customSharedPreference.getInt(got + "_FONTCODE", FontAwesomeUtil.getCodeIndexByFontName(context, "fa-cube"));
             final RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             // sfondo rosso...
             if (cmd != -3) {

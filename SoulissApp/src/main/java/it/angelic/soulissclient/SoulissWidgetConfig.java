@@ -144,13 +144,16 @@ public class SoulissWidgetConfig extends Activity {
             if (IToSave instanceof SoulissScene) {
                 SoulissScene toExec = (SoulissScene) IToSave;
                 editor.putInt(mAppWidgetId + "_SLOT", toExec.getId());
+                editor.putInt(mAppWidgetId + "_FONTCODE", toExec.getIconResourceId());
             } else if (IToSave instanceof SoulissCommand) {
                 ccm = (SoulissCommand) IToSave;
                 editor.putInt(mAppWidgetId + "_SLOT", ((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getSlot());
                 editor.putLong(mAppWidgetId + "_CMD", ccm.getCommand());
+                editor.putInt(mAppWidgetId + "_FONTCODE", ccm.getIconResId());
             } else if (IToSave == null) {//maybe a sensor
                 Toast.makeText(context, getString(R.string.widget_cantsave), Toast.LENGTH_LONG).show();
                 editor.putInt(mAppWidgetId + "_SLOT", ((SoulissTypical) outputTypicalSpinner.getSelectedItem()).getSlot());
+                editor.putInt(mAppWidgetId + "_FONTCODE", ((SoulissTypical) outputTypicalSpinner.getSelectedItem()).getIconResourceId());
             }
 
             editor.putString(mAppWidgetId + "_NAME", widgetLabel.getText().toString());
