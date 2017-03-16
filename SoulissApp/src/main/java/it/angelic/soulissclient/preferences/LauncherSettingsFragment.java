@@ -15,12 +15,10 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 public class LauncherSettingsFragment extends PreferenceFragment {
 
-    private SoulissPreferenceHelper opzioni;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        opzioni = SoulissApp.getOpzioni();
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         PackageInfo packageInfo;
         String strVersionName;
 

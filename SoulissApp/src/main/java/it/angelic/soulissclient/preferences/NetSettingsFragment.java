@@ -22,8 +22,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 
 	private SoulissPreferenceHelper opzioni;
 	private Preference userIndex;
-	private Preference udpport;
-	private Preference nodeIndex;
+    private Preference nodeIndex;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class NetSettingsFragment extends PreferenceFragment {
 		Preference publicIP =  findPreference("edittext_IP_pubb");
 		Preference bCast = findPreference("advbroadcastKey");
         userIndex =  findPreference("userindexIC");
-        udpport =  findPreference("udpportIC");
+        Preference udpport = findPreference("udpportIC");
         nodeIndex = findPreference("nodeindexIC");
 
 		String summar = getResources().getString(R.string.summary_edittext_IP);

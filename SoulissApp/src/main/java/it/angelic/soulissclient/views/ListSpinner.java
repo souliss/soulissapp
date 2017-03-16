@@ -1,15 +1,15 @@
 package it.angelic.soulissclient.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 /**
  * Un bottone definito per essere utilizzato in una {@link ListView}.
  */
-public class ListSpinner extends Spinner {
+public class ListSpinner extends AppCompatSpinner {
 
         /**
          * Costruttore di default, inizializza il bottone in base ad un contesto e ad un insieme di attributi.

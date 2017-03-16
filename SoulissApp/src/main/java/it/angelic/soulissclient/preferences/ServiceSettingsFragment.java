@@ -26,9 +26,7 @@ import it.angelic.soulissclient.util.SoulissUtils;
 @TargetApi(11)
 public class ServiceSettingsFragment extends PreferenceFragment {
 
-	private SoulissPreferenceHelper opzioni;
-
-	//private static final int DIALOG_LOAD_FILE = 1000;
+    //private static final int DIALOG_LOAD_FILE = 1000;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,8 +85,8 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 
 	private void resetMesg(Preference setHomeLocation) {
 		String loc = null;
-		opzioni = SoulissApp.getOpzioni();
-		if (opzioni.getHomeLatitude() != 0) {
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
+        if (opzioni.getHomeLatitude() != 0) {
 
 			Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
 			List<Address> list;

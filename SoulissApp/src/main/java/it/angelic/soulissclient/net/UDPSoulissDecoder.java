@@ -126,7 +126,7 @@ public class UDPSoulissDecoder {
         Log.i(Constants.Net.TAG, ">--decodeDBStructRequest, nodes: " + nodes + " maxnodes: " + maxnodes + " maxrequests: "
                 + maxrequests + " maxTypicalXnode: " + maxTypicalXnode);
         SoulissDBHelper.open();
-        database.createOrUpdateStructure(nodes, maxTypicalXnode);
+        database.createOrUpdateStructure(nodes);
         // Log.w(Constants.TAG, "Drop DB requested, response: " + mac);
         SharedPreferences.Editor editor = opzioni.getCustomPref().edit();
         // SharedPreferences.Editor editor = soulissSharedPreference.edit();
@@ -493,7 +493,7 @@ public class UDPSoulissDecoder {
         try {
 
             List<SoulissNode> ref = database.getAllNodes();
-            List<SoulissTrigger> triggers = database.getAllTriggers(context);
+            List<SoulissTrigger> triggers = database.getAllTriggers();
             Log.i(Constants.Net.TAG, "processTriggers triggersize: " + triggers.size());
             // logThings(refreshedNodes);
 

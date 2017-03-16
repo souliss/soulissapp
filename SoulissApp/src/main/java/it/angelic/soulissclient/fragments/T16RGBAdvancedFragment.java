@@ -54,15 +54,6 @@ import static junit.framework.Assert.assertTrue;
 public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private TextView blueChanabel;
     private Button btFeedBackPatern;
-    private Button btFlash;
-    private Button btOff;
-    private Button btOn;
-    private Button btSleep;
-    private Button btStartPattern;
-    private Button btStopPattern;
-    private Button btWhite;
-    private Button buttMinus;
-    private Button buttPlus;
     private CheckBox checkBoxScatter;
     private SoulissTypical16AdvancedRGB collected;
     private int color = 0;
@@ -105,8 +96,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             refreshStatusIcon();
         }
     };
-    // Color change listener.
-    private OnColorChangedListener dialogColorChangedListener = null;
     private TextView eqText;
     private TextView greenChanabel;
     // private CheckBox checkMusic;
@@ -231,22 +220,22 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         refreshStatusIcon();
 
-        buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-        buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
+        Button buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
+        Button buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
         togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
         togMulticast.setChecked(opzioni.isRgbSendAllDefault());
-        btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
-        btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
-        btStartPattern = (Button) ret.findViewById(R.id.buttonStartPattern);
-        btStopPattern = (Button) ret.findViewById(R.id.buttonStopPattern);
+        Button btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
+        Button btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+        Button btStartPattern = (Button) ret.findViewById(R.id.buttonStartPattern);
+        Button btStopPattern = (Button) ret.findViewById(R.id.buttonStopPattern);
         btFeedBackPatern = (Button) ret.findViewById(R.id.buttonPatternFeedback);
         // checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
         tableRowPatterns = (TableRow) ret.findViewById(R.id.tableRowPatterns);
         tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
-        btWhite = (Button) ret.findViewById(R.id.white);
-        btFlash = (Button) ret.findViewById(R.id.flash);
-        btSleep = (Button) ret.findViewById(R.id.sleep);
+        Button btWhite = (Button) ret.findViewById(R.id.white);
+        Button btFlash = (Button) ret.findViewById(R.id.flash);
+        Button btSleep = (Button) ret.findViewById(R.id.sleep);
         modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
@@ -481,7 +470,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             }
         });
 
-        dialogColorChangedListener = new OnColorChangedListener() {
+        OnColorChangedListener dialogColorChangedListener = new OnColorChangedListener() {
             /**
              * {@inheritDoc}
              */

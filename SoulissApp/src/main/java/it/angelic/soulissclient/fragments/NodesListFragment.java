@@ -61,7 +61,7 @@ import static it.angelic.soulissclient.Constants.TAG;
  * @author Ale
  */
 public class NodesListFragment extends ListFragment {
-    int mCurCheckPosition = 0;
+    private int mCurCheckPosition = 0;
     //private Handler timeoutHandler;
     private Timer autoUpdate;
     private SoulissDBHelper datasource;

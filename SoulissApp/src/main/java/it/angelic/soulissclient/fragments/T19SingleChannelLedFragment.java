@@ -49,21 +49,12 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
 
     private SoulissDBHelper datasource;
 
-    private Button buttPlus;
-    private Button buttMinus;
-
-    private Button btOff;
-    private Button btOn;
     private SoulissTypical19AnalogChannel collected;
     private TextView eqText;
-    private Button btFlash;
-    private Button btSleep;
 
     private int intensity = 0;
-    private int intensityReal = 0;
     // Color change listener.
     private VisualizerView mVisualizerView;
-    private FrameLayout mVisualizerViewFrame;
     private boolean continueIncrementing;
     private boolean continueDecrementing;
     private TextView textviewHistoryTags;
@@ -71,11 +62,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     private TableRow tableRowVis;
     private TableRow tableRowChannel;
     private View tableRowLamp;
-    private Spinner modeSpinner;
     private SeekBar seekChannelIntensity;
     private TextView singleChanabel;
-    private TableRow infoFavs;
-    private TableRow infoTags;
 
     /**
      * Serve per poter tenuto il bottone brightness
@@ -206,22 +194,22 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         assertTrue("TIPICO NULLO", collected instanceof SoulissTypical19AnalogChannel);
         collected.setPrefs(opzioni);
 
-        buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-        buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
+        Button buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
+        Button buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
         togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
 
-        btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
-        btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+        Button btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
+        Button btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
         tableRowLamp = ret.findViewById(R.id.tableRowLamp);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
         eqText = (TextView) ret.findViewById(R.id.textEqualizer);
-        btFlash = (Button) ret.findViewById(R.id.flash);
-        btSleep = (Button) ret.findViewById(R.id.sleep);
-        modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
+        Button btFlash = (Button) ret.findViewById(R.id.flash);
+        Button btSleep = (Button) ret.findViewById(R.id.sleep);
+        Spinner modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
         tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
 
 
-        mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
+        FrameLayout mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
         //permesso per la visualizer connessa all'audio o mic
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
@@ -245,8 +233,8 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         buttMinus.setTag(Constants.Typicals.Souliss_T1n_BrightDown);
         btFlash.setTag(Constants.Typicals.Souliss_T1n_Flash);
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
-        infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
+        TableRow infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
+        TableRow infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         refreshTagsInfo();
         // CHANNEL Listeners
@@ -445,7 +433,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
                     .getNodeId(), collected.getSlot());
             // Bundle extras = intent.getExtras();
             // Bundle vers = (Bundle) extras.get("NODES");
-            intensityReal = collected.getIntensity();
+            int intensityReal = collected.getIntensity();
             Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + intensityReal);
                 singleChanabel.setText(getString(R.string.Souliss_T19_received) + " " + collected.getOutputDesc());
             seekChannelIntensity.setProgress(intensityReal);

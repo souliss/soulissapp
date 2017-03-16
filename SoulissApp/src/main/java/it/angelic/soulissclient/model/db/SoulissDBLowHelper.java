@@ -51,11 +51,10 @@ public class SoulissDBLowHelper extends SoulissDBHelper {
     /**
      * In seguito alla DB structure, viene aggiornata
      * la struttura dei nodi, senza cancellarla
+     *  @param numnodes nodi da creare
      *
-     * @param numnodes nodi da creare
-     * @param typXnode tipici x nodo
      */
-    public int createOrUpdateStructure(int numnodes, int typXnode) {
+    public int createOrUpdateStructure(int numnodes) {
         int ret = 0;
         for (int i = 0; i < numnodes; i++) {
             ContentValues values = new ContentValues();

@@ -16,10 +16,8 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
  */
 public class DbSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private DbPreferenceListener dbPrefListener;
     private Preference dbinfopref;
-    private Preference exportDBPref;
-	private SoulissPreferenceHelper opzioni;
+    private SoulissPreferenceHelper opzioni;
 
 
     /*
@@ -54,13 +52,13 @@ public class DbSettingsFragment extends PreferenceFragment implements SharedPref
 		addPreferencesFromResource(R.xml.settings_db);
 		Preference createDbPref = findPreference("createdb");
 		Preference dropDbPref = findPreference("dropdb");
-        exportDBPref = findPreference("dbexp");
+        Preference exportDBPref = findPreference("dbexp");
         Preference imortDBPref = findPreference("dbimp");
 		Preference optimDBPref = findPreference("dbopt");
         dbinfopref = findPreference("dbinfo");
         Preference sharesettingspref = findPreference("settingshare");
 		/* listeners DB */
-        dbPrefListener = new DbPreferenceListener(getActivity());
+        DbPreferenceListener dbPrefListener = new DbPreferenceListener(getActivity());
         exportDBPref.setOnPreferenceClickListener(dbPrefListener);
         imortDBPref.setOnPreferenceClickListener(dbPrefListener);
         createDbPref.setOnPreferenceClickListener(dbPrefListener);

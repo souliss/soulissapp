@@ -32,13 +32,10 @@ import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 public class SoulissWidgetConfig extends Activity {
     private SoulissNode[] nodiArray;
-    private Button configOkButton;
     private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    private SoulissDBHelper datasource;
     private Spinner outputNodeSpinner;
     private Spinner outputCommandSpinner;
     private Spinner outputTypicalSpinner;
-    private Button configCancelButton;
     private EditText widgetLabel;
     private LinkedList<SoulissScene> scenes;
     private TextView textViewCommand;
@@ -53,8 +50,8 @@ public class SoulissWidgetConfig extends Activity {
         outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);
         outputCommandSpinner = (Spinner) findViewById(R.id.spinnerCommand);
         outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
-        configOkButton = (Button) findViewById(R.id.buttonOkWidgetConfig);
-        configCancelButton = (Button) findViewById(R.id.buttonCancelWidgetConfig);
+        Button configOkButton = (Button) findViewById(R.id.buttonOkWidgetConfig);
+        Button configCancelButton = (Button) findViewById(R.id.buttonCancelWidgetConfig);
         widgetLabel = (EditText) findViewById(R.id.editTextWidgetLabel);
         textViewCommand = (TextView) findViewById(R.id.textViewCommand);
         configOkButton.setOnClickListener(configOkButtonOnClickListener);
@@ -70,7 +67,7 @@ public class SoulissWidgetConfig extends Activity {
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
-        datasource = new SoulissDBHelper(this);
+        SoulissDBHelper datasource = new SoulissDBHelper(this);
         SoulissDBHelper.open();
 
         // prendo tipici dal DB
@@ -84,7 +81,7 @@ public class SoulissWidgetConfig extends Activity {
         SoulissNode fake = new SoulissNode(getApplicationContext(), Constants.COMMAND_FAKE_SCENE);// MASSIVO
         fake.setName(getString(R.string.scenes_title));
         goer.add(fake);
-        scenes = datasource.getScenes(this);
+        scenes = datasource.getScenes();
         nodiArray = new SoulissNode[goer.size()];
         nodiArray = goer.toArray(nodiArray);
 

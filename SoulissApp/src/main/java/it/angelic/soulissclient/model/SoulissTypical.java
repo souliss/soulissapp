@@ -49,7 +49,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     protected SoulissTypicalDTO typicalDTO;
     //transient per evitare problemi di serializzazione
     protected transient SoulissPreferenceHelper prefs;
-    private boolean isSlave = false;// indica se includerlo nelle liste
+    private boolean isRelated = false;// indica se includerlo nelle liste
     //AUTOF
     public SoulissTypical(Context context, SoulissPreferenceHelper pre) {
         super();
@@ -321,7 +321,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     public boolean isRelated() {
-        return isSlave;
+        return isRelated;
     }
 
     public void setRelated(SoulissTypical in) {
@@ -393,7 +393,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     public void setRelated(boolean isSlave) {
-        this.isSlave = isSlave;
+        this.isRelated = isSlave;
     }
 
     @Override

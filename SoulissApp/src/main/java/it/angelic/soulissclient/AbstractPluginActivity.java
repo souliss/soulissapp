@@ -30,8 +30,8 @@ import com.twofortyfouram.locale.BreadCrumber;
 public abstract class AbstractPluginActivity extends Activity {
     /**
      * Flag boolean that can only be set to true via the "Don't Save"
-     * {@link com.twofortyfouram.locale.platform.R.id#twofortyfouram_locale_menu_dontsave} menu item in
-     * {@link #onMenuItemSelected(int, MenuItem)}.
+     * {@see com.twofortyfouram.locale.platform.R.id#twofortyfouram_locale_menu_dontsave} menu item in
+     * {@see #onMenuItemSelected(int, MenuItem)}.
      */
     /*
      * There is no need to save/restore this field's state.

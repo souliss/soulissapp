@@ -31,12 +31,6 @@ import static junit.framework.Assert.assertTrue;
 
 public class T5nSensorFragment extends AbstractTypicalFragment {
 
-    private SoulissDBHelper datasource;
-    private TextView icon;
-    private TextView nodeinfo;
-    private ProgressBar par;
-    private TextView upda;
-
     public static T5nSensorFragment newInstance(int index, SoulissTypical content) {
         T5nSensorFragment f = new T5nSensorFragment();
         // Supply index input as an argument.
@@ -77,7 +71,7 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
         if (container == null)
             return null;
 
-        datasource = new SoulissDBHelper(getActivity());
+        SoulissDBHelper datasource = new SoulissDBHelper(getActivity());
         SoulissDBHelper.open();
 
         Bundle extras = getActivity().getIntent().getExtras();
@@ -90,10 +84,10 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
 
         }
         View ret = inflater.inflate(R.layout.frag_t5n_sensordetail, container, false);
-        nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
-        icon = (TextView) ret.findViewById(R.id.typ_icon);
-        upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
-        par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
+        TextView nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
+        TextView icon = (TextView) ret.findViewById(R.id.typ_icon);
+        TextView upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
+        ProgressBar par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);

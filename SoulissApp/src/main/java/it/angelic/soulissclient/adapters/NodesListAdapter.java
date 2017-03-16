@@ -28,7 +28,7 @@ import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class NodesListAdapter extends BaseAdapter {
-    List<SoulissNode> nodi;
+    private List<SoulissNode> nodi;
     private Activity context;
     private LayoutInflater mInflater;
     private SoulissPreferenceHelper opzioni;

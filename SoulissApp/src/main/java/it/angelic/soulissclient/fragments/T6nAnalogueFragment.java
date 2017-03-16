@@ -45,7 +45,6 @@ import static junit.framework.Assert.assertTrue;
 public class T6nAnalogueFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
 
     private SoulissDBHelper datasource;
-    private TextView icon;
     private EditText incrementText;
     private TextView nodeinfo;
     // Aggiorna il feedback
@@ -66,9 +65,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
             }
         }
     };
-    private ProgressBar par;
     private NumberPickerT6 tempSlider;
-    private TextView upda;
 
     public static T6nAnalogueFragment newInstance(int index, SoulissTypical content) {
         T6nAnalogueFragment f = new T6nAnalogueFragment();
@@ -126,10 +123,10 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         View ret = inflater.inflate(R.layout.frag_t6n_analogue, container, false);
         nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
         incrementText = (EditText) ret.findViewById(R.id.editTextIncrement);
-        icon = (TextView) ret.findViewById(R.id.typ_icon);
+        TextView icon = (TextView) ret.findViewById(R.id.typ_icon);
         tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSliderPicker);
-        upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
-        par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
+        TextView upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
+        ProgressBar par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);

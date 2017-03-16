@@ -53,8 +53,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
     private ListView listaProgrammiView;
 	private SoulissDBHelper datasource;
 	private ProgramListAdapter progsAdapter;
-	private TextView textViewAwesomeBck;
-	private TextView tt;
+    private TextView tt;
 
 
 	@Override
@@ -89,7 +88,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
         }
 
 		listaProgrammiView = (ListView) findViewById(R.id.ListViewListaProgs);
-		textViewAwesomeBck = (TextView) findViewById(R.id.scene_icon);
+        TextView textViewAwesomeBck = (TextView) findViewById(R.id.scene_icon);
 
 		FontAwesomeUtil.prepareAwesomeFontAweTextView(ProgramListActivity.this, textViewAwesomeBck, FontAwesomeEnum.fa_calendar.getFontName());
 		//SoulissApp.setBackground(findViewById(R.id.containerlistaProgrammi), getWindowManager());
@@ -158,7 +157,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
             tt.setText(getString(R.string.programs_no));
 
         progsAdapter = new ProgramListAdapter(this, programsArray,
-                datasource.getTriggerMap(this), opzioni);
+                datasource.getTriggerMap(), opzioni);
         // Adapter della lista
         listaProgrammiView.setAdapter(progsAdapter);
         listaProgrammiView.invalidateViews();
@@ -230,8 +229,8 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
             programsArray = datasource.getUnexecutedCommands(ProgramListActivity.this);
 
 			progsAdapter = new ProgramListAdapter(ProgramListActivity.this, programsArray,
-					datasource.getTriggerMap(ProgramListActivity.this), opzioni);
-			// Adapter della lista
+                    datasource.getTriggerMap(), opzioni);
+            // Adapter della lista
 			listaProgrammiView.setAdapter(progsAdapter);
 			listaProgrammiView.invalidateViews();
 		}

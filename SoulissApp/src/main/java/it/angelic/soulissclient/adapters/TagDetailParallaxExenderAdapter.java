@@ -49,12 +49,11 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     private final TagDetailActivity context;
     protected SoulissTag mDataset;
     private SoulissPreferenceHelper opzioni;
-    private long tagId;
 
     public TagDetailParallaxExenderAdapter(SoulissPreferenceHelper pref, TagDetailActivity father, SoulissTag data, long tagId) {
         super();
         mDataset = data;
-        this.tagId = tagId;
+        long tagId1 = tagId;
         opzioni = pref;
         context = father;
     }

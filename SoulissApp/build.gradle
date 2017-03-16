@@ -11,7 +11,7 @@ android {
             }
         }
     } catch (Exception e) {
-        println 'localsignature.properties not found'
+        println 'localsignature.properties not found' + e
     }
 
     compileSdkVersion rootProject.ext.compileSdkVersion

@@ -116,7 +116,7 @@ public class ScenesDialogHelper {
                         datasource.deleteScene(toRename);
                         if (ctx != null) {
                             // prendo comandi dal DB
-                            LinkedList<SoulissScene> goer = datasource.getScenes(cont);
+                            LinkedList<SoulissScene> goer = datasource.getScenes();
                             // targetScene.setCommandArray(goer);
                             SceneListAdapter progsAdapter = new SceneListAdapter(cont, goer, opts);
                             // Adapter della lista
@@ -162,7 +162,7 @@ public class ScenesDialogHelper {
                         if (ctx != null) {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             // prendo comandi dal DB
-                            List<SoulissTag> goer = dbt.getRootTags(cont);
+                            List<SoulissTag> goer = dbt.getRootTags();
                             SoulissTag[] programsArray = new SoulissTag[goer.size()];
                             programsArray = goer.toArray(programsArray);
                             // targetScene.setCommandArray(goer);

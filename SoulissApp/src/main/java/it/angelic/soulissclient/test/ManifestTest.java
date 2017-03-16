@@ -153,7 +153,7 @@ public final class ManifestTest extends AndroidTestCase {
 
         final String packageName = context.getPackageName();
 
-        final List<ResolveInfo> result = new LinkedList<ResolveInfo>();
+        final List<ResolveInfo> result = new LinkedList<>();
 
         for (final ResolveInfo x : context.getPackageManager()
                 .queryIntentActivities(new Intent(
@@ -179,7 +179,7 @@ public final class ManifestTest extends AndroidTestCase {
 
         final String packageName = context.getPackageName();
 
-        final List<ResolveInfo> result = new LinkedList<ResolveInfo>();
+        final List<ResolveInfo> result = new LinkedList<>();
 
         for (final ResolveInfo x : context.getPackageManager()
                 .queryBroadcastReceivers(new Intent(

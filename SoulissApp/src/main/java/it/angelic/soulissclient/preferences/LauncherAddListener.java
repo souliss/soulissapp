@@ -32,7 +32,6 @@ public class LauncherAddListener extends DialogPreference implements DialogInter
     private static LauncherElementEnum[] statArr = new LauncherElementEnum[]{LauncherElementEnum.NODE, LauncherElementEnum.TYPICAL, LauncherElementEnum.SCENE, LauncherElementEnum.TAG};
     private final Context context;
     SoulissDBLauncherHelper datasource;
-    private int mWhichButtonClicked;
     private Spinner outputTYpSpinner;
     private Spinner typeSpinner;
 
@@ -45,7 +44,7 @@ public class LauncherAddListener extends DialogPreference implements DialogInter
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        mWhichButtonClicked = which;
+        int mWhichButtonClicked = which;
         // if statement to set save/cancel button roles
         if (mWhichButtonClicked == -1) {
             // Save user preferences
@@ -105,12 +104,12 @@ public class LauncherAddListener extends DialogPreference implements DialogInter
                     outputTYpSpinner.setAdapter(adaptertyp);
                 } else if (statArr[pos].equals(LauncherElementEnum.TAG)) {
                     ArrayAdapter<SoulissTag> adaptertyp = new ArrayAdapter<>(context,
-                            android.R.layout.simple_spinner_dropdown_item, datasource.getRootTags(context));
+                            android.R.layout.simple_spinner_dropdown_item, datasource.getRootTags());
                     //setTypicalSpinner(outputTypicalSpinner, nodiArray[pos], context);
                     outputTYpSpinner.setAdapter(adaptertyp);
                 } else if (statArr[pos].equals(LauncherElementEnum.SCENE)) {
                     ArrayAdapter<SoulissScene> adaptertyp = new ArrayAdapter<>(context,
-                            android.R.layout.simple_spinner_dropdown_item, datasource.getScenes(context));
+                            android.R.layout.simple_spinner_dropdown_item, datasource.getScenes());
                     //setTypicalSpinner(outputTypicalSpinner, nodiArray[pos], context);
                     outputTYpSpinner.setAdapter(adaptertyp);
                 }

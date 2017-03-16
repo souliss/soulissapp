@@ -26,8 +26,8 @@ import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class ProgramListAdapter extends BaseAdapter {
-    List<SoulissCommand> programmi = new ArrayList<>();
-    SparseArray<SoulissTriggerDTO> triggers;
+    private List<SoulissCommand> programmi = new ArrayList<>();
+    private SparseArray<SoulissTriggerDTO> triggers;
     private Activity context;
     private LayoutInflater mInflater;
     private SoulissPreferenceHelper opzioni;

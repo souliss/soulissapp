@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
 
 import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.adapters.StaggeredDashboardElementAdapter;
@@ -67,7 +66,6 @@ import static it.angelic.soulissclient.Constants.TAG;
  * @author shine@angelic.it
  */
 public class MainActivity extends AbstractStatusedFragmentActivity implements LocationListener {
-    private Timer autoUpdate;
     private SoulissDBLauncherHelper database;
     private StaggeredDashboardElementAdapter launcherMainAdapter;
     private LocationManager locationManager;
@@ -97,8 +95,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             }
         }
     };
-    private RecyclerView mRecyclerView;
-    private ArrayAdapter<INavDrawerItem> navAdapter;
     private SoulissPreferenceHelper opzioni;
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -201,7 +197,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         setContentView(R.layout.main_launcher2);
 
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
         final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
         final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewDashboardDescFa);
         FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
@@ -533,20 +529,17 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             AlertDialogHelper.dbNotInitedDialog(this);
         }
         // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.DASHBOARD);
+        ArrayAdapter<INavDrawerItem> navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.DASHBOARD);
         mDrawerList.setAdapter(navAdapter);
     }
 
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
         private final StaggeredDashboardElementAdapter adapter;
-        private final Context context;
-        View.OnClickListener mOnClickListener;
         private SoulissDBLauncherHelper database;
 
         public LauncherStaggeredCallback(Context xct, final StaggeredDashboardElementAdapter adapter, SoulissDBLauncherHelper database) {
             this.adapter = adapter;
-            this.context = xct;
             this.database = database;
 
         }

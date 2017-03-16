@@ -205,7 +205,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         } else if (collected.getType() == Constants.COMMAND_TRIGGERED) {
             radioTrigger.performClick();
 
-            inputTrigger = datasource.getTriggerByCommandId(this, collected.getCommandId());
+            inputTrigger = datasource.getTriggerByCommandId(collected.getCommandId());
 
             triggeredNodeSpinner.setSelection(inputTrigger.getInputNodeId());
             Log.d(Constants.TAG, "Setting trigger nodeid:" + inputTrigger.getInputNodeId() + " slot:" + inputTrigger.getInputSlot());
@@ -225,7 +225,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         super.onStart();
         setActionBarInfo(getString(R.string.app_addprog));
 
-        scenes = datasource.getScenes(this);
+        scenes = datasource.getScenes();
         outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
         fillNodeSpinnerWithExtra(outputNodeSpinner);
         outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);

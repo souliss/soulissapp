@@ -37,7 +37,6 @@ import static junit.framework.Assert.assertTrue;
 
 
 public class T32AirConFragment extends AbstractTypicalFragment {
-	private SoulissDBHelper datasource;
 
 	private SoulissDataService mBoundService;
 	private boolean mIsBound;
@@ -63,7 +62,6 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 	Button btOff;
 	Button btOn;
 	private SoulissTypical collected;
-	private SoulissTypical related;
 
 	public static T32AirConFragment newInstance(int index, SoulissTypical content) {
 		T32AirConFragment f = new T32AirConFragment();
@@ -90,7 +88,7 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 			getActivity().setTheme(R.style.LightThemeSelector);
 		else
 			getActivity().setTheme(R.style.DarkThemeSelector);
-		super.onCreate(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
 
 		if (!opzioni.isDbConfigured()) {
 			AlertDialogHelper.dbNotInitedDialog(getActivity());
@@ -107,8 +105,8 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		opzioni.reload();
 
 		View ret = inflater.inflate(R.layout.main_aircon, container, false);
-		datasource = new SoulissDBHelper(getActivity());
-		SoulissDBHelper.open();
+        SoulissDBHelper datasource = new SoulissDBHelper(getActivity());
+        SoulissDBHelper.open();
 
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null && extras.get("TIPICO") != null) {
@@ -121,8 +119,8 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		}
 		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical32AirCon);
 
-		related = (SoulissTypical) getActivity().getIntent().getExtras().get("RELATO");
-		if (related == null)
+        SoulissTypical related = (SoulissTypical) getActivity().getIntent().getExtras().get("RELATO");
+        if (related == null)
 			related = datasource.getTypical(collected.getNodeId(), (short) (collected.getSlot() + 1));
 
 		collected.setPrefs(opzioni);

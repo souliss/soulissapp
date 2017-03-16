@@ -27,8 +27,8 @@ import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 
 public class DrawerItemClickListener implements ListView.OnItemClickListener {
 
-    protected LinearLayout mDrawerLinear;
-    Activity mActivity;
+    private LinearLayout mDrawerLinear;
+    private Activity mActivity;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 

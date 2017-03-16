@@ -11,14 +11,13 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import static junit.framework.Assert.assertTrue;
 @Deprecated
 public class T4nFragWrapper extends ActionBarActivity {
-	private SoulissPreferenceHelper opzioni;
-	private SoulissTypical collected;
+    private SoulissTypical collected;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		opzioni = SoulissApp.getOpzioni();
-		if (opzioni.isLightThemeSelected())
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
+        if (opzioni.isLightThemeSelected())
 			setTheme(R.style.LightThemeSelector);
 		else
 			setTheme(R.style.DarkThemeSelector);

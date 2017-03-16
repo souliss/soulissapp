@@ -1,9 +1,7 @@
 package it.angelic.soulissclient.net;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.net.DhcpInfo;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
@@ -11,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -62,7 +59,7 @@ public class NetUtils {
     }
 
     public static InetAddress getDeviceSubnetMask(Context ctx) {
-        WifiManager wifii = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifii = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         DhcpInfo d = wifii.getDhcpInfo();
         //A volte non funziona e torna 0.
         if (d.netmask == 0) {
@@ -113,7 +110,7 @@ public class NetUtils {
     }
 
     public static int getDeviceGateway(Context ctx) {
-        WifiManager wifii = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifii = (WifiManager) ctx.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         DhcpInfo d = wifii.getDhcpInfo();
 
         return d.gateway;
@@ -203,8 +200,7 @@ public class NetUtils {
         for (int i = 0; i < good.length; i++) {
             good[i] = parsed[i].byteValue();
         }
-        final InetAddress checkIPt = InetAddress.getByAddress(good);
-        return checkIPt;
+        return InetAddress.getByAddress(good);
     }
 
     public static byte byteOfInt(int value, int which) {
@@ -245,20 +241,7 @@ public class NetUtils {
         return sb.toString();
     }
 
-    public static String openHTMLString(Context context, int id) {
-        InputStream is = context.getResources().openRawResource(id);
 
-        return convertStreamToString(is);
-    }
-
-    public static String openHTMLStringfromURI(Context context, String id) throws FileNotFoundException {
-        ContentResolver cr = context.getContentResolver();
-        Log.d(Constants.Net.TAG, "fileUriString = " + id);
-        Uri tempuri = Uri.parse(id);
-        InputStream is = cr.openInputStream(tempuri);
-
-        return convertStreamToString(is);
-    }
 
     public static JSONObject getJSONSoulissDevice(SoulissTypical soulissTypical) {
         JSONObject objecttyp = new JSONObject();

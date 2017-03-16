@@ -294,7 +294,7 @@ public class AlertDialogHelper {
                             LinkedList<SoulissCommand> programsArray = datasource.getUnexecutedCommands(cont);
 
                             ProgramListAdapter progsAdapter = new ProgramListAdapter(cont, programsArray, datasource
-                                    .getTriggerMap(cont), new SoulissPreferenceHelper(cont.getApplicationContext()));
+                                    .getTriggerMap(), new SoulissPreferenceHelper(cont.getApplicationContext()));
                             // Adapter della lista
                             ctx.setAdapter(progsAdapter);
                             ctx.invalidateViews();
@@ -352,7 +352,7 @@ public class AlertDialogHelper {
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
                             if (listV != null) {
-                                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
+                                LinkedList<SoulissScene> goer = datasource.getScenes();
                                 try {
                                     SceneListAdapter sa = (SceneListAdapter) listV.getAdapter();
 
@@ -368,7 +368,7 @@ public class AlertDialogHelper {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(cont);
                             dbt.createOrUpdateTag((SoulissTag) toRename);//non aggiorno il campo fath, non serve
                             if (listV != null) {
-                                List<SoulissTag> goer = dbt.getRootTags(SoulissApp.getAppContext());
+                                List<SoulissTag> goer = dbt.getRootTags();
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 try {
@@ -605,7 +605,7 @@ public class AlertDialogHelper {
                         } else if (toRename instanceof SoulissScene) {
                             datasource.createOrUpdateScene((SoulissScene) toRename);
                             if (list != null) {
-                                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
+                                LinkedList<SoulissScene> goer = datasource.getScenes();
 
                                 SceneListAdapter progsAdapter = new SceneListAdapter(context, goer, opzioni);
                                 // Adapter della lista
@@ -616,7 +616,7 @@ public class AlertDialogHelper {
                             SoulissDBTagHelper dbt = new SoulissDBTagHelper(SoulissApp.getAppContext());
                             dbt.createOrUpdateTag((SoulissTag) toRename);//non aggiorno il campo fath, non serve
                             if (list != null) {
-                                List<SoulissTag> goer = dbt.getRootTags(SoulissApp.getAppContext());
+                                List<SoulissTag> goer = dbt.getRootTags();
                                 SoulissTag[] scenesArray = new SoulissTag[goer.size()];
                                 scenesArray = goer.toArray(scenesArray);
                                 FontAwesomeTagListAdapter progsAdapter = new FontAwesomeTagListAdapter(context, scenesArray, opzioni);

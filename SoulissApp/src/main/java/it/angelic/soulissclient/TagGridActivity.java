@@ -51,9 +51,7 @@ import it.angelic.soulissclient.util.FontAwesomeUtil;
 public class TagGridActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBTagHelper datasource;
     private List<SoulissTag> goer;
-    private RecyclerView.LayoutManager gridManager;
     private ContextMenuRecyclerView mRecyclerView;
-    private ArrayAdapter<INavDrawerItem> navAdapter;
     private TagRecyclerAdapter tagAdapter;
     //private SoulissTag[] tags;
 
@@ -99,7 +97,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
     /*
     With Drag&Drop this WON'T BE CALLED
-     */
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         ContextMenuRecyclerView.RecyclerContextMenuInfo info = (ContextMenuRecyclerView.RecyclerContextMenuInfo) item.getMenuInfo();
@@ -132,7 +130,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
                 return super.onContextItemSelected(item);
         }
     }
-
+*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -167,7 +165,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_tags.getFontName());
 
         //3 colonne in horiz
-        gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
+        RecyclerView.LayoutManager gridManager = new GridLayoutManager(this, getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2);
         mRecyclerView.setLayoutManager(gridManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
         //Floatin Button
@@ -180,7 +178,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
                 long rest = datasource.createOrUpdateTag(null);
                 // prendo comandi dal DB, setto adapter
-                goer = datasource.getRootTags(TagGridActivity.this);
+                goer = datasource.getRootTags();
 
                 tagAdapter.setTagArray(goer);
 
@@ -208,7 +206,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         datasource = new SoulissDBTagHelper(this);
         SoulissDBHelper.open();
         // prendo comandi dal DB, setto adapter
-        goer = datasource.getRootTags(SoulissApp.getAppContext());
+        goer = datasource.getRootTags();
 
         tagAdapter = new TagRecyclerAdapter(this, goer, opzioni, fab);
         // Adapter della lista
@@ -372,10 +370,10 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         }
         SoulissDBHelper.open();
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
+        ArrayAdapter<INavDrawerItem> navAdapter = new NavDrawerAdapter(TagGridActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.TAGS);
         mDrawerList.setAdapter(navAdapter);
         //un po bruto
-        tagAdapter.setTagArray(datasource.getRootTags(this));
+        tagAdapter.setTagArray(datasource.getRootTags());
         tagAdapter.notifyDataSetChanged();
         scheduleStartPostponedTransition(mDrawerList);
     }

@@ -19,15 +19,13 @@ public class BroadcastSettingsPreferenceListener implements OnPreferenceClickLis
 	// EXPORT
 	private String[] mFileList;
 	private String mChosenFile;
-	private SoulissPreferenceHelper opzioni;
-	private SoulissDBHelper datasource;
 
-	public BroadcastSettingsPreferenceListener(Activity parent) {
-		super();
+    public BroadcastSettingsPreferenceListener(Activity parent) {
+        super();
 		this.parent = parent;
-		opzioni = SoulissApp.getOpzioni();
-		datasource = new SoulissDBHelper(parent);
-		//File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
+        SoulissDBHelper datasource = new SoulissDBHelper(parent);
+        //File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
 	}
 	private void fireBCastSubScreen(){
 		Intent inten = parent.getIntent();

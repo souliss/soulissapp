@@ -58,5 +58,7 @@
             tools:text="Questa e la descrizione"
             android:layout_below="@id/card_static_title"
             android:paddingTop="2dp"/>
+
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

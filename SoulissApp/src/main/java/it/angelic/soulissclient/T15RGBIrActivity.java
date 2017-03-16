@@ -27,15 +27,8 @@ import static junit.framework.Assert.assertTrue;
 
 
 public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
-	//TODO check this
-	private SoulissDBHelper datasource = new SoulissDBHelper(this);
 
-	private Button buttPlus;
-	private Button buttMinus;
-
-	private Button btOff;
-	private Button btOn;
-	private SoulissTypical collected;
+    private SoulissTypical collected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +45,11 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 			AlertDialogHelper.dbNotInitedDialog(this);
 		}
 
-		buttPlus = (Button) findViewById(R.id.buttonPlus);
-		buttMinus = (Button) findViewById(R.id.buttonMinus);
+        Button buttPlus = (Button) findViewById(R.id.buttonPlus);
+        Button buttMinus = (Button) findViewById(R.id.buttonMinus);
 
-		btOff = (Button) findViewById(R.id.buttonTurnOff);
-		btOn = (Button) findViewById(R.id.buttonTurnOn);
+        Button btOff = (Button) findViewById(R.id.buttonTurnOff);
+        Button btOn = (Button) findViewById(R.id.buttonTurnOn);
 
         Button btWhite = (Button) findViewById(R.id.white);
         Button btFlash = (Button) findViewById(R.id.flash);
@@ -112,8 +105,8 @@ public class T15RGBIrActivity extends AbstractStatusedFragmentActivity {
 		btBlu4.setTag(Constants.Typicals.Souliss_T1n_RGB_B4);
 		btBlu5.setTag(Constants.Typicals.Souliss_T1n_RGB_B5);
 
-		datasource = new SoulissDBHelper(this);
-		SoulissDBHelper.open();
+        SoulissDBHelper datasource = new SoulissDBHelper(this);
+        SoulissDBHelper.open();
 
 		Bundle extras = getIntent().getExtras();
 		collected = (SoulissTypical15) extras.get("TIPICO");

@@ -34,7 +34,7 @@ import java.io.Writer;
 * @author Glen Smith
 *
 */
-public class CSVWriter {
+class CSVWriter {
 
    private PrintWriter pw;
 

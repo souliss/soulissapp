@@ -12,10 +12,10 @@ import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 public class DrawerMenuHelper {
-    private static Context ctx;
+    private Context ctx;
 
     public DrawerMenuHelper(Context ctx) {
-        DrawerMenuHelper.ctx = ctx;
+        this.ctx = ctx;
     }
 
     public static final int DASHBOARD = -9;

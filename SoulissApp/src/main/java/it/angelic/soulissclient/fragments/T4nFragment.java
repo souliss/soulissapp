@@ -67,11 +67,7 @@ public class T4nFragment extends Fragment {
 
     private VisualizerView mVisualizerView;
     private TextView alarmInfoTextView;
-    //private ToggleButton togMassive;
-    private CheckBox notifCheckbox;
-    private TextView infoTyp;
     private TextView textviewSensors;
-    private Button resetButton;
     private SoulissTypical41AntiTheft senseiMaster;
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
@@ -90,7 +86,6 @@ public class T4nFragment extends Fragment {
             }
         }
     };
-    private List<SoulissTypical> sensei;
 
     public static T4nFragment newInstance(int index, SoulissTypical content) {
         T4nFragment f = new T4nFragment();
@@ -116,7 +111,7 @@ public class T4nFragment extends Fragment {
             getActivity().setTheme(R.style.LightThemeSelector);
         else
             getActivity().setTheme(R.style.DarkThemeSelector);
-        super.onCreate(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(getActivity());
@@ -151,11 +146,11 @@ public class T4nFragment extends Fragment {
 
 
         toggleButton = (SwitchCompat) ret.findViewById(R.id.buttonPlus);
-        resetButton = (Button) ret.findViewById(R.id.resetButton);
+        Button resetButton = (Button) ret.findViewById(R.id.resetButton);
 
         alarmInfoTextView = (TextView) ret.findViewById(R.id.textviewAlarmInfo);
-        notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
-        infoTyp = (TextView) ret.findViewById(R.id.textView4nInfo);
+        CheckBox notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
+        TextView infoTyp = (TextView) ret.findViewById(R.id.textView4nInfo);
         mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
 
         textviewSensors = (TextView) ret.findViewById(R.id.textviewSensors);
@@ -352,7 +347,7 @@ public class T4nFragment extends Fragment {
     private void setSensorsView() {
         StringBuilder tmp = new StringBuilder();
 
-        sensei = datasource.getAntiTheftSensors();
+        List<SoulissTypical> sensei = datasource.getAntiTheftSensors();
         for (SoulissTypical soulissTypical42AntiTheftPeer : sensei) {
             tmp.append(soulissTypical42AntiTheftPeer.getParentNode().getNiceName())
                     .append(" - ")

@@ -21,20 +21,17 @@ public class LauncherRstListener implements OnPreferenceClickListener {
 
     private static final String DB_BACKUP_FORMAT = ".csv";
     private static final int DIALOG_LOAD_FILE = 1000;
-    private SoulissDBHelper datasource;
     private String mChosenFile;
     // EXPORT
     private String[] mFileList;
-    private File mPath;
-    private SoulissPreferenceHelper opzioni;
     private Activity parent;
 
     public LauncherRstListener(Activity parent) {
         super();
         this.parent = parent;
-        opzioni = SoulissApp.getOpzioni();
-        datasource = new SoulissDBHelper(parent);
-        mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
+        SoulissDBHelper datasource = new SoulissDBHelper(parent);
+        File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
     }
 
     @Override

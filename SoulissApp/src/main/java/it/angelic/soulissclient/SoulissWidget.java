@@ -34,9 +34,6 @@ import it.angelic.tagviewlib.SimpleTagViewUtils;
 public class SoulissWidget extends AppWidgetProvider {
 
     private static final String TAG = "SoulissWidget";
-    private static SoulissDBHelper db;
-    private SharedPreferences customSharedPreference;
-    private Handler handler;
     private SoulissPreferenceHelper opzioni;
 
     /**
@@ -61,7 +58,7 @@ public class SoulissWidget extends AppWidgetProvider {
             return;
         }
         RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-        db = new SoulissDBHelper(context);
+        SoulissDBHelper db = new SoulissDBHelper(context);
         SoulissDBHelper.open();
         if (node > Constants.MASSIVE_NODE_ID) {
             try {
@@ -129,9 +126,9 @@ public class SoulissWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(@NonNull final Context context, final Intent intent) {
-        customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
         opzioni = new SoulissPreferenceHelper(context);
-        handler = new Handler();
+        Handler handler = new Handler();
         super.onReceive(context, intent);
         final AppWidgetManager awm = AppWidgetManager.getInstance(context);
         final int got = intent.getIntExtra("_ID", -1);

@@ -17,7 +17,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 
 public class NodesListActivity extends AbstractStatusedFragmentActivity {
-    List<SoulissNode> goer;
+    private List<SoulissNode> goer;
     private SoulissDBHelper datasource;
 
 

@@ -38,9 +38,7 @@ public class ChartFragment extends Fragment {
     private SoulissDBHelper datasource;
     private Spinner graphtSpinner;
     private LineView lineView;
-    private TextView nodeinfo;
     private Spinner rangeSpinner;
-    private TextView upda;
 
     public static ChartFragment newInstance(ISoulissTypicalSensor content) {
         ChartFragment f = new ChartFragment();
@@ -112,10 +110,10 @@ public class ChartFragment extends Fragment {
      */
     private void drawHistoryGraphAndroChart(HashMap<Date, SoulissHistoryGraphData> logs) {
         //must*
-        ArrayList<String> test = new ArrayList<String>();
-        ArrayList<Integer> dataList = new ArrayList<Integer>();
-        ArrayList<Integer> dataListMin = new ArrayList<Integer>();
-        ArrayList<Integer> dataListMax = new ArrayList<Integer>();
+        ArrayList<String> test = new ArrayList<>();
+        ArrayList<Integer> dataList = new ArrayList<>();
+        ArrayList<Integer> dataListMin = new ArrayList<>();
+        ArrayList<Integer> dataListMax = new ArrayList<>();
 
         Set<Date> dates = logs.keySet();
         for (Date date2 : dates) {
@@ -155,12 +153,12 @@ public class ChartFragment extends Fragment {
         Bundle extras = getActivity().getIntent().getExtras();
 
         View ret = inflater.inflate(R.layout.frag_chart, container, false);
-        nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
+        TextView nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
         graphtSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphType);
         rangeSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphRange);
         rangeSpinner.setSelection(2);
         lineView = (LineView) ret.findViewById(R.id.line_view);
-        upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
+        TextView upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
 
         assertTrue("TIPICO NULLO", collected != null);
 

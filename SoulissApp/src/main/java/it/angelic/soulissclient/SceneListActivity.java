@@ -53,15 +53,13 @@ import static it.angelic.soulissclient.Constants.TAG;
  */
 public class SceneListActivity extends AbstractStatusedFragmentActivity {
     private SoulissDBHelper datasource;
-    private LinkedList<SoulissScene> sceneList;
     private ListView listaScenesView;
-    private ArrayAdapter<INavDrawerItem> mAdapter;
     private SceneListAdapter progsAdapter;
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            List<SoulissScene> goer = datasource.getScenes(SceneListActivity.this);
+            List<SoulissScene> goer = datasource.getScenes();
             //progsAdapter = new SceneListAdapter(SceneListActivity.this.getApplicationContext(), scenesArray, opzioni);
             progsAdapter.setScenes(goer);
             progsAdapter.notifyDataSetChanged();
@@ -70,7 +68,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
             listaScenesView.invalidateViews();
         }
     };
-    private TextView textAwesomeUpperRight;
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -144,7 +141,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
         listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
 
-        textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
+        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
 
         final TextView toHid = (TextView) findViewById(R.id.TextViewSceneDesc);
         final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewSceneDescFa);
@@ -176,7 +173,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
             public void onClick(View v) {
                 int rest = datasource.createOrUpdateScene(null);
                 // prendo comandi dal DB, setto adapter
-                LinkedList<SoulissScene> goer = datasource.getScenes(SoulissApp.getAppContext());
+                LinkedList<SoulissScene> goer = datasource.getScenes();
                 progsAdapter.setScenes(goer);
                 progsAdapter.notifyDataSetChanged();
                 listaScenesView.setAdapter(progsAdapter);
@@ -293,7 +290,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
         SoulissDBHelper.open();
 
         // prendo comandi dal DB, setto adapter
-        sceneList = datasource.getScenes(SoulissApp.getAppContext());
+        LinkedList<SoulissScene> sceneList = datasource.getScenes();
 
         progsAdapter = new SceneListAdapter(this, sceneList, opzioni);
         // Adapter della lista
@@ -301,7 +298,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
         //listaScenesView.invalidateViews();
         // ImageView nodeic = (ImageView) findViewById(R.id.scene_icon);
         // nodeic.setAlpha(150);
-        mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
+        ArrayAdapter<INavDrawerItem> mAdapter = new NavDrawerAdapter(SceneListActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SCENES);
         mDrawerList.setAdapter(mAdapter);
     }
 

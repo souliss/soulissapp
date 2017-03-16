@@ -49,7 +49,6 @@ public class SoulissDataService extends Service implements LocationListener {
     private final IBinder mBinder = new LocalBinder();
     NotificationManager nm;
     private Intent cIntent;
-    private String cached;
     // private long uir;
     private SoulissDBHelper db;
     private float homeDist = 0;
@@ -89,7 +88,7 @@ public class SoulissDataService extends Service implements LocationListener {
 			 * opts.getDataServiceInterval(); Log.w(TAG, "pace changed: " +
 			 * opts.getDataServiceInterval()); }
 			 */
-            cached = opts.getAndSetCachedAddress();
+            String cached = opts.getAndSetCachedAddress();
 
             final byte nodesNum = (byte) opts.getCustomPref().getInt("numNodi", 0);
 
@@ -462,7 +461,7 @@ public class SoulissDataService extends Service implements LocationListener {
         if (homeDistPrev > (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance() / 10)
                 && homeDist < (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance() / 10)) {
             SoulissDBHelper.open();
-            final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
+            final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms();
             Log.i(TAG, "processing positional programs: " + unexecuted.size());
             // tornato a casa
 
@@ -480,7 +479,7 @@ public class SoulissDataService extends Service implements LocationListener {
         } else if (homeDistPrev < (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance() / 10)
                 && homeDist > (opts.getHomeThresholdDistance() + opts.getHomeThresholdDistance() / 10)) {
             SoulissDBHelper.open();
-            final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms(SoulissDataService.this);
+            final LinkedList<SoulissCommand> unexecuted = db.getPositionalPrograms();
             Log.i(TAG, "activating positional programs: " + unexecuted.size());
             // uscito di casa
 

@@ -722,7 +722,6 @@ public class TaskerPlugin {
          * @param toPlugin  the intent we're sending
          * @param timeoutMS the hosts timeout setting for the action. Note that this may differ from
          *                  that which the plugin requests.
-         * @see #REQUESTED_TIMEOUT_MS_NONE, REQUESTED_TIMEOUT_MS_MAX, REQUESTED_TIMEOUT_MS_NEVER
          */
         public static void addHintTimeoutMS(Intent toPlugin, int timeoutMS) {
             getHintsBundle(toPlugin, "addHintTimeoutMS").putInt(BUNDLE_KEY_HINT_TIMEOUT_MS, timeoutMS);

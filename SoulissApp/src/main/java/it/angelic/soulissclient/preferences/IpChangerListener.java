@@ -14,7 +14,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
-public class IpChangerListener implements OnPreferenceChangeListener {
+class IpChangerListener implements OnPreferenceChangeListener {
 
 	private Activity parent;
 	private SoulissPreferenceHelper opzioni;

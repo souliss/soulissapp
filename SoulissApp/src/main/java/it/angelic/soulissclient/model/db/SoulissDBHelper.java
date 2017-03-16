@@ -271,7 +271,7 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    public List<SoulissTrigger> getAllTriggers(Context context) {
+    public List<SoulissTrigger> getAllTriggers() {
         List<SoulissTrigger> ret = new ArrayList<>();
         // Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS,
         // SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,null);
@@ -636,7 +636,7 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    public LinkedList<SoulissCommand> getPositionalPrograms(Context soulissDataService) {
+    public LinkedList<SoulissCommand> getPositionalPrograms() {
         LinkedList<SoulissCommand> ret = new LinkedList<>();
         Cursor cursor = database
                 .query(SoulissDB.TABLE_COMMANDS, SoulissDB.ALLCOLUMNS_COMMANDS, SoulissDB.COLUMN_COMMAND_TYPE + " = "
@@ -665,7 +665,7 @@ public class SoulissDBHelper {
         return ret;
     }
 
-    public List<SoulissTag> getRootTags(Context context) {
+    public List<SoulissTag> getRootTags() {
         List<SoulissTag> comments = new ArrayList<>();
         if (!database.isOpen())
             open();
@@ -744,7 +744,7 @@ public class SoulissDBHelper {
         return ret;
     }
 
-    public LinkedList<SoulissScene> getScenes(Context context) {
+    public LinkedList<SoulissScene> getScenes() {
         LinkedList<SoulissScene> ret = new LinkedList<>();
         Cursor cursor = database.query(SoulissDB.TABLE_SCENES, SoulissDB.ALLCOLUMNS_SCENES, null, null, null, null,
                 SoulissDB.COLUMN_SCENE_ID);
@@ -886,7 +886,7 @@ public class SoulissDBHelper {
         return comments;
     }
 
-    public SoulissTriggerDTO getTriggerByCommandId(Context context, long triggerId) {
+    public SoulissTriggerDTO getTriggerByCommandId(long triggerId) {
 
         String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TRIGGERS + " a " + "INNER JOIN "
                 + SoulissDB.TABLE_COMMANDS + " b ON a." + SoulissDB.COLUMN_TRIGGER_COMMAND_ID + " = b."
@@ -906,10 +906,9 @@ public class SoulissDBHelper {
     /**
      * Ritorna mappa di tutti i comandi, indicizzati per ID
      *
-     * @param ct
      * @return
      */
-    public SparseArray<SoulissTriggerDTO> getTriggerMap(Context ct) {
+    public SparseArray<SoulissTriggerDTO> getTriggerMap() {
         SparseArray<SoulissTriggerDTO> ret = new SparseArray<>();
 
         Cursor cursor = database.query(SoulissDB.TABLE_TRIGGERS, SoulissDB.ALLCOLUMNS_TRIGGERS, null, null, null, null,
@@ -985,7 +984,7 @@ public class SoulissDBHelper {
      * @return
      */
     public ArrayList<ClockPieHelper> getTypicalOnClockPie(SoulissTypical tgt, TimeRangeEnum range) {
-        ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<ClockPieHelper>();
+        ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<>();
         LinkedHashMap<Date, Short> comments = getHistoryTypicalHashMap(tgt, range);
         boolean firstGo = true;
         Date accStart = new Date();

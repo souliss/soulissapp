@@ -107,7 +107,6 @@
         <activity
             android:name="ManualUDPTestActivity"
             android:exported="false"
-            android:icon="@drawable/knife1"
             android:label="@string/souliss_app_name">
             <intent-filter>
                 <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>
@@ -139,7 +138,6 @@
         <activity
             android:name="it.angelic.soulissclient.NodesListActivity"
             android:exported="false"
-            android:icon="@drawable/hand1"
             android:label="@string/souliss_app_name"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
@@ -150,7 +148,6 @@
         <activity
             android:name="NodeDetailActivity"
             android:exported="false"
-            android:icon="@drawable/square"
             android:label="@string/souliss_app_name"
             android:uiOptions="splitActionBarWhenNarrow">
             <intent-filter>
@@ -188,7 +185,6 @@
 
         <activity
             android:name=".TagDetailActivity"
-            android:icon="@drawable/home1"
             android:label="@string/souliss_app_name"
             android:parentActivityName=".TagGridActivity"
             android:uiOptions="splitActionBarWhenNarrow">

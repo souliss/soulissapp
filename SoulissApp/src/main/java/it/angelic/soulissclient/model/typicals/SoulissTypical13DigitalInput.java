@@ -39,8 +39,8 @@ public class SoulissTypical13DigitalInput extends SoulissTypical implements ISou
 	@Override
 	public ArrayList<ISoulissCommand> getCommands(Context ctx) {
 		// ritorna le bozze dei comandi, da riempire con la schermata addProgram
-		return new ArrayList<ISoulissCommand>();
-	}
+        return new ArrayList<>();
+    }
 
 	/**
 	 * Ottiene il layout del pannello comandi

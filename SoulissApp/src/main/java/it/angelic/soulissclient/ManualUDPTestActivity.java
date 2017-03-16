@@ -46,15 +46,13 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 	private SoulissDBHelper datasource;
 	private Button refreshButton;
 	private Button stateRequestButton;
-	private Button typreqButton;
-	private Button healthButton;
-	private Button GoButt;
+    private Button healthButton;
+    private Button GoButt;
 	private Handler timeoutHandler;
 	private TextView errorText;
-    private ArrayAdapter<INavDrawerItem> mAdapter;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 		// tema
 		opzioni = SoulissApp.getOpzioni();
 		if (opzioni.isLightThemeSelected())
@@ -72,8 +70,8 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 		// getWindow().addFlags(WindowManager.LayoutParams.FLAG_DITHER);
 		refreshButton = (Button) findViewById(R.id.refreshButton);
 		stateRequestButton = (Button) findViewById(R.id.resetButton);
-		typreqButton = (Button) findViewById(R.id.typreqButton);
-		healthButton = (Button) findViewById(R.id.healthreqButton);
+        Button typreqButton = (Button) findViewById(R.id.typreqButton);
+        healthButton = (Button) findViewById(R.id.healthreqButton);
 		GoButt = (Button) findViewById(R.id.buttonForce);
 		errorText = (TextView) findViewById(R.id.textOutputError);
 
@@ -115,8 +113,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
-
-        mAdapter = new NavDrawerAdapter(ManualUDPTestActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SETTINGS_UDPTEST);
+        ArrayAdapter<INavDrawerItem> mAdapter = new NavDrawerAdapter(ManualUDPTestActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.SETTINGS_UDPTEST);
         mDrawerList.setAdapter(mAdapter);
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout, mDrawerLinear));

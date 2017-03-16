@@ -14,9 +14,6 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.adapters.SoulissFontAwesomeAdapter;
-import it.angelic.soulissclient.adapters.SoulissIconAdapter;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -26,9 +23,6 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.util.FontAwesomeEnum;
-import it.angelic.soulissclient.util.FontAwesomeUtil;
-import us.feras.ecogallery.EcoGallery;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -85,7 +79,7 @@ public class AlertDialogGridHelper {
                             dbt.createOrUpdateTag((SoulissTag) toRename);
                             if (tagRecyclerAdapter != null) {
                                 int tgtPos = -1;
-                                List<SoulissTag> goer = dbt.getRootTags(SoulissApp.getAppContext());
+                                List<SoulissTag> goer = dbt.getRootTags();
 
                                 tagRecyclerAdapter.setTagArray(goer);
                                 try {
@@ -136,7 +130,7 @@ public class AlertDialogGridHelper {
      * @param toRename   puo essere nodo o Scenario
      * @return
      */
-    public static AlertDialog.Builder chooseIconDialog(final Context context, final TagRecyclerAdapter list,
+  /*  public static AlertDialog.Builder chooseIconDialog(final Context context, final TagRecyclerAdapter list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
@@ -147,7 +141,7 @@ public class AlertDialogGridHelper {
         alert2.setTitle(context.getString(R.string.dialog_choose_icon) + " " + toRename.getNiceName());
 
         alert2.setIcon(android.R.drawable.ic_dialog_dialer);
-        // loads gallery and requires icon selection*/
+        // loads gallery and requires icon selection
         final EcoGallery gallery = new EcoGallery(context);
         // final Gallery gallery = new Gallery(context);
         // Gallery gallery = (Gallery) findViewById(R.id.gallery);
@@ -160,9 +154,7 @@ public class AlertDialogGridHelper {
         alert2.setPositiveButton(context.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        /*int pos = gallery.getSelectedItemPosition();
-                        SoulissFontAwesomeAdapter ad = (SoulissFontAwesomeAdapter) gallery.getAdapter();
-                        toRename.setIconResourceId(pos);*/
+
 
                         int pos = gallery.getSelectedItemPosition();
 
@@ -216,7 +208,7 @@ public class AlertDialogGridHelper {
 
         return alert2;
     }
-
+*/
     /**
      * Remove a Scene
      *
@@ -250,7 +242,7 @@ public class AlertDialogGridHelper {
                             }
 
                             // prendo dal DB
-                            List<SoulissTag> goer = datasource.getRootTags(cont);
+                            List<SoulissTag> goer = datasource.getRootTags();
                             ctx.setTagArray(goer);
                             //shift visivo
                             ctx.notifyItemRemoved(tgtPos);

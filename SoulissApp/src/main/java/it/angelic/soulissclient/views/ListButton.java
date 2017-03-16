@@ -1,14 +1,14 @@
 package it.angelic.soulissclient.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 
 /**
  * Un bottone definito per essere utilizzato in una {@link android.widget.ListView}.
  */
-public class ListButton extends Button {
+public class ListButton extends AppCompatButton {
 
         /**
          * Costruttore di default, inizializza il bottone in base ad un contesto e ad un insieme di attributi.

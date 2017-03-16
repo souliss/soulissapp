@@ -66,7 +66,6 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     private SoulissTag collected;
     private SoulissDBTagHelper db;
-    private TagDetailFragment fragment;
     private long tagId;
 
     /**
@@ -150,7 +149,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            fragment = new TagDetailFragment();
+            TagDetailFragment fragment = new TagDetailFragment();
             transaction.replace(R.id.detailPane, fragment);
             transaction.commit();
         }

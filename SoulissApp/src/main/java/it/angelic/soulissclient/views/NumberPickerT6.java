@@ -14,8 +14,6 @@ import it.angelic.soulissclient.Constants;
  * Created by shine@angelic.it on 19/04/2016.
  */
 public class NumberPickerT6 extends NumberPicker {
-    private final int pivotIdx = 51;
-    private final int WINDOW_SIZE = 100;
     private String[] dispVal;
     private float increment;
     private int max;
@@ -52,6 +50,7 @@ public class NumberPickerT6 extends NumberPicker {
         //finestra di selezione
         winIdxIn = winIdxOut - (dispVal.length * increment);
         //Float tempArray[] = new Float[100];
+        int pivotIdx = 51;
         for (int t = pivotIdx; t < dispVal.length; t++) {
             if (winIdxOut + increment > max)
                 break;//ho finito
@@ -109,6 +108,7 @@ public class NumberPickerT6 extends NumberPicker {
 
     private void init() {
         setMinValue(0);
+        int WINDOW_SIZE = 100;
         dispVal = new String[WINDOW_SIZE];
         setMaxValue(WINDOW_SIZE - 1);
 

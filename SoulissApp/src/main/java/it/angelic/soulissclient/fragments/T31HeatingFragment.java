@@ -57,9 +57,6 @@ import static junit.framework.Assert.assertTrue;
 
 
 public class T31HeatingFragment extends AbstractTypicalFragment implements NumberPicker.OnValueChangeListener {
-    private Button asMeasuredButton;
-    private Button buttOff;
-    private Button buttOn;
     private SoulissTypical31Heating collected;
     private SoulissDBHelper datasource = new SoulissDBHelper(SoulissApp.getAppContext());
     private Spinner fanSpiner;
@@ -69,10 +66,8 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
     private ImageView imageFan2;
     private ImageView imageFan3;
     private EditText incrementText;
-    private Handler mHandler;
     private SoulissPreferenceHelper opzioni;
     private NumberPickerT6 tempSlider;
-    private TextView textViewTagDescgroup;
     private TextView textviewStatus;
     // Aggiorna il feedback
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
@@ -109,7 +104,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
 
         }
     };
-    private View viewTagDescgroup;
 
     public static T31HeatingFragment newInstance(int index, SoulissTypical content) {
         T31HeatingFragment f = new T31HeatingFragment();
@@ -178,15 +172,15 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         super.setCollected(collected);
         refreshStatusIcon();
 
-        buttOn = (Button) ret.findViewById(R.id.buttonTurnOn);
-        buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
+        Button buttOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+        Button buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
         textviewStatus = (TextView) ret.findViewById(R.id.textviewStatus);
-        textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
-        viewTagDescgroup = ret.findViewById(R.id.TagDiv);
+        TextView textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
+        View viewTagDescgroup = ret.findViewById(R.id.TagDiv);
         tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSlider);
         functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
         fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
-        asMeasuredButton = (Button) ret.findViewById(R.id.asMeasuredButton);
+        Button asMeasuredButton = (Button) ret.findViewById(R.id.asMeasuredButton);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
         imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
         imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
@@ -198,7 +192,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         final android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
         //Fragment details = manager.findFragmentById(R.id.hvacChart);
 
-        mHandler = new Handler();
+        Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {

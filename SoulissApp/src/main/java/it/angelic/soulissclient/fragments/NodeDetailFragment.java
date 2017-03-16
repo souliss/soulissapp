@@ -112,7 +112,6 @@ public class NodeDetailFragment extends ListFragment {
             ta.setmBoundService(null);
         }
     };
-    private Handler timeoutHandler;
     // private Toolbar actionBar;
     private TextView upda;
     // Aggiorna il feedback
@@ -230,7 +229,7 @@ public class NodeDetailFragment extends ListFragment {
             getActivity().setTheme(R.style.DarkThemeSelector);
 
         super.onActivityCreated(savedInstanceState);
-        timeoutHandler = new Handler();
+        Handler timeoutHandler = new Handler();
         setHasOptionsMenu(true);
         datasource = new SoulissDBHelper(getActivity());
         View detailsFrame = getActivity().findViewById(R.id.detailPane);

@@ -64,14 +64,12 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	private SoulissTypical collected;
 	// private SoulissTypical related;
 	private SeekBar timer;
-	private Button btSleep;
 
-	// Color change listener.
-	private VisualizerView mVisualizerView;
+    // Color change listener.
+    private VisualizerView mVisualizerView;
 	private TextView timerInfo;
-	private Button buttAuto;
-	private TextView autoInfo;
-	private TextView infoTyp;
+    private TextView autoInfo;
+    private TextView infoTyp;
 	private SwitchCompat togMassive;
 	private TextView infoHistory;
 
@@ -156,12 +154,12 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		warnerCheck = (CheckBox) ret.findViewById(R.id.checkBoxWarn);
 		warner = (NumberPicker) ret.findViewById(R.id.warnTimer);
 		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-		buttAuto = (Button) ret.findViewById(R.id.buttonAuto);
-		timer = (SeekBar) ret.findViewById(R.id.sleepBar);
+        Button buttAuto = (Button) ret.findViewById(R.id.buttonAuto);
+        timer = (SeekBar) ret.findViewById(R.id.sleepBar);
 		timerInfo = (TextView) ret.findViewById(R.id.textviewTimerInfo);
 		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
-		btSleep = (Button) ret.findViewById(R.id.sleep);
-		infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
+        Button btSleep = (Button) ret.findViewById(R.id.sleep);
+        infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
         infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
 		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
         togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);

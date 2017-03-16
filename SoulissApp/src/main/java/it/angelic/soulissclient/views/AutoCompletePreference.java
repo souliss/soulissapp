@@ -15,7 +15,7 @@ import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 
 public class AutoCompletePreference extends EditTextPreference {
 
-    private static AutoCompleteTextView mEditText = null;
+    private AutoCompleteTextView mEditText = null;
     private final SoulissGlobalPreferenceHelper gbPref;
 
     /**

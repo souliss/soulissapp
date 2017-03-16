@@ -87,7 +87,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     };
     private TextView info1;
     private TextView info2;
-    private FloatingActionButton mDrawerFloatButt;
     private Handler timeoutHandler = new Handler();
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -152,7 +151,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         //getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerLinear = (LinearLayout) findViewById(R.id.left_drawer_linear);
-        mDrawerFloatButt = (FloatingActionButton) findViewById(R.id.fabSmall);
+        FloatingActionButton mDrawerFloatButt = (FloatingActionButton) findViewById(R.id.fabSmall);
         SoulissDBTagHelper db = new SoulissDBTagHelper(parentActivity);
         SoulissDBHelper.open();
         if (db.countFavourites() > 0) {

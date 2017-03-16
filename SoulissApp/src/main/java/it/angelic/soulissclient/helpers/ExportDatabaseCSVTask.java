@@ -31,7 +31,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 {
     private final String TAG = "SoulissApp:" + getClass().getName();
     private final SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ITALIAN);
-    Context context;
+    private Context context;
     //private ProgressDialog dialog;
     private int exportedNodes;
     // can use UI thread here

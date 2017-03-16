@@ -28,7 +28,6 @@ public class PreferencesActivity extends PreferenceActivity {
 
     // SoulissPreferenceHelper opzioni;
     private String currentScreen;
-    private SoulissPreferenceHelper opzioni;
 
 
     @Override
@@ -45,7 +44,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        opzioni = SoulissApp.getOpzioni();
+        SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         super.onCreate(savedInstanceState);
         //col tema sparisce l'action bar, chiaramente :/
         /*if (opzioni.isLightThemeSelected()) {

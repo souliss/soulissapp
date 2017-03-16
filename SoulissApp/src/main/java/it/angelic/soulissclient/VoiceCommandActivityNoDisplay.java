@@ -43,7 +43,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
 
             return;
         }
-        for (SoulissScene scenario : db.getScenes(context)) {
+        for (SoulissScene scenario : db.getScenes()) {
             if (yesMan.toLowerCase().contains(scenario.getName().toLowerCase())) {
                 Log.w(Constants.TAG, "Voice activated Scenario:!! :" + scenario.getName());
                 Toast.makeText(context, scenario.getName() + " " + context.getString(R.string.command_sent), Toast.LENGTH_SHORT).show();

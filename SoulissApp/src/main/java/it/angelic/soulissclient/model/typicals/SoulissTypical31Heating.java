@@ -62,10 +62,6 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     private static final long serialVersionUID = 1113488985342542012L;
     private float TemperatureMeasuredVal;
     private float TemperatureSetpointVal;
-    // private SoulissNode parentd;
-    // Context ctx;
-    private SoulissTypical TemperatureSetpointValue;
-    private SoulissTypical TemperatureSetpointValue2;
 
     //AUTOF
     public SoulissTypical31Heating(Context co, SoulissPreferenceHelper pp) {
@@ -79,8 +75,8 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
                 .getTypicalDTO().getOutput();
 
         // Serve solo per dare comandi, da togliere
-        TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
-        TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
+        SoulissTypical temperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3));
+        SoulissTypical temperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4));
         short TemperatureSetpointValue = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 3)).getTypicalDTO().getOutput();
         short TemperatureSetpointValue2 = getParentNode().getTypical((short) (getTypicalDTO().getSlot() + 4)).getTypicalDTO().getOutput();
 

@@ -24,13 +24,12 @@ import it.angelic.soulissclient.Constants;
 public class SoulissGlobalPreferenceHelper implements Serializable {
     // private static final Object countLock = new Object();
     private static final long serialVersionUID = -7522233636731669014L;
-    private final Context contx;
     private SharedPreferences customCachedPrefs;
     private Set<String> ipDictionary;
 
     public SoulissGlobalPreferenceHelper(Context contx) {
         super();
-        this.contx = contx;
+        Context contx1 = contx;
 
         initializePrefs(contx);
     }

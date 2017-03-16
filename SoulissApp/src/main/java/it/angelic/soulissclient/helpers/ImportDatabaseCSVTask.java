@@ -79,7 +79,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
      * application context.
      */
     private Activity activity;
-    ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onPreExecute()
