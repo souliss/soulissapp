@@ -37,7 +37,7 @@ public class SoulissTypical6nAnalogue extends SoulissTypical implements ISouliss
     @Override
     public String getOutputDesc() {
         if (Calendar.getInstance().getTime().getTime() - typicalDTO.getRefreshedAt().getTime().getTime() < (prefs.getDataServiceIntervalMsec() * 3))
-            return "" + String.format("%.2f", getOutputFloat());
+            return "OK";
         else
             return context.getString(R.string.stale);
 
@@ -60,6 +60,11 @@ public class SoulissTypical6nAnalogue extends SoulissTypical implements ISouliss
         //return (float) (Math.round(temp2*100.0)/100.0);
         return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
+    }
+
+    @Override
+    public String getTypedOutputValue() {
+        return String.format("%.2f", getOutputFloat());
     }
 
     @Override

@@ -67,6 +67,14 @@ public class SoulissTypical52TemperatureSensor extends SoulissTypical implements
 
 	}
 
+    @Override
+    public String getTypedOutputValue() {
+        StringBuilder strout = new StringBuilder();
+        strout.append(" ").append(String.format("%.2f", getOutputFloat())).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C")
+                .append(" (").append(String.format("%.2f", getOutputFloat())).append("°").append(prefs.isFahrenheitChosen() ? "F" : "C").append(")");
+        return strout.toString();
+    }
+
 	public String getOutputCelsius() {
 		return Constants.twoDecimalFormat.format(getOutputFloat() )+"°C";
 	}

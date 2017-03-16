@@ -45,7 +45,7 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
         cont.removeAllViews();
         final TextView cmd = new TextView(ctx);
 
-        cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputPascal()));
+        cmd.setText(Html.fromHtml("<b>Reading:</b> " + getTypedOutputValue()));
         if (prefs.isLightThemeSelected())
             cmd.setTextColor(ctx.getResources().getColor(R.color.black));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -103,7 +103,7 @@ public class SoulissTypical58PressureSensor extends SoulissTypical implements IS
         return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
     }
 
-    private String getOutputPascal() {
+    public String getTypedOutputValue() {
         return Constants.twoDecimalFormat.format(getOutputFloat()) + " hPa";
     }
 }

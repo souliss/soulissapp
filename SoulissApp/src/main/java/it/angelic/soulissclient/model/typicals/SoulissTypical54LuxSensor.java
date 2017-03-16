@@ -48,7 +48,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 	/**
 	 * La conversione del half fp si basa su HalfFloatUtils.toFloat
 	 */
-	public String getOutputLux() {
+	public String getTypedOutputValue() {
 		return Constants.twoDecimalFormat.format(getOutputFloat()) + " Lux";
 	}
 	
@@ -81,7 +81,7 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 		cont.removeAllViews();
 		final TextView cmd = new TextView(ctx);
 
-		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getOutputLux()));
+		cmd.setText(Html.fromHtml("<b>Reading:</b> " + getTypedOutputValue()));
 		if (prefs.isLightThemeSelected())
 			cmd.setTextColor(ctx.getResources().getColor(R.color.black));
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,

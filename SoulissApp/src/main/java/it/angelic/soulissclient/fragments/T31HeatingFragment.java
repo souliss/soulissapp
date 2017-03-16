@@ -85,7 +85,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
                 collected = (SoulissTypical31Heating) coll.getTypical(collected.getTypicalDTO().getSlot());
                 refreshStatusIcon();
                 //refreshTagsInfo();
-                textviewStatus.setText(collected.getOutputLongDesc());
+                textviewStatus.setText(collected.getTypedOutputValue());
                 Log.e(Constants.TAG, "Setting Temp Slider:" + collected.getTemperatureSetpointVal());
 
                 if (collected.isFannTurnedOn(1))

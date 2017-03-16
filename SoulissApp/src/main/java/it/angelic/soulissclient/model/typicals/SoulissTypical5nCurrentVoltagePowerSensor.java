@@ -62,6 +62,24 @@ public class SoulissTypical5nCurrentVoltagePowerSensor extends SoulissTypical  i
 
 	}
 
+    @Override
+    public String getTypedOutputValue() {
+        String sUnit = "";
+        switch (typ) {
+
+            case Constants.Typicals.Souliss_T55_VoltageSensor:
+                sUnit = "V";
+                break;
+            case Constants.Typicals.Souliss_T56_CurrentSensor:
+                sUnit = "A";
+                break;
+            case Constants.Typicals.Souliss_T57_PowerSensor:
+                sUnit = "W";
+                break;
+        }
+        return df.format(getOutputFloat()) + sUnit;
+    }
+
 	public String getOutputWatt() {
 		
 		return df.format(getOutputFloat() );

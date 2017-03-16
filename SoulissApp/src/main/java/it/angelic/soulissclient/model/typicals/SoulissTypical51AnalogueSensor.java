@@ -68,6 +68,12 @@ public class SoulissTypical51AnalogueSensor extends SoulissTypical implements IS
 	    return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 
 	}
+
+	@Override
+	public String getTypedOutputValue() {
+		return "" + getOutputFloat();//unknown type
+	}
+
 	@Override
 	public void getActionsLayout(Context ctx, final LinearLayout contLinear) {
 		WindowManager mWinMgr = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
