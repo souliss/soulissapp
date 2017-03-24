@@ -86,7 +86,7 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder.textUpdated = (TextView) convertView.findViewById(R.id.TextViewUpdated);
             holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
             holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
-            holder.image = (TextView) convertView.findViewById(R.id.node_icon);
+            holder.image = (TextView) convertView.findViewById(R.id.typ_awe_icon);
             holder.imageFav = (TextView) convertView.findViewById(R.id.imageButtonFav);
             holder.imageTag = (TextView) convertView.findViewById(R.id.imageButtonTag);
 

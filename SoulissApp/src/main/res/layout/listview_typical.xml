@@ -33,7 +33,7 @@
                 android:src="@drawable/overflow_dots"/>
 
             <TextView
-                android:id="@+id/node_icon"
+                android:id="@+id/typ_awe_icon"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -54,7 +54,7 @@
                 android:id="@+id/imageButtonTag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/node_icon"
+                android:layout_below="@id/typ_awe_icon"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/imageButtonFav"
                 android:padding="2dp"
@@ -65,7 +65,7 @@
                 style="@style/CodeFontTitle"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="16dip"
-                android:layout_toRightOf="@id/node_icon"
+                android:layout_toRightOf="@id/typ_awe_icon"
                 android:ellipsize="end"
                 android:lines="1"
                 android:textIsSelectable="false">
@@ -75,7 +75,7 @@
                 android:id="@+id/TextViewUpdated"
                 style="@style/CodeFontMain"
                 android:layout_below="@id/TextViewSlot"
-                android:layout_toRightOf="@id/node_icon"
+                android:layout_toRightOf="@id/typ_awe_icon"
                 android:ellipsize="end"
                 android:textIsSelectable="false">
             </TextView>
@@ -84,7 +84,7 @@
                 android:id="@+id/textViewStatus"
                 style="@style/CodeFontMain"
                 android:layout_below="@id/TextViewUpdated"
-                android:layout_toRightOf="@id/node_icon"
+                android:layout_toRightOf="@id/typ_awe_icon"
                 android:text="@string/status"/>
 
             <TextView

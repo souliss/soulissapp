@@ -406,4 +406,5 @@
     <string name="step">ШАГ</string>
     <string name="active_config">Активная конфигурация</string>
     <string name="importing_be_patient">Выполняется экспорт %1$s пожалуйста, подождите</string>
+    <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
 </resources>

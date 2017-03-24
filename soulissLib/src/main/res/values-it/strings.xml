@@ -410,6 +410,7 @@
     <string name="opt_launcher">configurazione Dashboard</string>
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importazione %1$s in corso, prego attendere</string>
+    <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
 
 
 </resources>

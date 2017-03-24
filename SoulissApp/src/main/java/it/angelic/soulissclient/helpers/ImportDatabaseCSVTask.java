@@ -51,52 +51,24 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     private static final int PHASE_TAG_TYP = 5;
 
     // private ProgressDialog dialog;
-
-    private SoulissDBLauncherHelper databaseLauncher;
-    private SoulissDBTagHelper database;
+    /**
+     * application context.
+     */
+    private Activity activity;
     private SharedPreferences customSharedPreference;
+    private SoulissDBTagHelper database;
+    private SoulissDBLauncherHelper databaseLauncher;
     private File file;
-    private int tottyp = 0;
-    private int totNodes = 0;
+    private ProgressDialog mProgressDialog;
 
     // can use UI thread here
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setImportFile(File file) {
-        this.file = file;
-    }
+    private int totNodes = 0;
+    private int tottyp = 0;
 
     public ImportDatabaseCSVTask(Activity activity) {
         this.activity = activity;
         //customSharedPreference = activity.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
         customSharedPreference = PreferenceManager.getDefaultSharedPreferences(activity);
-    }
-
-    /**
-     * application context.
-     */
-    private Activity activity;
-    private ProgressDialog mProgressDialog;
-
-    @Override
-    protected void onPreExecute()
-
-    {
-        // dialog = new ProgressDialog(context);
-        // dialog.setMessage("Exporting database...");
-        // dialog.show();
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                mProgressDialog = new ProgressDialog(activity);
-                mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
-                // mProgressDialog.setTitle(SoulissClient.getAppContext().getString(R.string.));
-                mProgressDialog.setTitle("Importing DB");
-            }
-        });
-
     }
 
     // automatically done on worker thread (separate from UI thread)
@@ -108,9 +80,9 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         database = new SoulissDBTagHelper(SoulissApp.getAppContext());
         databaseLauncher = new SoulissDBLauncherHelper(SoulissApp.getAppContext());
         File importDir;
-        try {
-            Looper.prepare();
 
+        Looper.prepare();
+        try {
             importDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
 
             if (!importDir.exists())
@@ -134,7 +106,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             CSVReader csvReader = new CSVReader(new FileReader(file));
             String[] temp;
             SoulissDBHelper.open();
-            // SQLiteDatabase db = database.getDatabase();
+            //forza truncate, ma se non era vuota non stavamo qua
             database.truncateImportTables();
             SharedPreferences.Editor editor = customSharedPreference.edit();
             // sistema configurato
@@ -156,7 +128,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             Log.w(Constants.TAG, "Importing " + linesNum + " lines");
             csvReader.close();
             csvReader = new CSVReader(new FileReader(file));
-
+            //import nodes etc.
             processCsv(csvReader, editor, linesNum);
             editor.apply();
             csvReader.close();
@@ -182,10 +154,257 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
             File filePrefs = new File(importDir, file.getName().substring(0, file.getName().lastIndexOf("_")) + "_SoulissApp.prefs");
             SoulissUtils.loadSharedPreferencesFromFile(SoulissApp.getAppContext(), filePrefs);
         } catch (Exception e) {
-            Log.e(Constants.TAG, "Errore import prefs", e);
+            Log.e(Constants.TAG, "Errore import prefs:", e);
         }
 
         return true;
+
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    private void insertDashboard(String[] temp) {
+        try {
+            LauncherElement reto = new LauncherElement();
+            reto.setId(Long.parseLong(temp[0]));
+            reto.setComponentEnum(LauncherElementEnum.valueOf(temp[1]));
+            reto.setOrder(Short.parseShort(temp[2]));
+
+            try {
+                ISoulissObject assign = null;
+                if (temp[1].length() > 0 && temp[2].length() == 0) {//nodeId
+                    SoulissNode fat = database.getSoulissNode(Integer.valueOf(temp[1]));
+                    assign = fat;
+                } else if (temp[2].length() > 0) {//typ
+                    SoulissTypical typ = database.getTypical(Integer.valueOf(temp[1]), Short.valueOf(temp[2]));
+                    assign = typ;
+                } else if (temp[3].length() > 0) {//typ
+                    SoulissTag tag = database.getTag(Integer.valueOf(temp[3]));
+                    assign = tag;
+                } else if (temp[4].length() > 0) {//typ
+                    SoulissScene sc = database.getScene(Integer.valueOf(temp[4]));
+                    assign = sc;
+                } else {
+                    throw new SoulissModelException("Caso non contemplato in immportazione");
+                }
+
+                reto.setLinkedObject(assign);
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            try {
+                if (temp[5].length() > 0)//title
+                    reto.setTitle(temp[5]);
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            try {
+                if (temp[6].length() > 0)//title
+                    reto.setDesc(temp[6]);
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            try {
+                if (temp[7].length() > 0)//title
+                    reto.setIsFullSpan(!"0".equals(temp[7]));
+            } catch (Exception e) {
+                Log.w(Constants.TAG, e.getMessage());
+            }
+
+            databaseLauncher.addElement(reto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertLog(String[] temp) {
+        try {
+            SoulissLogDTO log = new SoulissLogDTO();
+            log.setLogId(Long.valueOf(temp[0]));
+            log.setNodeId(Short.valueOf(temp[1]));
+            log.setSlot(Short.valueOf(temp[2]));
+            log.setLogValue(Float.valueOf(temp[3]));
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date(Long.parseLong(temp[4])));
+            log.setLogTime(cal);
+            log.persist();
+        } catch (Exception e) {
+            Log.e("skipped log", e.getMessage());
+        }
+    }
+
+    private void insertNode(String[] temp) {
+
+        SoulissNode nit = new SoulissNode(activity, Short.valueOf(temp[1]));
+        nit.setHealth(Short.valueOf(temp[2]));
+        try {
+            nit.setIconResourceId(Integer.valueOf(temp[3]));
+        } catch (Exception e) {
+            // null icon
+        }
+        try {
+            nit.setName(temp[4]);
+        } catch (Exception e) {
+            // null name
+        }
+
+        try {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date(Long.valueOf(temp[5])));
+            nit.setRefreshedAt(cal);
+        } catch (Exception e) {
+            Log.w("Untimed node", e.getMessage());
+        }
+        database.createOrUpdateNode(nit);
+    }
+
+    /*
+    public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
+            COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH, COLUMN_TAG_ORDER};
+     */
+    private void insertTag(String[] temp) {
+        SoulissTag tIns = new SoulissTag();
+        tIns.setTagId(Long.parseLong(temp[0]));
+
+        try {
+            if (temp[1].length() > 0)
+                tIns.setName(temp[1]);
+        } catch (Exception e) {
+            Log.w(Constants.TAG, e.getMessage());
+        }
+
+        try {
+            tIns.setIconResourceId(Integer.valueOf(temp[2]));
+        } catch (Exception e) {
+            // NO icon here
+        }
+        try {
+            if (temp[3].length() > 0)
+                tIns.setImagePath(temp[3]);
+        } catch (Exception e) {
+            Log.w(Constants.TAG, e.getMessage());
+        }
+        try {
+            tIns.setTagOrder(Integer.valueOf(temp[4]));
+        } catch (Exception e) {
+            Log.w(Constants.TAG, e.getMessage());
+        }
+        try {
+            tIns.setFatherId(Long.valueOf(temp[5]));
+        } catch (Exception e) {
+            Log.w(Constants.TAG, e.getMessage());
+            tIns.setFatherId(null);
+        }
+
+        database.createOrUpdateTag(tIns);
+    }
+
+    /*
+    public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
+                COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
+     */
+    private void insertTagTyp(String[] temp) {
+        try {
+            SoulissTag hero = database.getTag(Long.parseLong(temp[2]));
+            SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]), Short.valueOf(temp[0]));
+
+            database.createOrUpdateTagTypicalNode(polloTyp, hero, Integer.valueOf(temp[3]));
+        } catch (SQLDataException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private SoulissTypicalDTO insertTypical(String[] temp) {
+        SoulissTypicalDTO typo = new SoulissTypicalDTO();
+        typo.setNodeId(Short.valueOf(temp[0]));
+        typo.setTypical(Short.valueOf(temp[1]));
+        typo.setSlot(Short.valueOf(temp[2]));
+
+        try {
+            typo.setInput(Byte.valueOf(temp[3]));
+        } catch (Exception e) {
+            Log.w("typical W/o input", e.getMessage());
+        }
+        typo.setOutput(Short.valueOf(temp[4]));
+        try {
+            typo.setIconId(Integer.valueOf(temp[5]));
+        } catch (Exception e) {
+            // NO icon here
+        }
+        try {
+            if (temp[6].length() > 0)
+                typo.setFavourite(temp[6].equals("1"));
+        } catch (Exception e) {
+            Log.w("NOT Favourite", e.getMessage());
+        }
+        try {
+            if (temp[7].length() > 0)
+                typo.setName(temp[7]);
+        } catch (Exception e) {
+            Log.w("Unnamed typical", e.getMessage());
+        }
+        try {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date(Long.valueOf(temp[8])));
+            typo.setRefreshedAt(cal);
+        } catch (Exception e) {
+            Log.w("Untimed typ", e.getMessage());
+        }
+        try {
+            typo.setWarnDelayMsec(Integer.valueOf(temp[9]));
+        } catch (Exception e) {
+            // NO icon here
+        }
+        typo.persist();
+        return typo;
+    }
+
+    @Override
+    protected void onPostExecute(final Boolean success)
+
+    {
+        if (success) {
+            String formatStr = activity.getString(R.string.imported_success);
+
+            Toast.makeText(activity,
+                    String.format(formatStr, totNodes, tottyp), Toast.LENGTH_SHORT).show();
+            final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
+
+            preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
+            // preferencesActivity.putExtra
+            // (PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
+            preferencesActivity.setAction("db_setup");
+            preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            activity.startActivity(preferencesActivity);
+
+        } else {
+            Toast.makeText(SoulissApp.getAppContext(), "Import failed", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    protected void onPreExecute()
+
+    {
+        // dialog = new ProgressDialog(context);
+        // dialog.setMessage("Exporting database...");
+        // dialog.show();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                mProgressDialog = new ProgressDialog(activity);
+                mProgressDialog.setIcon(android.R.drawable.ic_dialog_info);
+                // mProgressDialog.setTitle(SoulissClient.getAppContext().getString(R.string.));
+                mProgressDialog.setTitle("Importing DB");
+            }
+        });
 
     }
 
@@ -288,231 +507,10 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         }
     }
 
-    private void insertDashboard(String[] temp) {
-        try {
-            LauncherElement reto = new LauncherElement();
-            reto.setId(Long.parseLong(temp[0]));
-            reto.setComponentEnum(LauncherElementEnum.valueOf(temp[1]));
-            reto.setOrder(Short.parseShort(temp[2]));
-
-            try {
-                ISoulissObject assign = null;
-                if (temp[1].length() > 0 && temp[2].length() == 0) {//nodeId
-                    SoulissNode fat = database.getSoulissNode(Integer.valueOf(temp[1]));
-                    assign = fat;
-                } else if (temp[2].length() > 0) {//typ
-                    SoulissTypical typ = database.getTypical(Integer.valueOf(temp[1]), Short.valueOf(temp[2]));
-                    assign = typ;
-                } else if (temp[3].length() > 0) {//typ
-                    SoulissTag tag = database.getTag(Integer.valueOf(temp[3]));
-                    assign = tag;
-                } else if (temp[4].length() > 0) {//typ
-                    SoulissScene sc = database.getScene(Integer.valueOf(temp[4]));
-                    assign = sc;
-                } else {
-                    throw new SoulissModelException("Caso non contemplato in immportazione");
-                }
-
-                reto.setLinkedObject(assign);
-            } catch (Exception e) {
-                Log.w(Constants.TAG, e.getMessage());
-            }
-
-            try {
-                if (temp[5].length() > 0)//title
-                    reto.setTitle(temp[5]);
-            } catch (Exception e) {
-                Log.w(Constants.TAG, e.getMessage());
-            }
-
-            try {
-                if (temp[6].length() > 0)//title
-                    reto.setDesc(temp[6]);
-            } catch (Exception e) {
-                Log.w(Constants.TAG, e.getMessage());
-            }
-
-            try {
-                if (temp[7].length() > 0)//title
-                    reto.setIsFullSpan(!"0".equals(temp[7]));
-            } catch (Exception e) {
-                Log.w(Constants.TAG, e.getMessage());
-            }
-
-            databaseLauncher.addElement(reto);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    public static final String[] ALLCOLUMNS_TAGS_TYPICAL = {COLUMN_TAG_TYP_SLOT,
-                COLUMN_TAG_TYP_NODE_ID, COLUMN_TAG_TYP_TAG_ID, COLUMN_TAG_TYP_PRIORITY};
-     */
-    private void insertTagTyp(String[] temp) {
-        try {
-            SoulissTag hero = database.getTag(Long.parseLong(temp[2]));
-            SoulissTypical polloTyp = database.getTypical(Short.valueOf(temp[1]),Short.valueOf(temp[0]));
-
-            database.createOrUpdateTagTypicalNode( polloTyp ,hero,Integer.valueOf(temp[3]));
-        } catch (SQLDataException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /*
-    public static final String[] ALLCOLUMNS_TAGS = {COLUMN_TAG_ID, COLUMN_TAG_NAME,
-            COLUMN_TAG_ICONID, COLUMN_TAG_IMGPTH, COLUMN_TAG_ORDER};
-     */
-    private void insertTag(String[] temp) {
-        SoulissTag tIns = new SoulissTag();
-        tIns.setTagId(Long.parseLong(temp[0]));
-
-        try {
-            if (temp[1].length() > 0)
-                tIns.setName(temp[1]);
-        } catch (Exception e) {
-            Log.w(Constants.TAG, e.getMessage());
-        }
-
-        try {
-            tIns.setIconResourceId(Integer.valueOf(temp[2]));
-        } catch (Exception e) {
-            // NO icon here
-        }
-        try {
-            if (temp[3].length() > 0)
-                tIns.setImagePath(temp[3]);
-        } catch (Exception e) {
-            Log.w(Constants.TAG, e.getMessage());
-        }
-        try {
-            tIns.setTagOrder(Integer.valueOf(temp[4]));
-        } catch (Exception e) {
-            Log.w(Constants.TAG, e.getMessage());
-        }
-        try {
-            tIns.setFatherId(Long.valueOf(temp[5]));
-        } catch (Exception e) {
-            Log.w(Constants.TAG, e.getMessage());
-            tIns.setFatherId(null);
-        }
-
-        database.createOrUpdateTag(tIns);
-    }
-
-    private void insertLog(String[] temp) {
-        try {
-            SoulissLogDTO log = new SoulissLogDTO();
-            log.setLogId(Long.valueOf(temp[0]));
-            log.setNodeId(Short.valueOf(temp[1]));
-            log.setSlot(Short.valueOf(temp[2]));
-            log.setLogValue(Float.valueOf(temp[3]));
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date(Long.parseLong(temp[4])));
-            log.setLogTime(cal);
-            log.persist();
-        } catch (Exception e) {
-            Log.e("skipped log", e.getMessage());
-        }
-    }
-
-    private SoulissTypicalDTO insertTypical(String[] temp) {
-        SoulissTypicalDTO typo = new SoulissTypicalDTO();
-        typo.setNodeId(Short.valueOf(temp[0]));
-        typo.setTypical(Short.valueOf(temp[1]));
-        typo.setSlot(Short.valueOf(temp[2]));
-
-        try {
-            typo.setInput(Byte.valueOf(temp[3]));
-        } catch (Exception e) {
-            Log.w("typical W/o input", e.getMessage());
-        }
-        typo.setOutput(Short.valueOf(temp[4]));
-        try {
-            typo.setIconId(Integer.valueOf(temp[5]));
-        } catch (Exception e) {
-            // NO icon here
-        }
-        try {
-            if (temp[6].length() > 0)
-                typo.setFavourite(temp[6].equals("1"));
-        } catch (Exception e) {
-            Log.w("NOT Favourite", e.getMessage());
-        }
-        try {
-            if (temp[7].length() > 0)
-                typo.setName(temp[7]);
-        } catch (Exception e) {
-            Log.w("Unnamed typical", e.getMessage());
-        }
-        try {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date(Long.valueOf(temp[8])));
-            typo.setRefreshedAt(cal);
-        } catch (Exception e) {
-            Log.w("Untimed typ", e.getMessage());
-        }
-        try {
-            typo.setWarnDelayMsec(Integer.valueOf(temp[9]));
-        } catch (Exception e) {
-            // NO icon here
-        }
-        typo.persist();
-        return typo;
-    }
-
-    private void insertNode(String[] temp) {
-
-        SoulissNode nit = new SoulissNode(activity, Short.valueOf(temp[1]));
-        nit.setHealth(Short.valueOf(temp[2]));
-        try {
-            nit.setIconResourceId(Integer.valueOf(temp[3]));
-        } catch (Exception e) {
-            // null icon
-        }
-        try {
-            nit.setName(temp[4]);
-        } catch (Exception e) {
-            // null name
-        }
-
-        try {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date(Long.valueOf(temp[5])));
-            nit.setRefreshedAt(cal);
-        } catch (Exception e) {
-            Log.w("Untimed node", e.getMessage());
-        }
-        database.createOrUpdateNode(nit);
-    }
-
     // can use UI thread here
 
-    @Override
-    protected void onPostExecute(final Boolean success)
-
-    {
-        if (success) {
-            String formatStr = activity.getString(R.string.imported_success);
-
-            Toast.makeText(activity,
-                    String.format(formatStr, totNodes, tottyp), Toast.LENGTH_SHORT).show();
-            final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
-
-            preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
-            // preferencesActivity.putExtra
-            // (PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
-            preferencesActivity.setAction("db_setup");
-            preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            activity.startActivity(preferencesActivity);
-
-        } else {
-            Toast.makeText(SoulissApp.getAppContext(), "Import failed", Toast.LENGTH_SHORT).show();
-        }
-
+    public void setImportFile(File file) {
+        this.file = file;
     }
 
 }

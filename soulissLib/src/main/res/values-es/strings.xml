@@ -410,6 +410,7 @@
     <string name="step">STEP</string>
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
+    <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
 
 
 </resources>

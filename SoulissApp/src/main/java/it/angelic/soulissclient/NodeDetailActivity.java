@@ -81,7 +81,6 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
             finish();
             return;
         }
-        //super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.get("NODO") != null) {
@@ -96,16 +95,10 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
             // questo fragment viene usato anche per typ detail
             getSupportFragmentManager().beginTransaction().add(R.id.detailPane, details).commit();
         }
-
     }
 
     /**
      * chiamato dal layout
-     * <p/>
-     * public void startOptions(View v){
-     * opzioni.setBestAddress();
-     * Toast.makeText(this, getString(R.string.ping)+" - "+getString(R.string.command_sent), Toast.LENGTH_SHORT).show();
-     * }
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,12 +109,11 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextView icon = (TextView) findViewById(R.id.node_icon);
+        TextView icon = (TextView) findViewById(R.id.node_icon);//nullable
         switch (item.getItemId()) {
             case android.R.id.home:
 
                 if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
-
                     if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
                         mDrawerLayout.closeDrawer(mDrawerLinear);
                     } else {
@@ -142,16 +134,12 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
                 AlertDialog.Builder alert2 = AlertDialogHelper.chooseIconDialog(this, icon, null, database, collected);
                 alert2.show();
                 return true;
-
             case R.id.Rinomina:
                 AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, getActionTitleTextView(), null, database,
                         collected);
                 alert.show();
                 return true;
-           /* case R.id.Ricostruisci:
-                AlertDialog.Builder alertt = AlertDialogHelper.rebuildNodeDialog(this,  collected, opzioni);
-                alertt.show();
-                return true;*/
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -173,7 +161,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
     // meccanismo per timeout detection
     /*
-	 * private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
+     * private BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
 	 * 
 	 * @Override public void onReceive(Context context, Intent intent) {
 	 * Log.w(TAG, "Posting timeout from " + intent.toString()); Bundle extras =

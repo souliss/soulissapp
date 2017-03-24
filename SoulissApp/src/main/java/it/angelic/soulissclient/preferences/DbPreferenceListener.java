@@ -70,7 +70,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
         } else if ("dbopt".equals(arg0.getKey())) {
             try {
                 datasource.clean();
-                Toast.makeText(parent, "Vacuum Complete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(parent, parent.getString(R.string.opt_vacuum_complete) + datasource.getSize(), Toast.LENGTH_SHORT).show();
                 return true;
             } catch (Exception e) {
                 Toast.makeText(parent, "CLEAN ERROR: "+e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -118,7 +118,7 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
                 FilenameFilter filter = new FilenameFilter() {
                     public boolean accept(File dir, String filename) {
                         File sel = new File(dir, filename);
-                        return filename.endsWith(DB_BACKUP_FORMAT) || sel.isDirectory();
+                        return filename.endsWith(DB_BACKUP_FORMAT);
                     }
                 };
                 mFileList = mPath.list(filter);
