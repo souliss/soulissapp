@@ -142,7 +142,7 @@
     <string name="status_geoprovider_disabled">Geo provider <b>disabilitato</b> o permesso mancante</string>
 
     <!-- OPZIONI -->
-    <string name="opt_credits">Credits</string>
+    <string name="opt_credits">Crediti</string>
     <string name="opt_credits_desc">Souliss è un progetto open-source con diversi collaboratori. Tap per l\'elenco</string>
     <string name="opt_userindex">Index Utente</string>
     <string name="opt_userindex_desc">Indica a Souliss il tipo di dispositivo. Ora vale %1$d. Non dovrebbe essere necessario cambiarlo</string>
@@ -152,11 +152,11 @@
     <string name="opt_summary_broadcast">Souliss proverà a determinare l\'indirizzo del bridge automaticamente</string>
     <string name="opt_networkdesc">Impostazioni rete locale e remota</string>
     <string name="opt_dbexp">Esporta DB</string>
-    <string name="opt_dbexp_desc">Scrivi un .csv contenente la configurazione attuale e la storia dei nodi</string>
+    <string name="opt_dbexp_desc">Scrivi due .csv contenenti il modello attuale (nodi, dispositivi, ecc.) e le opzioni</string>
     <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
     <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importa DB</string>
-    <string name="opt_dbimp_desc">Importa .csv. Attenzione! La configurazione attuale verrà sovrascritta!</string>
+    <string name="opt_dbimp_desc">Importa .csv. Attenzione! Le opzioni ed il modello verranno sovrascritti sulla configurazione attiva: %1$s</string>
     <string name="opt_db">Modello</string>
     <string name="opt_db_desc">(Ri)crea database, importazione ed esportazione</string>
     <string name="opt_dbdrop">Drop DB</string>
@@ -190,13 +190,6 @@
     <string name="opt_serviceinterval_desc">Aggiornamenti frequenti richiedono più batteria e risorse</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Con il webserver Souliss puoi esporre i dispositivi sul web. Apre la porta 8080</string>
-    <string name="opt_WebServerPort">Porta HTTP</string>
-    <string name="opt_WebServerPort_desc">Porta usata per le connessioni in entrata</string>
-    <string name="opt_WebServerUser">User</string>
-    <string name="opt_WebServerUser_desc">Se valorizzati, Souliss richiederà nome utente e password per visualizzare la pagina</string>
-    <string name="opt_WebServerPass">Password</string>
-    <string name="opt_WebServerPass_desc">Webserver password</string>
-    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
     <string name="opt_servicehomepos">Sono a casa</string>
     <string name="opt_servicehomepos_desc">usa la posizione corrente come riferimento per i programmi posizionali</string>
     <string name="opt_Thold_desc">Distanza entro cui si viene considerati in casa</string>
@@ -411,6 +404,7 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importazione %1$s in corso, prego attendere</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Elemento rimosso</string>
 
 
 </resources>

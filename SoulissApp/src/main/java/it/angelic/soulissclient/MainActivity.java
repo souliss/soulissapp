@@ -596,8 +596,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             database.remove(tbr);
             adapter.notifyDataSetChanged();
 
-            //Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_SHORT).setAction(R.string.cancel, mOnClickListener).show(); // Don’t forget to show!
-            Snackbar.make(viewHolder.itemView, "Tile removed", Snackbar.LENGTH_LONG)
+            Snackbar.make(viewHolder.itemView, R.string.tile_removed, Snackbar.LENGTH_LONG)
                     .setAction(R.string.cancel, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

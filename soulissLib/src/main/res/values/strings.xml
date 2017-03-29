@@ -160,7 +160,7 @@
     <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
     <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Import</string>
-    <string name="opt_dbimp_desc">Import a .csv file. Warning! Souliss Data will be ovewritten!</string>
+    <string name="opt_dbimp_desc">Import a .csv file. Warning! Both Model (nodes, devices, scenes, etc.) and preferences will be overwritten on current configuration:%1$s</string>
     <string name="opt_dbopt_desc">Vacuum DB and remove logs older than a year</string>
     <string name="opt_dbopt">Optimize DB</string>
     <string name="opt_db">Model</string>
@@ -198,13 +198,6 @@
     <string name="opt_serviceinterval_desc">Higher speeds require more battery and resources</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer Gateway your Souliss network on HTTP. Open port 8080 on this device</string>
-    <string name="opt_WebServerPort">Http Port</string>
-    <string name="opt_WebServerPort_desc">Port used for incoming connections</string>
-    <string name="opt_WebServerUser">User</string>
-    <string name="opt_WebServerUser_desc">If not empty, Zozzariello will ask for user and password</string>
-    <string name="opt_WebServerPass">Password</string>
-    <string name="opt_WebServerPass_desc">Souliss webserver password</string>
-    <string name="opt_WebServerPass_err">Zozzaziello PANIC!!!</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_Thold_desc">Range at which you\'ll be considered out of home when you leave</string>
@@ -413,5 +406,6 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
 
 </resources>

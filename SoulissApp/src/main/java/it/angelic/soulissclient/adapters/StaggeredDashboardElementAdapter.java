@@ -41,7 +41,6 @@ import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.TagGridActivity;
 import it.angelic.soulissclient.TypicalDetailFragWrapper;
-import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.LauncherElement;
@@ -353,7 +352,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
 
         //holder.image.setImageResource(soulissTags[position].getIconResourceId());
         try {
-            File picture = new File(TagDetailFragment.getRealPathFromURI(context, Uri.parse(soulissTag.getImagePath())));
+            File picture = new File(SoulissUtils.getRealPathFromURI(context, Uri.parse(soulissTag.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
             if (picture.exists()) {

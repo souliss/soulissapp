@@ -90,6 +90,27 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
         if (resultCode == RESULT_OK) {
             Uri selectedImage = imageReturnedIntent.getData();
             Log.i(Constants.TAG, "RESULT_OK PATH:" + selectedImage.toString());
+            //TODO G photo
+
+           /*String fromPath = SoulissUtils.getRealPathFromURI(TagDetailActivity.this,selectedImage);
+            if (fromPath == null){
+                fromPath = SoulissUtils.getImageUrlWithAuthority(TagDetailActivity.this,selectedImage);
+            }
+
+
+            Log.i(Constants.TAG, "RESULT_OK URI:" + fromPath);
+            File from = new File(fromPath);
+            File f =  new File(this.getFilesDir(), selectedImage.getLastPathSegment());
+            if (!f.exists())
+            {
+                try {
+                    f.createNewFile();
+                    SoulissUtils.fileCopy(from, f);
+                } catch (IOException e) {
+                    Log.e(Constants.TAG, "ERROR SAVING IMG RESULT:",e);
+                }
+            }*/
+
             collected.setImagePath(selectedImage.toString());
             //father nullo che' siamo sulla lista grid
             db.createOrUpdateTag(collected);

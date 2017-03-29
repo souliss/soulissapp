@@ -17,6 +17,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 public class DbSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private Preference dbinfopref;
+    private Preference imortDBPref;
     private SoulissPreferenceHelper opzioni;
 
 
@@ -53,8 +54,8 @@ public class DbSettingsFragment extends PreferenceFragment implements SharedPref
 		Preference createDbPref = findPreference("createdb");
 		Preference dropDbPref = findPreference("dropdb");
         Preference exportDBPref = findPreference("dbexp");
-        Preference imortDBPref = findPreference("dbimp");
-		Preference optimDBPref = findPreference("dbopt");
+        imortDBPref = findPreference("dbimp");
+        Preference optimDBPref = findPreference("dbopt");
         dbinfopref = findPreference("dbinfo");
         Preference sharesettingspref = findPreference("settingshare");
 		/* listeners DB */
@@ -67,11 +68,16 @@ public class DbSettingsFragment extends PreferenceFragment implements SharedPref
         sharesettingspref.setOnPreferenceClickListener(dbPrefListener);
 
         String strMeatFormat = getResources().getString(R.string.opt_dbinfo_desc);
-		String nonode = getString(R.string.dialog_disabled_db);
+        String strMeFormat = getResources().getString(R.string.opt_dbimp_desc);
+        String nonode = getString(R.string.dialog_disabled_db);
 		final String strMeatMsg = opzioni.getCustomPref().getInt("numNodi", 0) == 0 ? nonode : String.format(
 				strMeatFormat, opzioni.getCustomPref().getInt("numNodi", 0),
 				opzioni.getCustomPref().getInt("numTipici", 0));
 		dbinfopref.setSummary(strMeatMsg);
+
+        String strimortDBPrefMsg = String.format(
+                strMeFormat, SoulissApp.getCurrentConfig());
+        imortDBPref.setSummary(strimortDBPrefMsg);
 
 	}
 

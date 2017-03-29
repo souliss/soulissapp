@@ -155,7 +155,7 @@
     <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
     <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importar Banco de Dados</string>
-    <string name="opt_dbimp_desc">Importar um arquivo .csv. Cuidado! Dados Souliss será reescritos!</string>
+    <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_db">Souliss Banco de Dados</string>
     <string name="opt_db_desc">(Re)criar banco de dados, importar e exportar</string>
     <string name="opt_dbdrop">Apagar Banco de Dados</string>
@@ -189,13 +189,6 @@
     <string name="opt_serviceinterval_desc">Altas velocidades requerem mais batteria e recursos</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer bridges your Souliss network on HTTP. Open port 8080 on this device</string>
-    <string name="opt_WebServerPort">Http Port</string>
-    <string name="opt_WebServerPort_desc">Port used for incoming connections</string>
-    <string name="opt_WebServerUser">User</string>
-    <string name="opt_WebServerUser_desc">If not empty, Zozzariello will ask for user and password</string>
-    <string name="opt_WebServerPass">Password</string>
-    <string name="opt_WebServerPass_desc">Souliss webserver password</string>
-    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
     <string name="opt_servicehomepos">Set Home Location</string>
     <string name="opt_servicehomepos_desc">set current position as reference for positional Programs</string>
     <string name="opt_Thold_desc">Distanza entro cui si viene considerati "in casa"</string>
@@ -409,5 +402,6 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
 
 </resources>

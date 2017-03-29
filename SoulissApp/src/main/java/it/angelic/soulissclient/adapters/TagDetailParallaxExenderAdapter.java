@@ -29,7 +29,6 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissModelException;
@@ -148,7 +147,7 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         }
 
         try {
-            File picture = new File(TagDetailFragment.getRealPathFromURI(context, Uri.parse(holder.data.getImagePath())));
+            File picture = new File(SoulissUtils.getRealPathFromURI(context, Uri.parse(holder.data.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
             if (picture.exists()) {

@@ -160,7 +160,7 @@
     <string name="opt_setHtmlRoot">Zozzariello domača stran</string>
     <string name="opt_setHtmlRoot_desc">Izberi .html datoteko na sd-kartici za uporabo kot root</string>
     <string name="opt_dbimp">Uvozi</string>
-    <string name="opt_dbimp_desc">Uvozi .csv datoteko. Pozor! Souliss podatki bodo prepisani!</string>
+    <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_dbopt_desc">Počisti pod.bazo in odstrani zgodovino starejšo od enega leta</string>
     <string name="opt_dbopt">Optimiziraj pod.bazo</string>
     <string name="opt_db">Model</string>
@@ -198,13 +198,6 @@
     <string name="opt_serviceinterval_desc">Višje hitrosti potrošijo več baterije in zalog</string>
     <string name="opt_WebServerEnable">Zozzariello (spletni-server)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer Gateway vaše Souliss omrežje na HTTP. Odpri port 8080 na tej napravi.</string>
-    <string name="opt_WebServerPort">Http Port</string>
-    <string name="opt_WebServerPort_desc">Port, ki se uporablja za vhodne povezave</string>
-    <string name="opt_WebServerUser">Uporabnik</string>
-    <string name="opt_WebServerUser_desc">Če ni prazno, bo Zozzariello vprašal za upor.ime in geslo</string>
-    <string name="opt_WebServerPass">Geslo</string>
-    <string name="opt_WebServerPass_desc">Souliss geslo za spletni-server</string>
-    <string name="opt_WebServerPass_err">Zozzaziello PANIKA!!!</string>
     <string name="opt_servicehomepos">Nastavi domačo lokacijo</string>
     <string name="opt_servicehomepos_desc">nastavi trenutno lokacijo kot referenco za lokacijske Programe</string>
     <string name="opt_Thold_desc">Razdalja ob kateri boš smatran, da si zdoma</string>
@@ -406,5 +399,6 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
     >
 </resources>

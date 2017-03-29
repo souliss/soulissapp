@@ -157,7 +157,7 @@
     <string name="opt_setHtmlRoot">Домашняя страница Zozzariello </string>
     <string name="opt_setHtmlRoot_desc">Выберите .html файл на СД карте для использования как корневой</string>
     <string name="opt_dbimp">Загрузить БД</string>
-    <string name="opt_dbimp_desc">Загрузить .csv файл. Внимание! Данные Souliss будут перезаписаны!</string>
+    <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_dbopt_desc">Очистить БД и удалить логи старше года</string>
     <string name="opt_dbopt">Оптимизировать БД</string>
     <string name="opt_db">БД Souliss</string>
@@ -195,13 +195,6 @@
     <string name="opt_serviceinterval_desc">Большая скорость требует больше ресурсов и увеличивает расход батареи</string>
     <string name="opt_WebServerEnable">Zozzariello (вебсервер)</string>
     <string name="opt_WebServerEnable_desc">Вебсервер Souliss обеспечивает доступ к сети Souliss по HTTP. Открыть порт 8080 на этом устройстве</string>
-    <string name="opt_WebServerPort">Порт Http</string>
-    <string name="opt_WebServerPort_desc">Порт используемый для входящих соединений</string>
-    <string name="opt_WebServerUser">Пользователь</string>
-    <string name="opt_WebServerUser_desc">Если не пусто, Zozzariello запросит имя пользователя и пароль</string>
-    <string name="opt_WebServerPass">Пароль</string>
-    <string name="opt_WebServerPass_desc">Пароль вебсервера Souliss</string>
-    <string name="opt_WebServerPass_err">Zozzaziello паника</string>
     <string name="opt_servicehomepos">Установить расположение Дома</string>
     <string name="opt_servicehomepos_desc">установить текущую позицию как основу для геозависимых программ</string>
     <string name="opt_Thold_desc">Расстояние, на котором вы будите считаться вне дома</string>
@@ -407,4 +400,5 @@
     <string name="active_config">Активная конфигурация</string>
     <string name="importing_be_patient">Выполняется экспорт %1$s пожалуйста, подождите</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
 </resources>

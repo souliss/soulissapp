@@ -155,7 +155,7 @@
     <string name="opt_setHtmlRoot">Página Principal Zozzariello</string>
     <string name="opt_setHtmlRoot_desc">Escoja un archivo .html en la tarjeta SD para usar como root</string>
     <string name="opt_dbimp">Importar Base de datos</string>
-    <string name="opt_dbimp_desc">Importar un archivo .csv. ¡Atención! ¡Se va a sobreescribir la Base de Datos Souliss!</string>
+    <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_db">Base de Datos Souliss</string>
     <string name="opt_db_desc">Volver a crear la Base de Datos, importar y exportar</string>
     <string name="opt_dbdrop">Descartar la Base de Datos</string>
@@ -189,13 +189,6 @@
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">El Webserver Souliss conecta su red Souliss con HTTP. Abrir puerto 8080 en este dispositivo</string>
-    <string name="opt_WebServerPort">Puerto Http</string>
-    <string name="opt_WebServerPort_desc">Puerto usado para conexiones entrantes</string>
-    <string name="opt_WebServerUser">Usuario</string>
-    <string name="opt_WebServerUser_desc">Si no está vacío, Zozzariello preguntará por usuario y contraseña</string>
-    <string name="opt_WebServerPass">Contraseña</string>
-    <string name="opt_WebServerPass_desc">Contraseña webserver Souliss</string>
-    <string name="opt_WebServerPass_err">Zozzaziello error</string>
     <string name="opt_servicehomepos">Establecer localización Casa</string>
     <string name="opt_servicehomepos_desc">establecer posición actual como referencia para Programas de posicionamiento</string>
     <string name="opt_Thold_desc">Distancia dentro de la cual se considera "en casa"</string>
@@ -411,6 +404,7 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
 
 
 </resources>

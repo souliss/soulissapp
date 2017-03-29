@@ -12,11 +12,6 @@ import android.widget.TextView;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
-import static it.angelic.soulissclient.drawer.DrawerMenuHelper.MANUAL;
-import static it.angelic.soulissclient.drawer.DrawerMenuHelper.PROGRAMS;
-import static it.angelic.soulissclient.drawer.DrawerMenuHelper.SCENES;
-import static it.angelic.soulissclient.drawer.DrawerMenuHelper.TAGS;
-
 public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
     private final int activeSection;
@@ -56,28 +51,8 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
             convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.grey_alpha));
 
         convertView.setTag(navMenuItemHolder);
-        //  }
-
-        //if ( navMenuItemHolder == null ) {
-        //   navMenuItemHolder = (NavMenuItemHolder) convertView.getTag();
-        //  }
 
         navMenuItemHolder.labelView.setText(menuItem.getLabel());
-
-        switch (navDrawerItem.getId()) {
-            case SCENES:
-                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_yellow_50));
-                break;
-            case PROGRAMS:
-                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_light_blue_50));
-                break;
-            case MANUAL:
-                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_green_50));
-                break;
-            case TAGS:
-                navMenuItemHolder.iconView.setTextColor(ContextCompat.getColor(context, R.color.md_purple_50));
-                break;
-        }
         FontAwesomeUtil.prepareMenuFontAweTextView(context, navMenuItemHolder.iconView, menuItem.getIcon());
 
         return convertView;

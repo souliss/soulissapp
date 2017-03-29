@@ -29,11 +29,11 @@ import java.util.List;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
-import it.angelic.soulissclient.fragments.TagDetailFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.TagCardViewHolder> {
     private final FloatingActionButton fab;
@@ -155,7 +155,7 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
 
         //holder.image.setImageResource(soulissTags[position].getIconResourceId());
         try {
-            File picture = new File(TagDetailFragment.getRealPathFromURI(context, Uri.parse(holder.data.getImagePath())));
+            File picture = new File(SoulissUtils.getRealPathFromURI(context, Uri.parse(holder.data.getImagePath())));
 
             // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
             if (picture.exists()) {

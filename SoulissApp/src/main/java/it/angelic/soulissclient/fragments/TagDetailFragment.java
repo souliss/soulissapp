@@ -25,14 +25,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
-import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -74,6 +72,7 @@ import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.SoulissUtils;
 
 /**
  * Demonstrates the use of {@link android.support.v7.widget.RecyclerView} with a {@link android.support.v7.widget.LinearLayoutManager} and a
@@ -115,18 +114,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     };
     private TextView tagTitle;
 
-    public static String getRealPathFromURI(Context ctx, Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = ctx.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
 
-    }
 
     /**
      * Generates Strings for RecyclerView's adapter. This data would usually come
@@ -281,7 +269,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         if (collectedTag != null && collectedTag.getImagePath() != null) {
             try {
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    File picture = new File(getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
+                    File picture = new File(SoulissUtils.getRealPathFromURI(getActivity(), Uri.parse(collectedTag.getImagePath())));
 
                     if (picture.exists()) {
                         BitmapFactory.Options options = new BitmapFactory.Options();

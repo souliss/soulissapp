@@ -157,7 +157,7 @@
     <string name="opt_setHtmlRoot">Strona domowa Zozzariello</string>
     <string name="opt_setHtmlRoot_desc">Wybierz plik .html na sdcard do użycia jako root</string>
     <string name="opt_dbimp">Importuj bazę</string>
-    <string name="opt_dbimp_desc">Importuj plik.csv. Ostrzeżenie! Dane Souliss zostaną nadpisane!</string>
+    <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_dbopt_desc">Odkurz bazę danych i usuń logi starsze niż rok</string>
     <string name="opt_dbopt">Optymalizuj bazę danych</string>
     <string name="opt_db">Baza danych Souliss</string>
@@ -195,13 +195,6 @@
     <string name="opt_serviceinterval_desc">Większa szybkości wymagają więcej energii z baterii i zasobów</string>
     <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer mostkuje twoją sieć Souliss poprzez HTTP. Otwórz port 8080 na tym urządzeniu</string>
-    <string name="opt_WebServerPort">Port Http</string>
-    <string name="opt_WebServerPort_desc">Port używany do połączeń przychodzących</string>
-    <string name="opt_WebServerUser">Użytkownik</string>
-    <string name="opt_WebServerUser_desc">Jeśli nie puste, Zozzariello będzie pytać o nazwę użytkownika i hasło</string>
-    <string name="opt_WebServerPass">Hasło</string>
-    <string name="opt_WebServerPass_desc">Hasło do serwera webowego Souliss</string>
-    <string name="opt_WebServerPass_err">Zozzaziello panic</string>
     <string name="opt_servicehomepos">Ustaw pozycję domową</string>
     <string name="opt_servicehomepos_desc">ustaw bieżącą pozycję jako punkt odniesienia dla programów pozycyjnych</string>
     <string name="opt_Thold_desc">Gdy oddalisz się na taką odległość będziesz uznawany za poza domem </string>
@@ -410,4 +403,5 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
 </resources>

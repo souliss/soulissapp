@@ -157,7 +157,7 @@
     <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
     <string name="opt_setHtmlRoot_desc">Eine .html Datei auf der SD-Karte als Quelle auswählen</string>
     <string name="opt_dbimp">DB importieren</string>
-    <string name="opt_dbimp_desc">Eine .csv Datei importieren. Warnung! Die Souliss Daten werden überschrieben!</string>
+    <string name="opt_dbimp_desc">Eine .csv Datei importieren. Warnung! Die Souliss Daten werden überschrieben: %1$s</string>
     <string name="opt_dbopt_desc">DB säubern und alle Logs älter als 1 Jahr entfernen</string>
     <string name="opt_dbopt">DB optimieren</string>
     <string name="opt_db">Souliss DB</string>
@@ -195,13 +195,6 @@
     <string name="opt_serviceinterval_desc">Höhere Geschwindigkeiten beanspruchen mehr Batterie and Resourcen</string>
     <string name="opt_WebServerEnable">Zozzariello (Webserver)</string>
     <string name="opt_WebServerEnable_desc">Souliss WebServer-Gateway Ihres Souliss Netzwerks auf HTTP. Port 8080 auf diesem Gerät öffnen</string>
-    <string name="opt_WebServerPort">Http Port</string>
-    <string name="opt_WebServerPort_desc">Port für eingehende Verbindungen</string>
-    <string name="opt_WebServerUser">Benutzer</string>
-    <string name="opt_WebServerUser_desc">Wenn nicht leer, fragt Zozzariello nach User- and Passwort-Daten</string>
-    <string name="opt_WebServerPass">Passwort</string>
-    <string name="opt_WebServerPass_desc">Souliss Webserver Passwort</string>
-    <string name="opt_WebServerPass_err">Zozzaziello PANIK!!!</string>
     <string name="opt_servicehomepos">Heimatposition setzen</string>
     <string name="opt_servicehomepos_desc">Aktuelle Position als Referenz für Positions-Programme verwenden</string>
     <string name="opt_Thold_desc">Entfernung ab der Sie als \'Außer Haus\' registriert werden, wenn Sie sich entfernen</string>
@@ -405,4 +398,5 @@
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
+    <string name="tile_removed">Tile removed</string>
 </resources>
