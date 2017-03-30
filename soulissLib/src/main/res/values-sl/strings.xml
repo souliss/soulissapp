@@ -157,8 +157,6 @@
     <string name="opt_networkdesc">Domače in oddaljene omrežne nastavitve</string>
     <string name="opt_dbexp">Izvozi</string>
     <string name="opt_dbexp_desc">Zapiši .csv datoteko na sd-kartico, vsebovala bo trenutni model in nastavitve</string>
-    <string name="opt_setHtmlRoot">Zozzariello domača stran</string>
-    <string name="opt_setHtmlRoot_desc">Izberi .html datoteko na sd-kartici za uporabo kot root</string>
     <string name="opt_dbimp">Uvozi</string>
     <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_dbopt_desc">Počisti pod.bazo in odstrani zgodovino starejšo od enega leta</string>
@@ -400,5 +398,6 @@
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
+    <string name="cancel">Cancel</string>
     >
 </resources>

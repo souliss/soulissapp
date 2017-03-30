@@ -152,8 +152,6 @@
     <string name="opt_networkdesc">Configurações das redes interna e remota</string>
     <string name="opt_dbexp">Exportar Bando de Dados</string>
     <string name="opt_dbexp_desc">Escrever um arquivo .csv no sdcard contendo o atual banco de dados</string>
-    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
-    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importar Banco de Dados</string>
     <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_db">Souliss Banco de Dados</string>
@@ -403,5 +401,6 @@
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
+    <string name="all">all</string>
 
 </resources>

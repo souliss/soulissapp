@@ -154,8 +154,6 @@
     <string name="opt_networkdesc">Ustawienia sieci domowej i zdalnej</string>
     <string name="opt_dbexp">Eksportuj bazę</string>
     <string name="opt_dbexp_desc">Zapisz plik .csv na sdcard z bieżącą zawartością bazy danych</string>
-    <string name="opt_setHtmlRoot">Strona domowa Zozzariello</string>
-    <string name="opt_setHtmlRoot_desc">Wybierz plik .html na sdcard do użycia jako root</string>
     <string name="opt_dbimp">Importuj bazę</string>
     <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_dbopt_desc">Odkurz bazę danych i usuń logi starsze niż rok</string>
@@ -404,4 +402,5 @@
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
+    <string name="all">all</string>
 </resources>

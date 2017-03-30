@@ -152,8 +152,6 @@
     <string name="opt_networkdesc">Ajuste de red local y remoto</string>
     <string name="opt_dbexp">Exportar Base de Datos</string>
     <string name="opt_dbexp_desc">Escribe un fichero .csv en la tarjeta SD conteniendo la actual Base de Datos</string>
-    <string name="opt_setHtmlRoot">Página Principal Zozzariello</string>
-    <string name="opt_setHtmlRoot_desc">Escoja un archivo .html en la tarjeta SD para usar como root</string>
     <string name="opt_dbimp">Importar Base de datos</string>
     <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_db">Base de Datos Souliss</string>

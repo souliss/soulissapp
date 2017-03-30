@@ -154,8 +154,6 @@
     <string name="opt_networkdesc">Heim- und Remote Netzwerk-Einstellungen</string>
     <string name="opt_dbexp">DB exportieren</string>
     <string name="opt_dbexp_desc">Ein .csv file auf Sdcard von der aktuellen DB erzeugen</string>
-    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
-    <string name="opt_setHtmlRoot_desc">Eine .html Datei auf der SD-Karte als Quelle auswählen</string>
     <string name="opt_dbimp">DB importieren</string>
     <string name="opt_dbimp_desc">Eine .csv Datei importieren. Warnung! Die Souliss Daten werden überschrieben: %1$s</string>
     <string name="opt_dbopt_desc">DB säubern und alle Logs älter als 1 Jahr entfernen</string>

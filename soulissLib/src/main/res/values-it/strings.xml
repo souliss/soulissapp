@@ -153,8 +153,6 @@
     <string name="opt_networkdesc">Impostazioni rete locale e remota</string>
     <string name="opt_dbexp">Esporta DB</string>
     <string name="opt_dbexp_desc">Scrivi due .csv contenenti il modello attuale (nodi, dispositivi, ecc.) e le opzioni</string>
-    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
-    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Importa DB</string>
     <string name="opt_dbimp_desc">Importa .csv. Attenzione! Le opzioni ed il modello verranno sovrascritti sulla configurazione attiva: %1$s</string>
     <string name="opt_db">Modello</string>

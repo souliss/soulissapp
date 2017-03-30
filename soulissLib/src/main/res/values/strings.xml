@@ -157,8 +157,6 @@
     <string name="opt_networkdesc">Home and remote network settings</string>
     <string name="opt_dbexp">Export</string>
     <string name="opt_dbexp_desc">Write a .csv file on sdcard containing current model and settings</string>
-    <string name="opt_setHtmlRoot">Zozzariello Homepage</string>
-    <string name="opt_setHtmlRoot_desc">Choose a .html file on sdcard to use as root</string>
     <string name="opt_dbimp">Import</string>
     <string name="opt_dbimp_desc">Import a .csv file. Warning! Both Model (nodes, devices, scenes, etc.) and preferences will be overwritten on current configuration:%1$s</string>
     <string name="opt_dbopt_desc">Vacuum DB and remove logs older than a year</string>

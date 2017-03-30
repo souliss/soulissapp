@@ -154,8 +154,6 @@
     <string name="opt_networkdesc">Настройки домашней и удаленной сети</string>
     <string name="opt_dbexp">Выгрузить БД</string>
     <string name="opt_dbexp_desc">Записать .csv файл содержащий текущую БД на СД карту</string>
-    <string name="opt_setHtmlRoot">Домашняя страница Zozzariello </string>
-    <string name="opt_setHtmlRoot_desc">Выберите .html файл на СД карте для использования как корневой</string>
     <string name="opt_dbimp">Загрузить БД</string>
     <string name="opt_dbimp_desc">%1$s</string>
     <string name="opt_dbopt_desc">Очистить БД и удалить логи старше года</string>
