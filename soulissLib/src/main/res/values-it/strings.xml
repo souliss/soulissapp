@@ -403,6 +403,7 @@
     <string name="importing_be_patient">Importazione %1$s in corso, prego attendere</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Elemento rimosso</string>
+    <string name="pulse">Pulse</string>
 
 
 </resources>

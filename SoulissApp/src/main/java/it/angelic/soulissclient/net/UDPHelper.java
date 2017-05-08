@@ -310,7 +310,6 @@ public class UDPHelper {
 
 		try {
 			serverAddr = InetAddress.getByName(prefs.getAndSetCachedAddress());
-			Log.i(Constants.Net.TAG, "<-- Staterequest, numberof=" + numberOf);
 			sender = getSenderSocket(serverAddr);
 
 			List<Byte> macaco = new ArrayList<>();
@@ -328,7 +327,7 @@ public class UDPHelper {
 			byte[] merd = toByteArray(buf);
 			packet = new DatagramPacket(merd, merd.length, serverAddr,  prefs.getUDPPort());
 			sender.send(packet);
-			Log.i(Constants.Net.TAG, "<-- stateRequest sent. bytes:" + packet.getLength());
+			Log.i(Constants.Net.TAG, "<-- stateRequest sent. bytes:" + packet.getLength() + ", numberof=" + numberOf);
 		} catch (UnknownHostException ed) {
 			Log.e(Constants.Net.TAG, "***stateRequest Fail", ed);
 			return;

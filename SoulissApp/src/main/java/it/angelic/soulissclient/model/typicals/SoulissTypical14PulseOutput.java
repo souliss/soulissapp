@@ -47,7 +47,7 @@ public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoul
         cont.addView(getQuickActionTitle());
 
         final ListButton turnOnButton = new ListButton(ctx);
-        turnOnButton.setText(ctx.getString(R.string.open));
+        turnOnButton.setText(ctx.getString(R.string.pulse));
 
         cont.addView(turnOnButton);
 

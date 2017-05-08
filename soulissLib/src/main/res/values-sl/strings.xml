@@ -399,5 +399,6 @@
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
     <string name="cancel">Cancel</string>
+    <string name="pulse">Pulse</string>
     >
 </resources>

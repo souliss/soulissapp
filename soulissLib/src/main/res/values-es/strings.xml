@@ -403,6 +403,7 @@
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
+    <string name="pulse">Pulse</string>
 
 
 </resources>
