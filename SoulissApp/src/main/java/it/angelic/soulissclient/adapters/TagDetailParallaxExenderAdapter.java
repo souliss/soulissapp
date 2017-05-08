@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
+import it.angelic.soulissclient.model.ISoulissCommand;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.SoulissTag;
@@ -202,13 +205,13 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
     }
 
     private void onBindTypicalCardViewHolderImpl(TypicalCardViewHolder viewHolder, final int i) {
-        viewHolder.setData((SoulissTypical) getItems().get(i));
+        SoulissTypical tipico = (SoulissTypical) getItems().get(i);
+        viewHolder.setData(tipico);
         Log.d(Constants.TAG, "Element " + i + " set: last upd: " + SoulissUtils.getTimeAgo(viewHolder.getData().getTypicalDTO().getRefreshedAt()));
 
         viewHolder.getTextView().setText(
-                viewHolder.getData().getParentNode().getNiceName()
-                        + " "
-                        + viewHolder.getData().getNiceName());
+                //viewHolder.getData().getParentNode().getNiceName()
+                viewHolder.getData().getNiceName());
         viewHolder.getTextView().setTag(i);
         viewHolder.getData().setOutputDescView(viewHolder.getTextViewInfo1());
         viewHolder.getTextViewInfo2().setText(opzioni.getContx().getString(R.string.update) + " "
@@ -218,11 +221,33 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
         //comandi
         LinearLayout sghembo = viewHolder.getLinearActionsLayout();
         sghembo.removeAllViews();
-        if (opzioni.isLightThemeSelected()) {
-            viewHolder.getCardView().setCardBackgroundColor(opzioni.getContx().getResources().getColor(R.color.background_floating_material_light));
+
+        List<ISoulissCommand> pi = tipico.getCommands(context);
+        for (final ISoulissCommand cmd : pi) {
+            //  LinearLayout view = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.button_flat, null);
+            // or LinearLayout buttonView = (LinearLayout)this.getLayoutInflater().inflate(R.layout.my_button, null);
+            Button myButton = (AppCompatButton) LayoutInflater.from(context).inflate(R.layout.button_flat, sghembo, false);
+            //myButton.setId(myButton.getId());
+            myButton.setText(cmd.getName());
+            // view.removeView(myButton);
+            myButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cmd.execute();
+                }
+            });
+            sghembo.addView(myButton);
+
+            //non ce ne stanno piu di due
+            if (sghembo.getChildCount() >= 2)
+                break;
         }
+
+        // if (opzioni.isLightThemeSelected()) {
+        //    viewHolder.getCardView().setCardBackgroundColor(opzioni.getContx().getResources().getColor(R.color.background_floating_material_light));
+        //}
         //viewHolder.getTextView().setOnClickListener(this);
-        viewHolder.getData().getActionsLayout(opzioni.getContx(), sghembo);
+        //viewHolder.getData().getActionsLayout(opzioni.getContx(), sghembo);
         viewHolder.getCardView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
