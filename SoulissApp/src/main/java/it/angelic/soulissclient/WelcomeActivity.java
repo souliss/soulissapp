@@ -281,6 +281,10 @@ public class WelcomeActivity extends FragmentActivity {
                 }
 
                 //https://github.com/ribico/souliss_demo/blob/master/souliss_demo.ino
+
+
+                //clear cached address to put ofline&retriggger checks
+                SoulissApp.getOpzioni().clearCachedAddress();
             }
 
             @Override

@@ -280,7 +280,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                 }
                 if (!opzioni.isSoulissReachable()) {
                     online.setBackgroundResource(R.drawable.red);
-
                     statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_red));
                     statusOnline.setText(R.string.offline);
                 } else {
