@@ -46,7 +46,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
-import it.angelic.soulissclient.util.CCFAnimator;
 import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
@@ -93,7 +92,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             } catch (Exception e) {
                 Log.e(Constants.TAG, "Errore broadcast Receive! " + e.getMessage());
             }
-            refreshStatusIcon();
+
         }
     };
     private TextView eqText;
@@ -103,9 +102,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private FrameLayout mVisualizerViewFrame;
     private Spinner modeSpinner;
     private SoulissPreferenceHelper opzioni;
-    private CCFAnimator patternAnimator;
-    private Thread patternRunner;
-    private boolean patternRunning;
+    private PatternRunnerThread patternRunner;
     private TextView redChanabel;
     private SeekBar seekChannelBlue;
     private SeekBar seekChannelGreen;
@@ -183,8 +180,8 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         }
-        patternAnimator = CCFAnimator.rgb(Color.RED, Color.BLUE);
         setHasOptionsMenu(true);
+        patternRunner = new PatternRunnerThread();
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -229,7 +226,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         Button btStartPattern = (Button) ret.findViewById(R.id.buttonStartPattern);
         Button btStopPattern = (Button) ret.findViewById(R.id.buttonStopPattern);
         btFeedBackPatern = (Button) ret.findViewById(R.id.buttonPatternFeedback);
-        // checkMusic = (CheckBox) ret.findViewById(R.id.checkBoxMusic);
         tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
         tableRowPatterns = (TableRow) ret.findViewById(R.id.tableRowPatterns);
         tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
@@ -296,7 +292,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     tableRowPatterns.setVisibility(View.GONE);
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.GONE);
-                    patternRunning = false;
+                    patternRunner.setPatternRunning(false);
                     tableRowEq.setVisibility(View.INVISIBLE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
@@ -315,7 +311,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     }
                     mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.VISIBLE);
-                    patternRunning = false;
+                    patternRunner.setPatternRunning(false);
                     colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
                     eqText.setVisibility(View.GONE);
@@ -333,13 +329,12 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     tableRowChannel.invalidate();
                 } else if (pos == 2) {// music
                     tableRowPatterns.setVisibility(View.GONE);
-                    patternRunning = false;
+                    patternRunner.setPatternRunning(false);
                     if (mVisualizerView != null) {
                         mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
                         mVisualizerView.link(togMulticast.isChecked());
                         mVisualizerView.setVisibility(View.VISIBLE);
                         mVisualizerView.setEnabled(true);
-                        //mVisualizerView.link(togMulticast.isChecked());
                         addBarGraphRenderers();
                     }
                     mVisualizerViewFrame.setVisibility(View.VISIBLE);
@@ -353,7 +348,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     tableRowPatterns.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
                     tableRowVis.setVisibility(View.GONE);
-                    patternRunning = true;
+                    patternRunner.setPatternRunning(true);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
                         mVisualizerView.setEnabled(false);
@@ -486,67 +481,42 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
-                patternAnimator = CCFAnimator.rgb(colorSeekBar.getColor(), colorSeekBarStop.getColor());
+                patternRunner.setColorFrom(colorSeekBar.getColor());
             }
         });
         colorSeekBarStop.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int colorBarValue, int alphaBarValue, int color) {
-                patternAnimator = CCFAnimator.rgb(colorSeekBar.getColor(), colorSeekBarStop.getColor());
+                patternRunner.setColorTo(colorSeekBarStop.getColor());
             }
         });
-        //pattern animator
+        sliderSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                patternRunner.setSliderSpeed(sliderSpeed.getProgress());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        //PATTERN animator
         btStartPattern.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                patternRunning = true;
-                patternAnimator = CCFAnimator.rgb(colorSeekBar.getColor(), colorSeekBarStop.getColor());
-                patternRunner = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int iterCount = 0;
-                        float cnt = 0f;
-                        float step = 0.01f;
-                        boolean goinUp = true;
-                        while (patternRunning) {
-                            iterCount++;
-                            try {
-                                if (checkBoxScatter.isChecked())
-                                    cnt = Constants.random.nextFloat();
-                                color = patternAnimator.getColor(cnt);
-                                //varia il colore solo ogni tot
-                                if (iterCount % (11 - sliderSpeed.getProgress() / 10) == 0) {
-                                    if (goinUp)
-                                        cnt += step;
-                                    else
-                                        cnt -= step;
-
-                                    collected.issueRGBCommand(Constants.Typicals.Souliss_T1n_Set,
-                                            Color.red(color), Color.green(color), Color.blue(color), togMulticast.isChecked());
-                                    Log.d(Constants.TAG, "dialogColorChangedListener, pattern color asc: " + goinUp
-                                            + " cnt=" + cnt);
-                                    if (getActivity() != null) {//could be detached
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            public void run() {
-                                                btFeedBackPatern
-                                                        .setBackgroundColor(color);
-                                            }
-                                        });
-                                    }
-                                    if (cnt >= 1)
-                                        goinUp = false;
-                                    else if (cnt <= 0)
-                                        goinUp = true;
-                                    //slider max = 255
-                                }
-                                //do respiro almeno 50msec
-                                Thread.sleep(150 - sliderSpeed.getProgress());
-                            } catch (InterruptedException e) {
-                                Log.e(Constants.TAG, "Error Thread.sleep:");
-                            }
-                        }
-                    }
-                });
+                patternRunner = new PatternRunnerThread(getActivity(), collected, btFeedBackPatern);
+                patternRunner.setColorFrom(colorSeekBar.getColor());
+                patternRunner.setColorTo(colorSeekBarStop.getColor());
+                patternRunner.setMulticastMode(togMulticast.isChecked());
+                patternRunner.setScatterMode(checkBoxScatter.isChecked());
+                patternRunner.setSliderSpeed(sliderSpeed.getProgress());
+                patternRunner.setPatternRunning(true);
                 patternRunner.start();
             }
         });
@@ -554,7 +524,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         btStopPattern.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                patternRunning = false;
+                patternRunner.setPatternRunning(false);
             }
         });
 
@@ -603,7 +573,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         getActivity().registerReceiver(datareceiver, filtere);
-
+        refreshStatusIcon();
     }
 
     synchronized void setIsDecrementing(boolean newSetting) {
