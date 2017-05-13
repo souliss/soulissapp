@@ -83,7 +83,7 @@ public class SoulissTypical14PulseOutput extends SoulissTypical implements ISoul
 
     @Override
     public String getOutputDesc() {
-        return "NA";
+        return NOT_AVAILABLE;
     }
 
 }

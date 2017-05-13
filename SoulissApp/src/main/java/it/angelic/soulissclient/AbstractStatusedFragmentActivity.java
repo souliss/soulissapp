@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,7 +42,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
-import it.angelic.soulissclient.net.UDPHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -289,7 +287,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                     statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_green));
                     statusOnline.setText(R.string.Online);
                     final int numNodes = opzioni.getCustomPref().getInt("numNodi", 0);
-                    if (numTries > 1 && numNodes > 0) {
+                    /*if (numTries > 1 && numNodes > 0) {
                         AsyncTask.execute(new Runnable() {
                             @Override
                             public void run() {
@@ -298,7 +296,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                                 Log.e(Constants.TAG, "STATE REQUEST after long offline ");
                             }
                         });
-                    }
+                    }*/
                 }
                 statusOnline.invalidate();
             }

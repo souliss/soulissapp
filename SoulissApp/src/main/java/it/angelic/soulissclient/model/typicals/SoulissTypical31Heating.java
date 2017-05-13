@@ -246,7 +246,7 @@ public class SoulissTypical31Heating extends SoulissTypical implements ISoulissT
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if ((typicalDTO.getOutput() == 0 || typicalDTO.getOutput() >> 6 == 1) || !isTurnedOn()
-                || "UNKNOWN".compareTo(getTypedOutputValue()) == 0 || "NA".compareTo(getTypedOutputValue()) == 0) {
+                || UNKNOWN.compareTo(getTypedOutputValue()) == 0 || NOT_AVAILABLE.compareTo(getTypedOutputValue()) == 0) {
             textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {

@@ -145,13 +145,11 @@ public class SoulissTypical18StepRelay extends SoulissTypical implements ISoulis
     @Override
     public String getOutputDesc() {
 
-        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil)
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OnFeedback)
             return context.getString(R.string.ON);
-        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
+        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback)
             return context.getString(R.string.OFF);
-        else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil)
-            return context.getString(R.string.Souliss_TRGB_flash);
-        return "NA";
+        return NOT_AVAILABLE;
     }
 
 }

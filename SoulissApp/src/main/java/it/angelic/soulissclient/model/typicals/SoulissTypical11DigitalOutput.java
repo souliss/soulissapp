@@ -164,8 +164,8 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
         if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback ||
-                "UNKNOWN".compareTo(getOutputDesc()) == 0 ||
-                "NA".compareTo(getOutputDesc()) == 0) {
+                UNKNOWN.compareTo(getOutputDesc()) == 0 ||
+                NOT_AVAILABLE.compareTo(getOutputDesc()) == 0) {
             textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
             //textStatusVal.setBackground(ctx.getResources().getDrawable(R.drawable.borderedbackoff));
@@ -186,7 +186,7 @@ public class SoulissTypical11DigitalOutput extends SoulissTypical implements ISo
             return "" + typicalDTO.getOutput();
             //return ctx.getString(R.string.Souliss_TRGB_sleep);
         else
-            return "UNKNOWN";
+            return NOT_AVAILABLE;
     }
 
 }

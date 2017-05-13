@@ -42,6 +42,8 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
      *
      */
     private static final long serialVersionUID = -7375342157142543740L;
+    public static final String NOT_AVAILABLE = "NA";
+    public static final String UNKNOWN = "UNKNOWN";
     protected transient Context context;
     // nodo di appartenenza
     protected SoulissNode parentNode;
@@ -383,7 +385,10 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
 
     public void setOutputDescView(TextView textStatusVal) {
         textStatusVal.setText(getOutputDesc());
-        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil || "UNKNOWN".compareTo(getOutputDesc()) == 0 || "NA".compareTo(getOutputDesc()) == 0) {
+        if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil
+                || typicalDTO.getOutput() == Constants.Typicals.Souliss_T1n_OffFeedback
+                || UNKNOWN.compareTo(getOutputDesc()) == 0
+                || NOT_AVAILABLE.compareTo(getOutputDesc()) == 0) {
             textStatusVal.setTextColor(context.getResources().getColor(R.color.std_red));
             textStatusVal.setBackgroundResource(R.drawable.borderedbackoff);
         } else {

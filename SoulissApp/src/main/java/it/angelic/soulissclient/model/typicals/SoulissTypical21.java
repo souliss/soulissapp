@@ -85,7 +85,7 @@ public class SoulissTypical21 extends SoulissTypical implements ISoulissTypical 
 		else if (typicalDTO.getOutput() == Constants.Typicals.Souliss_T2n_Coil_Stop)
 			return context.getString(R.string.stop);
 		else
-			return "UNKNOWN";
+			return UNKNOWN;
 	}
 
 }
