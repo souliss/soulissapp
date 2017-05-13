@@ -47,49 +47,73 @@ import static junit.framework.Assert.assertTrue;
 public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment {
 
 
-    private SoulissDBHelper datasource;
-
     private SoulissTypical19AnalogChannel collected;
+    private boolean continueDecrementing;
+    private boolean continueIncrementing;
+    private SoulissDBHelper datasource;
     private TextView eqText;
-
     private int intensity = 0;
     // Color change listener.
     private VisualizerView mVisualizerView;
-    private boolean continueIncrementing;
-    private boolean continueDecrementing;
-    private TextView textviewHistoryTags;
-    private SwitchCompat togMulticast;
-    private TableRow tableRowVis;
-    private TableRow tableRowChannel;
-    private View tableRowLamp;
     private SeekBar seekChannelIntensity;
     private TextView singleChanabel;
+    // Aggiorna il feedback
+    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // SoulissNode coll = datasource.getSoulissNode();
+            collected = (SoulissTypical19AnalogChannel) datasource.getTypical(collected
+                    .getNodeId(), collected.getSlot());
+            // Bundle extras = intent.getExtras();
+            // Bundle vers = (Bundle) extras.get("NODES");
+            int intensityReal = collected.getIntensity();
+            Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + intensityReal);
+            singleChanabel.setText(getString(R.string.Souliss_T19_received) + " " + collected.getOutputDesc());
+            seekChannelIntensity.setProgress(intensityReal);
+            refreshStatusIcon();
+        }
+    };
+    private TableRow tableRowChannel;
+    private View tableRowLamp;
+    private TableRow tableRowVis;
+    private TextView textviewHistoryTags;
+    private SwitchCompat togMulticast;
 
-    /**
-     * Serve per poter tenuto il bottone brightness
-     *
-     * @param cmd
-     */
-    private void startIncrementing(final Short cmd) {
-        setIsIncrementing(true);
-        new Thread(new Runnable() {
-            public void run() {
-                while (isIncrementing()) {
-                    intensity += 5;
-                    collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_BrightUp, togMulticast.isChecked());
-                    try {
-                        Thread.sleep(250);
-                    } catch (InterruptedException e) {
-                        Log.e(Constants.TAG, "Error Thread.sleep:" + e.getMessage());
-                    }
-                }
-            }
-        }).start();
+    public static T19SingleChannelLedFragment newInstance(int index, SoulissTypical content) {
+        T19SingleChannelLedFragment f = new T19SingleChannelLedFragment();
+
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putInt("index", index);
+        // Ci metto il nodo dentro
+        if (content != null) {
+            args.putSerializable("TIPICO", content);
+        }
+        f.setArguments(args);
+
+        return f;
     }
 
-    synchronized private void stopIncrementing() {
-        setIsIncrementing(false);
-        collected.issueRefresh();
+    // Methods for adding renderers to visualizer
+    private void addBarGraphRenderers() {
+        Paint paint = new Paint();
+        paint.setStrokeWidth(50f);
+        paint.setAntiAlias(false);
+        paint.setColor(Color.argb(255, 156, 138, 252));
+        BarGraphRenderer barGraphRendererBottom = new BarGraphRenderer(32, paint, false);
+        mVisualizerView.addRenderer(barGraphRendererBottom);
+
+        // TOP
+        Paint paint2 = new Paint();
+        paint2.setStrokeWidth(12f);
+        paint2.setAntiAlias(false);
+        paint2.setColor(Color.argb(255, 181, 11, 233));
+        BarGraphRenderer barGraphRendererTop = new BarGraphRenderer(4, paint2, true);
+        mVisualizerView.addRenderer(barGraphRendererTop);
+    }
+
+    synchronized private boolean isDecrementing() {
+        return continueDecrementing;
     }
 
     synchronized private boolean isIncrementing() {
@@ -97,47 +121,13 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     }
 
     /**
-     * Serve per poter tenuto il bottone brightness
-     *
-     * @param cmd
+     * Souliss RGB light command Souliss OUTPUT Data is:
+     * <p/>
+     * <p/>
+     * INPUT data 'read' from GUI
      */
-    private void startDecrementing(final Short cmd) {
-        setIsDecrementing(true);
-        new Thread(new Runnable() {
-            public void run() {
-                while (isDecrementing() && intensity > 5) {
-                    intensity -= 5;
-                    collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_BrightDown, togMulticast.isChecked());
-                    try {
-                        Thread.sleep(250);
-                    } catch (InterruptedException e) {
-                        Log.e(Constants.TAG, "Error Thread.sleep:" + e.getMessage());
-                    }
-                }
-            }
-        }).start();
-    }
-
-    synchronized private void stopDecrementing() {
-        setIsDecrementing(false);
-        collected.issueRefresh();
-    }
-
-    /**
-     * Per gestire tasto premuto
-     *
-     * @param newSetting
-     */
-    synchronized void setIsIncrementing(boolean newSetting) {
-        continueIncrementing = newSetting;
-    }
-
-    synchronized private boolean isDecrementing() {
-        return continueDecrementing;
-    }
-
-    synchronized void setIsDecrementing(boolean newSetting) {
-        continueDecrementing = newSetting;
+    public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
+        collected.issueSingleChannelCommand(val, (r + g + b) / 3, multicast);
     }
 
     @Override
@@ -155,6 +145,14 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             AlertDialogHelper.dbNotInitedDialog(getActivity());
         }
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Rinomina nodo e scelta icona
+        inflater.inflate(R.menu.t16_ctx_menu, menu);
+        Log.i(Constants.TAG, "Inflated Equalizer menu");
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -186,7 +184,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         super.setCollected(collected);
         collected.issueRefresh();
         /*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-		super.actionBar.setCustomView(R.layout.custom_actionbar); // load
+        super.actionBar.setCustomView(R.layout.custom_actionbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
         refreshStatusIcon();*/
@@ -244,22 +242,28 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {// channels
                     tableRowVis.setVisibility(View.GONE);
-                    mVisualizerView.setVisibility(View.GONE);
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setEnabled(false);
+                        mVisualizerView.setVisibility(View.GONE);
+                    }
+
                     tableRowLamp.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.VISIBLE);
-                    mVisualizerView.setEnabled(false);
+
                     eqText.setVisibility(View.GONE);
                     // TODO questi non vanno
                     seekChannelIntensity.setProgress(intensity);
                 } else {// music
-                    mVisualizerView.setFrag(T19SingleChannelLedFragment.this);
-                    mVisualizerView.link(togMulticast.isChecked());
+                    if (mVisualizerView != null) {
+                        mVisualizerView.setFrag(T19SingleChannelLedFragment.this);
+                        mVisualizerView.link(togMulticast.isChecked());
+                        mVisualizerView.setVisibility(View.VISIBLE);
+                        mVisualizerView.setEnabled(true);
+                        mVisualizerView.link(togMulticast.isChecked());
+                    }
+                    tableRowVis.setVisibility(View.VISIBLE);
                     addBarGraphRenderers();
                     tableRowLamp.setVisibility(View.GONE);
-                    mVisualizerView.setVisibility(View.VISIBLE);
-                    tableRowVis.setVisibility(View.VISIBLE);
-                    mVisualizerView.setEnabled(true);
-                    mVisualizerView.link(togMulticast.isChecked());
                     eqText.setVisibility(View.VISIBLE);
                     tableRowChannel.setVisibility(View.GONE);
                 }
@@ -342,44 +346,11 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Rinomina nodo e scelta icona
-        inflater.inflate(R.menu.t16_ctx_menu, menu);
-        Log.i(Constants.TAG, "Inflated Equalizer menu");
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    // Methods for adding renderers to visualizer
-    private void addBarGraphRenderers() {
-        Paint paint = new Paint();
-        paint.setStrokeWidth(50f);
-        paint.setAntiAlias(false);
-        paint.setColor(Color.argb(255, 156, 138, 252));
-        BarGraphRenderer barGraphRendererBottom = new BarGraphRenderer(32, paint, false);
-        mVisualizerView.addRenderer(barGraphRendererBottom);
-
-        // TOP
-        Paint paint2 = new Paint();
-        paint2.setStrokeWidth(12f);
-        paint2.setAntiAlias(false);
-        paint2.setColor(Color.argb(255, 181, 11, 233));
-        BarGraphRenderer barGraphRendererTop = new BarGraphRenderer(4, paint2, true);
-        mVisualizerView.addRenderer(barGraphRendererTop);
-    }
-
-    public static T19SingleChannelLedFragment newInstance(int index, SoulissTypical content) {
-        T19SingleChannelLedFragment f = new T19SingleChannelLedFragment();
-
-        // Supply index input as an argument.
-        Bundle args = new Bundle();
-        args.putInt("index", index);
-        // Ci metto il nodo dentro
-        if (content != null) {
-            args.putSerializable("TIPICO", content);
-        }
-        f.setArguments(args);
-
-        return f;
+    public void onDestroy() {
+        super.onDestroy();
+        // datasource.close();
+        if (mVisualizerView != null)
+            mVisualizerView.release();
     }
 
     @Override
@@ -397,6 +368,12 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(datareceiver);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         SoulissDBHelper.open();
@@ -410,36 +387,72 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         getActivity().registerReceiver(datareceiver, filtere);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(datareceiver);
+    synchronized void setIsDecrementing(boolean newSetting) {
+        continueDecrementing = newSetting;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // datasource.close();
-        if (mVisualizerView != null)
-            mVisualizerView.release();
+    /**
+     * Per gestire tasto premuto
+     *
+     * @param newSetting
+     */
+    synchronized void setIsIncrementing(boolean newSetting) {
+        continueIncrementing = newSetting;
     }
 
-    // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // SoulissNode coll = datasource.getSoulissNode();
-            collected = (SoulissTypical19AnalogChannel) datasource.getTypical(collected
-                    .getNodeId(), collected.getSlot());
-            // Bundle extras = intent.getExtras();
-            // Bundle vers = (Bundle) extras.get("NODES");
-            int intensityReal = collected.getIntensity();
-            Log.d(Constants.TAG, "Detected data arrival, intensity change to: " + intensityReal);
-                singleChanabel.setText(getString(R.string.Souliss_T19_received) + " " + collected.getOutputDesc());
-            seekChannelIntensity.setProgress(intensityReal);
-            refreshStatusIcon();
-        }
-    };
+    /**
+     * Serve per poter tenuto il bottone brightness
+     *
+     * @param cmd
+     */
+    private void startDecrementing(final Short cmd) {
+        setIsDecrementing(true);
+        new Thread(new Runnable() {
+            public void run() {
+                while (isDecrementing() && intensity > 5) {
+                    intensity -= 5;
+                    collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_BrightDown, togMulticast.isChecked());
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        Log.e(Constants.TAG, "Error Thread.sleep:" + e.getMessage());
+                    }
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Serve per poter tenuto il bottone brightness
+     *
+     * @param cmd
+     */
+    private void startIncrementing(final Short cmd) {
+        setIsIncrementing(true);
+        new Thread(new Runnable() {
+            public void run() {
+                while (isIncrementing()) {
+                    intensity += 5;
+                    collected.issueSingleChannelCommand(Constants.Typicals.Souliss_T1n_BrightUp, togMulticast.isChecked());
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        Log.e(Constants.TAG, "Error Thread.sleep:" + e.getMessage());
+                    }
+                }
+            }
+        }).start();
+    }
+
+    synchronized private void stopDecrementing() {
+        setIsDecrementing(false);
+        collected.issueRefresh();
+    }
+
+    synchronized private void stopIncrementing() {
+        setIsIncrementing(false);
+        collected.issueRefresh();
+    }
 
     /**
      * Inner class representing the intensity Channels.
@@ -469,16 +482,6 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             //collected.issueRefresh();//
         }
 
-    }
-
-    /**
-     * Souliss RGB light command Souliss OUTPUT Data is:
-     * <p/>
-     * <p/>
-     * INPUT data 'read' from GUI
-     */
-    public void issueRGBCommand(final short val, final int r, final int g, final int b, final boolean multicast) {
-        collected.issueSingleChannelCommand(val, (r + g + b) / 3, multicast);
     }
 
 }
