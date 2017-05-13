@@ -129,6 +129,7 @@ public class
             recordingSampler.setSamplingInterval(100); // voice sampling interval
             recordingSampler.link(this, multicast);// link to visualizer
             // mVisualizer.setScalingMode(Visualizer.SCALING_MODE_NORMALIZED);
+
         } else {
             Log.w(Constants.TAG, "default audio input selected");
             // Pass through Visualizer data to VisualizerView
@@ -204,6 +205,7 @@ public class
      */
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public void release() {
+        setEnabled(false);
         // XXX sposta il disable
         mVisualizer.release();
         recordingSampler.release();

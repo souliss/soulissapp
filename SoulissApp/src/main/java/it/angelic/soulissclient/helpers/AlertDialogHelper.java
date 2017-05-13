@@ -535,11 +535,11 @@ public class AlertDialogHelper {
                         opzioni.setEqMedRange(medRange.getProgress() / 100f);
                         opzioni.setEqHighRange(hiRange.getProgress() / 100f);
                         if (toUpdate != null) {
-                            act.getSupportFragmentManager()
+                           /* act.getSupportFragmentManager()
                                     .beginTransaction()
                                     .detach(canvas)
                                     .attach(canvas)
-                                    .commit();
+                                    .commit();*/
                             toUpdate.setText(strDisease2Msg);
                         }
                     }

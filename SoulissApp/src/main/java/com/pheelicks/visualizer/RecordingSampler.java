@@ -17,7 +17,7 @@ import java.util.TimerTask;
 import it.angelic.soulissclient.Constants;
 
 public class RecordingSampler {
-    private static final int RECORDING_SAMPLE_RATE = 8000;
+    private static final int RECORDING_SAMPLE_RATE = 22050;
     private AudioTrack audioPlayer;
     private AudioRecord mAudioRecord;
     private int mBufSize;
@@ -43,7 +43,7 @@ public class RecordingSampler {
 
     private void initAudioRecord() {
         int bufferSize = AudioRecord.getMinBufferSize(RECORDING_SAMPLE_RATE, 16, AudioFormat.ENCODING_PCM_16BIT);
-        this.mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC, RECORDING_SAMPLE_RATE, 16, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
+        this.mAudioRecord = new AudioRecord(MediaRecorder.AudioSource.VOICE_RECOGNITION, RECORDING_SAMPLE_RATE, 16, AudioFormat.ENCODING_PCM_16BIT, bufferSize);
         if (this.mAudioRecord.getState() == 1) {
             this.mBufSize = bufferSize;
             Log.i(Constants.TAG, "Buffer size:" + bufferSize);
@@ -61,6 +61,7 @@ public class RecordingSampler {
     public void link(VisualizerView visualizerView, final boolean multicast) {
         this.mVisualizerViews.add(visualizerView);
         this.mulicat = multicast;
+        visualizerView.setEnabled(true);
     }
 
     public void release() {
@@ -102,7 +103,7 @@ public class RecordingSampler {
                     }*/
 
                         //TODO feedback
-                        //   audioPlayer.play();
+                        //  audioPlayer.play();
                     }
                 }
             }
