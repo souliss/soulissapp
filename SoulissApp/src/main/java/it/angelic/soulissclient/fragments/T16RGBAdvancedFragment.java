@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -77,7 +78,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 // Bundle vers = (Bundle) extras.get("NODES");
                 // color = collected.getColor();
                 if (collected.getOutput() == Constants.Typicals.Souliss_T1n_OffCoil) {
-                    cpv.setCenterColor(getResources().getColor(R.color.black));
+                    cpv.setCenterColor(ContextCompat.getColor(getActivity(), R.color.black));
                 } else {
                     Log.d(Constants.TAG, "RGB Out:" + collected.getOutput());
 
@@ -287,34 +288,33 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         final OnItemSelectedListener lib = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                patternRunner.setPatternRunning(false);
+                tableRowPatterns.setVisibility(View.GONE);
+                tableRowVis.setVisibility(View.GONE);
+                mVisualizerViewFrame.setVisibility(View.GONE);
+                eqText.setVisibility(View.GONE);
+                colorSwitchRelativeLayout.setVisibility(View.GONE);
+                tableRowChannel.setVisibility(View.GONE);
+                //potrebbe essere out of sync, lo resetto
+                color = (Color.argb(255, Color.red(collected.getColor()),
+                        Color.green(collected.getColor()), Color.blue(collected.getColor())));
                 if (pos == 0) {// cerchio RGB
-                    tableRowVis.setVisibility(View.GONE);
-                    tableRowPatterns.setVisibility(View.GONE);
-                    mVisualizerViewFrame.setVisibility(View.GONE);
-                    tableRowChannel.setVisibility(View.GONE);
-                    patternRunner.setPatternRunning(false);
                     tableRowEq.setVisibility(View.INVISIBLE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
                         mVisualizerView.setEnabled(false);
                     }
                     colorSwitchRelativeLayout.setVisibility(View.VISIBLE);
-                    eqText.setVisibility(View.GONE);
+
                     cpv.setCenterColor(Color.argb(255, Color.red(color),
                             Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
-                    tableRowPatterns.setVisibility(View.GONE);
-                    tableRowVis.setVisibility(View.GONE);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
                         mVisualizerView.setEnabled(false);
                     }
-                    mVisualizerViewFrame.setVisibility(View.GONE);
                     tableRowChannel.setVisibility(View.VISIBLE);
-                    patternRunner.setPatternRunning(false);
-                    colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
-                    eqText.setVisibility(View.GONE);
                     // ok android 5
                     seekChannelRed.setProgress(0);
                     seekChannelRed.invalidate();
@@ -328,8 +328,6 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
                     tableRowChannel.invalidate();
                 } else if (pos == 2) {// music
-                    tableRowPatterns.setVisibility(View.GONE);
-                    patternRunner.setPatternRunning(false);
                     if (mVisualizerView != null) {
                         mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
                         mVisualizerView.link(togMulticast.isChecked());
@@ -339,25 +337,16 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     }
                     mVisualizerViewFrame.setVisibility(View.VISIBLE);
                     tableRowVis.setVisibility(View.VISIBLE);
-                    colorSwitchRelativeLayout.setVisibility(View.GONE);
-
                     eqText.setVisibility(View.VISIBLE);
                     tableRowEq.setVisibility(View.VISIBLE);
-                    tableRowChannel.setVisibility(View.GONE);
                 } else {// patterns
                     tableRowPatterns.setVisibility(View.VISIBLE);
-                    tableRowChannel.setVisibility(View.GONE);
-                    tableRowVis.setVisibility(View.GONE);
                     patternRunner.setPatternRunning(true);
                     if (mVisualizerView != null) {
                         mVisualizerView.setVisibility(View.GONE);
                         mVisualizerView.setEnabled(false);
                     }
-                    mVisualizerViewFrame.setVisibility(View.GONE);
-
-                    colorSwitchRelativeLayout.setVisibility(View.GONE);
                     tableRowEq.setVisibility(View.INVISIBLE);
-                    eqText.setVisibility(View.GONE);
                 }
             }
 

@@ -101,6 +101,11 @@ public class PatternRunnerThread extends Thread {
             try {
                 if (scatterMode)
                     cnt = Constants.random.nextFloat();
+                //digital filter
+                if (cnt > 1.0f)
+                    cnt = 1;
+                if (cnt < 0)
+                    cnt = 0;
                 color = patternAnimator.getColor(cnt);
                 //varia il colore solo ogni tot
                 if (iterCount % (11 - sliderSpeed / 10) == 0) {
