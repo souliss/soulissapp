@@ -70,9 +70,8 @@ public class NetUtils {
                 byte[] subDario = subnetLenghtToSubnetAddressDario(networkInterface.getInterfaceAddresses().get(1).getNetworkPrefixLength());
                 Log.w(Constants.TAG, "Emergency subnet recovery from IP Address mask lenght:" + networkInterface.getInterfaceAddresses().get(1).getNetworkPrefixLength());
                 return Inet4Address.getByAddress(subDario);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (SocketException e) {
+            } catch (Exception e) {
+                Log.e(Constants.TAG, "Errore nel recupero subnet mask per: " + d.ipAddress);
                 e.printStackTrace();
             }
         }
