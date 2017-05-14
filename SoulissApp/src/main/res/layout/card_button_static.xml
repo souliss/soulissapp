@@ -34,7 +34,7 @@
             android:layout_centerVertical="true"
             android:transitionName="helloManual"
             tools:text="X"
-            tools:textSize="4dp"
+            tools:textSize="4sp"
             android:padding="8dp"/>
 
         <TextView

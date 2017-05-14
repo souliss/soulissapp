@@ -63,11 +63,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
 
         opzioni = SoulissApp.getOpzioni();
-        // String settings;
-       /* if (opzioni.isLightThemeSelected()) {
-            getActivity().setTheme(R.style.LightThemeSelector);
-        } else
-            getActivity().setTheme(R.style.DarkThemeSelector);*/
+
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings_broadcast);
         final EditTextPreference bcast_IP = (EditTextPreference) findPreference("bcast_IP");

@@ -17,23 +17,9 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 public class DbSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private Preference dbinfopref;
-    private Preference imortDBPref;
     private SoulissPreferenceHelper opzioni;
 
 
-    /*
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            TypedValue typedValue = new TypedValue();
-            Resources.Theme theme = getActivity().getTheme();
-            theme.resolveAttribute(R.attr.backgroundTint, typedValue, true);
-            @ColorInt  int color = typedValue.data;
-            View view = super.onCreateView(inflater, container, savedInstanceState);
-            view.setBackgroundColor(color);
-
-            return view;
-        }
-    */
     @Override
     public void onResume() {
         super.onResume();
@@ -54,7 +40,7 @@ public class DbSettingsFragment extends PreferenceFragment implements SharedPref
 		Preference createDbPref = findPreference("createdb");
 		Preference dropDbPref = findPreference("dropdb");
         Preference exportDBPref = findPreference("dbexp");
-        imortDBPref = findPreference("dbimp");
+        Preference imortDBPref = findPreference("dbimp");
         Preference optimDBPref = findPreference("dbopt");
         dbinfopref = findPreference("dbinfo");
         Preference sharesettingspref = findPreference("settingshare");

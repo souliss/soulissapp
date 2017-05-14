@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/Cont01"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="4dp">
 
         <RelativeLayout
             android:id="@+id/relativeLayout3"
@@ -161,7 +162,7 @@
                 android:background="#FFCCCCCC"/>
 
             <TextView
-                android:id="@+id/textviewChartHeader"
+                android:id="@+id/tagInfoChartHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -172,7 +173,7 @@
                 android:id="@+id/textviewStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewChartHeader"
+                android:layout_below="@id/tagInfoChartHeader"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="15dip"/>
 

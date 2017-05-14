@@ -119,7 +119,7 @@
                 android:background="#FFCCCCCC"/>
 
             <TextView
-                android:id="@+id/textviewChartHeader"
+                android:id="@+id/tagInfoChartHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -130,7 +130,7 @@
                 android:id="@+id/toggleButtonEco"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewChartHeader"
+                android:layout_below="@id/tagInfoChartHeader"
                 android:layout_centerHorizontal="true"
                 android:drawableTop="@drawable/plug"
                 android:textOff="Eco Mode"
@@ -140,7 +140,7 @@
                 android:id="@+id/toggleButtonIon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewChartHeader"
+                android:layout_below="@id/tagInfoChartHeader"
                 android:layout_marginRight="15dip"
                 android:layout_toLeftOf="@id/toggleButtonEco"
                 android:drawableTop="@drawable/ionizer"
@@ -151,7 +151,7 @@
                 android:id="@+id/toggleButtonSwing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textviewChartHeader"
+                android:layout_below="@id/tagInfoChartHeader"
                 android:layout_marginLeft="15dip"
                 android:layout_toRightOf="@id/toggleButtonEco"
                 android:drawableTop="@drawable/fan"

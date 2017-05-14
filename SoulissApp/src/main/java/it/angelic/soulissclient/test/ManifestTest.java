@@ -157,7 +157,7 @@ public final class ManifestTest extends AndroidTestCase {
 
         for (final ResolveInfo x : context.getPackageManager()
                 .queryIntentActivities(new Intent(
-                        com.twofortyfouram.locale.Intent.ACTION_EDIT_SETTING), PackageManager.GET_ACTIVITIES)) {
+                        com.twofortyfouram.locale.Intent.ACTION_EDIT_SETTING), PackageManager.MATCH_ALL)) {
             if (packageName.equals(x.activityInfo.packageName)) {
                 result.add(x);
             }

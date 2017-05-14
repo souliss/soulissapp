@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
-import it.angelic.soulissclient.R;
 import it.angelic.tagviewlib.FontNotFoundException;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
@@ -86,7 +85,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
      * @return
      * @author asfodel
      */
-    @Deprecated
+/*    @Deprecated
     public static String remapIconResId(int oldResId) {
         switch (oldResId) {
             case R.drawable.fan:
@@ -219,5 +218,5 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
 
     }
 
-
+*/
 }
