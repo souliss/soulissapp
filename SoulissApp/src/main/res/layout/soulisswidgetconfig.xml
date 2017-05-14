@@ -32,7 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignRight="@id/strut"
-            android:layout_below="@id/textView1"/>
+            android:layout_below="@id/textView1"
+            android:layout_marginTop="8dp"
+            android:paddingTop="8dp"/>
 
         <Spinner
             android:id="@+id/spinner3"
@@ -41,7 +43,9 @@
             android:layout_alignLeft="@id/strut"
             android:layout_alignParentRight="true"
             android:layout_below="@id/textView1"
-            android:layout_toRightOf="@id/spinner2"/>
+            android:layout_toRightOf="@id/spinner2"
+            android:layout_marginTop="8dp"
+            android:paddingTop="8dp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -49,8 +53,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:layout_below="@id/relativeLayout3"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/textViewCommand"
@@ -63,15 +69,16 @@
             android:id="@+id/spinnerCommand"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewCommand"/>
+            android:layout_below="@id/textViewCommand"
+            android:layout_marginTop="8dp"
+            />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_below="@id/relativeLayout43"
-        android:layout_marginTop="2dip">
+        android:padding="8dp">
 
         <View
             android:layout_width="fill_parent"
@@ -82,7 +89,7 @@
             android:id="@+id/textViewWidgetLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Widget label:"
+            android:text="@string/widget_label"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <EditText
@@ -90,7 +97,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewWidgetLabel"
-            android:hint="Typical&apos;s Name"
+            android:hint="@string/typical_apos_s_name"
             android:inputType="text">
 
             <requestFocus/>

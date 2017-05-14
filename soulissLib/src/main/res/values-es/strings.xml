@@ -404,6 +404,7 @@
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
     <string name="pulse">Pulse</string>
+    <string name="typical_apos_s_name">Label shown to identify the widget</string>
 
 
 </resources>

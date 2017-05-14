@@ -63,6 +63,7 @@ public class SoulissWidget extends AppWidgetProvider {
         if (node > Constants.MASSIVE_NODE_ID) {
             try {
                 final SoulissTypical tgt = db.getTypical(node, (short) slot);
+                tgt.setContext(context);
                 updateViews.setTextViewText(R.id.button1, tgt.getNiceName());
                 if (tgt instanceof ISoulissTypicalSensor) {
                     updateViews.setTextViewText(R.id.wid_info,

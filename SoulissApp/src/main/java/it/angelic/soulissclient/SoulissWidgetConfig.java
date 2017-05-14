@@ -120,7 +120,7 @@ public class SoulissWidgetConfig extends Activity {
 
     }
 
-    private Button.OnClickListener configOkButtonOnClickListener = new Button.OnClickListener() {
+    private final Button.OnClickListener configOkButtonOnClickListener = new Button.OnClickListener() {
 
         private SharedPreferences customSharedPreference;
 
@@ -130,7 +130,7 @@ public class SoulissWidgetConfig extends Activity {
             final Context context = SoulissWidgetConfig.this;
             customSharedPreference = context.getSharedPreferences("SoulissWidgetPrefs", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = customSharedPreference.edit();
-            SoulissCommand ccm = null;
+            SoulissCommand ccm;
             //if (outputTypicalSpinner.getSelectedItem() == null){
             //	Toast.makeText(context, getString(R.string.widget_cantsave)  , Toast.LENGTH_LONG).show();
             //	return;
@@ -176,7 +176,7 @@ public class SoulissWidgetConfig extends Activity {
         }
     };
 
-    private Button.OnClickListener configCancelButtonOnClickListener = new Button.OnClickListener() {
+    private final Button.OnClickListener configCancelButtonOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View arg0) {
             finish();

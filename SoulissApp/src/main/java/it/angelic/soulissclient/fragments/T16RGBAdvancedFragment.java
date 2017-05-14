@@ -67,7 +67,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     private SoulissDBHelper datasource = new SoulissDBHelper(getActivity());
     // private SoulissTypical related;
     // Aggiorna il feedback
-    private BroadcastReceiver datareceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // SoulissNode coll = datasource.getSoulissNode();
@@ -565,7 +565,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         refreshStatusIcon();
     }
 
-    synchronized void setIsDecrementing(boolean newSetting) {
+    private synchronized void setIsDecrementing(boolean newSetting) {
         continueDecrementing = newSetting;
     }
 
@@ -574,7 +574,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
      *
      * @param newSetting
      */
-    synchronized void setIsIncrementing(boolean newSetting) {
+    private synchronized void setIsIncrementing(boolean newSetting) {
         continueIncrementing = newSetting;
     }
 
@@ -663,7 +663,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                 issueRGBCommand(Constants.Typicals.Souliss_T1n_Set, Color.red(color),
                         Color.green(color), Color.blue(color), togMulticast.isChecked());
             }
-        }
+        }//The notional line of source at which a program fails for obscure reasons, implying either that somebody is out to get it (when you are the programmer), or that it richly deserves to be so gotten (when you are not)
 
         public void onStartTrackingTouch(SeekBar seekBar) {
         }

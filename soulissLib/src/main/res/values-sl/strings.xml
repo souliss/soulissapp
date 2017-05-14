@@ -400,5 +400,6 @@
     <string name="tile_removed">Tile removed</string>
     <string name="cancel">Cancel</string>
     <string name="pulse">Pulse</string>
+    <string name="typical_apos_s_name">Label shown to identify the widget</string>
     >
 </resources>

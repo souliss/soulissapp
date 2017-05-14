@@ -46,15 +46,16 @@
         android:id="@+id/button1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginTop="12dp"
         android:background="@android:color/transparent"
-        android:gravity="center"
+        android:gravity="top"
         android:shadowColor="#000000"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
+        android:textColor="@color/white"
         android:textStyle="bold"
-        android:layout_marginBottom="15dp"
-        tools:text="button1" />
+        tools:text="button1"/>
 
     <TextView
         android:id="@+id/wid_info"

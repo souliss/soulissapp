@@ -84,7 +84,7 @@
     <string name="scene_subtitle">Scene based on %1$d commands</string>
 
     <!-- ADD PROGRAMS_SECTION -->
-    <string name="addprogram_choosecommand">Choose Program\'s Command</string>
+    <string name="addprogram_choosecommand">Choose Command to execute</string>
     <string name="addprogram_timed">Timed Activation</string>
     <string name="addprogram_scheduleevery">Repeat Every:</string>
     <string name="addprogram_timed_desc">The command below will be activated at chosen time of day. If recursive, the program will be repeated at specified intervals</string>
@@ -406,5 +406,7 @@
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>
     <string name="tile_removed">Tile removed</string>
     <string name="pulse">Pulse</string>
+    <string name="widget_label">Widget label:</string>
+    <string name="typical_apos_s_name">Label shown to identify the widget</string>
 
 </resources>
