@@ -26,6 +26,7 @@ import android.widget.Spinner;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Set;
 
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
@@ -193,7 +194,11 @@ public class WelcomeActivity extends FragmentActivity {
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
 
-        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+        //final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, android.R.id.text1);
+
+        //ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
+        //        R.array.configChooserArray, R.layout.welcome_spinner); //change the last argument here to your xml above.
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.welcome_spinner, new ArrayList<String>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         int selectedIdx = fillSpinnerConfig(spinnerAdapter);

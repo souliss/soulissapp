@@ -41,8 +41,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -136,15 +134,15 @@ public class OldLauncherActivity extends AbstractStatusedFragmentActivity implem
 
             if (extras != null && extras.get("MACACO") != null) {
                 Log.i(TAG, "Broadcast receive, refresh from DB");
-                @SuppressWarnings("unchecked")
-                ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
+                //@SuppressWarnings("unchecked")
+                // ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 // Log.d(TAG, "RAW DATA: " + vers);
 
                 setHeadInfo();
                 setServiceInfo();
                 setAntiTheftInfo();
-                serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.last_update) + "</b> "
-                        + Constants.hourFormat.format(new Date()) + " - " + vers.size() + " " + context.getString(R.string.bytes_received)));
+                //serviceInfoFoot.setText(Html.fromHtml("<b>" + getString(R.string.last_update) + "</b> "
+                //        + Constants.hourFormat.format(new Date()) + " - " + vers.size() + " " + context.getString(R.string.bytes_received)));
                 // questo sovrascrive nodesinf
 
             } else {

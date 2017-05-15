@@ -76,7 +76,7 @@ public class UDPRunnable implements Runnable {
                 socket.setSoTimeout(to);
                 // wait to receive the packet
                 socket.receive(packet);
-                Log.d(TAG, "***Packet received, spawning decoder. Recvd bytes=" + packet.getLength());
+                Log.d(TAG, "***Packet received, spawning decoder and dying. Recvd bytes=" + packet.getLength());
                 // spawn a decoder and go on
                 threadExecutor.execute(new Runnable() {
                     @Override
@@ -87,7 +87,7 @@ public class UDPRunnable implements Runnable {
 
                     }
                 });
-                Log.d(TAG, "***ThreadPool, active=" + threadExecutor.getActiveCount() + ", completed:" + threadExecutor.getCompletedTaskCount() + ", poolsize:" + threadExecutor.getPoolSize());
+                Log.v(TAG, "***ThreadPool, active=" + threadExecutor.getActiveCount() + ", completed:" + threadExecutor.getCompletedTaskCount() + ", poolsize:" + threadExecutor.getPoolSize());
                 socket.close();
 
             } catch (BindException e) {

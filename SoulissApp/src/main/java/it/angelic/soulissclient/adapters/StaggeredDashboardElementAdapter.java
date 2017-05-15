@@ -57,22 +57,182 @@ import static it.angelic.soulissclient.Constants.TAG;
 
 public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<StaggeredDashboardElementAdapter.ViewHolder> {
 
-    public SoulissDataService getmBoundService() {
-        return mBoundService;
-    }
-
-    public void setmBoundService(SoulissDataService mBoundService) {
-        this.mBoundService = mBoundService;
-    }
-
-    SoulissDataService mBoundService;
-    private Activity context;
+    private SoulissDataService mBoundService;
+    private final Activity context;
     private List<LauncherElement> launcherElements;
-
     public StaggeredDashboardElementAdapter(Activity context, List<LauncherElement> launcherElements, SoulissDataService mBoundService) {
         this.launcherElements = launcherElements;
         this.context = context;
         this.mBoundService = mBoundService;
+    }
+
+    private void bindNodeElement(ViewHolder holder, LauncherElement item) {
+        final SoulissNode nodo = (SoulissNode) item.getLinkedObject();
+        Log.d(Constants.TAG, "Launcher Element node " + nodo.getNiceName() + "set: last upd: " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()));
+
+        TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
+        TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
+        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo1);
+        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo2);
+
+        textView.setText(nodo.getNiceName());
+
+        textViewInfo1.setText(context.getResources().getQuantityString(R.plurals.Devices,
+                nodo.getActiveTypicals().size(), nodo.getActiveTypicals().size()));
+
+        //textView.setTag(position);
+        textViewInfo2.setText(context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()) + context.getString(R.string.health) + nodo.getHealthPercent());
+        // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
+        FontAwesomeUtil.prepareFontAweTextView(context, imageView, nodo.getIconResourceId());
+        //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "Activating NODE " + nodo.getNiceName());
+                Intent nodeDatail = new Intent(context, NodeDetailActivity.class);
+                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                nodeDatail.putExtra("NODO", nodo.getNodeId());
+                context.startActivity(nodeDatail);
+            }
+
+
+        });
+    }
+
+    private void bindTagElement(ViewHolder holder, LauncherElement item) {
+        final SoulissTag soulissTag = (SoulissTag) item.getLinkedObject();
+        TextView textCmd = (TextView) holder.container.findViewById(R.id.TextViewTagTitle);
+        TextView textCmdWhen = (TextView) holder.container.findViewById(R.id.TextViewTagDesc);
+        final ImageView image = (ImageView) holder.container.findViewById(R.id.imageViewTag);
+        final TextView imageTag = (TextView) holder.container.findViewById(R.id.imageTagIconFa);
+        final ImageView shadowbar = (ImageView) holder.container.findViewById(R.id.infoTagAlpha);
+        String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
+                0);
+        try {
+            List<SoulissTypical> appoggio = soulissTag.getAssignedTypicals();
+            quantityString = context.getResources().getQuantityString(R.plurals.Devices,
+                    appoggio.size(), appoggio.size());
+        } catch (Exception ce) {
+            Log.w(Constants.TAG, "TAG Empty? ");
+        }
+        textCmd.setText(soulissTag.getName());
+        textCmdWhen.setText(quantityString);
+        if (soulissTag.getIconResourceId() != 0) {
+            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, soulissTag.getIconResourceId());
+            imageTag.setVisibility(View.VISIBLE);
+        } else {
+            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, FontAwesomeEnum.fa_window_maximize.getFontName());
+            imageTag.setVisibility(View.INVISIBLE);
+        }
+        // Here you apply the animation when the view is bound
+        //setAnimation(holder.container, position);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "Activating TAG " + soulissTag.getNiceName());
+                Intent nodeDatail = new Intent(context, TagDetailActivity.class);
+                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                nodeDatail.putExtra("TAG", soulissTag.getTagId());
+
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
+                                //holder.image,   // The view which starts the transition
+                                //"photo_hero"    // The transitionName of the view we’re transitioning to
+                                Pair.create((View) image, "photo_hero"),
+                                Pair.create((View) shadowbar, "shadow_hero"),
+                                Pair.create((View) imageTag, "tag_icon")
+                        );
+
+                ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
+            }
+
+
+        });
+
+
+        holder.container.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;//chiama Parentàs onItemClickListener
+            }
+        });
+
+        //holder.image.setImageResource(soulissTags[position].getIconResourceId());
+        try {
+            File picture = new File(SoulissUtils.getRealPathFromURI(context, Uri.parse(soulissTag.getImagePath())));
+
+            // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
+            if (picture.exists()) {
+                //ImageView imageView = (ImageView)findViewById(R.id.imageView);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                options.inPreferQualityOverSpeed = false;
+                Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
+                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
+                image.setImageBitmap(myBitmap);
+            }
+
+        } catch (Exception io) {
+            Log.i(Constants.TAG, "cant load image " + soulissTag.getImagePath());
+            image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
+        }
+    }
+
+    private void bindTypicalElement(ViewHolder holder, LauncherElement item) {
+        final SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
+        Log.d(Constants.TAG, "Launcher Element typical " + tipico.getNiceName() + "set: last upd: " + SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+
+        TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
+        TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
+        LinearLayout linearActionsLayout = (LinearLayout) holder.container.findViewById(R.id.linearLayoutButtons);
+        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoStatus);
+        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
+
+        textView.setText(tipico.getNiceName());
+
+        tipico.setOutputDescView(textViewInfo1);
+        textViewInfo2.setText(SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
+        // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
+        FontAwesomeUtil.prepareFontAweTextView(context, imageView, tipico.getIconResourceId());
+        linearActionsLayout.removeAllViews();
+
+
+        List<ISoulissCommand> pi = tipico.getCommands(context);
+        for (final ISoulissCommand cmd : pi) {
+            //  LinearLayout view = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.button_flat, null);
+            // or LinearLayout buttonView = (LinearLayout)this.getLayoutInflater().inflate(R.layout.my_button, null);
+            Button myButton = (AppCompatButton) LayoutInflater.from(context).inflate(R.layout.button_flat, linearActionsLayout, false);
+            //myButton.setId(myButton.getId());
+            myButton.setText(cmd.getName());
+            // view.removeView(myButton);
+            myButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cmd.execute();
+                }
+            });
+            linearActionsLayout.addView(myButton);
+
+            //non ce ne stanno piu di due
+            if (linearActionsLayout.getChildCount() >= 2)
+                break;
+        }
+        //linearActionsLayout.removeAllViews();
+        // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "Activating TYP" + tipico.getNiceName());
+                Intent nodeDatail = new Intent(context, TypicalDetailFragWrapper.class);
+                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                nodeDatail.putExtra("TIPICO", tipico);
+                context.startActivity(nodeDatail);
+            }
+
+
+        });
     }
 
     @Override
@@ -87,6 +247,15 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         return launcherElements.get(position).getComponentEnum().ordinal();
     }
 
+    public List<LauncherElement> getLauncherElements() {
+        return launcherElements;
+    }
+
+    public void setLauncherElements(List<LauncherElement> in) {
+        launcherElements = in;
+        notifyDataSetChanged();
+    }
+
     public LauncherElement getLocationLauncherElements() {
 
         for (LauncherElement lal :
@@ -98,13 +267,12 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         return null;
     }
 
-    public List<LauncherElement> getLauncherElements() {
-        return launcherElements;
+    public SoulissDataService getmBoundService() {
+        return mBoundService;
     }
 
-    public void setLauncherElements(List<LauncherElement> in) {
-        launcherElements = in;
-        notifyDataSetChanged();
+    public void setmBoundService(SoulissDataService mBoundService) {
+        this.mBoundService = mBoundService;
     }
 
     @Override
@@ -224,9 +392,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
                 TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
                 Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
-
                 textViewCommand.setText(nodo.getNiceName());
-
                 String strMeatFormat = context.getString(R.string.scene_subtitle);
                 textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
 
@@ -254,176 +420,6 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 bindTagElement(holder, item);
                 break;
         }
-    }
-
-    private void bindNodeElement(ViewHolder holder, LauncherElement item) {
-        final SoulissNode nodo = (SoulissNode) item.getLinkedObject();
-        Log.d(Constants.TAG, "Launcher Element node " + nodo.getName() + "set: last upd: " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()));
-
-        TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
-        TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
-        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo1);
-        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo2);
-
-        textView.setText(nodo.getNiceName());
-
-        textViewInfo1.setText(context.getResources().getQuantityString(R.plurals.Devices,
-                nodo.getActiveTypicals().size(), nodo.getActiveTypicals().size()));
-
-        //textView.setTag(position);
-        textViewInfo2.setText(context.getString(R.string.update) + " " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()) + context.getString(R.string.health) + nodo.getHealthPercent());
-        // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
-        FontAwesomeUtil.prepareFontAweTextView(context, imageView, nodo.getIconResourceId());
-        //tipico.getActionsLayout(SoulissApp.getAppContext(), linearActionsLayout);
-
-
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.w(Constants.TAG, "Activating NODE " + nodo.getNiceName());
-                Intent nodeDatail = new Intent(context, NodeDetailActivity.class);
-                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                nodeDatail.putExtra("NODO", nodo.getNodeId());
-                context.startActivity(nodeDatail);
-            }
-
-
-        });
-    }
-
-    private void bindTagElement(ViewHolder holder, LauncherElement item) {
-        final SoulissTag soulissTag = (SoulissTag) item.getLinkedObject();
-        TextView textCmd = (TextView) holder.container.findViewById(R.id.TextViewTagTitle);
-        TextView textCmdWhen = (TextView) holder.container.findViewById(R.id.TextViewTagDesc);
-        final ImageView image = (ImageView) holder.container.findViewById(R.id.imageViewTag);
-        final TextView imageTag = (TextView) holder.container.findViewById(R.id.imageTagIconFa);
-        final ImageView shadowbar = (ImageView) holder.container.findViewById(R.id.infoTagAlpha);
-        String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                0);
-        try {
-            List<SoulissTypical> appoggio = soulissTag.getAssignedTypicals();
-            quantityString = context.getResources().getQuantityString(R.plurals.Devices,
-                    appoggio.size(), appoggio.size());
-        } catch (Exception ce) {
-            Log.w(Constants.TAG, "TAG Empty? ");
-        }
-        textCmd.setText(soulissTag.getName());
-        textCmdWhen.setText(quantityString);
-        if (soulissTag.getIconResourceId() != 0) {
-            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, soulissTag.getIconResourceId());
-            imageTag.setVisibility(View.VISIBLE);
-        } else {
-            FontAwesomeUtil.prepareFontAweTextView(context, imageTag, FontAwesomeEnum.fa_window_maximize.getFontName());
-            imageTag.setVisibility(View.INVISIBLE);
-        }
-        // Here you apply the animation when the view is bound
-        //setAnimation(holder.container, position);
-
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.w(Constants.TAG, "Activating TAG " + soulissTag.getNiceName());
-                Intent nodeDatail = new Intent(context, TagDetailActivity.class);
-                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                nodeDatail.putExtra("TAG", soulissTag.getTagId());
-
-                ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(context,
-                                //holder.image,   // The view which starts the transition
-                                //"photo_hero"    // The transitionName of the view we’re transitioning to
-                                Pair.create((View) image, "photo_hero"),
-                                Pair.create((View) shadowbar, "shadow_hero"),
-                                Pair.create((View) imageTag, "tag_icon")
-                        );
-
-                ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
-            }
-
-
-        });
-
-
-        holder.container.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;//chiama Parentàs onItemClickListener
-            }
-        });
-
-        //holder.image.setImageResource(soulissTags[position].getIconResourceId());
-        try {
-            File picture = new File(SoulissUtils.getRealPathFromURI(context, Uri.parse(soulissTag.getImagePath())));
-
-            // File picture = new File(Uri.parse(collectedTag.getImagePath()).getPath());
-            if (picture.exists()) {
-                //ImageView imageView = (ImageView)findViewById(R.id.imageView);
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 2;
-                options.inPreferQualityOverSpeed = false;
-                Bitmap myBitmap = BitmapFactory.decodeFile(picture.getAbsolutePath(), options);
-                Log.i(Constants.TAG, "bitmap size " + myBitmap.getRowBytes());
-                image.setImageBitmap(myBitmap);
-            }
-
-        } catch (Exception io) {
-            Log.i(Constants.TAG, "cant load image " + soulissTag.getImagePath());
-            image.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.home_automation));
-        }
-    }
-
-    private void bindTypicalElement(ViewHolder holder, LauncherElement item) {
-        final SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
-        Log.d(Constants.TAG, "Launcher Element typical " + tipico.getName() + "set: last upd: " + SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
-
-        TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
-        TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
-        LinearLayout linearActionsLayout = (LinearLayout) holder.container.findViewById(R.id.linearLayoutButtons);
-        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoStatus);
-        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
-
-        textView.setText(tipico.getNiceName());
-
-        tipico.setOutputDescView(textViewInfo1);
-        textViewInfo2.setText(SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
-        // imageView.setImageResource(FontAwesomeUtil.remapIconResId(tipico.getIconResourceId()));
-        FontAwesomeUtil.prepareFontAweTextView(context, imageView, tipico.getIconResourceId());
-        linearActionsLayout.removeAllViews();
-
-
-        List<ISoulissCommand> pi = tipico.getCommands(context);
-        for (final ISoulissCommand cmd : pi) {
-            //  LinearLayout view = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.button_flat, null);
-            // or LinearLayout buttonView = (LinearLayout)this.getLayoutInflater().inflate(R.layout.my_button, null);
-            Button myButton = (AppCompatButton) LayoutInflater.from(context).inflate(R.layout.button_flat, linearActionsLayout, false);
-            //myButton.setId(myButton.getId());
-            myButton.setText(cmd.getName());
-            // view.removeView(myButton);
-            myButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cmd.execute();
-                }
-            });
-            linearActionsLayout.addView(myButton);
-
-            //non ce ne stanno piu di due
-            if (linearActionsLayout.getChildCount() >= 2)
-                break;
-        }
-        //linearActionsLayout.removeAllViews();
-        // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.w(Constants.TAG, "Activating TYP" + tipico.getNiceName());
-                Intent nodeDatail = new Intent(context, TypicalDetailFragWrapper.class);
-                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
-                nodeDatail.putExtra("TIPICO", tipico);
-                context.startActivity(nodeDatail);
-            }
-
-
-        });
     }
 
     @Override
@@ -544,7 +540,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public CardView container;
+        public final CardView container;
 
         public ViewHolder(View itemView) {
             super(itemView);

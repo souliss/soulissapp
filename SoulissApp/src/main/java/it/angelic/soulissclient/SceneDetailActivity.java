@@ -24,10 +24,13 @@ import java.util.ArrayList;
 import it.angelic.soulissclient.adapters.SceneCommandListAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.ScenesDialogHelper;
+import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
@@ -175,6 +178,14 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
                 AlertDialog.Builder alert = AlertDialogHelper.renameSoulissObjectDialog(this, upda, listaComandiView,
                         datasource, collected);
                 alert.show();
+                return true;
+            case R.id.AddSceneToDashboard:
+                SoulissDBLauncherHelper dbl = new SoulissDBLauncherHelper(SceneDetailActivity.this);
+                LauncherElement nodeLauncher = new LauncherElement();
+                nodeLauncher.setComponentEnum(LauncherElementEnum.SCENE);
+                nodeLauncher.setLinkedObject(collected);
+                dbl.addElement(nodeLauncher);
+                Toast.makeText(SceneDetailActivity.this, collected.getNiceName() + " " + getString(R.string.added_to_dashboard), Toast.LENGTH_SHORT).show();
                 return true;
             case android.R.id.home:
                 finish();

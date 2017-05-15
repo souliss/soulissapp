@@ -333,7 +333,7 @@ public class NodeDetailFragment extends ListFragment {
             case R.id.addTo:
                 SoulissDBTagHelper dbt = new SoulissDBTagHelper(getActivity());
                 //
-                AlertDialog.Builder alert4 = AlertDialogHelper.addTagCommandDialog(getActivity(), dbt, todoItem, null, getListView());
+                AlertDialog.Builder alert4 = AlertDialogHelper.addToCommandDialog(getActivity(), dbt, todoItem, null, getListView());
                 AlertDialog built = alert4.create();
                 built.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 built.show();

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/standard_spinner_format"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/white_bitaplha"
+          android:textSize="@dimen/text_size_med"/>

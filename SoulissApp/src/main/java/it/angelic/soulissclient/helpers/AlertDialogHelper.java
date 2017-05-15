@@ -753,11 +753,11 @@ public class AlertDialogHelper {
      *
      * @return
      */
-    public static AlertDialog.Builder addTagCommandDialog(final Context context,
-                                                          final SoulissDBTagHelper datasource,
-                                                          final SoulissTypical toadd,
-                                                          @Nullable final SoulissTag parentTag,
-                                                          @Nullable final ListView toReferesh) {
+    public static AlertDialog.Builder addToCommandDialog(final Context context,
+                                                         final SoulissDBTagHelper datasource,
+                                                         final SoulissTypical toadd,
+                                                         @Nullable final SoulissTag parentTag,
+                                                         @Nullable final ListView toReferesh) {
         // prendo tag dal DB
         List<SoulissTag> goer = datasource.getAllTagsWithoutChildren(context);
         final SoulissTag[] tagArray = new SoulissTag[goer.size()];
@@ -768,7 +768,7 @@ public class AlertDialogHelper {
         ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
         final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
 
-        View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.add_to_dialog, null);
+        View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.dialog_add_to_, null);
         alert2.setView(dialoglayout);
         alert2.setTitle(context.getString(R.string.scene_add_to));
         alert2.setIcon(android.R.drawable.ic_menu_add);

@@ -47,7 +47,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
+            android:layout_gravity="center_horizontal|center"
             android:layout_marginTop="100dp"
             android:animateLayoutChanges="true">
 
@@ -58,15 +58,22 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="150dp"
+                android:textSize="@dimen/text_size_med"
                 android:entries="@array/configChooserArray"
                 android:gravity="center"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_toLeftOf="@id/configSpinner"
+                android:text="@string/active_config"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                android:textColor="@color/white_bitaplha"/>
             <Button
                 android:id="@+id/welcome_tour_rename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="80dp"
                 android:layout_toRightOf="@id/configSpinner"
                 android:background="@color/trans_black"
                 android:drawableRight="@drawable/ic_mode_edit_24dp"
@@ -78,8 +85,6 @@
                 android:id="@+id/welcome_tour_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="80dp"
                 android:layout_toRightOf="@id/welcome_tour_rename"
                 android:background="@color/trans_black"
                 android:drawableRight="@drawable/ic_cancel_24dp"
@@ -95,9 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="45dp"
-
             android:text="@string/welcome_tour_button"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:textSize="@dimen/text_size_med"/>
 
 
         <CheckBox
@@ -118,7 +122,6 @@
             android:shadowDx="5"
             android:shadowDy="5"
             android:shadowRadius="2"
-            android:singleLine="false"
             android:text="@string/souliss_app_name"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="46sp"/>
@@ -135,7 +138,6 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="2"
-            android:singleLine="false"
             android:text="Open-source IoT"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="italic"/>
@@ -147,7 +149,6 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="80dp"
             android:padding="5pt"
-            android:singleLine="false"
             android:text="@string/config_choose_desc"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 

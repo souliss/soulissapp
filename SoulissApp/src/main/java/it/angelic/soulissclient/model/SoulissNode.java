@@ -3,6 +3,7 @@ package it.angelic.soulissclient.model;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
@@ -118,11 +118,13 @@ public class SoulissNode implements Serializable, ISoulissNode {
         name = namer;
     }
 
-    public String getNiceName() {
+    public
+    @NonNull
+    String getNiceName() {
         if (name != null && "".compareToIgnoreCase(name) != 0)
             return name; //+ " ("+SoulissClient.getAppContext().getString(R.string.node)+" "+ getNodeId() + ")";
         else if (id > Constants.MASSIVE_NODE_ID)
-            return SoulissApp.getAppContext().getString(R.string.node) + " " + Constants.int2roman(getNodeId());
+            return context.getString(R.string.node) + " " + Constants.int2roman(getNodeId());
         else
             return context.getString(R.string.allnodes);
     }

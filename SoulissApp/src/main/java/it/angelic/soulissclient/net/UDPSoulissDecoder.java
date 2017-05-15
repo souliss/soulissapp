@@ -451,6 +451,7 @@ public class UDPSoulissDecoder {
         // il primo byte dev essere la dimensione
         if (checklen != packet.getData()[0]) {
             StringBuilder dump = new StringBuilder();
+
             for (int ig = 0; ig < checklen; ig++) {
                 // 0xFF & buf[index]
                 dump.append("0x").append(Long.toHexString(0xFF & packet.getData()[ig])).append(" ");
