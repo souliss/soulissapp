@@ -267,9 +267,8 @@ public class UDPSoulissDecoder {
 
         SharedPreferences.Editor editor = soulissSharedPreference.edit();
         // se ho gia` indirizzo privato che funziona (!= 0)
-        boolean alreadyPrivate = (soulissSharedPreference.getString("cachedAddress", "").compareTo(
-                opzioni.getPrefIPAddress()) == 0 && "".compareTo(opzioni.getPrefIPAddress()) != 0);
-        if (putIn == 0xB && !alreadyPrivate) {// PUBBLICO
+        boolean alreadyPrivate = opzioni.isSoulissIpConfigured() && opzioni.getPrefIPAddress().equals(opzioni.getCachedAddress());
+        if (putIn == 0xB && (!alreadyPrivate || !opzioni.isSoulissReachable())) {// PUBBLICO
             opzioni.setCachedAddr(opzioni.getIPPreferencePublic());
             editor.putString("cachedAddress", opzioni.getIPPreferencePublic());
             Log.w(Constants.Net.TAG, ">--decodePing Set cached address (PUBLIC): " + opzioni.getIPPreferencePublic());

@@ -22,8 +22,8 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 		//solo if UDP?
 		opzioni.clearCachedAddress();
 		SharedPreferences.Editor editor = opzioni.getCustomPref().edit();
-		Log.d(TAG, "Network connectivity change");
-		if (intent.getExtras() != null) {
+        Log.i(TAG, "Network connectivity change detected");
+        if (intent.getExtras() != null) {
 			NetworkInfo ni = ((ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
 	        //NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
 			storeNetworkInfo(ni, opzioni);

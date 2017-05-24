@@ -320,29 +320,24 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
         if (NewFrag != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //details.setSharedElementReturnTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.move));
-                oldFrag.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.slide_top));
-                NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.slide_top));
-
-                // Add Fragment B
+                if (opzioni.isAnimationsEnabled()) {
+                    oldFrag.setExitTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.slide_bottom));
+                    NewFrag.setEnterTransition(TransitionInflater.from(this).inflateTransition(android.R.transition.slide_bottom));
+                }
                 ft
                         .replace(R.id.detailPane, NewFrag)
                         .addToBackStack("transaction")
                         // .addSharedElement(mProductText, "hero_title")
                         .commit();
-                //.addSharedElement(mProductText, "ToolbarText");
             } else {
-                // if (opzioni.isAnimationsEnabled())
-                //     ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
                 ft.replace(R.id.detailPane, NewFrag);
                 ft.addToBackStack(null);
-                // ft.remove(details);
-                //ft.add(NewFrag,"BOH");
+
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
                 ft.commit();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "No detail to show", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.no_detail_available, Toast.LENGTH_SHORT).show();
         }
 
     }

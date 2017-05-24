@@ -401,4 +401,5 @@
     <string name="tile_removed">Tile removed</string>
     <string name="pulse">импульс</string>
     <string name="typical_apos_s_name">Label shown to identify the widget</string>
+    <string name="no_detail_available">No detail to show</string>
 </resources>

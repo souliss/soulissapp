@@ -404,5 +404,6 @@
     <string name="all">all</string>
     <string name="pulse">Pulse</string>
     <string name="typical_apos_s_name">Label shown to identify the widget</string>
+    <string name="no_detail_available">No detail to show</string>
 
 </resources>

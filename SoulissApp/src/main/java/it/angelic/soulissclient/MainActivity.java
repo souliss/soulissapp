@@ -19,7 +19,9 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -266,6 +268,9 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         ith.attachToRecyclerView(mRecyclerView);
 
         //opzioni.reload();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(new NetworkStateReceiver(), filter);
     }
     /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
@@ -479,6 +484,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     @Override
     protected void onResume() {
         super.onResume();
+
         // macaco pack
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
@@ -531,6 +537,33 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ArrayAdapter<INavDrawerItem> navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.DASHBOARD);
         mDrawerList.setAdapter(navAdapter);
+
+        configureVoiceFab();
+    }
+
+    private void configureVoiceFab() {
+        //VOICE SEARCH
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, MainActivity.this.getString(R.string.voice_command_help));
+                    try {
+                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            fab.setVisibility(View.INVISIBLE);
+            fab.hide();
+        }
     }
 
 

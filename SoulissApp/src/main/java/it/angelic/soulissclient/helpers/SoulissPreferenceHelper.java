@@ -83,6 +83,7 @@ public class SoulissPreferenceHelper implements Serializable {
             editor.remove("cachedAddress");
         editor.apply();
         cachedAddr = null;
+        Log.w(TAG, "Cached address cleared");
     }
 
     /*

@@ -428,7 +428,6 @@ public class NodeDetailFragment extends ListFragment {
             Log.w(Constants.TAG, "Empty Typical!!");
             return;// no detail selected
         }
-        //refreshStatusIcon();
 
         if (opzioni.isDbConfigured()) {
             SoulissDBHelper.open();

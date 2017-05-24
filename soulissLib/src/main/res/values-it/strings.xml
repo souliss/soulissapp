@@ -360,7 +360,7 @@
     <string name="opt_settingshare_desc">Salva e condividi le impostazioni correnti</string>
     <string name="opt_settingshare">Esporta Opzioni</string>
     <string name="action_settings">Settings</string>
-    <string name="config_choose_desc">Questa app richiede una rete Souliss da controllare. E` possibile provare la Demo, importare da versioni precedenti oppure creare nuove configurazioni. Qui è possibile scegliere quale rete Souliss utilizzare</string>
+    <string name="config_choose_desc">Questa serve per controllare una rete Souliss. E` possibile provare la Demo, importare da versioni precedenti oppure creare nuove configurazioni. Qui è possibile scegliere quale rete Souliss utilizzare</string>
     <string name="opt_restore_welcome_desc">Mostra la schermata di benvenuto, per selezionare le configurazioni</string>
     <string name="opt_restore_welcome">Ripristina Benvenuto</string>
     <string name="export_failed">Esportazione fallita</string>
@@ -405,6 +405,7 @@
     <string name="tile_removed">Elemento rimosso</string>
     <string name="pulse">Pulse</string>
     <string name="typical_apos_s_name">Label shown to identify the widget</string>
+    <string name="no_detail_available">Nessun dettaglio disponibile</string>
 
 
 </resources>

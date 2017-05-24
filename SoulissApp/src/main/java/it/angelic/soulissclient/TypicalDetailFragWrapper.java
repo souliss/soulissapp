@@ -138,5 +138,6 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setActionBarInfo(collected == null ? getString(R.string.status_souliss_nodetail) : collected.getNiceName());
 
+        refreshStatusIcon();
     }
 }
