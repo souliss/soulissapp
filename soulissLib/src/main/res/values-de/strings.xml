@@ -400,4 +400,5 @@
     <string name="pulse">Pulse</string>
     <string name="typical_apos_s_name">Label shown to identify the widget</string>
     <string name="no_detail_available">No detail to show</string>
+    <string name="delete_scene_question">Are you sure you want to delete this scene ?</string>
 </resources>

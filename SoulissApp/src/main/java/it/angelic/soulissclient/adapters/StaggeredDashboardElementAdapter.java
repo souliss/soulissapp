@@ -385,27 +385,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 break;
             case SCENE:
 
-                final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
-                Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
-
-                TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
-                TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
-                TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
-                Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
-                textViewCommand.setText(nodo.getNiceName());
-                String strMeatFormat = context.getString(R.string.scene_subtitle);
-                textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
-
-                FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
-                exe.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
-                        nodo.execute();
-                    }
-
-
-                });
+                bindSceneElement(holder, item);
 
                 break;
             case NODE:
@@ -420,6 +400,30 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 bindTagElement(holder, item);
                 break;
         }
+    }
+
+    private void bindSceneElement(ViewHolder holder, LauncherElement item) {
+        final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
+        Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
+
+        TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
+        TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
+        TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
+        Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
+        textViewCommand.setText(nodo.getNiceName());
+        String strMeatFormat = context.getString(R.string.scene_subtitle);
+        textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
+
+        FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
+        exe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
+                nodo.execute();
+            }
+
+
+        });
     }
 
     @Override

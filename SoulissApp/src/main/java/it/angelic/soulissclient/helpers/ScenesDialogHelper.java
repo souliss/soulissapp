@@ -108,7 +108,7 @@ public class ScenesDialogHelper {
         AlertDialog.Builder alert = new AlertDialog.Builder(cont);
         alert.setTitle("Remove Scene");
         alert.setIcon(android.R.drawable.ic_dialog_alert);
-        alert.setMessage("Are you sure you want to delete this scene ?");
+        alert.setMessage(R.string.delete_scene_question);
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
 
@@ -122,6 +122,7 @@ public class ScenesDialogHelper {
                             // Adapter della lista
                             ctx.setAdapter(progsAdapter);
                             ctx.invalidateViews();
+
                         }
                     }
                 });

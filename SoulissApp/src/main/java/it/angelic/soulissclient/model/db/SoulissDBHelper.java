@@ -41,6 +41,7 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical41AntiTheft;
 import it.angelic.soulissclient.model.typicals.SoulissTypical42AntiTheftPeer;
 import it.angelic.soulissclient.model.typicals.SoulissTypical43AntiTheftLocalPeer;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
+import it.angelic.soulissclient.util.LauncherElementEnum;
 
 import static it.angelic.soulissclient.Constants.MASSIVE_NODE_ID;
 import static it.angelic.soulissclient.Constants.TAG;
@@ -228,18 +229,25 @@ public class SoulissDBHelper {
                 + toRename.getCommandId(), null);
     }
 
-    public int deleteScene(SoulissScene toRename) {
-        database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_SCENEID + " = " + toRename.getId(), null);
-        return database.delete(SoulissDB.TABLE_SCENES, SoulissDB.COLUMN_SCENE_ID + " = " + toRename.getId(), null);
+    public int deleteScene(SoulissScene toBeDeleted) {
+        database.delete(SoulissDB.TABLE_COMMANDS, SoulissDB.COLUMN_COMMAND_SCENEID + " = " + toBeDeleted.getId(), null);
+        //CASCADE Launcher
+        database.delete(SoulissDB.TABLE_LAUNCHER,
+                SoulissDB.COLUMN_LAUNCHER_TYPE + " = " + LauncherElementEnum.SCENE.ordinal()
+                        + " AND " + SoulissDB.COLUMN_LAUNCHER_SCENE_ID + " = " + toBeDeleted.getId(), null);
+        return database.delete(SoulissDB.TABLE_SCENES, SoulissDB.COLUMN_SCENE_ID + " = " + toBeDeleted.getId(), null);
     }
 
-    public int deleteTag(SoulissTag toRename) {
+    public int deleteTag(SoulissTag toBeDeleted) {
         //CASCADE sulle associazioni
-        database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toRename.getTagId(), null);
+        database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toBeDeleted.getTagId(), null);
         //CASCADE sui figli
-        database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_FATHER_ID + " = " + toRename.getTagId(), null);
-
-        return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toRename.getTagId(), null);
+        database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_FATHER_ID + " = " + toBeDeleted.getTagId(), null);
+        //CASCADE Launcher
+        database.delete(SoulissDB.TABLE_LAUNCHER,
+                SoulissDB.COLUMN_LAUNCHER_TYPE + " = " + LauncherElementEnum.TAG.ordinal()
+                        + " AND " + SoulissDB.COLUMN_LAUNCHER_TAG_ID + " = " + toBeDeleted.getTagId(), null);
+        return database.delete(SoulissDB.TABLE_TAGS, SoulissDB.COLUMN_TAG_ID + " = " + toBeDeleted.getTagId(), null);
     }
 
     public int deleteTagTypical(long tagId, int nodeid, int slot) {
