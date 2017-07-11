@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.sql.SQLDataException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -98,6 +97,32 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         return database.delete(SoulissDB.TABLE_LAUNCHER, SoulissDB.COLUMN_LAUNCHER_ID + " = " + toRename.getId(), null);
     }
 
+    private ContentValues fillcontentValues(LauncherElement nodeIN) {
+        ContentValues values = new ContentValues();
+        values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
+        values.put(SoulissDB.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
+        values.put(SoulissDB.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
+        values.put(SoulissDB.COLUMN_LAUNCHER_TYPE, nodeIN.getComponentEnum().ordinal());
+        values.put(SoulissDB.COLUMN_LAUNCHER_ORDER, nodeIN.getOrder());
+        values.put(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN, nodeIN.isFullSpan() ? 1 : 0);
+        if (nodeIN.getLinkedObject() != null) {
+            if (nodeIN.getLinkedObject() instanceof SoulissNode)
+                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissNode) nodeIN.getLinkedObject()).getNodeId());
+            else if (nodeIN.getLinkedObject() instanceof SoulissTypical) {
+                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
+                values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
+            } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
+                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
+            else if (nodeIN.getLinkedObject() instanceof SoulissTag)
+                values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
+            else
+                throw new SoulissModelException("Missing ISoulissObject cast");
+        }
+
+
+        return values;
+    }
+
     private List<LauncherElement> getDBLauncherElements(Context context) {
         List<LauncherElement> comments = new ArrayList<>();
         if (!database.isOpen())
@@ -114,56 +139,61 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             dto.setIsFullSpan(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN)) == 1);
             dto.setComponentEnum(LauncherElementEnum.values()[cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TYPE))]);
             ISoulissObject isoulissObj = null;
-            switch (dto.getComponentEnum()) {
-                case STATIC_LOCATION:
-                    //dto.setDesc(context.getString(R.string.opt_homepos_err));
-                    break;
-                case STATIC_MANUAL:
-                    int cntTyp = countTypicals();
-                    int cntN = countNodes();
-                    dto.setDesc(context.getResources().getQuantityString(R.plurals.Nodes,
-                            cntN, cntN)
-                            + "\n"
-                            + context.getResources().getQuantityString(R.plurals.Devices,
-                            cntTyp, cntTyp));
-                    break;
-                case STATIC_TAGS:
-                    dto.setDesc(context.getResources().getQuantityString(R.plurals.tags_plur,
-                            countTags(), countTags()));
-                    break;
-                case STATIC_SCENES:
-                    dto.setDesc(context.getResources().getQuantityString(R.plurals.scenes_plur,
-                            countScenes(), countScenes()) + " " + context.getString(R.string.string_configured));
-                    break;
-                case STATIC_PROGRAMS:
-                    dto.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
-                            countTriggers(), countTriggers()));//FIXME count progs
-                    break;
-                case NODE:
-                    isoulissObj = getSoulissNode(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)));
-                    break;
-                case TYPICAL:
-                    isoulissObj = getTypical(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)),
-                            cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_SLOT_ID)));
-                    break;
-                case TAG:
-                    try {
-                        isoulissObj = getTag(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TAG_ID)));
-                    } catch (SQLDataException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case SCENE:
-                    isoulissObj = getScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_SCENE_ID)));
-                    break;
-                default:
-                    break;
-            }
-            dto.setLinkedObject(isoulissObj);
-            Log.d(Constants.TAG, "retrieving LAUNCHER item:" + dto.getTitle() + " ID:" + dto.getId() + " ORDER:" + dto.getOrder());
+            try {
 
-            comments.add(dto);
-            cursor.moveToNext();
+
+                switch (dto.getComponentEnum()) {
+                    case STATIC_LOCATION:
+                        //dto.setDesc(context.getString(R.string.opt_homepos_err));
+                        break;
+                    case STATIC_MANUAL:
+                        int cntTyp = countTypicals();
+                        int cntN = countNodes();
+                        dto.setDesc(context.getResources().getQuantityString(R.plurals.Nodes,
+                                cntN, cntN)
+                                + "\n"
+                                + context.getResources().getQuantityString(R.plurals.Devices,
+                                cntTyp, cntTyp));
+                        break;
+                    case STATIC_TAGS:
+                        dto.setDesc(context.getResources().getQuantityString(R.plurals.tags_plur,
+                                countTags(), countTags()));
+                        break;
+                    case STATIC_SCENES:
+                        dto.setDesc(context.getResources().getQuantityString(R.plurals.scenes_plur,
+                                countScenes(), countScenes()) + " " + context.getString(R.string.string_configured));
+                        break;
+                    case STATIC_PROGRAMS:
+                        dto.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
+                                countTriggers(), countTriggers()));//FIXME count progs
+                        break;
+                    case NODE:
+                        isoulissObj = getSoulissNode(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)));
+                        break;
+                    case TYPICAL:
+                        isoulissObj = getTypical(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)),
+                                cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_SLOT_ID)));
+                        break;
+                    case TAG:
+                        isoulissObj = getTag(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TAG_ID)));
+                        break;
+                    case SCENE:
+                        isoulissObj = getScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_SCENE_ID)));
+                        break;
+                    default:
+                        break;
+                }
+                dto.setLinkedObject(isoulissObj);
+                comments.add(dto);
+                Log.d(Constants.TAG, "retrieved LAUNCHER item:" + dto.getTitle() + " ID:" + dto.getId() + " ORDER:" + dto.getOrder());
+            } catch (Exception outofBounds) {
+                //capita con elementi rimossi
+                Log.e(Constants.TAG, "retrieve LAUNCHER item FAIL:" + outofBounds.getMessage());
+            } finally {
+                cursor.moveToNext();
+            }
+
+
         }
         cursor.close();
         return comments;
@@ -233,7 +263,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         }
     }
 
-
     public void refreshMapFromDB() {
         Log.d(Constants.TAG, "refresh launcher from DB");
         launcherElementList = getDBLauncherElements(context);
@@ -282,32 +311,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         }
 
         return upd;
-    }
-
-    private ContentValues fillcontentValues(LauncherElement nodeIN) {
-        ContentValues values = new ContentValues();
-        values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
-        values.put(SoulissDB.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
-        values.put(SoulissDB.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
-        values.put(SoulissDB.COLUMN_LAUNCHER_TYPE, nodeIN.getComponentEnum().ordinal());
-        values.put(SoulissDB.COLUMN_LAUNCHER_ORDER, nodeIN.getOrder());
-        values.put(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN, nodeIN.isFullSpan() ? 1 : 0);
-        if (nodeIN.getLinkedObject() != null) {
-            if (nodeIN.getLinkedObject() instanceof SoulissNode)
-                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissNode) nodeIN.getLinkedObject()).getNodeId());
-            else if (nodeIN.getLinkedObject() instanceof SoulissTypical) {
-                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
-                values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
-            } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
-                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
-            else if (nodeIN.getLinkedObject() instanceof SoulissTag)
-                values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
-            else
-                throw new SoulissModelException("Missing ISoulissObject cast");
-        }
-
-
-        return values;
     }
 
 
