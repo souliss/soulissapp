@@ -9,7 +9,7 @@ You can find it published on <a href="https://play.google.com/store/apps/details
  
 To work on the project, just clone it from Android Studio main menu, it should compile without issues as needed libraries are encapsulated or *very* common. 
 
-More informations are available on <a href="https://github.com/souliss/souliss/wiki/SoulissApp">wiki</a> page, feel free to contribute. If you find app errors, please just report them via android report and/or open a issue; if you believe the error is 'functional' or needs further dscussion use <a href="https://github.com/souliss/soulissapp/issues">SoulissApp tracker</a> to create a new issue.
+More informations are available on <a href="https://github.com/souliss/souliss/wiki/SoulissApp">wiki</a> page, feel free to contribute. If you find app errors, please just report them via android report and/or open a issue; if you believe the error is 'functional' or needs further discussion use <a href="https://github.com/souliss/soulissapp/issues">SoulissApp tracker</a> to create a new issue.
 
 SoulissApp works on every Android devices from API 11 (HONEYCOMB) on.
 
@@ -23,7 +23,7 @@ SoulissApp is available for download on the Play store
 
 
 
-##How to build and contribute
+## How to build and contribute
 
 The easiest way to contribute is using <a href="https://developer.android.com/sdk/index.html">Android Studio</a>. Once installed, Import new project from GitHub (New -> Project from Version control -> GitHub) using the following _Git Repository URL_
 
