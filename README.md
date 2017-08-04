@@ -4,9 +4,12 @@
 
 You can find it published on <a href="https://play.google.com/store/apps/details?Id=it.angelic.soulissclient">Play store</a>; please note that the app itself is useless unless a souliss run-time is found on a local or remote network. Have a look at the <a href="http://souliss.github.io/welcome/">documentation</a> to get started with Souliss.
 
+ 
+<img alt="Souliss IoT dashboard"   src="https://lh3.googleusercontent.com/LuBBco1CyPm7Zyz1YytKTiWGu-5s9wPzhchXkfwKmkcRM0WFQRGo8ZqZku4EgEHRPiM=h310-rw" />|<img alt="Souliss Charts"   src="https://lh3.googleusercontent.com/Zy04p_27O0f5TeXU3d1vLcVYCRqu8Od8kvX-_qNi2RmOs8wsBdAUI0o5z_JADTS1lcn0=h310-rw" />|<img alt="Souliss Charts"   src="https://lh3.googleusercontent.com/mjObldwajd1K9LHuFk6QKRRZJW69k6cHKNgshjC5scP3O1XIK0rh2dfhHC7SSo7JGXoP=h310-rw" />
+ 
 To work on the project, just clone it from Android Studio main menu, it should compile without issues as needed libraries are encapsulated or *very* common. 
 
-More informations are available on <a href="https://github.com/souliss/souliss/wiki/SoulissApp">wiki</a> page, feel free to contribute. If you find app errors, please just report them via android report and/or open a issue; if you believe the error is 'functional' or needs further dscussion use <a href="https://github.com/souliss/soulissapp/issues">SoulissApp tracker</a> to create a new issue.
+More informations are available on <a href="https://github.com/souliss/souliss/wiki/SoulissApp">wiki</a> page, feel free to contribute. If you find app errors, please just report them via android report and/or open a issue; if you believe the error is 'functional' or needs further discussion use <a href="https://github.com/souliss/soulissapp/issues">SoulissApp tracker</a> to create a new issue.
 
 SoulissApp works on every Android devices from API 11 (HONEYCOMB) on.
 
@@ -14,10 +17,13 @@ SoulissApp works on every Android devices from API 11 (HONEYCOMB) on.
 
 SoulissApp is available for download on the Play store
 
-<a href="https://play.google.com/store/apps/details?Id=it.angelic.soulissclient&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-AC-global-none-all-co-pr-py-PartBadges-Oct1515-1">
+<a href="https://play.google.com/store/apps/details?id=it.angelic.soulissclient">
 <img alt="Get it on Google Play"   src="http://steverichey.github.io/google-play-badge-svg/img/en_get.svg" /></a>
+</a>
 
-##How to build and contribute
+
+
+## How to build and contribute
 
 The easiest way to contribute is using <a href="https://developer.android.com/sdk/index.html">Android Studio</a>. Once installed, Import new project from GitHub (New -> Project from Version control -> GitHub) using the following _Git Repository URL_
 
