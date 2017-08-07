@@ -40,7 +40,6 @@ import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical19AnalogChannel;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -61,6 +60,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            SoulissDBHelper.open();
             // SoulissNode coll = datasource.getSoulissNode();
             collected = (SoulissTypical19AnalogChannel) datasource.getTypical(collected
                     .getNodeId(), collected.getSlot());
@@ -192,22 +192,22 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         assertTrue("TIPICO NULLO", collected instanceof SoulissTypical19AnalogChannel);
         collected.setPrefs(opzioni);
 
-        Button buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-        Button buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
-        togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
+        Button buttPlus = ret.findViewById(R.id.buttonPlus);
+        Button buttMinus = ret.findViewById(R.id.buttonMinus);
+        togMulticast = ret.findViewById(R.id.checkBoxMulticast);
 
-        Button btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
-        Button btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+        Button btOff = ret.findViewById(R.id.buttonTurnOff);
+        Button btOn = ret.findViewById(R.id.buttonTurnOn);
         tableRowLamp = ret.findViewById(R.id.tableRowLamp);
-        tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
-        eqText = (TextView) ret.findViewById(R.id.textEqualizer);
-        Button btFlash = (Button) ret.findViewById(R.id.flash);
-        Button btSleep = (Button) ret.findViewById(R.id.sleep);
-        Spinner modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
-        tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
+        tableRowChannel = ret.findViewById(R.id.tableRowChannel);
+        eqText = ret.findViewById(R.id.textEqualizer);
+        Button btFlash = ret.findViewById(R.id.flash);
+        Button btSleep = ret.findViewById(R.id.sleep);
+        Spinner modeSpinner = ret.findViewById(R.id.modeSpinner);
+        tableRowVis = ret.findViewById(R.id.tableRowMusic);
 
 
-        FrameLayout mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
+        FrameLayout mVisualizerViewFrame = ret.findViewById(R.id.visualizerViewFrame);
         //permesso per la visualizer connessa all'audio o mic
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
@@ -216,14 +216,14 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
             mVisualizerView = null;
         } else {
             inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
-            mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
+            mVisualizerView = mVisualizerViewFrame.findViewById(R.id.visualizerView);
             //mVisualizerViewFrame.addView(mVisualizerView);
             mVisualizerView.setOpz(opzioni);
         }
 
-        seekChannelIntensity = (SeekBar) ret.findViewById(R.id.channelRed);
+        seekChannelIntensity = ret.findViewById(R.id.channelRed);
 
-        singleChanabel = (TextView) ret.findViewById(R.id.channelLabel);
+        singleChanabel = ret.findViewById(R.id.channelLabel);
         //	buttLamp = (ImageView) ret.findViewById(R.id.buttonLamp);
         btOff.setTag(Constants.Typicals.Souliss_T1n_OffCmd);
         btOn.setTag(Constants.Typicals.Souliss_T1n_OnCmd);
@@ -231,9 +231,9 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         buttMinus.setTag(Constants.Typicals.Souliss_T1n_BrightDown);
         btFlash.setTag(Constants.Typicals.Souliss_T1n_Flash);
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
-        TableRow infoFavs = (TableRow) ret.findViewById(R.id.tableRowFavInfo);
-        TableRow infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+        TableRow infoFavs = ret.findViewById(R.id.tableRowFavInfo);
+        TableRow infoTags = ret.findViewById(R.id.tableRowTagInfo);
+        tagView = ret.findViewById(R.id.tag_group);
         refreshTagsInfo();
         // CHANNEL Listeners
         seekChannelIntensity.setOnSeekBarChangeListener(new channelInputListener());

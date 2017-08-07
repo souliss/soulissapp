@@ -133,7 +133,11 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 			Log.e(Constants.TAG, "Error retriving node:");
 			return ret;
 		}
-		assertTrue("TIPICO NULLO", collected instanceof SoulissTypical);
+        assertTrue("ID TIPICO NULLO", collected instanceof SoulissTypical);
+        //ora che ho ID, ricarico
+        SoulissNode coll = datasource.getSoulissNode(collected.getNodeId());
+        collected = coll.getTypical(collected.getSlot());
+
 		collected.setPrefs(opzioni);
 
 		super.setCollected(collected);
