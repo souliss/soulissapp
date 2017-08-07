@@ -50,17 +50,17 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         ContentValues values = new ContentValues();
         long ret = -1;
         if (tagIN != null) {
-            values.put(SoulissDB.COLUMN_TAG_NAME, tagIN.getName());
-            values.put(SoulissDB.COLUMN_TAG_ICONID, tagIN.getIconResourceId());
-            values.put(SoulissDB.COLUMN_TAG_ORDER, tagIN.getTagOrder());
-            values.put(SoulissDB.COLUMN_TAG_IMGPTH, tagIN.getImagePath());
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_NAME, tagIN.getName());
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_ICONID, tagIN.getIconResourceId());
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_ORDER, tagIN.getTagOrder());
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_IMGPTH, tagIN.getImagePath());
 
 
-            values.put(SoulissDB.COLUMN_TAG_FATHER_ID, tagIN.getFatherId());
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_FATHER_ID, tagIN.getFatherId());
 
-            ret = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + tagIN.getTagId(),
+            ret = database.update(SoulissDBOpenHelper.TABLE_TAGS, values, SoulissDBOpenHelper.COLUMN_TAG_ID + " = " + tagIN.getTagId(),
                     null);
-            Log.i(Constants.TAG, "Update Tag " + tagIN.getTagId() + " in progress - just updated rows:" + ret + " father" + values.get(SoulissDB.COLUMN_TAG_FATHER_ID));
+            Log.i(Constants.TAG, "Update Tag " + tagIN.getTagId() + " in progress - just updated rows:" + ret + " father" + values.get(SoulissDBOpenHelper.COLUMN_TAG_FATHER_ID));
 
             List<SoulissTypical> typs = tagIN.getAssignedTypicals();
             int i = 0;
@@ -79,14 +79,14 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
 
             return ret;
         } else {//brand new
-            values.put(SoulissDB.COLUMN_TAG_ICONID, SimpleTagViewUtils.getAwesomeNames(context).indexOf(FontAwesomeEnum.fa_tag.getFontName()));
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_ICONID, SimpleTagViewUtils.getAwesomeNames(context).indexOf(FontAwesomeEnum.fa_tag.getFontName()));
             // Inserisco e risetto il nome e l'ordine
-            ret = (int) database.insert(SoulissDB.TABLE_TAGS, null, values);
-            values.put(SoulissDB.COLUMN_TAG_NAME, context.getResources().getString(R.string.tag) + " " + ret);
+            ret = (int) database.insert(SoulissDBOpenHelper.TABLE_TAGS, null, values);
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_NAME, context.getResources().getString(R.string.tag) + " " + ret);
             //if (father != null)//forse non serve
-            values.put(SoulissDB.COLUMN_TAG_FATHER_ID, (Long) null);
-            values.put(SoulissDB.COLUMN_TAG_ORDER, ret);
-            database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + ret, null);
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_FATHER_ID, (Long) null);
+            values.put(SoulissDBOpenHelper.COLUMN_TAG_ORDER, ret);
+            database.update(SoulissDBOpenHelper.TABLE_TAGS, values, SoulissDBOpenHelper.COLUMN_TAG_ID + " = " + ret, null);
             Log.i(Constants.TAG, "CREATED Tag " + ret + " in progress - just updated rows:" + ret);
 
             return ret;
@@ -103,15 +103,15 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
     public int createOrUpdateTagTypicalNode(SoulissTypical nodeIN, SoulissTag toAssoc, Integer priority) {
         ContentValues values = new ContentValues();
         // wrap values from object
-        values.put(SoulissDB.COLUMN_TAG_TYP_NODE_ID, nodeIN.getNodeId());
-        values.put(SoulissDB.COLUMN_TAG_TYP_SLOT, nodeIN.getSlot());
-        values.put(SoulissDB.COLUMN_TAG_TYP_TAG_ID, toAssoc.getTagId());
-        values.put(SoulissDB.COLUMN_TAG_TYP_PRIORITY, priority);
-        int upd = database.update(SoulissDB.TABLE_TAGS_TYPICALS, values, SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
-                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot() + " AND " + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toAssoc.getTagId(),
+        values.put(SoulissDBOpenHelper.COLUMN_TAG_TYP_NODE_ID, nodeIN.getNodeId());
+        values.put(SoulissDBOpenHelper.COLUMN_TAG_TYP_SLOT, nodeIN.getSlot());
+        values.put(SoulissDBOpenHelper.COLUMN_TAG_TYP_TAG_ID, toAssoc.getTagId());
+        values.put(SoulissDBOpenHelper.COLUMN_TAG_TYP_PRIORITY, priority);
+        int upd = database.update(SoulissDBOpenHelper.TABLE_TAGS_TYPICALS, values, SoulissDBOpenHelper.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
+                        + " AND " + SoulissDBOpenHelper.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot() + " AND " + SoulissDBOpenHelper.COLUMN_TAG_TYP_TAG_ID + " = " + toAssoc.getTagId(),
                 null);
         if (upd == 0) {
-            long insertId = database.insert(SoulissDB.TABLE_TAGS_TYPICALS, null, values);
+            long insertId = database.insert(SoulissDBOpenHelper.TABLE_TAGS_TYPICALS, null, values);
         }
 
         return upd;
@@ -125,9 +125,9 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
      */
     public int deleteTagTypicalNode(SoulissTypical nodeIN, SoulissTag toAssoc) {
 
-        int upd = database.delete(SoulissDB.TABLE_TAGS_TYPICALS, SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
-                + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot()
-                + " AND " + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + toAssoc.getTagId(), null);
+        int upd = database.delete(SoulissDBOpenHelper.TABLE_TAGS_TYPICALS, SoulissDBOpenHelper.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
+                + " AND " + SoulissDBOpenHelper.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot()
+                + " AND " + SoulissDBOpenHelper.COLUMN_TAG_TYP_TAG_ID + " = " + toAssoc.getTagId(), null);
         Log.w(Constants.TAG, "DELETE TAG->TYP" + nodeIN.toString() + " TO " + toAssoc.getNiceName());
         return upd;
     }
@@ -137,18 +137,18 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
         if (!database.isOpen())
             open();
         //solo radici
-        Cursor cursor = database.query(SoulissDB.TABLE_TAGS, SoulissDB.ALLCOLUMNS_TAGS, null, null, null, null, SoulissDB.COLUMN_TAG_ORDER + ", " + SoulissDB.COLUMN_TAG_ID);
+        Cursor cursor = database.query(SoulissDBOpenHelper.TABLE_TAGS, SoulissDBOpenHelper.ALLCOLUMNS_TAGS, null, null, null, null, SoulissDBOpenHelper.COLUMN_TAG_ORDER + ", " + SoulissDBOpenHelper.COLUMN_TAG_ID);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             SoulissTag dto = new SoulissTag();
-            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ID)));
-            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_NAME)));
-            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ORDER)));
-            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_ICONID)));
-            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_IMGPTH)));
+            dto.setTagId(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_ID)));
+            dto.setName(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_NAME)));
+            dto.setTagOrder(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_ORDER)));
+            dto.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_ICONID)));
+            dto.setImagePath(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_IMGPTH)));
             Long l = null;
-            if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID)))
-                l = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_FATHER_ID));
+            if (!cursor.isNull(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_FATHER_ID)))
+                l = cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_FATHER_ID));
             dto.setFatherId(l);
             Log.d(Constants.TAG, "retrieving ROOT TAG:" + dto.getTagId() + " ORDER:" + dto.getTagOrder());
             dto.setAssignedTypicals(getTagTypicals(dto));
@@ -170,14 +170,14 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
     public List<SoulissTag> getTagsByTypicals(SoulissTypical parent) {
 
         List<SoulissTag> comments = new ArrayList<>();
-        String MY_QUERY = "SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS + " a "
-                + " WHERE a." + SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + parent.getNodeId()
-                + " AND a." + SoulissDB.COLUMN_TAG_TYP_SLOT + " =  " + parent.getSlot();
+        String MY_QUERY = "SELECT * FROM " + SoulissDBOpenHelper.TABLE_TAGS_TYPICALS + " a "
+                + " WHERE a." + SoulissDBOpenHelper.COLUMN_TAG_TYP_NODE_ID + " = " + parent.getNodeId()
+                + " AND a." + SoulissDBOpenHelper.COLUMN_TAG_TYP_SLOT + " =  " + parent.getSlot();
         Cursor cursor = database.rawQuery(MY_QUERY, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            int tagId = cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TAG_TYP_TAG_ID));
+            int tagId = cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TAG_TYP_TAG_ID));
             try {
                 SoulissTag newTag = getTag(tagId);
                 if (!comments.contains(newTag))
@@ -202,8 +202,8 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
     public int refreshTag(SoulissTag nodeIN) {
         ContentValues values = new ContentValues();
         // wrap values from object
-        values.put(SoulissDB.COLUMN_TAG_ORDER, nodeIN.getTagOrder());
-        long upd = database.update(SoulissDB.TABLE_TAGS, values, SoulissDB.COLUMN_TAG_ID + " = " + nodeIN.getTagId(),
+        values.put(SoulissDBOpenHelper.COLUMN_TAG_ORDER, nodeIN.getTagOrder());
+        long upd = database.update(SoulissDBOpenHelper.TABLE_TAGS, values, SoulissDBOpenHelper.COLUMN_TAG_ID + " = " + nodeIN.getTagId(),
                 null);
 
         assertEquals(upd, 1);
@@ -213,10 +213,10 @@ public class SoulissDBTagHelper extends SoulissDBHelper {
     public int refreshTagTypical(SoulissTypical nodeIN, SoulissTag father, @NonNull Integer priority) {
         ContentValues values = new ContentValues();
         // wrap values from object
-        values.put(SoulissDB.COLUMN_TAG_TYP_PRIORITY, priority);
-        long upd = database.update(SoulissDB.TABLE_TAGS_TYPICALS, values, SoulissDB.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
-                        + " AND " + SoulissDB.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot()
-                        + " AND " + SoulissDB.COLUMN_TAG_TYP_TAG_ID + " = " + father.getTagId(),
+        values.put(SoulissDBOpenHelper.COLUMN_TAG_TYP_PRIORITY, priority);
+        long upd = database.update(SoulissDBOpenHelper.TABLE_TAGS_TYPICALS, values, SoulissDBOpenHelper.COLUMN_TAG_TYP_NODE_ID + " = " + nodeIN.getNodeId()
+                        + " AND " + SoulissDBOpenHelper.COLUMN_TAG_TYP_SLOT + " = " + nodeIN.getSlot()
+                        + " AND " + SoulissDBOpenHelper.COLUMN_TAG_TYP_TAG_ID + " = " + father.getTagId(),
                 null);
 
         assertEquals(upd, 1);

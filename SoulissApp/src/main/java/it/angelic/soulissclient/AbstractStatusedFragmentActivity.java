@@ -39,8 +39,8 @@ import it.angelic.soulissclient.drawer.DrawerItemClickListener;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;
@@ -163,7 +163,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                     mDrawerLayout.closeDrawer(mDrawerLinear);
                     Intent myIntent = new Intent(AbstractStatusedFragmentActivity.this, TagDetailActivity.class);
                     //I preferiti son sempre quelli
-                    myIntent.putExtra("TAG", SoulissDB.FAVOURITES_TAG_ID);
+                    myIntent.putExtra("TAG", SoulissDBOpenHelper.FAVOURITES_TAG_ID);
 
                     myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     AbstractStatusedFragmentActivity.this.startActivity(myIntent);
@@ -268,8 +268,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         try {
             View ds = actionBar.getRootView();
             if (ds != null) {
-                ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
-                TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+                ImageButton online = ds.findViewById(R.id.online_status_icon);
+                TextView statusOnline = ds.findViewById(R.id.online_status);
                 if (opzioni.isAnimationsEnabled()) {
                     final Animation animation = new AlphaAnimation(1, 0.2f); // Change alpha from fully visible to invisible
                     animation.setDuration(250);
@@ -311,7 +311,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             //actionBar = getSupportActionBar();
             View ds = actionBar.getRootView();
 
-            actionTitleTextView = (TextView) ds.findViewById(R.id.actionbar_title);
+            actionTitleTextView = ds.findViewById(R.id.actionbar_title);
             actionTitleTextView.setText(title);
             refreshStatusIcon();
         } catch (Exception e) {
@@ -322,8 +322,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
     public void setSynching() {
         View ds = actionBar.getRootView();
         if (ds != null) {
-            ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
-            TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+            ImageButton online = ds.findViewById(R.id.online_status_icon);
+            TextView statusOnline = ds.findViewById(R.id.online_status);
             switch (numTries) {//sempre piu verso il rosso
                 case 0:
                     online.setBackgroundResource(R.drawable.red5);

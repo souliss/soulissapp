@@ -40,9 +40,9 @@ public class SoulissDBLowHelper extends SoulissDBHelper {
 
         for (int i = 0; i < healths.size(); i++) {
             ContentValues values = new ContentValues();
-            values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
-            values.put(SoulissDB.COLUMN_NODE_HEALTH, healths.get(i));
-            long upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + String.valueOf(i + startOffset), null);
+            values.put(SoulissDBOpenHelper.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
+            values.put(SoulissDBOpenHelper.COLUMN_NODE_HEALTH, healths.get(i));
+            long upd = database.update(SoulissDBOpenHelper.TABLE_NODES, values, SoulissDBOpenHelper.COLUMN_NODE_ID + " = " + String.valueOf(i + startOffset), null);
             ret += upd;
         }
         return ret;
@@ -59,15 +59,15 @@ public class SoulissDBLowHelper extends SoulissDBHelper {
         for (int i = 0; i < numnodes; i++) {
             ContentValues values = new ContentValues();
             // wrap values from object
-            values.put(SoulissDB.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
-            values.put(SoulissDB.COLUMN_NODE_ID, i);
-            values.put(SoulissDB.COLUMN_NODE_HEALTH, 0);
+            values.put(SoulissDBOpenHelper.COLUMN_NODE_LASTMOD, Calendar.getInstance().getTime().getTime());
+            values.put(SoulissDBOpenHelper.COLUMN_NODE_ID, i);
+            values.put(SoulissDBOpenHelper.COLUMN_NODE_HEALTH, 0);
             //values.put(SoulissDB.COLUMN_NODE_ICON, nodeIN.getIconResourceId());
-            int upd = database.update(SoulissDB.TABLE_NODES, values, SoulissDB.COLUMN_NODE_ID + " = " + i,
+            int upd = database.update(SoulissDBOpenHelper.TABLE_NODES, values, SoulissDBOpenHelper.COLUMN_NODE_ID + " = " + i,
                     null);
             if (upd == 0) {
-                values.put(SoulissDB.COLUMN_NODE_ICON, FontAwesomeUtil.getCodeIndexByFontName(context, "fa-cube"));
-                long insertId = database.insert(SoulissDB.TABLE_NODES, null, values);
+                values.put(SoulissDBOpenHelper.COLUMN_NODE_ICON, FontAwesomeUtil.getCodeIndexByFontName(context, "fa-cube"));
+                long insertId = database.insert(SoulissDBOpenHelper.TABLE_NODES, null, values);
                 Log.d(Constants.TAG, "Node " + i + " insert returned: " + insertId);
                 ret++;
             } else

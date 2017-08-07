@@ -22,7 +22,7 @@ import it.angelic.soulissclient.util.FontAwesomeUtil;
  *
  * @author Ale
  */
-public class SoulissDB extends SQLiteOpenHelper {
+public class SoulissDBOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "souliss.db";
     public static final String TABLE_TYPICALS = "typicals";
@@ -280,7 +280,7 @@ public class SoulissDB extends SQLiteOpenHelper {
      *
      * @param context
      */
-    public SoulissDB(Context context) {
+    public SoulissDBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -332,7 +332,7 @@ public class SoulissDB extends SQLiteOpenHelper {
     }
 
     protected void dropCreate(SQLiteDatabase db) {
-        Log.w(SoulissDB.class.getName(), "DB dropCreate " + db.getPath());
+        Log.w(SoulissDBOpenHelper.class.getName(), "DB dropCreate " + db.getPath());
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAUNCHER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRIGGERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_COMMANDS);
@@ -348,7 +348,7 @@ public class SoulissDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        Log.w(SoulissDB.class.getName(), "DB on create " + database.getPath());
+        Log.w(SoulissDBOpenHelper.class.getName(), "DB on create " + database.getPath());
         database.execSQL(DATABASE_CREATE_NODES);
         database.execSQL(DATABASE_CREATE_TYPICALS);
         database.execSQL(DATABASE_CREATE_COMMANDS);
@@ -365,7 +365,7 @@ public class SoulissDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(SoulissDB.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion);
+        Log.w(SoulissDBOpenHelper.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion);
         boolean dropNeeded = true;
         if (oldVersion <= 30 && newVersion == DATABASE_VERSION) {
             //added warn TIMER
@@ -375,7 +375,7 @@ public class SoulissDB extends SQLiteOpenHelper {
 
             } catch (Exception cazzo) {
                 //somehow already existing, just log
-                Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
+                Log.e(SoulissDBOpenHelper.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
             }
         }
         if (oldVersion <= 34 && newVersion == DATABASE_VERSION) {
@@ -403,13 +403,13 @@ public class SoulissDB extends SQLiteOpenHelper {
                 dropNeeded = false;
             } catch (Exception cazzo) {
                 //somehow already existing, just log
-                Log.e(SoulissDB.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
+                Log.e(SoulissDBOpenHelper.class.getName(), "Upgrading database ERROR:" + cazzo.getMessage());
                 dropNeeded = true;
             }
         }
 
         if (dropNeeded) {
-            Log.e(SoulissDB.class.getName(), "Upgrading database went wrong, DROPPI&RE-CREATE");
+            Log.e(SoulissDBOpenHelper.class.getName(), "Upgrading database went wrong, DROPPI&RE-CREATE");
             dropCreate(db);
         }
 

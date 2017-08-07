@@ -74,6 +74,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_detailwrapper);
         database = new SoulissDBHelper(this);
+        SoulissDBHelper.open();
         // recuper nodo da extra
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // If the screen is now in landscape mode, we can show the

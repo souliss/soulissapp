@@ -30,9 +30,9 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.model.db.SoulissLogDTO;
 import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
@@ -414,7 +414,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
         while ((temp = csvReader.readNext()) != null) {
             // Log.d("Souliss:file import", temp.toString());
-            if (temp[1].compareToIgnoreCase(SoulissDB.COLUMN_NODE_ID) == 0) {
+            if (temp[1].compareToIgnoreCase(SoulissDBOpenHelper.COLUMN_NODE_ID) == 0) {
                 Log.i(Constants.TAG, "Importing nodes...");
                 loopMode = PHASE_NODES;
                 activity.runOnUiThread(new Runnable() {
@@ -425,7 +425,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     }
                 });
                 continue;
-            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TYPICAL_NODE_ID) == 0) {
+            } else if (temp[0].compareToIgnoreCase(SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID) == 0) {
                 Log.i(Constants.TAG, "Imported " + totNodes + " nodes. Importing typicals...");
                 editor.putInt("numNodi", totNodes);
                 loopMode = PHASE_TYPICALS;
@@ -435,7 +435,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     }
                 });
                 continue;
-            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LOG_ID) == 0) {
+            } else if (temp[0].compareToIgnoreCase(SoulissDBOpenHelper.COLUMN_LOG_ID) == 0) {
                 editor.putInt("numTipici", database.countTypicals());
                 Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing Logs...");
                 loopMode = PHASE_LOGS;
@@ -446,7 +446,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     }
                 });
                 continue;
-            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_ID) == 0) {
+            } else if (temp[0].compareToIgnoreCase(SoulissDBOpenHelper.COLUMN_TAG_ID) == 0) {
                 Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing TAGS...");
                 loopMode = PHASE_TAGS;
                 activity.runOnUiThread(new Runnable() {
@@ -455,7 +455,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     }
                 });
                 continue;
-            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_TAG_TYP_SLOT) == 0) {
+            } else if (temp[0].compareToIgnoreCase(SoulissDBOpenHelper.COLUMN_TAG_TYP_SLOT) == 0) {
                 Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing TAG_TYP...");
                 loopMode = PHASE_TAG_TYP;
                 activity.runOnUiThread(new Runnable() {
@@ -464,7 +464,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
                     }
                 });
                 continue;
-            } else if (temp[0].compareToIgnoreCase(SoulissDB.COLUMN_LAUNCHER_ID) == 0) {
+            } else if (temp[0].compareToIgnoreCase(SoulissDBOpenHelper.COLUMN_LAUNCHER_ID) == 0) {
                 Log.i(Constants.TAG, "Imported " + tottyp + " typicals. Importing DASHBOARD...");
                 loopMode = PHASE_DASHB;
                 activity.runOnUiThread(new Runnable() {

@@ -22,8 +22,8 @@ import java.util.Locale;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
@@ -105,34 +105,34 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
         SoulissDBHelper.open();
         SQLiteDatabase db = SoulissDBHelper.getDatabase();
         // NODI
-        Cursor curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_NODES, null);
+        Cursor curCSV = db.rawQuery("SELECT * FROM " + SoulissDBOpenHelper.TABLE_NODES, null);
         exportedNodes += writeCsvFromTableCursor(csvWrite, curCSV);
         Log.i(TAG, "exported NODE rows:" + curCSV.getCount());
 
         curCSV.close();
         // TIPICI
-        curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TYPICALS, null);
+        curCSV = db.rawQuery("SELECT * FROM " + SoulissDBOpenHelper.TABLE_TYPICALS, null);
         exportedNodes += writeCsvFromTableCursor(csvWrite, curCSV);
         Log.i(TAG, "exported TYP rows");
         curCSV.close();
 
-        curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_LOGS, null);
+        curCSV = db.rawQuery("SELECT * FROM " + SoulissDBOpenHelper.TABLE_LOGS, null);
         exportedNodes += writeCsvFromTableCursor(csvWrite, curCSV);
         Log.i(TAG, "exported LOG rows");
         curCSV.close();
 
-        curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TAGS, null);
+        curCSV = db.rawQuery("SELECT * FROM " + SoulissDBOpenHelper.TABLE_TAGS, null);
         exportedNodes += writeCsvFromTableCursor(csvWrite, curCSV);
         Log.i(TAG, "exported TAG rows");
         curCSV.close();
 
-        curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_TAGS_TYPICALS, null);
+        curCSV = db.rawQuery("SELECT * FROM " + SoulissDBOpenHelper.TABLE_TAGS_TYPICALS, null);
         exportedNodes += writeCsvFromTableCursor(csvWrite, curCSV);
         Log.i(TAG, "exported TABLE_TAGS_TYPICALS rows");
         // dialog.setMessage( "exported LOG rows:" + curCSV.getCount());
         curCSV.close();
 
-        curCSV = db.rawQuery("SELECT * FROM " + SoulissDB.TABLE_LAUNCHER, null);
+        curCSV = db.rawQuery("SELECT * FROM " + SoulissDBOpenHelper.TABLE_LAUNCHER, null);
         exportedNodes += writeCsvFromTableCursor(csvWrite, curCSV);
         Log.i(TAG, "exported DASHBOARD rows");
         curCSV.close();

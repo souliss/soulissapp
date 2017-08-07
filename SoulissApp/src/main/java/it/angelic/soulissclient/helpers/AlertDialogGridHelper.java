@@ -20,8 +20,8 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 
 import static junit.framework.Assert.assertTrue;
@@ -71,7 +71,7 @@ public class AlertDialogGridHelper {
                                 throw new RuntimeException("NOT IMPLEMENTED");
                             }
                         } else if (toRename instanceof SoulissTag) {
-                            if (((SoulissTag) toRename).getTagId() <= SoulissDB.FAVOURITES_TAG_ID) {
+                            if (((SoulissTag) toRename).getTagId() <= SoulissDBOpenHelper.FAVOURITES_TAG_ID) {
                                 Toast.makeText(cont, cont.getString(R.string.nodeleteFav), Toast.LENGTH_SHORT).show();
                                 return;
                             }
@@ -220,7 +220,7 @@ public class AlertDialogGridHelper {
     public static void removeTagDialog(final Context cont, final TagRecyclerAdapter ctx, final SoulissDBTagHelper datasource,
                                        final SoulissTag toRename) {
         Log.w(Constants.TAG, "Removing TAG:" + toRename.getNiceName() + " ID:" + toRename.getTagId());
-        if (toRename.getTagId() <= SoulissDB.FAVOURITES_TAG_ID) {
+        if (toRename.getTagId() <= SoulissDBOpenHelper.FAVOURITES_TAG_ID) {
             Toast.makeText(cont, R.string.cantRemoveDefault, Toast.LENGTH_SHORT).show();
             return;
         }

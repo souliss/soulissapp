@@ -13,7 +13,7 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
-import it.angelic.soulissclient.model.db.SoulissDB;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -53,13 +53,13 @@ public class SoulissNode implements Serializable, ISoulissNode {
     public static SoulissNode cursorToNode(Context c, Cursor cursor) {
         SoulissNode comment = new SoulissNode(c, cursor.getShort(1));
 
-        comment.setHealth(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_HEALTH)));
-        if (!cursor.isNull(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_ICON)))
-            comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_ICON)));
-        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_NAME)));
+        comment.setHealth(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_NODE_HEALTH)));
+        if (!cursor.isNull(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_NODE_ICON)))
+            comment.setIconResourceId(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_NODE_ICON)));
+        comment.setName(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_NODE_NAME)));
 
         Calendar now = Calendar.getInstance();
-        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_NODE_LASTMOD))));
+        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_NODE_LASTMOD))));
         comment.setRefreshedAt(now);
         return comment;
     }

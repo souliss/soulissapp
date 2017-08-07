@@ -17,9 +17,10 @@ import java.util.List;
 
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
@@ -77,7 +78,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         this.context = context;
     }
 
-    public String getDefaultName(Context ctx) {
+    public String getDefaultName() {
         short typical = typicalDTO.getTypical();
         assertTrue(typical != -1);
 
@@ -147,8 +148,8 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         else
             id = R.string.unknown_typical;
 
-
-        return ctx.getResources().getString(id);
+        Context cc = SoulissApp.getAppContext();
+        return cc.getResources().getString(id);
     }
 
     @Override
@@ -233,7 +234,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     public String getName() {
         if (typicalDTO.getName() != null)
             return typicalDTO.getName();
-        return getDefaultName(context);
+        return getDefaultName();
     }
 
     @Override
@@ -245,7 +246,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     public String getNiceName() {
         if (typicalDTO.getName() != null)
             return typicalDTO.getName();
-        return getDefaultName(context);
+        return getDefaultName();
 
     }
 
@@ -359,18 +360,18 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
         ContentValues values = new ContentValues();
 
         // wrap values from object
-        values.put(SoulissDB.COLUMN_LOG_NODE_ID, getNodeId());
-        values.put(SoulissDB.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
-        values.put(SoulissDB.COLUMN_LOG_SLOT, getSlot());
+        values.put(SoulissDBOpenHelper.COLUMN_LOG_NODE_ID, getNodeId());
+        values.put(SoulissDBOpenHelper.COLUMN_LOG_DATE, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDBOpenHelper.COLUMN_LOG_SLOT, getSlot());
         if (isSensor()) {
-            Log.d(it.angelic.soulissclient.Constants.TAG, getDefaultName(context) + " saving sensor loggi: " + ((ISoulissTypicalSensor) this).getOutputFloat());
-            values.put(SoulissDB.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
+            Log.d(it.angelic.soulissclient.Constants.TAG, getDefaultName() + " saving sensor loggi: " + ((ISoulissTypicalSensor) this).getOutputFloat());
+            values.put(SoulissDBOpenHelper.COLUMN_LOG_VAL, ((ISoulissTypicalSensor) this).getOutputFloat());
         } else {
-            Log.d(it.angelic.soulissclient.Constants.TAG, getDefaultName(context) + " saving loggi: " + getOutput());
-            values.put(SoulissDB.COLUMN_LOG_VAL, getOutput());
+            Log.d(it.angelic.soulissclient.Constants.TAG, getDefaultName() + " saving loggi: " + getOutput());
+            values.put(SoulissDBOpenHelper.COLUMN_LOG_VAL, getOutput());
         }
         try {
-            SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_LOGS, null, values);
+            SoulissDBHelper.getDatabase().insert(SoulissDBOpenHelper.TABLE_LOGS, null, values);
         } catch (SQLiteConstraintException e) {
             // sensori NaN violano il constraint
             Log.e(it.angelic.soulissclient.Constants.TAG, "error saving log: " + e);

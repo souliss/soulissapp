@@ -31,9 +31,9 @@ import java.util.Set;
 
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.Eula;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.util.SystemUiHider;
 
@@ -180,17 +180,17 @@ public class WelcomeActivity extends FragmentActivity {
         setContentView(R.layout.activity_welcome);
 
         // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
-        final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
-        final CheckBox welcomeEnableCheckBox = (CheckBox) findViewById(R.id.welcome_enable_checkbox);
-        final FrameLayout welcomeContainer = (FrameLayout) findViewById(R.id.frame_welcome_container);
+        final Button welcomeTourButton = findViewById(R.id.welcome_tour_button);
+        final CheckBox welcomeEnableCheckBox = findViewById(R.id.welcome_enable_checkbox);
+        final FrameLayout welcomeContainer = findViewById(R.id.frame_welcome_container);
         //welcomeContainer.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         //welcomeContainer.getBackground().setDither(true);
         Log.i(Constants.TAG, "onCreate: current config:" + SoulissApp.getCurrentConfig());
         welcomeEnableCheckBox.setChecked(SoulissApp.isWelcomeDisabled());
 
-        final Spinner confSpinner = (Spinner) findViewById(R.id.configSpinner);
-        final Button renameButton = (Button) findViewById(R.id.welcome_tour_rename);
-        final Button deleteButton = (Button) findViewById(R.id.welcome_tour_delete);
+        final Spinner confSpinner = findViewById(R.id.configSpinner);
+        final Button renameButton = findViewById(R.id.welcome_tour_rename);
+        final Button deleteButton = findViewById(R.id.welcome_tour_delete);
         final View controlsView = findViewById(R.id.fullscreen_content_controls);
         final View contentView = findViewById(R.id.fullscreen_content);
 
@@ -329,7 +329,7 @@ public class WelcomeActivity extends FragmentActivity {
 
                             String DbPath = SoulissDBHelper.getDatabase().getPath();
                             File oldDb = new File(DbPath);
-                            File bckDb = new File(importDir, previousConfig + "_" + SoulissDB.DATABASE_NAME);
+                            File bckDb = new File(importDir, previousConfig + "_" + SoulissDBOpenHelper.DATABASE_NAME);
                             Log.w(Constants.TAG, "Saving old DB: " + DbPath + " to: " + bckDb.getPath());
                             SoulissUtils.fileCopy(oldDb, bckDb);
 

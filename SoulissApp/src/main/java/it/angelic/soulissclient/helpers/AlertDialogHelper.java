@@ -49,9 +49,9 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;
 import it.angelic.soulissclient.model.SoulissTag;
 import it.angelic.soulissclient.model.SoulissTypical;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
@@ -233,7 +233,7 @@ public class AlertDialogHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         datasource.close();
-                        if (source.deleteDatabase(SoulissDB.DATABASE_NAME)) {
+                        if (source.deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME)) {
                             SharedPreferences.Editor editor = soulissCust.edit();
                             // tolgo db dalle prefs
                             if (soulissCust.contains("numNodi"))
@@ -494,14 +494,14 @@ public class AlertDialogHelper {
 
         LayoutInflater factory = LayoutInflater.from(context);
         final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null, false);
-        final Spinner aufioChan = (Spinner) deleteDialogView.findViewById(R.id.spinnerInputChannel);
-        final SeekBar low = (SeekBar) deleteDialogView.findViewById(R.id.seekBarLow);
-        final SeekBar med = (SeekBar) deleteDialogView.findViewById(R.id.seekBarMed);
-        final SeekBar hi = (SeekBar) deleteDialogView.findViewById(R.id.seekBarHigh);
+        final Spinner aufioChan = deleteDialogView.findViewById(R.id.spinnerInputChannel);
+        final SeekBar low = deleteDialogView.findViewById(R.id.seekBarLow);
+        final SeekBar med = deleteDialogView.findViewById(R.id.seekBarMed);
+        final SeekBar hi = deleteDialogView.findViewById(R.id.seekBarHigh);
 
-        final SeekBar lowRange = (SeekBar) deleteDialogView.findViewById(R.id.seekBarRangeLow);
-        final SeekBar medRange = (SeekBar) deleteDialogView.findViewById(R.id.seekBarRangeMed);
-        final SeekBar hiRange = (SeekBar) deleteDialogView.findViewById(R.id.seekBarRangeHigh);
+        final SeekBar lowRange = deleteDialogView.findViewById(R.id.seekBarRangeLow);
+        final SeekBar medRange = deleteDialogView.findViewById(R.id.seekBarRangeMed);
+        final SeekBar hiRange = deleteDialogView.findViewById(R.id.seekBarRangeHigh);
         low.setProgress(Float.valueOf(opzioni.getEqLow() * 100f).intValue());
         med.setProgress(Float.valueOf(opzioni.getEqMed() * 100f).intValue());
         hi.setProgress(Float.valueOf(opzioni.getEqHigh() * 100f).intValue());
@@ -773,12 +773,12 @@ public class AlertDialogHelper {
         alert2.setTitle(context.getString(R.string.scene_add_to));
         alert2.setIcon(android.R.drawable.ic_menu_add);
 
-        final RadioButton dashbRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonDashboardTag);
-        final RadioButton tagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonTag);
-        final RadioButton newTagRadio = (RadioButton) dialoglayout.findViewById(R.id.radioButtonNewTag);
-        final EditText editNewTag = (EditText) dialoglayout.findViewById(R.id.editTextNewTag);
+        final RadioButton dashbRadio = dialoglayout.findViewById(R.id.radioButtonDashboardTag);
+        final RadioButton tagRadio = dialoglayout.findViewById(R.id.radioButtonTag);
+        final RadioButton newTagRadio = dialoglayout.findViewById(R.id.radioButtonNewTag);
+        final EditText editNewTag = dialoglayout.findViewById(R.id.editTextNewTag);
 
-        final Spinner outputNodeSpinner = (Spinner) dialoglayout.findViewById(R.id.spinnerTags);
+        final Spinner outputNodeSpinner = dialoglayout.findViewById(R.id.spinnerTags);
         ArrayAdapter<SoulissTag> adapter = new ArrayAdapter<>(context,
                 android.R.layout.simple_spinner_item, tagArray);
 
@@ -847,7 +847,7 @@ public class AlertDialogHelper {
                             it = (SoulissTag) outputNodeSpinner.getSelectedItem();
                             if (!it.getAssignedTypicals().contains(toadd))
                                 it.getAssignedTypicals().add(toadd);
-                            if (it.getTagId() == SoulissDB.FAVOURITES_TAG_ID)
+                            if (it.getTagId() == SoulissDBOpenHelper.FAVOURITES_TAG_ID)
                                 toadd.getTypicalDTO().setFavourite(true);
                             else
                                 toadd.getTypicalDTO().setTagged(true);

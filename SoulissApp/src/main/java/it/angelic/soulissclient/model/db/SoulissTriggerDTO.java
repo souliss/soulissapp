@@ -23,13 +23,13 @@ public class SoulissTriggerDTO implements Serializable {
 
     public SoulissTriggerDTO(Cursor cursor) {
 
-        setTriggerId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_ID)));
-        setCommandId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_COMMAND_ID)));
-        setInputNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_NODE_ID)));
-        setInputSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_SLOT)));
-        setOp(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_OP)));
-        setThreshVal(cursor.getFloat(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_THRESHVAL)));
-        setActive(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TRIGGER_ACTIVE)));
+        setTriggerId(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_ID)));
+        setCommandId(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_COMMAND_ID)));
+        setInputNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_NODE_ID)));
+        setInputSlot(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_SLOT)));
+        setOp(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_OP)));
+        setThreshVal(cursor.getFloat(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_THRESHVAL)));
+        setActive(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TRIGGER_ACTIVE)));
     }
 
     private void setActive(int int1) {
@@ -116,17 +116,17 @@ public class SoulissTriggerDTO implements Serializable {
     public SoulissTriggerDTO persist(SoulissDBHelper database) {
         ContentValues values = new ContentValues();
         //assertTrue(getSlot() != -1);
-        values.put(SoulissDB.COLUMN_TRIGGER_COMMAND_ID, getCommandId());
-        values.put(SoulissDB.COLUMN_TRIGGER_SLOT, getInputSlot());
-        values.put(SoulissDB.COLUMN_TRIGGER_NODE_ID, getInputNodeId());
-        values.put(SoulissDB.COLUMN_TRIGGER_OP, getOp());
-        values.put(SoulissDB.COLUMN_TRIGGER_THRESHVAL, getThreshVal());
-        values.put(SoulissDB.COLUMN_TRIGGER_ACTIVE, getActive());
+        values.put(SoulissDBOpenHelper.COLUMN_TRIGGER_COMMAND_ID, getCommandId());
+        values.put(SoulissDBOpenHelper.COLUMN_TRIGGER_SLOT, getInputSlot());
+        values.put(SoulissDBOpenHelper.COLUMN_TRIGGER_NODE_ID, getInputNodeId());
+        values.put(SoulissDBOpenHelper.COLUMN_TRIGGER_OP, getOp());
+        values.put(SoulissDBOpenHelper.COLUMN_TRIGGER_THRESHVAL, getThreshVal());
+        values.put(SoulissDBOpenHelper.COLUMN_TRIGGER_ACTIVE, getActive());
 
-        int upd = SoulissDBHelper.getDatabase().update(SoulissDB.TABLE_TRIGGERS, values,
-                SoulissDB.COLUMN_TRIGGER_ID + " = " + getTriggerId(), null);
+        int upd = SoulissDBHelper.getDatabase().update(SoulissDBOpenHelper.TABLE_TRIGGERS, values,
+                SoulissDBOpenHelper.COLUMN_TRIGGER_ID + " = " + getTriggerId(), null);
         if (upd == 0) {
-            long insertId = SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_TRIGGERS, null, values);
+            long insertId = SoulissDBHelper.getDatabase().insert(SoulissDBOpenHelper.TABLE_TRIGGERS, null, values);
             return database.getSoulissTrigger(insertId);
         }
         //ce gia

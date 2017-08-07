@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.NumberPicker;
 import android.widget.SeekBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +40,6 @@ import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical12DigitalOutputAuto;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_AutoCmd;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T1n_OffCmd;
@@ -89,18 +87,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		return f;
 	}
 
-	/**
-	 * Interface describing a color change listener.
-	 */
-	public interface OnColorChangedListener {
-		/**
-		 * Method colorChanged is called when a new color is selected.
-		 * 
-		 * @param color
-		 *            new color.
-		 */
-		void colorChanged(int color);
-	}
+
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -151,21 +138,21 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 
 		super.setCollected(collected);
 
-		warnerCheck = (CheckBox) ret.findViewById(R.id.checkBoxWarn);
-		warner = (NumberPicker) ret.findViewById(R.id.warnTimer);
-		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-        Button buttAuto = (Button) ret.findViewById(R.id.buttonAuto);
-        timer = (SeekBar) ret.findViewById(R.id.sleepBar);
-		timerInfo = (TextView) ret.findViewById(R.id.textviewTimerInfo);
-		autoInfo = (TextView) ret.findViewById(R.id.textviewAutoInfo);
-        Button btSleep = (Button) ret.findViewById(R.id.sleep);
-        infoTyp = (TextView) ret.findViewById(R.id.textView1nInfo);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-		infoHistory = (TextView) ret.findViewById(R.id.textviewHistoryInfo);
-        togMassive = (SwitchCompat) ret.findViewById(R.id.buttonMassive);
-		mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
-		tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
-		clockPieView = (ClockPieView) ret.findViewById(R.id.pie_view);
+        warnerCheck = ret.findViewById(R.id.checkBoxWarn);
+        warner = ret.findViewById(R.id.warnTimer);
+        buttPlus = ret.findViewById(R.id.buttonPlus);
+        Button buttAuto = ret.findViewById(R.id.buttonAuto);
+        timer = ret.findViewById(R.id.sleepBar);
+        timerInfo = ret.findViewById(R.id.textviewTimerInfo);
+        autoInfo = ret.findViewById(R.id.textviewAutoInfo);
+        Button btSleep = ret.findViewById(R.id.sleep);
+        infoTyp = ret.findViewById(R.id.textView1nInfo);
+        infoTags = ret.findViewById(R.id.tableRowTagInfo);
+        infoHistory = ret.findViewById(R.id.textviewHistoryInfo);
+        togMassive = ret.findViewById(R.id.buttonMassive);
+        mVisualizerView = ret.findViewById(R.id.visualizerView);
+        tagView = ret.findViewById(R.id.tag_group);
+        clockPieView = ret.findViewById(R.id.pie_view);
 
 		buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
 		infoTyp.setText(collected.getParentNode().getNiceName() + " - Slot " + collected.getSlot() + " - Out: 0x" + Integer.toHexString(collected.getOutput().intValue()));

@@ -29,8 +29,8 @@ import java.util.Set;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 
 /**
  * Created by shine@angelic.it on 10/10/2015.
@@ -211,7 +211,7 @@ public class SoulissUtils {
 
     public static void loadSoulissDbFromFile(Context c, String config, File importDir) throws IOException {
 
-        File bckDb = new File(importDir, config + "_" + SoulissDB.DATABASE_NAME);
+        File bckDb = new File(importDir, config + "_" + SoulissDBOpenHelper.DATABASE_NAME);
         SoulissDBHelper db = new SoulissDBHelper(c);
         SoulissDBHelper.open();
         String DbPath = SoulissDBHelper.getDatabase().getPath();

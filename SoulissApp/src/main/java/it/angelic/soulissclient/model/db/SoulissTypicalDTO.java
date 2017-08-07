@@ -58,17 +58,17 @@ public class SoulissTypicalDTO implements Serializable {
 
     public SoulissTypicalDTO(Cursor cursor) {
         // byte typ = (byte) cursor.getShort(1);
-        setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NODE_ID)));
-        setTypical(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL)));
-        setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_SLOT)));
-        setInput((byte) cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_INPUT)));
-        setOutput(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_VALUE)));
-        setIconId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ICON)));
-        setWarnDelayMsec(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_WARNTIMER)));
+        setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID)));
+        setTypical(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL)));
+        setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT)));
+        setInput((byte) cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_INPUT)));
+        setOutput(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_VALUE)));
+        setIconId(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_ICON)));
+        setWarnDelayMsec(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_WARNTIMER)));
         //setFavourite(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_ISFAV)));
-        setName(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_NAME)));
+        setName(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_NAME)));
         Calendar now = Calendar.getInstance();
-        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_TYPICAL_LASTMOD))));
+        now.setTime(new Date(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_TYPICAL_LASTMOD))));
         setRefreshedAt(now);
     }
 
@@ -98,30 +98,30 @@ public class SoulissTypicalDTO implements Serializable {
         int upd;
         ContentValues values = new ContentValues();
         assertTrue(getSlot() != -1);
-        values.put(SoulissDB.COLUMN_TYPICAL_NODE_ID, getNodeId());
-        values.put(SoulissDB.COLUMN_TYPICAL, getTypical());
-        values.put(SoulissDB.COLUMN_TYPICAL_SLOT, getSlot());
-        values.put(SoulissDB.COLUMN_TYPICAL_NAME, getName());
-        values.put(SoulissDB.COLUMN_TYPICAL_ICON, getIconId());
-        values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
-        values.put(SoulissDB.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID, getNodeId());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL, getTypical());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT, getSlot());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_NAME, getName());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_ICON, getIconId());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
         //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
-        values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
 
         upd = SoulissDBHelper.getDatabase().update(
-                SoulissDB.TABLE_TYPICALS,
+                SoulissDBOpenHelper.TABLE_TYPICALS,
                 values,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT
                         + " = " + getSlot(), null);
         if (upd == 0) {//magari non esiste, prova insert
             try {
-                upd = (int) db.insert(SoulissDB.TABLE_TYPICALS, null, values);
+                upd = (int) db.insert(SoulissDBOpenHelper.TABLE_TYPICALS, null, values);
             } catch (SQLiteConstraintException sqe) {
                 //esiste, magari il primo fail era sfiga. Riproviamo...
                 upd = SoulissDBHelper.getDatabase().update(
-                        SoulissDB.TABLE_TYPICALS,
+                        SoulissDBOpenHelper.TABLE_TYPICALS,
                         values,
-                        SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                        SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT
                                 + " = " + getSlot(), null);
             }
         }
@@ -135,23 +135,23 @@ public class SoulissTypicalDTO implements Serializable {
 
     public Date getLastStatusChange() {
         Cursor cursor = SoulissDBHelper.getDatabase().query(
-                SoulissDB.TABLE_LOGS,
-                new String[]{SoulissDB.COLUMN_LOG_DATE, SoulissDB.COLUMN_LOG_VAL,
+                SoulissDBOpenHelper.TABLE_LOGS,
+                new String[]{SoulissDBOpenHelper.COLUMN_LOG_DATE, SoulissDBOpenHelper.COLUMN_LOG_VAL,
                         // "strftime('%Y-%m-%d', datetime((cldlogwhen/1000), 'unixepoch', 'localtime')) AS IDX",
                         // "AVG(CAST(flologval AS FLOAT)) AS AVG",
                         // "MIN(CAST(flologval AS FLOAT)) AS MIN",
                         // "MAX(CAST(flologval AS FLOAT)) AS MAX"
                 },
-                SoulissDB.COLUMN_LOG_NODE_ID + " = " + this.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT + " = "
-                        + this.getSlot() + " AND " + SoulissDB.COLUMN_LOG_ID + " = ( SELECT MAX("
-                        + SoulissDB.COLUMN_LOG_ID + ") FROM " + SoulissDB.TABLE_LOGS + " WHERE "
-                        + SoulissDB.COLUMN_LOG_NODE_ID + " = " + this.getNodeId() + " AND " + SoulissDB.COLUMN_LOG_SLOT
-                        + " = " + this.getSlot() + ")", null, null, null, SoulissDB.COLUMN_LOG_DATE + " ASC");
+                SoulissDBOpenHelper.COLUMN_LOG_NODE_ID + " = " + this.getNodeId() + " AND " + SoulissDBOpenHelper.COLUMN_LOG_SLOT + " = "
+                        + this.getSlot() + " AND " + SoulissDBOpenHelper.COLUMN_LOG_ID + " = ( SELECT MAX("
+                        + SoulissDBOpenHelper.COLUMN_LOG_ID + ") FROM " + SoulissDBOpenHelper.TABLE_LOGS + " WHERE "
+                        + SoulissDBOpenHelper.COLUMN_LOG_NODE_ID + " = " + this.getNodeId() + " AND " + SoulissDBOpenHelper.COLUMN_LOG_SLOT
+                        + " = " + this.getSlot() + ")", null, null, null, SoulissDBOpenHelper.COLUMN_LOG_DATE + " ASC");
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
             try {
-                Date dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LOG_DATE)));
+                Date dff = new Date(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LOG_DATE)));
                 cursor.close();
                 return dff;
             } catch (Exception e) {
@@ -173,9 +173,9 @@ public class SoulissTypicalDTO implements Serializable {
         if (SoulissApp.getOpzioni().isLogHistoryEnabled() && !(parent.isSensor() || parent.isRelated())) {
             // se e` un sensore viene loggato altrove
             Cursor cursor = SoulissDBHelper.getDatabase().query(
-                    SoulissDB.TABLE_TYPICALS,
-                    SoulissDB.ALLCOLUMNS_TYPICALS,
-                    SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + nodeId + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT + " = "
+                    SoulissDBOpenHelper.TABLE_TYPICALS,
+                    SoulissDBOpenHelper.ALLCOLUMNS_TYPICALS,
+                    SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID + " = " + nodeId + " AND " + SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT + " = "
                             + slot, null, null, null, null);
             cursor.moveToFirst();
             SoulissTypicalDTO dto = new SoulissTypicalDTO(cursor);
@@ -187,12 +187,12 @@ public class SoulissTypicalDTO implements Serializable {
         }
         ContentValues values = new ContentValues();
         assertTrue(getSlot() != -1);
-        values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
-        values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
-                SoulissDB.TABLE_TYPICALS,
+                SoulissDBOpenHelper.TABLE_TYPICALS,
                 values,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT
                         + " = " + getSlot(), null);
         // TODO throw exception
         return upd;
@@ -207,23 +207,23 @@ public class SoulissTypicalDTO implements Serializable {
     public SoulissTypical createOrReplaceTypical(SoulissDBHelper database) {
         ContentValues values = new ContentValues();
         assertTrue(getSlot() != -1);
-        values.put(SoulissDB.COLUMN_TYPICAL_NODE_ID, getNodeId());
-        values.put(SoulissDB.COLUMN_TYPICAL_NAME, getName());
-        values.put(SoulissDB.COLUMN_TYPICAL_ICON, getIconId());
-        values.put(SoulissDB.COLUMN_TYPICAL, getTypical());
-        values.put(SoulissDB.COLUMN_TYPICAL_SLOT, getSlot());
-        values.put(SoulissDB.COLUMN_TYPICAL_INPUT, getInput());
-        values.put(SoulissDB.COLUMN_TYPICAL_VALUE, getOutput());
-        values.put(SoulissDB.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID, getNodeId());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_NAME, getName());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_ICON, getIconId());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL, getTypical());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT, getSlot());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_INPUT, getInput());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_VALUE, getOutput());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_WARNTIMER, getWarnDelayMsec());
         //values.put(SoulissDB.COLUMN_TYPICAL_ISFAV, getFavourite());
-        values.put(SoulissDB.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
+        values.put(SoulissDBOpenHelper.COLUMN_TYPICAL_LASTMOD, Calendar.getInstance().getTime().getTime());
         int upd = SoulissDBHelper.getDatabase().update(
-                SoulissDB.TABLE_TYPICALS,
+                SoulissDBOpenHelper.TABLE_TYPICALS,
                 values,
-                SoulissDB.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDB.COLUMN_TYPICAL_SLOT
+                SoulissDBOpenHelper.COLUMN_TYPICAL_NODE_ID + " = " + getNodeId() + " AND " + SoulissDBOpenHelper.COLUMN_TYPICAL_SLOT
                         + " = " + getSlot(), null);
         if (upd == 0) {
-            SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_TYPICALS, null, values);
+            SoulissDBHelper.getDatabase().insert(SoulissDBOpenHelper.TABLE_TYPICALS, null, values);
         }
         return database.getTypical(getNodeId(), getSlot());
     }

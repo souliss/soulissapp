@@ -23,21 +23,21 @@ public class SoulissCommandDTO implements Serializable {
     int type;
 
     public SoulissCommandDTO(Cursor cursor) {
-        setCommandId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_ID)));
-        setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_NODE_ID)));
-        setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SLOT)));
-        setCommand(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_INPUT)));
+        setCommandId(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_ID)));
+        setNodeId(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_NODE_ID)));
+        setSlot(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_SLOT)));
+        setCommand(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_INPUT)));
         Calendar now = Calendar.getInstance();
-        setScheduledTime(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCHEDTIME)));
-        long exd = cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_EXECTIME));
+        setScheduledTime(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_SCHEDTIME)));
+        long exd = cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_EXECTIME));
         if (exd != 0) {
             Calendar bis = Calendar.getInstance();
             bis.setTime(new Date(exd));
             setExecutedTime(exd);
         }
-        setInterval(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCHEDTIME_INTERVAL)));
-        setSceneId(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_SCENEID)));
-        setType(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_COMMAND_TYPE)));
+        setInterval(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_SCHEDTIME_INTERVAL)));
+        setSceneId(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_SCENEID)));
+        setType(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_COMMAND_TYPE)));
     }
 
     public SoulissCommandDTO() {
@@ -51,27 +51,27 @@ public class SoulissCommandDTO implements Serializable {
         ContentValues values = new ContentValues();
         // assert (typicalIN.getSlot() != -1);
         if (commandId != null)
-            values.put(SoulissDB.COLUMN_COMMAND_ID, commandId);
-        values.put(SoulissDB.COLUMN_COMMAND_NODE_ID, nodeId);
-        values.put(SoulissDB.COLUMN_COMMAND_SLOT, slot);
-        values.put(SoulissDB.COLUMN_COMMAND_INPUT, command);
-        values.put(SoulissDB.COLUMN_COMMAND_TYPE, type);
-        values.put(SoulissDB.COLUMN_COMMAND_SCENEID, sceneId);
+            values.put(SoulissDBOpenHelper.COLUMN_COMMAND_ID, commandId);
+        values.put(SoulissDBOpenHelper.COLUMN_COMMAND_NODE_ID, nodeId);
+        values.put(SoulissDBOpenHelper.COLUMN_COMMAND_SLOT, slot);
+        values.put(SoulissDBOpenHelper.COLUMN_COMMAND_INPUT, command);
+        values.put(SoulissDBOpenHelper.COLUMN_COMMAND_TYPE, type);
+        values.put(SoulissDBOpenHelper.COLUMN_COMMAND_SCENEID, sceneId);
         if (scheduledTime != null)
-            values.put(SoulissDB.COLUMN_COMMAND_SCHEDTIME, scheduledTime);
+            values.put(SoulissDBOpenHelper.COLUMN_COMMAND_SCHEDTIME, scheduledTime);
         if (executedTime != null)
-            values.put(SoulissDB.COLUMN_COMMAND_EXECTIME, executedTime);
+            values.put(SoulissDBOpenHelper.COLUMN_COMMAND_EXECTIME, executedTime);
         // else
         // values.put(SoulissDB.COLUMN_EXECTIME, null);
         if (interval != 0)
-            values.put(SoulissDB.COLUMN_COMMAND_SCHEDTIME_INTERVAL, interval);
+            values.put(SoulissDBOpenHelper.COLUMN_COMMAND_SCHEDTIME_INTERVAL, interval);
 
         long upd;
         if (commandId != null) {
-            upd = SoulissDBHelper.getDatabase().update(SoulissDB.TABLE_COMMANDS, values,
-                    SoulissDB.COLUMN_COMMAND_ID + " = " + commandId, null);
+            upd = SoulissDBHelper.getDatabase().update(SoulissDBOpenHelper.TABLE_COMMANDS, values,
+                    SoulissDBOpenHelper.COLUMN_COMMAND_ID + " = " + commandId, null);
         } else {
-            upd = SoulissDBHelper.getDatabase().insert(SoulissDB.TABLE_COMMANDS, null, values);
+            upd = SoulissDBHelper.getDatabase().insert(SoulissDBOpenHelper.TABLE_COMMANDS, null, values);
             setCommandId(upd);
         }
         return upd;

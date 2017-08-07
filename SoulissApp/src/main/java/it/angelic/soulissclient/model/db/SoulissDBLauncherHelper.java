@@ -85,7 +85,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         // int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getSceneId(),
         //         null);
         // if (upd == 0) {
-        long insertId = database.insert(SoulissDB.TABLE_LAUNCHER, null, values);
+        long insertId = database.insert(SoulissDBOpenHelper.TABLE_LAUNCHER, null, values);
         //  }
 
         return insertId;
@@ -94,27 +94,27 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
     private int deleteLauncher(LauncherElement toRename) {
         if (!database.isOpen())
             open();
-        return database.delete(SoulissDB.TABLE_LAUNCHER, SoulissDB.COLUMN_LAUNCHER_ID + " = " + toRename.getId(), null);
+        return database.delete(SoulissDBOpenHelper.TABLE_LAUNCHER, SoulissDBOpenHelper.COLUMN_LAUNCHER_ID + " = " + toRename.getId(), null);
     }
 
     private ContentValues fillcontentValues(LauncherElement nodeIN) {
         ContentValues values = new ContentValues();
-        values.put(SoulissDB.COLUMN_LAUNCHER_ID, nodeIN.getId());
-        values.put(SoulissDB.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
-        values.put(SoulissDB.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
-        values.put(SoulissDB.COLUMN_LAUNCHER_TYPE, nodeIN.getComponentEnum().ordinal());
-        values.put(SoulissDB.COLUMN_LAUNCHER_ORDER, nodeIN.getOrder());
-        values.put(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN, nodeIN.isFullSpan() ? 1 : 0);
+        values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_ID, nodeIN.getId());
+        values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_TITLE, nodeIN.getTitle());
+        values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_DESC, nodeIN.getDesc());
+        values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_TYPE, nodeIN.getComponentEnum().ordinal());
+        values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_ORDER, nodeIN.getOrder());
+        values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_FULL_SPAN, nodeIN.isFullSpan() ? 1 : 0);
         if (nodeIN.getLinkedObject() != null) {
             if (nodeIN.getLinkedObject() instanceof SoulissNode)
-                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissNode) nodeIN.getLinkedObject()).getNodeId());
+                values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_NODE_ID, ((SoulissNode) nodeIN.getLinkedObject()).getNodeId());
             else if (nodeIN.getLinkedObject() instanceof SoulissTypical) {
-                values.put(SoulissDB.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
-                values.put(SoulissDB.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
+                values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_NODE_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getNodeId());
+                values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_SLOT_ID, ((SoulissTypical) nodeIN.getLinkedObject()).getSlot());
             } else if (nodeIN.getLinkedObject() instanceof SoulissScene)
-                values.put(SoulissDB.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
+                values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_SCENE_ID, ((SoulissScene) nodeIN.getLinkedObject()).getSceneId());
             else if (nodeIN.getLinkedObject() instanceof SoulissTag)
-                values.put(SoulissDB.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
+                values.put(SoulissDBOpenHelper.COLUMN_LAUNCHER_TAG_ID, ((SoulissTag) nodeIN.getLinkedObject()).getTagId());
             else
                 throw new SoulissModelException("Missing ISoulissObject cast");
         }
@@ -127,17 +127,17 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         List<LauncherElement> comments = new ArrayList<>();
         if (!database.isOpen())
             open();
-        Cursor cursor = database.query(SoulissDB.TABLE_LAUNCHER, SoulissDB.ALLCOLUMNS_LAUNCHER,
-                null, null, null, null, SoulissDB.COLUMN_LAUNCHER_ORDER + ", " + SoulissDB.COLUMN_LAUNCHER_ID);
+        Cursor cursor = database.query(SoulissDBOpenHelper.TABLE_LAUNCHER, SoulissDBOpenHelper.ALLCOLUMNS_LAUNCHER,
+                null, null, null, null, SoulissDBOpenHelper.COLUMN_LAUNCHER_ORDER + ", " + SoulissDBOpenHelper.COLUMN_LAUNCHER_ID);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             LauncherElement dto = new LauncherElement();
-            dto.setId(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_ID)));
-            dto.setTitle(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TITLE)));
-            dto.setDesc(cursor.getString(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_DESC)));
-            dto.setOrder(cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_ORDER)));
-            dto.setIsFullSpan(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_FULL_SPAN)) == 1);
-            dto.setComponentEnum(LauncherElementEnum.values()[cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TYPE))]);
+            dto.setId(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_ID)));
+            dto.setTitle(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_TITLE)));
+            dto.setDesc(cursor.getString(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_DESC)));
+            dto.setOrder(cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_ORDER)));
+            dto.setIsFullSpan(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_FULL_SPAN)) == 1);
+            dto.setComponentEnum(LauncherElementEnum.values()[cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_TYPE))]);
             ISoulissObject isoulissObj = null;
             try {
 
@@ -168,17 +168,17 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                                 countTriggers(), countTriggers()));//FIXME count progs
                         break;
                     case NODE:
-                        isoulissObj = getSoulissNode(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)));
+                        isoulissObj = getSoulissNode(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_NODE_ID)));
                         break;
                     case TYPICAL:
-                        isoulissObj = getTypical(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_NODE_ID)),
-                                cursor.getShort(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_SLOT_ID)));
+                        isoulissObj = getTypical(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_NODE_ID)),
+                                cursor.getShort(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_SLOT_ID)));
                         break;
                     case TAG:
-                        isoulissObj = getTag(cursor.getLong(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_TAG_ID)));
+                        isoulissObj = getTag(cursor.getLong(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_TAG_ID)));
                         break;
                     case SCENE:
-                        isoulissObj = getScene(cursor.getInt(cursor.getColumnIndex(SoulissDB.COLUMN_LAUNCHER_SCENE_ID)));
+                        isoulissObj = getScene(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_SCENE_ID)));
                         break;
                     default:
                         break;
@@ -304,7 +304,7 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         // wrap values from object
 
         ContentValues values = fillcontentValues(nodeIN);
-        int upd = database.update(SoulissDB.TABLE_LAUNCHER, values, SoulissDB.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
+        int upd = database.update(SoulissDBOpenHelper.TABLE_LAUNCHER, values, SoulissDBOpenHelper.COLUMN_LAUNCHER_ID + " = " + nodeIN.getId(),
                 null);
         if (upd == 0) {
             Log.e(Constants.TAG, "updateLauncherElement() NO ROW UPDATED!!");

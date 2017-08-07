@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.Constants;
@@ -20,11 +19,11 @@ import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
+import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
@@ -83,13 +82,17 @@ public class T5nSensorFragment extends AbstractTypicalFragment {
             Log.e(Constants.TAG, "Error retriving Typical Detail:");
 
         }
+        //ora che ho ID, ricarico
+        SoulissNode coll = datasource.getSoulissNode(collected.getNodeId());
+        collected = coll.getTypical(collected.getSlot());
+
         View ret = inflater.inflate(R.layout.frag_t5n_sensordetail, container, false);
-        TextView nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
-        TextView icon = (TextView) ret.findViewById(R.id.typ_icon);
-        TextView upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
-        ProgressBar par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+        TextView nodeinfo = ret.findViewById(R.id.TextViewTypNodeInfo);
+        TextView icon = ret.findViewById(R.id.typ_icon);
+        TextView upda = ret.findViewById(R.id.TextViewTypUpdate);
+        ProgressBar par = ret.findViewById(R.id.progressBarTypNodo);
+        infoTags = ret.findViewById(R.id.tableRowTagInfo);
+        tagView = ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);
 
 

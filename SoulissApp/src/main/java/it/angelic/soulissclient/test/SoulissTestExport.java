@@ -11,8 +11,8 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.ExportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
-import it.angelic.soulissclient.model.db.SoulissDB;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 
@@ -73,7 +73,7 @@ public class SoulissTestExport extends AndroidTestCase {
 
     @Override
     public void tearDown() throws Exception {
-        getContext().deleteDatabase(SoulissDB.DATABASE_NAME);
+        getContext().deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
 
         Log.i(Constants.TAG, "tearDown test DB");
         db.close();
