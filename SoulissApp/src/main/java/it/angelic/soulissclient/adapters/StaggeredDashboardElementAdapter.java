@@ -57,9 +57,10 @@ import static it.angelic.soulissclient.Constants.TAG;
 
 public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<StaggeredDashboardElementAdapter.ViewHolder> {
 
-    private SoulissDataService mBoundService;
     private final Activity context;
     private List<LauncherElement> launcherElements;
+    private SoulissDataService mBoundService;
+
     public StaggeredDashboardElementAdapter(Activity context, List<LauncherElement> launcherElements, SoulissDataService mBoundService) {
         this.launcherElements = launcherElements;
         this.context = context;
@@ -70,10 +71,10 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         final SoulissNode nodo = (SoulissNode) item.getLinkedObject();
         Log.d(Constants.TAG, "Launcher Element node " + nodo.getNiceName() + "set: last upd: " + SoulissUtils.getTimeAgo(nodo.getRefreshedAt()));
 
-        TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
-        TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
-        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo1);
-        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfoNodo2);
+        TextView textView = holder.container.findViewById(R.id.TextViewTypicalsTitle);
+        TextView imageView = holder.container.findViewById(R.id.card_thumbnail_image2);
+        TextView textViewInfo1 = holder.container.findViewById(R.id.TextViewInfoNodo1);
+        TextView textViewInfo2 = holder.container.findViewById(R.id.TextViewInfoNodo2);
 
         textView.setText(nodo.getNiceName());
 
@@ -100,13 +101,37 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         });
     }
 
+    private void bindSceneElement(ViewHolder holder, LauncherElement item) {
+        final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
+        Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
+
+        TextView commandIcon = holder.container.findViewById(R.id.command_icon);
+        TextView textViewCommand = holder.container.findViewById(R.id.TextViewCommand);
+        TextView textViewCommandWhen = holder.container.findViewById(R.id.TextViewCommandWhen);
+        Button exe = holder.container.findViewById(R.id.sceneBtn);
+        textViewCommand.setText(nodo.getNiceName());
+        String strMeatFormat = context.getString(R.string.scene_subtitle);
+        textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
+
+        FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
+        exe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
+                nodo.execute();
+            }
+
+
+        });
+    }
+
     private void bindTagElement(ViewHolder holder, LauncherElement item) {
         final SoulissTag soulissTag = (SoulissTag) item.getLinkedObject();
-        TextView textCmd = (TextView) holder.container.findViewById(R.id.TextViewTagTitle);
-        TextView textCmdWhen = (TextView) holder.container.findViewById(R.id.TextViewTagDesc);
-        final ImageView image = (ImageView) holder.container.findViewById(R.id.imageViewTag);
-        final TextView imageTag = (TextView) holder.container.findViewById(R.id.imageTagIconFa);
-        final ImageView shadowbar = (ImageView) holder.container.findViewById(R.id.infoTagAlpha);
+        TextView textCmd = holder.container.findViewById(R.id.TextViewTagTitle);
+        TextView textCmdWhen = holder.container.findViewById(R.id.TextViewTagDesc);
+        final ImageView image = holder.container.findViewById(R.id.imageViewTag);
+        final TextView imageTag = holder.container.findViewById(R.id.imageTagIconFa);
+        final ImageView shadowbar = holder.container.findViewById(R.id.infoTagAlpha);
         String quantityString = context.getResources().getQuantityString(R.plurals.Devices,
                 0);
         try {
@@ -184,11 +209,11 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         final SoulissTypical tipico = (SoulissTypical) item.getLinkedObject();
         Log.d(Constants.TAG, "Launcher Element typical " + tipico.getNiceName() + "set: last upd: " + SoulissUtils.getTimeAgo(tipico.getTypicalDTO().getRefreshedAt()));
 
-        TextView textView = (TextView) holder.container.findViewById(R.id.TextViewTypicalsTitle);
-        TextView imageView = (TextView) holder.container.findViewById(R.id.card_thumbnail_image2);
-        LinearLayout linearActionsLayout = (LinearLayout) holder.container.findViewById(R.id.linearLayoutButtons);
-        TextView textViewInfo1 = (TextView) holder.container.findViewById(R.id.TextViewInfoStatus);
-        TextView textViewInfo2 = (TextView) holder.container.findViewById(R.id.TextViewInfo2);
+        TextView textView = holder.container.findViewById(R.id.TextViewTypicalsTitle);
+        TextView imageView = holder.container.findViewById(R.id.card_thumbnail_image2);
+        LinearLayout linearActionsLayout = holder.container.findViewById(R.id.linearLayoutButtons);
+        TextView textViewInfo1 = holder.container.findViewById(R.id.TextViewInfoStatus);
+        TextView textViewInfo2 = holder.container.findViewById(R.id.TextViewInfo2);
 
         textView.setText(tipico.getNiceName());
 
@@ -297,9 +322,9 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         switch (item.getComponentEnum()) {
             case STATIC_LOCATION:
                 View viewLineL = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTitL = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDescL = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesomL = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                TextView txtTitL = holder.container.findViewById(R.id.card_static_title);
+                TextView txtDescL = holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesomL = holder.container.findViewById(R.id.card_thumbnail_fa);
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesomL, FontAwesomeEnum.fa_location_arrow.getFontName());
                 txtTitL.setText(item.getTitle());
                 txtDescL.setText(item.getDesc());
@@ -308,9 +333,9 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 break;
             case STATIC_SCENES:
                 View viewLine = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                TextView txtTit = holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc = holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom = holder.container.findViewById(R.id.card_thumbnail_fa);
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom, FontAwesomeEnum.fa_moon_o.getFontName());
                 txtTit.setText(item.getTitle());
                 txtDesc.setText(item.getDesc());
@@ -327,9 +352,9 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 break;
             case STATIC_MANUAL:
                 View viewLine2 = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit2 = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc2 = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom2 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                TextView txtTit2 = holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc2 = holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom2 = holder.container.findViewById(R.id.card_thumbnail_fa);
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom2, FontAwesomeEnum.fa_codepen.getFontName());
                 txtTit2.setText(item.getTitle());
                 txtDesc2.setText(item.getDesc());
@@ -346,9 +371,9 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 break;
             case STATIC_PROGRAMS:
                 View viewLine3 = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit3 = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc3 = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom3 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                TextView txtTit3 = holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc3 = holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom3 = holder.container.findViewById(R.id.card_thumbnail_fa);
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom3, "fa-calendar");
                 txtTit3.setText(item.getTitle());
                 txtDesc3.setText(item.getDesc());
@@ -365,9 +390,9 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 break;
             case STATIC_TAGS:
                 View viewLine34 = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTit34 = (TextView) holder.container.findViewById(R.id.card_static_title);
-                TextView txtDesc34 = (TextView) holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesom34 = (TextView) holder.container.findViewById(R.id.card_thumbnail_fa);
+                TextView txtTit34 = holder.container.findViewById(R.id.card_static_title);
+                TextView txtDesc34 = holder.container.findViewById(R.id.card_static_desc);
+                TextView txtAwesom34 = holder.container.findViewById(R.id.card_thumbnail_fa);
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesom34, "fa-tags");
                 txtTit34.setText(item.getTitle());
                 txtDesc34.setText(item.getDesc());
@@ -392,38 +417,14 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 bindNodeElement(holder, item);
                 break;
             case STATIC_STATUS:
-                TextView textCmdsd = (TextView) holder.container.findViewById(R.id.textViewBasicInfo);
-                TextView textCmdWhens = (TextView) holder.container.findViewById(R.id.textViewBasicInfoLittle);
+                TextView textCmdsd = holder.container.findViewById(R.id.textViewBasicInfo);
+                TextView textCmdWhens = holder.container.findViewById(R.id.textViewBasicInfoLittle);
                 setServiceInfo(textCmdsd, textCmdWhens);
                 break;
             case TAG:
                 bindTagElement(holder, item);
                 break;
         }
-    }
-
-    private void bindSceneElement(ViewHolder holder, LauncherElement item) {
-        final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
-        Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
-
-        TextView commandIcon = (TextView) holder.container.findViewById(R.id.command_icon);
-        TextView textViewCommand = (TextView) holder.container.findViewById(R.id.TextViewCommand);
-        TextView textViewCommandWhen = (TextView) holder.container.findViewById(R.id.TextViewCommandWhen);
-        Button exe = (Button) holder.container.findViewById(R.id.sceneBtn);
-        textViewCommand.setText(nodo.getNiceName());
-        String strMeatFormat = context.getString(R.string.scene_subtitle);
-        textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
-
-        FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
-        exe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
-                nodo.execute();
-            }
-
-
-        });
     }
 
     @Override

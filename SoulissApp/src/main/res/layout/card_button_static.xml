@@ -34,7 +34,6 @@
             android:layout_centerVertical="true"
             android:transitionName="helloManual"
             tools:text="X"
-            tools:textSize="4sp"
             android:padding="8dp"/>
 
         <TextView
@@ -53,6 +52,7 @@
             android:id="@+id/card_static_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/CodeFontMain"
             android:transitionName="helloManual"
             android:layout_toRightOf="@id/card_thumbnail_fa"
             tools:text="Questa e la descrizione"
