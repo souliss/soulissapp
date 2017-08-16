@@ -117,11 +117,11 @@ public class NodesListFragment extends ListFragment {
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
 
-        TextView nodeic = (TextView) getActivity().findViewById(R.id.scene_icon_awe);
+        TextView nodeic = getActivity().findViewById(R.id.scene_icon_awe);
         FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, FontAwesomeEnum.fa_codepen.getFontName());
 
-        final TextView textHeadListInfo = (TextView) getActivity().findViewById(R.id.TextViewTypListDesc);
-        final TextView textViewTagsDescFa = (TextView) getActivity().findViewById(R.id.TextViewTypListDescFa);
+        final TextView textHeadListInfo = getActivity().findViewById(R.id.TextViewTypListDesc);
+        final TextView textViewTagsDescFa = getActivity().findViewById(R.id.TextViewTypListDescFa);
 
 
         if (textViewTagsDescFa != null) {//forse nascosto > landscape
@@ -141,7 +141,7 @@ public class NodesListFragment extends ListFragment {
             }
         }
 
-        swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
+        swipeLayout = getActivity().findViewById(R.id.swipeRefreshContainer);
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -202,7 +202,6 @@ public class NodesListFragment extends ListFragment {
                 public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     Log.i(TAG, "Showing Node Detail:" + arg2);
                     NodeViewHolder holder = (NodeViewHolder) arg1.getTag();
-
                     // Activity Dettaglio nodo
                     showDetails(arg2, holder.data);
                 }
@@ -340,7 +339,7 @@ public class NodesListFragment extends ListFragment {
         // Adapter della lista
         getListView().setAdapter(nodesAdapter);
 
-        final TextView nodesTitle = (TextView) getActivity().findViewById(R.id.TextViewTypicals);
+        final TextView nodesTitle = getActivity().findViewById(R.id.TextViewTypicals);
         if (nodesTitle != null) {//se dual pane salta
             nodesTitle.setText(getActivity().getResources().getQuantityString(R.plurals.Nodes,
                     nodiArray.size(), nodiArray.size()));

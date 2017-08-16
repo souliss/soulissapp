@@ -10,6 +10,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
     }
 }
 
@@ -28,7 +30,7 @@ allprojects {
 
 project.ext {
     global_buildToolsVersion = "26.0.1"
-    global_supportLibVersion = "25.3.1"
+    global_supportLibVersion = "26+"
     VERSION_NAME = "2.0.9"
     VERSION_CODE = 209
     compileSdkVersion = 26

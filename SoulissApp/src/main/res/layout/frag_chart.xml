@@ -84,7 +84,7 @@
 
             <view
                 android:id="@+id/line_view"
-                class="com.dacer.androidcharts.LineView"
+                class="im.dacer.androidcharts.LineView"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"/>
         </HorizontalScrollView>

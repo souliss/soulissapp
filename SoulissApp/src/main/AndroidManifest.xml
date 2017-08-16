@@ -56,7 +56,6 @@
             android:theme="@android:style/Theme.NoDisplay"/>
         <activity
             android:name=".WelcomeActivity"
-            android:configChanges="keyboardHidden|screenSize"
             android:label="@string/souliss_app_name"
             android:theme="@style/FullscreenTheme">
             <intent-filter>

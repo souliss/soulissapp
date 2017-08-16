@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.util.SparseArray;
 
-import com.dacer.androidcharts.ClockPieHelper;
-
 import java.io.File;
 import java.sql.SQLDataException;
 import java.text.ParseException;
@@ -23,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import im.dacer.androidcharts.ClockPieHelper;
 import it.angelic.soulissclient.BuildConfig;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;

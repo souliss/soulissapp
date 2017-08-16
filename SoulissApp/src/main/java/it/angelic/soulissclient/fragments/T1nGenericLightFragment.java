@@ -22,11 +22,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dacer.androidcharts.ClockPieView;
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
+import im.dacer.androidcharts.ClockPieView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;

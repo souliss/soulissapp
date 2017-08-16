@@ -13,8 +13,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.dacer.androidcharts.LineView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
+import im.dacer.androidcharts.LineView;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
@@ -153,12 +152,12 @@ public class ChartFragment extends Fragment {
         Bundle extras = getActivity().getIntent().getExtras();
 
         View ret = inflater.inflate(R.layout.frag_chart, container, false);
-        TextView nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
-        graphtSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphType);
-        rangeSpinner = (Spinner) ret.findViewById(R.id.spinnerGraphRange);
+        TextView nodeinfo = ret.findViewById(R.id.TextViewTypNodeInfo);
+        graphtSpinner = ret.findViewById(R.id.spinnerGraphType);
+        rangeSpinner = ret.findViewById(R.id.spinnerGraphRange);
         rangeSpinner.setSelection(2);
-        lineView = (LineView) ret.findViewById(R.id.line_view);
-        TextView upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
+        lineView = ret.findViewById(R.id.line_view);
+        TextView upda = ret.findViewById(R.id.TextViewTypUpdate);
 
         assertTrue("TIPICO NULLO", collected != null);
 
@@ -219,7 +218,7 @@ public class ChartFragment extends Fragment {
     }
 
     private void redrawGraph(int graphType, int timeFilter) {
-        final HorizontalScrollView layout = (HorizontalScrollView) getActivity().findViewById(R.id.horizontalScrollView);
+        final HorizontalScrollView layout = getActivity().findViewById(R.id.horizontalScrollView);
         //final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
         // Log.i(TAG, selectedVal);
         ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
