@@ -235,7 +235,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignRight="@id/strut2"
-                android:layout_below="@+id/hvacChart"
+                android:layout_below="@id/hvacChart"
                 android:width="0dip"
                 android:text="@string/ON"/>
 
@@ -248,7 +248,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignStart="@id/strut2"
-                android:layout_below="@+id/hvacChart"
+                android:layout_below="@id/hvacChart"
                 android:text="@string/OFF"/>
         </RelativeLayout>
 
