@@ -34,7 +34,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
     private TextView initialIp;
     private String mChosenFile;
     private String[] mFileList;
-    private File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
+    //private File mPath = new File(Environment.getExternalStorageDirectory() + Constants.EXTERNAL_EXP_FOLDER);
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

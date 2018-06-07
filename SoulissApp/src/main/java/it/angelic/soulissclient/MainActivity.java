@@ -97,6 +97,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             }
         }
     };
+    private NetworkStateReceiver netReceiver;
     private SoulissPreferenceHelper opzioni;
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -268,9 +269,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         ith.attachToRecyclerView(mRecyclerView);
 
         //opzioni.reload();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        registerReceiver(new NetworkStateReceiver(), filter);
+
     }
     /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
@@ -398,6 +397,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     @Override
     protected void onPause() {
         unregisterReceiver(datareceiver);
+        unregisterReceiver(netReceiver);
         super.onPause();
         //autoUpdate.cancel();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -491,6 +491,11 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         registerReceiver(datareceiver, filtere);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        netReceiver = new NetworkStateReceiver();
+        registerReceiver(netReceiver, filter);
 
         List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
 
