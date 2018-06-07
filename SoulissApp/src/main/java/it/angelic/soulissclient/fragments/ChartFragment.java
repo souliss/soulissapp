@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.HorizontalScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -53,9 +52,102 @@ public class ChartFragment extends Fragment {
         return f;
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null)
+            return null;
+
+        datasource = new SoulissDBHelper(getActivity());
+        SoulissDBHelper.open();
+
+        Bundle extras = getActivity().getIntent().getExtras();
+
+        View ret = inflater.inflate(R.layout.frag_chart, container, false);
+        TextView nodeinfo = ret.findViewById(R.id.TextViewTypNodeInfo);
+        graphtSpinner = ret.findViewById(R.id.spinnerGraphType);
+        rangeSpinner = ret.findViewById(R.id.spinnerGraphRange);
+        rangeSpinner.setSelection(2);
+        lineView = ret.findViewById(R.id.line_view);
+        //TextView upda = ret.findViewById(R.id.TextViewTypUpdate);
+
+        assertTrue("TIPICO NULLO", collected != null);
+
+        /**
+         * LISTENER TIPO GRAFICO
+         */
+        OnItemSelectedListener lit = new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // Filtro tempo
+                String bid = (String) rangeSpinner.getSelectedItem();
+                int len = 0;
+                final String[] tempArray = getResources().getStringArray(R.array.graphRange);
+                for (int i = 0; i < tempArray.length; i++) {
+                    if (tempArray[i].compareTo(bid) == 0)
+                        len = i;
+                }
+                redrawGraph(pos, len);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        graphtSpinner.setOnItemSelectedListener(lit);
+        /**
+         * LISTENER RANGE
+         */
+        OnItemSelectedListener lite = new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                // Filtro tempo
+                String bid = (String) graphtSpinner.getSelectedItem();
+                int len = 0;
+                final String[] tempArray = getResources().getStringArray(R.array.graphType);
+                for (int i = 0; i < tempArray.length; i++) {
+                    if (tempArray[i].compareTo(bid) == 0)
+                        len = i;
+                }
+                redrawGraph(len, pos);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        rangeSpinner.setOnItemSelectedListener(lite);
+
+        return ret;
+
+    }
+
+    private void redrawGraph(int graphType, int timeFilter) {
+
+        ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
+        switch (tipoGrafico) {
+            case HISTORY:
+                //TODO se vuoto skippa
+                HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
+                drawHistoryGraphAndroChart(logs);
+                break;
+            case GROUP_HOUR://fallback
+                //TODO se vuoto skippa
+                SparseArray<SoulissGraphData> logss = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
+                drawGroupedGraphAndroChart(logss, tipoGrafico);
+                break;
+            case GROUP_MONTH:
+                //TODO se vuoto skippa
+                SparseArray<SoulissGraphData> logsd = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
+                drawGroupedGraphAndroChart(logsd, tipoGrafico);
+                break;
+            case GROUP_WEEK:
+                //TODO se vuoto skippa
+                SparseArray<SoulissGraphData> logsf = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
+                drawGroupedGraphAndroChart(logsf, tipoGrafico);
+                break;
+        }
+    }
+
 
     private void drawGroupedGraphAndroChart(SparseArray<SoulissGraphData> logs, ChartTypeEnum bymonth) {
-        //must*
+        if (logs == null || logs.size() < 1)
+            return;
         ArrayList<String> test = new ArrayList<>();
         ArrayList<Integer> dataList = new ArrayList<>();
         ArrayList<Integer> dataListMin = new ArrayList<>();
@@ -108,6 +200,10 @@ public class ChartFragment extends Fragment {
      * @param logs
      */
     private void drawHistoryGraphAndroChart(HashMap<Date, SoulissHistoryGraphData> logs) {
+
+        if (logs == null || logs.size() < 1)
+            return;
+
         //must*
         ArrayList<String> test = new ArrayList<>();
         ArrayList<Integer> dataList = new ArrayList<>();
@@ -142,108 +238,10 @@ public class ChartFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (container == null)
-            return null;
-
-        datasource = new SoulissDBHelper(getActivity());
-        SoulissDBHelper.open();
-
-        Bundle extras = getActivity().getIntent().getExtras();
-
-        View ret = inflater.inflate(R.layout.frag_chart, container, false);
-        TextView nodeinfo = ret.findViewById(R.id.TextViewTypNodeInfo);
-        graphtSpinner = ret.findViewById(R.id.spinnerGraphType);
-        rangeSpinner = ret.findViewById(R.id.spinnerGraphRange);
-        rangeSpinner.setSelection(2);
-        lineView = ret.findViewById(R.id.line_view);
-        TextView upda = ret.findViewById(R.id.TextViewTypUpdate);
-
-        assertTrue("TIPICO NULLO", collected != null);
-
-
-        //Setta STATUS BAR
-
-        // ProgressBar sfumata
-
-        /**
-         * LISTENER TIPO GRAFICO
-         */
-        OnItemSelectedListener lit = new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Filtro tempo
-                String bid = (String) rangeSpinner.getSelectedItem();
-                int len = 0;
-                final String[] tempArray = getResources().getStringArray(R.array.graphRange);
-                for (int i = 0; i < tempArray.length; i++) {
-                    if (tempArray[i].compareTo(bid) == 0)
-                        len = i;
-                }
-                redrawGraph(pos, len);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        };
-        graphtSpinner.setOnItemSelectedListener(lit);
-        /**
-         * LISTENER RANGE
-         */
-        OnItemSelectedListener lite = new OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                // Filtro tempo
-                String bid = (String) graphtSpinner.getSelectedItem();
-                int len = 0;
-                final String[] tempArray = getResources().getStringArray(R.array.graphType);
-                for (int i = 0; i < tempArray.length; i++) {
-                    if (tempArray[i].compareTo(bid) == 0)
-                        len = i;
-                }
-                redrawGraph(len, pos);
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        };
-        rangeSpinner.setOnItemSelectedListener(lite);
-
-        return ret;
-
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         // datasource.close();
     }
 
-    private void redrawGraph(int graphType, int timeFilter) {
-        final HorizontalScrollView layout = getActivity().findViewById(R.id.horizontalScrollView);
-        //final TextView tinfo = (TextView) getActivity().findViewById(R.id.TextViewGraphName);
-        // Log.i(TAG, selectedVal);
-        ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
-        switch (tipoGrafico) {
-            case HISTORY:
-                //TODO se vuoto skippa
-                HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
-                drawHistoryGraphAndroChart(logs);
-                break;
-            case GROUP_HOUR://fallback
-                //TODO se vuoto skippa
-                SparseArray<SoulissGraphData> logss = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
-                drawGroupedGraphAndroChart(logss, tipoGrafico);
-                break;
-            case GROUP_MONTH:
-                //TODO se vuoto skippa
-                SparseArray<SoulissGraphData> logsd = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
-                drawGroupedGraphAndroChart(logsd, tipoGrafico);
-                break;
-            case GROUP_WEEK:
-                //TODO se vuoto skippa
-                SparseArray<SoulissGraphData> logsf = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
-                drawGroupedGraphAndroChart(logsf, tipoGrafico);
-                break;
-        }
-    }
 
 }
