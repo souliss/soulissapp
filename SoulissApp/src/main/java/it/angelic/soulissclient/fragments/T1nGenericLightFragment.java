@@ -121,7 +121,8 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 		opzioni.reload();
 
 		View ret = inflater.inflate(R.layout.frag_t1n, container, false);
-		datasource = new SoulissDBHelper(getActivity());
+
+        datasource = new SoulissDBHelper(getActivity());
 		SoulissDBHelper.open();
 
 		Bundle extras = getActivity().getIntent().getExtras();

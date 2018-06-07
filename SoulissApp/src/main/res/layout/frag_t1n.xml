@@ -162,6 +162,7 @@
                     android:layout_marginTop="2dp"
                     android:gravity="center"
                     android:weightSum="4">
+
                     <TextView
                         android:id="@+id/textviewHistoryInfo"
                         android:layout_width="0dip"
@@ -178,9 +179,8 @@
                     android:gravity="center"
                     android:weightSum="4">
 
-                    <view
+                    <im.dacer.androidcharts.ClockPieView
                         android:id="@+id/pie_view"
-                        class="com.dacer.androidcharts.ClockPieView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
