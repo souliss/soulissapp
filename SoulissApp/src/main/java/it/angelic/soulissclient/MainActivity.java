@@ -199,9 +199,9 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         setContentView(R.layout.main_launcher2);
 
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewLauncherItems);
-        final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
-        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewDashboardDescFa);
+        RecyclerView mRecyclerView = findViewById(R.id.recyclerViewLauncherItems);
+        final TextView toHid = findViewById(R.id.TextViewTagsDesc);
+        final TextView textViewTagsDescFa = findViewById(R.id.TextViewDashboardDescFa);
         FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
 
         //NASCONDI
@@ -455,12 +455,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                         Log.wtf(TAG, "boh. permesso negato su risposta permesso");
                         return;
                     }
-                    locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                            Constants.POSITION_UPDATE_MIN_DIST, this);
-                    Location location = locationManager.getLastKnownLocation(provider);
-                    // Initialize the location fields
-                    if (location != null) {
-                        onLocationChanged(location);
+                    if (locationManager != null) {
+                        locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
+                                Constants.POSITION_UPDATE_MIN_DIST, this);
+                        Location location = locationManager.getLastKnownLocation(provider);
+                        // Initialize the location fields
+                        if (location != null) {
+                            onLocationChanged(location);
+                        }
                     }
 
                 } else {
@@ -543,7 +545,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
     private void configureVoiceFab() {
         //VOICE SEARCH
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {
