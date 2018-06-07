@@ -61,11 +61,11 @@
 
                 <TextView
                     android:id="@+id/TextViewInfoNodo1"
-                    android:maxLines="1"
                     android:ellipsize="marquee"
                     style="@style/CodeFontMain"
                     android:textIsSelectable="false"
-                    tools:text="ON"/>
+                    tools:text="ON"
+                    android:singleLine="true"/>
 
                 <View
                     android:id="@+id/PositionWarnLine"

@@ -3,7 +3,7 @@
 
 
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:listViewStyle">@style/lightListView</item>
+        @style/MyActionBar
     </style>
 
     <style name="AboutDialogLight" parent="@android:style/Theme.Dialog">

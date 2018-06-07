@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
@@ -47,7 +48,6 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -130,6 +130,51 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
         return f;
     }
 
+    private void activateMusicPanel() {
+        if (mVisualizerView != null) {
+            mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
+            mVisualizerView.link(togMulticast.isChecked());
+            mVisualizerView.setVisibility(View.VISIBLE);
+            mVisualizerView.setEnabled(true);
+            addBarGraphRenderers();
+        }
+        mVisualizerViewFrame.setVisibility(View.VISIBLE);
+        tableRowVis.setVisibility(View.VISIBLE);
+        eqText.setVisibility(View.VISIBLE);
+        tableRowEq.setVisibility(View.VISIBLE);
+    }
+
+    private void activatePatternsPanel() {
+        tableRowPatterns.setVisibility(View.VISIBLE);
+        patternRunner.setPatternRunning(true);
+        if (mVisualizerView != null) {
+            mVisualizerView.setVisibility(View.GONE);
+            mVisualizerView.setEnabled(false);
+        }
+        tableRowEq.setVisibility(View.INVISIBLE);
+    }
+
+    private void activateRGBChannelsPanel() {
+        if (mVisualizerView != null) {
+            mVisualizerView.setVisibility(View.GONE);
+            mVisualizerView.setEnabled(false);
+        }
+        tableRowChannel.setVisibility(View.VISIBLE);
+        tableRowEq.setVisibility(View.INVISIBLE);
+        // ok android 5
+        seekChannelRed.setProgress(0);
+        seekChannelRed.invalidate();
+        seekChannelGreen.setProgress(0);
+        seekChannelGreen.invalidate();
+        seekChannelBlue.setProgress(0);
+        seekChannelBlue.invalidate();
+        seekChannelRed.setProgress(Color.red(color));
+        seekChannelGreen.setProgress(Color.green(color));
+        seekChannelBlue.setProgress(Color.blue(color));
+        Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
+        tableRowChannel.invalidate();
+    }
+
     // Methods for adding renderers to visualizer
     private void addBarGraphRenderers() {
         Paint paint = new Paint();
@@ -195,7 +240,7 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
             return null;
         opzioni = SoulissApp.getOpzioni();
@@ -218,27 +263,27 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
 
         refreshStatusIcon();
 
-        Button buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-        Button buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
-        togMulticast = (SwitchCompat) ret.findViewById(R.id.checkBoxMulticast);
+        Button buttPlus = ret.findViewById(R.id.buttonPlus);
+        Button buttMinus = ret.findViewById(R.id.buttonMinus);
+        togMulticast = ret.findViewById(R.id.checkBoxMulticast);
         togMulticast.setChecked(opzioni.isRgbSendAllDefault());
-        Button btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
-        Button btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
-        Button btStartPattern = (Button) ret.findViewById(R.id.buttonStartPattern);
-        Button btStopPattern = (Button) ret.findViewById(R.id.buttonStopPattern);
-        btFeedBackPatern = (Button) ret.findViewById(R.id.buttonPatternFeedback);
-        tableRowChannel = (TableRow) ret.findViewById(R.id.tableRowChannel);
-        tableRowPatterns = (TableRow) ret.findViewById(R.id.tableRowPatterns);
-        tableRowEq = (TableRow) ret.findViewById(R.id.tableRowEqualizer);
-        Button btWhite = (Button) ret.findViewById(R.id.white);
-        Button btFlash = (Button) ret.findViewById(R.id.flash);
-        Button btSleep = (Button) ret.findViewById(R.id.sleep);
-        modeSpinner = (Spinner) ret.findViewById(R.id.modeSpinner);
-        tableRowVis = (TableRow) ret.findViewById(R.id.tableRowMusic);
-        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
-        sliderSpeed = (SeekBar) ret.findViewById(R.id.sliderSpeed);
-        checkBoxScatter = (CheckBox) ret.findViewById(R.id.checkBoxScatter);
-        mVisualizerViewFrame = (FrameLayout) ret.findViewById(R.id.visualizerViewFrame);
+        Button btOff = ret.findViewById(R.id.buttonTurnOff);
+        Button btOn = ret.findViewById(R.id.buttonTurnOn);
+        Button btStartPattern = ret.findViewById(R.id.buttonStartPattern);
+        Button btStopPattern = ret.findViewById(R.id.buttonStopPattern);
+        btFeedBackPatern = ret.findViewById(R.id.buttonPatternFeedback);
+        tableRowChannel = ret.findViewById(R.id.tableRowChannel);
+        tableRowPatterns = ret.findViewById(R.id.tableRowPatterns);
+        tableRowEq = ret.findViewById(R.id.tableRowEqualizer);
+        Button btWhite = ret.findViewById(R.id.white);
+        Button btFlash = ret.findViewById(R.id.flash);
+        Button btSleep = ret.findViewById(R.id.sleep);
+        modeSpinner = ret.findViewById(R.id.modeSpinner);
+        tableRowVis = ret.findViewById(R.id.tableRowMusic);
+        tagView = ret.findViewById(R.id.tag_group);
+        sliderSpeed = ret.findViewById(R.id.sliderSpeed);
+        checkBoxScatter = ret.findViewById(R.id.checkBoxScatter);
+        mVisualizerViewFrame = ret.findViewById(R.id.visualizerViewFrame);
         //permesso per la visualizer connessa all'audio o mic
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),
@@ -247,31 +292,31 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
             mVisualizerView = null;
         } else {
             inflater.inflate(R.layout.custom_visview, mVisualizerViewFrame);
-            mVisualizerView = (VisualizerView) mVisualizerViewFrame.findViewById(R.id.visualizerView);
+            mVisualizerView = mVisualizerViewFrame.findViewById(R.id.visualizerView);
             //mVisualizerViewFrame.addView(mVisualizerView);
             mVisualizerView.setOpz(opzioni);
         }
-        colorSwitchRelativeLayout = (RelativeLayout) ret.findViewById(R.id.colorSwitch);
+        colorSwitchRelativeLayout = ret.findViewById(R.id.colorSwitch);
 
-        seekChannelRed = (SeekBar) ret.findViewById(R.id.channelRed);
-        seekChannelGreen = (SeekBar) ret.findViewById(R.id.channelGreen);
-        seekChannelBlue = (SeekBar) ret.findViewById(R.id.channelBlue);
+        seekChannelRed = ret.findViewById(R.id.channelRed);
+        seekChannelGreen = ret.findViewById(R.id.channelGreen);
+        seekChannelBlue = ret.findViewById(R.id.channelBlue);
 
-        redChanabel = (TextView) ret.findViewById(R.id.channelRedLabel);
-        blueChanabel = (TextView) ret.findViewById(R.id.channelBlueLabel);
-        greenChanabel = (TextView) ret.findViewById(R.id.channelGreenLabel);
+        redChanabel = ret.findViewById(R.id.channelRedLabel);
+        blueChanabel = ret.findViewById(R.id.channelBlueLabel);
+        greenChanabel = ret.findViewById(R.id.channelGreenLabel);
 
-        colorSeekBar = (ColorSeekBar) ret.findViewById(R.id.colorSlider);
-        colorSeekBarStop = (ColorSeekBar) ret.findViewById(R.id.colorSliderStop);
+        colorSeekBar = ret.findViewById(R.id.colorSlider);
+        colorSeekBarStop = ret.findViewById(R.id.colorSliderStop);
         btOff.setTag(Constants.Typicals.Souliss_T1n_OffCmd);
         btOn.setTag(Constants.Typicals.Souliss_T1n_OnCmd);
         buttPlus.setTag(Constants.Typicals.Souliss_T1n_BrightUp);
         buttMinus.setTag(Constants.Typicals.Souliss_T1n_BrightDown);
         btFlash.setTag(Constants.Typicals.Souliss_T1n_Flash);
         btSleep.setTag(Constants.Typicals.Souliss_T_related);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
+        infoTags = ret.findViewById(R.id.tableRowTagInfo);
 
-        eqText = (TextView) ret.findViewById(R.id.textEqualizer);
+        eqText = ret.findViewById(R.id.textEqualizer);
 
         // avoid auto call upon Creation with runnable
         seekChannelRed.post(new Runnable() {
@@ -309,44 +354,11 @@ public class T16RGBAdvancedFragment extends AbstractMusicVisualizerFragment {
                     cpv.setCenterColor(Color.argb(255, Color.red(color),
                             Color.green(color), Color.blue(color)));
                 } else if (pos == 1) {// channels
-                    if (mVisualizerView != null) {
-                        mVisualizerView.setVisibility(View.GONE);
-                        mVisualizerView.setEnabled(false);
-                    }
-                    tableRowChannel.setVisibility(View.VISIBLE);
-                    tableRowEq.setVisibility(View.INVISIBLE);
-                    // ok android 5
-                    seekChannelRed.setProgress(0);
-                    seekChannelRed.invalidate();
-                    seekChannelGreen.setProgress(0);
-                    seekChannelGreen.invalidate();
-                    seekChannelBlue.setProgress(0);
-                    seekChannelBlue.invalidate();
-                    seekChannelRed.setProgress(Color.red(color));
-                    seekChannelGreen.setProgress(Color.green(color));
-                    seekChannelBlue.setProgress(Color.blue(color));
-                    Log.i(Constants.TAG, "channel mode, color=" + Color.red(color) + " " + Color.green(color) + " " + Color.blue(color));
-                    tableRowChannel.invalidate();
+                    activateRGBChannelsPanel();
                 } else if (pos == 2) {// music
-                    if (mVisualizerView != null) {
-                        mVisualizerView.setFrag(T16RGBAdvancedFragment.this);
-                        mVisualizerView.link(togMulticast.isChecked());
-                        mVisualizerView.setVisibility(View.VISIBLE);
-                        mVisualizerView.setEnabled(true);
-                        addBarGraphRenderers();
-                    }
-                    mVisualizerViewFrame.setVisibility(View.VISIBLE);
-                    tableRowVis.setVisibility(View.VISIBLE);
-                    eqText.setVisibility(View.VISIBLE);
-                    tableRowEq.setVisibility(View.VISIBLE);
+                    activateMusicPanel();
                 } else {// patterns
-                    tableRowPatterns.setVisibility(View.VISIBLE);
-                    patternRunner.setPatternRunning(true);
-                    if (mVisualizerView != null) {
-                        mVisualizerView.setVisibility(View.GONE);
-                        mVisualizerView.setEnabled(false);
-                    }
-                    tableRowEq.setVisibility(View.INVISIBLE);
+                    activatePatternsPanel();
                 }
             }
 

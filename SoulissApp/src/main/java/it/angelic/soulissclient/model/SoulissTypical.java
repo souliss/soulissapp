@@ -256,7 +256,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
     }
 
     public Float getOutput() {
-        return Float.valueOf(typicalDTO.getOutput());
+        return (float) typicalDTO.getOutput();
     }
 
 

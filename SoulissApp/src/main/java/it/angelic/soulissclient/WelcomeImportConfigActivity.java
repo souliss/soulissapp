@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.net.URISyntaxException;
 
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
@@ -50,7 +49,7 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
                     try {
                         path = SoulissUtils.getPath(this, uri);
                         Log.d(Constants.TAG, "File Path: " + path);
-                    } catch (URISyntaxException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     initialIp.setText(path);
@@ -71,9 +70,9 @@ public class WelcomeImportConfigActivity extends FragmentActivity {
         setContentView(R.layout.activity_welcome_importconf);
 
         // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
-        final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
-        final EditText configName = (EditText) findViewById(R.id.config_name);
-        initialIp = (TextView) findViewById(R.id.config_ip);
+        final Button welcomeTourButton = findViewById(R.id.welcome_tour_button);
+        final EditText configName = findViewById(R.id.config_name);
+        initialIp = findViewById(R.id.config_ip);
         ContextWrapper c = new ContextWrapper(WelcomeImportConfigActivity.this);
         final File importDir = c.getFilesDir();
         initialIp.setOnClickListener(new View.OnClickListener() {

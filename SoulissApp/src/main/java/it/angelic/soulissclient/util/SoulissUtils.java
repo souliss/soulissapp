@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
@@ -83,11 +82,11 @@ public class SoulissUtils {
     }
 
     public static Float celsiusToFahrenheit(float in) {
-        return Float.valueOf((9.0f / 5.0f) * in + 32);
+        return (9.0f / 5.0f) * in + 32;
     }
 
     public static Float fahrenheitToCelsius(float fahrenheit) {
-        return Float.valueOf((5.0f / 9.0f) * (fahrenheit - 32));
+        return (5.0f / 9.0f) * (fahrenheit - 32);
     }
 
     public static byte[] hexStringToByteArray(String s) {
@@ -166,13 +165,13 @@ public class SoulissUtils {
                 String key = entry.getKey();
 
                 if (v instanceof Boolean)
-                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+                    prefEdit.putBoolean(key, (Boolean) v);
                 else if (v instanceof Float)
-                    prefEdit.putFloat(key, ((Float) v).floatValue());
+                    prefEdit.putFloat(key, (Float) v);
                 else if (v instanceof Integer)
-                    prefEdit.putInt(key, ((Integer) v).intValue());
+                    prefEdit.putInt(key, (Integer) v);
                 else if (v instanceof Long)
-                    prefEdit.putLong(key, ((Long) v).longValue());
+                    prefEdit.putLong(key, (Long) v);
                 else if (v instanceof String)
                     prefEdit.putString(key, ((String) v));
                 else if (v instanceof Set)
@@ -248,7 +247,7 @@ public class SoulissUtils {
         return res;
     }
 
-    public static String getPath(Context context, Uri uri) throws URISyntaxException {
+    public static String getPath(Context context, Uri uri) {
         if ("content".equalsIgnoreCase(uri.getScheme())) {
             String[] projection = {"_data"};
             Cursor cursor = null;

@@ -124,6 +124,7 @@ public class
     public void link(final boolean multicast) {
         // Create the Visualizer object and attach it to our media player.
         if (opz.getAudioInputChannel() == MediaRecorder.AudioSource.MIC) {
+
             Log.w(Constants.TAG, "MIC input selected");
             // recordingSampler.setVolumeListener(this);  // for custom implements
             recordingSampler.setSamplingInterval(100); // voice sampling interval

@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,7 +27,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.Constants;
@@ -41,7 +41,6 @@ import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical31Heating;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.views.NumberPickerT6;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T31;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T3n_AsMeasured;
@@ -145,7 +144,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
             return null;
         opzioni = SoulissApp.getOpzioni();
@@ -172,21 +171,21 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         super.setCollected(collected);
         refreshStatusIcon();
 
-        Button buttOn = (Button) ret.findViewById(R.id.buttonTurnOn);
-        Button buttOff = (Button) ret.findViewById(R.id.buttonTurnOff);
-        textviewStatus = (TextView) ret.findViewById(R.id.textviewStatus);
-        TextView textViewTagDescgroup = (TextView) ret.findViewById(R.id.TextViewTagDescgroup);
+        Button buttOn = ret.findViewById(R.id.buttonTurnOn);
+        Button buttOff = ret.findViewById(R.id.buttonTurnOff);
+        textviewStatus = ret.findViewById(R.id.textviewStatus);
+        TextView textViewTagDescgroup = ret.findViewById(R.id.TextViewTagDescgroup);
         View viewTagDescgroup = ret.findViewById(R.id.TagDiv);
-        tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSlider);
-        functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
-        fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
-        Button asMeasuredButton = (Button) ret.findViewById(R.id.asMeasuredButton);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        imageFan1 = (ImageView) ret.findViewById(R.id.ImageFan1);
-        imageFan2 = (ImageView) ret.findViewById(R.id.ImageFan2);
-        imageFan3 = (ImageView) ret.findViewById(R.id.ImageFan3);
-        incrementText = (EditText) ret.findViewById(R.id.editTextIncrement);
-        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+        tempSlider = ret.findViewById(R.id.tempSlider);
+        functionSpinner = ret.findViewById(R.id.spinnerFunction);
+        fanSpiner = ret.findViewById(R.id.spinnerFan);
+        Button asMeasuredButton = ret.findViewById(R.id.asMeasuredButton);
+        infoTags = ret.findViewById(R.id.tableRowTagInfo);
+        imageFan1 = ret.findViewById(R.id.ImageFan1);
+        imageFan2 = ret.findViewById(R.id.ImageFan2);
+        imageFan3 = ret.findViewById(R.id.ImageFan3);
+        incrementText = ret.findViewById(R.id.editTextIncrement);
+        tagView = ret.findViewById(R.id.tag_group);
         //hvacChart = (FrameLayout) ret.findViewById(R.id.hvacChart);
 
         final android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
@@ -309,9 +308,9 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
             public void onClick(View v) {
                 //int act = Integer.parseInt(textviewTemperature.getText().toString());
                 if (functionSpinner.getSelectedItemPosition() == 0)
-                    collected.issueCommand(Souliss_T3n_Cooling, Float.valueOf(tempSlider.getValue()));
+                    collected.issueCommand(Souliss_T3n_Cooling, (float) tempSlider.getValue());
                 else if (functionSpinner.getSelectedItemPosition() == 1)
-                    collected.issueCommand(Souliss_T3n_Heating, Float.valueOf(tempSlider.getValue()));
+                    collected.issueCommand(Souliss_T3n_Heating, (float) tempSlider.getValue());
                 //else OFF, non fare nulla
             }
         });

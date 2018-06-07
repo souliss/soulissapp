@@ -42,11 +42,11 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             tools:text="Titolo"
-            android:maxLines="1"
             android:ellipsize="marquee"
             style="@style/CodeFontTitle"
             android:layout_toRightOf="@id/card_thumbnail_fa"
-            android:transitionName="helloManual"/>
+            android:transitionName="helloManual"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/card_static_desc"

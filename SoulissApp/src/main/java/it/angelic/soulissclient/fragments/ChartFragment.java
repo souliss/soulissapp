@@ -122,22 +122,18 @@ public class ChartFragment extends Fragment {
         ChartTypeEnum tipoGrafico = ChartTypeEnum.values()[graphType];
         switch (tipoGrafico) {
             case HISTORY:
-                //TODO se vuoto skippa
                 HashMap<Date, SoulissHistoryGraphData> logs = datasource.getHistoryTypicalLogs(collected, timeFilter);
                 drawHistoryGraphAndroChart(logs);
                 break;
             case GROUP_HOUR://fallback
-                //TODO se vuoto skippa
                 SparseArray<SoulissGraphData> logss = datasource.getGroupedTypicalLogs(collected, "%H", timeFilter);
                 drawGroupedGraphAndroChart(logss, tipoGrafico);
                 break;
             case GROUP_MONTH:
-                //TODO se vuoto skippa
                 SparseArray<SoulissGraphData> logsd = datasource.getGroupedTypicalLogs(collected, "%m", timeFilter);
                 drawGroupedGraphAndroChart(logsd, tipoGrafico);
                 break;
             case GROUP_WEEK:
-                //TODO se vuoto skippa
                 SparseArray<SoulissGraphData> logsf = datasource.getGroupedTypicalLogs(collected, "%w", timeFilter);
                 drawGroupedGraphAndroChart(logsf, tipoGrafico);
                 break;

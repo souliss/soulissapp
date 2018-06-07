@@ -110,11 +110,13 @@
     <string-array name="inputChan">
         <item>Auto</item>
         <item>Mic</item>
+        <item>Line-In</item>
     </string-array>
     <!-- see MediaRecorder.AudioSource.MIC -->
     <string-array name="inputChanValues">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
     
     <string-array name="HeatingFunction">

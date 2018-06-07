@@ -87,7 +87,7 @@ public class SoulissTypical19AnalogChannel extends SoulissTypical implements ISo
     }
 
     public String getIntensityPercent(){
-        return ""+String.valueOf((int)(Float.valueOf(getIntensity() / 255f) * 100)) + "%";
+        return "" + String.valueOf((int) (getIntensity() / 255f * 100)) + "%";
     }
 
     /**

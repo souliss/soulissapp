@@ -9,6 +9,7 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import it.angelic.soulissclient.Constants;
@@ -37,7 +37,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.views.NumberPickerT6;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 
 import static junit.framework.Assert.assertTrue;
@@ -104,7 +103,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (container == null)
             return null;
 
@@ -121,14 +120,14 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
 
         }
         View ret = inflater.inflate(R.layout.frag_t6n_analogue, container, false);
-        nodeinfo = (TextView) ret.findViewById(R.id.TextViewTypNodeInfo);
-        incrementText = (EditText) ret.findViewById(R.id.editTextIncrement);
-        TextView icon = (TextView) ret.findViewById(R.id.typ_icon);
-        tempSlider = (NumberPickerT6) ret.findViewById(R.id.tempSliderPicker);
-        TextView upda = (TextView) ret.findViewById(R.id.TextViewTypUpdate);
-        ProgressBar par = (ProgressBar) ret.findViewById(R.id.progressBarTypNodo);
-        infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-        tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+        nodeinfo = ret.findViewById(R.id.TextViewTypNodeInfo);
+        incrementText = ret.findViewById(R.id.editTextIncrement);
+        TextView icon = ret.findViewById(R.id.typ_icon);
+        tempSlider = ret.findViewById(R.id.tempSliderPicker);
+        TextView upda = ret.findViewById(R.id.TextViewTypUpdate);
+        ProgressBar par = ret.findViewById(R.id.progressBarTypNodo);
+        infoTags = ret.findViewById(R.id.tableRowTagInfo);
+        tagView = ret.findViewById(R.id.tag_group);
         assertTrue("TIPICO NULLO", collected != null);
 
 

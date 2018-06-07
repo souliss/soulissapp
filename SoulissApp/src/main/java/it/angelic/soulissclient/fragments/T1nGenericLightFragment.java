@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
@@ -114,7 +115,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (container == null)
 			return null;
 		opzioni = SoulissApp.getOpzioni();
@@ -392,7 +393,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(Constants.TAG, "Injecting warn timer: " + collected.getTypicalDTO().getWarnDelayMsec());
         warner.setValue(TimeHourSpinnerUtils.getTimeArrayPos(collected.getTypicalDTO().getWarnDelayMsec()));

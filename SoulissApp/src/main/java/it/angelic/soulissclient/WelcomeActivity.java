@@ -198,7 +198,7 @@ public class WelcomeActivity extends FragmentActivity {
 
         //ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
         //        R.array.configChooserArray, R.layout.welcome_spinner); //change the last argument here to your xml above.
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, R.layout.welcome_spinner, new ArrayList<String>());
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, R.layout.welcome_spinner, new ArrayList<String>());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         int selectedIdx = fillSpinnerConfig(spinnerAdapter);

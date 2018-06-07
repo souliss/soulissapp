@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -162,19 +163,19 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
         rootView.setTag(TAG);
         setHasOptionsMenu(true);
         Log.i(Constants.TAG, "onCreateView with size of data:" + collectedTag.getAssignedTypicals().size());
-        appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appBar_layout);
-        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
+        appBarLayout = getActivity().findViewById(R.id.appBar_layout);
+        swipeLayout = rootView.findViewById(R.id.swipeRefreshContainer);
         swipeLayout.setColorSchemeResources(R.color.std_blue,
                 R.color.std_blue_shadow);
         // BEGIN_INCLUDE(initializeRecyclerView)
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
-        swipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshContainer);
+        mRecyclerView = rootView.findViewById(R.id.recyclerView);
+        swipeLayout = rootView.findViewById(R.id.swipeRefreshContainer);
 
         mCurrentLayoutManagerType = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ?
                 LayoutManagerType.LAND_LAYOUT_MANAGER : LayoutManagerType.PORT_LAYOUT_MANAGER;
@@ -183,9 +184,9 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
 
         //HEADER
         // shared trans su queste
-        mLogoIcon = (TextView) getActivity().findViewById(R.id.imageTagIconFAwe);
-        infoAlpha = (ImageView) getActivity().findViewById(R.id.infoAlpha);
-        mLogoImg = (ImageView) getActivity().findViewById(R.id.photo);
+        mLogoIcon = getActivity().findViewById(R.id.imageTagIconFAwe);
+        infoAlpha = getActivity().findViewById(R.id.infoAlpha);
+        mLogoImg = getActivity().findViewById(R.id.photo);
 
 
         parallaxExtAdapter = new TagDetailParallaxExenderAdapter(opzioni, (TagDetailActivity) getActivity(), collectedTag, tagId);
@@ -209,9 +210,9 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
         //mLogoIcon.setTextColor(getActivity().getResources().getColor(R.color.white));
 
 
-        tagTitle = (TextView) getActivity().findViewById(R.id.tagTextView);
-        collapseToolbar = (CollapsingToolbarLayout) getActivity().findViewById(R.id.Collapselayout);
-        fab = (FloatingActionButton) getActivity().findViewById(R.id.fabTag);
+        tagTitle = getActivity().findViewById(R.id.tagTextView);
+        collapseToolbar = getActivity().findViewById(R.id.Collapselayout);
+        fab = getActivity().findViewById(R.id.fabTag);
         //EDIT TAG
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,7 +240,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
                         for (SoulissTypical typ : collectedTag.getAssignedTypicals()) {
                             if (!alreadyRequested.contains(typ.getNodeId())) {
                                 UDPHelper.pollRequest(opzioni, 1, typ.getNodeId());
-                                alreadyRequested.add(Short.valueOf(typ.getNodeId()));
+                                alreadyRequested.add(typ.getNodeId());
                             }
                         }
                         //Avvisa solo
@@ -374,7 +375,7 @@ public class TagDetailFragment extends AbstractTypicalFragment implements AppBar
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         // Save currently selected layout manager.
         savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
         super.onSaveInstanceState(savedInstanceState);

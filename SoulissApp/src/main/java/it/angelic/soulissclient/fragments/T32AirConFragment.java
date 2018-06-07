@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.List;
@@ -31,7 +31,6 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical32AirCon;
 import it.angelic.soulissclient.net.UDPHelper;
-import it.angelic.tagviewlib.SimpleTagRelativeLayout;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -97,7 +96,7 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		if (container == null)
 			return null;
@@ -126,31 +125,31 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 		collected.setPrefs(opzioni);
 		super.setCollected(collected);
 
-		functionSpinner = (Spinner) ret.findViewById(R.id.spinnerFunction);
-		fanSpiner = (Spinner) ret.findViewById(R.id.spinnerFan);
+		functionSpinner = ret.findViewById(R.id.spinnerFunction);
+		fanSpiner = ret.findViewById(R.id.spinnerFan);
 
 		// time based
-		textviewTemperature = (TextView) ret.findViewById(R.id.textviewTemp);
-		textviewPositional = (TextView) ret.findViewById(R.id.textViewInfoPos);
-		togSwirl = (SwitchCompat) ret.findViewById(R.id.toggleButtonSwing);
-		togIon = (SwitchCompat) ret.findViewById(R.id.toggleButtonIon);
-		togEnergySave = (SwitchCompat) ret.findViewById(R.id.toggleButtonEco);
-		textviewTriggered = (TextView) ret.findViewById(R.id.textViewInfoTrig);
+		textviewTemperature = ret.findViewById(R.id.textviewTemp);
+		textviewPositional = ret.findViewById(R.id.textViewInfoPos);
+		togSwirl = ret.findViewById(R.id.toggleButtonSwing);
+		togIon = ret.findViewById(R.id.toggleButtonIon);
+		togEnergySave = ret.findViewById(R.id.toggleButtonEco);
+		textviewTriggered = ret.findViewById(R.id.textViewInfoTrig);
 
-		buttPlus = (Button) ret.findViewById(R.id.buttonPlus);
-		buttMinus = (Button) ret.findViewById(R.id.buttonMinus);
+		buttPlus = ret.findViewById(R.id.buttonPlus);
+		buttMinus = ret.findViewById(R.id.buttonMinus);
 
-		btOff = (Button) ret.findViewById(R.id.buttonTurnOff);
-		btOn = (Button) ret.findViewById(R.id.buttonTurnOn);
+		btOff = ret.findViewById(R.id.buttonTurnOff);
+		btOn = ret.findViewById(R.id.buttonTurnOn);
 
-		infoTags = (TableRow) ret.findViewById(R.id.tableRowTagInfo);
-		tagView = (SimpleTagRelativeLayout) ret.findViewById(R.id.tag_group);
+		infoTags = ret.findViewById(R.id.tableRowTagInfo);
+		tagView = ret.findViewById(R.id.tag_group);
 
 		refreshTagsInfo();
 
 		// upcast
-		Integer status = Integer.valueOf(collected.getTypicalDTO().getOutput());
-		Integer status2 = Integer.valueOf(related.getTypicalDTO().getOutput());
+		Integer status = (int) collected.getTypicalDTO().getOutput();
+		Integer status2 = (int) related.getTypicalDTO().getOutput();
 		Log.d(Constants.TAG, "Power + opts : 0x" + Integer.toHexString(collected.getTypicalDTO().getOutput()));
 		Log.d(Constants.TAG, "Function + temp: 0x" + Integer.toHexString(status2));
 		int fun = (status2 & 0XF0);

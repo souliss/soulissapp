@@ -633,7 +633,7 @@ public class UDPHelper {
 		assertEquals(true, functional < Byte.MAX_VALUE);
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Byte.valueOf(functional));// functional code
+		frame.add(functional);// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
@@ -713,7 +713,7 @@ public class UDPHelper {
 	private static ArrayList<Byte> buildMaCaCoBroadCastConfigureWifiPass(List<Byte> payLoad) {
 		ArrayList<Byte> frame = new ArrayList<>();
 
-		frame.add(Byte.valueOf(Constants.Net.Souliss_UDP_function_broadcast_configure_wifipass));// functional code
+		frame.add(Constants.Net.Souliss_UDP_function_broadcast_configure_wifipass);// functional code
 
 		frame.add(Byte.valueOf("0"));// PUTIN
 		frame.add(Byte.valueOf("0"));
