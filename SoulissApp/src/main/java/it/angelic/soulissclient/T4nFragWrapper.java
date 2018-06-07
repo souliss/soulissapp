@@ -2,7 +2,7 @@ package it.angelic.soulissclient;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import it.angelic.soulissclient.fragments.T4nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -10,7 +10,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 
 import static junit.framework.Assert.assertTrue;
 @Deprecated
-public class T4nFragWrapper extends ActionBarActivity {
+public class T4nFragWrapper extends AppCompatActivity {
     private SoulissTypical collected;
 
 

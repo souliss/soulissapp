@@ -82,7 +82,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
             for (final SoulissNode premio : nodes) {
                 List<SoulissTypical> tippi = premio.getTypicals();
                 for (final SoulissTypical treppio : tippi) {
-                    if (treppio.getName() != null && yesMan.contains(treppio.getName().toLowerCase())) {
+                    if (treppio.getName() != null && yesMan.toLowerCase().contains(treppio.getName().toLowerCase())) {
                         typMatch = true;
                         if (yesMan.contains(context.getString(R.string.all))) {
                             cmdSent = true;
@@ -95,7 +95,7 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                                 }
                             }).start();
                             break;//uno basta e avanza
-                        } else if (nodeMatch == null || yesMan.contains(nodeMatch.getName().toLowerCase())) {
+                        } else if (nodeMatch == null || yesMan.toLowerCase().contains(nodeMatch.getName().toLowerCase())) {
                             cmdSent = true;
                             new Thread(new Runnable() {
                                 @Override

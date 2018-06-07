@@ -13,7 +13,7 @@ ext {
     siteUrl = '//github.com/HackPlan/AndroidCharts'
     gitUrl = '//github.com/HackPlan/AndroidCharts'
 
-    libraryVersion = '1.0.3'
+    libraryVersion = '1.0.4'
 
     developerId = 'Dacer'
     developerName = 'Ding Wenhao'
@@ -29,9 +29,7 @@ buildscript {
         jcenter()
         mavenCentral()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-    }
+
 }
 
 repositories {
@@ -39,12 +37,12 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion rootProject.ext.targetSdkVersion
     }
 
     buildTypes {
