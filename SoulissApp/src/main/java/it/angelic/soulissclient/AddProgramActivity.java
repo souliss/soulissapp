@@ -89,17 +89,17 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         datasource = new SoulissDBHelper(this);
         SoulissDBHelper.open();
         spinnerArrVal = getResources().getIntArray(R.array.scheduleIntervalValues);
-        TextView nodeic = (TextView) findViewById(R.id.timed_icon);
-        tvcommand = (TextView) findViewById(R.id.textViewCommand);
+        TextView nodeic = findViewById(R.id.timed_icon);
+        tvcommand = findViewById(R.id.textViewCommand);
         /* Icona timed */
         nodeic.setTextColor(ContextCompat.getColor(AddProgramActivity.this, R.color.md_light_blue_200));
         FontAwesomeUtil.prepareFontAweTextView(AddProgramActivity.this, nodeic, FontAwesomeEnum.fa_clock_o.getFontName());
 /* Icona positional */
-        TextView nodeic2 = (TextView) findViewById(R.id.position_icon);
+        TextView nodeic2 = findViewById(R.id.position_icon);
         nodeic2.setTextColor(ContextCompat.getColor(AddProgramActivity.this, R.color.md_light_blue_400));
         FontAwesomeUtil.prepareFontAweTextView(AddProgramActivity.this, nodeic2, FontAwesomeEnum.fa_sign_out.getFontName());
 /* Icona Trigger */
-        TextView nodeic3 = (TextView) findViewById(R.id.triggered_icon);
+        TextView nodeic3 = findViewById(R.id.triggered_icon);
         nodeic3.setTextColor(ContextCompat.getColor(AddProgramActivity.this, R.color.md_light_blue_900));
         FontAwesomeUtil.prepareFontAweTextView(AddProgramActivity.this, nodeic3, FontAwesomeEnum.fa_puzzle_piece.getFontName());
 
@@ -226,36 +226,33 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         setActionBarInfo(getString(R.string.app_addprog));
 
         scenes = datasource.getScenes();
-        outputNodeSpinner = (Spinner) findViewById(R.id.spinner2);
+        outputNodeSpinner = findViewById(R.id.spinner2);
         fillNodeSpinnerWithExtra(outputNodeSpinner);
-        outputTypicalSpinner = (Spinner) findViewById(R.id.spinner3);
-        outputCommandSpinner = (Spinner) findViewById(R.id.spinnerCommand);
+        outputTypicalSpinner = findViewById(R.id.spinner3);
+        outputCommandSpinner = findViewById(R.id.spinnerCommand);
 
-        radioTimed = (RadioButton) findViewById(R.id.RadioButtonTime);
-        radioPositional = (RadioButton) findViewById(R.id.RadioButtonPosition);
-        radioTrigger = (RadioButton) findViewById(R.id.RadioButtonTriggered);
+        radioTimed = findViewById(R.id.RadioButtonTime);
+        radioPositional = findViewById(R.id.RadioButtonPosition);
+        radioTrigger = findViewById(R.id.RadioButtonTriggered);
         // time based
-        final TextView textviewTimed = (TextView) findViewById(R.id.textviewtimed);
-        checkboxRecursive = (CheckBox) findViewById(R.id.checkBoxRecursive);
-        commandTimePicker = (TimePicker) findViewById(R.id.timePicker);
-        commandSpinnerInterval = (Spinner) findViewById(R.id.spinnerRepeatEvery);
+        final TextView textviewTimed = findViewById(R.id.textviewtimed);
+        checkboxRecursive = findViewById(R.id.checkBoxRecursive);
+        commandTimePicker = findViewById(R.id.timePicker);
+        commandSpinnerInterval = findViewById(R.id.spinnerRepeatEvery);
         // position based
-        final TextView textviewPositional = (TextView) findViewById(R.id.textViewInfoPos);
-        togglehomeaway = (SwitchCompat) findViewById(R.id.toggleButtonPosition);
+        final TextView textviewPositional = findViewById(R.id.textViewInfoPos);
+        togglehomeaway = findViewById(R.id.toggleButtonPosition);
         // data based
-        final TextView textviewTriggered = (TextView) findViewById(R.id.textViewInfoTrig);
-        triggeredNodeSpinner = (Spinner) findViewById(R.id.Spinner05);
-        triggeredTypicalSpinner = (Spinner) findViewById(R.id.Spinner06);
+        final TextView textviewTriggered = findViewById(R.id.textViewInfoTrig);
+        triggeredNodeSpinner = findViewById(R.id.Spinner05);
+        triggeredTypicalSpinner = findViewById(R.id.Spinner06);
         fillNodeSpinner(triggeredNodeSpinner);
-        threshButton = (Button) findViewById(R.id.buttonComparator);
-        threshValEditText = (EditText) findViewById(R.id.editTextThreshold);
-        final Button btCancel = (Button) findViewById(R.id.buttonInsertProgram);
-        final Button btSave = (Button) findViewById(R.id.buttonCancelProgram);
+        threshButton = findViewById(R.id.buttonComparator);
+        threshValEditText = findViewById(R.id.editTextThreshold);
+        final Button btCancel = findViewById(R.id.buttonInsertProgram);
+        final Button btSave = findViewById(R.id.buttonCancelProgram);
 
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        /**
-         * LISTENER SPINNER DESTINATARIO, IN TESTATA
-         */
         final OnItemSelectedListener nodeSelectionListener = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 setTypicalSpinner(outputTypicalSpinner, nodiArrayWithExtra[pos]);
@@ -286,9 +283,6 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         };
-        /**
-         * LISTENER SPINNER INPUT TRIGGER
-         */
         final OnItemSelectedListener triggeredNodeSpinnerListener = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 setTypicalSpinner(triggeredTypicalSpinner, nodiArray[pos]);
@@ -310,9 +304,6 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         });
 
 
-        /**
-         * INTERLOCK della GUI
-         */
         OnClickListener first_radio_listener = new OnClickListener() {
             @Override
             public void onClick(View v) {

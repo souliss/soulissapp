@@ -1,9 +1,5 @@
 package it.angelic.soulissclient.fragments;
 
-/**
- * Antifurto, deve poter leggere lo stato di tutti i sensori. Il pannello e` unico
- */
-
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -145,15 +141,15 @@ public class T4nFragment extends Fragment {
         collected.setPrefs(opzioni);
 
 
-        toggleButton = (SwitchCompat) ret.findViewById(R.id.buttonPlus);
-        Button resetButton = (Button) ret.findViewById(R.id.resetButton);
+        toggleButton = ret.findViewById(R.id.buttonPlus);
+        Button resetButton = ret.findViewById(R.id.resetButton);
 
-        alarmInfoTextView = (TextView) ret.findViewById(R.id.textviewAlarmInfo);
-        CheckBox notifCheckbox = (CheckBox) ret.findViewById(R.id.checkBoxnotifAndroid);
-        TextView infoTyp = (TextView) ret.findViewById(R.id.textView4nInfo);
-        mVisualizerView = (VisualizerView) ret.findViewById(R.id.visualizerView);
+        alarmInfoTextView = ret.findViewById(R.id.textviewAlarmInfo);
+        CheckBox notifCheckbox = ret.findViewById(R.id.checkBoxnotifAndroid);
+        TextView infoTyp = ret.findViewById(R.id.textView4nInfo);
+        mVisualizerView = ret.findViewById(R.id.visualizerView);
 
-        textviewSensors = (TextView) ret.findViewById(R.id.textviewSensors);
+        textviewSensors = ret.findViewById(R.id.textviewSensors);
 
         infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getTypicalDTO().getSlot());
         alarmInfoTextView.setText(Html.fromHtml("<b>" + getString(R.string.antitheft_status) + "</b> "

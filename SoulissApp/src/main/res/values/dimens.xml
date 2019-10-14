@@ -7,4 +7,5 @@
     <dimen name="text_size_vbig">28sp</dimen>
     <dimen name="external_margin">0dp</dimen>
     <bool name="isTablet">false</bool>
+    <dimen name="activity_horizontal_margin">32dp</dimen>
 </resources>

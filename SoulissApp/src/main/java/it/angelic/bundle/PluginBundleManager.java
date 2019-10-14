@@ -46,11 +46,6 @@ public final class PluginBundleManager {
     private static final String BUNDLE_EXTRA_INT_VERSION_CODE =
             "it.angelic.soulissclient.extra.INT_VERSION_CODE"; //$NON-NLS-1$
 
-    /**
-     * Private constructor prevents instantiation
-     *
-     * @throws UnsupportedOperationException because this class cannot be instantiated.
-     */
     private PluginBundleManager() {
         throw new UnsupportedOperationException("This class is non-instantiable"); //$NON-NLS-1$
     }

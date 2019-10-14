@@ -183,7 +183,7 @@ public final class ManifestTest extends AndroidTestCase {
 
         for (final ResolveInfo x : context.getPackageManager()
                 .queryBroadcastReceivers(new Intent(
-                        com.twofortyfouram.locale.Intent.ACTION_FIRE_SETTING), PackageManager.GET_INTENT_FILTERS)) {
+                        com.twofortyfouram.locale.Intent.ACTION_FIRE_SETTING), PackageManager.GET_RESOLVED_FILTER)) {
             if (packageName.equals(x.activityInfo.packageName)) {
                 result.add(x);
             }

@@ -72,9 +72,6 @@ public class ChartFragment extends Fragment {
 
         assertTrue("TIPICO NULLO", collected != null);
 
-        /**
-         * LISTENER TIPO GRAFICO
-         */
         OnItemSelectedListener lit = new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // Filtro tempo
@@ -92,9 +89,6 @@ public class ChartFragment extends Fragment {
             }
         };
         graphtSpinner.setOnItemSelectedListener(lit);
-        /**
-         * LISTENER RANGE
-         */
         OnItemSelectedListener lite = new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 // Filtro tempo

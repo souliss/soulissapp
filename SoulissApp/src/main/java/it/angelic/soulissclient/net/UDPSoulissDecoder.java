@@ -280,12 +280,6 @@ public class UDPSoulissDecoder {
             try {// sanity check
                 final InetAddress toverify = NetUtils.extractTargetAddress(mac);
                 Log.i(Constants.Net.TAG, "decodePing Parsed private IP: " + toverify.getHostAddress());
-                /**
-                 * deve essere determinato se l'indirizzo appartiene ad un nodo
-                 * e se è all'interno della propria subnet. Se entrambe le
-                 * verifiche hanno esito positivo, si può utilizzare tale
-                 * indirizzo, altrimenti si continua ad usare broadcast.
-                 */
 
                 Log.d(Constants.Net.TAG, "BROADCAST detected, IP to verify: " + toverify);
                 Log.d(Constants.Net.TAG, "BROADCAST, subnet: " + NetUtils.getDeviceSubnetMask(context));
@@ -590,7 +584,7 @@ public class UDPSoulissDecoder {
      */
     private void processWidgets() {
         try {
-            int ids[] = AppWidgetManager.getInstance(SoulissApp.getAppContext()).getAppWidgetIds(new ComponentName(SoulissApp.getAppContext(), SoulissWidget.class));
+            int[] ids = AppWidgetManager.getInstance(SoulissApp.getAppContext()).getAppWidgetIds(new ComponentName(SoulissApp.getAppContext(), SoulissWidget.class));
             if (ids.length > 0) {
                 Intent intent = new Intent(SoulissApp.getAppContext(), SoulissWidget.class);
                 intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);

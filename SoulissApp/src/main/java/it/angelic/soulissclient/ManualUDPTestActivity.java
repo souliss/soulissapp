@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.Html;
 import android.util.Log;
@@ -21,8 +20,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,11 +75,11 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
                 ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 Log.d(TAG, "Broadcast RAW DATA: " + vers);
                 timeoutHandler.removeCallbacks(timeExpired);
-                TextView ito = (TextView) findViewById(R.id.textOutputError);
+                TextView ito = findViewById(R.id.textOutputError);
                 ito.setVisibility(View.GONE);
                 // final LinearLayout OutputLinearLayout = (LinearLayout)
                 // findViewById(R.id.linearLayoutOutput);
-                final TextView OutputLinearT = (TextView) findViewById(R.id.textOutput1);
+                final TextView OutputLinearT = findViewById(R.id.textOutput1);
                 // OutputLinearLayout.removeViewAt(0);
                 // TextView ito = new TextView(getApplicationContext());
 
@@ -137,24 +134,24 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
         timeoutHandler = new Handler();
         // getWindow().setFormat(PixelFormat.RGBA_8888);
         // getWindow().addFlags(WindowManager.LayoutParams.FLAG_DITHER);
-        refreshButton = (Button) findViewById(R.id.refreshButton);
-        stateRequestButton = (Button) findViewById(R.id.resetButton);
-        Button typreqButton = (Button) findViewById(R.id.typreqButton);
-        healthButton = (Button) findViewById(R.id.healthreqButton);
-        GoButt = (Button) findViewById(R.id.buttonForce);
-        errorText = (TextView) findViewById(R.id.textOutputError);
+        refreshButton = findViewById(R.id.refreshButton);
+        stateRequestButton = findViewById(R.id.resetButton);
+        Button typreqButton = findViewById(R.id.typreqButton);
+        healthButton = findViewById(R.id.healthreqButton);
+        GoButt = findViewById(R.id.buttonForce);
+        errorText = findViewById(R.id.textOutputError);
 
-        final Spinner idspinner = (Spinner) findViewById(R.id.spinner1);
-        final Spinner slotspinner = (Spinner) findViewById(R.id.spinner2);
-        final EditText editCmd = (EditText) findViewById(R.id.editText1);
+        final Spinner idspinner = findViewById(R.id.spinner1);
+        final Spinner slotspinner = findViewById(R.id.spinner2);
+        final EditText editCmd = findViewById(R.id.editText1);
 
         SoulissApp.setBackground(findViewById(R.id.container), getWindowManager());
 
         // DRAWER
-        final TextView info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
-        final TextView info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
+        final TextView info1 = findViewById(R.id.textViewDrawerInfo1);
+        final TextView info2 = findViewById(R.id.textViewDrawerInfo2);
         dmh = new DrawerMenuHelper(ManualUDPTestActivity.this);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
                 R.string.warn_wifi, /* "open drawer" description */
@@ -176,8 +173,8 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
                         .getCustomPref().getInt("numTipici", 0) + " Things");
             }
         };
-        mDrawerLinear = (LinearLayout) findViewById(R.id.left_drawer_linear);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerLinear = findViewById(R.id.left_drawer_linear);
+        mDrawerList = findViewById(R.id.left_drawer);
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -186,9 +183,6 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
         mDrawerList.setAdapter(mAdapter);
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener(this, mDrawerList, mDrawerLayout, mDrawerLinear));
-        /**
-         * Aggiorna le tabelle dei tipici
-         */
         refreshButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // nascondi tastiera
@@ -220,7 +214,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
                                 errorText.setVisibility(View.GONE);
                                 refreshButton.setEnabled(true);
                                 // svuota la tabella e mette feedback
-                                TextView txt = (TextView) findViewById(R.id.textOutput1);
+                                TextView txt = findViewById(R.id.textOutput1);
                                 txt.setText(Constants.hourFormat.format(new Date()) + ": Ping sent to " + ret.toString());
                             }
                         });
@@ -231,9 +225,6 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
             }
         });
-        /**
-         * Manda RESET a Souliss
-         */
         stateRequestButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // nascondi tastiera
@@ -246,7 +237,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
                         stateRequestButton.post(new Runnable() {
                             public void run() {
-                                TextView txt = (TextView) findViewById(R.id.textOutput1);
+                                TextView txt = findViewById(R.id.textOutput1);
                                 if (opzioni.isLightThemeSelected())
                                     txt.setTextColor(getResources().getColor(R.color.black));
 
@@ -261,9 +252,6 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
             }
         });
-        /**
-         * Manda TYPICAL Request a Souliss
-         */
         typreqButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // nascondi tastiera
@@ -278,7 +266,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
                         stateRequestButton.post(new Runnable() {
                             public void run() {
-                                TextView txt = (TextView) findViewById(R.id.textOutput1);
+                                TextView txt = findViewById(R.id.textOutput1);
                                 if (opzioni.isLightThemeSelected())
                                     txt.setTextColor(getResources().getColor(R.color.black));
 
@@ -295,9 +283,6 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
             }
         });
 
-        /**
-         * Manda HEALTH Request a Souliss
-         */
         healthButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 // nascondi tastiera
@@ -312,7 +297,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
                         healthButton.post(new Runnable() {
                             public void run() {
-                                TextView txt = (TextView) findViewById(R.id.textOutput1);
+                                TextView txt = findViewById(R.id.textOutput1);
                                 if (opzioni.isLightThemeSelected())
                                     txt.setTextColor(getResources().getColor(R.color.black));
                                 errorText.setVisibility(View.GONE);
@@ -328,9 +313,6 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
 
             }
         });
-        /**
-         * Invia un comando
-         */
         GoButt.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -361,7 +343,7 @@ public class ManualUDPTestActivity extends AbstractStatusedFragmentActivity {
                             public void run() {
                                 // Refresh Output area
                                 GoButt.setEnabled(true);
-                                TextView txt = (TextView) findViewById(R.id.textOutput1);
+                                TextView txt = findViewById(R.id.textOutput1);
                                 if (opzioni.isLightThemeSelected())
                                     txt.setTextColor(getResources().getColor(R.color.black));
                                 errorText.setVisibility(View.GONE);

@@ -1,9 +1,3 @@
-/**
- * Copyright 2011, Felix Palmer
- * <p/>
- * Licensed under the MIT license:
- * http://creativecommons.org/licenses/MIT/
- */
 package com.pheelicks.visualizer;
 
 import android.annotation.TargetApi;

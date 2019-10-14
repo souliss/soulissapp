@@ -121,16 +121,7 @@ public class AlertDialogGridHelper {
     }
 
 
-    /**
-     * Sceglie nuova icona
-     *
-     * @param context
-     * @param list
-     * @param datasource
-     * @param toRename   puo essere nodo o Scenario
-     * @return
-     */
-  /*  public static AlertDialog.Builder chooseIconDialog(final Context context, final TagRecyclerAdapter list,
+    /*  public static AlertDialog.Builder chooseIconDialog(final Context context, final TagRecyclerAdapter list,
                                                        final SoulissDBHelper datasource, final ISoulissObject toRename) {
         final int savepoint = toRename.getIconResourceId();
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);

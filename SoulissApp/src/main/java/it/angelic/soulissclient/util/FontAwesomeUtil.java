@@ -78,14 +78,7 @@ public class FontAwesomeUtil extends SimpleTagViewUtils {
         txtAwesome.setTextSize(320);
     }
 
-    /**
-     * Catena rimappaggio vecchie icone
-     *
-     * @param oldResId
-     * @return
-     * @author asfodel
-     */
-/*    @Deprecated
+    /*    @Deprecated
     public static String remapIconResId(int oldResId) {
         switch (oldResId) {
             case R.drawable.fan:

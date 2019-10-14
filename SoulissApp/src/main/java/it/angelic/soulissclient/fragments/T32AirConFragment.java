@@ -166,9 +166,6 @@ public class T32AirConFragment extends AbstractTypicalFragment {
 				functionSpinner.setSelection(i);
 		}
 
-		/**
-		 * LISTENER SPINNER DESTINATARIO, IN TESTATA
-		 */
 		final OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 				// /setTypicalSpinner(outputTypicalSpinner, nodiArray[pos]);

@@ -211,9 +211,6 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         refreshTagsInfo();
 
 
-        /**
-         * LISTENER SPINNER DESTINATARIO, IN TESTATA
-         */
         final OnItemSelectedListener lit = new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) {//fa cagare
