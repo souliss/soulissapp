@@ -44,6 +44,11 @@ dependencies {
     implementation 'com.github.rtugeek:ColorSeekBar:1.7.5'
     implementation 'im.dacer:AndroidCharts:1.0.4'
 
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation ('androidx.test.espresso:espresso-core:3.1.0', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
     implementation project(':soulissLib')
    // wearApp project(":soulisswear")
     implementation project(':taskerapi')
