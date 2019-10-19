@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:textColor="@color/white"
+        style="@style/CodeFontMain"
         android:layout_toRightOf="@id/dicon"
         android:textSize="14sp" />
 

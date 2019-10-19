@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:background="@android:color/transparent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/cardview_typical_vertical"
+                    tools:listitem="@layout/cardview_launcher_typical"
                     android:layout_below="@id/TextViewTagsDesc"/>
 
                 <android.support.design.widget.FloatingActionButton
@@ -71,6 +71,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <include layout="@layout/custom_leftdrawer"/>
+    <include layout="@layout/drawer_head" />
 
 </android.support.v4.widget.DrawerLayout>

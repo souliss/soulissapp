@@ -416,20 +416,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onPause() {
-        unregisterReceiver(datareceiver);
-        unregisterReceiver(netReceiver);
-        super.onPause();
-        //autoUpdate.cancel();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //...e amen
-            return;
-        }
-        locationManager.removeUpdates(this);
-        //non mettere nulla qui
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -498,6 +484,22 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(datareceiver);
+        unregisterReceiver(netReceiver);
+        super.onPause();
+        //autoUpdate.cancel();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //...e amen
+            return;
+        }
+        locationManager.removeUpdates(this);
+        //non mettere nulla qui
     }
 
     /**

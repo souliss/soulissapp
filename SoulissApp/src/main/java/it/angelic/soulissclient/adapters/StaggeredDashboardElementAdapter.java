@@ -35,6 +35,7 @@ import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.NodesListActivity;
 import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SceneDetailActivity;
 import it.angelic.soulissclient.SceneListActivity;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.SoulissDataService;
@@ -102,23 +103,35 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
     }
 
     private void bindSceneElement(ViewHolder holder, LauncherElement item) {
-        final SoulissScene nodo = (SoulissScene) item.getLinkedObject();
-        Log.d(Constants.TAG, "Launcher Element scenesList " + nodo.getName());
+        final SoulissScene scenario = (SoulissScene) item.getLinkedObject();
+        Log.d(Constants.TAG, "Launcher Element scenesList " + scenario.getName());
 
         TextView commandIcon = holder.container.findViewById(R.id.command_icon);
         TextView textViewCommand = holder.container.findViewById(R.id.TextViewCommand);
         TextView textViewCommandWhen = holder.container.findViewById(R.id.TextViewCommandWhen);
         Button exe = holder.container.findViewById(R.id.sceneBtn);
-        textViewCommand.setText(nodo.getNiceName());
+        textViewCommand.setText(scenario.getNiceName());
         String strMeatFormat = context.getString(R.string.scene_subtitle);
-        textViewCommandWhen.setText(String.format(strMeatFormat, nodo.getCommandArray().size()));
+        textViewCommandWhen.setText(String.format(strMeatFormat, scenario.getCommandArray().size()));
 
-        FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, nodo.getIconResourceId());
+        FontAwesomeUtil.prepareFontAweTextView(context, commandIcon, scenario.getIconResourceId());
         exe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.w(Constants.TAG, "Activating SCENE " + nodo.getNiceName());
-                nodo.execute();
+                Log.w(Constants.TAG, "Activating SCENE " + scenario.getNiceName());
+                scenario.execute();
+            }
+
+
+        });
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sceneDet = new Intent(context, SceneDetailActivity.class);
+                sceneDet.putExtra("SCENA", scenario);
+                // TagRecyclerAdapter.TagViewHolder holder = ( TagRecyclerAdapter.TagViewHolder holder) view;
+                context.startActivity(sceneDet);
             }
 
 
@@ -244,8 +257,6 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
             if (linearActionsLayout.getChildCount() >= 2)
                 break;
         }
-        //linearActionsLayout.removeAllViews();
-        // LinearLayout ll = (LinearLayout)context.getLayoutInflater().inflate(R.layout.button_flat, linearActionsLayout);
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -333,7 +344,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesomL, FontAwesomeEnum.fa_location_arrow.getFontName());
                 txtTitL.setText(item.getTitle());
                 txtDescL.setText(item.getDesc());
-                viewLineL.setBackgroundColor(context.getResources().getColor(R.color.md_blue_grey_500));
+                //viewLineL.setBackgroundColor(context.getResources().getColor(R.color.md_blue_grey_500));
                 break;
             case STATIC_SCENES:
                 View viewLine = holder.container.findViewById(R.id.StaticTileLine);
@@ -432,23 +443,27 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 inflate(R.layout.cardview_launcher_empty, parent, false);
         switch (enumVal) {
             case STATIC_LOCATION:
+                itemView = LayoutInflater.
+                        from(parent.getContext()).
+                        inflate(R.layout.cardview_launcher_dbandposition, parent, false);
+                break;
             case STATIC_SCENES:
             case STATIC_PROGRAMS:
             case STATIC_MANUAL:
             case STATIC_TAGS:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
-                        inflate(R.layout.card_button_static, parent, false);
+                        inflate(R.layout.cardview_launcher_static, parent, false);
                 break;
             case TYPICAL:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
-                        inflate(R.layout.cardview_typical_vertical, parent, false);
+                        inflate(R.layout.cardview_launcher_typical, parent, false);
                 break;
             case NODE:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
-                        inflate(R.layout.cardview_node_vertical, parent, false);
+                        inflate(R.layout.cardview_launcher_node, parent, false);
                 break;
             case TAG:
                 itemView = LayoutInflater.
@@ -463,7 +478,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
             case STATIC_STATUS:
                 itemView = LayoutInflater.
                         from(parent.getContext()).
-                        inflate(R.layout.cardview_basicinfo, parent, false);
+                        inflate(R.layout.cardview_launcher_basicinfo, parent, false);
                 break;
 
 

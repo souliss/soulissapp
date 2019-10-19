@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:id="@+id/dbAndPositionCard"
+<android.support.v7.widget.CardView android:id="@+id/BasicInfoCard"
                                     style="?attr/cardStyle"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
                                     xmlns:android="http://schemas.android.com/apk/res/android"
                                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                                     xmlns:tools="http://schemas.android.com/tools"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:clickable="true"
                                     android:elevation="2dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    app:cardUseCompatPadding="true"
+                                    android:layout_margin="4dp"
                                     android:foreground="?attr/selectableItemBackground"
                                     card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="2sp"
+    card_view:cardPreventCornerOverlap="true"
                                     tools:showIn="@layout/main_launcher2">
-
+    <!-- Your card content -->
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/card_thumbnail_image2"
+            android:id="@+id/card_thumbnail_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawingCacheQuality="high"
-            android:src="@drawable/side1"/>
+            android:src="@drawable/side2"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/card_thumbnail_image2"
+
+            android:layout_toRightOf="@id/card_thumbnail_image"
             android:padding="8dp">
 
+
+            <TextView
+                android:id="@+id/textViewBasicInfoTit"
+                style="@style/CodeFontTitle"
+                android:layout_marginLeft="5dip"
+                android:text="@string/status_souliss"/>
+
             <View
-                android:id="@+id/PositionWarnLine"
+                android:id="@+id/BasicInfoLine"
                 android:layout_width="fill_parent"
                 android:layout_height="1dip"
                 android:background="@color/std_green"/>
 
             <TextView
-                android:id="@+id/textViewdbInfoTit"
-                style="@style/CodeFontTitle"
+                android:id="@+id/textViewBasicInfo"
+                style="@style/CodeFontMain"
+                android:layout_below="@id/textViewBasicInfoTit"
+                android:layout_marginLeft="5dp"
+                android:textIsSelectable="false"/>
+
+            <TextView
+                android:id="@+id/textViewBasicInfoLittle"
+                style="@style/CodeFontMain"
+                android:layout_below="@id/textViewBasicInfo"
                 android:layout_marginLeft="5dip"
-                android:text="@string/position"/>
-
-            <TextView
-                android:id="@+id/TextViewCoords"
-                style="@style/CodeFontMain"
-                android:layout_below="@id/textViewdbInfoTit"
                 android:textIsSelectable="false"/>
-
-            <TextView
-                android:id="@+id/TextViewFromHome"
-                style="@style/CodeFontMain"
-                android:layout_below="@id/TextViewCoords"
-                android:textIsSelectable="false"/>
-
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -8,6 +8,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:layout_margin="4dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
     android:foreground="?attr/selectableItemBackground"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="2sp"
@@ -20,7 +23,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:focusable="false">
-
 
         <ImageView
             android:id="@+id/imageViewTag"

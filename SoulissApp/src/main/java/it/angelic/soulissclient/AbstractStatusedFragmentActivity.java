@@ -124,9 +124,9 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
 
         // DRAWER
         dmh = new DrawerMenuHelper(parentActivity);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        info1 = (TextView) findViewById(R.id.textViewDrawerInfo1);
-        info2 = (TextView) findViewById(R.id.textViewDrawerInfo2);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        info1 = findViewById(R.id.textViewDrawerInfo1);
+        info2 = findViewById(R.id.textViewDrawerInfo2);
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
                 R.string.warn_wifi, /* "open drawer" description */
@@ -150,8 +150,8 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         };
         //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         //getSupportActionBar().setHomeButtonEnabled(true);
-        mDrawerLinear = (LinearLayout) findViewById(R.id.left_drawer_linear);
-        FloatingActionButton mDrawerFloatButt = (FloatingActionButton) findViewById(R.id.fabSmall);
+        mDrawerLinear = findViewById(R.id.left_drawer_linear);
+        FloatingActionButton mDrawerFloatButt = findViewById(R.id.fabSmall);
         SoulissDBTagHelper db = new SoulissDBTagHelper(parentActivity);
         SoulissDBHelper.open();
         if (db.countFavourites() > 0) {
@@ -173,7 +173,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             mDrawerFloatButt.setVisibility(View.INVISIBLE);
         }
 
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = findViewById(R.id.left_drawer);
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
@@ -190,7 +190,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         if (requestCode == Constants.VOICE_REQUEST_OK && resultCode == RESULT_OK) {
 
             ArrayList<String> thingsYouSaid = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            // ((TextView)findViewById(R.id.text1)).setText(thingsYouSaid.get(0));
             final String yesMan = thingsYouSaid.get(0).toLowerCase();
             Log.i(Constants.TAG, "onActivityResult, searching command: " + yesMan);
             //Invia comando
@@ -209,7 +208,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         if (opzioni.isVoiceCommandEnabled()) {
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.ctx_menu_voice, menu);
-
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -257,7 +255,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
-        actionBar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
+        actionBar = findViewById(R.id.my_awesome_toolbar);
         //if (actionBar != null)
         setSupportActionBar(actionBar);
         super.onStart();
@@ -287,16 +285,6 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                     statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_green));
                     statusOnline.setText(R.string.Online);
                     final int numNodes = opzioni.getCustomPref().getInt("numNodi", 0);
-                    /*if (numTries > 1 && numNodes > 0) {
-                        AsyncTask.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                // subscribe a tutti i nodi se era da tempo offline
-                                UDPHelper.stateRequest(opzioni, numNodes, 0);
-                                Log.e(Constants.TAG, "STATE REQUEST after long offline ");
-                            }
-                        });
-                    }*/
                 }
                 statusOnline.invalidate();
             }
@@ -305,6 +293,26 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Siccome nel rientro da dettaglio nested a dettaglio
+     * gli elementi non sono ancora presenti, si postpone la transazione per sbloccarla
+     * poi con una chiamata a codesto metodo
+     */
+    protected void scheduleStartPostponedTransition(final View sharedElement) {
+        Log.w(Constants.TAG, "SCHEDULE  ");
+        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+                new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+                        Log.w(Constants.TAG, "SCHEDULE StartPostponedTransition ");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            startPostponedEnterTransition();
+                        }
+                        return true;
+                    }
+                });
+    }
 
     public void setActionBarInfo(String title) {
         try {
@@ -338,26 +346,5 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
             statusOnline.setTextColor(ContextCompat.getColor(this, R.color.std_yellow));
             statusOnline.setText(R.string.synch);
         }
-    }
-
-    /**
-     * Siccome nel rientro da dettaglio nested a dettaglio
-     * gli elementi non sono ancora presenti, si postpone la transazione per sbloccarla
-     * poi con una chiamata a codesto metodo
-     */
-    protected void scheduleStartPostponedTransition(final View sharedElement) {
-        Log.w(Constants.TAG, "SCHEDULE  ");
-        sharedElement.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
-                        Log.w(Constants.TAG, "SCHEDULE StartPostponedTransition ");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            startPostponedEnterTransition();
-                        }
-                        return true;
-                    }
-                });
     }
 }

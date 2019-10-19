@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dbAndPositionCard"
+    style="?attr/cardStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:clickable="true"
+    android:elevation="2dp"
+    app:cardUseCompatPadding="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    card_view:cardElevation="2sp"
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardCornerRadius="2dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <View
+            android:id="@+id/StaticTileLine"
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@color/md_blue_grey_500" />
+
+        <TextView
+            android:id="@+id/card_static_title"
+            style="@style/CodeFontTitle"
+            android:layout_marginLeft="5dip"
+            android:text="@string/position" />
+
+        <TextView
+            android:id="@+id/card_thumbnail_fa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/card_static_title"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:transitionName="helloManual"
+            tools:text="X" />
+
+        <TextView
+            android:id="@+id/card_static_desc"
+            style="@style/CodeFontMain"
+            android:layout_below="@id/card_static_title"
+            android:layout_toRightOf="@id/card_thumbnail_fa"
+            android:textIsSelectable="false" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

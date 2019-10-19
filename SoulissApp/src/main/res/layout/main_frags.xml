@@ -83,5 +83,5 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <include layout="@layout/custom_leftdrawer"/>
+    <include layout="@layout/drawer_head" />
 </android.support.v4.widget.DrawerLayout>

@@ -75,7 +75,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="16dp"
-                    android:src="@drawable/ic_add_32dp"
+                    app:srcCompat="@drawable/ic_add_32dp"
                     app:backgroundTint="@color/md_yellow_400"
                     />
             </RelativeLayout>
@@ -83,5 +83,5 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <include layout="@layout/custom_leftdrawer"/>
+    <include layout="@layout/drawer_head" />
 </android.support.v4.widget.DrawerLayout>
