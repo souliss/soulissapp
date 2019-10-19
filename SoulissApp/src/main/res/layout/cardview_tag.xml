@@ -32,7 +32,6 @@
             android:layout_alignParentStart="true"
             android:alpha="0.8"
             android:scaleType="centerCrop"
-
             android:transitionName="photo_hero"/>
 
         <View
@@ -55,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imageViewTag"
+            style="@style/CodeFontMain"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="4dp"
             android:elevation="2dp"
@@ -83,12 +83,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/TextViewTagDescPlaceHolder"
+            android:layout_alignTop="@id/TextViewTagTitle"
             android:layout_alignBottom="@id/imageViewTag"
-            android:layout_alignTop="@id/TextViewTagPlaceHolder"
             android:layout_gravity="bottom"
-            android:alpha="0.6"
+            android:alpha="0.4"
             android:background="@color/black"
-            android:transitionName="shadow_hero"/>
+            android:transitionName="shadow_hero" />
 
         <TextView
             android:id="@+id/TextViewTagDesc"
@@ -98,6 +98,7 @@
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="4dp"
             android:elevation="2dp"
+            style="@style/CodeFontMain"
             android:maxLines="2"
             android:text="@string/health"
             android:textColor="@color/white_bitaplha"

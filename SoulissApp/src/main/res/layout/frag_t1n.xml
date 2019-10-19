@@ -30,7 +30,7 @@
                 android:layout_marginTop="2dp"
                 android:gravity="center_horizontal"
                 android:textAllCaps="true"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                style="@style/CodeFontTitle"
                 android:textIsSelectable="false"
                 android:transitionName="ToolbarText"
                 tools:text="Nodo 2 Slot 3"/>
@@ -56,13 +56,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="@string/timer"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                style="@style/CodeFontMain" />
 
             <TableLayout
-                android:id="@+id/containervermegame"
+                android:id="@+id/sleepContainer"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@id/textviewColours">
+                android:layout_height="fill_parent">
 
                 <TableRow
                     android:id="@+id/tableRow1"
@@ -132,6 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
                         android:layout_weight="2"
+                        style="@style/CodeFontMain"
                         android:text="@string/multicast_desc"/>
                 </TableRow>
 
@@ -151,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
                         android:text="@string/charts"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        style="@style/CodeFontTitle"
                         android:textIsSelectable="false"/>
                 </TableRow>
 
@@ -166,6 +166,7 @@
                     <TextView
                         android:id="@+id/textviewHistoryInfo"
                         android:layout_width="0dip"
+                        style="@style/CodeFontMain"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"/>
                 </TableRow>

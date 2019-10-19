@@ -1,15 +1,11 @@
 package it.angelic.soulissclient;
 
-import android.annotation.TargetApi;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -26,9 +22,6 @@ import static it.angelic.soulissclient.Constants.TAG;
 
 public class PreferencesActivity extends PreferenceActivity {
 
-    // SoulissPreferenceHelper opzioni;
-    private String currentScreen;
-
 
     @Override
     public void onBuildHeaders(List<Header> target) {
@@ -36,30 +29,20 @@ public class PreferencesActivity extends PreferenceActivity {
         loadHeadersFromResource(R.xml.preference_headers, target);
     }
 
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private void fit(View v) {
-        v.setFitsSystemWindows(true);
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
-        super.onCreate(savedInstanceState);
-        //col tema sparisce l'action bar, chiaramente :/
-        /*if (opzioni.isLightThemeSelected()) {
+        if (opzioni.isLightThemeSelected())
             setTheme(R.style.LightThemeSelector);
-        } else
+        else
             setTheme(R.style.DarkThemeSelector);
-        */
 
-        //ListView v = getListView();
-       // v.setCacheColorHint(0);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull
-    String permissions[], @NonNull int[] grantResults) {
+            String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -77,24 +60,6 @@ public class PreferencesActivity extends PreferenceActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //setActionBarInfo(getString(R.string.app_opt));
-        //currentScreen = getIntent().getExtras().getString("opt_screen");
-        ListView v = getListView();
-      //  v.setCacheColorHint(0);
-        //LinearLayout root = (LinearLayout) findViewById(android.R.id.list).getParent().getParent().getParent();
-        //bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.custom_actionbar, root, false);
-        //root.addView(bar, 0); // insert at top
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            fit(v);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            Log.d(TAG, "Going thru preference onStart(), screeN: " + currentScreen);
-            return;
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -102,7 +67,6 @@ public class PreferencesActivity extends PreferenceActivity {
         IntentFilter filtere = new IntentFilter();
         filtere.addAction(Constants.CUSTOM_INTENT_SOULISS_RAWDATA);
         // registerReceiver(macacoRawDataReceiver, filtere);
-
 
         super.onResume();
     }

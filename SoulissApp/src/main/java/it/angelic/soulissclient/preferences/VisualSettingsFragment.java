@@ -23,7 +23,6 @@ public class VisualSettingsFragment extends PreferenceFragment {
 		addPreferencesFromResource(R.xml.settings_visual);
 		final Preference restoreWarns = findPreference("restoredialogs");
 		final Preference restoreWelcome = findPreference("restorewelcome");
-		//final Preference lightThemeCheckBox = (Preference) findPreference("checkboxHoloLight");
 
 		// Rimette i dialogs
 		restoreWarns.setOnPreferenceClickListener(new OnPreferenceClickListener() {

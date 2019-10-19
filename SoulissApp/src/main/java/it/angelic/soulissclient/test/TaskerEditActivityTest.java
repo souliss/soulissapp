@@ -388,7 +388,7 @@ public final class TaskerEditActivityTest extends ActivityInstrumentationTestCas
     private void setMessageAutoSync(final String message) throws Throwable {
         final Runnable runnable = new Runnable() {
             public void run() {
-                final EditText editText = (EditText) getActivity().findViewById(android.R.id.text1);
+                final EditText editText = getActivity().findViewById(android.R.id.text1);
 
                 editText.setText(message);
             }
@@ -421,7 +421,7 @@ public final class TaskerEditActivityTest extends ActivityInstrumentationTestCas
         try {
             final Field resultCodeField = Activity.class.getDeclaredField("mResultCode"); //$NON-NLS-1$
             resultCodeField.setAccessible(true);
-            return ((Integer) resultCodeField.get(activity)).intValue();
+            return ((Integer) resultCodeField.get(activity));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }

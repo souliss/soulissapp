@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
 
-        <include layout="@layout/custom_actionbar" />
+        <include layout="@layout/custom_toolbar" />
         <!-- The main_tasker content view -->
         <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_below="@id/my_awesome_toolbar"

@@ -65,18 +65,21 @@
                         android:layout_height="60dp"
                         android:layout_gravity="bottom"
                         android:alpha="0.4"
+                        android:transitionName="shadow_hero"
                         android:background="@color/black"/>
 
                     <TextView
                         android:id="@+id/tagTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|left"
+                        android:layout_gravity="bottom|start"
+                        style="@style/CodeFontTitleBig"
                         android:layout_marginBottom="4dp"
                         android:layout_marginLeft="12dp"
                         android:textColor="@color/white_bitaplha"
-                        android:textSize="24sp"
-                        tools:text="Title Big Swallow"/>
+                        android:transitionName="shadow_hero_text"
+                        tools:text="Title Big Swallow"
+                        android:layout_marginStart="12dp" />
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/fabTag"
@@ -90,12 +93,12 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginTop="10dp"
                         app:backgroundTint="@color/md_purple_200"
-                        android:src="@drawable/ic_mode_edit_24dp"
+                        app:srcCompat="@drawable/ic_mode_edit_24dp"
                         android:transitionName="fab_hero"
                         fab:fabSize="mini"/>
                 </FrameLayout>
 
-                <include layout="@layout/custom_actionbar"/>
+                <include layout="@layout/custom_toolbar" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

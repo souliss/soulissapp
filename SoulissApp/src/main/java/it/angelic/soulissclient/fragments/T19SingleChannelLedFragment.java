@@ -185,7 +185,7 @@ public class T19SingleChannelLedFragment extends AbstractMusicVisualizerFragment
         super.setCollected(collected);
         collected.issueRefresh();
         /*super.actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-        super.actionBar.setCustomView(R.layout.custom_actionbar); // load
+        super.actionBar.setCustomView(R.layout.custom_toolbar); // load
 		super.actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM); // show
 		super.actionBar.setDisplayHomeAsUpEnabled(true);
         refreshStatusIcon();*/

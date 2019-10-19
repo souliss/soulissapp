@@ -5,7 +5,7 @@
           android:title="@string/menu_options" />
     <item android:id="@+id/TestUDP"
           android:icon="@android:drawable/ic_menu_agenda"
-          android:title="@string/menu_test_udp" />  
+        android:title="@string/menu_test_udp" />
     <item android:id="@+id/Esci"
           android:icon="@android:drawable/ic_lock_power_off"
           android:title="@string/menu_exit" />

@@ -36,7 +36,6 @@
             android:process=":souliss_process">
         </service>
 
-
         <activity
             android:name=".VoiceCommandActivityNoDisplay"
             android:label="@string/souliss_app_name"
@@ -219,6 +218,7 @@
         <activity
             android:name="it.angelic.soulissclient.PreferencesActivity"
             android:exported="false"
+            android:theme="@style/AppTheme"
             android:label="@string/app_opt">
             <intent-filter>
                 <action android:name="it.angelic.soulissclient.RAW_MACACO_DATA"/>

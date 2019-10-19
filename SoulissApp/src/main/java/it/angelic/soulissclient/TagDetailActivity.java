@@ -244,12 +244,11 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextView icon = (TextView) findViewById(R.id.imageTagIconFAwe);
+        TextView icon = findViewById(R.id.imageTagIconFAwe);
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 Fragment details = getSupportFragmentManager().findFragmentById(R.id.detailPane);
-                Log.w(Constants.TAG, "instanceof: " + details.getClass());
+                //Log.w(Constants.TAG, "instanceof: " + details.getClass());
                 if (details instanceof TagDetailFragment) {
                     setResult(Activity.RESULT_OK);
                     supportFinishAfterTransition();

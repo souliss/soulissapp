@@ -28,7 +28,7 @@
             android:title="@string/title_edittext_IP_pubb" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Advanced" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="checkboxBroadcast"
             android:summary="@string/opt_summary_broadcast"

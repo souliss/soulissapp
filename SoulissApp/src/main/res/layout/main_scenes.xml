@@ -12,7 +12,7 @@
         android:padding="@dimen/external_margin"
         android:transitionName="helloScenes">
 
-        <include layout="@layout/custom_actionbar"/>
+        <include layout="@layout/custom_toolbar" />
 
         <LinearLayout
             android:id="@+id/containerlistaScenes"

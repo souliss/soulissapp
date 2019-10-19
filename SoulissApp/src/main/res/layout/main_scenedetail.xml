@@ -11,7 +11,7 @@
 
         android:padding="@dimen/external_margin">
 
-        <include layout="@layout/custom_actionbar"/>
+        <include layout="@layout/custom_toolbar" />
 
         <RelativeLayout
             android:id="@+id/RelativeLayoutNodeDetail"

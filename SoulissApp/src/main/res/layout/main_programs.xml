@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:transitionName="helloPrograms">
 
-        <include layout="@layout/custom_actionbar"/>
+        <include layout="@layout/custom_toolbar" />
 
         <LinearLayout
             android:id="@+id/containerlistaProgrammi"

@@ -263,9 +263,9 @@ public class SoulissDBOpenHelper extends SQLiteOpenHelper {
             + COLUMN_TAG_TYP_NODE_ID + " integer not null, "
             + COLUMN_TAG_TYP_TAG_ID + " integer not null, "
             + COLUMN_TAG_TYP_PRIORITY + " integer not null DEFAULT 0 , "
-            + " PRIMARY KEY (" + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + "," + COLUMN_TAG_TYP_TAG_ID + ") "
-            + " FOREIGN KEY ( " + COLUMN_TAG_TYP_TAG_ID + ") "
-            + " REFERENCES " + TABLE_TAGS + " (" + COLUMN_TYPICAL_NODE_ID + "), "
+            + " PRIMARY KEY (" + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + "," + COLUMN_TAG_TYP_TAG_ID
+            + ") FOREIGN KEY ( " + COLUMN_TAG_TYP_TAG_ID
+            + ") REFERENCES " + TABLE_TAGS + " (" + COLUMN_TYPICAL_NODE_ID + "), "
             + " FOREIGN KEY ( " + COLUMN_TAG_TYP_NODE_ID + "," + COLUMN_TAG_TYP_SLOT + ") "
             + " REFERENCES " + TABLE_TYPICALS + " (" + COLUMN_TYPICAL_NODE_ID + "," + COLUMN_TYPICAL_SLOT + ") "
             + ");";
@@ -286,7 +286,7 @@ public class SoulissDBOpenHelper extends SQLiteOpenHelper {
     }
 
     private void doDefaultInserts(SQLiteDatabase database) {
-    /* DEFAULT TAG , Order=0 */
+        /* DEFAULT TAG , Order=0 */
         database.execSQL("INSERT INTO " + TABLE_TAGS + " (" + COLUMN_TAG_ID + "," + COLUMN_TAG_NAME + "," + COLUMN_TAG_ORDER + "," + COLUMN_TAG_ICONID
                 + ") VALUES (" + FAVOURITES_TAG_ID + ",'" + context.getResources().getString(R.string.favourites) + "'," + 0 + ","
                 + FontAwesomeUtil.getCodeIndexByFontName(context, "fa-heart-o") + ")");

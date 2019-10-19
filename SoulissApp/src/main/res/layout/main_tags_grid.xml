@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:padding="@dimen/external_margin">
 
-        <include layout="@layout/custom_actionbar" />
+        <include layout="@layout/custom_toolbar" />
 
         <TextView
             android:id="@+id/back_icon"

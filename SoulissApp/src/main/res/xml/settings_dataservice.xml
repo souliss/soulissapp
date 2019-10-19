@@ -7,7 +7,7 @@
     android:title="@string/opt_service" >
 
     <PreferenceCategory android:title="@string/service" >
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="checkboxService"
             android:summary="@string/opt_serviceEnable_desc"
@@ -22,7 +22,7 @@
             robobunny:min="1"
             robobunny:unitsLeft=""
             robobunny:unitsRight="min" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="checkboxVoiceCommand"
             android:summary="@string/opt_voice_command_desc"
