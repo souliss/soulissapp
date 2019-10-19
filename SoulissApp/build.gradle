@@ -52,5 +52,4 @@ dependencies {
     implementation project(':soulissLib')
    // wearApp project(":soulisswear")
     implementation project(':taskerapi')
-    //compile project(':tagView')
 }
