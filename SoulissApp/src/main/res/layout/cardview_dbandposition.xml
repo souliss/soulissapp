@@ -10,7 +10,7 @@
                                     android:elevation="2dp"
                                     android:foreground="?attr/selectableItemBackground"
                                     card_view:cardCornerRadius="2dp"
-                                    tools:showIn="@layout/main_launcher">
+                                    tools:showIn="@layout/main_launcher2">
 
     <RelativeLayout
         android:layout_width="wrap_content"

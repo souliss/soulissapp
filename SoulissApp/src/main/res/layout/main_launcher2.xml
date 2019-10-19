@@ -7,7 +7,7 @@
                                         android:layout_height="match_parent"
                                         android:fitsSystemWindows="true">
 
-    <!-- The main content view -->
+    <!-- The main_tasker content view -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

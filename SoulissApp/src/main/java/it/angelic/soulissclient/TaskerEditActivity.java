@@ -46,7 +46,7 @@ public final class TaskerEditActivity extends AbstractPluginActivity {
         final Bundle localeBundle = getIntent().getBundleExtra(com.twofortyfouram.locale.Intent.EXTRA_BUNDLE);
         BundleScrubber.scrub(localeBundle);
 
-        setContentView(R.layout.main);
+        setContentView(R.layout.main_tasker);
 
         if (null == savedInstanceState) {
             if (PluginBundleManager.isBundleValid(localeBundle)) {

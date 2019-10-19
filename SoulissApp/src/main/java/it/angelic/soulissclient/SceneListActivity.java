@@ -139,12 +139,12 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 		 */
         // ParallaxListView listView2 = (ParallaxListView) findViewById(R.id.paraList);
 
-        listaScenesView = (ListView) findViewById(R.id.ListViewListaScenes);
+        listaScenesView = findViewById(R.id.ListViewListaScenes);
 
-        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.scene_icon);
+        TextView textAwesomeUpperRight = findViewById(R.id.scene_icon);
 
-        final TextView toHid = (TextView) findViewById(R.id.TextViewSceneDesc);
-        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewSceneDescFa);
+        final TextView toHid = findViewById(R.id.TextViewSceneDesc);
+        final TextView textViewTagsDescFa = findViewById(R.id.TextViewSceneDescFa);
         FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
         //NASCONDI
         textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +162,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
 
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_moon_o.getFontName());
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         //  fab.attachToListView(listaScenesView);
 
         //SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
@@ -228,22 +228,13 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-
-            if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
-                mDrawerLayout.closeDrawer(mDrawerLinear);
-            } else {
-                mDrawerLayout.openDrawer(mDrawerLinear);
-            }
-            return true;
-        }
-
         switch (item.getItemId()) {
             case android.R.id.home:
-                // app icon in action bar clicked; go home
-                Intent intent = new Intent(this, OldLauncherActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if (mDrawerLayout.isDrawerOpen(mDrawerLinear)) {
+                    mDrawerLayout.closeDrawer(mDrawerLinear);
+                } else {
+                    mDrawerLayout.openDrawer(mDrawerLinear);
+                }
                 return true;
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);

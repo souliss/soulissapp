@@ -48,7 +48,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
     }
 
     /**
-     * Swaps fragments in the main content view
+     * Swaps fragments in the main_tasker content view
      */
     private void selectItem(int position, int id) {
         SoulissDBHelper db = new SoulissDBHelper(mActivity);

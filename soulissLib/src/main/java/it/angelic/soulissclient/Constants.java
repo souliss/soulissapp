@@ -279,7 +279,7 @@ public class Constants {
          */
         public static final short Souliss_T1n_RGB_OnCmd = 0x1;
         public static final short Souliss_T1n_RGB_OffCmd = 0x9;
-        // Souliss RGB main colours
+        // Souliss RGB main_tasker colours
         public static final short Souliss_T1n_RGB_R = 0x2;
         public static final short Souliss_T1n_RGB_G = 0x3;
         public static final short Souliss_T1n_RGB_B = 0x4;
