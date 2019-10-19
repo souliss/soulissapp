@@ -140,8 +140,6 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
             dto.setComponentEnum(LauncherElementEnum.values()[cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_TYPE))]);
             ISoulissObject isoulissObj = null;
             try {
-
-
                 switch (dto.getComponentEnum()) {
                     case STATIC_LOCATION:
                         //dto.setDesc(context.getString(R.string.opt_homepos_err));

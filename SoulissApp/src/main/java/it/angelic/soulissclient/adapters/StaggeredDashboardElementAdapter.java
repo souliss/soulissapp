@@ -320,6 +320,11 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         }
         //qui la view c'e` gia
         switch (item.getComponentEnum()) {
+            case STATIC_STATUS:
+                TextView textCmdsd = holder.container.findViewById(R.id.textViewBasicInfo);
+                TextView textCmdWhens = holder.container.findViewById(R.id.textViewBasicInfoLittle);
+                setServiceInfo(textCmdsd, textCmdWhens);
+                break;
             case STATIC_LOCATION:
                 View viewLineL = holder.container.findViewById(R.id.StaticTileLine);
                 TextView txtTitL = holder.container.findViewById(R.id.card_static_title);
@@ -328,7 +333,6 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 FontAwesomeUtil.prepareFontAweTextView(context, txtAwesomL, FontAwesomeEnum.fa_location_arrow.getFontName());
                 txtTitL.setText(item.getTitle());
                 txtDescL.setText(item.getDesc());
-
                 viewLineL.setBackgroundColor(context.getResources().getColor(R.color.md_blue_grey_500));
                 break;
             case STATIC_SCENES:
@@ -409,17 +413,10 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 bindTypicalElement(holder, item);
                 break;
             case SCENE:
-
                 bindSceneElement(holder, item);
-
                 break;
             case NODE:
                 bindNodeElement(holder, item);
-                break;
-            case STATIC_STATUS:
-                TextView textCmdsd = holder.container.findViewById(R.id.textViewBasicInfo);
-                TextView textCmdWhens = holder.container.findViewById(R.id.textViewBasicInfoLittle);
-                setServiceInfo(textCmdsd, textCmdWhens);
                 break;
             case TAG:
                 bindTagElement(holder, item);
@@ -432,7 +429,7 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
         LauncherElementEnum enumVal = LauncherElementEnum.values()[viewType];
         View itemView = LayoutInflater.
                 from(parent.getContext()).
-                inflate(R.layout.cardview_launcher2, parent, false);
+                inflate(R.layout.cardview_launcher_empty, parent, false);
         switch (enumVal) {
             case STATIC_LOCATION:
             case STATIC_SCENES:

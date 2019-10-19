@@ -122,11 +122,35 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     };
     private String provider;
 
+    private void configureVoiceFab() {
+        //VOICE SEARCH
+        FloatingActionButton fab = findViewById(R.id.fab);
+        if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, MainActivity.this.getString(R.string.voice_command_help));
+                    try {
+                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } else {
+            fab.setVisibility(View.INVISIBLE);
+            fab.hide();
+        }
+    }
+
     private void doBindService() {
         Log.i(TAG, "doBindService(), BIND_AUTO_CREATE.");
         bindService(new Intent(MainActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
     }
-
 
     private void doUnbindService() {
         if (mBoundService != null) {
@@ -168,7 +192,10 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
         }
     }
-
+    /*
+     * @Override public void setTitle(CharSequence title) { mTitle = title;
+     * getActionBar().setTitle(mTitle); }
+     */
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -177,8 +204,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     }
     /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
-	 * getActionBar().setTitle(mTitle); }
-	 */
+     * getActionBar().setTitle(mTitle); }
+     */
 
     /**
      * This will not work so great since the heights of the imageViews
@@ -271,10 +298,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         //opzioni.reload();
 
     }
-    /*
-     * @Override public void setTitle(CharSequence title) { mTitle = title;
-	 * getActionBar().setTitle(mTitle); }
-	 */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -349,21 +372,20 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (launcherMainAdapter.getLocationLauncherElements() != null)
-                            launcherMainAdapter.getLocationLauncherElements().setDesc(out1.toString() + "\n" + out2.toString());
+                            Log.i(Constants.TAG, "appending location change " + out1.toString() + " - " + out2.toString());
+                            if (launcherMainAdapter.getLocationLauncherElements() != null) {
+                                LauncherElement p1 = launcherMainAdapter.getLocationLauncherElements();
+                                p1.setDesc(out1.toString() + "\n" + out2.toString());
+                                database.updateLauncherElement(p1);
+                            }
                             launcherMainAdapter.notifyItemChanged(launcherMainAdapter.getLauncherElements().indexOf(launcherMainAdapter.getLocationLauncherElements()));
                         }
                     });
-
                 }
-
             }).start();
+        } else {
+            Log.e(Constants.TAG, "Launcher element not found: location ");
         }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.i(Constants.TAG, "status change " + provider);
     }
 
     @Override
@@ -431,7 +453,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull
-            String permissions[], @NonNull int[] grantResults) {
+            String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case Constants.MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -548,31 +570,10 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         configureVoiceFab();
     }
 
-    private void configureVoiceFab() {
-        //VOICE SEARCH
-        FloatingActionButton fab = findViewById(R.id.fab);
-        if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
-            fab.setVisibility(View.VISIBLE);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, MainActivity.this.getString(R.string.voice_command_help));
-                    try {
-                        startActivityForResult(i, Constants.VOICE_REQUEST_OK);
-                    } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, "Error initializing speech to text engine.", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        } else {
-            fab.setVisibility(View.INVISIBLE);
-            fab.hide();
-        }
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.i(Constants.TAG, "status change " + provider);
     }
-
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
         private final StaggeredDashboardElementAdapter adapter;
