@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
@@ -179,6 +180,8 @@ public class DbPreferenceListener implements OnPreferenceClickListener {
         }
         File sharedP;
         try {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
             sharedP = File.createTempFile("Souliss", ".preferences", exportDir);
             // File sharedP = new File(sharedDir, "exportSettings.tmp");
             saveSharedPreferencesToFile(sharedP);

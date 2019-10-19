@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -40,7 +41,8 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
     protected Boolean doInBackground(final String... args)
 
     {
-
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         //SoulissDBHelper DBob = new SoulissDBHelper(SoulissApp.getAppContext());
         File exportDir = new File(Environment.getExternalStorageDirectory(), Constants.EXTERNAL_EXP_FOLDER);
 
