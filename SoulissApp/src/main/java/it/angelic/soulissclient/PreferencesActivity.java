@@ -4,12 +4,12 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;

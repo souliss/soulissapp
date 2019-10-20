@@ -6,12 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.model.typicals.SoulissTypical16AdvancedRGB;
 
@@ -152,7 +152,7 @@ public class ColorPickerView extends View {
      * @param unit
      * @return
      */
-    private static int interpColor(int colors[], float unit) {
+    private static int interpColor(int[] colors, float unit) {
         if (unit <= 0) {
             return colors[0];
         }

@@ -8,11 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
 
 public class SoulissWidgetVoice extends AppWidgetProvider {
 

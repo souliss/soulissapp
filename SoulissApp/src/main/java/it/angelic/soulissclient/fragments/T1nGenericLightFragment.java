@@ -7,9 +7,6 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,6 +24,9 @@ import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.FragmentTransaction;
 import im.dacer.androidcharts.ClockPieView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -166,7 +166,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
         refreshTagsInfo();
         refreshHistoryInfo();
 
-		String nums[]= {getString(R.string.hours),"1/4","1/2","3/4","1","2","3","4","5","6","8","12","24"};
+		String[] nums = {getString(R.string.hours), "1/4", "1/2", "3/4", "1", "2", "3", "4", "5", "6", "8", "12", "24"};
 
 
 		warner.setMaxValue(nums.length-1);

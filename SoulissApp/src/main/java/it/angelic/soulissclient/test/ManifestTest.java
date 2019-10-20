@@ -27,7 +27,7 @@ import java.util.List;
 
 import androidx.test.filters.SmallTest;
 
-import static android.support.test.InstrumentationRegistry.getContext;
+import static androidx.test.InstrumentationRegistry.getContext;
 
 /**
  * Tests to verify proper entries in the plug-in's Android Manifest.

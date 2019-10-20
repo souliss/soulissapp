@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.preference.PreferenceActivity;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import it.angelic.soulissclient.MainActivity;
 import it.angelic.soulissclient.ManualUDPTestActivity;
 import it.angelic.soulissclient.NodeDetailActivity;

@@ -9,8 +9,6 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,6 +21,9 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
@@ -131,7 +132,7 @@ public class T6nAnalogueFragment extends AbstractTypicalFragment implements Numb
         assertTrue("TIPICO NULLO", collected != null);
 
 
-        android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentManager manager = getActivity().getSupportFragmentManager();
         ChartFragment NewFrag = ChartFragment.newInstance((ISoulissTypicalSensor) collected);
         FragmentTransaction ft = manager.beginTransaction();
         ft.replace(R.id.hvacChart, NewFrag);

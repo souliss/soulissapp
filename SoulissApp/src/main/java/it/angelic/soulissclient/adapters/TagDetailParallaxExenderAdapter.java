@@ -7,13 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -28,6 +21,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
+import androidx.recyclerview.widget.RecyclerView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
@@ -371,12 +371,12 @@ public class TagDetailParallaxExenderAdapter extends RecyclerView.Adapter<Recycl
 
         public TypicalCardViewHolder(View v) {
             super(v);
-            textView = (TextView) v.findViewById(R.id.TextViewTypicalsTitle);
-            imageView = (TextView) v.findViewById(R.id.card_thumbnail_image2);
-            linearActionsLayout = (LinearLayout) v.findViewById(R.id.linearLayoutButtons);
-            textViewInfo1 = (TextView) v.findViewById(R.id.TextViewInfoStatus);
-            textViewInfo2 = (TextView) v.findViewById(R.id.TextViewInfo2);
-            cardView = (CardView) v.findViewById(R.id.TypCard);
+            textView = v.findViewById(R.id.TextViewTypicalsTitle);
+            imageView = v.findViewById(R.id.card_thumbnail_image2);
+            linearActionsLayout = v.findViewById(R.id.linearLayoutButtons);
+            textViewInfo1 = v.findViewById(R.id.TextViewInfoStatus);
+            textViewInfo2 = v.findViewById(R.id.TextViewInfo2);
+            cardView = v.findViewById(R.id.TypCard);
             //v.setOnCreateContextMenuListener(this);
         }
 

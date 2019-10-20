@@ -8,12 +8,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +17,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import it.angelic.soulissclient.adapters.TagRecyclerAdapter;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.INavDrawerItem;
@@ -143,8 +144,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
 
         setContentView(R.layout.main_tags_grid);
 
-        final TextView toHid = (TextView) findViewById(R.id.TextViewTagsDesc);
-        final TextView textViewTagsDescFa = (TextView) findViewById(R.id.TextViewTagsDescFa);
+        final TextView toHid = findViewById(R.id.TextViewTagsDesc);
+        final TextView textViewTagsDescFa = findViewById(R.id.TextViewTagsDescFa);
         FontAwesomeUtil.prepareMiniFontAweTextView(this, textViewTagsDescFa, FontAwesomeEnum.fa_close.getFontName());
         //NASCONDI HINT
         textViewTagsDescFa.setOnClickListener(new View.OnClickListener() {
@@ -160,8 +161,8 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
             toHid.setVisibility(View.GONE);
         }
 
-        mRecyclerView = (ContextMenuRecyclerView) findViewById(R.id.recyclerViewLauncherItems);
-        TextView textAwesomeUpperRight = (TextView) findViewById(R.id.back_icon);
+        mRecyclerView = findViewById(R.id.recyclerViewLauncherItems);
+        TextView textAwesomeUpperRight = findViewById(R.id.back_icon);
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_tags.getFontName());
 
         //3 colonne in horiz
@@ -169,7 +170,7 @@ public class TagGridActivity extends AbstractStatusedFragmentActivity {
         mRecyclerView.setLayoutManager(gridManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
         //Floatin Button
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         //ADD NEW TAG
         fab.setOnClickListener(new View.OnClickListener() {

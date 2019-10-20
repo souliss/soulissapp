@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import androidx.fragment.app.FragmentActivity;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 import it.angelic.soulissclient.util.SystemUiHider;

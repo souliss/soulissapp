@@ -3,7 +3,6 @@ package it.angelic.soulissclient;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -18,6 +17,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -53,9 +54,9 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         // nodoInfo.removeAllViews();
         // titolo = (TextView) findViewById(R.id.TextViewNodeTitle);
         //TextView tt = (TextView) findViewById(R.id.TextViewTypicals);
-        TextView health = (TextView) findViewById(R.id.TextViewHealth);
-        upda = (TextView) findViewById(R.id.TextViewNodeUpdate);
-        TextView aweIcon = (TextView) findViewById(R.id.scene_icon);
+        TextView health = findViewById(R.id.TextViewHealth);
+        upda = findViewById(R.id.TextViewNodeUpdate);
+        TextView aweIcon = findViewById(R.id.scene_icon);
         // titolo.setText(getString(R.string.scene) + " " +
         // Constants.int2roman(collected.getNodeId()));
 
@@ -118,9 +119,9 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         // Testata, info scena
         createHeader();
 
-        listaComandiView = (ListView) findViewById(R.id.ListViewListaScene);
+        listaComandiView = findViewById(R.id.ListViewListaScene);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         //fab.attachToListView(listaComandiView);
         //SoulissApp.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
@@ -159,7 +160,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextView icon = (TextView) findViewById(R.id.scene_icon);
+        TextView icon = findViewById(R.id.scene_icon);
         switch (item.getItemId()) {
             case R.id.Opzioni:
                 Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);

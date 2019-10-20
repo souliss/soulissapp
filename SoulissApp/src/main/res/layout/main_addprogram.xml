@@ -189,7 +189,7 @@
                         android:text="@string/addprogram_positional_desc"
                         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/toggleButtonPosition"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"

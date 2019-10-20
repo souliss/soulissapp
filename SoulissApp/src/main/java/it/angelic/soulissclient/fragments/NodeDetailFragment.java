@@ -16,10 +16,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -43,6 +39,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -237,9 +237,9 @@ public class NodeDetailFragment extends ListFragment {
         // nodoInfo.removeAllViews();
         //tt = (TextView) getActivity().findViewById(R.id.TextViewTypicalsTitle);
         // health = (TextView) findViewById(R.id.TextViewHealth);
-        upda = (TextView) getActivity().findViewById(R.id.TextViewNodeUpdate);
-        par = (ProgressBar) getActivity().findViewById(R.id.progressBarNodo);
-        swipeLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeRefreshContainer);
+        upda = getActivity().findViewById(R.id.TextViewNodeUpdate);
+        par = getActivity().findViewById(R.id.progressBarNodo);
+        swipeLayout = getActivity().findViewById(R.id.swipeRefreshContainer);
 
         if (upda == null)
             return;
@@ -265,7 +265,7 @@ public class NodeDetailFragment extends ListFragment {
         getActivity().setTitle(collected.getNiceName());
 
         listaTypicalsView = getListView();
-        nodeic = (TextView) getActivity().findViewById(R.id.node_icon_detail);
+        nodeic = getActivity().findViewById(R.id.node_icon_detail);
         // Icona, puo esser nullo dopo rotazione schermo
         FontAwesomeUtil.prepareAwesomeFontAweTextView(getActivity(), nodeic, SimpleTagViewUtils.getAwesomeNames(getActivity()).get(collected.getIconResourceId()));
         createHeader();

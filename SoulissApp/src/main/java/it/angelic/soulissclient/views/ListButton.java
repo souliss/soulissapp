@@ -1,9 +1,10 @@
 package it.angelic.soulissclient.views;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.appcompat.widget.AppCompatButton;
 
 /**
  * Un bottone definito per essere utilizzato in una {@link android.widget.ListView}.

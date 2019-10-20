@@ -2,7 +2,6 @@ package it.angelic.soulissclient.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -81,16 +81,16 @@ public class TypicalsListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.listview_typical, parent, false);
             final View ccopy = convertView;
             holder = new TypicalViewHolder();
-            holder.expand = (ImageView) convertView.findViewById(R.id.imageButtonExpand);
-            holder.textslot = (TextView) convertView.findViewById(R.id.TextViewSlot);
-            holder.textUpdated = (TextView) convertView.findViewById(R.id.TextViewUpdated);
-            holder.textStatus = (TextView) convertView.findViewById(R.id.textViewStatus);
-            holder.textStatusVal = (TextView) convertView.findViewById(R.id.textViewStatusVal);
-            holder.image = (TextView) convertView.findViewById(R.id.typ_awe_icon);
-            holder.imageFav = (TextView) convertView.findViewById(R.id.imageButtonFav);
-            holder.imageTag = (TextView) convertView.findViewById(R.id.imageButtonTag);
+            holder.expand = convertView.findViewById(R.id.imageButtonExpand);
+            holder.textslot = convertView.findViewById(R.id.TextViewSlot);
+            holder.textUpdated = convertView.findViewById(R.id.TextViewUpdated);
+            holder.textStatus = convertView.findViewById(R.id.textViewStatus);
+            holder.textStatusVal = convertView.findViewById(R.id.textViewStatusVal);
+            holder.image = convertView.findViewById(R.id.typ_awe_icon);
+            holder.imageFav = convertView.findViewById(R.id.imageButtonFav);
+            holder.imageTag = convertView.findViewById(R.id.imageButtonTag);
 
-            holder.linearActionsLayout = (LinearLayout) convertView.findViewById(R.id.linearLayoutButtons);
+            holder.linearActionsLayout = convertView.findViewById(R.id.linearLayoutButtons);
             // linButton.removeAllViews();
             convertView.setTag(holder);
             holder.expand.setOnClickListener(new OnClickListener() {

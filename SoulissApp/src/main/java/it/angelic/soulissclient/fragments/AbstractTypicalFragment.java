@@ -3,9 +3,6 @@ package it.angelic.soulissclient.fragments;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +16,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import it.angelic.soulissclient.AbstractStatusedFragmentActivity;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -82,7 +82,7 @@ public class AbstractTypicalFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        actionBar = (Toolbar) getActivity().findViewById(R.id.my_awesome_toolbar);
+        actionBar = getActivity().findViewById(R.id.my_awesome_toolbar);
 
         ((AbstractStatusedFragmentActivity) getActivity()).setSupportActionBar(actionBar);
         ((AbstractStatusedFragmentActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -95,10 +95,10 @@ public class AbstractTypicalFragment extends Fragment {
             if (ds != null) {
                 //TextView info1 = (TextView) ds.findViewById(R.id.TextViewInfoStatus);
                 //  TextView info2 = (TextView) ds.findViewById(R.id.TextViewInfo2);
-                ImageButton online = (ImageButton) ds.findViewById(R.id.online_status_icon);
-                TextView statusOnline = (TextView) ds.findViewById(R.id.online_status);
+                ImageButton online = ds.findViewById(R.id.online_status_icon);
+                TextView statusOnline = ds.findViewById(R.id.online_status);
 
-                TextView actionTitle = (TextView) ds.findViewById(R.id.actionbar_title);
+                TextView actionTitle = ds.findViewById(R.id.actionbar_title);
                 if (collected != null) {
                     actionTitle.setText(collected.getNiceName());
                 }

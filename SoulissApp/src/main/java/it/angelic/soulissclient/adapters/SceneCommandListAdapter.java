@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
 import android.app.Activity;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -65,10 +65,10 @@ public class SceneCommandListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.listview_scene_detail, parent, false);
             holder = new CommandViewHolder();
-            holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
-            holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
-            holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-            holder.image = (TextView) convertView.findViewById(R.id.command_icon);
+            holder.textCmd = convertView.findViewById(R.id.TextViewCommand);
+            holder.textCmdWhen = convertView.findViewById(R.id.TextViewCommandWhen);
+            holder.textCmdInfo = convertView.findViewById(R.id.TextViewCommandInfo);
+            holder.image = convertView.findViewById(R.id.command_icon);
             holder.tileLie = convertView.findViewById(R.id.tileLie);
             if (comandiScena.size() > 0)
                 holder.data = comandiScena.get(position);
@@ -106,7 +106,7 @@ public class SceneCommandListAdapter extends BaseAdapter {
             holder.textCmdInfo.setText(context.getResources().getString(R.string.scene_cmd_order) + " " + context.getResources().getQuantityString(R.plurals.seconds, holder.data.getInterval() / 1000, strVal));
             /* comando massivo */
         } else {
-            RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
+            RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
             //don.setBackgroundResource(R.drawable.list_rect_purple);
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_arrows_alt.getFontName());
             holder.tileLie.setBackgroundColor(ContextCompat.getColor(context, R.color.md_yellow_900));

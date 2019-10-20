@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
 import android.app.Activity;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -59,10 +59,10 @@ public class SceneListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.listview_scenes, parent, false);
             holder = new SceneViewHolder();
-            holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
-            holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
-            holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-            holder.image = (TextView) convertView.findViewById(R.id.command_icon);
+            holder.textCmd = convertView.findViewById(R.id.TextViewCommand);
+            holder.textCmdWhen = convertView.findViewById(R.id.TextViewCommandWhen);
+            holder.textCmdInfo = convertView.findViewById(R.id.TextViewCommandInfo);
+            holder.image = convertView.findViewById(R.id.command_icon);
             convertView.setTag(holder);
         } else {
             holder = (SceneViewHolder) convertView.getTag();

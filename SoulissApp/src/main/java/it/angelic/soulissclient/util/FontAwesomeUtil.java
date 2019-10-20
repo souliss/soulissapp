@@ -2,9 +2,9 @@ package it.angelic.soulissclient.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import it.angelic.tagviewlib.FontNotFoundException;
 import it.angelic.tagviewlib.SimpleTagViewUtils;
 

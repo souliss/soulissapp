@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.adapters;
 
 import android.app.Activity;
-import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -66,10 +66,10 @@ public class ProgramListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.listview_program, parent, false);
             holder = new CommandViewHolder();
-            holder.textCmd = (TextView) convertView.findViewById(R.id.TextViewCommand);
-            holder.textCmdWhen = (TextView) convertView.findViewById(R.id.TextViewCommandWhen);
-            holder.textCmdInfo = (TextView) convertView.findViewById(R.id.TextViewCommandInfo);
-            holder.image = (TextView) convertView.findViewById(R.id.program_icon);
+            holder.textCmd = convertView.findViewById(R.id.TextViewCommand);
+            holder.textCmdWhen = convertView.findViewById(R.id.TextViewCommandWhen);
+            holder.textCmdInfo = convertView.findViewById(R.id.TextViewCommandInfo);
+            holder.image = convertView.findViewById(R.id.program_icon);
             holder.line = convertView.findViewById(R.id.StaticTileLine);
             holder.data = programmi.get(position);
             convertView.setTag(holder);
@@ -88,7 +88,7 @@ public class ProgramListAdapter extends BaseAdapter {
         holder.textCmd.setText(holder.data.getNiceName());
         /* programma temporale */
         if (holder.data.getType() == Constants.COMMAND_TIMED) {
-            RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
+            RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
             //don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_clock_o.getFontName());
@@ -105,7 +105,7 @@ public class ProgramListAdapter extends BaseAdapter {
 
         }/* programma POSIZIONALE */ else if (holder.data.getType() == Constants.COMMAND_COMEBACK_CODE
                 || holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
-            RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
+            RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
 
             if (holder.data.getExecutedTime() != null) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
@@ -129,7 +129,7 @@ public class ProgramListAdapter extends BaseAdapter {
 
 			/* COMANDO TRIGGERED */
         } else if (holder.data.getType() == Constants.COMMAND_TRIGGERED) {
-            RelativeLayout don = (RelativeLayout) convertView.findViewById(R.id.LinearLayout01);
+            RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_puzzle_piece.getFontName());
             //rosso
             holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_900));

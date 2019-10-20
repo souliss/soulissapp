@@ -5,7 +5,8 @@ import junit.framework.TestCase;
 
 import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
 
-import static android.support.test.InstrumentationRegistry.getContext;
+import static androidx.test.InstrumentationRegistry.getContext;
+
 
 /**
  * Created by shine@angelic.it on 02/09/2015.

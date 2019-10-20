@@ -1,11 +1,11 @@
 package it.angelic.soulissclient.model;
 
-import android.support.annotation.DrawableRes;
 import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import androidx.annotation.DrawableRes;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 

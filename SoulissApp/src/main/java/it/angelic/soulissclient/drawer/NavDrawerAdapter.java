@@ -1,14 +1,14 @@
 package it.angelic.soulissclient.drawer;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -39,9 +39,9 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
             convertView = inflater.inflate(R.layout.drawer_list_item_son, parentView, false);
 
 
-        TextView labelView = (TextView) convertView
+        TextView labelView = convertView
                 .findViewById(R.id.dtitle);
-        TextView iconView = (TextView) convertView
+        TextView iconView = convertView
                 .findViewById(R.id.dicon);
 
         navMenuItemHolder = new NavMenuItemHolder();
@@ -71,7 +71,7 @@ public class NavDrawerAdapter extends ArrayAdapter<INavDrawerItem> {
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.drawer_section, parentView, false);
-            TextView labelView = (TextView) convertView
+            TextView labelView = convertView
                     .findViewById(R.id.navmenusection_label);
 
             navMenuItemHolder = new NavMenuSectionHolder();

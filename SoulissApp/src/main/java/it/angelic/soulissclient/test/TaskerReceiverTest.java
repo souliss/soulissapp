@@ -15,14 +15,15 @@ package it.angelic.soulissclient.test;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.test.filters.SmallTest;
 
 import junit.framework.TestCase;
 
+import androidx.test.filters.SmallTest;
 import it.angelic.bundle.PluginBundleManager;
 import it.angelic.receivers.TaskerFireReceiver;
 
-import static android.support.test.InstrumentationRegistry.getContext;
+import static androidx.test.InstrumentationRegistry.getContext;
+
 
 /**
  * Tests the {@link TaskerFireReceiver}.

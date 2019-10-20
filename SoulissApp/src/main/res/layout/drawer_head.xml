@@ -45,7 +45,7 @@
             android:layout_above="@id/textViewDrawerInfo2"
             android:layout_alignParentLeft="true" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSmall"
             fab:fabSize="normal"
             android:layout_width="wrap_content"

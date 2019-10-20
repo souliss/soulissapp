@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.PersistableBundle;
 import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissScene;

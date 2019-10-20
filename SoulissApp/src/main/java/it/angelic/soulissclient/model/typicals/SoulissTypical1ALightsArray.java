@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.model.typicals;
 
 import android.content.Context;
-import android.support.annotation.ColorRes;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -13,6 +12,7 @@ import android.widget.TextView.BufferType;
 
 import java.util.ArrayList;
 
+import androidx.annotation.ColorRes;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;

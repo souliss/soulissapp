@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Set;
 
+import androidx.fragment.app.Fragment;
 import im.dacer.androidcharts.LineView;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.model.ISoulissTypicalSensor;

@@ -7,8 +7,7 @@
                 android:layout_height="wrap_content">
 
 
-
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeRefreshContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,5 +23,5 @@
             android:fadeScrollbars="true"
             android:fadingEdge="vertical"
             tools:listitem="@layout/listview"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

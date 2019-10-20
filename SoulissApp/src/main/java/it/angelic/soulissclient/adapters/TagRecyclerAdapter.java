@@ -7,14 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -23,9 +15,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.io.File;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.util.Pair;
+import androidx.recyclerview.widget.RecyclerView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.TagDetailActivity;
@@ -210,12 +211,12 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagRecyclerAdapter.
 
         public TagCardViewHolder(View itemView) {
             super(itemView);
-            textCmd = (TextView) itemView.findViewById(R.id.TextViewTagTitle);
-            textCmdWhen = (TextView) itemView.findViewById(R.id.TextViewTagDesc);
-            image = (ImageView) itemView.findViewById(R.id.imageViewTag);
-            container = (CardView) itemView.findViewById(R.id.TagCard);
-            imageTag = (TextView) itemView.findViewById(R.id.imageTagIconFa);
-            shadowbar = (ImageView) itemView.findViewById(R.id.infoTagAlpha);
+            textCmd = itemView.findViewById(R.id.TextViewTagTitle);
+            textCmdWhen = itemView.findViewById(R.id.TextViewTagDesc);
+            image = itemView.findViewById(R.id.imageViewTag);
+            container = itemView.findViewById(R.id.TagCard);
+            imageTag = itemView.findViewById(R.id.imageTagIconFa);
+            shadowbar = itemView.findViewById(R.id.infoTagAlpha);
         }
 
 

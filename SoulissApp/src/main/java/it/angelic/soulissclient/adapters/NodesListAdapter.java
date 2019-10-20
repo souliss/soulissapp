@@ -5,7 +5,6 @@ import android.graphics.LinearGradient;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -75,11 +75,11 @@ public class NodesListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.listview, parent, false);
             holder = new NodeViewHolder();
 
-            holder.text = (TextView) convertView.findViewById(R.id.TextView01);
-            holder.textTyp = (TextView) convertView.findViewById(R.id.TextViewTypicals);
-            holder.textHlt = (TextView) convertView.findViewById(R.id.TextViewHealth);
-            holder.image = (TextView) convertView.findViewById(R.id.node_icon);
-            holder.hlt = (ProgressBar) convertView.findViewById(R.id.progressBarHealth);
+            holder.text = convertView.findViewById(R.id.TextView01);
+            holder.textTyp = convertView.findViewById(R.id.TextViewTypicals);
+            holder.textHlt = convertView.findViewById(R.id.TextViewHealth);
+            holder.image = convertView.findViewById(R.id.node_icon);
+            holder.hlt = convertView.findViewById(R.id.progressBarHealth);
             holder.hlt.setIndeterminate(false);
             holder.hlt.setMax(50);
             holder.hlt.setProgress(20);

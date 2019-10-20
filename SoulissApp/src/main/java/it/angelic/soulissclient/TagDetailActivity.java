@@ -22,9 +22,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
@@ -36,6 +33,10 @@ import android.widget.Toast;
 
 import java.sql.SQLDataException;
 
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import it.angelic.soulissclient.fragments.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.T19SingleChannelLedFragment;
 import it.angelic.soulissclient.fragments.T1nGenericLightFragment;
@@ -296,7 +297,7 @@ public class TagDetailActivity extends AbstractStatusedFragmentActivity {
     public void showTypical(int pos, SoulissTypical soulissTypical) {
         Bundle bundle = new Bundle();
         bundle.putInt("key", pos);
-        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+        FragmentManager manager = getSupportFragmentManager();
         // Check what fragment is currently shown, replace if needed.
         Fragment oldFrag = manager.findFragmentById(R.id.detailPane);
         Fragment NewFrag = null;

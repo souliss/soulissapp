@@ -7,8 +7,6 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,6 +27,9 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
@@ -188,7 +189,7 @@ public class T31HeatingFragment extends AbstractTypicalFragment implements Numbe
         tagView = ret.findViewById(R.id.tag_group);
         //hvacChart = (FrameLayout) ret.findViewById(R.id.hvacChart);
 
-        final android.support.v4.app.FragmentManager manager = getActivity().getSupportFragmentManager();
+        final FragmentManager manager = getActivity().getSupportFragmentManager();
         //Fragment details = manager.findFragmentById(R.id.hvacChart);
 
         Handler mHandler = new Handler();

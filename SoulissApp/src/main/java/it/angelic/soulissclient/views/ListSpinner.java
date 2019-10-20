@@ -1,10 +1,11 @@
 package it.angelic.soulissclient.views;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatSpinner;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ListView;
+
+import androidx.appcompat.widget.AppCompatSpinner;
 
 /**
  * Un bottone definito per essere utilizzato in una {@link ListView}.

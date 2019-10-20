@@ -3,7 +3,6 @@ package com.robobunny;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.Preference;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import it.angelic.soulissclient.R;
 
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
@@ -102,7 +102,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         try {
             // move our seekbar to the new view we've been given
             ViewParent oldContainer = mSeekBar.getParent();
-            ViewGroup newContainer = (ViewGroup) view.findViewById(R.id.seekBarPrefBarContainer);
+            ViewGroup newContainer = view.findViewById(R.id.seekBarPrefBarContainer);
 
             if (oldContainer != newContainer) {
                 // remove the seekbar from the old view
@@ -131,16 +131,16 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         try {
             RelativeLayout layout = (RelativeLayout) view;
 
-            mStatusText = (TextView) layout.findViewById(R.id.seekBarPrefValue);
+            mStatusText = layout.findViewById(R.id.seekBarPrefValue);
             mStatusText.setText(String.valueOf(mCurrentValue));
             mStatusText.setMinimumWidth(30);
 
             mSeekBar.setProgress(mCurrentValue - mMinValue);
 
-            TextView unitsRight = (TextView) layout.findViewById(R.id.seekBarPrefUnitsRight);
+            TextView unitsRight = layout.findViewById(R.id.seekBarPrefUnitsRight);
             unitsRight.setText(mUnitsRight);
 
-            TextView unitsLeft = (TextView) layout.findViewById(R.id.seekBarPrefUnitsLeft);
+            TextView unitsLeft = layout.findViewById(R.id.seekBarPrefUnitsLeft);
             unitsLeft.setText(mUnitsLeft);
 
         } catch (Exception e) {

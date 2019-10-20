@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import java.net.InetAddress;
 
+import androidx.fragment.app.FragmentActivity;
 import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.util.SystemUiHider;
 
@@ -37,14 +37,13 @@ public class WelcomeCreateConfigActivity extends FragmentActivity {
         setContentView(R.layout.activity_welcome_createconf);
 
         // final TextView welcomeSkipText = (TextView) findViewById(R.id.welcome_skip_text);
-        final Button welcomeTourButton = (Button) findViewById(R.id.welcome_tour_button);
-        final EditText configName = (EditText) findViewById(R.id.config_name);
+        final Button welcomeTourButton = findViewById(R.id.welcome_tour_button);
+        final EditText configName = findViewById(R.id.config_name);
         // final EditText initialIp = (EditText) findViewById(R.id.config_ip);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, gbPref.getIpDictionary());
-        final AutoCompleteTextView initialIp = (AutoCompleteTextView)
-                findViewById(R.id.config_ip);
+        final AutoCompleteTextView initialIp = findViewById(R.id.config_ip);
         initialIp.setAdapter(adapter);
 
         welcomeTourButton.setOnClickListener(new View.OnClickListener() {
