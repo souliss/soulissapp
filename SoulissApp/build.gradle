@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 android {
 
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Ale\\Documents\\shineangelic')
+            storePassword 'Crossfire84'
+            keyAlias = 'shineangelic'
+            keyPassword 'Crossfire84'
+        }
+    }
     try {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('localsignature.properties').newDataInputStream())
@@ -23,6 +31,7 @@ android {
         versionName rootProject.ext.VERSION_NAME
         versionCode rootProject.ext.VERSION_CODE
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
