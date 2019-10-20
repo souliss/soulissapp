@@ -1,8 +1,6 @@
 package it.angelic.soulissclient.test;
 
 import android.os.Environment;
-import android.test.AndroidTestCase;
-import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import java.io.File;
@@ -16,10 +14,12 @@ import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.typicals.SoulissTypical11DigitalOutput;
 import it.angelic.soulissclient.model.typicals.SoulissTypical51AnalogueSensor;
 
+import static android.support.test.InstrumentationRegistry.getContext;
+
 /**
  * Created by shine@angelic.it on 02/09/2015.
  */
-public class SoulissTestExport extends AndroidTestCase {
+public class SoulissTestExport extends junit.framework.TestCase {
     private static final short fakeNodeId = 1;
     private static final short fakeSlotId = 1;
     private SoulissDBHelper db;
@@ -60,9 +60,8 @@ public class SoulissTestExport extends AndroidTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        RenamingDelegatingContext context = new RenamingDelegatingContext(getContext(), "test_");
-        db = new SoulissDBHelper(context);
-        opzioni = new SoulissPreferenceHelper(context);
+        db = new SoulissDBHelper(getContext());
+        opzioni = new SoulissPreferenceHelper(getContext());
         SoulissDBHelper.open();
 
         addFakeNode();

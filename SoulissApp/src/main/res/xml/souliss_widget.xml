@@ -3,7 +3,7 @@
     android:minWidth="110dp"
     android:minHeight="110dp"
     android:updatePeriodMillis="3600000"
-    android:previewImage="@drawable/soulisslogo"
+    android:previewImage="@mipmap/ic_launcher_2019"
     android:initialLayout="@layout/widget_layout"
     android:configure="it.angelic.soulissclient.SoulissWidgetConfig"
     android:resizeMode="horizontal|vertical">

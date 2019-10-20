@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.test;
 
-import android.test.InstrumentationTestCase;
 import android.util.Log;
 
 import it.angelic.soulissclient.Constants;
@@ -9,7 +8,7 @@ import it.angelic.soulissclient.HalfFloatUtils;
 /**
  * Created by shine@angelic.it on 02/09/2015.
  */
-public class SoulissTestBasic extends InstrumentationTestCase {
+public class SoulissTestBasic extends junit.framework.TestCase {
 
 
     public void testHalfFloat() {

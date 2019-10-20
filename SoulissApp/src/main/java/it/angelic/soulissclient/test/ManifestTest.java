@@ -17,18 +17,23 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
-import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import com.twofortyfouram.locale.PackageUtilities;
+
+import org.junit.Assert;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.test.filters.SmallTest;
+
+import static android.support.test.InstrumentationRegistry.getContext;
+
 /**
  * Tests to verify proper entries in the plug-in's Android Manifest.
  */
-public final class ManifestTest extends AndroidTestCase {
+public final class
+ManifestTest extends junit.framework.TestCase {
     /**
      * Verifies there is a Locale compatible host present.
      */
@@ -89,7 +94,7 @@ public final class ManifestTest extends AndroidTestCase {
 
         final List<ResolveInfo> receivers = getPluginReceivers(getContext());
 
-        assertEquals(1, receivers.size());
+        Assert.assertEquals(1, receivers.size());
 
         for (final ResolveInfo x : receivers) {
             assertTrue(x.activityInfo.enabled);

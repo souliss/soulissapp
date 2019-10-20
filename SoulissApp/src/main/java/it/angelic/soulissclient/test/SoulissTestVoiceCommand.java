@@ -1,13 +1,16 @@
 package it.angelic.soulissclient.test;
 
-import android.test.AndroidTestCase;
+
+import junit.framework.TestCase;
 
 import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
+
+import static android.support.test.InstrumentationRegistry.getContext;
 
 /**
  * Created by shine@angelic.it on 02/09/2015.
  */
-public class SoulissTestVoiceCommand extends AndroidTestCase {
+public class SoulissTestVoiceCommand extends TestCase {
 
 
     public void testVoiceCommand() {

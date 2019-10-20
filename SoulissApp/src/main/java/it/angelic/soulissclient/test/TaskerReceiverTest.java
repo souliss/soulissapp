@@ -15,16 +15,19 @@ package it.angelic.soulissclient.test;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
-import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
+import android.support.test.filters.SmallTest;
+
+import junit.framework.TestCase;
 
 import it.angelic.bundle.PluginBundleManager;
 import it.angelic.receivers.TaskerFireReceiver;
 
+import static android.support.test.InstrumentationRegistry.getContext;
+
 /**
  * Tests the {@link TaskerFireReceiver}.
  */
-public final class TaskerReceiverTest extends AndroidTestCase {
+public final class TaskerReceiverTest extends TestCase {
     /*
      * These test cases perform sanity checks to verify the receiver doesn't crash when receiving unexpected
      * inputs.

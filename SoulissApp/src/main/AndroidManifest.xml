@@ -25,7 +25,8 @@
         android:name=".SoulissApp"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/soulisslogo"
+        android:icon="@mipmap/ic_launcher_2019"
+        android:roundIcon="@mipmap/ic_launcher_2019_round"
         android:label="@string/souliss_app_name"
         android:process=":souliss_process"
         tools:ignore="GoogleAppIndexingWarning">
@@ -232,7 +233,6 @@
         <activity
             android:name=".TaskerEditActivity"
             android:exported="true"
-            android:icon="@drawable/soulisslogo"
             android:label="@string/souliss_app_name"
             android:theme="@style/Theme.Locale.Dark"
             android:uiOptions="splitActionBarWhenNarrow"
@@ -269,8 +269,7 @@
 
         <activity
             android:name=".TaskerEditQueryActivity"
-            android:label="@string/souliss_app_name"
-            android:icon="@drawable/soulisslogo">
+            android:label="@string/souliss_app_name">
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION"/>
             </intent-filter>

@@ -15,7 +15,7 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
     private static final long serialVersionUID = 375896210748961219L;
     private int Id;
     private ArrayList<SoulissCommand> commandArray;
-    private int iconId = R.drawable.soulisslogo;
+    private int iconId = R.mipmap.ic_launcher_2019;
     //private transient Context ctx;
     private String name = "Name not Set";
 
