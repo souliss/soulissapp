@@ -44,6 +44,8 @@ public class SoulissZombieRestoreWorker extends Worker {
             } else {
                 SoulissApp.getAppContext().startService(eventService);//sempre, ci pensa poi lui
             }
+        } else {
+            Log.i(TAG, "Zombie inactive, service disabled");
         }
 
         return Result.success(outputData);

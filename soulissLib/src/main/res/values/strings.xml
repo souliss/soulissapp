@@ -188,7 +188,7 @@
     <string name="opt_visual">Interface</string>
     <string name="opt_fontsize">Text Size</string>
     <string name="opt_fonttitle">Change Title font</string>
-    <string name="opt_visualdesc">Text size and effects</string>
+    <string name="opt_visualdesc">Interface Options</string>
     <string name="opt_servicedesc">Configure Souliss background services and home position</string>
     <string name="opt_serviceEnable">Data Service Enabled</string>
     <string name="opt_serviceEnable_desc">Background service keeps Souliss synchronized</string>
@@ -390,7 +390,7 @@
     <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
     <string name="settings_launcher_items">Home screen Elements</string>
     <string name="launcher_type">Launcher element type</string>
-    <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
+    <string name="opt_rstlauncher_desc">Restore removed launcher elements</string>
     <string name="scene_added">Scene inserted, long-press to rename it and choose icon</string>
     <string name="tag_addSub">Add a sub-Tag</string>
     <string name="string_configured">configured</string>
@@ -410,5 +410,6 @@
     <string name="typical_apos_s_name">Label shown to identify the widget</string>
     <string name="no_detail_available">No detail to show</string>
     <string name="delete_scene_question">Are you sure you want to delete this scene ?</string>
+    <string name="every">Every</string>
 
 </resources>

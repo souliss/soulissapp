@@ -69,7 +69,7 @@ public class SoulissDataService extends Service implements LocationListener {
             opts = SoulissApp.getOpzioni();
             if (!opts.isDbConfigured()) {
                 Log.w(TAG, "Database empty, closing service");
-                setLastupd(Calendar.getInstance());
+                lastupd = (Calendar.getInstance());
                 // mHandler.removeCallbacks(mUpdateSoulissRunnable);
                 reschedule(false);
                 // SoulissDataService.this.stopSelf();
@@ -77,7 +77,7 @@ public class SoulissDataService extends Service implements LocationListener {
             }
             if (!opts.getCustomPref().contains("numNodi")) {
                 Log.w(TAG, "Souliss didn't answer yet, rescheduling");
-                setLastupd(Calendar.getInstance());
+                lastupd = (Calendar.getInstance());
                 // mHandler.removeCallbacks(mUpdateSoulissRunnable);
                 reschedule(false);
                 return;
@@ -194,7 +194,7 @@ public class SoulissDataService extends Service implements LocationListener {
                         // spostato per consentire comandi manuali
                         if (!opts.isDataServiceEnabled()) {
                             Log.w(TAG, "Service disabled, is not going to be re-scheduled");
-                            setLastupd(Calendar.getInstance());
+                            lastupd = (Calendar.getInstance());
                             mHandler.removeCallbacks(mUpdateSoulissRunnable);
                             // SoulissDataService.this.stopSelf();
                             return;
@@ -231,7 +231,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             }
 
                             Log.i(TAG, "Service end run" + SoulissDataService.this.hashCode());
-                            setLastupd(Calendar.getInstance());
+                            lastupd = (Calendar.getInstance());
                             reschedule(false);
                         }
 
@@ -243,7 +243,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 Log.w(TAG, "Service end but NOTHING DONE");
                 Intent i = new Intent();
                 i.setAction(Constants.CUSTOM_INTENT);
-                setLastupd(Calendar.getInstance());
+                lastupd = (Calendar.getInstance());
                 getApplicationContext().sendBroadcast(i);
                 reschedule(false);
             }
@@ -310,10 +310,10 @@ public class SoulissDataService extends Service implements LocationListener {
         return lastupd;
     }
 
-    public void setLastupd(Calendar lastupd) {
+   /* public void setLastupd(Calendar lastupd) {
         this.lastupd = lastupd;
         opts.setLastServiceRun(lastupd);
-    }
+    }*/
 
     private void logThings(Map<Short, SoulissNode> refreshedNodes) {
         Log.i(Constants.TAG, "logging sensors for " + refreshedNodes.size() + " nodes");
@@ -420,6 +420,7 @@ public class SoulissDataService extends Service implements LocationListener {
     public void onProviderEnabled(String provider) {
         Log.i(TAG, "Service received Provider ENABLED");
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -561,7 +562,7 @@ public class SoulissDataService extends Service implements LocationListener {
             Log.i(TAG, "Regular mode, rescheduling self every " + opts.getDataServiceIntervalMsec() / 1000 + " seconds");
 
             if (getLastupd().getTime().getTime() + opts.getBackedOffServiceIntervalMsec() < Calendar.getInstance().getTime().getTime()) {
-                Log.i(TAG, "DETECTED LATE SERVICE, LAST RUN: " + getLastupd().getTime());
+                Log.i(TAG, "DETECTED LATE SERVICE,\n LAST RUN: " + getLastupd().getTime() + " BackedOffServiceInterval: " + opts.getBackedOffServiceIntervalMsec());
 
                 reschedule(true);
                 return;

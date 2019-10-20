@@ -63,7 +63,6 @@ public class NetSettingsFragmentNuova extends PreferenceFragmentCompat {
 		 * vengano generati due "Node Index" uguali, a quel punto l'utente dovrà
 		 * intervenire manualmente per modificarli.
 		 *
-		 * ATTENZIONE CODICE DUPLICATO NELLA PREF ACTIVITY
 		 */
 
 		String stdrMeatFormat = getActivity().getString(R.string.opt_userindex_desc);

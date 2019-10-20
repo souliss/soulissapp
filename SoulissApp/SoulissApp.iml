@@ -169,7 +169,6 @@
     <orderEntry type="library" name="Gradle: androidx.test:monitor:1.1.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite-framework:2.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.sqlite:sqlite:2.0.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.rtugeek:ColorSeekBar:1.7.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: im.dacer:AndroidCharts:1.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.test.espresso:espresso-idling-resource:3.1.0@aar" level="project" />
     <orderEntry type="module" module-name="ecoGallery" />

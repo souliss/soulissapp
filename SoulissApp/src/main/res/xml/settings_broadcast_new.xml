@@ -5,7 +5,7 @@
     android:key="network_setup"
     android:summary="@string/opt_networkdesc"
     android:title="@string/opt_network">
-
+    <PreferenceCategory android:title="@string/opt_title_broadcast">
     <EditTextPreference
         android:dialogTitle="IP Address"
         app:key="bcast_IP"
@@ -48,5 +48,5 @@
         android:key="sndBcast"
         android:summary="Send a broadcast packet to configure Souliss with these settings"
         android:title="Send Configuration Now" />
-
+    </PreferenceCategory>
 </PreferenceScreen>

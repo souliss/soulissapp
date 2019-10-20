@@ -4,7 +4,7 @@
     android:key="visual_PrefScreen"
     android:summary="@string/opt_visualdesc"
     android:title="@string/opt_visual">
-
+        <PreferenceCategory android:title="@string/opt_visualdesc">
         <SwitchPreference
             android:defaultValue="false"
             android:key="checkboxFahrenheit"
@@ -36,5 +36,5 @@
             android:key="restorewelcome"
             android:summary="@string/opt_restore_welcome_desc"
             android:title="@string/opt_restore_welcome"/>
-
+        </PreferenceCategory>
 </PreferenceScreen>

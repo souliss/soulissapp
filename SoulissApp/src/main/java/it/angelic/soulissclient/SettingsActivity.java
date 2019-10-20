@@ -15,6 +15,10 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
+import it.angelic.soulissclient.preferences.DbSettingsFragment;
+import it.angelic.soulissclient.preferences.LauncherSettingsFragment;
+import it.angelic.soulissclient.preferences.NetSettingsFragmentNuova;
+import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -44,14 +48,26 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         Bundle extras = getIntent().getExtras();
-        String collected = "";
-        if (extras != null)
-            collected = (String) extras.get(PreferenceActivity.EXTRA_SHOW_FRAGMENT);
-        boolean useBroadcast = BroadcastSettingsFragment.class.getName().equals(collected);
+        PreferenceFragmentCompat collected = null;
+        if (extras != null && extras.get(PreferenceActivity.EXTRA_SHOW_FRAGMENT) != null) {
+            String classNAme = (String) extras.get(PreferenceActivity.EXTRA_SHOW_FRAGMENT);
+            if (NetSettingsFragmentNuova.class.getName().equals(classNAme))
+                collected = new NetSettingsFragmentNuova();
+            if (BroadcastSettingsFragment.class.getName().equals(classNAme))
+                collected = new BroadcastSettingsFragment();
+            if (VisualSettingsFragment.class.getName().equals(classNAme))
+                collected = new VisualSettingsFragment();
+            if (LauncherSettingsFragment.class.getName().equals(classNAme))
+                collected = new LauncherSettingsFragment();
+            if (DbSettingsFragment.class.getName().equals(classNAme))
+                collected = new DbSettingsFragment();
+        }
+        if (collected == null)
+            collected = new SettingsFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings, useBroadcast ? new BroadcastFragment() : new SettingsFragment())
+                .replace(R.id.settings, collected)
                 .commit();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -79,10 +95,5 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    public static class BroadcastFragment extends PreferenceFragmentCompat {
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.settings_broadcast_new, rootKey);
-        }
-    }
+
 }

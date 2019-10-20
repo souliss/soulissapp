@@ -8,7 +8,7 @@
 
     <PreferenceCategory android:title="Launcher Configuration">
 
-        <it.angelic.soulissclient.preferences.LauncherAddListener
+        <it.angelic.soulissclient.preferences.LauncherAddCustomPreference
             android:key="add_launcher_elem"
             android:dialogIcon="@android:drawable/ic_menu_add"
             android:title="Add element"

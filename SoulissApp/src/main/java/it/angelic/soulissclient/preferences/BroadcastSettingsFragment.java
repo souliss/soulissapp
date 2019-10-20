@@ -1,11 +1,6 @@
 package it.angelic.soulissclient.preferences;
 
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +8,10 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -55,7 +54,7 @@ import it.angelic.soulissclient.net.UDPHelper;
  *
  * @author Del Pex
  */
-public class BroadcastSettingsFragment extends PreferenceFragment {
+public class BroadcastSettingsFragment extends PreferenceFragmentCompat {
 
     private SoulissPreferenceHelper opzioni;
 
@@ -65,14 +64,14 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
         opzioni = SoulissApp.getOpzioni();
 
         super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.settings_broadcast);
-        final EditTextPreference bcast_IP = (EditTextPreference) findPreference("bcast_IP");
-        final EditTextPreference bcast_subnet = (EditTextPreference) findPreference("bcast_subnet");
-        final EditTextPreference bcast_gateway = (EditTextPreference) findPreference("bcast_gateway");
-        final CheckBoxPreference bcast_isGateway = (CheckBoxPreference) findPreference("bcast_isgateway");
-        final CheckBoxPreference bcast_useDhcp = (CheckBoxPreference) findPreference("bcast_useDhcp");
-        final EditTextPreference bcast_ssid = (EditTextPreference) findPreference("bcast_ssid");
-        final EditTextPreference bcast_passwd = (EditTextPreference) findPreference("bcast_passwd");
+
+        final EditTextPreference bcast_IP = findPreference("bcast_IP");
+        final EditTextPreference bcast_subnet = findPreference("bcast_subnet");
+        final EditTextPreference bcast_gateway = findPreference("bcast_gateway");
+        final CheckBoxPreference bcast_isGateway = findPreference("bcast_isgateway");
+        final CheckBoxPreference bcast_useDhcp = findPreference("bcast_useDhcp");
+        final EditTextPreference bcast_ssid = findPreference("bcast_ssid");
+        final EditTextPreference bcast_passwd = findPreference("bcast_passwd");
         final Preference sndBcast = findPreference("sndBcast");
 
         if (bcast_subnet.getText() == null || bcast_subnet.getText().length() == 0)
@@ -82,7 +81,7 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
             bcast_gateway.setText(NetUtils.getDeviceGatewayString(getActivity()));
         bcast_gateway.setSummary(getString(R.string.bridge_gateway) + ": " + bcast_gateway.getText());
 
-        sndBcast.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        sndBcast.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
 
                 final List<Byte> bcastPayload = new ArrayList<>();
@@ -185,5 +184,10 @@ public class BroadcastSettingsFragment extends PreferenceFragment {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.settings_broadcast_new);
     }
 }

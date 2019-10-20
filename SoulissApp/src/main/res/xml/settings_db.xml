@@ -6,7 +6,7 @@
                   android:summary="@string/opt_db_desc"
                   android:title="@string/opt_db">
 
-    <PreferenceCategory android:title="DB Configuration">
+    <PreferenceCategory android:title="@string/opt_db_desc">
         <Preference
             android:name="createdb"
             android:key="createdb"

@@ -34,7 +34,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -88,8 +87,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
             if (extras != null && extras.get("MACACO") != null) {
                 Log.i(TAG, "Broadcast receive, refresh from DB");
-                @SuppressWarnings("unchecked")
-                ArrayList<Short> vers = (ArrayList<Short>) extras.get("MACACO");
                 database.refreshMapFromDB();
                 List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
                 launcherMainAdapter.setmBoundService(mBoundService);
@@ -106,7 +103,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
             PeriodicWorkRequest request =
                     // Executes MyWorker every 15 minutes
-                    new PeriodicWorkRequest.Builder(SoulissZombieRestoreWorker.class, 2, TimeUnit.MINUTES)
+                    new PeriodicWorkRequest.Builder(SoulissZombieRestoreWorker.class, pref.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
                             // Sets the input data for the ListenableWorker
                             //.setInputData(input)
                             .build();
@@ -115,7 +112,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                     // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
                     // (uncompleted) work with the same unique name. Then, insert the newly-specified
                     // work.
-                    .enqueueUniquePeriodicWork("my-unique-name", ExistingPeriodicWorkPolicy.KEEP, request);
+                    .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.KEEP, request);
         }
     };
     private NetworkStateReceiver netReceiver;
@@ -147,7 +144,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         //VOICE SEARCH
         FloatingActionButton fab = findViewById(R.id.fab);
         if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
-            fab.setVisibility(View.VISIBLE);
+            fab.show();
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -163,7 +160,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 }
             });
         } else {
-            fab.setVisibility(View.INVISIBLE);
+            fab.hide();
             fab.hide();
         }
     }
