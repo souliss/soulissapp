@@ -14,14 +14,14 @@ import it.angelic.soulissclient.MainActivity;
 import it.angelic.soulissclient.ManualUDPTestActivity;
 import it.angelic.soulissclient.NodeDetailActivity;
 import it.angelic.soulissclient.NodesListActivity;
-import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.ProgramListActivity;
 import it.angelic.soulissclient.SceneListActivity;
+import it.angelic.soulissclient.SettingsActivity;
 import it.angelic.soulissclient.TagGridActivity;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.LauncherSettingsFragment;
-import it.angelic.soulissclient.preferences.NetSettingsFragment;
+import it.angelic.soulissclient.preferences.NetSettingsFragmentNuova;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 
@@ -113,9 +113,9 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerList.setItemChecked(position, true);
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
-                    Intent myIntent4 = new Intent(mActivity, PreferencesActivity.class);
+                    Intent myIntent4 = new Intent(mActivity, SettingsActivity.class);
                     myIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    myIntent4.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
+                    myIntent4.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragmentNuova.class.getName());
                     myIntent4.setAction("network_setup");
                     mActivity.startActivity(myIntent4);
                     break;
@@ -123,7 +123,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerList.setItemChecked(position, true);
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
-                    Intent myIntent5 = new Intent(mActivity, PreferencesActivity.class);
+                    Intent myIntent5 = new Intent(mActivity, SettingsActivity.class);
                     myIntent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     myIntent5.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
                     myIntent5.setAction("db_setup");
@@ -133,7 +133,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerList.setItemChecked(position, true);
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
-                    Intent myIntent6 = new Intent(mActivity, PreferencesActivity.class);
+                    Intent myIntent6 = new Intent(mActivity, SettingsActivity.class);
                     myIntent6.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     myIntent6.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, ServiceSettingsFragment.class.getName());
                     myIntent6.setAction("service_setup");
@@ -143,7 +143,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerList.setItemChecked(position, true);
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
-                    Intent myIntent7 = new Intent(mActivity, PreferencesActivity.class);
+                    Intent myIntent7 = new Intent(mActivity, SettingsActivity.class);
                     myIntent7.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     myIntent7.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, VisualSettingsFragment.class.getName());
                     myIntent7.setAction("visual_setup");
@@ -153,7 +153,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerList.setItemChecked(position, true);
                     // setTitle(mPlanetTitles[position]);
                     mDrawerLayout.closeDrawer(mDrawerLinear);
-                    Intent myIntent78 = new Intent(mActivity, PreferencesActivity.class);
+                    Intent myIntent78 = new Intent(mActivity, SettingsActivity.class);
                     myIntent78.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     myIntent78.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, LauncherSettingsFragment.class.getName());
                     myIntent78.setAction("launcher_setup");

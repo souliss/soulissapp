@@ -7,9 +7,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +14,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -24,9 +23,13 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 @TargetApi(11)
-public class ServiceSettingsFragment extends PreferenceFragment {
+public class ServiceSettingsFragment extends PreferenceFragmentCompat {
 
     //private static final int DIALOG_LOAD_FILE = 1000;
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.settings_dataservice);
+    }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,14 +42,14 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 		locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 		// datasource = new SoulissDBHelper(getActivity());
 
-		addPreferencesFromResource(R.xml.settings_dataservice);
+
 		final Preference serviceActive = findPreference("checkboxService");
 		final Preference setHomeLocation = findPreference("setHomeLocation");
 		/* START STOP SoulissDataService */
 		serviceActive.setOnPreferenceChangeListener(new ServicePreferenceListener(getActivity()));
 
 		// Setta home location
-		setHomeLocation.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        setHomeLocation.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
 			@Override
 			public boolean onPreferenceClick(Preference preference) {
@@ -83,7 +86,7 @@ public class ServiceSettingsFragment extends PreferenceFragment {
 	}
 
 
-	private void resetMesg(Preference setHomeLocation) {
+    private void resetMesg(Preference setHomeLocation) {
 		String loc = null;
         SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         if (opzioni.getHomeLatitude() != 0) {

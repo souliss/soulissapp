@@ -2,14 +2,13 @@ package it.angelic.soulissclient.preferences;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.Log;
 
+import androidx.preference.Preference;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissDataService;
 
-public class ServicePreferenceListener implements OnPreferenceChangeListener {
+public class ServicePreferenceListener implements androidx.preference.Preference.OnPreferenceChangeListener {
 
 	private Activity parent;
 	// EXPORT

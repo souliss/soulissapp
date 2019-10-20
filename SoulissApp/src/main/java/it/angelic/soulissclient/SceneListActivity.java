@@ -238,7 +238,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
                 }
                 return true;
             case R.id.Opzioni:
-                Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
+                Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
                 startActivity(settingsActivity);
                 return true;
             case R.id.TestUDP:

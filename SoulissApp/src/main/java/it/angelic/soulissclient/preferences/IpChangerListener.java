@@ -2,8 +2,6 @@ package it.angelic.soulissclient.preferences;
 
 import android.app.Activity;
 import android.os.Looper;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.Log;
 
 import java.net.InetAddress;
@@ -14,7 +12,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
-class IpChangerListener implements OnPreferenceChangeListener {
+class IpChangerListener implements androidx.preference.Preference.OnPreferenceChangeListener {
 
 	private Activity parent;
 	private SoulissPreferenceHelper opzioni;
@@ -26,7 +24,7 @@ class IpChangerListener implements OnPreferenceChangeListener {
 	}
 
 	@Override
-	public boolean onPreferenceChange(final Preference preference, final Object newValue) {
+    public boolean onPreferenceChange(final androidx.preference.Preference preference, final Object newValue) {
 		new Thread() {
 			public void run() {
 				Looper.prepare();
@@ -103,5 +101,6 @@ class IpChangerListener implements OnPreferenceChangeListener {
 		}.start();
 		return true;
 	}
+
 
 }

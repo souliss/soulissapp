@@ -20,8 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SettingsActivity;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.model.ISoulissObject;
 import it.angelic.soulissclient.model.LauncherElement;
@@ -373,7 +373,7 @@ public class ImportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>
 
             Toast.makeText(activity,
                     String.format(formatStr, totNodes, tottyp), Toast.LENGTH_SHORT).show();
-            final Intent preferencesActivity = new Intent(activity, PreferencesActivity.class);
+            final Intent preferencesActivity = new Intent(activity, SettingsActivity.class);
 
             preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
             // preferencesActivity.putExtra

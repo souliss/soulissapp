@@ -223,7 +223,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
                 }
                 return true;//cliccato sul drawer, non far altro
             case R.id.Opzioni:
-                Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
+                Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
                 startActivity(settingsActivity);
                 return true;
         }

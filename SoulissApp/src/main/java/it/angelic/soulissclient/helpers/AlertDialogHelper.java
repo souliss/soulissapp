@@ -33,8 +33,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.PreferencesActivity;
 import it.angelic.soulissclient.R;
+import it.angelic.soulissclient.SettingsActivity;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.FontAwesomeTagListAdapter;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
@@ -55,7 +55,7 @@ import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
-import it.angelic.soulissclient.preferences.NetSettingsFragment;
+import it.angelic.soulissclient.preferences.NetSettingsFragmentNuova;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
@@ -87,9 +87,9 @@ public class AlertDialogHelper {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         final Intent preferencesActivity = new Intent(source.getBaseContext(),
-                                PreferencesActivity.class);
+                                SettingsActivity.class);
 
-                        preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
+                        preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragmentNuova.class.getName());
                         // preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
                         preferencesActivity.setAction("network_setup");
                         preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -137,7 +137,7 @@ public class AlertDialogHelper {
                                         true);
                             }
                             final Intent preferencesActivity = new Intent(source,
-                                    PreferencesActivity.class);
+                                    SettingsActivity.class);
                             preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
                             preferencesActivity.setAction("db_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -195,7 +195,7 @@ public class AlertDialogHelper {
                                         source.getResources().getString(R.string.dialog_disabled_service), true);
                             }
                             final Intent preferencesActivity = new Intent(source.getBaseContext(),
-                                    PreferencesActivity.class);
+                                    SettingsActivity.class);
                             preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, ServiceSettingsFragment.class.getName());
                             preferencesActivity.setAction("service_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -243,14 +243,14 @@ public class AlertDialogHelper {
                             editor.commit();
                             Log.w(TAG, "Souliss DB dropped");
                             // source.finish();
-                            final Intent preferencesActivity = new Intent(source.getBaseContext(),
-                                    PreferencesActivity.class);
+                           /* final Intent preferencesActivity = new Intent(source.getBaseContext(),
+                                    SettingsActivity.class);
 
                             preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
                             preferencesActivity.setAction("db_setup");
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            source.startActivity(preferencesActivity);
+                            source.startActivity(preferencesActivity);*/
 
                         } else {
                             Log.e(TAG, "Unable to DROP DB");

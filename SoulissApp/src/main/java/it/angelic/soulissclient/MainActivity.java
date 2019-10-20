@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -46,6 +47,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
 import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.adapters.StaggeredDashboardElementAdapter;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
@@ -96,6 +100,22 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             } else {
                 Log.e(TAG, "EMPTY response!!");
             }
+            SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
+            // Define constraints (as above)
+            // Constraints constraints = ...
+
+            PeriodicWorkRequest request =
+                    // Executes MyWorker every 15 minutes
+                    new PeriodicWorkRequest.Builder(SoulissZombieRestoreWorker.class, 2, TimeUnit.MINUTES)
+                            // Sets the input data for the ListenableWorker
+                            //.setInputData(input)
+                            .build();
+
+            WorkManager.getInstance(MainActivity.this)
+                    // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
+                    // (uncompleted) work with the same unique name. Then, insert the newly-specified
+                    // work.
+                    .enqueueUniquePeriodicWork("my-unique-name", ExistingPeriodicWorkPolicy.KEEP, request);
         }
     };
     private NetworkStateReceiver netReceiver;
@@ -401,7 +421,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         }
         switch (item.getItemId()) {
             case R.id.Opzioni:
-                Intent preferencesActivity = new Intent(getBaseContext(), PreferencesActivity.class);
+                Intent preferencesActivity = new Intent(getBaseContext(), SettingsActivity.class);
                 // evita doppie aperture per via delle sotto-schermate
                 preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(preferencesActivity);
@@ -417,6 +437,20 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        unregisterReceiver(datareceiver);
+        unregisterReceiver(netReceiver);
+        super.onPause();
+        //autoUpdate.cancel();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //...e amen
+            return;
+        }
+        locationManager.removeUpdates(this);
+        //non mettere nulla qui
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -424,7 +458,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-
 
     @Override
     public void onProviderDisabled(String provider) {
@@ -485,22 +518,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             // other 'case' lines to check for other
             // permissions this app might request
         }
-    }
-
-
-    @Override
-    protected void onPause() {
-        unregisterReceiver(datareceiver);
-        unregisterReceiver(netReceiver);
-        super.onPause();
-        //autoUpdate.cancel();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //...e amen
-            return;
-        }
-        locationManager.removeUpdates(this);
-        //non mettere nulla qui
     }
 
     /**

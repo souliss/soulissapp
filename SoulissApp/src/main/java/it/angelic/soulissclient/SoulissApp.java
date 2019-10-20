@@ -114,6 +114,7 @@ public class SoulissApp extends Application implements Serializable {
         displayWidth = displayMetrics.heightPixels / displayMetrics.density;
         displayHeight = displayMetrics.widthPixels / displayMetrics.density;
         soulissConfigurationPreference = getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
+
     }
 
     public static void addConfiguration(String newConfig) {
@@ -127,8 +128,7 @@ public class SoulissApp extends Application implements Serializable {
     public static void deleteConfiguration(String newConfig) {
         SharedPreferences.Editor editor = soulissConfigurationPreference.edit();
         Set<String> current = getConfigurations();
-        if (current.contains(newConfig))
-            current.remove(newConfig);
+        current.remove(newConfig);
         editor.putStringSet(Constants.SOULISS_CONFIGURATIONS_KEY, current);
         editor.apply();
     }

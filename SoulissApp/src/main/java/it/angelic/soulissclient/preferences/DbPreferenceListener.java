@@ -12,8 +12,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -26,6 +24,7 @@ import java.io.ObjectOutputStream;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.Preference;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -35,7 +34,7 @@ import it.angelic.soulissclient.helpers.ImportDatabaseCSVTask;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
-public class DbPreferenceListener implements OnPreferenceClickListener {
+public class DbPreferenceListener implements Preference.OnPreferenceClickListener {
 
     private Activity parent;
     private File mPath;

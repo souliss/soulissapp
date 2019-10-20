@@ -2,7 +2,7 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <header
-        android:fragment="it.angelic.soulissclient.preferences.NetSettingsFragment"
+        android:fragment="it.angelic.soulissclient.preferences.NetSettingsFragmentNuova"
         android:icon="@android:drawable/ic_menu_mylocation"
         android:title="@string/opt_network"
         android:summary="@string/opt_networkdesc" >

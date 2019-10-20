@@ -2,17 +2,16 @@ package it.angelic.soulissclient.preferences;
 
 import android.annotation.TargetApi;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceFragment;
 import android.widget.Toast;
 
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 @TargetApi(11)
-public class VisualSettingsFragment extends PreferenceFragment {
+public class VisualSettingsFragment extends PreferenceFragmentCompat {
 
 	private SoulissPreferenceHelper opzioni;
 
@@ -20,12 +19,12 @@ public class VisualSettingsFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		opzioni = SoulissApp.getOpzioni();
-		addPreferencesFromResource(R.xml.settings_visual);
+
 		final Preference restoreWarns = findPreference("restoredialogs");
 		final Preference restoreWelcome = findPreference("restorewelcome");
 
 		// Rimette i dialogs
-		restoreWarns.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        restoreWarns.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
@@ -42,7 +41,7 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			}
 		});
 
-		restoreWelcome.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        restoreWelcome.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 			@Override
 			public boolean onPreferenceClick(Preference arg0) {
 				SoulissApp.saveWelcomeDisabledPreference(false);
@@ -52,5 +51,10 @@ public class VisualSettingsFragment extends PreferenceFragment {
 			}
 		});
 	}
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.settings_visual);
+    }
 
 }

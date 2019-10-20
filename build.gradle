@@ -37,8 +37,7 @@ allprojects {
 }
 
 project.ext {
-    global_buildToolsVersion = "28.0.0"
-    global_supportLibVersion = "28.0.0"
+
     VERSION_NAME = "2.2.1"
     VERSION_CODE = 221
     compileSdkVersion = 28

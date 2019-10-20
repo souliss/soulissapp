@@ -110,7 +110,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        TextView icon = (TextView) findViewById(R.id.node_icon);//nullable
+        TextView icon = findViewById(R.id.node_icon);//nullable
         switch (item.getItemId()) {
             case android.R.id.home:
 
@@ -124,9 +124,9 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
                 }
                 return true;
             case R.id.Opzioni:
-                Intent settingsActivity = new Intent(this, PreferencesActivity.class);
+                Intent settingsActivity = new Intent(this, SettingsActivity.class);
                 startActivity(settingsActivity);
-                final Intent preferencesActivity = new Intent(this.getBaseContext(), PreferencesActivity.class);
+                final Intent preferencesActivity = new Intent(this.getBaseContext(), SettingsActivity.class);
                 // evita doppie aperture per via delle sotto-schermate
                 preferencesActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(preferencesActivity);

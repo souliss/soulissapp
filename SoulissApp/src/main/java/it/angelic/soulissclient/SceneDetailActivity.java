@@ -163,7 +163,7 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
         TextView icon = findViewById(R.id.scene_icon);
         switch (item.getItemId()) {
             case R.id.Opzioni:
-                Intent settingsActivity = new Intent(getBaseContext(), PreferencesActivity.class);
+                Intent settingsActivity = new Intent(getBaseContext(), SettingsActivity.class);
                 startActivity(settingsActivity);
                 return true;
             case R.id.AddScene:

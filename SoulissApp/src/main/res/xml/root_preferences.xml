@@ -1,0 +1,65 @@
+<!--
+  ~ Copyright 2018 The app Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/menu_options">
+
+    </PreferenceCategory>
+
+    <Preference
+        app:fragment="it.angelic.soulissclient.preferences.NetSettingsFragmentNuova"
+        app:icon="@android:drawable/ic_menu_mylocation"
+        app:title="@string/opt_network"
+        app:summary="@string/opt_networkdesc" />
+
+    <Preference
+        app:fragment="it.angelic.soulissclient.preferences.DbSettingsFragment"
+        app:icon="@android:drawable/ic_menu_save"
+        app:summary="@string/opt_db_desc"
+        app:title="@string/opt_db" />
+
+    <Preference
+        app:fragment="it.angelic.soulissclient.preferences.ServiceSettingsFragment"
+        app:icon="@android:drawable/ic_menu_rotate"
+        app:summary="@string/opt_servicedesc"
+        app:title="@string/opt_service" />
+
+    <Preference
+        app:fragment="it.angelic.soulissclient.preferences.VisualSettingsFragment"
+        app:icon="@android:drawable/ic_menu_gallery"
+        app:summary="@string/opt_visualdesc"
+        app:title="@string/opt_visual" />
+
+    <Preference
+        app:icon="@android:drawable/ic_menu_agenda"
+        app:summary="@string/menu_test"
+        app:title="@string/menu_test_udp">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="it.angelic.soulissclient.ManualUDPTestActivity"
+            android:targetClass="it.angelic.soulissclient.ManualUDPTestActivity"
+            android:targetPackage="it.angelic.soulissclient" />
+    </Preference>
+
+    <PreferenceCategory app:title="@string/opt_credits">
+        <Preference
+            app:key="credits"
+            app:summary="@string/opt_credits_desc"
+            app:title="@string/opt_credits" />
+    </PreferenceCategory>
+</PreferenceScreen>

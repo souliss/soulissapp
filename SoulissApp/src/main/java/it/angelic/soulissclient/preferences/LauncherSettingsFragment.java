@@ -2,9 +2,9 @@ package it.angelic.soulissclient.preferences;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -13,7 +13,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
  * Created by shine@angelic.it on 21/01/2017.
  */
 
-public class LauncherSettingsFragment extends PreferenceFragment {
+public class LauncherSettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,11 +22,14 @@ public class LauncherSettingsFragment extends PreferenceFragment {
         PackageInfo packageInfo;
         String strVersionName;
 
-        addPreferencesFromResource(R.xml.settings_launcher);
-
         //bind opzione reset
         Preference exportDBPref = findPreference("rstlauncher");
         LauncherRstListener dbPrefListener = new LauncherRstListener(getActivity());
         exportDBPref.setOnPreferenceClickListener(dbPrefListener);
+    }
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.settings_launcher);
     }
 }

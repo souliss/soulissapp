@@ -2,13 +2,12 @@ package it.angelic.soulissclient.preferences;
 
 import android.app.Activity;
 import android.os.Environment;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.List;
 
+import androidx.preference.Preference;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -17,7 +16,7 @@ import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 
-public class LauncherRstListener implements OnPreferenceClickListener {
+public class LauncherRstListener implements androidx.preference.Preference.OnPreferenceClickListener {
 
     private static final String DB_BACKUP_FORMAT = ".csv";
     private static final int DIALOG_LOAD_FILE = 1000;

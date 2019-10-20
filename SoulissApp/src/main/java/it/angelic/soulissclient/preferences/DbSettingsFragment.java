@@ -2,10 +2,10 @@ package it.angelic.soulissclient.preferences;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.util.Log;
 
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -14,7 +14,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 /**
  * Fragment of database options
  */
-public class DbSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class DbSettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private Preference dbinfopref;
     private SoulissPreferenceHelper opzioni;
@@ -33,11 +33,15 @@ public class DbSettingsFragment extends PreferenceFragment implements SharedPref
     }
 
     @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        addPreferencesFromResource(R.xml.settings_db);
+    }
+    @Override
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		opzioni = SoulissApp.getOpzioni();
-		addPreferencesFromResource(R.xml.settings_db);
-		Preference createDbPref = findPreference("createdb");
+
+        Preference createDbPref = findPreference("createdb");
 		Preference dropDbPref = findPreference("dropdb");
         Preference exportDBPref = findPreference("dbexp");
         Preference imortDBPref = findPreference("dbimp");
@@ -66,6 +70,7 @@ public class DbSettingsFragment extends PreferenceFragment implements SharedPref
         imortDBPref.setSummary(strimortDBPrefMsg);
 
 	}
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

@@ -58,7 +58,7 @@ public class NodesListActivity extends AbstractStatusedFragmentActivity {
                 }
                 return true;
             case R.id.Opzioni:
-                Intent settingsActivity = new Intent(NodesListActivity.this, PreferencesActivity.class);
+                Intent settingsActivity = new Intent(NodesListActivity.this, SettingsActivity.class);
                 startActivity(settingsActivity);
                 return true;
             // TODO scelta tipo ordinamento
