@@ -9,7 +9,6 @@
     <string name="health">SALUTE:</string>
     <string name="status">STATO:</string>
     <string name="update">Aggiornato</string>
-    <string name="actions">AZIONI:</string>
     <string name="node">Nodo</string>
     <string name="nodes">Nodi</string>
     <string name="slot">Slot</string>
@@ -20,7 +19,6 @@
     <string name="days">giorni</string>
     <string name="multicast">Invia a tutti</string>
     <string name="multicast_desc">Invia a tutti i dispositivi uguali a questo</string>
-    <string name="refresh">Aggiorna</string>
     <string name="save">Salva</string>
     <string name="brightness">Luminosità</string>
     <string name="proceed">Procedi</string>
@@ -47,7 +45,6 @@
     <string name="timer">Timer</string>
     <string name="is">è</string>
     <string name="equalizer">Equalizzatore</string>
-    <string name="meters">Metri</string>
     <string name="service">Servizio</string>
     <string name="position">Posizione</string>
     <string name="ok">OK</string>

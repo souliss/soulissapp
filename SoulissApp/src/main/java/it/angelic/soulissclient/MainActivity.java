@@ -100,19 +100,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
             // Define constraints (as above)
             // Constraints constraints = ...
-
-            PeriodicWorkRequest request =
-                    // Executes MyWorker every 15 minutes
-                    new PeriodicWorkRequest.Builder(SoulissZombieRestoreWorker.class, pref.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
-                            // Sets the input data for the ListenableWorker
-                            //.setInputData(input)
-                            .build();
-
-            WorkManager.getInstance(MainActivity.this)
-                    // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
-                    // (uncompleted) work with the same unique name. Then, insert the newly-specified
-                    // work.
-                    .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.KEEP, request);
         }
     };
     private NetworkStateReceiver netReceiver;
@@ -289,13 +276,19 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 UDPHelper.stateRequest(opzioni, database.countNodes(), 0);
             }
         });
+        //TODO test&tune
+        PeriodicWorkRequest request =
+                // Executes MyWorker every 15 minutes
+                new PeriodicWorkRequest.Builder(SoulissZombieRestoreWorker.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MINUTES)
+                        // Sets the input data for the ListenableWorker
+                        //.setInputData(input)
+                        .build();
 
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }).start();*/
+        WorkManager.getInstance(MainActivity.this)
+                // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
+                // (uncompleted) work with the same unique name. Then, insert the newly-specified
+                // work.
+                .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.KEEP, request);
 
 
         launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);

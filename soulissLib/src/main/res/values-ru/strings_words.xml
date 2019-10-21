@@ -9,7 +9,6 @@
     <string name="health">ЗДОРОВЬЕ:</string>
     <string name="status">СОСТ:</string>
     <string name="update">ОБНОВЛЕН:</string>
-    <string name="actions">ДЕЙСТВИЯ:</string>
     <string name="node">Узел</string>
     <string name="nodes">Узлы</string>
     <string name="slot">Слот</string>
@@ -20,7 +19,6 @@
     <string name="multicast_desc">Отправить на все устройства данного типа</string>
     <string name="days">дней</string>
     <string name="poll">Повторяющийся запрос</string>
-    <string name="refresh">Обновить</string>
     <string name="save">Сохранить</string>
     <string name="brightness">Яркость</string>
     <string name="proceed">Продолжить</string>
@@ -47,7 +45,6 @@
     <string name="timer">Таймер</string>
     <string name="is"></string>
     <string name="equalizer">Эквалайзер</string>
-    <string name="meters">Счетчики</string>
     <string name="service">Сервис</string>
     <string name="position">Позиция</string>
     <string name="Online">В сети</string>

@@ -11,13 +11,8 @@
     <string name="bridge_gateway">Beim Start zugeordnetes IP-Gateway für Souliss-Netzknoten, vorzugsweise Ihre Router-Adresse</string>
     <string name="bridge_ssid">Name Ihres WiFi-Netzwerkes, für die Verbinung mit Souliss</string>
     <string name="bridge_wifipass">Passwort des oben genannten WiFi-Netzwerkes</string>
-    <string name="last_update">Letztes Update:</string>
     <string name="last_exec">Zuletzt ausgeführt:</string>
-    <string name="db_size">DB Größe</string>
-    <string name="waiting">Warte auf Updates&#8230;</string>
     <string name="historyof">Verlauf von</string>
-    <string name="daily">Durchschnitt tägl.</string>
-    <string name="monthly">Durchschnitt monatl.</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss scheint nicht konfiguriert. Bitte konfigurieren Sie die lokale Souliss IP-Adresse unter Einstellungen</string>
@@ -34,13 +29,11 @@
     <string name="dialog_remove_title">Programm löschen</string>
     <string name="dialog_remove_cmd">Wollen Sie dieses Kommando wirklich löschen ?</string>
     <string name="dialog_choose_icon">Ein Icon wählen für</string>
-    <string name="dialog_choose_html">Wählen Sie eine .html Datei innerhalb /der sdcard /des Souliss Ordners</string>
     <string name="allnodes">Alle Netzknoten</string>
 
     <!-- PROGRAMS_SECTION -->
     <string name="programs_title">Programme</string>
     <string name="programs_no">Kein aktives Programm</string>
-    <string name="programs_add">Programm hinzufügen</string>
     <string name="execute">Ausführen</string>
     <string name="programs_trigger_executed">Souliss Impuls ausgeführt</string>
     <string name="programs_unexecuted">Aktive Programme</string>
@@ -60,13 +53,11 @@
     <string name="compatible">kompatiblen Routinen</string>
     <string name="to_all">an alle</string>
     <string name="to">an</string>
-    <string name="on_node">ein Netzknoten</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Szenarien</string>
     <string name="scenes_delete">Szenario löschen</string>
     <string name="scenes_rename">Szenario umbenennen</string>
     <string name="scenes_changeicon">Szenario Icon ändern</string>
-    <string name="scenes_add">Szenario hinzufügen</string>
     <string name="scenes_empty">Szenario ist leer!</string>
     <string name="scenes_empty_desc">Den +Knopf unten benutzen, um einen Befehl zu diesem Szenario hinzu zu fügen</string>
     <string name="scenes_desc">Szenarien bestehen aus verschiedenen Souliss Befehlen. Das Szenario gedrückt halten, um es zu ändern oder auszuführen - zum editieren, kurz drücken. Benutzen Sie den Knopf unten fuer ein neues Szenario</string>
@@ -98,7 +89,6 @@
     <string name="menu_options">Optionen</string>
     <string name="menu_test">Test der Low-Level UDP Verbindung</string>
     <string name="menu_test_udp">Test UDP</string>
-    <string name="menu_addFav">Zu Favoriten hinzufügen</string>
     <string name="menu_rename">Knoten umbenennen</string>
     <string name="menu_changenodeicon">Knoten Icon ändern</string>
     <string name="menu_changetypicon">Routinen Icon ändern</string>
@@ -120,7 +110,6 @@
     <string name="manual_id_prompt">Wählen Sie eine KNOTEN-ID</string>
     <string name="manual_slot_prompt">Wählen sie einen SLOT</string>
     <string name="icon_select">Icon auswählen</string>
-    <string name="manual_showing_typ">Zeige Routinen Details: </string>
     <string name="manual_desc">Manuell Befehle an die Souliss Netzknoten senden. Den Knoten kurz drücken, um Details anzuzeigen. Zum editieren lange drücken</string>
     <string name="manual_litfrom">Eingeschaltet seit %1$s</string>
     <string name="manual_tyinf">Dieses Gerät war im letzten Monat %1$s lang eingeschaltet</string>
@@ -132,14 +121,10 @@
     <string name="service_disabled">Souliss Daten-Service <b>deaktiviert</b></string>
     <string name="service_lastexec"><b>Service zuletzt ausgeführt:</b></string>
     <string name="service_warnbound">Service <b>aktiviert</b> aber <b>nicht zugeordnet</b>, neu starten</string>
-    <string name="webservice_enabled">Zozzariello <b>aktiviert</b> verbunden mit </string>
-    <string name="timeout_expired">Befehl timeout <![CDATA[<b><font color=\"#FF4444\">überschritten</font></b>]]>.Souliss ggf. nicht erreichbar</string>
     <!-- STATUS -->
     <string name="status_souliss">Souliss Status</string>
-    <string name="status_updating">Updating DB&#8230;Bitte warten</string>
     <string name="status_souliss_notreachable">Souliss nicht erreichbar, Netzwerkfehler</string>
     <string name="status_geoprovider_enabled">Geo-Provider <b>aktiviert</b>, bisher noch keine Daten empfangen</string>
-    <string name="status_provider_selected"> wurde ausgewählt.</string>
     <string name="status_geoprovider_disabled">Geo-Provider <b>deaktiviert</b></string>
 
     <!-- OPZIONI -->
@@ -172,8 +157,6 @@
     <string name="dialog_title_edittext_IP">IP-Addresse</string>
     <string name="summary_edittext_IP_pubb">Öffentliche Souliss Addresse eingeben, wenn Sie nicht zu Hause sind. Erreichen Sie ihr zu Hause einfach über Dynamic-DNS und Port-Forwarding</string>
     <string name="title_edittext_IP_pubb">Öffentliche Souliss Addresse</string>
-    <string name="opt_fontsizedesc">Schriftgröße wählen</string>
-    <string name="opt_fonttitledesc">Font für Überschriften</string>
     <string name="opt_tetxfx">Text Effekte</string>
     <string name="opt_tetxfx_desc">Animierte Icons und Texte</string>
     <string name="opt_animfx">Animationen</string>
@@ -183,16 +166,12 @@
     <string name="opt_restore">Warnung bei Wiederherstellungen</string>
     <string name="opt_restore_desc">Unterdrückte Warnungen wieder erneut anzeigen</string>
     <string name="opt_visual">Visuelle Optionen</string>
-    <string name="opt_fontsize">Schriftgröße</string>
-    <string name="opt_fonttitle">Schriftart f. Überschriften ändern</string>
     <string name="opt_visualdesc">Schriftgröße und Effekte</string>
     <string name="opt_servicedesc">Souliss Hintergrunddienste und Heim-Position konfigurieren</string>
     <string name="opt_serviceEnable">Daten-Service aktiviert</string>
     <string name="opt_serviceEnable_desc">Hintergrunddienste synchronisieren Souliss fortwährend</string>
     <string name="opt_serviceinterval">Service Interval</string>
     <string name="opt_serviceinterval_desc">Höhere Geschwindigkeiten beanspruchen mehr Batterie and Resourcen</string>
-    <string name="opt_WebServerEnable">Zozzariello (Webserver)</string>
-    <string name="opt_WebServerEnable_desc">Souliss WebServer-Gateway Ihres Souliss Netzwerks auf HTTP. Port 8080 auf diesem Gerät öffnen</string>
     <string name="opt_servicehomepos">Heimatposition setzen</string>
     <string name="opt_servicehomepos_desc">Aktuelle Position als Referenz für Positions-Programme verwenden</string>
     <string name="opt_Thold_desc">Entfernung ab der Sie als \'Außer Haus\' registriert werden, wenn Sie sich entfernen</string>
@@ -205,12 +184,8 @@
     <string name="opt_dialog_restored">Alle Dialoge wiederhergestellt</string>
     <string name="unknown_typical">Unbekannte Routine</string>
     <string name="opt_net_home">Netzwerk</string>
-    <string name="opt_net_remote">Remote-Netzwerk (optional)</string>
-    <string name="opt_db_upd_desc">Souliss Netzknoten-Konfiguration erneuern. Bitte zuerst Netzwerk konfigurieren</string>
     <!-- TYPICALS -->
-    
-    <string name="Souliss_TurnOn_desc">AN</string>
-    <string name="Souliss_TurnOff_desc">AUS</string>
+
     <string name="Souliss_ResetCmd_desc">Reset</string>
     <string name="Souliss_ToggleCmd_desc">Umschalten</string>
     <string name="Souliss_AutoCmd_desc">Auto</string>
@@ -236,14 +211,11 @@
     <string name="Souliss_T41_desc">Alarmanlage</string>
     <string name="Souliss_T42_desc">Alarm Peer</string>
     <string name="Souliss_T51_desc">Analoger Input</string>
-    <string name="Souliss_T52_desc">Analoger Input, Mittelwert</string>
-    <string name="Souliss_T53_desc">Analoger Input, max. iterativ</string>
     <string name="Souliss_T54_desc">Licht-Sensor</string>
     <string name="Souliss_T55_desc">Spannungs-Sensor</string>
     <string name="Souliss_T56_desc">Stromstärke-Sensor</string>
     <string name="Souliss_T57_desc">Leistungs-Sensor</string>
     <string name="Souliss_T58_desc">Druck-Sensor</string>
-    <string name="Souliss_TCurrentSensor_desc">Aktueller Sensor</string>
     <string name="Souliss_TTemperature_desc">Temperatur-Sensor</string>
     <string name="Souliss_THumidity_desc">Luftfeuchtigkeits-Sensor</string>
     <string name="Souliss_TAircon_desc">Klimaanlage</string>
@@ -279,11 +251,8 @@
     <string name="or">oder</string>
     <string name="input_tag_name">Name neuer Gruppe eingeben</string>
     <string name="tag_rename" >GRUPPE umbenennen</string>
-    <string name="tag_delete" >GRUPPE löschen</string>
     <string name="tag_desc" >Gruppen bilden Geräte zusammen ab. Sie können Gruppen erstellen, um Ihre Geräte wie gewünscht zu organisieren. Es gibt eine vordefinierte Gruppe: Favouriten</string>
     <string name="img_select" >Foto auswählen</string>
-    <string name="tag_info_format">Es gibt %1$d markierte Geräte in %2$d GRUPPEN</string>
-    <string name="err_command_not_sel">Befehl nicht ausgewählt</string>
     <string name="nodeleteFav" >Can\'t remove default Favourite Tag</string>
     <string name="positionfrom">Positionierung with</string>
     <string name="status_souliss_nodetail">Keine Detailanzeige verfügbar</string>
@@ -301,7 +270,6 @@
     <string name="cantRemoveDefault">Gruppe "Favoriten" nicht löschbar</string>
     <string name="removeTag">Gruppe löschen</string>
     <string name="opt_fahrenheit">Fahrenheit</string>
-    <string name="amongFav">This Device is among your favourites</string>
     <string name="amongTags">This Device has been Tagged</string>
     <string name="antitheftNotify">Notify Alarm Condition</string>
     <string name="antitheftReset">Re-Arm Anti theft</string>
@@ -309,7 +277,6 @@
     <string name="antitheft_notify_desc">Check for antitheft peers tapping on this notification</string>
     <string name="antitheft_status">Antitheft Status:</string>
     <string name="bridge_isgateway">Configure remote node as Gateway/Peer for the Souliss network</string>
-    <string name="bytes_received">Bytes received</string>
     <string name="contact_at">Contacting Souliss at</string>
     <string name="contact_progress">Souliss server is being contacted&#8230;</string>
     <string name="currentlyin">currently in</string>
@@ -321,10 +288,8 @@
     <string name="hours">hours</string>
     <string name="nodeidxhint">Please insert a number in range 1&#8211;254</string>
     <string name="opt_udpport">UDP Port</string>
-    <string name="tagorder_desc">If two TAGs with same position are found, their TAG\'s Id will be used to determine final position.</string>
     <string name="udphint">Please insert a number in range 1&#8211;65535</string>
     <string name="warnmeifon">Warn me if turned on for more than (hours)</string>
-    <string name="widget_cantupdate">Error retrieving Typical</string>
     <string name="opt_voice_command">Voice Command</string>
     <string name="opt_voice_command_desc">Execute scenes and send commands with your voice. Tap for details</string>
     <string name="voice_command">Voice Command</string>
@@ -336,12 +301,9 @@
     <string name="menu_changenodeRebuild">Rebuild Node</string>
     <string name="menu_changenodeRebuild_desc">Rebuilding the node will overwrite device\'s definition</string>
     <string name="all">all</string>
-    <string name="bytes_sent">Bytes sent</string>
-    <string name="dbstruct_req">DB Structure received</string>
     <string name="souliss_voice_command">Souliss Voice Command</string>
     <string name="addprogram_choosedelay">Command\'s delay</string>
     <string name="scene_add_typical_to">Add device to...</string>
-    <string name="action_settings">Settings</string>
     <string name="config_choose_desc">Try SoulissApp with demo system, create your own configuration or load an existing one</string>
     <string name="opt_restore_welcome_desc">Show welcome screen when App starts</string>
     <string name="opt_restore_welcome">Restore Splash Screen</string>
@@ -351,7 +313,6 @@
     <string name="welcome_dontshow">Don\'t show welcome screen again</string>
     <string name="welcome_tour_button">Start</string>
     <string name="functions">Functions</string>
-    <string name="souliss_controlling">Souliss is controlling %1$d Things</string>
     <string name="voice_command_query_help">Use a device name, followed by output status needed to verify condition</string>
     <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. For example,<ul> <li>\'Dinner Spotlight ON\', </li></ul>\'Bedroom window open\']]></string>
     <string name="opt_settingshare_desc">Save current  settings and share them</string>
@@ -380,8 +341,6 @@
     <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
     <string name="menu_launcher_config">Homescreen Setup</string>
     <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
-    <string name="opt_launcher">Launcher Setup</string>
-    <string name="settings_launcher_items">Home screen Elements</string>
     <string name="launcher_type">Launcher element type</string>
     <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
     <string name="scene_added">" inserted, long-press to rename it and choose icon"</string>
@@ -392,7 +351,6 @@
     <string name="menu_addto_dashboard">Addo to Dashboard</string>
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">" added to Dashboard"</string>
-    <string name="step">STEP</string>
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>

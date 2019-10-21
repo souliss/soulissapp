@@ -9,7 +9,6 @@
     <string name="health">ZDROWIE:</string>
     <string name="status">STAN:</string>
     <string name="update">ZAKTUALIZOWANY:</string>
-    <string name="actions">AKCJE:</string>
     <string name="node">Węzeł</string>
     <string name="nodes">Węzły</string>
     <string name="slot">Przegródka</string>
@@ -20,7 +19,6 @@
     <string name="multicast_desc">Wyślij do wszystkich urządzeń tego typu</string>
     <string name="days">dni</string>
     <string name="poll">Sonduj</string>
-    <string name="refresh">Odśwież</string>
     <string name="save">Zapisz</string>
     <string name="brightness">Jasność</string>
     <string name="proceed">Kontynuuj</string>
@@ -47,7 +45,6 @@
     <string name="timer">Timer</string>
     <string name="is">jest</string>
     <string name="equalizer">Korektor</string>
-    <string name="meters">Metry</string>
     <string name="service">Usługa</string>
     <string name="position">Pozycja</string>
     <string name="Online">Online</string>

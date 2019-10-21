@@ -32,18 +32,6 @@
         <item>8</item>
         <item>9</item>
     </string-array>
-    <string-array name="textsiz_array">
-        <item>Zelo majhen</item>
-        <item>majhen</item>
-        <item>srednji</item>
-        <item>velik</item>
-    </string-array>
-    <string-array name="textsiz_values">
-        <item>-1</item>
-        <item>0</item>
-        <item>2</item>
-        <item>4</item>
-    </string-array>
 
     <string-array name="updateInterval">
         <item name="3000">3 sekunde</item>

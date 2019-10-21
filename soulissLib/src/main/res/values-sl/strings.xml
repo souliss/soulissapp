@@ -13,13 +13,8 @@
     <string name="bridge_gateway">IP Gateway dodeljen ob izvajanju za Souliss vozlišče, najverjetneje enak naslovu routerja</string>
     <string name="bridge_ssid">Ime wifi omrežja s katerim se bo vaše Souliss vozlišče povezalo</string>
     <string name="bridge_wifipass">Geslo zgoraj navedenga wifi omrežja</string>
-    <string name="last_update">Zadnja osvežitev ob:</string>
     <string name="last_exec">Zadnji zagon ob:</string>
-    <string name="db_size">Velikost pod.baze</string>
-    <string name="waiting">Čakam na osvežitev&#8230;</string>
     <string name="historyof">Zgodovina od</string>
-    <string name="daily">Dnevno povprečje</string>
-    <string name="monthly">Mesečno povprečje</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss ni konfiguriran. Prosimo nastavite Souliss lokalni IP naslov v nastavitvah</string>
@@ -36,13 +31,11 @@
     <string name="dialog_remove_title">Izbriši program</string>
     <string name="dialog_remove_cmd">Ali ste prepričani, da želite izbrisati ta ukaz ?</string>
     <string name="dialog_choose_icon">Izberi ikono za </string>
-    <string name="dialog_choose_html">Izberi .html datoteko znotraj /sdcard/Souliss mape</string>
     <string name="allnodes">Vsa vozlišča</string>
 
     <!-- PROGRAMS_SECTION -->
     <string name="programs_title">Programi</string>
     <string name="programs_no">Ni aktivnega programa</string>
-    <string name="programs_add">Dodaj program</string>
     <string name="execute">Izvrši</string>
     <string name="programs_trigger_executed">Souliss Trigger izvršen</string>
     <string name="programs_unexecuted">Activni Programi</string>
@@ -62,13 +55,11 @@
     <string name="compatible">kompatibilni typicals</string>
     <string name="to_all">za vse</string>
     <string name="to">za</string>
-    <string name="on_node">on node</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Scena</string>
     <string name="scenes_delete">Izbriši Sceno</string>
     <string name="scenes_rename">Preimenuj Sceno</string>
     <string name="scenes_changeicon">Zamenjaj ikono Scene</string>
-    <string name="scenes_add">Dodaj Sceno</string>
     <string name="scenes_empty">Scena je prazna!</string>
     <string name="scenes_empty_desc">Uporabi spodnji gumb za dodati ukaz tej sceni</string>
     <string name="scenes_desc">Scene so sestavljene iz večih Souliss ukazov. Dolgo-pritisni na Sceno da jo urediš ali izvršiš, pritisni za odprtje podrobnosti.Uporabi gumb da ustvariš novo prazno Sceno</string>
@@ -100,7 +91,6 @@
     <string name="menu_options">Nastavitve</string>
     <string name="menu_test">Test Low-level UDP povezljivosti</string>
     <string name="menu_test_udp">Test UDP</string>
-    <string name="menu_addFav">Dodaj k priljubljenim</string>
     <string name="menu_rename">Preimenuj vozlišče</string>
     <string name="menu_changenodeicon">Zamenjaj ikono vozlišča</string>
     <string name="menu_changetypicon">Zamenjaj typical ikono</string>
@@ -122,7 +112,6 @@
     <string name="manual_id_prompt">Izberi ID vozlišča</string>
     <string name="manual_slot_prompt">Izberi SLOT</string>
     <string name="icon_select">Izberi ikono</string>
-    <string name="manual_showing_typ">Prikazujem podrobnosti Typicala: </string>
     <string name="manual_desc">Pošlji ukaze Souliss vozliščem ročno. Pritisni na vozlišče da odpreš podrobnosti, dolgo-pritisni da ga urediš</string>
     <string name="manual_litfrom">Vklopljen pred %1$s</string>
     <string name="manual_tyinf">Ta naprava je bila vklopljena za %1$s v zadnjem mesecu</string>
@@ -130,19 +119,14 @@
     <string name="node_empty_desc">To vozlišče ne vsebuje typical. Če bi ga moralo, poizkusi osvežiti strukturo pod.baze v nastavitvah</string>
     <!-- WIDGET -->
     <string name="widget_cantsave">Ukaz ni izbran</string>
-    <string name="widget_cantupdate">Napaka pri pridobivanju Typical</string>
     <!-- SERVICE -->
     <string name="service_disabled">Souliss podatkovna storitev <b>onemogočeno</b></string>
     <string name="service_lastexec"><b>Zadnji zagon storitve:</b></string>
     <string name="service_warnbound">Storitev <b>omogočena</b> ampak <b>ni vezana</b>, restartam</string>
-    <string name="webservice_enabled">Zozzariello <b>omogočen</b> poslušam na </string>
-    <string name="timeout_expired">Ukaz pretečen <![CDATA[<b><font color=\"#FF4444\">expired</font></b>]]>.Souliss morda ni na voljo</string>
     <!-- STATUS -->
     <string name="status_souliss">Souliss Status</string>
-    <string name="status_updating">Posodabljam DB&#8230;Prosim počakajte</string>
     <string name="status_souliss_notreachable">Souliss ni dosegljiv, napaka omrežja</string>
     <string name="status_geoprovider_enabled">Geo ponudnik <b>omogočen</b>, vendar podatki še niso sprejeti</string>
-    <string name="status_provider_selected"> je izbran.</string>
     <string name="status_geoprovider_disabled">Geo ponudniki <b>onemogočeni</b></string>
 
     <!-- OPZIONI -->
@@ -175,8 +159,6 @@
     <string name="dialog_title_edittext_IP">IP naslov</string>
     <string name="summary_edittext_IP_pubb">Vnesi Souliss javni naslov, za uporabo kadar si zdoma. Lahko uporabiš dinamični DNS in port-forwarding da se povežeš z domačim omrežjem</string>
     <string name="title_edittext_IP_pubb">Souliss javni naslov</string>
-    <string name="opt_fontsizedesc">Izberi velikost teksta</string>
-    <string name="opt_fonttitledesc">Font teksta uporabljen za naslove</string>
     <string name="opt_tetxfx">Efekti teksta</string>
     <string name="opt_tetxfx_desc">Animiraj ikone in tekst</string>
     <string name="opt_animfx">Animacije</string>
@@ -186,16 +168,12 @@
     <string name="opt_restore">Obnovi opozorila</string>
     <string name="opt_restore_desc">Show suppressed warning dialogs again</string>
     <string name="opt_visual">Vmesnik</string>
-    <string name="opt_fontsize">Velikost teksta</string>
-    <string name="opt_fonttitle">Spremeni font naslova</string>
     <string name="opt_visualdesc">Velikost teksta in efekti</string>
     <string name="opt_servicedesc">Konfiguriraj Souliss storitve v ozadju, ter domačo lokacijo</string>
     <string name="opt_serviceEnable">Podatkovna storitev omogočena</string>
     <string name="opt_serviceEnable_desc">Storitev v ozadju omogoča, da je Souliss sinhroniziran</string>
     <string name="opt_serviceinterval">Service Interval</string>
     <string name="opt_serviceinterval_desc">Višje hitrosti potrošijo več baterije in zalog</string>
-    <string name="opt_WebServerEnable">Zozzariello (spletni-server)</string>
-    <string name="opt_WebServerEnable_desc">Souliss WebServer Gateway vaše Souliss omrežje na HTTP. Odpri port 8080 na tej napravi.</string>
     <string name="opt_servicehomepos">Nastavi domačo lokacijo</string>
     <string name="opt_servicehomepos_desc">nastavi trenutno lokacijo kot referenco za lokacijske Programe</string>
     <string name="opt_Thold_desc">Razdalja ob kateri boš smatran, da si zdoma</string>
@@ -208,12 +186,8 @@
     <string name="opt_dialog_restored">Vsi Dialogs obnovljeni</string>
     <string name="unknown_typical">Neznan typical</string>
     <string name="opt_net_home">Omrežje</string>
-    <string name="opt_net_remote">Oddaljeno omrežje (opcijsko)</string>
-    <string name="opt_db_upd_desc">posodobi konfiguracijo Souliss vozlišč. Prvo konfigurirajte omrežje</string>
 
     <!-- TYPICALS -->
-    <string name="Souliss_TurnOn_desc">Vklopi</string>
-    <string name="Souliss_TurnOff_desc">Izklopi</string>
     <string name="Souliss_ResetCmd_desc">Reset</string>
     <string name="Souliss_ToggleCmd_desc">Preklopi</string>
     <string name="Souliss_AutoCmd_desc">Auto</string>
@@ -239,14 +213,11 @@
     <string name="Souliss_T41_desc">Protivlomni sistem</string>
     <string name="Souliss_T42_desc">Protivlomni Peer</string>
     <string name="Souliss_T51_desc">Analogni input</string>
-    <string name="Souliss_T52_desc">Analogni input, root mean value</string>
-    <string name="Souliss_T53_desc">Analogni input, max iterative</string>
     <string name="Souliss_T54_desc">Svetlobni Senzor</string>
     <string name="Souliss_T55_desc">Sensor Napetosti</string>
     <string name="Souliss_T56_desc">Sensor Toka</string>
     <string name="Souliss_T57_desc">Senzor Moči</string>
     <string name="Souliss_T58_desc">Barometer</string>
-    <string name="Souliss_TCurrentSensor_desc">Sensor Toka</string>
     <string name="Souliss_TTemperature_desc">Senzor Temperature</string>
     <string name="Souliss_THumidity_desc">Senzor Vlage</string>
     <string name="Souliss_TAircon_desc">Klima</string>
@@ -282,17 +253,13 @@
     <string name="or">ali</string>
     <string name="input_tag_name">Vnesi ime nove Nalepke</string>
     <string name="tag_rename">Preimenuj Nalepko</string>
-    <string name="tag_delete">Izbriši Nalepko</string>
     <string name="tag_desc">Grupiraj naprave z Nalepkami. Ustvariš lahko Nalepke da reorganiriraš svoje naprave. Ena predefinirana skupina je že ustvarjena - Priljubljene</string>
     <string name="img_select" >Izberi fotografijo</string>
-    <string name="tag_info_format">Označeno je %1$d naprav v %2$d Nalepk</string>
-    <string name="err_command_not_sel">Ukaz ni izbran</string>
     <string name="hours">ur</string>
     <string name="warnmeifon">Opozori me če je vklopljeno več kot (ur)</string>
     <string name="timed_warning" >Opozorilo zaradi energije</string>
     <string name="hasbeenturnedontoolong">Typical %s je bil predolgo vklopljen</string>
     <string name="opt_udpport" >UDP Port</string>
-    <string name="amongFav">Ta naprava je med vašimi priljubljenimi</string>
     <string name="amongTags">Ta naprava je bila Tagged</string>
     <string name="status_souliss_nodetail" >No detail panel available</string>
     <string name="bridge_isgateway" >Konfiguriraj oddaljeno vozlišče kot Gateway/Peer za Souliss omrežje</string>
@@ -312,11 +279,9 @@
     <string name="nodeidxhint">Prosimo vnesi številko v rangu 1&#8211;254</string>
     <string name="udphint">Prosimo vnesi številko v rangu 1&#8211;65535</string>
 
-    <string name="dbstruct_req">Struktura pod.baze sprejeta</string>
     <string name="antitheft_status">Protivlomni Status:</string>
     <string name="antitheft_notify_desc">Preveri za protivlomne peers, dotakni se tega obvestila</string>
     <string name="antitheft_notify">Souliss ALARM Aktiviran!</string>
-    <string name="bytes_received">Byti sprejeti</string>
     <string name="antitheftNotify">Obvesti Alarmno Stanje</string>
     <string name="antitheftReset">Re-Arm Protivlomni sistem</string>
 
@@ -331,7 +296,6 @@
     <string name="sureToRemoveTag">Ali ste prepričani da želite izbrisati to nalepko?</string>
     <string name="cantRemoveDefault">Ne moram odstraniti osnovne priljubljene nalepke</string>
     <string name="removeTag">Odstrani Nalepko</string>
-    <string name="tagorder_desc">Če sta najdene dve nalepki z istim položajem, potem bo njun Id uporabljen za končno pozicijo.</string>
     <string name="opt_fahrenheit" >Uporabi Fahrenheit</string>
     <string name="opt_voice_command">Glasovni ukaz</string>
     <string name="opt_voice_command_desc">Izvrši scene in pošlji ukaze s svojim glasom. Dotakni se za podrobnosti</string>
@@ -344,10 +308,8 @@
     <string name="err_command_not_recognized">Ukaz ni prepoznan</string>
     <string name="menu_changenodeRebuild">Obnovi vozlišče</string>
     <string name="menu_changenodeRebuild_desc">Obnovitev vozlišča bo prepisalo definicijo naprave</string>
-    <string name="bytes_sent">Byti poslani</string>
     <string name="addprogram_choosedelay">Zakasnitev ukaza</string>
     <string name="scene_add_typical_to">Dodaj napravo k...</string>
-    <string name="action_settings">Nastavitve</string>
     <string name="config_choose_desc">Preizkusi SoulissApp z demo sistemom, ustvari svojo konfiguracijo ali naloži obsotječo. Konfiguracije bodo omogočale menjavo med različnimi Souliss omrežji.</string>
     <string name="opt_restore_welcome_desc">Pokaži pozdravni zaslon ob startu apl.</string>
     <string name="opt_restore_welcome">Povrni Splash Screen</string>
@@ -357,7 +319,6 @@
     <string name="welcome_dontshow">Ne pokaži več pozdravnega zaslona</string>
     >
     <string name="functions">Funkcije</string>
-    <string name="souliss_controlling">Souliss nadzira %1$d stvari</string>
     <string name="voice_command_query_help">Uporabi ime naprave, ter output status potreben za preverbo stanja</string>
     <string name="tasker_query_longexp"><![CDATA[The query will be passed to SoulissApp in order to retrieve a boolean flag indicating if the specified condition is verified. To return true, the string must contain the desired device\'s output status. <br/>Examples:<ul> <li>\'Dinner Spotlight ON\', </li>\'Bedroom window open\' </ul>]]></string>
     <string name="opt_settingshare_desc">Shrani trenutne nastavitve in jih deli</string>
@@ -393,7 +354,6 @@
     <string name="menu_addto_dashboard">Addo to Dashboard</string>
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">" added to Dashboard"</string>
-    <string name="step">STEP</string>
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>

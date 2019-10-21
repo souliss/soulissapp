@@ -9,7 +9,6 @@
     <string name="health">SAÚDE:</string>
     <string name="status">STATUS:</string>
     <string name="update">ATUALIZADO:</string>
-    <string name="actions">AÇÕES:</string>
     <string name="node">Central</string>
     <string name="nodes">Centrais</string>
     <string name="slot">Slot</string>
@@ -20,7 +19,6 @@
     <string name="multicast_desc">Enviar para todos os dispositivos deste tipo</string>
     <string name="days">dias</string>
     <string name="poll">Poll</string>
-    <string name="refresh">Recarregar</string>
     <string name="reset">Reset</string>
     <string name="save">Salvar</string>
     <string name="brightness">Brilho</string>
@@ -46,7 +44,6 @@
     <string name="plus">+</string>
     <string name="timer">Temporizador</string>
      <string name="is">é</string>
-         <string name="meters">Metri</string>
     <string name="service">Serviçoo</string>
     <string name="position">Posição</string>
     <string name="ok">OK</string>

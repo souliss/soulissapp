@@ -6,17 +6,13 @@
     <string name="app_opt">SoulissApp - Opciones</string>
     <string name="app_addprog">Agregar programa</string>
     <string name="opt_network">Opciones de red</string>
-    <string name="last_update">Última actualización:</string>
     <string name="last_exec">Última ejecución:</string>
     <string name="bridge_IP">IP que será asignada dinamicamente al Nodo Puente de Souliss</string>
     <string name="bridge_subnet">Máscara de Subred que será asignada al Nodo Puente de Souliss</string>
     <string name="bridge_gateway">Puerta de Acceso para el Nodo Puente de Souliss, normalmente la IP de su Router</string>
     <string name="bridge_ssid">Nombre de la red Wifi, para ser utilizada por el Nodo Puente de Souliss</string>
     <string name="bridge_wifipass">Contraseña de la Red Inalambrica indicada anteriormente</string>
-    <string name="waiting">Esperando actualización&#8230;</string>
     <string name="historyof">Historia de</string>
-    <string name="daily">Promedio diario</string>
-    <string name="monthly">Promedio mensual</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Souliss no parece configurado. Por favor configure la dirección local de Souliss en la pantalla preferencias</string>
@@ -33,13 +29,11 @@
     <string name="dialog_remove_title">Borrar Programa</string>
     <string name="dialog_remove_cmd">Está seguro que quiere borrar este programa?</string>
     <string name="dialog_choose_icon">Seleccione icono para </string>
-    <string name="dialog_choose_html">Escoja un archivo .html en la carpeta /sdcard/Souliss</string>
     <string name="allnodes">Todos los Nodos</string>
 
     <!-- PROGRAMS_SECTION -->
     <string name="programs_title">Programas</string>
     <string name="programs_no">Programa no activo</string>
-    <string name="programs_add">Agregar programa</string>
     <string name="execute">Ejecutar</string>
     <string name="programs_unexecuted">Programas activos</string>
     <string name="programs_desc">El cliente Souliss admite programas temporizados (morado), programas geolocalizados (azul) y comandos basados en sensores (rojo) </string>
@@ -58,13 +52,11 @@
     <string name="compatible">compatible con dispositivos</string>
     <string name="to_all">a todos</string>
     <string name="to">a</string>
-    <string name="on_node">en el Nodo</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Escenas</string>
     <string name="scenes_delete">Borrar escena</string>
     <string name="scenes_rename">Renombrar escena</string>
     <string name="scenes_changeicon">Cambiar icono de escena</string>
-    <string name="scenes_add">Añadir escena</string>
     <string name="scenes_empty">!!Escena vacía!!</string>
     <string name="scenes_empty_desc">Utilice el siguiente botón para añadir un comando para esta escena</string>
     <string name="scenes_desc">Las escenas se componen de varios comandos souliss. Realice una pulsación larga para editar o ejecutar una escena. Realice una pulsación corta para abrir detalles. Utilice el botón + para crear una nueva escena vacía</string>
@@ -119,7 +111,6 @@
     <string name="manual_id_prompt">Elija el ID de un Nodo</string>
     <string name="manual_slot_prompt">Elija un SLOT</string>
     <string name="icon_select">Seleccione un icono</string>
-    <string name="manual_showing_typ">Mostrando detalle del dispositivo: </string>
     <string name="manual_desc">Envía comandos al los Nodos Souliss de forma manual. Pulse sobre el Nodo para abrir los detalles, mantenga pulsado para editarlo</string>
     <string name="node_empty">¡El Nodo está vacío!</string>
     <string name="node_empty_desc">Este Nodo no contiene dispositivos. Si debiera contenerlos intente refrescar la Base de Datos en Opciones</string>
@@ -127,17 +118,12 @@
     <!-- SERVICE -->
     <string name="service_disabled">Souliss Servicio de Datos <b>desactivado</b></string>
     <string name="service_lastexec"><b>Última ejecución del Servicio:</b></string>
-    <string name="db_size">Tamaño de la BD</string>
     <string name="service_warnbound">Servicio <b>activado</b> pero <b>no enlazado</b>, reiniciando</string>
-    <string name="webservice_enabled">Zozzariello <b>habilitado</b> escuchando </string>
-    <string name="timeout_expired">Commando expirado <![CDATA[<b><font color=\"#FF4444\">expirado</font></b>]]>.Souliss podría no estar disponible</string>
 
     <!-- STATUS -->
     <string name="status_souliss">Estado Souliss</string>
-    <string name="status_updating">Actualizando Base de Datos &#8230;Por favor espere</string>
     <string name="status_souliss_notreachable">Souliss no accesible, error de red</string>
     <string name="status_geoprovider_enabled">Geo proveedor <b>habilitado</b>,pero no hay datos aún</string>
-    <string name="status_provider_selected"> se ha seleccionado.</string>
     <string name="status_geoprovider_disabled">Geo proveedor <b>deshabilitado</b></string>
 
     <!-- OPZIONI -->
@@ -166,8 +152,6 @@
     <string name="dialog_title_edittext_IP">Dirección IP</string>
     <string name="summary_edittext_IP_pubb">Insertar dirección pública Souliss, para acceder desde fuera de casa. Puede usar DNS dinámica (DDNS) y redireccionamiento de puerto para acceder a casa fácilmente</string>
     <string name="title_edittext_IP_pubb">Dirección pública de Souliss</string>
-    <string name="opt_fontsizedesc">Elija el tamaño de letra</string>
-    <string name="opt_fonttitledesc">Personalizar el aspecto de los títulos</string>
     <string name="opt_tetxfx">Efectos de texto</string>
     <string name="opt_tetxfx_desc">Animación de íconos y texto</string>
     <string name="opt_animfx">Animaciones</string>
@@ -177,16 +161,12 @@
     <string name="opt_restore">Restaurar advertencias</string>
     <string name="opt_restore_desc">Muestra de nuevo las advertencias suprimidas</string>
     <string name="opt_visual">Opciones visuales</string>
-    <string name="opt_fontsize">Tamaño de texto</string>
-    <string name="opt_fonttitle">Cambiar la fuente del título</string>
     <string name="opt_visualdesc">Tamaño del texto y efectos</string>
     <string name="opt_servicedesc">Configurar la recuperación de datos en segundo plano del cliente Souliss</string>
     <string name="opt_serviceEnable">Servicio de Datos habilitado</string>
     <string name="opt_serviceEnable_desc">Servicio en segundo plano deja Souliss sincronizado</string>
     <string name="opt_serviceinterval">Intervalo del Servicio</string>
     <string name="opt_serviceinterval_desc">Mayor velocidad requiere mayor uso de batería y recursos</string>
-    <string name="opt_WebServerEnable">Zozzariello (webserver)</string>
-    <string name="opt_WebServerEnable_desc">El Webserver Souliss conecta su red Souliss con HTTP. Abrir puerto 8080 en este dispositivo</string>
     <string name="opt_servicehomepos">Establecer localización Casa</string>
     <string name="opt_servicehomepos_desc">establecer posición actual como referencia para Programas de posicionamiento</string>
     <string name="opt_Thold_desc">Distancia dentro de la cual se considera "en casa"</string>
@@ -199,12 +179,8 @@
     <string name="opt_dialog_restored">Restaurados todos los diálogos</string>
     <string name="unknown_typical">Dispositivo desconocido</string>
     <string name="opt_net_home">Red</string>
-    <string name="opt_net_remote">Red remota (opcional)</string>
-    <string name="opt_db_upd_desc">actualiza la configuración de los nodos de hardware Souliss. Asegúrese de configurar la red primero</string>
 
     <!-- TYPICALS -->
-    <string name="Souliss_TurnOn_desc">Encender</string>
-    <string name="Souliss_TurnOff_desc">Apagar</string>
     <string name="Souliss_ResetCmd_desc">Reset</string>
     <string name="Souliss_ToggleCmd_desc">Cambiar estado</string>
     <string name="Souliss_AutoCmd_desc">Auto</string>
@@ -229,8 +205,6 @@
     <string name="Souliss_T41_desc">Sistema antirobo</string>
     <string name="Souliss_T42_desc">Peer antirobo</string>
     <string name="Souliss_T51_desc">Entrada analógica</string>
-    <string name="Souliss_T52_desc">Entrada analógica, valor medio</string>
-    <string name="Souliss_T53_desc">Entrada analógica, interactividad máxima</string>
     <string name="Souliss_T54_desc">Sensor de luz</string>
     <string name="Souliss_T55_desc">Sensor de Voltaje</string>
     <string name="Souliss_T56_desc">Sensor de Corriente</string>
@@ -244,7 +218,6 @@
     <string name="Souliss_T66_desc">Current setpoint(0, 25) A</string>
     <string name="Souliss_T67_desc">Power setpoint(0, 6500) W</string>
     <string name="Souliss_T68_desc">Pressure setpoint (0, 1500) hPa</string>
-    <string name="Souliss_TCurrentSensor_desc">Sensor de Corriente</string>
     <string name="Souliss_TTemperature_desc">Sensor de Temperatura</string>
     <string name="Souliss_THumidity_desc">Sensor de Humedad</string>
     <string name="Souliss_TAircon_desc">Aire acondicionado</string>
@@ -280,22 +253,18 @@
     <string name="or">o</string>
     <string name="input_tag_name">Introduzca nombre de Etiqueta</string>
     <string name="tag_rename">Renombrar</string>
-    <string name="tag_delete">Borrar</string>
     <string name="tag_desc">Descripcion</string>
     <string name="img_select" >Seleciona Imagen</string>
-    <string name="tag_info_format">Hay %1$d dispositivos en %2$d Etiquetas</string>
-    <string name="hours">hora</string> 
+    <string name="hours">hora</string>
     <string name="warnmeifon">Avísame si está encendido más de (hours)</string>
     <string name="timed_warning">Alerta de Consumo</string>
     <string name="hasbeenturnedontoolong">Typical %s está encendido mucho tiempo</string>
     <string name="opt_udpport">Puerto UDP</string>
     <string name="udphint" >Porfavor, Introduzca un numero en el rango 1&#8211;65535</string>
-    <string name="amongFav">Dispositivo en Favoritos</string>
     <string name="amongTags">Dispositivo Etiquetado</string>
     <string name="status_souliss_nodetail">No hay detalle disponible</string>
     <string name="bridge_isgateway">Configure remote node as Gateway/Peer for the Souliss network</string>
     <string name="nodeleteFav">No se puede eliminar la etiqueta Favoritos</string>
-    <string name="err_command_not_sel">Comando no seleccionado</string>
     <string name="widget_cantsave">Dispositivo vacio/No seleccionado</string>
 
     <string name="warn_wifi">¡Imposible usar direccion local sin conexión WI-FI!</string>
@@ -308,11 +277,9 @@
     <string name="homewarn"><b>No está fijada la posición de casa</b>, utilice la opción de fondo para establecer la posición de casa</string>
     <string name="useridxhint">Porfavor, Introduzca un numero en el rango 1&#8211;100</string>
     <string name="nodeidxhint">Porfavor, Introduzca un numero en el rango 1&#8211;254</string>
-    <string name="dbstruct_req">Estructura de base de datos OK</string>
     <string name="antitheft_status">Estado de sistema antirobo:</string>
     <string name="antitheft_notify_desc">Revisar peers tapping del sistema antirobo en esta notificación</string>
     <string name="antitheft_notify">ALARMA Souliss activada!</string>
-    <string name="bytes_received">Bytes recibidos</string>
     <string name="antitheftNotify">Notificar estado de Alarma</string>
     <string name="antitheftReset">Re-Armar sistema antirobo</string>
     <string name="dialog_import_nofolder">No existe la carpeta a importar</string>
@@ -328,20 +295,17 @@
     <string name="sureToRemoveTag">Estás seguro que quieres eliminar esta etiqueta ?</string>
     <string name="cantRemoveDefault">No se puede eliminar la etiqueta Favoritos</string> 
     <string name="removeTag">Eliminar etiqueta</string>
-    <string name="tagorder_desc">Si hay dos etiquetas con la misma posicion el ID será utilizado para determinar la posicion final.</string>
     <string name="opt_fahrenheit">Fahrenheit</string>
     <string name="Souliss_T1A_desc">Status Array</string>
     <string name="offline">Desconectado</string>
     <string name="opt_loghist_desc">Guardar todos los dispositivos\' cambio de estado</string>
     <string name="opt_loghist">Historial activado</string>
-    <string name="widget_cantupdate">Error al recuperar el dispositivo</string>
     <string name="opt_dbopt_desc">Vaciar base de datos y eliminar los registros de más de un año</string>
     <string name="opt_dbopt">Optimizar base de datos</string>
     <string name="opt_voice_command">Comando de voz</string>
     <string name="opt_voice_command_desc">Ejecutar escenas y enviar comandos con tu voz. Pulse para más detalles</string>
     <string name="voice_command">Comando de voz</string>
     <string name="opt_get_nodes">Obtener nodos Souliss</string>
-    <string name="bytes_sent">Bytes enviados</string>
     <string name="voice_command_help">Utilice una de sus escenas\' nombre, o un comando (encender, apagar, etc.) seguido de un dispositivo\'s nombre</string>
     <string name="souliss_voice_command">Comando de voz Souliss</string>
     <string name="command_typ_error"/>
@@ -349,9 +313,7 @@
     <string name="err_command_not_recognized">Comando no reconocido</string>
     <string name="menu_changenodeRebuild">Reconstruir nodo</string>
     <string name="menu_changenodeRebuild_desc">Al reconstruir el nodo se borraran los nombres de los dispositivos</string>
-    <string name="menu_addFav">Añadir a Favoritos</string>
     <string name="addprogram_choosedelay">Command\'s delay</string>
-    <string name="action_settings">Settings</string>
     <string name="config_choose_desc">SoulissApp en modo Demo, Crea tu configuracion o carga una existente.</string>
     <string name="opt_restore_welcome_desc">Muestra la ventana de Bienvenida al iniciar la App</string>
     <string name="opt_restore_welcome">Restaurar Pantalla de Inicio</string>
@@ -362,7 +324,6 @@
     <string name="welcome_tour_button">Iniciar</string>
     <string name="scene_add_typical_to">Añadir dispositivo a...</string>
     <string name="functions">Funciones</string>
-    <string name="souliss_controlling">Souliss está controlando %1$d Dispositivos</string>
     <string name="voice_command_query_help">Es necesario indicar un nombre de dispositivo seguido de un estado.</string>
     <string name="tasker_query_longexp"><![CDATA[La consulta sera enviada a SoulissApp para recibir si se cumple la condicion. Para devolver Verdadero el texto debe contener el estado de Salida del dispositivo deseado. Por ejemplo:<ul> <li>\'Luz Cocina Encender\', </li></ul>\'Ventana Habitacion Abrir\']]></string>
     <string name="opt_settingshare_desc">Guarda los ajustes actuales y compartelos.</string>
@@ -386,8 +347,6 @@
     <string name="menu_launcher_desc">Launcher menu elements and configuration</string>
     <string name="menu_launcher_config">Homescreen Setup</string>
     <string name="launcher_desc">drag items to sort them. Launcher option menu offers further menu configuration</string>
-    <string name="opt_launcher">Launcher Setup</string>
-    <string name="settings_launcher_items">Home screen Elements</string>
     <string name="launcher_type">Launcher element type</string>
     <string name="opt_rstlauncher_desc">Restore default launcher elements</string>
     <string name="scene_added">" inserted, long-press to rename it and choose icon"</string>
@@ -398,7 +357,6 @@
     <string name="menu_addto_dashboard">Addo to Dashboard</string>
     <string name="dashboard">Dashboard</string>
     <string name="added_to_dashboard">" added to Dashboard"</string>
-    <string name="step">STEP</string>
     <string name="active_config">Active Config</string>
     <string name="importing_be_patient">Importing %1$s, please be patient</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>

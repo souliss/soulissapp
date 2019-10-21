@@ -49,7 +49,11 @@
         <activity
             android:name=".SendCommandActivityNoDisplay"
             android:label="@string/souliss_app_name"
-            android:theme="@android:style/Theme.NoDisplay" />
+            android:exported="true"
+            android:theme="@android:style/Theme.NoDisplay">
+
+        </activity>
+
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/souliss_app_name"

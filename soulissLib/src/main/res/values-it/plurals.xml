@@ -30,9 +30,4 @@
         <item quantity="one">1 Secondo</item>
         <item quantity="other">%s Secondi</item>
     </plurals>
-    <plurals name="scenes_configured">
-        <item quantity="zero">Nessuno scenario</item>
-        <item quantity="one">1 Scenario</item>
-        <item quantity="other">%s Scenari</item>
-    </plurals>
 </resources>

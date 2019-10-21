@@ -22,18 +22,6 @@
         <item>8</item>
         <item>9</item>
     </string-array>
-    <string-array name="textsiz_array">
-        <item>Bardzo małe</item>
-        <item>Małe</item>
-        <item>Średnie</item>
-        <item>Duże</item>
-    </string-array>
-    <string-array name="textsiz_values">
-        <item>-1</item>
-        <item>0</item>
-        <item>2</item>
-        <item>4</item>
-    </string-array>
     <string-array name="updateInterval">
         <item name="3000">3 sekundy</item>
         <item name="5000">5 sekund</item>

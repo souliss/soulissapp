@@ -21,5 +21,4 @@
         <item quantity="few">%d Секунды</item>
         <item quantity="many">%s Секунд</item>
     </plurals>
-    <plurals name="scenes_configured">Scenes configured</plurals>
 </resources>

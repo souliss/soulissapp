@@ -6,14 +6,6 @@
         <item name="android:listViewStyle">@style/lightListView</item>
     </style>
 
-    <style name="AboutDialogLight" parent="@android:style/Theme.Dialog">
-        <item name="android:textColor">#ff000000</item>
-    </style>
-
-    <style name="AboutDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:textColor">#ffCCCCCC</item>
-    </style>
-
     <style name="lightListView">
         <item name="android:background">#00ffffff</item>
     </style>
@@ -94,12 +86,6 @@
 
     <style name="mySpinnerStyle">
         <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
-    </style>
-
-    <style name="FilePickerAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorPrimary">@color/std_blue</item>
-        <item name="colorPrimaryDark">@color/std_blue_shadow</item>
-        <item name="colorAccent">@color/aa_green</item>
     </style>
 
 </resources>

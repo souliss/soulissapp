@@ -11,13 +11,8 @@
     <string name="bridge_gateway">Шлюз Souliss бриджа, чаще всего это адрес роутера</string>
     <string name="bridge_ssid">Название беспроводной сети, которую будет использовать Souliss бридж</string>
     <string name="bridge_wifipass">Пароль для указанной беспроводной сети</string>
-    <string name="last_update">Последнее обновление в:</string>
     <string name="last_exec">Последний запуск в:</string>
-    <string name="db_size">Размер БД</string>
-    <string name="waiting">Ждем обновлений&#8230;</string>
     <string name="historyof">История</string>
-    <string name="daily">В среднем за день</string>
-    <string name="monthly">В среднем за месяц</string>
 
     <!-- dialogs_SECTION -->
     <string name="dialog_notinited_ip">Похоже, что Souliss не сконфигурирована. Пожалуйста, настройте локальный адрес Souliss в окне настроек</string>
@@ -34,13 +29,11 @@
     <string name="dialog_remove_title">Удалить Программу</string>
     <string name="dialog_remove_cmd">Вы уверены, что хотите удалить эту команду?</string>
     <string name="dialog_choose_icon">Выберите иконку для </string>
-    <string name="dialog_choose_html">Выберите  .html файл в каталоге /sdcard/Souliss</string>
     <string name="allnodes">Все узлы</string>
 
     <!-- PROGRAMS_SECTION -->
     <string name="programs_title">Программы</string>
     <string name="programs_no">Нет активных программ</string>
-    <string name="programs_add">Добавить программу</string>
     <string name="execute">Выполнить</string>
     <string name="programs_trigger_executed">Событие Souliss Trigger запущено</string>
     <string name="programs_unexecuted">Активные программы</string>
@@ -60,13 +53,11 @@
     <string name="compatible">поддерживаемых устройств</string>
     <string name="to_all">для всех</string>
     <string name="to">для</string>
-    <string name="on_node">на узле</string>
     <!-- SCENESS_SECTION -->
     <string name="scenes_title">Сцены</string>
     <string name="scenes_delete">Удалить сцену</string>
     <string name="scenes_rename">Переименовать сцену</string>
     <string name="scenes_changeicon">Сменить иконку сцены</string>
-    <string name="scenes_add">Добавить сцену</string>
     <string name="scenes_empty">Сцена пуста!</string>
     <string name="scenes_empty_desc">Используйте кнопку ниже, чтобы добавить команду к этой сцене</string>
     <string name="scenes_desc">Сцены состоят из нескольких команд Souliss. Долгое нажатие для редактирования или запуска сцены, щелчек для просмотра свойств. Используйте кнопку для создания новой пустой сцены</string>
@@ -98,7 +89,6 @@
     <string name="menu_options">Настройки</string>
     <string name="menu_test">Тест низкоуровнего UDP соединения</string>
     <string name="menu_test_udp">Тест UDP</string>
-    <string name="menu_addFav">Добавить в избранное</string>
     <string name="menu_rename">Переименовать узел</string>
     <string name="menu_changenodeicon">Сменить иконку узла</string>
     <string name="menu_changetypicon">Сменить иконку устройтва</string>
@@ -120,7 +110,6 @@
     <string name="manual_id_prompt">Выбрать  ID узла</string>
     <string name="manual_slot_prompt">Выбрать слот</string>
     <string name="icon_select">Выбрать иконку</string>
-    <string name="manual_showing_typ">Отображаемые свойства устройства: </string>
     <string name="manual_desc">Отправить команду устройству сети Souliss вручную. Кликнуть узел, чтобы открыть свойства, долгое нажатие для редактирования</string>
     <string name="manual_litfrom">Включено %1$s назад</string>
     <string name="manual_tyinf">Это устройство работало %1$s в последнием месяце</string>
@@ -132,14 +121,10 @@
     <string name="service_disabled">Служба данных Souliss <b>отключена</b></string>
     <string name="service_lastexec"><b>Последний запуск службы:</b></string>
     <string name="service_warnbound">Сервис <b>активирован</b> но <b>не доступен</b>, перезапуск</string>
-    <string name="webservice_enabled">Zozzariello <b>активирован</b> слушаем на </string>
-    <string name="timeout_expired">Время выполнения команды <![CDATA[<b><font color=\"#FF4444\">истекло</font></b>]]>.Возможно сеть Souliss не доступна</string>
     <!-- STATUS -->
     <string name="status_souliss">Состояние Souliss</string>
-    <string name="status_updating">Обновляем DB&#8230;Пожалуйста ждите</string>
     <string name="status_souliss_notreachable">Сеть Souliss недоступна, ошибка сети</string>
     <string name="status_geoprovider_enabled">Гео провайдер <b>включен</b>, но данные еще не получены</string>
-    <string name="status_provider_selected"> был выбран.</string>
     <string name="status_geoprovider_disabled">Гео провайдеры <b>отключены</b></string>
 
     <!-- OPZIONI -->
@@ -172,8 +157,6 @@
     <string name="dialog_title_edittext_IP">IP адрес</string>
     <string name="summary_edittext_IP_pubb">Ввести публичный адрес сети Souliss, для использования когда Вы вне дома. Вы можете использовать dynamic DNS и перенаправление портов, чтобы с лёгкостью подключиться к дому</string>
     <string name="title_edittext_IP_pubb">Публичный адрес сети Souliss</string>
-    <string name="opt_fontsizedesc">Выберите размер текста</string>
-    <string name="opt_fonttitledesc">Шрифт используемый для заголовков</string>
     <string name="opt_tetxfx">Текстовые эффекты</string>
     <string name="opt_tetxfx_desc">Анимировать иконки и текст</string>
     <string name="opt_animfx">Анимации</string>
@@ -183,16 +166,12 @@
     <string name="opt_restore">Восстановить предупреждения</string>
     <string name="opt_restore_desc">Показать отключенные сообщения снова</string>
     <string name="opt_visual">Настройки визуализации</string>
-    <string name="opt_fontsize">Размер текста</string>
-    <string name="opt_fonttitle">Изменить шрифт заголовков</string>
     <string name="opt_visualdesc">Размер текста и эффекты</string>
     <string name="opt_servicedesc">Настроить службу Souliss и расположение дома</string>
     <string name="opt_serviceEnable">Служба данных запущена</string>
     <string name="opt_serviceEnable_desc">Фоновая служба синхронизирует Souliss</string>
     <string name="opt_serviceinterval">Периодичность службы</string>
     <string name="opt_serviceinterval_desc">Большая скорость требует больше ресурсов и увеличивает расход батареи</string>
-    <string name="opt_WebServerEnable">Zozzariello (вебсервер)</string>
-    <string name="opt_WebServerEnable_desc">Вебсервер Souliss обеспечивает доступ к сети Souliss по HTTP. Открыть порт 8080 на этом устройстве</string>
     <string name="opt_servicehomepos">Установить расположение Дома</string>
     <string name="opt_servicehomepos_desc">установить текущую позицию как основу для геозависимых программ</string>
     <string name="opt_Thold_desc">Расстояние, на котором вы будите считаться вне дома</string>
@@ -205,12 +184,8 @@
     <string name="opt_dialog_restored">Все диалоги восстановлены</string>
     <string name="unknown_typical">Неизвестное устройство</string>
     <string name="opt_net_home">Сеть</string>
-    <string name="opt_net_remote">Удаленная сеть (опционально)</string>
-    <string name="opt_db_upd_desc">обновления конфигурации устройств Souliss. Убедитесь, что сеть настроена</string>
 
     <!-- TYPICALS -->
-    <string name="Souliss_TurnOn_desc">Включить</string>
-    <string name="Souliss_TurnOff_desc">Выключить</string>
     <string name="Souliss_ResetCmd_desc">Ресет</string>
     <string name="Souliss_ToggleCmd_desc">Переключить</string>
     <string name="Souliss_AutoCmd_desc">Автоматически</string>
@@ -236,14 +211,11 @@
     <string name="Souliss_T41_desc">Система Антивзлом</string>
     <string name="Souliss_T42_desc">Датчик Антивзлом</string>
     <string name="Souliss_T51_desc">Аналоговый вход</string>
-    <string name="Souliss_T52_desc">Аналоговый вход основное значение</string>
-    <string name="Souliss_T53_desc">Аналоговый вход, максимум повторений</string>
     <string name="Souliss_T54_desc">Сенсор освещенности</string>
     <string name="Souliss_T55_desc">Сенсор напряжения</string>
     <string name="Souliss_T56_desc">Сенсор тока</string>
     <string name="Souliss_T57_desc">Сенсор мощности</string>
     <string name="Souliss_T58_desc">Сенсор давления</string>
-    <string name="Souliss_TCurrentSensor_desc">Сенсор тока</string>
     <string name="Souliss_TTemperature_desc">Сенсор температуры</string>
     <string name="Souliss_THumidity_desc">Сенсор влажности</string>
     <string name="Souliss_TAircon_desc">Кондиционер</string>
@@ -279,13 +251,9 @@
     <string name="or">или</string>
     <string name="input_tag_name">Введите имя новой метки</string>
     <string name="tag_rename" >Переименовать метку</string>
-    <string name="tag_delete" >Удалить метку</string>
     <string name="tag_desc" >Метки групп устройств. Вы можете создать метки для перераспределения устройств на свой выбор. Имеется предопределенная группа - Избранное</string>
     <string name="img_select" >Выбрать фото</string>
-    <string name="tag_info_format">Есть %1$d помеченных устройств в %2$d Метках</string>
-    <string name="err_command_not_sel">Команда не выбрана</string>
     <string name="udphint" >Пожалуйста, введите число в диапазоне 1&#8211;65535</string>
-    <string name="amongFav">Это устройство в Избранном</string>
     <string name="amongTags">Это устройство было отмечено</string>
     <string name="status_souliss_nodetail" >Окно свойств недоступно</string>
     <string name="bridge_isgateway" >Установить удаленный узел как Шлюз/Обнаружить сеть Souliss</string>
@@ -302,11 +270,9 @@
     <string name="useridxhint">Пожалуйста, введите число в диапазоне 1&#8211;100</string>
     <string name="nodeidxhint">Пожалуйста, введите число в диапазоне 1&#8211;254</string>
 
-    <string name="dbstruct_req">Структура БД получена</string>
     <string name="antitheft_status">Статус антивзлома:</string>
     <string name="antitheft_notify_desc">Проверка датчиков антивзлома по щелчку на этом сообщении</string>
     <string name="antitheft_notify">ТРЕВОГА Souliss включена!</string>
-    <string name="bytes_received">Байтов получено</string>
     <string name="antitheftNotify">Сообщить о тревоге</string>
     <string name="antitheftReset">Поставить на охрану антивзлом</string>
 
@@ -322,18 +288,15 @@
     <string name="sureToRemoveTag">Вы уверены, что хотите удалить эту Метку?</string>
     <string name="cantRemoveDefault">Невозможно удалить предпочитаемую Метку по умолчанию</string>
     <string name="removeTag">Удалить Метку</string>
-    <string name="tagorder_desc">Если обнаруживаются две Метки, занимающие одинаковую позицию, их Id будет использоваться для определения конечной позиции</string>
     <string name="opt_fahrenheit">Фаренгейт</string>
     <string name="hasbeenturnedontoolong">Устройство %s оставалось включенным слишком долго</string>
     <string name="hours">часов</string>
     <string name="opt_udpport">UDP Порт</string>
     <string name="warnmeifon">Оповещать меня, если включено более, чем (часов)</string>
-    <string name="widget_cantupdate">Ошибка при поиске Устройства</string>
     <string name="opt_voice_command">Голосовая команда</string>
     <string name="opt_voice_command_desc">Запускайте сценарии и посылайте команды голосом. Подробности</string>
     <string name="voice_command">Голосовая команда</string>
     <string name="opt_get_nodes">Получить узлы Souliss</string>
-    <string name="bytes_sent">Переданные байты</string>
     <string name="voice_command_help">Используйте одно из имен Ваших сцен или команду (включить, выключить и т.д.) перед именем устройства</string>
     <string name="souliss_voice_command">Голосовая команда Souliss</string>
     <string name="command_typ_error"/>
@@ -343,7 +306,6 @@
     <string name="menu_changenodeRebuild_desc">Пересоздание узла приведет к переписыванию определения устойства</string>
     <string name="addprogram_choosedelay">Откладывание команды</string>
     <string name="scene_add_typical_to">Добавить устойство к...</string>
-    <string name="action_settings">Настройки</string>
     <string name="config_choose_desc">Попробовать SoulissApp с системой демо, создать Вашу собственную конфигурацию или загрузить существующую</string>
     <string name="opt_restore_welcome_desc">Показывать экран приветствия, когда Проиложение запускается </string>
     <string name="opt_restore_welcome">Восстановить Начальный Экран</string>
@@ -352,7 +314,6 @@
     <string name="config_mandatory">Имя конфигурации обязательно</string>
     <string name="welcome_dontshow">Больше не показывать экран приветствия</string>
     <string name="functions">Функции</string>
-    <string name="souliss_controlling">Souliss контролирует %1$d Вещей</string>
     <string name="voice_command_query_help">Использовать имя устройства, followed by output status needed to verify condition</string>
     <string name="tasker_query_longexp">Запрос будет передан SoulissApp с целью получения индикатора булевого флажка если обозначенное условие подтверждается. Чтобы было истинным, строка должна содержать выходной статус желаемого устройства. Например,<ul> <li>\'Софит Столовой Включен\', </li></ul>\'Окно спальни открыто\'</string>
     <string name="opt_settingshare_desc">Сохранить текущие настройки и поделиться ими</string>
@@ -382,8 +343,6 @@
     <string name="menu_launcher_desc">Пусковое меню элементов и конфигураций</string>
     <string name="menu_launcher_config">Начальный установочный экран</string>
     <string name="launcher_desc">перетащите элементы, чтобы сортировать их. Меню пусковых опций предлагает дальнейшие конфигурации меню</string>
-    <string name="opt_launcher">Установка пуска</string>
-    <string name="settings_launcher_items">Элементы домашнего экрана</string>
     <string name="launcher_type">Тип элемента пуска</string>
     <string name="opt_rstlauncher_desc">Восстановить элементы пуска по умолчанию</string>
     <string name="scene_added">" добавлено, долгое нажатие для переименования или выбора иконки"</string>
@@ -394,7 +353,6 @@
     <string name="menu_addto_dashboard">Добавить на Приборную панель</string>
     <string name="dashboard">Приборная панель</string>
     <string name="added_to_dashboard">" добавлен на Приборную панель"</string>
-    <string name="step">ШАГ</string>
     <string name="active_config">Активная конфигурация</string>
     <string name="importing_be_patient">Выполняется экспорт %1$s пожалуйста, подождите</string>
     <string name="opt_vacuum_complete">Vacuum Complete. DB size:</string>

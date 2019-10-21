@@ -16,8 +16,4 @@
 
     <style name="Theme.Locale.Dark" parent="android:Theme.DeviceDefault"/>
 
-    <style name="Theme.Locale.Light" parent="android:Theme.DeviceDefault.Light"/>
-
-    <style name="Theme.Locale.Dialog" parent="android:Theme.DeviceDefault.Dialog"/>
-
 </resources>

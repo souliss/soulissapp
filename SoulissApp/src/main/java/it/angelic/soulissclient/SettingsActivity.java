@@ -18,6 +18,7 @@ import it.angelic.soulissclient.preferences.BroadcastSettingsFragment;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.LauncherSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragmentNuova;
+import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -54,6 +55,8 @@ public class SettingsActivity extends AppCompatActivity {
             if (NetSettingsFragmentNuova.class.getName().equals(classNAme))
                 collected = new NetSettingsFragmentNuova();
             if (BroadcastSettingsFragment.class.getName().equals(classNAme))
+                collected = new BroadcastSettingsFragment();
+            if (ServiceSettingsFragment.class.getName().equals(classNAme))
                 collected = new BroadcastSettingsFragment();
             if (VisualSettingsFragment.class.getName().equals(classNAme))
                 collected = new VisualSettingsFragment();

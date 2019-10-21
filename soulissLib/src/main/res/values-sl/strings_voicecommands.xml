@@ -17,12 +17,6 @@
         <item>izklopi</item>
     </string-array>
 
-    <string-array name="stop_strarray">
-        <item>ustavi</item>
-        <item>zaustavi</item>
-        <item>stop</item>
-    </string-array>
-
     <string-array name="toggle_strarray">
         <item>preklopi</item>
         <item>obrni</item>

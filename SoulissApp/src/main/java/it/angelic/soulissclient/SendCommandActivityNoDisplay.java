@@ -25,7 +25,7 @@ public class SendCommandActivityNoDisplay extends Activity {
         }
 
 
-        toExec.execute();
+        // toExec.execute();
         // UDPHelper.issueSoulissCommand("" + toExec.getNodeId(), "" + toExec.getSlot(), SoulissApp.getOpzioni(), toExec.toString());
         Log.i(Constants.TAG, "Voice Command SENT: " + toExec.getName());
 

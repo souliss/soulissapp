@@ -35,12 +35,6 @@
     </style>
 
 
-    <style name="CustomActionBar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:windowActionBarOverlay">true</item>
-        <!-- Support library compatibility -->
-        <item name="windowActionBarOverlay">true</item>
-    </style>
-
     <style name="CodeFontSmall" parent="@android:style/TextAppearance.Small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

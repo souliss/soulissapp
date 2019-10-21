@@ -23,7 +23,6 @@ import it.angelic.soulissclient.net.UDPHelper;
 
 public class VoiceCommandActivityNoDisplay extends Activity {
 
-
     public static void interpretCommand(final Context context, @NonNull final String yesMan) {
         final StringBuilder comandToSend = new StringBuilder();
         final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
@@ -51,23 +50,10 @@ public class VoiceCommandActivityNoDisplay extends Activity {
                 return;
             }
         }
-        if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnON_strarray))) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T1n_OnCmd);
-        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnOFF_strarray))) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T1n_OffCmd);
-        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.toggle_strarray))) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T1n_ToogleCmd);
-        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.open_strarray))) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T2n_OpenCmd);
-        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.close_strarray))) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T2n_CloseCmd);
-        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.red).toLowerCase())) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T16_Red);
-        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.green).toLowerCase())) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T16_Green);
-        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.blue).toLowerCase())) {
-            comandToSend.append("" + Constants.Typicals.Souliss_T16_Blue);
-        }
+        long dedodedCmd = decodeVoiceCommand(context, yesMan);
+        if (dedodedCmd != -1)
+            comandToSend.append("" + dedodedCmd);
+
         SoulissNode nodeMatch = null;
         boolean typMatch = false;
         boolean cmdSent = false;
@@ -137,10 +123,32 @@ public class VoiceCommandActivityNoDisplay extends Activity {
      */
     private static boolean isContainedInArray(String In, String[] synonyms) {
         for (String it : synonyms) {
-            if (In.contains(it.toLowerCase()))
+            if (In.toLowerCase().contains(it.toLowerCase()))
                 return true;
         }
         return false;
+    }
+
+
+    public static long decodeVoiceCommand(Context context, String yesMan) {
+        if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnON_strarray))) {
+            return Constants.Typicals.Souliss_T1n_OnCmd;
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.TurnOFF_strarray))) {
+            return Constants.Typicals.Souliss_T1n_OffCmd;
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.toggle_strarray))) {
+            return Constants.Typicals.Souliss_T1n_ToogleCmd;
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.open_strarray))) {
+            return Constants.Typicals.Souliss_T2n_OpenCmd;
+        } else if (isContainedInArray(yesMan, context.getResources().getStringArray(R.array.close_strarray))) {
+            return Constants.Typicals.Souliss_T2n_CloseCmd;
+        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.red).toLowerCase())) {
+            return Constants.Typicals.Souliss_T16_Red;
+        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.green).toLowerCase())) {
+            return Constants.Typicals.Souliss_T16_Green;
+        } else if (yesMan.toLowerCase().contains(context.getResources().getString(R.string.blue).toLowerCase())) {
+            return Constants.Typicals.Souliss_T16_Blue;
+        }
+        return -1;
     }
 
     @Override

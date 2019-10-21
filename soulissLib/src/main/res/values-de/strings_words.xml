@@ -9,7 +9,6 @@
     <string name="health">EMPFANG:</string>
     <string name="status">STATUS:</string>
     <string name="update">AKTUAL. vor:</string>
-    <string name="actions">AKTIONEN:</string>
     <string name="node">Knoten</string>
     <string name="nodes">Knoten</string>
     <string name="slot">Slot</string>
@@ -20,7 +19,6 @@
     <string name="multicast_desc">An alle Geräte dieses Types senden</string>
     <string name="days">Tage</string>
     <string name="poll">Abfragen</string>
-    <string name="refresh">Aktualisieren</string>
     <string name="save">Speichern</string>
     <string name="brightness">Helligkeit</string>
     <string name="proceed">Weiter</string>
@@ -47,7 +45,6 @@
     <string name="timer">Timer</string>
     <string name="is">ist</string>
     <string name="equalizer">Equalizer</string>
-    <string name="meters">Meter</string>
     <string name="service">Service</string>
     <string name="position">Position</string>
     <string name="Online">Online</string>

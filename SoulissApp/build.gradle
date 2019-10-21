@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId "it.angelic.soulissclient"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName rootProject.ext.VERSION_NAME
         versionCode rootProject.ext.VERSION_CODE

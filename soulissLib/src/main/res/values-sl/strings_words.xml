@@ -9,7 +9,6 @@
     <string name="health">ZDRAVJE:</string>
     <string name="status">STATUS:</string>
     <string name="update">POSODOBLJENO:</string>
-    <string name="actions">AKCIJE:</string>
     <string name="node">Vozlišče</string>
     <string name="nodes">Vozlišča</string>
     <string name="slot">Slot</string>
@@ -20,7 +19,6 @@
     <string name="multicast_desc">Pošlji vsem napravam tega tipa</string>
     <string name="days">dni</string>
     <string name="poll">Poll</string>
-    <string name="refresh">Osveži</string>
     <string name="save">Shrani</string>
     <string name="brightness">Svetlost</string>
     <string name="proceed">Nadaljuj</string>
@@ -47,7 +45,6 @@
     <string name="timer">Timer</string>
     <string name="is">je</string>
     <string name="equalizer">Equalizer</string>
-    <string name="meters">Meters</string>
     <string name="service">Storitev</string>
     <string name="position">Položaj</string>
     <string name="Online">Online</string>

@@ -10,9 +10,4 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<resources>
-    <array name="preloaded_fonts" translatable="false">
-        <item>@font/montserrat</item>
-        <item>@font/raleway</item>
-    </array>
-</resources>
+<resources></resources>
