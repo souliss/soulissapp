@@ -60,6 +60,7 @@ public class SoulissDBHelper {
     protected final Context context;
     protected SoulissPreferenceHelper opts;
 
+
     public SoulissDBHelper(Context context) {
         soulissDatabase = new SoulissDBOpenHelper(context);
         opts = SoulissApp.getOpzioni();

@@ -1,9 +1,11 @@
-package it.angelic.soulissclient.test;
+package it.angelic.soulissclient.net;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
 
+import androidx.test.platform.app.InstrumentationRegistry;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -23,11 +25,12 @@ import static androidx.test.InstrumentationRegistry.getContext;
 public class SoulissTestPersistence extends junit.framework.TestCase {
     private static final short fakeNodeId = 1;
     private static final short fakeSlotId = 1;
+    private Context context;
     private SoulissDBHelper db;
     private SoulissPreferenceHelper opzioni;
 
     protected void addFakeNode() {
-        SoulissNode testNode = new SoulissNode(getContext(), fakeNodeId);
+        SoulissNode testNode = new SoulissNode(context, fakeNodeId);
         // Here i have my new database wich is not connected to the standard database of the App
         db.createOrUpdateNode(testNode);
         assertEquals(1, db.countNodes());
@@ -35,7 +38,7 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
     }
 
     protected void addFakeLight() {
-        SoulissTypical11DigitalOutput testTypical = new SoulissTypical11DigitalOutput(getContext(), opzioni);
+        SoulissTypical11DigitalOutput testTypical = new SoulissTypical11DigitalOutput(context, opzioni);
         testTypical.getTypicalDTO().setTypical(Constants.Typicals.Souliss_T11);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot(fakeSlotId);
@@ -47,7 +50,7 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
     }
 
     protected void addFakeSensor() {
-        SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(getContext(), opzioni);
+        SoulissTypical51AnalogueSensor testTypical = new SoulissTypical51AnalogueSensor(context, opzioni);
         testTypical.getTypicalDTO().setTypical(Constants.Typicals.Souliss_T51);
         testTypical.getTypicalDTO().setNodeId(fakeNodeId);
         testTypical.getTypicalDTO().setSlot((short) (fakeSlotId + 1));
@@ -61,8 +64,17 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        db = new SoulissDBHelper(getContext());
-        opzioni = new SoulissPreferenceHelper(getContext());
+        //USA DB VERO
+        //context = InstrumentationRegistry.getInstrumentation().getTargetContext()
+
+
+        context = InstrumentationRegistry.getInstrumentation().getContext();
+        //RenamingDelegatingContext context = new RenamingDelegatingContext(context, "test_db");
+        context.deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
+        //context.getDatabasePath()
+        db = new SoulissDBHelper(context);
+        opzioni = new SoulissPreferenceHelper(context);
+
         SoulissDBHelper.open();
 
         addFakeNode();
@@ -72,7 +84,7 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
 
     @Override
     public void tearDown() throws Exception {
-        getContext().deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
+        context.deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
 
         Log.i(Constants.TAG, "tearDown test DB");
         db.close();
@@ -106,7 +118,7 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
         List<SoulissTypical> testTypical = db.getNodeTypicals(father);
 
         assertEquals(2, db.countTypicals());//siam sicuri che solo lui
-        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(getContext(), Constants.Typicals.Souliss_T51, father, testTypical.get(1).getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
+        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(context, Constants.Typicals.Souliss_T51, father, testTypical.get(1).getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
 
         assertEquals(copy.getTypicalDTO(), testTypical.get(1).getTypicalDTO());
     }
@@ -116,7 +128,7 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
         SoulissTypical51AnalogueSensor testTypical = (SoulissTypical51AnalogueSensor) db.getTypical(fakeNodeId, (short) (fakeSlotId + 1));
 
         SoulissNode father = db.getSoulissNode(fakeNodeId);
-        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(getContext(), Constants.Typicals.Souliss_T51, father, testTypical.getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
+        SoulissTypical51AnalogueSensor copy = (SoulissTypical51AnalogueSensor) SoulissTypicalFactory.getTypical(context, Constants.Typicals.Souliss_T51, father, testTypical.getTypicalDTO(), new SoulissPreferenceHelper(getContext()));
 
         assertEquals(true, testTypical.isSensor());
         assertEquals(copy.getTypicalDTO(), testTypical.getTypicalDTO());

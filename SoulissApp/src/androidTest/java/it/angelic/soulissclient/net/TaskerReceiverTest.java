@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-package it.angelic.soulissclient.test;
+package it.angelic.soulissclient.net;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -89,7 +89,7 @@ public final class TaskerReceiverTest extends TestCase {
         /*
          * The receiver shouldn't crash if the Intent has an EXTRA_BUNDLE that isn't actually a Bundle
          */
-        fireReceiver.onReceive(getContext(), new Intent(com.twofortyfouram.locale.Intent.ACTION_FIRE_SETTING).putExtra(com.twofortyfouram.locale.Intent.EXTRA_BUNDLE, "test")); //$NON-NLS-1$
+        fireReceiver.onReceive(getContext(), new Intent(com.twofortyfouram.locale.Intent.ACTION_FIRE_SETTING).putExtra(com.twofortyfouram.locale.Intent.EXTRA_BUNDLE, "it.angelic.soulissclient")); //$NON-NLS-1$
     }
 
     /**

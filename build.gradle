@@ -22,7 +22,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-
         mavenLocal()
 
         maven {

@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (BroadcastSettingsFragment.class.getName().equals(classNAme))
                 collected = new BroadcastSettingsFragment();
             if (ServiceSettingsFragment.class.getName().equals(classNAme))
-                collected = new BroadcastSettingsFragment();
+                collected = new ServiceSettingsFragment();
             if (VisualSettingsFragment.class.getName().equals(classNAme))
                 collected = new VisualSettingsFragment();
             if (LauncherSettingsFragment.class.getName().equals(classNAme))
