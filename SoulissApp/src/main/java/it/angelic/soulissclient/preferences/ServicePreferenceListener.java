@@ -11,10 +11,6 @@ import it.angelic.soulissclient.SoulissDataService;
 public class ServicePreferenceListener implements androidx.preference.Preference.OnPreferenceChangeListener {
 
     private Activity parent;
-    // EXPORT
-
-    //private SoulissPreferenceHelper opzioni;
-    //private SoulissDBHelper datasource;
 
     public ServicePreferenceListener(Activity parent) {
         super();

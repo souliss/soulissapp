@@ -35,7 +35,7 @@
             android:enabled="true"
             android:process=":souliss_process"></service>
         <service
-            android:name=".SoulissZombieRestoreWorker"
+            android:name=".WorkerZombieRestore"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />

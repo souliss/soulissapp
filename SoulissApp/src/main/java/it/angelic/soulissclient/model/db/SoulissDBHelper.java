@@ -110,6 +110,20 @@ public class SoulissDBHelper {
         return count;
     }
 
+    public int countPrograms() {
+        if (!database.isOpen())
+            open();
+        Cursor mCount = database.rawQuery("select count(*) from " + SoulissDBOpenHelper.TABLE_COMMANDS + " WHERE ("
+                + SoulissDBOpenHelper.COLUMN_COMMAND_EXECTIME + " is null OR " + SoulissDBOpenHelper.COLUMN_COMMAND_TYPE + " ="
+                + Constants.COMMAND_COMEBACK_CODE + " OR " + SoulissDBOpenHelper.COLUMN_COMMAND_TYPE + " ="
+                + Constants.COMMAND_GOAWAY_CODE + " OR " + SoulissDBOpenHelper.COLUMN_COMMAND_TYPE + " ="
+                + Constants.COMMAND_TRIGGERED + ") AND " + SoulissDBOpenHelper.COLUMN_COMMAND_SCENEID + " IS NULL", null);
+        mCount.moveToFirst();
+        int count = mCount.getInt(0);
+        mCount.close();
+        return count;
+    }
+
     public int countScenes() {
         if (!database.isOpen())
             open();

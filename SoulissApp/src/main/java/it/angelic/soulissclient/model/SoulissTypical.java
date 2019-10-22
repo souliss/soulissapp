@@ -374,7 +374,7 @@ public class SoulissTypical implements Serializable, ISoulissTypical {
             SoulissDBHelper.getDatabase().insert(SoulissDBOpenHelper.TABLE_LOGS, null, values);
         } catch (SQLiteConstraintException e) {
             // sensori NaN violano il constraint
-            Log.e(it.angelic.soulissclient.Constants.TAG, "error saving log: " + e);
+            Log.e(it.angelic.soulissclient.Constants.TAG, "error saving log: " + e.getMessage());
         }
 
     }

@@ -21,8 +21,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +34,6 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
-import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
 import it.angelic.soulissclient.util.SoulissUtils;
 
@@ -109,7 +106,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 if (homeDist != homeDistPrev) {
                     processPositionalPrograms(homeDistPrev);
                 }
-
+/*Moved in workJob
                 // Timed commands
                 new Thread(new Runnable() {
                     @Override
@@ -152,9 +149,9 @@ public class SoulissDataService extends Service implements LocationListener {
                         // db.close();
                     }
                 }).start();
-
-                // Check for too long ON status
-                new Thread(new Runnable() {
+*/
+                // Check for too long ON status SPOSTATO
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         Log.d(TAG, "Checking warning for long turned-on typicals");
@@ -181,17 +178,14 @@ public class SoulissDataService extends Service implements LocationListener {
                         Log.i(TAG, "checked timed on  warnings: " + checkd);
                         // db.close();
                     }
-                }).start();
+                }).start();*/
 
-				/* SENSORS REFRESH THREAD */
-                new Thread(new Runnable() {
+                /* SENSORS REFRESH THREAD SPOSTATO nel WORKER */
+               /* new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        /*
-                         * finally { db.close(); }
-						 */
 
-                        // spostato per consentire comandi manuali
+
                         if (!opts.isDataServiceEnabled()) {
                             Log.w(TAG, "Service disabled, is not going to be re-scheduled");
                             lastupd = (Calendar.getInstance());
@@ -237,7 +231,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
                     }
 
-                }).start();
+                }).start();*/
 
             } else {// NO CONNECTION, NO NODES!!
                 Log.w(TAG, "Service end but NOTHING DONE");
@@ -336,11 +330,10 @@ public class SoulissDataService extends Service implements LocationListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.w(TAG, "service onCreate()");
+        Log.w(TAG, "TIMED service onCreate()");
         opts = SoulissApp.getOpzioni();
         // subito
         startUDPListener();
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 
@@ -351,6 +344,7 @@ public class SoulissDataService extends Service implements LocationListener {
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         cIntent = new Intent(this, SoulissDataService.class);
+
     }
 
     @Override

@@ -162,8 +162,9 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
                                 countScenes(), countScenes()) + " " + context.getString(R.string.string_configured));
                         break;
                     case STATIC_PROGRAMS:
+                        int cntNd = countPrograms();
                         dto.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
-                                countTriggers(), countTriggers()));//FIXME count progs
+                                cntNd));
                         break;
                     case NODE:
                         isoulissObj = getSoulissNode(cursor.getInt(cursor.getColumnIndex(SoulissDBOpenHelper.COLUMN_LAUNCHER_NODE_ID)));

@@ -46,7 +46,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import it.angelic.receivers.NetworkStateReceiver;
@@ -89,7 +91,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 Log.i(TAG, "Broadcast receive, refresh from DB");
                 database.refreshMapFromDB();
                 List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
-                launcherMainAdapter.setmBoundService(mBoundService);
+
                 launcherMainAdapter.setLauncherElements(launcherItems);
                 launcherMainAdapter.notifyDataSetChanged();
                 if (mBoundService != null)
@@ -108,6 +110,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             mBoundService = ((SoulissDataService.LocalBinder) service).getService();
+            launcherMainAdapter.setmBoundService(mBoundService);
+
             Log.i(TAG, "Dataservice connected, BackedOffServiceInterval=" + opzioni.getBackedOffServiceIntervalMsec());
             SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
             if (pref.isDataServiceEnabled()) {
@@ -277,18 +281,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             }
         });
         //TODO test&tune
-        PeriodicWorkRequest request =
-                // Executes MyWorker every 15 minutes
-                new PeriodicWorkRequest.Builder(SoulissZombieRestoreWorker.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MINUTES)
-                        // Sets the input data for the ListenableWorker
-                        //.setInputData(input)
-                        .build();
-
-        WorkManager.getInstance(MainActivity.this)
-                // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
-                // (uncompleted) work with the same unique name. Then, insert the newly-specified
-                // work.
-                .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.KEEP, request);
+        enqueueJobs();
 
 
         launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);
@@ -308,6 +301,35 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
 
         //opzioni.reload();
 
+    }
+
+    private void enqueueJobs() {
+        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+
+        PeriodicWorkRequest requestService =
+                // Executes MyWorker every 15 minutes
+                new PeriodicWorkRequest.Builder(WorkerZombieRestore.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
+                        // Sets the input data for the ListenableWorker
+                        //.setInputData(input)
+                        .setConstraints(constraints)
+                        .setInitialDelay(10, TimeUnit.SECONDS)
+                        .build();
+
+        PeriodicWorkRequest requestTimed =
+                // Executes MyWorker every 15 minutes
+                new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, 15, TimeUnit.MINUTES)
+                        // Sets the input data for the ListenableWorker
+                        //.setInputData(input)
+                        .build();
+
+        WorkManager.getInstance(MainActivity.this)
+                .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.REPLACE, requestService);
+
+        WorkManager.getInstance(MainActivity.this)
+                // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
+                // (uncompleted) work with the same unique name. Then, insert the newly-specified
+                // work.
+                .enqueueUniquePeriodicWork("souliss-timed-commands", ExistingPeriodicWorkPolicy.REPLACE, requestTimed);
     }
 
     @Override
