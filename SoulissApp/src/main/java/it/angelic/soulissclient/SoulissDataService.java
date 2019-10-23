@@ -2,15 +2,11 @@ package it.angelic.soulissclient;
 
 import android.Manifest;
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,9 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -35,6 +28,7 @@ import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
+import it.angelic.soulissclient.util.NotificationStaticUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class SoulissDataService extends Service implements LocationListener {
@@ -44,7 +38,7 @@ public class SoulissDataService extends Service implements LocationListener {
     // This is the object that receives interactions from clients. See
     // RemoteService for a more complete example.
     private final IBinder mBinder = new LocalBinder();
-    NotificationManager nm;
+    //NotificationManager nm;
     private Intent cIntent;
     // private long uir;
     private SoulissDBHelper db;
@@ -245,61 +239,6 @@ public class SoulissDataService extends Service implements LocationListener {
 
     };
 
-    public static void sendTooLongWarnNotification(Context ctx, String desc, String longdesc, @NonNull SoulissTypical ppr) {
-        Intent notificationIntent = new Intent(ctx, TypicalDetailFragWrapper.class);
-        notificationIntent.putExtra("TIPICO", ppr);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Resources res = ctx.getResources();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
-
-        SoulissCommand shutoff = new SoulissCommand(ppr);
-        shutoff.setCommand(Constants.Typicals.Souliss_T1n_OffCmd);
-
-        Intent mapIntent = new Intent(ctx, SendCommandActivityNoDisplay.class);
-        mapIntent.putExtra("COMMAND", shutoff);
-
-        PendingIntent mapPendingIntent =
-                PendingIntent.getActivity(ctx, 0, mapIntent, 0);
-
-
-        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
-                .setLargeIcon(BitmapFactory.decodeResource(res, ppr.getIconResourceId()))
-                .setTicker("Turned on warning")
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true).setContentTitle(desc)
-
-                .addAction(R.drawable.ic_cancel_24dp,
-                        ctx.getString(R.string.scene_turnoff_lights), mapPendingIntent)
-                .setContentText(longdesc);
-
-        Notification n = builder.build();
-        nm.notify(664, n);
-    }
-
-    public static void sendProgramNotification(Context ctx, String desc, String longdesc, int icon, @Nullable SoulissCommand ppr) {
-
-        Intent notificationIntent = new Intent(ctx, AddProgramActivity.class);
-        if (ppr != null)
-            notificationIntent.putExtra("PROG", ppr);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Resources res = ctx.getResources();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
-
-        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_upload_done)
-                .setLargeIcon(BitmapFactory.decodeResource(res, icon))
-                .setTicker("Souliss program activated")
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true).setContentTitle(desc)
-                .setContentText(longdesc);
-        Notification n = builder.build();
-        nm.notify(665, n);
-    }
-
     public Calendar getLastupd() {
         return lastupd;
     }
@@ -341,7 +280,7 @@ public class SoulissDataService extends Service implements LocationListener {
         lastupd.setTimeInMillis(opts.getServiceLastrun());
         provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
         db = new SoulissDBHelper(this);
-        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        //nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         cIntent = new Intent(this, SoulissDataService.class);
 
@@ -465,7 +404,7 @@ public class SoulissDataService extends Service implements LocationListener {
                             Log.w(TAG, "issuing COMEBACK command: " + soulissCommand.toString());
                             soulissCommand.execute();
                             soulissCommand.persistCommand();
-                            sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
+                            NotificationStaticUtil.sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
                                     soulissCommand.toString() + " " + soulissCommand.getParentTypical() != null ? soulissCommand.getParentTypical().getNiceName() : "", R.drawable.exit1, soulissCommand);
                         }
                     }
@@ -484,7 +423,7 @@ public class SoulissDataService extends Service implements LocationListener {
 
                             soulissCommand.execute();
                             soulissCommand.persistCommand();
-                            sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
+                            NotificationStaticUtil.sendProgramNotification(SoulissDataService.this, getString(R.string.positional_executed),
                                     soulissCommand.getNiceName(), R.drawable.exit1, soulissCommand);
                         }
                     }

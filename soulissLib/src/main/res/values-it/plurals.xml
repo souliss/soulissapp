@@ -2,31 +2,26 @@
 <resources>
     <plurals
         name="Nodes">
-        <item quantity="zero">0 Nodi</item>
         <item quantity="one">1 Nodo</item>
         <item quantity="other">%d Nodi</item>
     </plurals>
     <plurals
         name="Devices">
-        <item quantity="zero">0 Dispositivi</item>
         <item quantity="one">1 Dispositivo</item>
         <item quantity="other">%d Dispositivi</item>
     </plurals>
     <plurals
         name="SubTags">
-        <item quantity="zero">nessun Sub-Tag</item>
         <item quantity="one">un Sub-Tag</item>
         <item quantity="other">%d Sub-Tags</item>
     </plurals>
     <plurals
         name="Bytes">
-        <item quantity="zero">0 Byte</item>
         <item quantity="one">1 Byte</item>
         <item quantity="other">%d  Bytes</item>
     </plurals>
 
     <plurals name="seconds">
-        <item quantity="zero">0 Secondi</item>
         <item quantity="one">1 Secondo</item>
         <item quantity="other">%s Secondi</item>
     </plurals>

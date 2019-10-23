@@ -1,19 +1,11 @@
 package it.angelic.soulissclient.net;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
-import android.graphics.BitmapFactory;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,13 +19,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.core.app.NotificationCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
-import it.angelic.soulissclient.SoulissDataService;
 import it.angelic.soulissclient.SoulissWidget;
-import it.angelic.soulissclient.T4nFragWrapper;
 import it.angelic.soulissclient.helpers.SoulissGlobalPreferenceHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
@@ -42,6 +31,7 @@ import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.model.db.SoulissDBLowHelper;
 import it.angelic.soulissclient.model.db.SoulissTypicalDTO;
+import it.angelic.soulissclient.util.NotificationStaticUtil;
 
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T41_Antitheft_Main;
 import static it.angelic.soulissclient.Constants.Typicals.Souliss_T4n_InAlarm;
@@ -73,39 +63,6 @@ public class UDPSoulissDecoder {
             localHost = NetUtils.getInetLocalIpAddress();
         } catch (SocketException e) {
             Log.e(Constants.Net.TAG, "CANT GET LOCALADDR");
-        }
-    }
-
-    /**
-     * TODO Should be moved. Produces Android notification
-     *
-     * @param ctx
-     * @param desc
-     * @param longdesc
-     * @param icon
-     * @param ty
-     */
-    public static void sendAntiTheftNotification(Context ctx, String desc, String longdesc, int icon, SoulissTypical ty) {
-
-        Intent notificationIntent = new Intent(ctx, T4nFragWrapper.class);
-        notificationIntent.putExtra("TIPICO", ty);
-        PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Resources res = ctx.getResources();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx);
-
-        builder.setContentIntent(contentIntent).setSmallIcon(android.R.drawable.stat_sys_warning)
-                .setLargeIcon(BitmapFactory.decodeResource(res, icon)).setTicker(desc)
-                .setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(desc).setContentText(longdesc);
-        Notification n = builder.build();
-        nm.notify(664, n);
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            Ringtone r = RingtoneManager.getRingtone(ctx, notification);
-            r.play();
-        } catch (Exception e) {
-            Log.e(Constants.Net.TAG, "Unable to play sounds:" + e.getMessage());
         }
     }
 
@@ -501,7 +458,7 @@ public class UDPSoulissDecoder {
                         // check Antitheft
                         if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
                                 && ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
-                            sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
+                            NotificationStaticUtil.sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
                                     context.getString(R.string.antitheft_notify_desc), R.drawable.shield1, ty);
                             break;
                         }
@@ -533,7 +490,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.execute();
                         soulissTrigger.setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                        NotificationStaticUtil.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse1, soulissTrigger);
                     } else if ("<".compareTo(op) == 0 && source.getTypicalDTO().getOutput() < soulissTrigger.getThreshVal()) {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
@@ -541,7 +498,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.execute();
                         soulissTrigger.setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                        NotificationStaticUtil.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse1, soulissTrigger);
                     } else if ("=".compareTo(op) == 0 && source.getTypicalDTO().getOutput() == soulissTrigger.getThreshVal()) {
                         Log.w(Constants.Net.TAG, "TRIGGERING COMMAND " + soulissTrigger.toString());
@@ -549,7 +506,7 @@ public class UDPSoulissDecoder {
                         soulissTrigger.getTriggerDto().setActive(true);
                         soulissTrigger.setExecutedTime(now);
                         soulissTrigger.persist(database);
-                        SoulissDataService.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
+                        NotificationStaticUtil.sendProgramNotification(context, SoulissApp.getAppContext().getResources().getString(R.string.programs_trigger_executed), info.toString(),
                                 R.drawable.lighthouse1, soulissTrigger);
                     }
                 }

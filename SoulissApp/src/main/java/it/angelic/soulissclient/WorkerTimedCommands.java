@@ -14,7 +14,7 @@ import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 import static it.angelic.soulissclient.Constants.TAG;
-import static it.angelic.soulissclient.SoulissDataService.sendProgramNotification;
+import static it.angelic.soulissclient.util.NotificationStaticUtil.sendProgramNotification;
 
 /**
  * TEST with

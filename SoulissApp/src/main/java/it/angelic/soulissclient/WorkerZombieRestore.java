@@ -22,7 +22,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
 
 import static it.angelic.soulissclient.Constants.TAG;
-import static it.angelic.soulissclient.SoulissDataService.sendTooLongWarnNotification;
+import static it.angelic.soulissclient.util.NotificationStaticUtil.sendTooLongWarnNotification;
 
 /**
  * TEST with
@@ -231,6 +231,7 @@ public class WorkerZombieRestore extends Worker {
             return Result.failure();
         }
 
+        opts.setLastServiceRun(Calendar.getInstance());
         // Return a ListenableWorker.Result
         Data outputData = new Data.Builder()
                 .putString("processed", "DX")
