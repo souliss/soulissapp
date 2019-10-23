@@ -12,13 +12,12 @@ import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 import android.speech.RecognizerIntent;
 import android.text.Html;
 import android.util.Log;
@@ -30,6 +29,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -64,7 +68,6 @@ import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
-import it.angelic.soulissclient.util.SoulissUtils;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -73,10 +76,13 @@ import static it.angelic.soulissclient.Constants.TAG;
  *
  * @author shine@angelic.it
  */
-public class MainActivity extends AbstractStatusedFragmentActivity implements LocationListener {
+public class MainActivity extends AbstractStatusedFragmentActivity {
+    private FusedLocationProviderClient client;
     private SoulissDBLauncherHelper database;
     private StaggeredDashboardElementAdapter launcherMainAdapter;
-    private LocationManager locationManager;
+    // private LocationAvailability locationAvail;
+    private LocationCallback locationCallback;
+    //private LocationManager locationManager;
     private SoulissDataService mBoundService;
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
@@ -129,7 +135,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             Toast.makeText(MainActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
         }
     };
-    private String provider;
+    // private String provider;
 
     private void configureVoiceFab() {
         //VOICE SEARCH
@@ -168,7 +174,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         }
     }
 
-    private void initLocationProvider() {
+  /*  private void initLocationProvider() {
         // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
         provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
         boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
@@ -200,7 +206,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                     Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
 
         }
-    }
+    }*/
     /*
      * @Override public void setTitle(CharSequence title) { mTitle = title;
      * getActionBar().setTitle(mTitle); }
@@ -263,7 +269,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         StaggeredGridLayoutManager staggeredGridManager = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
         //staggeredGridManager.setGapStrategy(GAP_HANDLING_NONE);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mRecyclerView.setLayoutManager(staggeredGridManager);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
@@ -283,7 +289,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         //TODO test&tune
         enqueueJobs();
 
-
+        AsyncTask.execute(new GeofenceRunnable(MainActivity.this));
         launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
@@ -346,8 +352,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         super.onDestroy();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
+    private void onLocationChanged(Location location) {
         final double lat = (location.getLatitude());
         final double lng = (location.getLongitude());
         if (launcherMainAdapter.getLocationLauncherElements() != null) {
@@ -377,9 +382,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                     final String ff = loc;
                     final String sonoIncapace = adString;
 
-                    out2.append(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + provider + "</b>: " + ff
+                    out2.append(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + "TODO" + "</b>: " + ff
                             + sonoIncapace)).toString();
-
                     final float[] res = new float[3];
                     // Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
                     Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
@@ -460,7 +464,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
             //...e amen
             return;
         }
-        locationManager.removeUpdates(this);
+//        locationManager.removeUpdates(this);
+        client.removeLocationUpdates(locationCallback);
         //non mettere nulla qui
     }
 
@@ -471,7 +476,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         mDrawerToggle.syncState();
     }
 
-    @Override
+  /*  @Override
     public void onProviderDisabled(String provider) {
         Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "Disabled provider " + provider);
@@ -481,7 +486,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
     public void onProviderEnabled(String provider) {
         Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
         Log.i(TAG, "Enabled new provider " + provider);
-    }
+    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull
@@ -501,7 +506,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
+                    //provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
                     Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
 
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -509,15 +514,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                         Log.wtf(TAG, "boh. permesso negato su risposta permesso");
                         return;
                     }
-                    if (locationManager != null) {
-                        locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                                Constants.POSITION_UPDATE_MIN_DIST, this);
-                        Location location = locationManager.getLastKnownLocation(provider);
-                        // Initialize the location fields
-                        if (location != null) {
-                            onLocationChanged(location);
-                        }
-                    }
+                    startLocationUpdates();
 
                 } else {
                     // quello stronzo. Utente nega permesso
@@ -556,13 +553,41 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         launcherMainAdapter.setLauncherElements(launcherItems);
         launcherMainAdapter.notifyDataSetChanged();
 
-        if (provider != null) {
+        /*if (provider != null) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 //   non chiamo request perche c'e altrove
             } else
                 locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
                         Constants.POSITION_UPDATE_MIN_DIST, this);
+        }*/
+        boolean permissionAccessCoarseLocationApproved =
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED;
+
+        if (permissionAccessCoarseLocationApproved) {
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
+                    if (locationResult == null) {
+                        return;
+                    }
+                    for (Location location : locationResult.getLocations()) {
+                        if (launcherMainAdapter.getLocationLauncherElements() != null) {
+                            onLocationChanged(location);
+                        }
+                    }
+                }
+            };
+            startLocationUpdates();
+        } else {
+            // App doesn't have access to the device's location at all. Make full request
+            // for permission.
+            ActivityCompat.requestPermissions(this, new String[]{
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    },
+                    77);
         }
        /* autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
@@ -579,13 +604,32 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         }, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());*/
     }
 
+    protected LocationRequest createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+        return locationRequest;
+    }
+
+    private void startLocationUpdates() {
+        Log.w(Constants.TAG, "Requesting POS updates ");
+        client = LocationServices.getFusedLocationProviderClient(this);
+        client.setMockMode(true);
+        client.requestLocationUpdates(createLocationRequest(),
+                locationCallback,
+                Looper.getMainLooper());
+        //locationAvail  = client.getLocationAvailability().
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setActionBarInfo(getString(R.string.souliss_app_name));
         opzioni.initializePrefs();
-        initLocationProvider();
+
+        //initLocationProvider();
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
@@ -602,10 +646,10 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
         configureVoiceFab();
     }
 
-    @Override
+    /*@Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.i(Constants.TAG, "status change " + provider);
-    }
+    }*/
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
         private final StaggeredDashboardElementAdapter adapter;
@@ -684,4 +728,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity implements Lo
                     }).show();
         }
     }
+
+
 }

@@ -11,8 +11,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- Required if your app targets Android 10 (API level 29) or higher -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <uses-feature
         android:name="android.software.app_widgets"
@@ -29,11 +32,11 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup, android:label">
 
-
+        <receiver android:name=".GeofenceBroadcastReceiver" />
         <service
             android:name=".SoulissDataService"
             android:enabled="true"
-            android:process=":souliss_process"></service>
+            android:process=":souliss_process" />
         <service
             android:name=".WorkerZombieRestore"
             android:exported="false">

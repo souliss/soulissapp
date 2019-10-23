@@ -34,19 +34,15 @@ import it.angelic.soulissclient.util.SoulissUtils;
 public class SoulissDataService extends Service implements LocationListener {
     // LOGGA a parte
     private static final String TAG = "SoulissDataService";
-
     // This is the object that receives interactions from clients. See
     // RemoteService for a more complete example.
     private final IBinder mBinder = new LocalBinder();
-    //NotificationManager nm;
     private Intent cIntent;
-    // private long uir;
     private SoulissDBHelper db;
     private float homeDist = 0;
     private Calendar lastupd = Calendar.getInstance();
     private LocationManager locationManager;
     private Handler mHandler = new Handler();
-    // private Timer timer = new Timer();
     private SoulissPreferenceHelper opts;
     private String provider;
     private Thread udpThread;

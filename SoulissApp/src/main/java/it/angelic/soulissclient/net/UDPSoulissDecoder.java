@@ -459,7 +459,7 @@ public class UDPSoulissDecoder {
                         if (ty.getTypicalDTO().getTypical() == Souliss_T41_Antitheft_Main
                                 && ty.getTypicalDTO().getOutput() == Souliss_T4n_InAlarm) {
                             NotificationStaticUtil.sendAntiTheftNotification(context, context.getString(R.string.antitheft_notify),
-                                    context.getString(R.string.antitheft_notify_desc), R.drawable.shield1, ty);
+                                    R.drawable.shield1, ty);
                             break;
                         }
                     }

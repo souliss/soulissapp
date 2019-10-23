@@ -45,6 +45,7 @@ import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 
 public class AddProgramActivity extends AbstractStatusedFragmentActivity {
+
     //arrays per spinner
     private SoulissNode[] nodiArray;
     private SoulissNode[] nodiArrayWithExtra;
@@ -304,7 +305,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         });
 
 
-        OnClickListener first_radio_listener = new OnClickListener() {
+        OnClickListener firstRadioListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 radioPositional.setChecked(false);
@@ -322,9 +323,9 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                 textviewTriggered.setEnabled(false);
             }
         };
-        radioTimed.setOnClickListener(first_radio_listener);
+        radioTimed.setOnClickListener(firstRadioListener);
 
-        OnClickListener se_radio_listener = new OnClickListener() {
+        OnClickListener posListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 radioTimed.setChecked(false);
@@ -342,9 +343,9 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                 textviewTriggered.setEnabled(false);
             }
         };
-        radioPositional.setOnClickListener(se_radio_listener);
+        radioPositional.setOnClickListener(posListener);
 
-        OnClickListener rw_radio_listener = new OnClickListener() {
+        OnClickListener triggeredListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
                 radioTimed.setChecked(false);
@@ -362,7 +363,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                 textviewTriggered.setEnabled(true);
             }
         };
-        radioTrigger.setOnClickListener(rw_radio_listener);
+        radioTrigger.setOnClickListener(triggeredListener);
         // Check box ricorsivo, Interlock
         checkboxRecursive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -385,107 +386,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         };
         threshButton.setOnClickListener(simplebttttt);
 
-        OnClickListener saveProgramButtonListener = new OnClickListener() {
-            public void onClick(View v) {
-                ISoulissExecutable IToSave = (ISoulissExecutable) outputCommandSpinner.getSelectedItem();
-                SoulissCommand programToSave = null;
-                if (IToSave instanceof SoulissScene) {
-                    SoulissScene toExec = (SoulissScene) IToSave;
-                    SoulissCommandDTO dto = new SoulissCommandDTO();
-                    dto.setNodeId(Constants.COMMAND_FAKE_SCENE);
-                    dto.setSlot((short) toExec.getId());
-                    programToSave = new SoulissCommand(AddProgramActivity.this, dto);
-                } else if (IToSave instanceof SoulissCommand) {
-                    programToSave = (SoulissCommand) IToSave;
-                    Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getNodeId());
-                    //programToSave.setCommandId(collected.getCommandId());
-                    //programToSave.setNodeId((short) Constants.MASSIVE_NODE_ID);
-                    //programToSave.setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
-                }
-                if (programToSave == null) {
-                    Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                //sceneId solo per i comandi che appartengono a una scena
-                programToSave.setSceneId(null);
-
-
-                Intent intent = AddProgramActivity.this.getIntent();
-                SoulissDBHelper.open();
-                if (radioTimed.isChecked()) {// temporal schedule
-                    Calendar baseNow = Calendar.getInstance();
-
-                    // se l'ora e` gia passata, fai domani
-                    if (commandTimePicker.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) < 0
-                            || (commandTimePicker.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) == 0 && commandTimePicker
-                            .getCurrentMinute().compareTo(baseNow.get(Calendar.MINUTE)) < 0)) {
-                        baseNow.add(Calendar.DAY_OF_YEAR, 1);
-                        Log.i(Constants.TAG, "Timed program delayed by one day");
-                    }
-                    baseNow.set(Calendar.HOUR_OF_DAY, commandTimePicker.getCurrentHour());
-                    baseNow.set(Calendar.MINUTE, commandTimePicker.getCurrentMinute());
-                    programToSave.setType(Constants.COMMAND_TIMED);
-                    programToSave.setScheduledTime(baseNow);
-                    if (checkboxRecursive.isChecked()) {
-
-                        programToSave.setInterval(
-                                spinnerArrVal[commandSpinnerInterval.getSelectedItemPosition()]);
-                    }
-                    // inserimento nuovo
-                    intent.putExtra("returnedData", Constants.COMMAND_TIMED);
-                } else if (radioPositional.isChecked()) {// POSIZIONALE
-                    if (togglehomeaway.isChecked()) {
-                        programToSave.setType(Constants.COMMAND_GOAWAY_CODE);
-                        intent.putExtra("returnedData", Constants.COMMAND_GOAWAY_CODE);
-                    } else {
-                        programToSave.setType(Constants.COMMAND_COMEBACK_CODE);
-                        intent.putExtra("returnedData", Constants.COMMAND_COMEBACK_CODE);
-                    }
-                    // inserimento nuovo
-                } else if (radioTrigger.isChecked()) {// TRIGGER
-                    SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
-                    if (trig == null || trig.getTypicalDTO() == null || threshValEditText.getText() == null
-                            || "".compareTo(threshValEditText.getText().toString()) == 0) {
-                        Toast.makeText(AddProgramActivity.this, getString(R.string.programs_warn_trigger_notset),
-                                Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    intent.putExtra("returnedData", Constants.COMMAND_TRIGGERED);
-                    programToSave.setType(Constants.COMMAND_TRIGGERED);
-                }
-                // MERGE
-                if (collected != null)
-                    programToSave.setCommandId(collected.getCommandId());
-                programToSave.persistCommand();
-
-                if (radioTrigger.isChecked()) {// TRIGGER
-                    SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
-                    SoulissTriggerDTO trigger = new SoulissTriggerDTO();
-                    //MERGE
-                    if (inputTrigger != null)
-                        trigger.setTriggerId(inputTrigger.getTriggerId());
-                    trigger.setInputNodeId(trig.getNodeId());
-
-                    trigger.setInputSlot(trig.getSlot());
-                    trigger.setOp(threshButton.getText().toString());
-                    trigger.setCommandId(programToSave.getCommandId());
-                    try {
-                        trigger.setThreshVal(Float.parseFloat(threshValEditText.getText().toString()));
-                    } catch (Exception e){
-                        Log.e(Constants.TAG, "Can't parse threshold "+e.getMessage());
-                    }
-
-
-                    trigger.persist(datasource);
-                }
-                // datasource.close();
-                AddProgramActivity.this.setResult(RESULT_OK, intent);
-                AddProgramActivity.this.finish();
-
-            }
-
-        };
+        OnClickListener saveProgramButtonListener = new SaveProgramListener();
         btSave.setOnClickListener(saveProgramButtonListener);
         // Cancel
         OnClickListener simplecan = new OnClickListener() {
@@ -648,4 +549,103 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
     }
 
 
+    private class SaveProgramListener implements OnClickListener {
+
+        public void onClick(View v) {
+            ISoulissExecutable IToSave = (ISoulissExecutable) outputCommandSpinner.getSelectedItem();
+            SoulissCommand programToSave = null;
+            if (IToSave instanceof SoulissScene) {
+                SoulissScene toExec = (SoulissScene) IToSave;
+                SoulissCommandDTO dto = new SoulissCommandDTO();
+                dto.setNodeId(Constants.COMMAND_FAKE_SCENE);
+                dto.setSlot((short) toExec.getId());
+                programToSave = new SoulissCommand(AddProgramActivity.this, dto);
+            } else if (IToSave instanceof SoulissCommand) {
+                programToSave = (SoulissCommand) IToSave;
+                Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getNodeId());
+                //programToSave.setCommandId(collected.getCommandId());
+                //programToSave.setNodeId((short) Constants.MASSIVE_NODE_ID);
+                //programToSave.setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
+            }
+            if (programToSave == null) {
+                Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //sceneId solo per i comandi che appartengono a una scena
+            programToSave.setSceneId(null);
+
+
+            Intent intent = AddProgramActivity.this.getIntent();
+            SoulissDBHelper.open();
+            if (radioTimed.isChecked()) {// temporal schedule
+                Calendar baseNow = Calendar.getInstance();
+
+                // se l'ora e` gia passata, fai domani
+                if (commandTimePicker.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) < 0
+                        || (commandTimePicker.getCurrentHour().compareTo(baseNow.get(Calendar.HOUR_OF_DAY)) == 0 && commandTimePicker
+                        .getCurrentMinute().compareTo(baseNow.get(Calendar.MINUTE)) < 0)) {
+                    baseNow.add(Calendar.DAY_OF_YEAR, 1);
+                    Log.i(Constants.TAG, "Timed program delayed by one day");
+                }
+                baseNow.set(Calendar.HOUR_OF_DAY, commandTimePicker.getCurrentHour());
+                baseNow.set(Calendar.MINUTE, commandTimePicker.getCurrentMinute());
+                programToSave.setType(Constants.COMMAND_TIMED);
+                programToSave.setScheduledTime(baseNow);
+                if (checkboxRecursive.isChecked()) {
+
+                    programToSave.setInterval(
+                            spinnerArrVal[commandSpinnerInterval.getSelectedItemPosition()]);
+                }
+                // inserimento nuovo
+                intent.putExtra("returnedData", Constants.COMMAND_TIMED);
+            } else if (radioPositional.isChecked()) {// POSIZIONALE
+                if (togglehomeaway.isChecked()) {
+                    programToSave.setType(Constants.COMMAND_GOAWAY_CODE);
+                    intent.putExtra("returnedData", Constants.COMMAND_GOAWAY_CODE);
+                } else {
+                    programToSave.setType(Constants.COMMAND_COMEBACK_CODE);
+                    intent.putExtra("returnedData", Constants.COMMAND_COMEBACK_CODE);
+                }
+            } else if (radioTrigger.isChecked()) {// TRIGGER
+                SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
+                if (trig == null || trig.getTypicalDTO() == null || threshValEditText.getText() == null
+                        || "".compareTo(threshValEditText.getText().toString()) == 0) {
+                    Toast.makeText(AddProgramActivity.this, getString(R.string.programs_warn_trigger_notset),
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                intent.putExtra("returnedData", Constants.COMMAND_TRIGGERED);
+                programToSave.setType(Constants.COMMAND_TRIGGERED);
+            }
+            // MERGE
+            if (collected != null)
+                programToSave.setCommandId(collected.getCommandId());
+            programToSave.persistCommand();
+
+            if (radioTrigger.isChecked()) {// TRIGGER
+                SoulissTypical trig = ((SoulissTypical) triggeredTypicalSpinner.getSelectedItem());
+                SoulissTriggerDTO trigger = new SoulissTriggerDTO();
+                //MERGE
+                if (inputTrigger != null)
+                    trigger.setTriggerId(inputTrigger.getTriggerId());
+                trigger.setInputNodeId(trig.getNodeId());
+
+                trigger.setInputSlot(trig.getSlot());
+                trigger.setOp(threshButton.getText().toString());
+                trigger.setCommandId(programToSave.getCommandId());
+                try {
+                    trigger.setThreshVal(Float.parseFloat(threshValEditText.getText().toString()));
+                } catch (Exception e) {
+                    Log.e(Constants.TAG, "Can't parse threshold " + e.getMessage());
+                }
+
+                trigger.persist(datasource);
+            }
+            // datasource.close();
+            AddProgramActivity.this.setResult(RESULT_OK, intent);
+            AddProgramActivity.this.finish();
+        }
+
+    }
 }

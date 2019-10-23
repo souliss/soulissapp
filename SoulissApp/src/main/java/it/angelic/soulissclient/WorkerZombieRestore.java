@@ -158,8 +158,8 @@ public class WorkerZombieRestore extends Worker {
                                     && now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
 
                                 Log.w(TAG, String.format(context.getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()));
-                                sendTooLongWarnNotification(context, context.getString(R.string.timed_warning),
-                                        String.format(context.getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()), tipico);
+                                sendTooLongWarnNotification(context, context.getString(R.string.timed_warning)
+                                        , tipico);
                                 checkd++;
                             }
 

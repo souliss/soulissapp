@@ -233,13 +233,14 @@ public class SoulissDBLauncherHelper extends SoulissDBHelper {
         pro.setTitle(context.getString(R.string.programs_title));
         pro.setOrder((short) 4);
         pro.setDesc(context.getResources().getQuantityString(R.plurals.programs_plur,
-                countTriggers(), countTriggers()));//FIXME count progs
+                countTriggers(), countTriggers()));
         ret.add(pro);
 
         LauncherElement loc = new LauncherElement(LauncherElementEnum.STATIC_LOCATION);
         loc.setTitle(context.getString(R.string.position));
         loc.setOrder((short) 5);
         loc.setDesc("");//dopo
+        loc.setIsFullSpan(true);
         ret.add(loc);
 
         return ret;

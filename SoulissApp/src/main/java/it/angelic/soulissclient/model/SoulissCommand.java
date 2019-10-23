@@ -349,9 +349,9 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 info.append(ctx.getString(R.string.to)).append(" ");
                 // Descrizione programma
                 if ("".compareTo(appo.getNiceName()) != 0)
-                    info.append(" ").append(appo.getNiceName());
+                    info.append(appo.getNiceName());
                 if ("".compareTo(appo.getParentNode().getNiceName()) != 0)
-                    info.append(" (").append(appo.getParentNode().getNiceName()).append(")");
+                    info.append("(").append(appo.getParentNode().getNiceName()).append(")");
             }
         } else {
             return getName();

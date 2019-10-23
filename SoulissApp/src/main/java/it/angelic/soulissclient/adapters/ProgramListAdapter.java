@@ -88,7 +88,7 @@ public class ProgramListAdapter extends BaseAdapter {
         holder.textCmd.setText(holder.data.getNiceName());
         /* programma temporale */
         if (holder.data.getType() == Constants.COMMAND_TIMED) {
-            RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
+            //RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
             //don.setBackgroundResource(R.drawable.list_rect_purple);
             //holder.evidenza.setBackgroundColor(context.getResources().getColor(color.std_purple_shadow));
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_clock_o.getFontName());
