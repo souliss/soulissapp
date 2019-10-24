@@ -1,11 +1,20 @@
 package it.angelic.soulissclient.net;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by shine@angelic.it on 21/10/2019.
- */
+import static org.junit.Assert.*;
+
 public class NetUtilsTest {
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
 
     @Test
     public void getInetLocalIpAddress() {
@@ -16,18 +25,30 @@ public class NetUtilsTest {
     }
 
     @Test
-    public void reverse() {
+    public void getDeviceSubnetMask() {
+    }
+
+    @Test
+    public void getDeviceGateway() {
+    }
+
+    @Test
+    public void getDeviceGatewayString() {
+    }
+
+    @Test
+    public void belongsToNode() {
+    }
+
+    @Test
+    public void belongsToSameSubnet() {
+    }
+
+    @Test
+    public void extractTargetAddress() {
     }
 
     @Test
     public void byteOfInt() {
-    }
-
-    @Test
-    public void intToInet() {
-    }
-
-    @Test
-    public void convertStreamToString() {
     }
 }

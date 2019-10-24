@@ -67,10 +67,9 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
         //USA DB VERO
         //context = InstrumentationRegistry.getInstrumentation().getTargetContext()
 
-
         context = InstrumentationRegistry.getInstrumentation().getContext();
         //RenamingDelegatingContext context = new RenamingDelegatingContext(context, "test_db");
-        context.deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
+
         //context.getDatabasePath()
         db = new SoulissDBHelper(context);
         opzioni = new SoulissPreferenceHelper(context);
@@ -84,10 +83,10 @@ public class SoulissTestPersistence extends junit.framework.TestCase {
 
     @Override
     public void tearDown() throws Exception {
-        context.deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
+        //context.deleteDatabase(SoulissDBOpenHelper.DATABASE_NAME);
 
         Log.i(Constants.TAG, "tearDown test DB");
-        db.close();
+        //db.close();
         super.tearDown();
 
     }

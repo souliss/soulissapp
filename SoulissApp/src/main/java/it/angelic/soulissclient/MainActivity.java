@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.IntentSender;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -29,15 +30,21 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -77,13 +84,15 @@ import static it.angelic.soulissclient.Constants.TAG;
  * @author shine@angelic.it
  */
 public class MainActivity extends AbstractStatusedFragmentActivity {
-    private FusedLocationProviderClient client;
+    private FusedLocationProviderClient locationCli;
     private SoulissDBLauncherHelper database;
     private StaggeredDashboardElementAdapter launcherMainAdapter;
-    // private LocationAvailability locationAvail;
+    private LocationSettingsResponse locSettings;
     private LocationCallback locationCallback;
-    //private LocationManager locationManager;
     private SoulissDataService mBoundService;
+    private NetworkStateReceiver netReceiver;
+    private SoulissPreferenceHelper opzioni;
+
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -97,7 +106,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 Log.i(TAG, "Broadcast receive, refresh from DB");
                 database.refreshMapFromDB();
                 List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
-
                 launcherMainAdapter.setLauncherElements(launcherItems);
                 launcherMainAdapter.notifyDataSetChanged();
                 if (mBoundService != null)
@@ -110,8 +118,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             // Constraints constraints = ...
         }
     };
-    private NetworkStateReceiver netReceiver;
-    private SoulissPreferenceHelper opzioni;
+
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -135,7 +142,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             Toast.makeText(MainActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
         }
     };
-    // private String provider;
 
     private void configureVoiceFab() {
         //VOICE SEARCH
@@ -174,60 +180,13 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
-  /*  private void initLocationProvider() {
-        // criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
-        boolean enabled = (provider != null && locationManager.isProviderEnabled(provider) && opzioni.getHomeLatitude() != 0);
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-            if (enabled && launcherMainAdapter.getLocationLauncherElements() != null) {
-                //launcherMainAdapter.getLocationLauncherElements().setTitle(getString(R.string.position));
-                launcherMainAdapter.getLocationLauncherElements().setDesc(Html.fromHtml(getString(R.string.status_geoprovider_enabled) + " (<b>" + provider
-                        + "</b>)").toString());
-                // ogni minuto, minimo 100 metri
-                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                        Constants.POSITION_UPDATE_MIN_DIST, this);
-                Location location = locationManager.getLastKnownLocation(provider);
-                // Initialize the location fields
-                if (location != null) {
-                    onLocationChanged(location);
-                }
-            } else if (opzioni.getHomeLatitude() != 0 && launcherMainAdapter.getLocationLauncherElements() != null) {
-                launcherMainAdapter.getLocationLauncherElements().setDesc(Html.fromHtml(getString(R.string.status_geoprovider_disabled)).toString());
-                // homedist.setVisibility(View.GONE);
-            } else {
-                // coordinfo.setVisibility(View.GONE);
-                // homedist.setText(Html.fromHtml(getString(R.string.homewarn)));
-            }
-        } else//permesso mancante
-        {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                    Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
-
-        }
-    }*/
-    /*
-     * @Override public void setTitle(CharSequence title) { mTitle = title;
-     * getActionBar().setTitle(mTitle); }
-     */
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-    /*
-     * @Override public void setTitle(CharSequence title) { mTitle = title;
-     * getActionBar().setTitle(mTitle); }
-     */
 
-    /**
-     * This will not work so great since the heights of the imageViews
-     * are calculated on the iamgeLoader callback ruining the offsets. To fix this try to get
-     * the (intrinsic) image width and height and set the views height manually. I will
-     * look into a fix once I find extra time.
-     */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
@@ -240,8 +199,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             setTheme(R.style.DarkThemeSelector);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_launcher2);
-
-        client = LocationServices.getFusedLocationProviderClient(this);
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerViewLauncherItems);
         final TextView toHid = findViewById(R.id.TextViewTagsDesc);
@@ -270,7 +227,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         StaggeredGridLayoutManager staggeredGridManager = new StaggeredGridLayoutManager(gridsize, StaggeredGridLayoutManager.VERTICAL);
         //staggeredGridManager.setGapStrategy(GAP_HANDLING_NONE);
 
-        //locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationCli = LocationServices.getFusedLocationProviderClient(this);
+
         mRecyclerView.setLayoutManager(staggeredGridManager);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());//FIXME
@@ -294,8 +252,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
-        //launcherMainAdapter.notifyDataSetChanged();
-
 
         // DRAWER
         initDrawer(this, DrawerMenuHelper.TAGS);
@@ -307,7 +263,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         ith.attachToRecyclerView(mRecyclerView);
 
         //opzioni.reload();
-
     }
 
     private void enqueueJobs() {
@@ -349,7 +304,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onDestroy() {
         doUnbindService();
-
         super.onDestroy();
     }
 
@@ -366,7 +320,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                     Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
                     String loc = null;
                     try {
-
                         List<Address> list;
                         list = geocoder.getFromLocation(lat, lng, 1);
 
@@ -376,15 +329,20 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                             if (address.getAddressLine(0) != null)
                                 adString = ", " + address.getAddressLine(0);
                         }
-                    } catch (final IOException e) {
+                    } catch (final Exception e) {
                         out1.append(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage())).toString();
-                        loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
                     }
-                    final String ff = loc;
-                    final String sonoIncapace = adString;
-
-                    out2.append(Html.fromHtml(getString(R.string.positionfrom) + " <b>" + "TODO" + "</b>: " + ff
-                            + sonoIncapace)).toString();
+                    if (loc==null)
+                        loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
+                    //final String ff = loc;
+                    if (locSettings != null) {
+                        //final String sonoIncapace = adString;
+                        out2.append(Html.fromHtml(getString(R.string.positionfrom)
+                                + " <b>"
+                                + (locSettings.getLocationSettingsStates().isGpsUsable()?"GPS":"3G")
+                                + "</b>: " + loc
+                                + adString)).toString();
+                    }
                     final float[] res = new float[3];
                     // Location.distanceBetween(lat, lng, 44.50117265d, 11.34518103, res);
                     Location.distanceBetween(lat, lng, opzioni.getHomeLatitude(), opzioni.getHomeLongitude(), res);
@@ -400,7 +358,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                         // homedist.setVisibility(View.VISIBLE);
                         out1.append(Html.fromHtml("<b>" + getString(R.string.homedist) + "</b> "
                                 + (int) res[0] + unit
-                                + (ff == null ? "" : " (" + getString(R.string.currentlyin) + " " + ff + ")"))).toString();
+                                + (loc == null ? "" : " (" + getString(R.string.currentlyin) + " " + loc + ")"))).toString();
 
                     } else {
 
@@ -460,13 +418,13 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         unregisterReceiver(netReceiver);
         super.onPause();
         //autoUpdate.cancel();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+       /* if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //...e amen
             return;
-        }
-//        locationManager.removeUpdates(this);
-        client.removeLocationUpdates(locationCallback);
+        }*/
+        if (locationCli != null)
+            locationCli.removeLocationUpdates(locationCallback);
         //non mettere nulla qui
     }
 
@@ -476,18 +434,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-
-  /*  @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "Disabled provider " + provider);
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "Enabled new provider " + provider);
-    }*/
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull
@@ -503,12 +449,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 }
                 return;
             }
-            case Constants.MY_PERMISSIONS_ACCESS_COARSE_LOCATION: {
+            case Constants.MY_PERMISSIONS_ACCESS_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
-                    Log.w(TAG, "MY_PERMISSIONS_ACCESS_COARSE_LOCATION permission granted");
+                    Log.w(TAG, "MY_PERMISSIONS_ACCESS_LOCATION permission granted");
 
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                             && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -554,16 +500,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         launcherMainAdapter.setLauncherElements(launcherItems);
         launcherMainAdapter.notifyDataSetChanged();
 
-        /*if (provider != null) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                //   non chiamo request perche c'e altrove
-            } else
-                locationManager.requestLocationUpdates(provider, Constants.POSITION_UPDATE_INTERVAL,
-                        Constants.POSITION_UPDATE_MIN_DIST, this);
-        }*/
         boolean permissionAccessCoarseLocationApproved =
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED;
 
         if (permissionAccessCoarseLocationApproved) {
@@ -586,9 +524,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             // App doesn't have access to the device's location at all. Make full request
             // for permission.
             ActivityCompat.requestPermissions(this, new String[]{
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                    },
-                    77);
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                    }, Constants.MY_PERMISSIONS_ACCESS_LOCATION);
         }
        /* autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
@@ -607,19 +544,36 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     protected LocationRequest createLocationRequest() {
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(10000);
-        locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        locationRequest.setInterval(100000);
+        locationRequest.setFastestInterval(10000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         return locationRequest;
     }
 
     private void startLocationUpdates() {
         Log.w(Constants.TAG, "Requesting POS updates ");
-
-        client.requestLocationUpdates(createLocationRequest(),
+        LocationRequest locReq = createLocationRequest();
+        locationCli.requestLocationUpdates(locReq,
                 locationCallback,
                 Looper.getMainLooper());
-        //locationAvail  = client.getLocationAvailability().
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+
+        SettingsClient client = LocationServices.getSettingsClient(this);
+        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                locSettings = locationSettingsResponse;
+            }
+        });
+
+        task.addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                locSettings = null;
+            }
+        });
     }
 
     @Override
@@ -629,12 +583,10 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         setActionBarInfo(getString(R.string.souliss_app_name));
         opzioni.initializePrefs();
 
-        //initLocationProvider();
         ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo inf = connectivity.getActiveNetworkInfo();
         NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
-        //initLocationProvider();
 
         if (!opzioni.isDbConfigured()) {
             AlertDialogHelper.dbNotInitedDialog(this);
@@ -645,11 +597,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         configureVoiceFab();
     }
-
-    /*@Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.i(Constants.TAG, "status change " + provider);
-    }*/
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {
         private final StaggeredDashboardElementAdapter adapter;

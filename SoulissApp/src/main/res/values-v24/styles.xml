@@ -16,8 +16,15 @@
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
         <item name="cardStyle">@style/CardView.Light</item>
         <item name="android:fontFamily">@font/montserrat</item>
+        <!-- This will override the Alert Dialog theme -->
+        <item name="alertDialogTheme">@style/MyAlertDialogThemeLight</item>
     </style>
 
+    <style name="MyAlertDialogThemeLight" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:textAppearanceSmall">@style/CodeFontSmall</item>
+        <item name="android:textAppearanceMedium">@style/CodeFontMain</item>
+        <item name="android:textAppearanceLarge">@style/CodeFontTitle</item>
+    </style>
 
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowContentTransitions">true</item>
@@ -32,6 +39,13 @@
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
         <item name="cardStyle">@style/CardView.Dark</item>
         <item name="android:fontFamily">@font/montserrat</item>
+        <item name="alertDialogTheme">@style/MyAlertDialogTheme</item>
+    </style>
+
+    <style name="MyAlertDialogTheme" parent="@android:style/Theme.Material.Dialog.Alert">
+        <item name="android:textAppearanceSmall">@style/CodeFontSmall</item>
+        <item name="android:textAppearanceMedium">@style/CodeFontMain</item>
+        <item name="android:textAppearanceLarge">@style/CodeFontTitle</item>
     </style>
 
 

@@ -38,6 +38,6 @@ allprojects {
 project.ext {
     VERSION_NAME = "2.3.0"
     VERSION_CODE = 230
-    compileSdkVersion = 28
+    compileSdkVersion = 29
     targetSdkVersion = 29
 }

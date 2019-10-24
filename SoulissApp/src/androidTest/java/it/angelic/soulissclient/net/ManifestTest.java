@@ -21,11 +21,13 @@ import android.content.pm.ResolveInfo;
 import com.twofortyfouram.locale.PackageUtilities;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.test.filters.SmallTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import static androidx.test.InstrumentationRegistry.getContext;
@@ -38,7 +40,7 @@ ManifestTest extends junit.framework.TestCase {
     /**
      * Verifies there is a Locale compatible host present.
      */
-    @Test
+    @Before
     public void testPreconditions() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertNotNull(getHostPackage(context.getPackageManager()));
@@ -55,7 +57,7 @@ ManifestTest extends junit.framework.TestCase {
     }
 
 
-    @Test
+    @SmallTest
     public void testApplicationEnabled() {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertTrue(context.getApplicationInfo().enabled);

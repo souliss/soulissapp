@@ -1,2 +1,2 @@
-include ":ecoGallery", ":soulissLib", 'SoulissApp', ':taskerapi', ':AndroidCharts'
+include 'SoulissApp',":ecoGallery", ":soulissLib",  ':taskerapi'
 

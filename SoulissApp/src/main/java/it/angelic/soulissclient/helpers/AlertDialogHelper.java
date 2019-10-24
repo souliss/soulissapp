@@ -78,7 +78,7 @@ public class AlertDialogHelper {
      * @return
      */
     public static AlertDialog.Builder sysNotInitedDialog(final Activity source) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(source);
+        AlertDialog.Builder alert = new AlertDialog.Builder(source,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         alert.setTitle(source.getResources().getString(R.string.notconfigured));
         alert.setMessage(source.getResources().getString(R.string.dialog_notinited_ip));
@@ -110,7 +110,7 @@ public class AlertDialogHelper {
 
     public static void dbNotInitedDialog(final Context source) {
         final SoulissPreferenceHelper opts = new SoulissPreferenceHelper(source);
-        AlertDialog.Builder alert = new AlertDialog.Builder(source);
+        AlertDialog.Builder alert = new AlertDialog.Builder(source,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_db))) {
             final CheckBox checkBox = new CheckBox(source);
             checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
@@ -168,15 +168,16 @@ public class AlertDialogHelper {
 
     public static void serviceNotActiveDialog(final Activity source) {
         final SoulissPreferenceHelper opts = SoulissApp.getOpzioni();
-        AlertDialog.Builder alert = new AlertDialog.Builder(source);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(source, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
+        AlertDialog.Builder alert = new AlertDialog.Builder(wrapper,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
 
-        final CheckBox checkBox = new CheckBox(source);
-        TextView textView = new TextView(source);
+        final CheckBox checkBox = new CheckBox(wrapper);
+        TextView textView = new TextView(wrapper);
         if (!opts.getDontShowAgain(source.getResources().getString(R.string.dialog_disabled_service))) {
             checkBox.setText(source.getResources().getString(R.string.dialog_dontshowagain));
             alert.setMessage(source.getResources().getString(R.string.dialog_notinited_service));
 
-            LinearLayout linearLayout = new LinearLayout(source);
+            LinearLayout linearLayout = new LinearLayout(wrapper);
             linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT));
             linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -218,7 +219,8 @@ public class AlertDialogHelper {
     }
 
     public static AlertDialog.Builder dropSoulissDBDialog(final Activity source, final SoulissDBHelper datasource) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(source);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(source, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
+        AlertDialog.Builder alert = new AlertDialog.Builder(wrapper,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         // AlertDialog.Builder alert;
         // alert = new AlertDialog.Builder(new ContextThemeWrapper(source,
         // R.style.AboutDialog));
@@ -278,7 +280,7 @@ public class AlertDialogHelper {
      */
     public static AlertDialog.Builder removeCommandDialog(final Activity cont, final ListView ctx,
                                                           final SoulissDBHelper datasource, final SoulissCommand toRename) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        AlertDialog.Builder alert = new AlertDialog.Builder(cont,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         alert.setTitle(cont.getString(R.string.dialog_remove_title));
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         alert.setMessage(cont.getString(R.string.dialog_remove_cmd));
@@ -322,7 +324,7 @@ public class AlertDialogHelper {
      */
     public static AlertDialog.Builder renameSoulissObjectDialog(final Activity cont, final TextView textViewLabel,
                                                                 final ListView listV, final SoulissDBHelper datasource, final ISoulissObject toRename) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(cont,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
                 || toRename instanceof SoulissScene || toRename instanceof SoulissTypical || toRename instanceof SoulissTag);
@@ -414,7 +416,7 @@ public class AlertDialogHelper {
 
     public static AlertDialog.Builder deleteConfigDialog(final Context cont, final Spinner toUpdate) {
 
-        final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(cont,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         final String bckConfig = (String) toUpdate.getSelectedItem();
         alert.setIcon(R.drawable.ic_cancel_24dp);
         alert.setTitle(cont.getString(R.string.delete) + " " + bckConfig);
@@ -449,7 +451,7 @@ public class AlertDialogHelper {
     }
 
     public static AlertDialog.Builder renameConfigDialog(final Context cont, final Spinner toUpdate) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(cont);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(cont,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         final String bckConfig = (String) toUpdate.getSelectedItem();
         alert.setIcon(R.drawable.ic_mode_edit_24dp);
@@ -490,7 +492,7 @@ public class AlertDialogHelper {
     public static AlertDialog equalizerDialog(final Context context, @Nullable final TextView toUpdate, final Fragment canvas, final FragmentActivity act) {
         final SoulissPreferenceHelper opzioni = SoulissApp.getOpzioni();
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
-        final AlertDialog.Builder equalizerBuilder = new AlertDialog.Builder(context);
+        final AlertDialog.Builder equalizerBuilder = new AlertDialog.Builder(context,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
 
         LayoutInflater factory = LayoutInflater.from(context);
         final View deleteDialogView = factory.inflate(R.layout.dialog_equalizer, null, false);
@@ -575,7 +577,7 @@ public class AlertDialogHelper {
         final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(context);
         assertTrue("chooseIconDialog: NOT instanceof", toRename instanceof SoulissNode
                 || toRename instanceof SoulissScene || toRename instanceof SoulissTypical || toRename instanceof SoulissTag);
-        final AlertDialog.Builder alert2 = new AlertDialog.Builder(context);
+        final AlertDialog.Builder alert2 = new AlertDialog.Builder(context,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         // alert2.setTitle("Choose " + toRename.toString() + " icon");
         alert2.setTitle(context.getString(R.string.dialog_choose_icon) + " " + toRename.getNiceName());
 
@@ -663,7 +665,7 @@ public class AlertDialogHelper {
                                                             final SoulissPreferenceHelper opts) {
         // ProgressDialog.Builder alert = new
         // ProgressDialog.Builder(preferencesActivity);
-        AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity);
+        AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         // final SharedPreferences customSharedPreference =
         // preferencesActivity.getSharedPreferences("SoulissPrefs",
         // Activity.MODE_PRIVATE);
@@ -713,7 +715,7 @@ public class AlertDialogHelper {
      */
     public static AlertDialog.Builder rebuildNodeDialog(final Activity preferencesActivity, final SoulissNode toRebuild,
                                                         final SoulissPreferenceHelper opts) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity);
+        AlertDialog.Builder alert = new AlertDialog.Builder(preferencesActivity,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
         alert.setTitle(preferencesActivity.getResources().getString(R.string.menu_changenodeRebuild));
         alert.setIcon(android.R.drawable.ic_dialog_alert);
         if (opts.isSoulissReachable()) {
@@ -766,7 +768,7 @@ public class AlertDialogHelper {
             tagArray[q++] = object;
         }
         ContextThemeWrapper wrapper = new ContextThemeWrapper(context, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
-        final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper);
+        final AlertDialog.Builder alert2 = new AlertDialog.Builder(wrapper,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
 
         View dialoglayout = View.inflate(new ContextWrapper(context), R.layout.dialog_add_to_, null);
         alert2.setView(dialoglayout);

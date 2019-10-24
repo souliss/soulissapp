@@ -13,7 +13,7 @@ import it.angelic.soulissclient.VoiceCommandActivityNoDisplay;
 /**
  * Created by shine@angelic.it on 02/09/2015.
  */
-public class SoulissTestVoiceCommand extends TestCase {
+public class SoulissTestVoiceCommand extends junit.framework.TestCase{
 
 
     public void testVoiceCommand() {

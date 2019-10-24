@@ -28,7 +28,7 @@ import static androidx.test.InstrumentationRegistry.getContext;
 /**
  * Tests the {@link TaskerFireReceiver}.
  */
-public final class TaskerReceiverTest extends TestCase {
+public final class TaskerReceiverTest extends junit.framework.TestCase {
     /*
      * These test cases perform sanity checks to verify the receiver doesn't crash when receiving unexpected
      * inputs.
