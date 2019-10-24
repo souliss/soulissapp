@@ -241,6 +241,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_launcher2);
 
+        client = LocationServices.getFusedLocationProviderClient(this);
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerViewLauncherItems);
         final TextView toHid = findViewById(R.id.TextViewTagsDesc);
@@ -608,14 +609,13 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(5000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         return locationRequest;
     }
 
     private void startLocationUpdates() {
         Log.w(Constants.TAG, "Requesting POS updates ");
-        client = LocationServices.getFusedLocationProviderClient(this);
-        client.setMockMode(true);
+
         client.requestLocationUpdates(createLocationRequest(),
                 locationCallback,
                 Looper.getMainLooper());

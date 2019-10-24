@@ -169,6 +169,9 @@
     <orderEntry type="module" module-name="ecoGallery" />
     <orderEntry type="module" module-name="soulissLib" />
     <orderEntry type="module" module-name="taskerapi" />
+    <orderEntry type="module" module-name="ecoGallery" />
+    <orderEntry type="module" module-name="soulissLib" />
+    <orderEntry type="module" module-name="taskerapi" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">
