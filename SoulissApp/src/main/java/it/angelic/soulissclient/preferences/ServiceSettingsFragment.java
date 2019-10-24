@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -20,17 +24,17 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.util.SoulissUtils;
 
 @TargetApi(11)
 public class ServiceSettingsFragment extends PreferenceFragmentCompat {
     Preference homeDist;
+    private FusedLocationProviderClient fusedLocationClient;
     private SoulissPreferenceHelper opzioni;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         opzioni = SoulissApp.getOpzioni();
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         super.onCreate(savedInstanceState);
         final LocationManager locationManager;
         // EXPORT
@@ -49,7 +53,24 @@ public class ServiceSettingsFragment extends PreferenceFragmentCompat {
         setHomeLocation.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                try {
+
+                fusedLocationClient.getLastLocation()
+                        .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                // Got last known location. In some rare situations this can be null.
+                                if (location != null) {
+                                    // Logic to handle location object
+                                    opzioni.setHomeLatitude(location.getLatitude());
+                                    opzioni.setHomeLongitude(location.getLongitude());
+                                    opzioni.initializePrefs();
+                                    resetMesg(setHomeLocation);
+                                    Toast.makeText(getActivity(), getString(R.string.opt_homepos_set), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+               /* try {
                     String provider = locationManager.getBestProvider(SoulissUtils.getGeoCriteria(), true);
                     //Location luogo = locationManager.getLastKnownLocation(provider);
 
@@ -69,7 +90,7 @@ public class ServiceSettingsFragment extends PreferenceFragmentCompat {
                 } catch (Exception e) {
                     Log.e(Constants.TAG, getString(R.string.opt_homepos_err), e);
                     Toast.makeText(getActivity(), getString(R.string.opt_homepos_err), Toast.LENGTH_SHORT).show();
-                }
+                }*/
                 return true;
             }
         });

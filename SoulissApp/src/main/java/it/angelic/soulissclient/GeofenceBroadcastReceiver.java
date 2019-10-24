@@ -8,7 +8,12 @@ import android.util.Log;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import it.angelic.soulissclient.model.SoulissCommand;
+import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.util.NotificationStaticUtil;
 
 import static it.angelic.soulissclient.Constants.TAG;
 
@@ -17,8 +22,17 @@ import static it.angelic.soulissclient.Constants.TAG;
  */
 public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
+    private String getGeofenceTransitionDetails(Context geofenceBroadcastReceiver, int geofenceTransition, List<Geofence> triggeringGeofences) {
+        return triggeringGeofences.get(0).getRequestId() + triggeringGeofences.get(0).toString();
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        SoulissDBHelper database = new SoulissDBHelper(context);
+        SoulissDBHelper.open();
+        LinkedList<SoulissCommand> progs = database.getPositionalPrograms();
+
         Log.w(Constants.TAG, "RECEIVED GEOFENCE INTENT " + intent.getAction());
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         if (geofencingEvent.hasError()) {
@@ -45,18 +59,23 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                     geofenceTransition,
                     triggeringGeofences
             );
+            Log.i(TAG, "GEOFENCE EVENT " + geofenceTransitionDetails);
+            for (SoulissCommand soulissCommand : progs) {
+                if ((soulissCommand.getCommandId() + soulissCommand.getName()).equals(triggeringGeofences.get(0).getRequestId())) {
+                    Log.i(TAG, "TRIGGER GEOFENCE EVENT " + geofenceTransitionDetails);
+                    soulissCommand.execute();
+                    NotificationStaticUtil.sendProgramNotification(context, context.getString(R.string.positional_executed),
+                            soulissCommand.toString() + " " + soulissCommand.getParentTypical() != null ? soulissCommand.getParentTypical().getNiceName() : "", R.drawable.exit1, soulissCommand);
+                }
+            }
 
             // Send notification and log the transition details.
             // sendNotification(geofenceTransitionDetails);
-            Log.i(TAG, "GEOFENCE EVENT " + geofenceTransitionDetails);
+
         } else {
             // Log the error.
             Log.e(TAG, "GEOFENCE ERR:" + geofenceTransition);
         }
-    }
-
-    private String getGeofenceTransitionDetails(Context geofenceBroadcastReceiver, int geofenceTransition, List<Geofence> triggeringGeofences) {
-        return triggeringGeofences.get(0).getRequestId() + triggeringGeofences.get(0).toString();
     }
 
     private static class GeofenceErrorMessages {

@@ -63,6 +63,7 @@ class GeofenceRunnable implements Runnable {
 
     @Override
     public void run() {
+        SoulissDBHelper.open();
         LinkedList<SoulissCommand> comandi = database.getPositionalPrograms();
 
         ArrayList<Geofence> geofenceList = new ArrayList<>();
@@ -90,15 +91,13 @@ class GeofenceRunnable implements Runnable {
                     .addOnSuccessListener(parent, new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            // Geofences added
-                            // ...
+                            Log.w(Constants.TAG, "Registered GEOFENCE ");
                         }
                     })
                     .addOnFailureListener(parent, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // Failed to add geofences
-                            // ...
+                            Log.w(Constants.TAG, "Registered GEOFENCE FAIL ");
                         }
                     });
         }

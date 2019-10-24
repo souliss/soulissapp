@@ -600,6 +600,11 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
                 // inserimento nuovo
                 intent.putExtra("returnedData", Constants.COMMAND_TIMED);
             } else if (radioPositional.isChecked()) {// POSIZIONALE
+                if (opzioni.getHomeLatitude() == 0) {
+                    Toast.makeText(AddProgramActivity.this, getString(R.string.programs_warn_home_notset),
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (togglehomeaway.isChecked()) {
                     programToSave.setType(Constants.COMMAND_GOAWAY_CODE);
                     intent.putExtra("returnedData", Constants.COMMAND_GOAWAY_CODE);

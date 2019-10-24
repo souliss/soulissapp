@@ -323,7 +323,7 @@ public class SoulissDataService extends Service implements LocationListener {
                 opts.setPrevDistance(homeDist);
             } else {
                 float homeDistPrev = opts.getPrevDistance();
-                processPositionalPrograms(homeDistPrev);
+                //processPositionalPrograms(homeDistPrev);
             }
 
         } catch (Exception e) {// home note set
