@@ -8,6 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import java.util.Locale;
+
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
@@ -17,6 +20,11 @@ public class NetworkStateReceiver extends BroadcastReceiver {
 
 
     public void onReceive(Context context, Intent intent) {
+        if (!"android.net.conn.CONNECTIVITY_CHANGE".equals(intent.getAction())) {
+            Log.e(Constants.TAG,
+                    String.format(Locale.US, "Received unexpected Intent action %s", intent.getAction())); //$NON-NLS-1$
+            return;
+        }
         // super.onReceive(context, intent);
         if (opzioni == null)
             opzioni = SoulissApp.getOpzioni();

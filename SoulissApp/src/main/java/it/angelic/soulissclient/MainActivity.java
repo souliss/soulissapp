@@ -81,15 +81,12 @@ import static it.angelic.soulissclient.Constants.TAG;
  * @author shine@angelic.it
  */
 public class MainActivity extends AbstractStatusedFragmentActivity {
-    private FusedLocationProviderClient locationCli;
     private SoulissDBLauncherHelper database;
     private StaggeredDashboardElementAdapter launcherMainAdapter;
     private LocationSettingsResponse locSettings;
     private LocationCallback locationCallback;
+    private FusedLocationProviderClient locationCli;
     private SoulissDataService mBoundService;
-    private NetworkStateReceiver netReceiver;
-    private SoulissPreferenceHelper opzioni;
-
     // invoked when RAW data is received
     private BroadcastReceiver datareceiver = new BroadcastReceiver() {
         @Override
@@ -115,7 +112,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             // Constraints constraints = ...
         }
     };
-
+    private NetworkStateReceiver netReceiver;
+    private SoulissPreferenceHelper opzioni;
     /* SOULISS DATA SERVICE BINDINGS */
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -165,6 +163,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
+    protected LocationRequest createLocationRequest() {
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(100000);
+        locationRequest.setFastestInterval(10000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        return locationRequest;
+    }
+
     private void doBindService() {
         Log.i(TAG, "doBindService(), BIND_AUTO_CREATE.");
         bindService(new Intent(MainActivity.this, SoulissDataService.class), mConnection, BIND_AUTO_CREATE);
@@ -177,12 +183,40 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }
     }
 
+    private void enqueueJobs() {
+        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+
+        PeriodicWorkRequest requestService =
+                // Executes MyWorker every 15 minutes
+                new PeriodicWorkRequest.Builder(WorkerZombieRestore.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
+                        // Sets the input data for the ListenableWorker
+                        //.setInputData(input)
+                        .setConstraints(constraints)
+                        .setInitialDelay(10, TimeUnit.SECONDS)
+                        .build();
+
+        PeriodicWorkRequest requestTimed =
+                // Executes MyWorker every 15 minutes
+                new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, 15, TimeUnit.MINUTES)
+                        // Sets the input data for the ListenableWorker
+                        //.setInputData(input)
+                        .build();
+
+        WorkManager.getInstance(MainActivity.this)
+                .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.REPLACE, requestService);
+
+        WorkManager.getInstance(MainActivity.this)
+                // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
+                // (uncompleted) work with the same unique name. Then, insert the newly-specified
+                // work.
+                .enqueueUniquePeriodicWork("souliss-timed-commands", ExistingPeriodicWorkPolicy.REPLACE, requestTimed);
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -232,7 +266,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         database = new SoulissDBLauncherHelper(this);
         List launcherItems = database.getLauncherItems(this);
-        // LauncherElement[] array = (LauncherElement[]) launcherItems.toArray(new LauncherElement[launcherItems.size()]);
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -245,7 +278,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         //TODO test&tune
         enqueueJobs();
 
-        AsyncTask.execute(new GeofenceRunnable(MainActivity.this));
+
         launcherMainAdapter = new StaggeredDashboardElementAdapter(this, launcherItems, mBoundService);
 
         mRecyclerView.setAdapter(launcherMainAdapter);
@@ -260,35 +293,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         ith.attachToRecyclerView(mRecyclerView);
 
         //opzioni.reload();
-    }
-
-    private void enqueueJobs() {
-        Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-
-        PeriodicWorkRequest requestService =
-                // Executes MyWorker every 15 minutes
-                new PeriodicWorkRequest.Builder(WorkerZombieRestore.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
-                        // Sets the input data for the ListenableWorker
-                        //.setInputData(input)
-                        .setConstraints(constraints)
-                        .setInitialDelay(10, TimeUnit.SECONDS)
-                        .build();
-
-        PeriodicWorkRequest requestTimed =
-                // Executes MyWorker every 15 minutes
-                new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, 15, TimeUnit.MINUTES)
-                        // Sets the input data for the ListenableWorker
-                        //.setInputData(input)
-                        .build();
-
-        WorkManager.getInstance(MainActivity.this)
-                .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.REPLACE, requestService);
-
-        WorkManager.getInstance(MainActivity.this)
-                // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
-                // (uncompleted) work with the same unique name. Then, insert the newly-specified
-                // work.
-                .enqueueUniquePeriodicWork("souliss-timed-commands", ExistingPeriodicWorkPolicy.REPLACE, requestTimed);
     }
 
     @Override
@@ -329,14 +333,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                     } catch (final Exception e) {
                         out1.append(Html.fromHtml("Geocoder <font color=\"#FF4444\">ERROR</font>: " + e.getMessage())).toString();
                     }
-                    if (loc==null)
+                    if (loc == null)
                         loc = Constants.gpsDecimalFormat.format(lat) + " : " + Constants.gpsDecimalFormat.format(lng);
                     //final String ff = loc;
                     if (locSettings != null) {
                         //final String sonoIncapace = adString;
                         out2.append(Html.fromHtml(getString(R.string.positionfrom)
                                 + " <b>"
-                                + (locSettings.getLocationSettingsStates().isGpsUsable()?"GPS":"3G")
+                                + (locSettings.getLocationSettingsStates().isGpsUsable() ? "GPS" : "3G")
                                 + "</b>: " + loc
                                 + adString)).toString();
                     }
@@ -413,15 +417,12 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
     protected void onPause() {
         unregisterReceiver(datareceiver);
         unregisterReceiver(netReceiver);
+
         super.onPause();
         //autoUpdate.cancel();
-       /* if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //...e amen
-            return;
-        }*/
-        if (locationCli != null)
+        if (locationCli != null && locationCallback != null) {
             locationCli.removeLocationUpdates(locationCallback);
+        }
         //non mettere nulla qui
     }
 
@@ -466,10 +467,14 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                     //   cardViewPositionInfo.setVisibility(View.GONE);
                 }
                 return;
-            }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+
+            }
+            default:
+                Log.wtf(TAG, "BOH. permesso non riconosciuto: " + requestCode);
+
+                // other 'case' lines to check for other
+                // permissions this app might request
         }
     }
 
@@ -497,33 +502,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         launcherMainAdapter.setLauncherElements(launcherItems);
         launcherMainAdapter.notifyDataSetChanged();
 
-        boolean permissionAccessCoarseLocationApproved =
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED;
 
-        if (permissionAccessCoarseLocationApproved) {
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
-                    if (locationResult == null) {
-                        return;
-                    }
-                    for (Location location : locationResult.getLocations()) {
-                        if (launcherMainAdapter.getLocationLauncherElements() != null) {
-                            onLocationChanged(location);
-                        }
-                    }
-                }
-            };
-            startLocationUpdates();
-        } else {
-            // App doesn't have access to the device's location at all. Make full request
-            // for permission.
-            ActivityCompat.requestPermissions(this, new String[]{
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                    }, Constants.MY_PERMISSIONS_ACCESS_LOCATION);
-        }
        /* autoUpdate = new Timer();
         autoUpdate.schedule(new TimerTask() {
             @Override
@@ -539,12 +518,58 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         }, 100, Constants.GUI_UPDATE_INTERVAL * opzioni.getBackoff());*/
     }
 
-    protected LocationRequest createLocationRequest() {
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(100000);
-        locationRequest.setFastestInterval(10000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        return locationRequest;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setActionBarInfo(getString(R.string.souliss_app_name));
+        opzioni.initializePrefs();
+
+        ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo inf = connectivity.getActiveNetworkInfo();
+        NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
+
+        if (!opzioni.isDbConfigured()) {
+            AlertDialogHelper.dbNotInitedDialog(this);
+        }
+        // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ArrayAdapter<INavDrawerItem> navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.DASHBOARD);
+        mDrawerList.setAdapter(navAdapter);
+
+        configureVoiceFab();
+
+        boolean permissionAccessCoarseLocationApproved =
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED;
+
+        if (permissionAccessCoarseLocationApproved) {
+            //refresh geofences
+            AsyncTask.execute(new GeofenceRunnable(MainActivity.this));
+
+            locationCallback = new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
+                    if (locationResult == null) {
+                        return;
+                    }
+                    for (Location location : locationResult.getLocations()) {
+                        if (launcherMainAdapter.getLocationLauncherElements() != null) {
+                            onLocationChanged(location);
+                        }
+                    }
+                }
+            };
+            startLocationUpdates();
+        } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_DENIED) {
+            // App doesn't have access to the device's location at all. Make full request
+            // for permission.
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, Constants.MY_PERMISSIONS_ACCESS_LOCATION);
+        }
     }
 
     private void startLocationUpdates() {
@@ -571,28 +596,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 locSettings = null;
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setActionBarInfo(getString(R.string.souliss_app_name));
-        opzioni.initializePrefs();
-
-        ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo inf = connectivity.getActiveNetworkInfo();
-        NetworkStateReceiver.storeNetworkInfo(inf, opzioni);
-
-        if (!opzioni.isDbConfigured()) {
-            AlertDialogHelper.dbNotInitedDialog(this);
-        }
-        // this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ArrayAdapter<INavDrawerItem> navAdapter = new NavDrawerAdapter(MainActivity.this, R.layout.drawer_list_item, dmh.getStuff(), DrawerMenuHelper.DASHBOARD);
-        mDrawerList.setAdapter(navAdapter);
-
-        configureVoiceFab();
     }
 
     private static class LauncherStaggeredCallback extends ItemTouchHelper.Callback {

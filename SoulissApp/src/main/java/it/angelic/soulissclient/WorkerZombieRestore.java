@@ -90,56 +90,9 @@ public class WorkerZombieRestore extends Worker {
                 return Result.failure();
             }
             // db.open();
-            float homeDistPrev = opts.getPrevDistance();
-            Log.i(TAG, "Previous distance " + homeDistPrev + " current: TODO");
-            // PROGRAMMI POSIZIONALI /
-            //           if (homeDist != homeDistPrev) {
-            //               processPositionalPrograms(homeDistPrev);
-            //           }
-/*
-                // Timed commands
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SoulissDBHelper.open();
-                        LinkedList<SoulissCommand> unexecuted = db.getUnexecutedCommands(SoulissDataService.this);
-                        Log.i(TAG, String.format("checking %d unexecuted TIMED commands ", unexecuted.size()));
-                        for (SoulissCommand unexnex : unexecuted) {
-                            Calendar now = Calendar.getInstance();
-                            if (unexnex.getType() == Constants.COMMAND_TIMED
-                                    && now.after(unexnex.getScheduledTime())) {
-                                // esegui comando
-                                Log.w(TAG, "issuing command: " + unexnex.toString());
-                                unexnex.execute();
-                                unexnex.persistCommand();
-                                // Se ricorsivo, ricrea
-                                if (unexnex.getInterval() > 0) {
+            //float homeDistPrev = opts.getPrevDistance();
+            //Log.i(TAG, "Previous distance " + homeDistPrev + " current: TODO");
 
-                                    SoulissCommand nc = new SoulissCommand(
-                                            unexnex.getParentTypical());
-                                    nc.setNodeId(unexnex.getNodeId());
-                                    nc.setSlot(unexnex.getSlot());
-                                    nc.setCommand(unexnex.getCommand());
-                                    nc.setInterval(unexnex.getInterval());
-                                    Calendar cop = Calendar.getInstance();
-                                    cop.add(Calendar.SECOND, unexnex.getInterval());
-                                    nc.setScheduledTime(cop);
-                                    nc.setType(Constants.COMMAND_TIMED);
-                                    nc.persistCommand();
-                                    Log.w(TAG, "recreate recursive command");
-                                }
-                                sendProgramNotification(SoulissDataService.this, getString(R.string.timed_program_executed),
-                                        unexnex.toString() + " " + unexnex.getParentTypical().toString(),
-                                        R.drawable.clock1, unexnex);
-                            } else if (unexnex.getType() != Constants.COMMAND_TIMED) {
-                                //this is only a check
-                                Log.e(TAG, "WTF? nt TIMED?? " + unexnex.getType());
-                            }
-                        }
-                        // db.close();
-                    }
-                }).start();
-*/
             // Check for too long ON status
             new Thread(new Runnable() {
                 @Override

@@ -64,8 +64,9 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 if ((soulissCommand.getCommandId() + soulissCommand.getName()).equals(triggeringGeofences.get(0).getRequestId())) {
                     Log.i(TAG, "TRIGGER GEOFENCE EVENT " + geofenceTransitionDetails);
                     soulissCommand.execute();
+                    soulissCommand.persistCommand();
                     NotificationStaticUtil.sendProgramNotification(context, context.getString(R.string.positional_executed),
-                            soulissCommand.toString() + " " + soulissCommand.getParentTypical() != null ? soulissCommand.getParentTypical().getNiceName() : "", R.drawable.exit1, soulissCommand);
+                            soulissCommand.getNiceName(), R.drawable.exit1, soulissCommand);
                 }
             }
 

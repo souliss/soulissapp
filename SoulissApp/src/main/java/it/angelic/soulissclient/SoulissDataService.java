@@ -17,18 +17,15 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
-import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.net.UDPRunnable;
-import it.angelic.soulissclient.util.NotificationStaticUtil;
 import it.angelic.soulissclient.util.SoulissUtils;
 
 public class SoulissDataService extends Service implements LocationListener {
@@ -90,12 +87,12 @@ public class SoulissDataService extends Service implements LocationListener {
                     return;
                 }
                 // db.open();
-                float homeDistPrev = opts.getPrevDistance();
-                Log.i(TAG, "Previous distance " + homeDistPrev + " current: " + homeDist);
+                // float homeDistPrev = opts.getPrevDistance();
+                //Log.i(TAG, "Previous distance " + homeDistPrev + " current: " + homeDist);
                 // PROGRAMMI POSIZIONALI /
-                if (homeDist != homeDistPrev) {
-                    processPositionalPrograms(homeDistPrev);
-                }
+                // if (homeDist != homeDistPrev) {
+                //  processPositionalPrograms(homeDistPrev);
+                // }
 /*Moved in workJob
                 // Timed commands
                 new Thread(new Runnable() {
@@ -317,17 +314,17 @@ public class SoulissDataService extends Service implements LocationListener {
         try {
             Location.distanceBetween(lat, lng, opts.getHomeLatitude(), opts.getHomeLongitude(), res);
             Log.d(TAG, "Service received new Position. Home Distance:" + (int) res[0]);
-            homeDist = res[0];
+          /*  homeDist = res[0];
             if (opts.getPrevDistance() == 0) {
                 Log.w(TAG, "Resetting prevdistance =>" + homeDist);
                 opts.setPrevDistance(homeDist);
             } else {
                 float homeDistPrev = opts.getPrevDistance();
                 //processPositionalPrograms(homeDistPrev);
-            }
+            }*/
 
         } catch (Exception e) {// home note set
-            homeDist = 0;
+            // homeDist = 0;
             Log.w(TAG, "can't compute home distance, home position not set");
         }
 
@@ -385,7 +382,7 @@ public class SoulissDataService extends Service implements LocationListener {
      *
      * @param homeDistPrev
      */
-    private void processPositionalPrograms(float homeDistPrev) {
+/*    private void processPositionalPrograms(float homeDistPrev) {
         float distPrevCache = opts.getPrevDistance();
         Log.d(TAG, "process positional programs, homedistanceprev=" + homeDistPrev + " homedist now is=" + homeDist);
         if (homeDistPrev > (opts.getHomeThresholdDistance() - opts.getHomeThresholdDistance() / 10)
@@ -438,7 +435,7 @@ public class SoulissDataService extends Service implements LocationListener {
         }
         //abbiamo processato, e` ora di resettare il prev
         opts.setPrevDistance(homeDist);
-    }
+    }*/
 
     /**
      * Rischedula le richieste posizionali a intervali basati su fascie distanza

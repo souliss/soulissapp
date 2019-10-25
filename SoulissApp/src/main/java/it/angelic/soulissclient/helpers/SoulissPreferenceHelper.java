@@ -262,24 +262,6 @@ public class SoulissPreferenceHelper implements Serializable {
         return IPPreference;
     }
 
-    /**
-     * Serve perche l'oggetto PreferenceHelper potrebbe essere ri-creato e non
-     * consistente rispetto alla rete. Salvo in
-     * customCachedPrefs.cachedAddress l'indirizzo attuale dopo la chiamata
-     * a setBestAddress
-     *
-     * @return
-     */
-    public float getPrevDistance() {
-        return customCachedPrefs.getFloat("lastDistance", 0);
-    }
-
-    public void setPrevDistance(float in) {
-        SharedPreferences.Editor editor = customCachedPrefs.edit();
-        editor.putFloat("lastDistance", in);
-        editor.apply();
-    }
-
     public int getRemoteTimeoutPref() {
         return remoteTimeoutPref;
     }

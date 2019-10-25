@@ -15,7 +15,6 @@ import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import it.angelic.soulissclient.AddProgramActivity;
 import it.angelic.soulissclient.Constants;
@@ -32,6 +31,8 @@ import it.angelic.soulissclient.model.SoulissTypical;
 public class NotificationStaticUtil {
 
     private final static String channelId = "SoulissNotifications";
+    private static final int NOTIF_ID_COMEBACK = 665;
+    private static final int NOTIF_ID_GOAWAY = 667;
 
     private static void createNotificationChannel(Context ctx) {
         // Create the NotificationChannel, but only on API 26+ because
@@ -48,20 +49,20 @@ public class NotificationStaticUtil {
         }
     }
 
-    public static void sendProgramNotification(Context ctx, String desc, String longdesc, int icon, @Nullable SoulissCommand ppr) {
+    public static void sendProgramNotification(Context ctx, String desc, String longdesc, int icon, @NonNull SoulissCommand ppr) {
 //It's safe to call this repeatedly because creating an existing notification channel performs no operation.
         createNotificationChannel(ctx);
         Intent notificationIntent = new Intent(ctx, AddProgramActivity.class);
-        if (ppr != null)
             notificationIntent.putExtra("PROG", ppr);
         PendingIntent contentIntent = PendingIntent.getActivity(ctx, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager nm = (NotificationManager) ctx.getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(ctx, channelId)
                 .setSmallIcon(R.drawable.ic_notification_souliss)
-                .setTicker("Souliss program activated")
+                .setTicker(desc)
                 .setLargeIcon(BitmapFactory.decodeResource(ctx.getResources(), icon))
                 .setContentIntent(contentIntent)
+                .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true).setContentTitle(desc)
                 .setContentText(longdesc)
                 //.setStyle(new NotificationCompat.BigTextStyle()
@@ -69,7 +70,7 @@ public class NotificationStaticUtil {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         Notification n = builder.build();
-        nm.notify(665, n);
+        nm.notify(ppr.getType() == Constants.COMMAND_COMEBACK_CODE ? NOTIF_ID_COMEBACK : NOTIF_ID_GOAWAY, n);
     }
 
     public static void sendTooLongWarnNotification(Context ctx, String desc, @NonNull SoulissTypical ppr) {
@@ -114,7 +115,6 @@ public class NotificationStaticUtil {
      *
      * @param ctx
      * @param desc
-     * @param longdesc
      * @param icon
      * @param ty
      */

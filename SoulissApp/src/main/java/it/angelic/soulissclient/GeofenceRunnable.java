@@ -26,7 +26,6 @@ import it.angelic.soulissclient.model.db.SoulissDBHelper;
  * Created by shine@angelic.it on 23/10/2019.
  */
 class GeofenceRunnable implements Runnable {
-    private final SoulissDBHelper database;
     private final SoulissPreferenceHelper opzioni;
     Activity parent;
 
@@ -35,7 +34,7 @@ class GeofenceRunnable implements Runnable {
 
     private GeofencingRequest getGeofencingRequest(List<Geofence> geofenceList) {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL);
         builder.addGeofences(geofenceList);
         return builder.build();
     }
@@ -56,14 +55,14 @@ class GeofenceRunnable implements Runnable {
     public GeofenceRunnable(Activity context) {
         this.parent = context;
         geofencingClient = LocationServices.getGeofencingClient(context);
-        database = new SoulissDBHelper(context);
+
         opzioni = new SoulissPreferenceHelper(context);
         Log.w(Constants.TAG, "Created GEOFENCE Runnable");
     }
 
     @Override
     public void run() {
-        SoulissDBHelper.open();
+        SoulissDBHelper database = new SoulissDBHelper(parent);
         LinkedList<SoulissCommand> comandi = database.getPositionalPrograms();
 
         ArrayList<Geofence> geofenceList = new ArrayList<>();
