@@ -171,7 +171,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
                 }
             });
         } else {
-            mDrawerFloatButt.setVisibility(View.INVISIBLE);
+            mDrawerFloatButt.hide();
         }
 
         mDrawerList = findViewById(R.id.left_drawer);

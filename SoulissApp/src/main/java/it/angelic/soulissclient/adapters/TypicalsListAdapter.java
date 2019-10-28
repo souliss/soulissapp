@@ -2,6 +2,7 @@ package it.angelic.soulissclient.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -114,8 +115,8 @@ public class TypicalsListAdapter extends BaseAdapter {
             holder.textslot.setTextColor(ContextCompat.getColor(context, R.color.black));
             holder.textUpdated.setTextColor(ContextCompat.getColor(context, R.color.black));
             holder.textStatus.setTextColor(ContextCompat.getColor(context, R.color.black));
-            holder.expand.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.overflow_dots));
-            holder.expand.setColorFilter(R.color.black);
+            holder.expand.setBackgroundResource(R.drawable.overflow_dots);
+            holder.expand.setColorFilter(R.color.black, PorterDuff.Mode.MULTIPLY);
         }
 		/* Nodo vuota */
         if (tipici.isEmpty()) {

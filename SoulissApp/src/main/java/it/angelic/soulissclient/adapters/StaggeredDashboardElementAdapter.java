@@ -178,9 +178,9 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                         ActivityOptionsCompat.makeSceneTransitionAnimation(context,
                                 //holder.image,   // The view which starts the transition
                                 //"photo_hero"    // The transitionName of the view we’re transitioning to
-                                Pair.create((View) image, "photo_hero"),
-                                Pair.create((View) shadowbar, "shadow_hero"),
-                                Pair.create((View) imageTag, "tag_icon")
+                                Pair.create(image, "photo_hero"),
+                                Pair.create(shadowbar, "shadow_hero"),
+                                Pair.create(imageTag, "tag_icon")
                         );
 
                 ActivityCompat.startActivity(context, nodeDatail, options.toBundle());
@@ -337,14 +337,17 @@ public class StaggeredDashboardElementAdapter extends RecyclerView.Adapter<Stagg
                 setServiceInfo(textCmdsd, textCmdWhens);
                 break;
             case STATIC_LOCATION:
-                View viewLineL = holder.container.findViewById(R.id.StaticTileLine);
-                TextView txtTitL = holder.container.findViewById(R.id.card_static_title);
-                TextView txtDescL = holder.container.findViewById(R.id.card_static_desc);
-                TextView txtAwesomL = holder.container.findViewById(R.id.card_thumbnail_fa);
-                FontAwesomeUtil.prepareFontAweTextView(context, txtAwesomL, FontAwesomeEnum.fa_location_arrow.getFontName());
-                txtTitL.setText(item.getTitle());
-                txtDescL.setText(item.getDesc());
-                //viewLineL.setBackgroundColor(context.getResources().getColor(R.color.md_blue_grey_500));
+                if (item.getDesc().isEmpty()) {
+                    holder.container.setVisibility(View.INVISIBLE);
+                } else {
+                    holder.container.setVisibility(View.VISIBLE);
+                    TextView txtTitL = holder.container.findViewById(R.id.card_static_title);
+                    TextView txtDescL = holder.container.findViewById(R.id.card_static_desc);
+                    TextView txtAwesomL = holder.container.findViewById(R.id.card_thumbnail_fa);
+                    FontAwesomeUtil.prepareFontAweTextView(context, txtAwesomL, FontAwesomeEnum.fa_location_arrow.getFontName());
+                    txtTitL.setText(item.getTitle());
+                    txtDescL.setText(item.getDesc());
+                }
                 break;
             case STATIC_SCENES:
                 View viewLine = holder.container.findViewById(R.id.StaticTileLine);

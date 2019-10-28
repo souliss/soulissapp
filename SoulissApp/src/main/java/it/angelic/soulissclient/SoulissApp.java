@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 /**
@@ -114,6 +115,7 @@ public class SoulissApp extends Application implements Serializable {
         displayWidth = displayMetrics.heightPixels / displayMetrics.density;
         displayHeight = displayMetrics.widthPixels / displayMetrics.density;
         soulissConfigurationPreference = getSharedPreferences("SoulissConfigPrefs", Activity.MODE_PRIVATE);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
     }
 

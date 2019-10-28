@@ -17,6 +17,7 @@ import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
  * http://www.hascode.com/2011/11/managing-background-tasks-on-android
  * -using-the-alarm-manager/
  */
+@Deprecated
 public class WatchDogEventReceiver extends BroadcastReceiver {
 
 

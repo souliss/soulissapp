@@ -13,6 +13,7 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
+@Deprecated
 public class WatchDogSetupReceiver extends BroadcastReceiver {
 
 	SoulissPreferenceHelper opts = SoulissApp.getOpzioni();
