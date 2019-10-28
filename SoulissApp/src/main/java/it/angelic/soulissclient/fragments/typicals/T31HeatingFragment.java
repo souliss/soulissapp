@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.fragments;
+package it.angelic.soulissclient.fragments.typicals;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,6 +34,8 @@ import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.HalfFloatUtils;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
+import it.angelic.soulissclient.fragments.ChartFragment;
+import it.angelic.soulissclient.fragments.NodeDetailFragment;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;

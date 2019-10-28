@@ -1,8 +1,6 @@
 package it.angelic.soulissclient;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -354,7 +352,7 @@ public class SoulissDataService extends Service implements LocationListener {
         opts = SoulissApp.getOpzioni();
         opts.initializePrefs();//forse cambiate,ricarica
         startUDPListener();
-        requestBackedOffLocationUpdates();
+        //requestBackedOffLocationUpdates();
         // uir = opts.getDataServiceInterval();
 
         // delle opzioni
@@ -496,14 +494,14 @@ public class SoulissDataService extends Service implements LocationListener {
             // mHandler.postDelayed(mUpdateSoulissRunnable,
             // opts.getDataServiceIntervalMsec());
             /* One of the two should get it */
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            /*AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
             PendingIntent secureShot = PendingIntent.getService(this, 0, cIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
 
             calendar.setTimeInMillis(getLastupd().getTime().getTime());
             calendar.add(Calendar.MILLISECOND, opts.getBackedOffServiceIntervalMsec().intValue());
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), secureShot);*/
             //will call onStart(), detect late and schedule immediate
             Log.i(TAG, "DATASERVICE SCHEDULED ON: " + calendar.getTime());
 

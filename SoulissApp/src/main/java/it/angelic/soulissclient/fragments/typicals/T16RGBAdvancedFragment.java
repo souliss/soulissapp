@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.fragments;
+package it.angelic.soulissclient.fragments.typicals;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;

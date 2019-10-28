@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.fragments;
+package it.angelic.soulissclient.fragments.typicals;
 
 import android.app.AlertDialog;
 import android.content.Intent;

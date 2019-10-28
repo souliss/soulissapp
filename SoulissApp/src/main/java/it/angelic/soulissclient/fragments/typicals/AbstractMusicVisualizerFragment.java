@@ -1,4 +1,4 @@
-package it.angelic.soulissclient.fragments;
+package it.angelic.soulissclient.fragments.typicals;
 
 /**
  * Generic LED typical with dimmable lights

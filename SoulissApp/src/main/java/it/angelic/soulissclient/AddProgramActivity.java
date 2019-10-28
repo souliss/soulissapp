@@ -1,7 +1,9 @@
 package it.angelic.soulissclient;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
@@ -328,6 +331,7 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
         OnClickListener posListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
+                managePositionPermissions();
                 radioTimed.setChecked(false);
                 radioTrigger.setChecked(false);
                 checkboxRecursive.setEnabled(false);
@@ -652,5 +656,22 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             AddProgramActivity.this.finish();
         }
 
+    }
+
+    private void managePositionPermissions() {
+        boolean permissionAccessCoarseLocationApproved =
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED;
+
+        if (permissionAccessCoarseLocationApproved) {
+            //TODO refresh geofences copia dal main
+
+        } else {
+            // App doesn't have access to the device's location at all. Make full request
+            // for permission.
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+            }, Constants.MY_PERMISSIONS_ACCESS_LOCATION);
+        }
     }
 }

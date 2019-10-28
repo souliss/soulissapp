@@ -24,7 +24,7 @@ android {
         versionName rootProject.ext.VERSION_NAME
         versionCode rootProject.ext.VERSION_CODE
         vectorDrawables.useSupportLibrary = true
-        multiDexEnabled true
+       // multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -52,10 +52,9 @@ dependencies {
     implementation 'im.dacer:AndroidCharts:1.0.4'
     implementation "com.android.support:support-compat:28.0.0"
 
-    //implementation 'com.google.firebase:firebase-core:17.0.1'
-    //implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.work:work-runtime:2.3.0-alpha03'
 
 
     implementation('androidx.test.espresso:espresso-core:3.1.0', {
@@ -65,17 +64,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     // Required for instrumented tests
     androidTestImplementation 'com.android.support:support-annotations:28.0.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    // optional - Test helpers
-    androidTestImplementation 'androidx.work:work-testing:2.2.0'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+   // androidTestImplementation 'androidx.work:work-testing:2.2.0'
 
     implementation project(':ecoGallery')
     implementation project(':soulissLib')
-    // wearApp project(":soulisswear")
     implementation project(':taskerapi')
-
-    // (Java only)
-    implementation 'androidx.work:work-runtime:2.2.0'
 
 
 }

@@ -33,8 +33,8 @@ public class WatchDogSetupReceiver extends BroadcastReceiver {
 			Calendar now = Calendar.getInstance();
 			now.add(Calendar.SECOND, 20);
 
-			alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, now.getTimeInMillis(), opts.getBackedOffServiceIntervalMsec()/2,
-					patTheDog);
+			//alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, now.getTimeInMillis(), opts.getBackedOffServiceIntervalMsec()/2,
+			//		patTheDog);
 
 		}
 	}

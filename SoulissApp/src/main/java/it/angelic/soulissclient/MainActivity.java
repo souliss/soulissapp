@@ -43,6 +43,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -102,14 +103,13 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                 List<LauncherElement> launcherItems = database.getLauncherItems(MainActivity.this);
                 launcherMainAdapter.setLauncherElements(launcherItems);
                 launcherMainAdapter.notifyDataSetChanged();
-                if (mBoundService != null)
-                    Log.i(TAG, "Service lastupd: " + mBoundService.getLastupd());
+                if (mBoundService != null) {
+                    SimpleDateFormat dfDate = new SimpleDateFormat("dd MMM yyyy hh.mm.ss");
+                    Log.i(TAG, "Service lastupd: " + dfDate.format(mBoundService.getLastupd().getTime()));
+                }
             } else {
                 Log.e(TAG, "EMPTY response!!");
             }
-            SoulissPreferenceHelper pref = SoulissApp.getOpzioni();
-            // Define constraints (as above)
-            // Constraints constraints = ...
         }
     };
     private NetworkStateReceiver netReceiver;
@@ -197,7 +197,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
         PeriodicWorkRequest requestTimed =
                 // Executes MyWorker every 15 minutes
-                new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, 15, TimeUnit.MINUTES)
+                new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
                         // Sets the input data for the ListenableWorker
                         //.setInputData(input)
                         .build();

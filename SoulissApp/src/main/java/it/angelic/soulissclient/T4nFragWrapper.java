@@ -4,7 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import it.angelic.soulissclient.fragments.T4nFragment;
+import it.angelic.soulissclient.fragments.typicals.T4nFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissTypical;
 

@@ -4,7 +4,13 @@
     <style name="LightThemeSelector" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
-   
+
+    <style name="MyAlertDialogThemeLight" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textAppearanceSmall">@style/CodeFontSmall</item>
+        <item name="android:textAppearanceMedium">@style/CodeFontMain</item>
+        <item name="android:textAppearanceLarge">@style/CodeFontTitle</item>
+    </style>
+
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">
         <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
@@ -16,6 +22,12 @@
 
     <style name="DarkThemeSelector" parent="Theme.AppCompat.NoActionBar">
         <item name="android:actionBarStyle">@style/MyActionBarDark</item>
+    </style>
+
+    <style name="MyAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:textAppearanceSmall">@style/CodeFontSmall</item>
+        <item name="android:textAppearanceMedium">@style/CodeFontMain</item>
+        <item name="android:textAppearanceLarge">@style/CodeFontTitle</item>
     </style>
 
     <style name="MyActionBarDark" parent="@android:style/Widget.Holo.ActionBar">
@@ -30,7 +42,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:fontFamily">sans-serif-light</item>
         <!-- <item name="android:typeface">monospace</item> -->
     </style>
 
@@ -38,7 +49,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size</item>
-        <item name="android:fontFamily">sans-serif-light</item>
         <!-- <item name="android:typeface">monospace</item> -->
     </style>
 
@@ -51,7 +61,6 @@
         <item name="android:shadowRadius">1.5</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
-        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textStyle">italic</item>
     </style>
     
@@ -59,14 +68,24 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_vbig</item>
-        <item name="android:fontFamily">sans-serif-condensed</item>
     </style>
     
      <style name="CodeFontActionBar" parent="@android:style/TextAppearance.Large">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_big</item>
-<!--         <item name="android:fontFamily">sans-serif-condensed</item> -->
+     </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.Holo">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="android:Widget.Holo.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
     </style>
 
 </resources>

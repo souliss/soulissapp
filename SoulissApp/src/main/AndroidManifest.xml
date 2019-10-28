@@ -39,9 +39,6 @@
         <service
             android:name=".WorkerZombieRestore"
             android:exported="false">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
         </service>
 
         <activity
@@ -52,9 +49,7 @@
             android:name=".SendCommandActivityNoDisplay"
             android:label="@string/souliss_app_name"
             android:exported="true"
-            android:theme="@android:style/Theme.NoDisplay">
-
-        </activity>
+            android:theme="@android:style/Theme.NoDisplay" />
 
         <activity
             android:name=".WelcomeActivity"
@@ -115,24 +110,24 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name="it.angelic.receivers.NetworkStateReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="it.angelic.receivers.WatchDogSetupReceiver"
-            android:process=":souliss_process">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
+        <!-- <receiver
+             android:name="it.angelic.receivers.NetworkStateReceiver"
+             android:exported="false">
+             <intent-filter>
+                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+             </intent-filter>
+         </receiver>
+         <receiver
+             android:name="it.angelic.receivers.WatchDogSetupReceiver"
+             android:process=":souliss_process">
+             <intent-filter>
+                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                 <action android:name="android.intent.action.USER_PRESENT" />
+             </intent-filter>
         </receiver>
         <receiver
             android:name="it.angelic.receivers.WatchDogEventReceiver"
-            android:process=":souliss_process" />
+            android:process=":souliss_process" />-->
 
         <activity
             android:name=".NodesListActivity"

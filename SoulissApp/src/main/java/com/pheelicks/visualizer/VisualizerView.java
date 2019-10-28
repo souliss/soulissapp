@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import it.angelic.soulissclient.Constants;
-import it.angelic.soulissclient.fragments.AbstractMusicVisualizerFragment;
+import it.angelic.soulissclient.fragments.typicals.AbstractMusicVisualizerFragment;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 /**
