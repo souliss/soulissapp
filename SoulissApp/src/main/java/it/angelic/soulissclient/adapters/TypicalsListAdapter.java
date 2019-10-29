@@ -120,21 +120,21 @@ public class TypicalsListAdapter extends BaseAdapter {
         }
 		/* Nodo vuota */
         if (tipici.isEmpty()) {
-
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_exclamation_triangle.getFontName());
-            //holder.image.setImageResource(android.R.drawable.ic_dialog_alert);
-            //holder.image.setColorFilter(ContextCompat.getColor(context, R.color.aa_yellow),
-            //        android.graphics.PorterDuff.Mode.SRC_ATOP);
             holder.textslot.setText(context.getResources().getString(R.string.node_empty));
             holder.textStatus.setText(context.getResources().getString(R.string.node_empty_desc));
-            // holder.evidenza.setBackgroundColor(context.getResources().getColor(color.trans_black));
             return convertView;
         }
 		/* INFO slot e Alias Name */
         holder.textslot.setText(tipici.get(position).getNiceName());
-        holder.textUpdated.setText(context.getString(R.string.update) + " "
-                + SoulissUtils.getTimeAgo(tipici.get(position).getTypicalDTO().getRefreshedAt()) + " - "
-                + context.getString(R.string.manual_slot) + ": " + tipici.get(position).getSlot());
+
+        StringBuilder txtUpd = new StringBuilder();
+        txtUpd.append(context.getString(R.string.update)).append(" ")
+                .append(SoulissUtils.getTimeAgo(tipici.get(position).getTypicalDTO().getRefreshedAt()))
+                .append(" - ")
+                .append(context.getString(R.string.manual_slot)).append(": ").append(tipici.get(position).getSlot());
+
+        holder.textUpdated.setText(txtUpd.toString());
         holder.textStatus.setText(context.getResources().getString(R.string.typical).toUpperCase(Locale.getDefault())
                 + ": " + tipici.get(position).getTypicalDTO().getTypicalDec() + " - "
                 + context.getResources().getString(R.string.status));

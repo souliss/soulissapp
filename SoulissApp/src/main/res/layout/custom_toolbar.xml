@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginRight="4dp"
+            android:layout_marginRight="2dp"
             android:maxLines="2"
             android:layout_toLeftOf="@id/online_status_icon"
             android:transitionName="hero_title"
@@ -38,10 +38,12 @@
             style="@style/CodeFontMain"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="6sp"
+            android:layout_marginRight="4sp"
             android:gravity="center_vertical"
             android:textAllCaps="true"
             android:maxLines="1"
+            android:ellipsize="end"
+            android:maxLength="10"
             android:textColor="@color/std_green"
             tools:text="Online"/>
         <ImageButton

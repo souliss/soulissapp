@@ -140,7 +140,6 @@
         <item name="10000">10000</item>
     </integer-array>
     <string-array name="configChooserArray">
-        <item>Demonstracija</item>
         <item>Ustvari novo</item>
         <item>Uvozi</item>
         <!-- other dynamic configs -->

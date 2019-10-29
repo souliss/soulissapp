@@ -114,7 +114,6 @@
     </string-array>
 
     <string-array name="configChooserArray">
-        <item>Demo</item>
         <item>Crea</item>
         <item>Importa</item>
         <!-- other dynamic configs -->

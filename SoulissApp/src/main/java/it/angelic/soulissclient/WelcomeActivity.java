@@ -402,12 +402,12 @@ public class WelcomeActivity extends FragmentActivity {
                 SoulissApp.getOpzioni().setBestAddress();
 
                 //here we've already chosen config and loaded right files
-                if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
                     Intent createNewConfig = new Intent(WelcomeActivity.this, WelcomeCreateConfigActivity.class);
                     startActivity(createNewConfig);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     supportFinishAfterTransition();
-                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                     Intent createNewConfig = new Intent(WelcomeActivity.this, WelcomeImportConfigActivity.class);
                     startActivity(createNewConfig);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
