@@ -547,20 +547,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             //refresh geofences
             AsyncTask.execute(new GeofenceRunnable(MainActivity.this));
 
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
-                    if (locationResult == null) {
-                        return;
-                    }
-                    for (Location location : locationResult.getLocations()) {
-                        if (launcherMainAdapter.getLocationLauncherElements() != null) {
-                            onLocationChanged(location);
-                        }
-                    }
-                }
-            };
+
             startLocationUpdates();
         } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_DENIED) {
@@ -574,6 +561,21 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     private void startLocationUpdates() {
         Log.w(Constants.TAG, "Requesting POS updates ");
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (launcherMainAdapter.getLocationLauncherElements() != null) {
+                        onLocationChanged(location);
+                    }
+                }
+            }
+        };
+
         LocationRequest locReq = createLocationRequest();
         locationCli.requestLocationUpdates(locReq,
                 locationCallback,
