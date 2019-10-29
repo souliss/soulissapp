@@ -26,8 +26,7 @@ import com.twofortyfouram.locale.api.R;
 public final class BreadCrumber {
     /**
      * Static helper method to generate bread crumbs. Bread crumb strings will be properly formatted for the
-     * current language, including right-to-left languages, as long as the proper
-     * {@link com.twofortyfouram.locale.platform.R.string#twofortyfouram_locale_breadcrumb_format} string
+     * current language, including right-to-left languages, as long as the proper string
      * resources have been created.
      *
      * @param context      {@code Context} for loading platform resources. Cannot be null.

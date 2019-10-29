@@ -371,7 +371,7 @@ public class SoulissDataService extends Service implements LocationListener {
         Log.d(TAG, "Service location status Provider changed to: " + status);
     }
 
-    /**
+    /*
      * Se la distanza attuale rispetto alla precedente supera la soglia,
      * scattano i programmi posizionali.
      * <p/>

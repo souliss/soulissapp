@@ -268,15 +268,16 @@ public class WelcomeActivity extends FragmentActivity {
                 String newConfig = confSpinner.getSelectedItem().toString();
                 String previousConfig = SoulissApp.getCurrentConfig();
                 Log.w(Constants.TAG, "Current Config:" + previousConfig);
-                if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
+                /*if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
                     //non si cambia la DEMO
                     renameButton.setVisibility(View.INVISIBLE);
                     deleteButton.setVisibility(View.INVISIBLE);
-                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                } else */
+                if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
                     renameButton.setVisibility(View.INVISIBLE);
                     deleteButton.setVisibility(View.INVISIBLE);
                     Log.i(Constants.TAG, "TODO? forse non c'e da fare nulla qui...(crea nuovo)");
-                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                } else if (confSpinner.getSelectedItem().equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                     renameButton.setVisibility(View.INVISIBLE);
                     deleteButton.setVisibility(View.INVISIBLE);
                     Log.i(Constants.TAG, "TODO? forse non c'e da fare nulla qui...(importa)");
