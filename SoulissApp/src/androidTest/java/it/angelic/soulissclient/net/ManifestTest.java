@@ -137,8 +137,8 @@ ManifestTest extends junit.framework.TestCase {
         }
 
         try {
-            final Context localeContext = getContext().createPackageContext(hostPackage, 0);
-            assertTrue(getContext().getApplicationInfo().targetSdkVersion >= localeContext.getApplicationInfo().targetSdkVersion);
+            final Context localeContext = context.createPackageContext(hostPackage, 0);
+            assertTrue(context.getApplicationInfo().targetSdkVersion >= localeContext.getApplicationInfo().targetSdkVersion);
         } catch (final NameNotFoundException e) {
             throw new RuntimeException(e);
         }
