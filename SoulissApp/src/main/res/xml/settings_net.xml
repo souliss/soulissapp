@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:icon="@android:drawable/ic_menu_mylocation"
     android:key="network_setup"
     android:summary="@string/opt_networkdesc"
-    android:title="@string/opt_network" >
+    android:title="@string/opt_network">
 
     <PreferenceCategory android:title="@string/opt_net_home" >
         <EditTextPreference
@@ -33,12 +34,13 @@
             android:key="checkboxBroadcast"
             android:summary="@string/opt_summary_broadcast"
             android:title="@string/opt_title_broadcast" />
-		<Preference
-            android:name="advbroadcast"
-            android:dialogTitle="@string/opt_userindex"
-            android:key="advbroadcastKey"
+
+        <Preference
+            app:fragment="it.angelic.soulissclient.preferences.BroadcastSettingsFragment"
+            app:icon="@android:drawable/ic_menu_share"
             android:summary="@string/advbroadcast_summary"
-            android:title="Broadcast Setting" />
+            android:title="Broadcast Setting to nodes" />
+
         <EditTextPreference
             android:name="udpport"
             android:dialogTitle="@string/opt_udpport"

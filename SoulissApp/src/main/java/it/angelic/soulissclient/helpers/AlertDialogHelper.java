@@ -55,7 +55,7 @@ import it.angelic.soulissclient.model.db.SoulissDBOpenHelper;
 import it.angelic.soulissclient.model.db.SoulissDBTagHelper;
 import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
-import it.angelic.soulissclient.preferences.NetSettingsFragmentNuova;
+import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
@@ -89,7 +89,7 @@ public class AlertDialogHelper {
                         final Intent preferencesActivity = new Intent(source.getBaseContext(),
                                 SettingsActivity.class);
 
-                        preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragmentNuova.class.getName());
+                        preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
                         // preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT_ARGUMENTS,com);
                         preferencesActivity.setAction("network_setup");
                         preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -415,16 +415,13 @@ public class AlertDialogHelper {
     }
 
     public static AlertDialog.Builder deleteConfigDialog(final Context cont, final Spinner toUpdate) {
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(cont, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
 
-        final AlertDialog.Builder alert = new AlertDialog.Builder(cont,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(wrapper, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight : R.style.MyAlertDialogTheme);
         final String bckConfig = (String) toUpdate.getSelectedItem();
         alert.setIcon(R.drawable.ic_cancel_24dp);
-        alert.setTitle(cont.getString(R.string.delete) + " " + bckConfig);
+        alert.setTitle(cont.getString(R.string.delete) + " " + bckConfig + "?");
 
-        // Set an EditText view to get user input
-        //final EditText input = new EditText(cont);
-        //alert.setView(input);
-        //input.setText(bckConfig);
         alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -451,17 +448,19 @@ public class AlertDialogHelper {
     }
 
     public static AlertDialog.Builder renameConfigDialog(final Context cont, final Spinner toUpdate) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(cont,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
-        final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(cont, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
+
+        final AlertDialog.Builder alert = new AlertDialog.Builder(wrapper, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight : R.style.MyAlertDialogTheme);
+        //final SoulissPreferenceHelper opzioni = new SoulissPreferenceHelper(cont);
         final String bckConfig = (String) toUpdate.getSelectedItem();
         alert.setIcon(R.drawable.ic_mode_edit_24dp);
         alert.setTitle(cont.getString(R.string.rename) + " " + bckConfig);
 
         // Set an EditText view to get user input
-        final EditText input = new EditText(cont);
+        final EditText input = new EditText(wrapper);
         alert.setView(input);
         input.setText(bckConfig);
-        alert.setPositiveButton(cont.getResources().getString(android.R.string.ok),
+        alert.setPositiveButton(wrapper.getResources().getString(android.R.string.ok),
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {

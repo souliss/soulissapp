@@ -21,7 +21,7 @@ import it.angelic.soulissclient.TagGridActivity;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.LauncherSettingsFragment;
-import it.angelic.soulissclient.preferences.NetSettingsFragmentNuova;
+import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
 import it.angelic.soulissclient.preferences.VisualSettingsFragment;
 
@@ -115,7 +115,7 @@ public class DrawerItemClickListener implements ListView.OnItemClickListener {
                     mDrawerLayout.closeDrawer(mDrawerLinear);
                     Intent myIntent4 = new Intent(mActivity, SettingsActivity.class);
                     myIntent4.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    myIntent4.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragmentNuova.class.getName());
+                    myIntent4.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, NetSettingsFragment.class.getName());
                     myIntent4.setAction("network_setup");
                     mActivity.startActivity(myIntent4);
                     break;

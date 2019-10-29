@@ -142,7 +142,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         //VOICE SEARCH
         FloatingActionButton fab = findViewById(R.id.fab);
         if (opzioni.isVoiceCommandEnabled() && opzioni.isDbConfigured()) {
-            fab.show();
+
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -157,8 +157,8 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
                     }
                 }
             });
+            fab.show();
         } else {
-            fab.hide();
             fab.hide();
         }
     }
@@ -547,20 +547,7 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
             //refresh geofences
             AsyncTask.execute(new GeofenceRunnable(MainActivity.this));
 
-            locationCallback = new LocationCallback() {
-                @Override
-                public void onLocationResult(LocationResult locationResult) {
-                    Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
-                    if (locationResult == null) {
-                        return;
-                    }
-                    for (Location location : locationResult.getLocations()) {
-                        if (launcherMainAdapter.getLocationLauncherElements() != null) {
-                            onLocationChanged(location);
-                        }
-                    }
-                }
-            };
+
             startLocationUpdates();
         } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_DENIED) {
@@ -575,6 +562,20 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
     private void startLocationUpdates() {
         Log.w(Constants.TAG, "Requesting POS updates ");
         LocationRequest locReq = createLocationRequest();
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (launcherMainAdapter.getLocationLauncherElements() != null) {
+                        onLocationChanged(location);
+                    }
+                }
+            }
+        };
         locationCli.requestLocationUpdates(locReq,
                 locationCallback,
                 Looper.getMainLooper());

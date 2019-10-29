@@ -22,7 +22,7 @@
     </PreferenceCategory>
 
     <Preference
-        app:fragment="it.angelic.soulissclient.preferences.NetSettingsFragmentNuova"
+        app:fragment="it.angelic.soulissclient.preferences.NetSettingsFragment"
         app:icon="@android:drawable/ic_menu_mylocation"
         app:title="@string/opt_network"
         app:summary="@string/opt_networkdesc" />

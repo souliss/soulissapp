@@ -314,8 +314,8 @@ public class WelcomeActivity extends FragmentActivity {
                 SoulissApp.setCurrentConfig(newConfig);
                 if (!(previousConfig.equalsIgnoreCase(newConfig))) {
                     //SAVE PREVIOUS if old one is not "create new" or "import"
-                    if (!previousConfig.equals("") && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1]))
-                            && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[2]))) {
+                    if (!previousConfig.equals("") && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[0]))
+                            && !(previousConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1]))) {
                         //save Old DB and config
                         File filePrefs = new File(importDir, previousConfig + "_SoulissApp.prefs");
                         Log.w(Constants.TAG, "Saving old Preferences to: " + filePrefs.getPath());
@@ -359,9 +359,9 @@ public class WelcomeActivity extends FragmentActivity {
                                     Log.e(Constants.TAG, "SERIO DB DEMO non generabile:" + newConfig);
                                 }
                         }
-                    } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
+                    } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[0])) {
                         Log.i(Constants.TAG, "Nothing here");
-                    } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[2])) {
+                    } else if (newConfig.equals(getResources().getStringArray(R.array.configChooserArray)[1])) {
                         Log.i(Constants.TAG, "Nothing here");
                     } else { //caso dinamico
                         File filePrefs;

@@ -12,7 +12,7 @@ import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 
 
-public class NetSettingsFragmentNuova extends PreferenceFragmentCompat {
+public class NetSettingsFragment extends PreferenceFragmentCompat {
 
 	private SoulissPreferenceHelper opzioni;
 	private Preference userIndex;
@@ -49,7 +49,7 @@ public class NetSettingsFragmentNuova extends PreferenceFragmentCompat {
 		publicIP.setOnPreferenceChangeListener(ipChanger);
 
 		//BROADCAST Settings
-		bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(getActivity()));
+        //bCast.setOnPreferenceClickListener(new BroadcastSettingsPreferenceListener(getActivity()));
 
 
 		/*

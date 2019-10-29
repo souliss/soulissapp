@@ -32,7 +32,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
@@ -135,14 +134,27 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
         ) {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
+                try {
+                    FloatingActionButton fab = findViewById(R.id.fab);
+                    fab.show();
+                } catch (Exception ue) {
+                    //no problem
+                }
                 super.onDrawerClosed(view);
-                ActivityCompat.invalidateOptionsMenu(parentActivity);
+                parentActivity.invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                ActivityCompat.invalidateOptionsMenu(parentActivity);
+                try {
+                    FloatingActionButton fab = findViewById(R.id.fab);
+                    fab.hide();
+                } catch (Exception ue) {
+                    //no problem
+                }
+
+                parentActivity.invalidateOptionsMenu();
                 info2.setText(getString(R.string.souliss_app_name) + " " + (opzioni.isSoulissReachable() ? getString(R.string.Online) : getString(R.string.offline))
                         + " - " + getString(R.string.active_config) + ": " + SoulissApp.getCurrentConfig());
                 info1.setText("Souliss is controlling " + opzioni
@@ -176,7 +188,7 @@ public abstract class AbstractStatusedFragmentActivity extends AppCompatActivity
 
         mDrawerList = findViewById(R.id.left_drawer);
         // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         mDrawermAdapter = new NavDrawerAdapter(parentActivity, R.layout.drawer_list_item, dmh.getStuff(), activeSection);
         mDrawerList.setAdapter(mDrawermAdapter);
