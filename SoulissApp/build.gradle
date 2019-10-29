@@ -8,13 +8,13 @@ android {
 
     defaultConfig {
         applicationId "it.angelic.soulissclient"
-        testApplicationId "it.angelic.soulissclientest"
+       // testApplicationId "it.angelic.soulissclientest"
         minSdkVersion 14
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionName rootProject.ext.VERSION_NAME
         versionCode rootProject.ext.VERSION_CODE
         vectorDrawables.useSupportLibrary = true
-       // multiDexEnabled true
+        //multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

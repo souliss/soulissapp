@@ -561,6 +561,21 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     private void startLocationUpdates() {
         Log.w(Constants.TAG, "Requesting POS updates ");
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    if (launcherMainAdapter.getLocationLauncherElements() != null) {
+                        onLocationChanged(location);
+                    }
+                }
+            }
+        };
+
         LocationRequest locReq = createLocationRequest();
         locationCallback = new LocationCallback() {
             @Override
