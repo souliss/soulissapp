@@ -76,6 +76,24 @@ public class SoulissTypical16AdvancedRGB extends SoulissTypical implements ISoul
 		fBlue.setNodeId(getTypicalDTO().getNodeId());
 		ret.add(fBlue);
 
+        SoulissCommand fYell = new SoulissCommand(this);
+        fYell.setCommand(Constants.Typicals.Souliss_T16_Yellow);
+        fYell.setSlot(getTypicalDTO().getSlot());
+        fYell.setNodeId(getTypicalDTO().getNodeId());
+        ret.add(fYell);
+
+        SoulissCommand fViolet = new SoulissCommand(this);
+        fViolet.setCommand(Constants.Typicals.Souliss_T16_Purple);
+        fViolet.setSlot(getTypicalDTO().getSlot());
+        fViolet.setNodeId(getTypicalDTO().getNodeId());
+        ret.add(fViolet);
+
+        SoulissCommand fAcqua = new SoulissCommand(this);
+        fAcqua.setCommand(Constants.Typicals.Souliss_T16_Aqua);
+        fAcqua.setSlot(getTypicalDTO().getSlot());
+        fAcqua.setNodeId(getTypicalDTO().getNodeId());
+        ret.add(fAcqua);
+
 		return ret;
 	}
 

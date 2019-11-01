@@ -6,7 +6,6 @@ import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.text.Html;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -58,10 +57,10 @@ public class SoulissTypical54LuxSensor extends SoulissTypical implements ISoulis
 				.getTypicalDTO().getOutput();
 		// ora ho i due bytes, li converto
 		int shifted = miofratello << 8;
-		Log.d(Constants.TAG,
+		/*Log.d(Constants.TAG,
 				"first:" + Long.toHexString((long) typicalDTO.getOutput()) + " second:"
 						+ Long.toHexString((long) miofratello) + " LUX SENSOR Reading:"
-						+ Long.toHexString((long) shifted + typicalDTO.getOutput()));
+						+ Long.toHexString((long) shifted + typicalDTO.getOutput()));*/
 
 		return HalfFloatUtils.toFloat(shifted + typicalDTO.getOutput());
 	}
