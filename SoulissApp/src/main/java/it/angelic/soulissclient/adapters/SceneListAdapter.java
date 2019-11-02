@@ -9,10 +9,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
@@ -75,7 +76,7 @@ public class SceneListAdapter extends BaseAdapter {
             holder.textCmd.setTextColor(ContextCompat.getColor(context, R.color.black));
             holder.textCmdInfo.setTextColor(ContextCompat.getColor(context, R.color.black));
         }
-        if (scenesList.get(position).getIconResourceId() != 0)
+        if (scenesList.get(position).getIconResourceId() > 0)
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, scenesList.get(position).getIconResourceId());
         else
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_moon_o.getFontName());

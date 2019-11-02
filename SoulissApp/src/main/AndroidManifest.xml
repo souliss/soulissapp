@@ -31,7 +31,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup, android:label">
 
-        <receiver android:name=".GeofenceBroadcastReceiver" />
+        <receiver android:name=".programmi.GeofenceBroadcastReceiver" />
         <service
             android:name=".SoulissDataService"
             android:enabled="true"

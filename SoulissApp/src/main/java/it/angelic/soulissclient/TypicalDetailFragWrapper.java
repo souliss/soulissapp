@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
 import it.angelic.soulissclient.fragments.typicals.T16RGBAdvancedFragment;
 import it.angelic.soulissclient.fragments.typicals.T19SingleChannelLedFragment;
 import it.angelic.soulissclient.fragments.typicals.T1nGenericLightFragment;
@@ -33,6 +34,7 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Wrapper per poter aprire dall'esterno direttamente un dettaglio
+ * per me da abolire 2019
  */
 public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
     private SoulissTypical collected;
@@ -69,22 +71,22 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
         // DRAWER gabola
         initDrawer(this, collected.getNodeId());
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-        Fragment NewFrag = null;
+        Fragment loadFragment = null;
         Log.w(Constants.TAG, "TypicalDetailFragWrapper should not be used like this: Legacy support");
         if (collected.isSensor())
-            NewFrag = T5nSensorFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T5nSensorFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical16AdvancedRGB)
-            NewFrag = T16RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T16RGBAdvancedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical19AnalogChannel)
-            NewFrag = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T19SingleChannelLedFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical31Heating)
-            NewFrag = T31HeatingFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T31HeatingFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical11DigitalOutput || collected instanceof SoulissTypical12DigitalOutputAuto)
-            NewFrag = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical41AntiTheft || collected instanceof SoulissTypical42AntiTheftPeer || collected instanceof SoulissTypical43AntiTheftLocalPeer)
-            NewFrag = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T4nFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical32AirCon)
-            NewFrag = T32AirConFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
+            loadFragment = T32AirConFragment.newInstance(collected.getTypicalDTO().getSlot(), collected);
         else if (collected instanceof SoulissTypical14PulseOutput || collected instanceof SoulissTypical18StepRelay) {
             //no detail, notice user and return
             Toast.makeText(this,
@@ -106,8 +108,8 @@ public class TypicalDetailFragWrapper extends AbstractStatusedFragmentActivity {
         // During initial setup, plug in the details fragment.
         //T1nGenericLightFragment details = T1nGenericLightFragment.newInstance(collected.getTypicalDTO().getSlot(),
         //		collected);
-        NewFrag.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(R.id.detailPane, NewFrag).commit();
+        loadFragment.setArguments(getIntent().getExtras());
+        getSupportFragmentManager().beginTransaction().add(R.id.detailPane, loadFragment).commit();
 
     }
 

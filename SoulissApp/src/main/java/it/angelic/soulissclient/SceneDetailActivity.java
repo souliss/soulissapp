@@ -114,16 +114,11 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
                 + Constants.int2roman(collected.getId()));
         setContentView(R.layout.main_scenedetail);
 
-        // Backg. stuff
-        //SoulissApp.setBackground(findViewById(R.id.containerlista), getWindowManager());
-        // Testata, info scena
         createHeader();
 
         listaComandiView = findViewById(R.id.ListViewListaScene);
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        //fab.attachToListView(listaComandiView);
-        //SoulissApp.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {
@@ -195,6 +190,13 @@ public class SceneDetailActivity extends AbstractStatusedFragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (opzioni.isAnimationsEnabled())
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override

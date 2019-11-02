@@ -2,10 +2,11 @@ package it.angelic.soulissclient.model;
 
 import android.util.Log;
 
+import androidx.annotation.DrawableRes;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import androidx.annotation.DrawableRes;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 
@@ -51,7 +52,6 @@ public class SoulissScene implements Serializable, ISoulissObject, ISoulissExecu
     }
 
     public
-    @DrawableRes
     int getIconResourceId() {
         return iconId;
     }

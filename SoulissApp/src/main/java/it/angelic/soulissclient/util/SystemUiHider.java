@@ -1,7 +1,6 @@
 package it.angelic.soulissclient.util;
 
 import android.app.Activity;
-import android.os.Build;
 import android.view.View;
 
 /**
@@ -52,17 +51,22 @@ public abstract class SystemUiHider {
      * but cannot be hidden, show and hide will toggle low profile mode.
      */
     public static final int FLAG_HIDE_NAVIGATION = FLAG_FULLSCREEN | 0x4;
-
+    /**
+     * A dummy no-op callback for use when there is no other listener set.
+     */
+    private static OnVisibilityChangeListener sDummyListener = new OnVisibilityChangeListener() {
+        @Override
+        public void onVisibilityChange(boolean visible) {
+        }
+    };
     /**
      * The activity associated with this UI hider object.
      */
     protected Activity mActivity;
-
     /**
      * The view on which {@link View#setSystemUiVisibility(int)} will be called.
      */
     protected View mAnchorView;
-
     /**
      * The current UI hider flags.
      *
@@ -71,11 +75,16 @@ public abstract class SystemUiHider {
      * @see #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES
      */
     protected int mFlags;
-
     /**
      * The current visibility callback.
      */
     protected OnVisibilityChangeListener mOnVisibilityChangeListener = sDummyListener;
+
+    protected SystemUiHider(Activity activity, View anchorView, int flags) {
+        mActivity = activity;
+        mAnchorView = anchorView;
+        mFlags = flags;
+    }
 
     /**
      * Creates and returns an instance of {@link SystemUiHider} that is
@@ -92,17 +101,7 @@ public abstract class SystemUiHider {
      *                   {@link #FLAG_LAYOUT_IN_SCREEN_OLDER_DEVICES}.
      */
     public static SystemUiHider getInstance(Activity activity, View anchorView, int flags) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            return new SystemUiHiderHoneycomb(activity, anchorView, flags);
-        } else {
-            return new SystemUiHiderBase(activity, anchorView, flags);
-        }
-    }
-
-    protected SystemUiHider(Activity activity, View anchorView, int flags) {
-        mActivity = activity;
-        mAnchorView = anchorView;
-        mFlags = flags;
+        return new SystemUiHiderHoneycomb(activity, anchorView, flags);
     }
 
     /**
@@ -148,15 +147,6 @@ public abstract class SystemUiHider {
 
         mOnVisibilityChangeListener = listener;
     }
-
-    /**
-     * A dummy no-op callback for use when there is no other listener set.
-     */
-    private static OnVisibilityChangeListener sDummyListener = new OnVisibilityChangeListener() {
-        @Override
-        public void onVisibilityChange(boolean visible) {
-        }
-    };
 
     /**
      * A callback interface used to listen for system UI visibility changes.

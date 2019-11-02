@@ -3,13 +3,14 @@ package it.angelic.soulissclient;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.Calendar;
-import java.util.LinkedList;
-
 import androidx.annotation.NonNull;
 import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
+import java.util.Calendar;
+import java.util.LinkedList;
+
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
@@ -48,7 +49,7 @@ public class WorkerTimedCommands extends Worker {
                 // esegui comando
                 Log.w(TAG, "issuing command: " + unexnex.toString());
                 unexnex.execute();
-                unexnex.persistCommand();
+                //unexnex.persistCommand();
                 // Se ricorsivo, ricrea
                 if (unexnex.getInterval() > 0) {
                     SoulissCommand nc = new SoulissCommand(
@@ -60,6 +61,8 @@ public class WorkerTimedCommands extends Worker {
                     Calendar cop = Calendar.getInstance();
                     cop.add(Calendar.SECOND, unexnex.getInterval());
                     nc.setScheduledTime(cop);
+                    //l'ho appena eseguito, questo e` il 'figlio'
+                    nc.setExecutedTime(Calendar.getInstance());
                     nc.setType(Constants.COMMAND_TIMED);
                     nc.persistCommand();
                     Log.w(TAG, "recreate recursive command");

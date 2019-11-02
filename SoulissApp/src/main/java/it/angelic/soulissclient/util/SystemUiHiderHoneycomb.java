@@ -1,6 +1,5 @@
 package it.angelic.soulissclient.util;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.WindowManager;
  * Honeycomb and later (specifically {@link View#setSystemUiVisibility(int)}) to
  * show and hide the system UI.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
     /**
      * Flags for {@link View#setSystemUiVisibility(int)} to use when hiding the

@@ -1,4 +1,4 @@
-package it.angelic.soulissclient;
+package it.angelic.soulissclient.programmi;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +11,8 @@ import com.google.android.gms.location.GeofencingEvent;
 import java.util.LinkedList;
 import java.util.List;
 
+import it.angelic.soulissclient.Constants;
+import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
 import it.angelic.soulissclient.util.NotificationStaticUtil;
@@ -64,14 +66,11 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 if ((soulissCommand.getCommandId() + soulissCommand.getName()).equals(triggeringGeofences.get(0).getRequestId())) {
                     Log.i(TAG, "TRIGGER GEOFENCE EVENT " + geofenceTransitionDetails);
                     soulissCommand.execute();
-                    soulissCommand.persistCommand();
+                    //soulissCommand.persistCommand();
                     NotificationStaticUtil.sendProgramNotification(context, context.getString(R.string.positional_executed),
                             soulissCommand.getNiceName(), R.drawable.exit1, soulissCommand);
                 }
             }
-
-            // Send notification and log the transition details.
-            // sendNotification(geofenceTransitionDetails);
 
         } else {
             // Log the error.

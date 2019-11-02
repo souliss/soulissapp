@@ -198,6 +198,7 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
         registerForContextMenu(listaScenesView);
     }
 
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 

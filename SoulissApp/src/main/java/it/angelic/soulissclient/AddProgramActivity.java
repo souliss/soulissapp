@@ -24,14 +24,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
+
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.ISoulissCommand;
@@ -567,9 +568,6 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
             } else if (IToSave instanceof SoulissCommand) {
                 programToSave = (SoulissCommand) IToSave;
                 Log.i(Constants.TAG, "PERSISTING COMMAND NODEID:" + programToSave.getNodeId());
-                //programToSave.setCommandId(collected.getCommandId());
-                //programToSave.setNodeId((short) Constants.MASSIVE_NODE_ID);
-                //programToSave.setSlot(((SoulissTypical)outputTypicalSpinner.getSelectedItem()).getTypicalDTO().getTypical());
             }
             if (programToSave == null) {
                 Toast.makeText(AddProgramActivity.this, "Command not selected", Toast.LENGTH_SHORT).show();
@@ -660,17 +658,17 @@ public class AddProgramActivity extends AbstractStatusedFragmentActivity {
 
     private void managePositionPermissions() {
         boolean permissionAccessCoarseLocationApproved =
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                         == PackageManager.PERMISSION_GRANTED;
 
         if (permissionAccessCoarseLocationApproved) {
-            //TODO refresh geofences copia dal main
+            //qui nulla
 
         } else {
             // App doesn't have access to the device's location at all. Make full request
             // for permission.
             ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
             }, Constants.MY_PERMISSIONS_ACCESS_LOCATION);
         }
     }

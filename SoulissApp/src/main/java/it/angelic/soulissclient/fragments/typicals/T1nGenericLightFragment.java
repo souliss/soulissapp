@@ -20,13 +20,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.pheelicks.visualizer.VisualizerView;
 
 import java.util.Date;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.fragment.app.FragmentTransaction;
 import im.dacer.androidcharts.ClockPieView;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
@@ -379,9 +380,9 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
 				Log.i(Constants.TAG, "Close fragment");
 				FragmentTransaction ft = getFragmentManager().beginTransaction();
 				ft.remove(getFragmentManager().findFragmentById(R.id.detailPane)).commit();
-				/*getActivity().supportFinishAfterTransition();
+				getActivity().supportFinishAfterTransition();
 				if (opzioni.isAnimationsEnabled())
-					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);*/
+					getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
 			}
 			return true;
@@ -462,7 +463,7 @@ public class T1nGenericLightFragment extends AbstractTypicalFragment implements 
                 else
                     autoInfo.setText(getString(R.string.Souliss_Auto_mode) + " OFF");
                 // datasource.close();
-                infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot() + "Val: 0x" + Integer.toHexString(collected.getOutput().intValue()));
+				infoTyp.setText(collected.getParentNode().getNiceName() + ", slot " + collected.getSlot() + " - 0x" + Integer.toHexString(collected.getOutput().intValue()));
 
 			} catch (Exception e) {
 				Log.e(Constants.TAG, "Error receiving data. Fragment disposed?", e);

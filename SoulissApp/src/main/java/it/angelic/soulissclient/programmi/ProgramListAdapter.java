@@ -1,8 +1,8 @@
-package it.angelic.soulissclient.adapters;
+package it.angelic.soulissclient.programmi;
 
 import android.app.Activity;
+import android.util.Log;
 import android.util.SparseArray;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import androidx.core.content.ContextCompat;
+
 import java.util.List;
 
-import androidx.core.content.ContextCompat;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.R.color;
@@ -26,11 +26,11 @@ import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
 public class ProgramListAdapter extends BaseAdapter {
-    private List<SoulissCommand> programmi = new ArrayList<>();
-    private SparseArray<SoulissTriggerDTO> triggers;
     private Activity context;
     private LayoutInflater mInflater;
     private SoulissPreferenceHelper opzioni;
+    private List<SoulissCommand> programmi;
+    private SparseArray<SoulissTriggerDTO> triggers;
 
     public ProgramListAdapter(Activity context, List<SoulissCommand> versio, SparseArray<SoulissTriggerDTO> trigs,
                               SoulissPreferenceHelper optss) {
@@ -76,13 +76,12 @@ public class ProgramListAdapter extends BaseAdapter {
         } else {
             holder = (CommandViewHolder) convertView.getTag();
         }
-        // holder.data.getCommand().getNodeId()
 
-        if (opzioni.isLightThemeSelected()) {
+       /* if (opzioni.isLightThemeSelected()) {
             holder.textCmdWhen.setTextColor(context.getResources().getColor(R.color.black));
             holder.textCmd.setTextColor(context.getResources().getColor(R.color.black));
             holder.textCmdInfo.setTextColor(context.getResources().getColor(R.color.black));
-        }
+        }*/
         //StringBuilder info = new StringBuilder(holder.data.toString());
 
         holder.textCmd.setText(holder.data.getNiceName());
@@ -98,16 +97,21 @@ public class ProgramListAdapter extends BaseAdapter {
                     .setText(context.getString(R.string.execute_at) + " " + Constants.hourFormat.format(holder.data.getScheduledTime().getTime()));
             if (holder.data.getInterval() > 0) {
                 String strMeatFormat = context.getString(R.string.programs_every);
-                holder.textCmdInfo.setText(String.format(strMeatFormat, holder.data.getInterval()));
+                String lastExc = " ";
+                if (holder.data.getExecutedTime() != null) {
+                    Log.i(Constants.TAG, "Exctd at: " + holder.data.getExecutedTime().getTime());
+                    lastExc = context.getString(R.string.last_exec)
+                            + " " + Constants.hourFormat.format(holder.data.getExecutedTime().getTime());
+                }
+                holder.textCmdInfo.setText(String.format(strMeatFormat, holder.data.getInterval()) + lastExc);
             } else {
                 holder.textCmdInfo.setText(context.getString(R.string.programs_recursive));
             }
 
         }/* programma POSIZIONALE */ else if (holder.data.getType() == Constants.COMMAND_COMEBACK_CODE
                 || holder.data.getType() == Constants.COMMAND_GOAWAY_CODE) {
-            RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
 
-            if (holder.data.getExecutedTime() != null) {
+            if (holder.data.getExecutedTime() != null && holder.data.getExecutedTime().getTime().getTime() > 0) {
                 holder.textCmdWhen.setText(context.getString(R.string.last_exec)
                         + " " + Constants.hourFormat.format(holder.data.getExecutedTime().getTime()));
             } else {
@@ -124,19 +128,17 @@ public class ProgramListAdapter extends BaseAdapter {
                 holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_500));
                 holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_500));
             }
-            /* Dimensioni del testo settate dalle opzioni */
-            holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
 
-			/* COMANDO TRIGGERED */
+            /* COMANDO TRIGGERED */
         } else if (holder.data.getType() == Constants.COMMAND_TRIGGERED) {
             RelativeLayout don = convertView.findViewById(R.id.LinearLayout01);
             FontAwesomeUtil.prepareFontAweTextView(context, holder.image, FontAwesomeEnum.fa_puzzle_piece.getFontName());
             //rosso
             holder.image.setTextColor(ContextCompat.getColor(context, color.md_light_blue_900));
             holder.line.setBackgroundColor(ContextCompat.getColor(context, color.md_light_blue_900));
-            SoulissTriggerDTO intrig = triggers.get((int) holder.data.getCommandId());
-			/* Dimensioni del testo settate dalle opzioni */
-            holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
+            SoulissTriggerDTO intrig = triggers.get(holder.data.getCommandId().intValue());
+            /* Dimensioni del testo settate dalle opzioni */
+            // holder.textCmdWhen.setTextSize(TypedValue.COMPLEX_UNIT_SP, opzioni.getListDimensTesto());
             holder.textCmdInfo.setText(context.getString(R.string.programs_when) + " " + intrig.getInputSlot()
                     + " on Node " + intrig.getInputNodeId() + " " + context.getString(R.string.is) + " " + intrig.getOp()
                     + " " + intrig.getThreshVal());
@@ -161,11 +163,11 @@ public class ProgramListAdapter extends BaseAdapter {
 
     public static class CommandViewHolder {
         public SoulissCommand data;
+        public View line;
         //public View evidenza;
         TextView textCmd;
         TextView textCmdWhen;
         TextView textCmdInfo;
         TextView image;
-        public View line;
     }
 }

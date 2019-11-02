@@ -3,17 +3,18 @@ package it.angelic.soulissclient;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.work.Data;
+import androidx.work.ListenableWorker;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.work.Data;
-import androidx.work.ListenableWorker;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissNode;
 import it.angelic.soulissclient.model.SoulissTypical;
@@ -94,90 +95,77 @@ public class WorkerZombieRestore extends Worker {
             //Log.i(TAG, "Previous distance " + homeDistPrev + " current: TODO");
 
             // Check for too long ON status
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d(TAG, "Checking warning for long turned-on typicals");
-                    SoulissDBHelper.open();
-                    int checkd = 0;
-                    List<SoulissNode> nodes = db.getAllNodes();
-                    Calendar now = Calendar.getInstance();
-                    for (SoulissNode piter : nodes) {
-                        List<SoulissTypical> slots = piter.getActiveTypicals();
-                        for (SoulissTypical tipico : slots) {
-                            Date when = tipico.getTypicalDTO().getLastStatusChange();
-                            if (when != null && (tipico.getOutput() != Constants.Typicals.Souliss_T1n_OffCoil || tipico.getOutput() != Constants.Typicals.Souliss_T1n_OffCoil_Auto)
-                                    && tipico.getTypicalDTO().getWarnDelayMsec() > 0
-                                    && now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
 
-                                Log.w(TAG, String.format(context.getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()));
-                                sendTooLongWarnNotification(context, context.getString(R.string.timed_warning)
-                                        , tipico);
-                                checkd++;
-                            }
+            Log.d(TAG, "Checking warning for long turned-on typicals");
+            SoulissDBHelper.open();
+            int checkd = 0;
+            List<SoulissNode> nodes = db.getAllNodes();
+            Calendar now = Calendar.getInstance();
+            for (SoulissNode piter : nodes) {
+                List<SoulissTypical> slots = piter.getActiveTypicals();
+                for (SoulissTypical tipico : slots) {
+                    Date when = tipico.getTypicalDTO().getLastStatusChange();
+                    if (when != null && (tipico.getOutput() != Constants.Typicals.Souliss_T1n_OffCoil || tipico.getOutput() != Constants.Typicals.Souliss_T1n_OffCoil_Auto)
+                            && tipico.getTypicalDTO().getWarnDelayMsec() > 0
+                            && now.getTime().getTime() - when.getTime() > tipico.getTypicalDTO().getWarnDelayMsec()) {
 
-                        }
+                        Log.w(TAG, String.format(context.getString(R.string.hasbeenturnedontoolong), tipico.getNiceName()));
+                        sendTooLongWarnNotification(context, context.getString(R.string.timed_warning)
+                                , tipico);
+                        checkd++;
                     }
-                    Log.i(TAG, "checked timed on  warnings: " + checkd);
 
                 }
-            }).start();
+            }
+            Log.i(TAG, "checked timed on  warnings: " + checkd);
+
 
             /* SENSORS REFRESH THREAD */
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    /*
-                     * finally { db.close(); }
-                     */
 
-                    // spostato per consentire comandi manuali
-                    if (!opts.isDataServiceEnabled()) {
-                        Log.w(TAG, "Worker disabled, is not going to be re-scheduled");
-                        //lastupd = (Calendar.getInstance());
-                        // mHandler.removeCallbacks(mUpdateSoulissRunnable);
-                        // SoulissDataService.this.stopSelf();
-                        return;
-                    } else {
-                        // refresh della subscription
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.i(TAG, "issuing pollRequest, numnodes=" + nodesNum);
-                                UDPHelper.pollRequest(opts, nodesNum, 0);
-                            }
-                        }).start();
-
-                        try {
-                            // ritarda il logging
-                            Thread.sleep(3000);
-                            SoulissDBHelper.open();
-
-                            Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
-
-                            List<SoulissNode> ref = db.getAllNodes();
-                            for (SoulissNode soulissNode : ref) {
-                                refreshedNodes.put(soulissNode.getNodeId(), soulissNode);
-                            }
-                            Log.v(TAG, "logging nodes:" + nodesNum);
-                            // issueRefreshSensors(ref, refreshedNodes);
-                            logThings(refreshedNodes);
-
-                            // try a local reach, just in case ..
-                            //UDPHelper.checkSoulissUdp(2000, opts, opts.getPrefIPAddress());
-
-                        } catch (Exception e) {
-                            Log.e(TAG, "Worker error, scheduling again ", e);
-                        }
-
-                        Log.i(TAG, "Service end run, id: " + WorkerZombieRestore.this.getId());
-                        //lastupd = (Calendar.getInstance());
-                        // reschedule(false);
+            // spostato per consentire comandi manuali
+            if (!opts.isDataServiceEnabled()) {
+                Log.w(TAG, "Worker disabled, is not going to be re-scheduled");
+                //lastupd = (Calendar.getInstance());
+                // mHandler.removeCallbacks(mUpdateSoulissRunnable);
+                // SoulissDataService.this.stopSelf();
+                return Result.failure();
+            } else {
+                // refresh della subscription
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i(TAG, "issuing pollRequest, numnodes=" + nodesNum);
+                        UDPHelper.pollRequest(opts, nodesNum, 0);
                     }
+                }).start();
 
+                try {
+                    // ritarda il logging
+                    Thread.sleep(3000);
+                    SoulissDBHelper.open();
+
+                    Map<Short, SoulissNode> refreshedNodes = new HashMap<>();
+
+                    List<SoulissNode> ref = db.getAllNodes();
+                    for (SoulissNode soulissNode : ref) {
+                        refreshedNodes.put(soulissNode.getNodeId(), soulissNode);
+                    }
+                    Log.v(TAG, "logging nodes:" + nodesNum);
+                    // issueRefreshSensors(ref, refreshedNodes);
+                    logThings(refreshedNodes);
+
+                    // try a local reach, just in case ..
+                    //UDPHelper.checkSoulissUdp(2000, opts, opts.getPrefIPAddress());
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Worker error, scheduling again ", e);
                 }
 
-            }).start();
+                Log.i(TAG, "Service end run, id: " + WorkerZombieRestore.this.getId());
+                //lastupd = (Calendar.getInstance());
+                // reschedule(false);
+            }
+
 
         } else {// NO CONNECTION, NO NODES!!
             Log.w(TAG, "Service end but NOTHING DONE, no connection");

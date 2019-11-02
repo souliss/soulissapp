@@ -29,7 +29,6 @@ public class SoulissPreferenceHelper implements Serializable {
     private static final long serialVersionUID = -7522863636731669014L;
     private String IPPreference;
     private String IPPreferencePublic;
-    private float ListDimensTesto;// dimensione testo tipici e info autore
     private Integer UDPPort;
     private boolean animations;
     private boolean antitheftNotify;
@@ -243,10 +242,6 @@ public class SoulissPreferenceHelper implements Serializable {
         IPPreferencePublic = iPPreferencePublic;
     }
 
-    public Float getListDimensTesto() {
-        return ListDimensTesto;
-    }
-
     public int getNodeIndex() {
         return nodeIndex;
     }
@@ -325,7 +320,7 @@ public class SoulissPreferenceHelper implements Serializable {
         remoteTimeoutPref = Integer.parseInt(prefs.getString("remoteTimeout", "3000"));
         dataServiceInterval = prefs.getInt("updateRate", 10) * 1000;
         homeThold = prefs.getInt("distanceThold", 150);
-        dataServiceEnabled = prefs.getBoolean("checkboxService", false);
+        dataServiceEnabled = prefs.getBoolean("checkboxService", true);
         fahrenheitChosen = prefs.getBoolean("checkboxFahrenheit", false);
         voiceCommandEnabled = prefs.getBoolean("checkboxVoiceCommand", true);
         userIndex = prefs.getInt("userIndex", -1);

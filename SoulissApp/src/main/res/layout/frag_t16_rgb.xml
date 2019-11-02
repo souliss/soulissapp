@@ -39,7 +39,7 @@
                 android:layout_below="@id/textviewBright"
                 android:layout_marginLeft="15dip"
                 android:layout_marginRight="15dip"
-                android:drawableLeft="@drawable/light_off"
+                android:drawableLeft="@drawable/light_on"
                 android:text="@string/plus"
                 android:textSize="40sp"/>
 
@@ -52,7 +52,7 @@
                 android:layout_below="@id/textviewBright"
                 android:layout_marginLeft="15dip"
                 android:layout_marginRight="15dip"
-                android:drawableLeft="@drawable/light_on"
+                android:drawableLeft="@drawable/light_off"
                 android:text="@string/minus"
                 android:textSize="40sp"/>
         </RelativeLayout>

@@ -1074,6 +1074,7 @@ public class SoulissDBHelper {
         Log.d(Constants.TAG, "Found unexecuted commands:" + cursor.getCount());
         while (!cursor.isAfterLast()) {
             SoulissCommandDTO comment = new SoulissCommandDTO(cursor);
+            Log.d(Constants.TAG, "Found command last exec at:" + comment.getExecutedTime());
             cursor.moveToNext();
             short node = comment.getNodeId();
             short slot = comment.getSlot();

@@ -26,12 +26,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
 import it.angelic.soulissclient.helpers.AlertDialogHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
+import it.angelic.soulissclient.programmi.ProgramListAdapter;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -208,7 +208,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        datasource.close();
+        //datasource.close();
     }
 
     @Override
@@ -259,10 +259,12 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SoulissDBHelper.open();
         opzioni.initializePrefs();
-        if (!opzioni.isDbConfigured()) {
+        // prendo comandi dal DB, setto adapter
+        programsArray = datasource.getUnexecutedCommands(this);
+        if (!opzioni.isDbConfigured() && programsArray.size() > 0) {
             AlertDialogHelper.dbNotInitedDialog(this);
         }
-        if (!opzioni.isDataServiceEnabled()) {
+        if (!opzioni.isDataServiceEnabled() && programsArray.size() > 0) {
             AlertDialogHelper.serviceNotActiveDialog(this);
         }
 
@@ -282,8 +284,7 @@ public class ProgramListActivity extends AbstractStatusedFragmentActivity {
             }
         });
 
-        // prendo comandi dal DB, setto adapter
-        programsArray = datasource.getUnexecutedCommands(this);
+
         if (programsArray.size() == 0)
             tt.setText(getString(R.string.programs_no));
 

@@ -29,6 +29,18 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -49,17 +61,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.work.Constraints;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.NetworkType;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 import it.angelic.receivers.NetworkStateReceiver;
 import it.angelic.soulissclient.adapters.StaggeredDashboardElementAdapter;
 import it.angelic.soulissclient.drawer.DrawerMenuHelper;
@@ -71,6 +72,7 @@ import it.angelic.soulissclient.model.LauncherElement;
 import it.angelic.soulissclient.model.SoulissModelException;
 import it.angelic.soulissclient.model.db.SoulissDBLauncherHelper;
 import it.angelic.soulissclient.net.UDPHelper;
+import it.angelic.soulissclient.programmi.GeofenceRunnable;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 
@@ -165,9 +167,15 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     protected LocationRequest createLocationRequest() {
         LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(100000);
-        locationRequest.setFastestInterval(10000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (BuildConfig.DEBUG) {
+            locationRequest.setInterval(10000);
+            locationRequest.setFastestInterval(1000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        } else {
+            locationRequest.setInterval(100000);
+            locationRequest.setFastestInterval(10000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        }
         return locationRequest;
     }
 
@@ -185,31 +193,32 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     private void enqueueJobs() {
         Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+        WorkManager.getInstance(MainActivity.this).cancelAllWork();
+        if (opzioni.isDataServiceEnabled()) {
+            PeriodicWorkRequest requestService =
+                    // Executes MyWorker every 15 minutes
+                    new PeriodicWorkRequest.Builder(WorkerZombieRestore.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
+                            //.setInputData(input)
+                            .setConstraints(constraints)
+                            .setInitialDelay(10, TimeUnit.SECONDS)
+                            .build();
 
-        PeriodicWorkRequest requestService =
-                // Executes MyWorker every 15 minutes
-                new PeriodicWorkRequest.Builder(WorkerZombieRestore.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
-                        // Sets the input data for the ListenableWorker
-                        //.setInputData(input)
-                        .setConstraints(constraints)
-                        .setInitialDelay(10, TimeUnit.SECONDS)
-                        .build();
+            PeriodicWorkRequest requestTimed =
+                    // Executes MyWorker every 15 minutes
+                    new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
+                            .setConstraints(constraints)
+                            //.setInputData(input)
+                            .build();
 
-        PeriodicWorkRequest requestTimed =
-                // Executes MyWorker every 15 minutes
-                new PeriodicWorkRequest.Builder(WorkerTimedCommands.class, opzioni.getDataServiceIntervalMsec(), TimeUnit.MILLISECONDS)
-                        // Sets the input data for the ListenableWorker
-                        //.setInputData(input)
-                        .build();
+            WorkManager.getInstance(MainActivity.this)
+                    .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.REPLACE, requestService);
 
-        WorkManager.getInstance(MainActivity.this)
-                .enqueueUniquePeriodicWork("souliss-zombie-restore", ExistingPeriodicWorkPolicy.REPLACE, requestService);
-
-        WorkManager.getInstance(MainActivity.this)
-                // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
-                // (uncompleted) work with the same unique name. Then, insert the newly-specified
-                // work.
-                .enqueueUniquePeriodicWork("souliss-timed-commands", ExistingPeriodicWorkPolicy.REPLACE, requestTimed);
+            WorkManager.getInstance(MainActivity.this)
+                    // Use ExistingWorkPolicy.REPLACE to cancel and delete any existing pending
+                    // (uncompleted) work with the same unique name. Then, insert the newly-specified
+                    // work.
+                    .enqueueUniquePeriodicWork("souliss-timed-commands", ExistingPeriodicWorkPolicy.REPLACE, requestTimed);
+        }
     }
 
     @Override
@@ -546,11 +555,9 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
         if (permissionAccessCoarseLocationApproved) {
             //refresh geofences
             AsyncTask.execute(new GeofenceRunnable(MainActivity.this));
-
-
             startLocationUpdates();
         } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_DENIED) {
+                == PackageManager.PERMISSION_DENIED && database.getPositionalPrograms().size() > 0) {
             // App doesn't have access to the device's location at all. Make full request
             // for permission.
             ActivityCompat.requestPermissions(this, new String[]{
@@ -561,20 +568,6 @@ public class MainActivity extends AbstractStatusedFragmentActivity {
 
     private void startLocationUpdates() {
         Log.w(Constants.TAG, "Requesting POS updates ");
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                Log.w(Constants.TAG, "RECEIVE POS updates " + locationResult);
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    if (launcherMainAdapter.getLocationLauncherElements() != null) {
-                        onLocationChanged(location);
-                    }
-                }
-            }
-        };
 
         LocationRequest locReq = createLocationRequest();
         locationCallback = new LocationCallback() {

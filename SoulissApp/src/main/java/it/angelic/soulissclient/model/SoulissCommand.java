@@ -3,11 +3,12 @@ package it.angelic.soulissclient.model;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.DrawableRes;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-import androidx.annotation.DrawableRes;
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SoulissApp;
@@ -35,10 +36,10 @@ import static junit.framework.Assert.assertNotNull;
 public class SoulissCommand implements Serializable, ISoulissCommand {
 
     private static final long serialVersionUID = -918392561828980547L;
+    protected transient Context context;
     private SoulissCommandDTO commandDTO;
     private SoulissTypical parentTypical;
     private SoulissScene targetScene;
-    protected transient Context context;
 
     public SoulissCommand(SoulissTypical parentTypical) {
         super();
@@ -117,6 +118,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                     setExecutedTime(now);
                     commandDTO.setSceneId(null);
                 }
+                persistCommand();
             }
         }).start();
     }
@@ -125,36 +127,23 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         return commandDTO.getCommand();
     }
 
+    public void setCommand(long souliss_t4n_armed) {
+        commandDTO.setCommand(souliss_t4n_armed);
+    }
+
     //protetto per i trigger
     protected SoulissCommandDTO getCommandDTO() {
         return commandDTO;
     }
 
-    public long getCommandId() {
+    public Long getCommandId() {
         return commandDTO.getCommandId();
-    }
-
-    public Calendar getExecutedTime() {
-        Calendar ret = Calendar.getInstance();
-        ret.setTime(new Date(commandDTO.getScheduledTime()));
-        return ret;
-    }
-
-    public int getSceneId() {
-        return commandDTO.getSceneId();
     }
 
     public void setCommandId(long commandId) {
         commandDTO.setCommandId(commandId);
     }
 
-
-    public void setExecutedTime(Calendar executedTime) {
-        if (executedTime == null)
-            commandDTO.setExecutedTime(null);
-        else
-            commandDTO.setExecutedTime(executedTime.getTime().getTime());
-    }
 
     // FIXME ritorna alla cazzo, rivedere le icone dei comandi
     public
@@ -187,9 +176,7 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 resId = FontAwesomeUtil.getCodeIndexByFontName(context, FontAwesomeEnum.fa_unlock.getFontName());
             else
                 resId = R.drawable.sos;
-        }
-
-        else if (typical == Constants.Typicals.Souliss_T21)
+        } else if (typical == Constants.Typicals.Souliss_T21)
             resId = R.drawable.sos;
         else if (typical == Constants.Typicals.Souliss_T22)
             resId = R.drawable.sos;
@@ -216,6 +203,10 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
 
     public int getInterval() {
         return commandDTO.getInterval();
+    }
+
+    public void setInterval(int interval) {
+        commandDTO.setInterval(interval);
     }
 
     @Override
@@ -267,6 +258,12 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
                 resId = R.string.green;
             else if (command == Constants.Typicals.Souliss_T16_Blue)
                 resId = R.string.blue;
+            else if (command == Constants.Typicals.Souliss_T16_Purple)
+                resId = R.string.purple;
+            else if (command == Constants.Typicals.Souliss_T16_Yellow)
+                resId = R.string.yellow;
+            else if (command == Constants.Typicals.Souliss_T16_Aqua)
+                resId = R.string.aqua;
             else
                 resId = R.string.Souliss_UndefinedCmd_desc;
         } else if (typical == Constants.Typicals.Souliss_T21)
@@ -323,10 +320,6 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         return SoulissApp.getAppContext().getString(resId);
     }
 
-    public void setInterval(int interval) {
-        commandDTO.setInterval(interval);
-    }
-
     @Override
     public void setName(String newName) {
         throw new Error("Commands don't support custom names");
@@ -381,6 +374,14 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         this.parentTypical = parentTypical;
     }
 
+    public int getSceneId() {
+        return commandDTO.getSceneId();
+    }
+
+    public void setSceneId(Integer id) {
+        commandDTO.setSceneId(id);
+    }
+
     public Calendar getScheduledTime() {
         Calendar ret = Calendar.getInstance();
         ret.setTime(new Date(commandDTO.getScheduledTime()));
@@ -392,6 +393,22 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
             commandDTO.setScheduledTime(null);
         else
             commandDTO.setScheduledTime(baseNow.getTime().getTime());
+    }
+
+    public Calendar getExecutedTime() {
+        if (commandDTO.getExecutedTime() != null) {
+            Calendar ret = Calendar.getInstance();
+            ret.setTime(new Date(commandDTO.getExecutedTime()));
+            return ret;
+        }
+        return null;//mai eseguito
+    }
+
+    public void setExecutedTime(Calendar executedTime) {
+        if (executedTime == null)
+            commandDTO.setExecutedTime(null);
+        else
+            commandDTO.setExecutedTime(executedTime.getTime().getTime());
     }
 
     public short getSlot() {
@@ -425,16 +442,8 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
         commandDTO.setType(commandSingle);
     }
 
-    public void setCommand(long souliss_t4n_armed) {
-        commandDTO.setCommand(souliss_t4n_armed);
-    }
-
     public void persistCommand() {
         commandDTO.persistCommand();
-    }
-
-    public void setSceneId(Integer id) {
-        commandDTO.setSceneId(id);
     }
 
     public void setStep(int size) {
@@ -448,12 +457,5 @@ public class SoulissCommand implements Serializable, ISoulissCommand {
     public String toString() {
         return getName();
     }
-
-    /*
-    holder.textCmd.setText(context.getResources().getString(R.string.scene_send_command) + " \""
-					+ holder.data.toString() + "\" " + context.getResources()
-					+ context.getResources().getString(R.string.compatible) + " ("
-					+ holder.data.getParentTypical().getNiceName() + ")");
-		*/
 
 }

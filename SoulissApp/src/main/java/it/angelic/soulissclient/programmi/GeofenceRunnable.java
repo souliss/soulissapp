@@ -1,10 +1,12 @@
-package it.angelic.soulissclient;
+package it.angelic.soulissclient.programmi;
 
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
+import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.helpers.SoulissPreferenceHelper;
 import it.angelic.soulissclient.model.SoulissCommand;
 import it.angelic.soulissclient.model.db.SoulissDBHelper;
@@ -25,7 +27,7 @@ import it.angelic.soulissclient.model.db.SoulissDBHelper;
 /**
  * Created by shine@angelic.it on 23/10/2019.
  */
-class GeofenceRunnable implements Runnable {
+public class GeofenceRunnable implements Runnable {
     private final SoulissPreferenceHelper opzioni;
     Activity parent;
 
@@ -64,7 +66,7 @@ class GeofenceRunnable implements Runnable {
     public void run() {
         SoulissDBHelper database = new SoulissDBHelper(parent);
         LinkedList<SoulissCommand> comandi = database.getPositionalPrograms();
-
+        geofencingClient.removeGeofences(getGeofencePendingIntent(parent));
         ArrayList<Geofence> geofenceList = new ArrayList<>();
         for (SoulissCommand programmaPos : comandi) {
             Log.w(Constants.TAG, "Adding GEOFENCE: " + programmaPos.getCommandId() + programmaPos.getName());
@@ -96,7 +98,7 @@ class GeofenceRunnable implements Runnable {
                     .addOnFailureListener(parent, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w(Constants.TAG, "Registered GEOFENCE FAIL ");
+                            Log.e(Constants.TAG, "Registered GEOFENCE FAIL " + e.getMessage());
                         }
                     });
         }

@@ -26,19 +26,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import it.angelic.soulissclient.Constants;
 import it.angelic.soulissclient.R;
 import it.angelic.soulissclient.SettingsActivity;
 import it.angelic.soulissclient.SoulissApp;
 import it.angelic.soulissclient.adapters.FontAwesomeTagListAdapter;
 import it.angelic.soulissclient.adapters.NodesListAdapter;
-import it.angelic.soulissclient.adapters.ProgramListAdapter;
 import it.angelic.soulissclient.adapters.SceneListAdapter;
 import it.angelic.soulissclient.adapters.SoulissFontAwesomeAdapter;
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
@@ -57,6 +57,7 @@ import it.angelic.soulissclient.net.UDPHelper;
 import it.angelic.soulissclient.preferences.DbSettingsFragment;
 import it.angelic.soulissclient.preferences.NetSettingsFragment;
 import it.angelic.soulissclient.preferences.ServiceSettingsFragment;
+import it.angelic.soulissclient.programmi.ProgramListAdapter;
 import it.angelic.soulissclient.util.FontAwesomeEnum;
 import it.angelic.soulissclient.util.FontAwesomeUtil;
 import it.angelic.soulissclient.util.LauncherElementEnum;
@@ -221,11 +222,7 @@ public class AlertDialogHelper {
     public static AlertDialog.Builder dropSoulissDBDialog(final Activity source, final SoulissDBHelper datasource) {
         ContextThemeWrapper wrapper = new ContextThemeWrapper(source, SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.LightThemeSelector : R.style.DarkThemeSelector);
         AlertDialog.Builder alert = new AlertDialog.Builder(wrapper,SoulissApp.getOpzioni().isLightThemeSelected() ? R.style.MyAlertDialogThemeLight:R.style.MyAlertDialogTheme);
-        // AlertDialog.Builder alert;
-        // alert = new AlertDialog.Builder(new ContextThemeWrapper(source,
-        // R.style.AboutDialog));
         alert.setIcon(android.R.drawable.ic_dialog_alert);
-        //final SharedPreferences soulissCust = source.getSharedPreferences("SoulissPrefs", Activity.MODE_PRIVATE);
         final SharedPreferences soulissCust = PreferenceManager.getDefaultSharedPreferences(source);
 
         alert.setTitle(source.getResources().getString(R.string.dialog_warn_db));
@@ -244,16 +241,6 @@ public class AlertDialogHelper {
                                 editor.remove("numTipici");
                             editor.commit();
                             Log.w(TAG, "Souliss DB dropped");
-                            // source.finish();
-                           /* final Intent preferencesActivity = new Intent(source.getBaseContext(),
-                                    SettingsActivity.class);
-
-                            preferencesActivity.putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, DbSettingsFragment.class.getName());
-                            preferencesActivity.setAction("db_setup");
-                            preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            preferencesActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            source.startActivity(preferencesActivity);*/
-
                         } else {
                             Log.e(TAG, "Unable to DROP DB");
                             Toast.makeText(source, "Unable to DROP DB", Toast.LENGTH_SHORT).show();
