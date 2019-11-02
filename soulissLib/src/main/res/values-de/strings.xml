@@ -361,4 +361,7 @@
     <string name="delete_scene_question">Are you sure you want to delete this scene ?</string>
     <string name="every">Every</string>
     <string name="programs_warn_home_notset">Can\'t add program: home position not set</string>
+    <string name="purple">Purple</string>
+    <string name="yellow">Yellow</string>
+    <string name="aqua">Aqua</string>
 </resources>

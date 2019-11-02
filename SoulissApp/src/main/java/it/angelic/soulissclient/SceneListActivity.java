@@ -130,15 +130,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main_scenes);
-        // final Button buttAddProgram = (Button)
-        // findViewById(R.id.buttonAddScene);
-        //tt = (TextView) findViewById(R.id.TextViewScenes);
-        /*
-         * if ("def".compareToIgnoreCase(opzioni.getPrefFont()) != 0) { Typeface
-		 * font = Typeface.createFromAsset(getAssets(), opzioni.getPrefFont());
-		 * tt.setTypeface(font, Typeface.NORMAL); }
-		 */
-        // ParallaxListView listView2 = (ParallaxListView) findViewById(R.id.paraList);
 
         listaScenesView = findViewById(R.id.ListViewListaScenes);
 
@@ -164,9 +155,6 @@ public class SceneListActivity extends AbstractStatusedFragmentActivity {
 
         FontAwesomeUtil.prepareAwesomeFontAweTextView(this, textAwesomeUpperRight, FontAwesomeEnum.fa_moon_o.getFontName());
         FloatingActionButton fab = findViewById(R.id.fab);
-        //  fab.attachToListView(listaScenesView);
-
-        //SoulissClient.setBackground(findViewById(R.id.containerlistaScenes), getWindowManager());
 
         //ADD NEW SCENE
         fab.setOnClickListener(new View.OnClickListener() {

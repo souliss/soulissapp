@@ -76,7 +76,7 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="16dp"
                     app:srcCompat="@drawable/ic_add_32dp"
-                    app:backgroundTint="@color/md_yellow_400"
+                    app:backgroundTint="@color/md_yellow_600"
                     />
             </RelativeLayout>
 
