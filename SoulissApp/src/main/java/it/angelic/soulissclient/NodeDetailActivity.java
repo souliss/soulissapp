@@ -1,18 +1,13 @@
 package it.angelic.soulissclient;
 
 import android.app.AlertDialog;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import it.angelic.soulissclient.adapters.TypicalsListAdapter;
 import it.angelic.soulissclient.drawer.NavDrawerAdapter;
@@ -24,7 +19,6 @@ import it.angelic.soulissclient.model.db.SoulissDBHelper;
 
 
 public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
-    //private ImageView nodeic;
     //private Handler timeoutHandler;
     private SoulissNode collected;
     private SoulissDBHelper database;
@@ -32,37 +26,7 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
     private boolean mIsBound;
     private TypicalsListAdapter ta;
     /* SOULISS DATA SERVICE BINDING */
-    private ServiceConnection mConnection = new ServiceConnection() {
 
-        public void onServiceConnected(ComponentName className, IBinder service) {
-
-            mBoundService = ((SoulissDataService.LocalBinder) service).getService();
-            if (ta != null)
-                ta.setmBoundService(mBoundService);
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            mBoundService = null;
-            if (ta != null)
-                ta.setmBoundService(null);
-            Toast.makeText(NodeDetailActivity.this, "Dataservice disconnected", Toast.LENGTH_SHORT).show();
-        }
-    };
-
-    void doBindService() {
-        if (!mIsBound) {
-            bindService(new Intent(NodeDetailActivity.this, SoulissDataService.class), mConnection,
-                    Context.BIND_AUTO_CREATE);
-            mIsBound = true;
-        }
-    }
-
-    void doUnbindService() {
-        if (mIsBound) {
-            unbindService(mConnection);
-            mIsBound = false;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +70,13 @@ public class NodeDetailActivity extends AbstractStatusedFragmentActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.nodedetail_menu, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (opzioni.isAnimationsEnabled())
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     @Override
